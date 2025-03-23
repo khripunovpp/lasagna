@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ContainerComponent} from '../../ui/container/container.component';
+import {ContainerComponent} from '../../ui/layout/container/container.component';
 
 @Component({
   selector: 'app-add-recipe',

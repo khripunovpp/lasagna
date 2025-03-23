@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {ContainerComponent} from '../ui/container/container.component';
+import {ContainerComponent} from '../ui/layout/container/container.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {CardComponent} from '../ui/card/card.component';
-import {TitleComponent} from '../ui/title/title.component';
+import {TitleComponent} from '../ui/layout/title/title.component';
 
 @Component({
   selector: 'app-application',

@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {ContainerComponent} from '../../ui/container/container.component';
+import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {CardComponent} from '../../ui/card/card.component';
-import {TitleComponent} from '../../ui/title/title.component';
+import {TitleComponent} from '../../ui/layout/title/title.component';
+import {AddRecipeFormComponent} from './add-recipe-form.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -9,13 +10,14 @@ import {TitleComponent} from '../../ui/title/title.component';
   imports: [
     ContainerComponent,
     CardComponent,
-    TitleComponent
+    TitleComponent,
+    AddRecipeFormComponent
   ],
   template: `
       <lg-container>
           <lg-title>Add Recipe</lg-title>
           <lg-card>
-              <p>Recipe form goes here.</p>
+              <lg-add-recipe-form></lg-add-recipe-form>
           </lg-card>
       </lg-container>
   `,
