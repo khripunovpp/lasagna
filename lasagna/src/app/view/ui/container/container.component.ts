@@ -4,18 +4,24 @@ import {Component} from '@angular/core';
   selector: 'lg-container',
   standalone: true,
   template: `
-      <section>
+      <section class="container">
           <ng-content></ng-content>
       </section>`,
   styles: [
     `
       :host {
         display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100%;
+        padding: 0 32px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
         width: 100vw;
         max-width: 1920px;
+        gap: 16px;
       }
     `
   ]

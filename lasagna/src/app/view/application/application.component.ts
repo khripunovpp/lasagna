@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {ContainerComponent} from '../ui/container/container.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {CardComponent} from '../ui/card/card.component';
+import {TitleComponent} from '../ui/title/title.component';
 
 @Component({
   selector: 'app-application',
@@ -10,7 +12,9 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
   imports: [
     ContainerComponent,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    CardComponent,
+    TitleComponent
   ]
 })
 export class ApplicationComponent {
