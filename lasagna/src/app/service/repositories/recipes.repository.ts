@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
+import {RecipeFormValue} from '../../view/recipe/add-recipe/add-recipe-form.component';
 
 export interface Recipe {
+  uuid: string
   name: string
   description: string
   ingredients: {
@@ -21,36 +23,31 @@ export class RecipesRepository {
   ) {
   }
 
-  async addRecipe(product: Recipe) {
+  async addRecipe(product: RecipeFormValue) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('recipesStore', 'readwrite');
-        const store = transaction.objectStore('recipesStore');
-        store.add(product);
-      });
-      resolve();
+      await this._indexDbService.addData('recipesStore', product);
     });
   }
 
-  async addRecipes() {
-    return new Promise<IDBRequest<any[]>>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('recipesStore', 'readonly');
-        const store = transaction.objectStore('recipesStore');
-        const products = await store.getAll();
-        resolve(products);
-      });
+  getRecipes(
+    onSuccess: (result: any) => void,
+  ) {
+    this._indexDbService.openDb(async db => {
+      const transaction = db.transaction('recipesStore', 'readonly');
+      const store = transaction.objectStore('recipesStore');
+      const request = store.getAll();
+      request.onsuccess = (event: any) => {
+        onSuccess(event.target.result);
+      }
     });
   }
 
-  async deleteRecipe(uuid: string) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('recipesStore', 'readwrite');
-        const store = transaction.objectStore('recipesStore');
-        store.delete(uuid);
-      });
-      resolve();
+  deleteRecipe(uuid: string, onSuccess: () => void) {
+    this._indexDbService.openDb(async db => {
+      const transaction = db.transaction('recipesStore', 'readwrite');
+      const store = transaction.objectStore('recipesStore');
+      store.delete(uuid);
+      onSuccess();
     });
   }
 }

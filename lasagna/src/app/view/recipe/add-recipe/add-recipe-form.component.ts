@@ -10,9 +10,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 
-export interface RecipeFormValue extends Recipe {
-
-}
+export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
 @Component({
   selector: 'lg-add-recipe-form',

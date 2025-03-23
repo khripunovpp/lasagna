@@ -19,3 +19,9 @@ form {
   --control-bg: #fafafa;
   --placeholder: var(--text-color);
 }
+
+
+.expand {
+  width: 100%;
+  flex-grow: 1;
+}
