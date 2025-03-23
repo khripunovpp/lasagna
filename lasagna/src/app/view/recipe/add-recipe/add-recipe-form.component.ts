@@ -7,18 +7,11 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {IndexDbService} from '../../../service/services/index-db.service';
 import {debounceTime} from 'rxjs';
+import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 
-export interface RecipeFormValue {
-  name: string
-  description: string
-  ingredients: {
-    name: string
-    amount: number
-    unit: string
-  }[]
-  steps: string[]
+export interface RecipeFormValue extends Recipe {
+
 }
 
 @Component({
@@ -119,7 +112,7 @@ export interface RecipeFormValue {
 export class AddRecipeFormComponent
   implements OnInit {
   constructor(
-    public _indexDbService: IndexDbService,
+    public _recipesRepository: RecipesRepository,
   ) {
   }
 
@@ -184,6 +177,9 @@ export class AddRecipeFormComponent
   addRecipe(
     values: RecipeFormValue
   ) {
-    this._indexDbService.addData('recipesStore', values)
+    this._recipesRepository.addRecipe(values).then(() => {
+      console.log('Recipe added');
+      this.form.reset();
+    });
   }
 }

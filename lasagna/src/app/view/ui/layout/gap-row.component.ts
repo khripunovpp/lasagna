@@ -15,7 +15,7 @@ import {Component} from '@angular/core';
 
     .gap-row {
       display: flex;
-      gap: 16px;
+      gap: 32px;
     }
     `
   ]
