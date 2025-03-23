@@ -1,6 +1,9 @@
-import {Component, input, ViewEncapsulation} from '@angular/core';
-import {NgSelectComponent} from '@ng-select/ng-select';
+import {Component, input, OnInit, Optional, signal, ViewEncapsulation} from '@angular/core';
+import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {IndexDbSelectLoaderService} from '../../../service/services/index-db-select-loader.service';
+import {JsonPipe} from '@angular/common';
 
 export interface MultiselectItem {
   value: unknown
@@ -12,16 +15,24 @@ export interface MultiselectItem {
   template: `
       <div class="multiselect">
           <ng-select (ngModelChange)="onChangeInput($event)"
-                     [items]="items()"
-                     [ngModel]="value"
-                     bindLabel="name"
-                     bindValue="id">
+                     [items]="loadedList()"
+                     bindValue="value"
+                     [ngModel]="value">
+              <ng-template let-item="item" ng-label-tmp>
+                  {{ item.value.name }}
+              </ng-template>
+              <ng-template let-item="item" ng-option-tmp>
+                  {{ item.value.name }}
+              </ng-template>
           </ng-select>
       </div>
   `,
   imports: [
     NgSelectComponent,
-    FormsModule
+    FormsModule,
+    JsonPipe,
+    NgOptionTemplateDirective,
+    NgLabelTemplateDirective
   ],
   styles: [
     `
@@ -78,11 +89,15 @@ export interface MultiselectItem {
   encapsulation: ViewEncapsulation.None
 })
 export class MultiselectComponent
-  implements ControlValueAccessor {
-  constructor() {
+  implements ControlValueAccessor, OnInit {
+  constructor(
+    @Optional() private _selectResourcesService: SelectResourcesService,
+    @Optional() private _indexDbSelectLoaderService: IndexDbSelectLoaderService
+  ) {
   }
 
-  items = input<MultiselectItem[]>([]);
+  resource = input<string>('');
+  loadedList = signal([]);
   value?: unknown = null
   onChange: (value: unknown) => void = () => {
   };
@@ -104,5 +119,17 @@ export class MultiselectComponent
 
   onChangeInput(value: unknown) {
     this.onChange(value);
+  }
+
+  ngOnInit() {
+    this._selectResourcesService.register(this.resource());
+    this._selectResourcesService.subscribe((registry) => {
+      const items = registry.get(this.resource())?.list ?? [];
+      this.loadedList.set(items.map<{
+        value: unknown
+      }>((item) => ({
+        value: item
+      })) as any);
+    });
   }
 }

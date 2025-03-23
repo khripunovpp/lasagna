@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
 import {ControlGroupComponent} from '../../ui/form/control-group.component';
@@ -7,9 +7,9 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {debounceTime} from 'rxjs';
-import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {Recipe} from '../../../service/repositories/recipes.repository';
 import {ProductsRepository} from '../../../service/repositories/products.repository';
+import {SelectResourcesService} from '../../../service/services/select-resources.service';
 
 export type ProductFormValue = Omit<Recipe, 'uuid'>
 
@@ -52,6 +52,7 @@ export class AddProductFormComponent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
+    @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService
   ) {
   }
 

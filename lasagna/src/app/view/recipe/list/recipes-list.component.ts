@@ -3,6 +3,7 @@ import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.r
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'lg-recipes-list',
@@ -11,7 +12,9 @@ import {ButtonComponent} from '../../ui/layout/button.component';
       <lg-gap-column>
           @for (recipe of recipes();track $index;let i = $index) {
               <lg-gap-row [center]="true">
-                  <div class="expand">{{ recipe.name }}</div>
+                  <div class="expand">
+                      <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                  </div>
                   <lg-button [style]="'danger'"
                              [size]="'small'"
                              (click)="deleteRecipe(recipe)">Delete
@@ -26,6 +29,7 @@ import {ButtonComponent} from '../../ui/layout/button.component';
     GapColumnComponent,
     GapRowComponent,
     ButtonComponent,
+    RouterLink,
   ],
   styles: [
     `:host {

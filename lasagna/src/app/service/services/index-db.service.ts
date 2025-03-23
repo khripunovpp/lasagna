@@ -71,6 +71,31 @@ export class IndexDbService {
       });
     });
   }
+
+  replaceData(storeKey: string, uuid: string, value: any) {
+    // Open the database
+    this.openDb(indexedDB => {
+      const transaction = indexedDB.transaction(storeKey, 'readwrite');
+
+      const store = transaction.objectStore(storeKey);
+      // Put the data in the store
+      store.put({
+        ...value,
+        uuid
+      });
+    });
+  }
+
+  getOne(storeKey: string, uuid: string, onSuccess: (result: any) => void) {
+    this.openDb(indexedDB => {
+      const transaction = indexedDB.transaction(storeKey, 'readonly');
+      const store = transaction.objectStore(storeKey);
+      const request = store.get(uuid);
+      request.onsuccess = (event: any) => {
+        onSuccess(event.target.result);
+      }
+    });
+  }
 }
 
 //

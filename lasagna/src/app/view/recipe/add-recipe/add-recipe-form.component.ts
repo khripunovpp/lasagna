@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, effect, input, OnInit, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -10,6 +10,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
+import {SelectResourcesService} from '../../../service/services/select-resources.service';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -40,7 +41,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                   <lg-input formControlName="name"></lg-input>
                                                   <span (click)="displayTextName.set(false)">Hide</span>
                                               } @else {
-                                                  <lg-multiselect formControlName="product_id"></lg-multiselect>
+                                                  <lg-multiselect [resource]="'products'"
+                                                                  formControlName="product_id"></lg-multiselect>
                                                   <span (click)="displayTextName.set(true)">Show text field</span>
                                               }
                                           </lg-gap-column>
@@ -96,9 +98,15 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                   </lg-control-group>
               </lg-gap-row>
 
-              <lg-button (click)="addRecipe(value)">
-                  Add Recipe
-              </lg-button>
+              @if (uuid()) {
+                  <lg-button (click)="editRecipe(value)">
+                      Edit Recipe
+                  </lg-button>
+              } @else {
+                  <lg-button (click)="addRecipe(value)">
+                      Add Recipe
+                  </lg-button>
+              }
           </lg-gap-column>
       </form>
   `,
@@ -117,11 +125,19 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     `
     `
   ],
+
+  providers: [
+    {
+      provide: SelectResourcesService,
+      useClass: SelectResourcesService,
+    }
+  ],
 })
 export class AddRecipeFormComponent
   implements OnInit {
   constructor(
     public _recipesRepository: RecipesRepository,
+    public _selectResourcesService: SelectResourcesService
   ) {
   }
 
@@ -140,7 +156,17 @@ export class AddRecipeFormComponent
       new FormControl('', Validators.required)
     ])
   });
+  uuid = input<string>('');
   displayTextName = signal(false);
+  private uuidEffect = effect(() => {
+    if (!this.uuid()) {
+      return;
+    }
+    this._recipesRepository.getOne(this.uuid(), recipe => {
+      console.log({recipe})
+      this.form.patchValue(recipe);
+    });
+  });
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;
@@ -151,7 +177,7 @@ export class AddRecipeFormComponent
   }
 
   get value() {
-    return this.form.value as RecipeFormValue;
+    return this.form.value as any;
   }
 
   ngOnInit() {
@@ -163,6 +189,12 @@ export class AddRecipeFormComponent
 
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this._selectResourcesService.load().then(resources => {
+      console.log({resources})
+    })
   }
 
   addIngredient() {
@@ -189,9 +221,27 @@ export class AddRecipeFormComponent
   addRecipe(
     values: RecipeFormValue
   ) {
-    this._recipesRepository.addRecipe(values).then(() => {
+    this._recipesRepository.addRecipe({
+      ...values,
+      ingredients: values.ingredients.map(ingredient => ({
+        ...ingredient,
+        product_id: ingredient.product_id ? ingredient.product_id.uuid : null
+      })) as any,
+    }).then(() => {
       console.log('Recipe added');
-      this.form.reset();
+      this.form.reset({});
     });
+  }
+
+  editRecipe(
+    values: RecipeFormValue
+  ) {
+    this._recipesRepository.editRecipe(this.uuid(), {
+      ...values,
+      ingredients: values.ingredients.map(ingredient => ({
+        ...ingredient,
+        product_id: ingredient.product_id ? ingredient.product_id.uuid : null
+      })) as any,
+    })
   }
 }

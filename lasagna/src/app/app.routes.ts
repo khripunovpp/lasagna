@@ -19,6 +19,11 @@ export const routes: Routes = [{
         .then(m => m.AddRecipeComponent)
     },
     {
+      path:'edit-recipe/:uuid',
+      loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+        .then(m => m.AddRecipeComponent)
+    },
+    {
       path:'add-product',
       loadComponent: () => import('./view/product/add-product/add-product.component')
         .then(m => m.AddProductComponent)
