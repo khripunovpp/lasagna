@@ -7,6 +7,19 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {IndexDbService} from '../../../service/services/index-db.service';
+import {debounceTime} from 'rxjs';
+
+export interface RecipeFormValue {
+  name: string
+  description: string
+  ingredients: {
+    name: string
+    amount: number
+    unit: string
+  }[]
+  steps: string[]
+}
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -82,7 +95,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                   </lg-control-group>
               </lg-gap-row>
 
-              <lg-button>
+              <lg-button (click)="addRecipe(value)">
                   Add Recipe
               </lg-button>
           </lg-gap-column>
@@ -101,11 +114,13 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
   styles: [
     `
     `
-  ]
+  ],
 })
 export class AddRecipeFormComponent
   implements OnInit {
-  constructor() {
+  constructor(
+    public _indexDbService: IndexDbService,
+  ) {
   }
 
   form = new FormGroup({
@@ -131,12 +146,19 @@ export class AddRecipeFormComponent
     return this.form.get('steps') as FormArray;
   }
 
+  get value() {
+    return this.form.value as RecipeFormValue;
+  }
+
   ngOnInit() {
-    this.form.valueChanges.subscribe({
+    this.form.valueChanges.pipe(
+      debounceTime(500),
+    ).subscribe({
       next: values => {
         console.log({values})
+
       }
-    })
+    });
   }
 
   addIngredient() {
@@ -157,5 +179,11 @@ export class AddRecipeFormComponent
 
   deleteStep(index: number) {
     this.steps.removeAt(index);
+  }
+
+  addRecipe(
+    values: RecipeFormValue
+  ) {
+    this._indexDbService.addData('recipesStore', values)
   }
 }
