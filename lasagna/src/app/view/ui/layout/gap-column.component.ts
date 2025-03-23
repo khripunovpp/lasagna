@@ -1,13 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, input} from '@angular/core';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-gap-column',
   standalone: true,
   template: `
-      <div class="gap-column">
+      <div [ngClass]="size()"
+           class="gap-column">
           <ng-content></ng-content>
       </div>
   `,
+  imports: [
+    NgClass
+  ],
   styles: [
     `:host {
 
@@ -19,10 +24,29 @@ import {Component} from '@angular/core';
       flex-direction: column;
       gap: 32px;
     }
+
+    .gap-column.small {
+      gap: 8px;
+    }
+
+    .gap-column.medium {
+      gap: 16px;
+    }
+
+    .gap-column.tiny {
+      gap: 4px;
+    }
     `
   ]
 })
 export class GapColumnComponent {
   constructor() {
   }
+
+  size = input<
+    'default' |
+    'small' |
+    'medium' |
+    'tiny'
+  >('default');
 }

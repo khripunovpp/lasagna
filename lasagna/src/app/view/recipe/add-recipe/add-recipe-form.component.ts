@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -9,6 +9,7 @@ import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {MultiselectComponent} from '../../ui/form/multiselect.component';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -32,8 +33,17 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                           <lg-gap-column formArrayName="ingredients">
                               @for (control of ingredients.controls;track $index;let i = $index) {
                                   <ng-container [formGroupName]="i">
+
                                       <lg-control label="Name">
-                                          <lg-input formControlName="name"></lg-input>
+                                          <lg-gap-column [size]="'medium'">
+                                              @if (displayTextName()) {
+                                                  <lg-input formControlName="name"></lg-input>
+                                                  <span (click)="displayTextName.set(false)">Hide</span>
+                                              } @else {
+                                                  <lg-multiselect formControlName="product_id"></lg-multiselect>
+                                                  <span (click)="displayTextName.set(true)">Show text field</span>
+                                              }
+                                          </lg-gap-column>
                                       </lg-control>
 
                                       <lg-control label="Amount">
@@ -101,6 +111,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ButtonComponent,
     TextareaComponent,
     GapRowComponent,
+    MultiselectComponent,
   ],
   styles: [
     `
@@ -115,19 +126,21 @@ export class AddRecipeFormComponent
   }
 
   form = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl('', Validators.required),
     ingredients: new FormArray([
       new FormGroup({
         name: new FormControl('', Validators.required),
         amount: new FormControl(0, Validators.required),
-        unit: new FormControl('', Validators.required)
+        unit: new FormControl('', Validators.required),
+        product_id: new FormControl<string | null>(null, Validators.required),
       })
     ]),
     steps: new FormArray([
       new FormControl('', Validators.required)
     ])
   });
+  displayTextName = signal(false);
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;
@@ -156,7 +169,8 @@ export class AddRecipeFormComponent
     this.ingredients.push(new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(0, Validators.required),
-      unit: new FormControl('', Validators.required)
+      unit: new FormControl('', Validators.required),
+      product_id: new FormControl('', Validators.required),
     }));
   }
 
