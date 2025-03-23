@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
+import {ProductFormValue} from '../../view/product/add-product/add-product-form.component';
 
 export interface Product {
   uuid: string
@@ -18,36 +19,32 @@ export class ProductsRepository {
   ) {
   }
 
-  async addProduct(product: Product) {
+  addProduct(product: ProductFormValue) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('productsStore', 'readwrite');
-        const store = transaction.objectStore('productsStore');
-        store.add(product);
-      });
-      resolve();
+      await this._indexDbService.addData('productsStore', product);
     });
   }
 
-  async getProducts() {
-    return new Promise<Product[]>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('productsStore', 'readonly');
-        const store = transaction.objectStore('productsStore');
-        const products = await store.getAll();
-        resolve(products);
-      });
+
+  getProducts(
+    onSuccess: (result: any) => void,
+  ) {
+    this._indexDbService.openDb(async db => {
+      const transaction = db.transaction('productsStore', 'readonly');
+      const store = transaction.objectStore('productsStore');
+      const request = store.getAll();
+      request.onsuccess = (event: any) => {
+        onSuccess(event.target.result);
+      }
     });
   }
 
-  async deleteProduct(uuid: string) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.openDb(async db => {
-        const transaction = db.transaction('productsStore', 'readwrite');
-        const store = transaction.objectStore('productsStore');
-        store.delete(uuid);
-      });
-      resolve();
+  deleteProduct(uuid: string, onSuccess: () => void) {
+    this._indexDbService.openDb(async db => {
+      const transaction = db.transaction('productsStore', 'readwrite');
+      const store = transaction.objectStore('productsStore');
+      store.delete(uuid);
+      onSuccess();
     });
   }
 }
