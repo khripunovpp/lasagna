@@ -16,7 +16,7 @@ import {ActivatedRoute} from '@angular/router';
   ],
   template: `
       <lg-container>
-          <lg-title>Add Recipe</lg-title>
+          <lg-title>{{uuid() ? 'Edit' : 'Add'}} Recipe</lg-title>
           <lg-card>
               <lg-add-recipe-form [uuid]="uuid()"></lg-add-recipe-form>
           </lg-card>

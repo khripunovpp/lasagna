@@ -47,6 +47,12 @@ export type ProductFormValue = Omit<Recipe, 'uuid'>
     `
     `
   ],
+  providers: [
+    {
+      provide: SelectResourcesService,
+      useClass: SelectResourcesService,
+    }
+  ],
 })
 export class AddProductFormComponent
   implements OnInit {

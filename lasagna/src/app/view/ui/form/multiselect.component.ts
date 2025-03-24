@@ -14,15 +14,16 @@ export interface MultiselectItem {
   standalone: true,
   template: `
       <div class="multiselect">
-          <ng-select (ngModelChange)="onChangeInput($event)"
-                     [items]="loadedList()"
-                     bindValue="value"
-                     [ngModel]="value">
+          <ng-select [items]="loadedList()"
+                     [searchFn]="searchFn"
+                     [compareWith]="compareWith"
+                     [ngModel]="value"
+                     (ngModelChange)="onChangeInput($event)">
               <ng-template let-item="item" ng-label-tmp>
-                  {{ item.value.name }}
+                  {{ item?.name ?? item.value }}
               </ng-template>
               <ng-template let-item="item" ng-option-tmp>
-                  {{ item.value.name }}
+                  {{ item?.name ?? item.value }}
               </ng-template>
           </ng-select>
       </div>
@@ -104,6 +105,18 @@ export class MultiselectComponent
   onTouched: () => void = () => {
   };
 
+  searchFn = (term: string, item: MultiselectItem) => {
+    const val = item as any;
+    return val.uuid === term;
+  }
+
+  compareWith = (a: MultiselectItem, b: MultiselectItem) => {
+    const valA = a as any;
+    const valB = b as any;
+
+    return valA?.uuid === valB?.uuid;
+  }
+
   writeValue(value: unknown): void {
     this.value = value;
     this.onChange(this.value);
@@ -122,14 +135,12 @@ export class MultiselectComponent
   }
 
   ngOnInit() {
+    console.log({resource: this.resource()})
     this._selectResourcesService.register(this.resource());
     this._selectResourcesService.subscribe((registry) => {
+      console.log({registry})
       const items = registry.get(this.resource())?.list ?? [];
-      this.loadedList.set(items.map<{
-        value: unknown
-      }>((item) => ({
-        value: item
-      })) as any);
+      this.loadedList.set(items as any);
     });
   }
 }

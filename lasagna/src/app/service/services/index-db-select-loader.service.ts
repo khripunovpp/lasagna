@@ -17,7 +17,6 @@ export class IndexDbSelectLoaderService
   ) {
     return new Promise<any[]>((resolve, reject) => {
       this._indexDb.openDb((db) => {
-        console.log({storeName})
         const transaction = db.transaction(storeName, 'readonly');
         const store = transaction.objectStore(storeName);
         const request = store.getAll();

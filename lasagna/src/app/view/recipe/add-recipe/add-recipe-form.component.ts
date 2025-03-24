@@ -11,6 +11,7 @@ import {debounceTime} from 'rxjs';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {JsonPipe} from '@angular/common';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -120,6 +121,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     TextareaComponent,
     GapRowComponent,
     MultiselectComponent,
+    JsonPipe,
   ],
   styles: [
     `
@@ -149,8 +151,8 @@ export class AddRecipeFormComponent
         name: new FormControl('', Validators.required),
         amount: new FormControl(0, Validators.required),
         unit: new FormControl('', Validators.required),
-        product_id: new FormControl<string | null>(null, Validators.required),
-      })
+        product_id: new FormControl<any>(null, Validators.required),
+      }),
     ]),
     steps: new FormArray([
       new FormControl('', Validators.required)
@@ -163,8 +165,22 @@ export class AddRecipeFormComponent
       return;
     }
     this._recipesRepository.getOne(this.uuid(), recipe => {
-      console.log({recipe})
-      this.form.patchValue(recipe);
+      this.form.reset(recipe);
+      (this.form.get('ingredients') as FormArray).clear();
+      (this.form.get('steps') as FormArray).clear();
+
+      recipe.ingredients.forEach((ingredient: Recipe['ingredients'][number]) => {
+        this.ingredients.push(new FormGroup({
+          name: new FormControl(ingredient.name, Validators.required),
+          amount: new FormControl(ingredient.amount, Validators.required),
+          unit: new FormControl(ingredient.unit, Validators.required),
+          product_id: new FormControl(ingredient.product_id, Validators.required),
+        }));
+      })
+
+      recipe.steps.forEach((step: Recipe['steps'][number]) => {
+        this.steps.push(new FormControl(step, Validators.required));
+      });
     });
   });
 
@@ -178,6 +194,20 @@ export class AddRecipeFormComponent
 
   get value() {
     return this.form.value as any;
+  }
+
+  private get _values() {
+    const values = this.form.value;
+    return {
+      ...values,
+      ingredients: values.ingredients?.map(ingredient => ({
+        ...ingredient,
+        product_id: ingredient.product_id ? {
+          uuid: ingredient.product_id.uuid
+        } : null
+      })),
+      steps: values.steps
+    } as any;
   }
 
   ngOnInit() {
@@ -221,13 +251,7 @@ export class AddRecipeFormComponent
   addRecipe(
     values: RecipeFormValue
   ) {
-    this._recipesRepository.addRecipe({
-      ...values,
-      ingredients: values.ingredients.map(ingredient => ({
-        ...ingredient,
-        product_id: ingredient.product_id ? ingredient.product_id.uuid : null
-      })) as any,
-    }).then(() => {
+    this._recipesRepository.addRecipe(this._values).then(() => {
       console.log('Recipe added');
       this.form.reset({});
     });
@@ -236,12 +260,8 @@ export class AddRecipeFormComponent
   editRecipe(
     values: RecipeFormValue
   ) {
-    this._recipesRepository.editRecipe(this.uuid(), {
-      ...values,
-      ingredients: values.ingredients.map(ingredient => ({
-        ...ingredient,
-        product_id: ingredient.product_id ? ingredient.product_id.uuid : null
-      })) as any,
-    })
+    this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
+      console.log('Recipe edited');
+    });
   }
 }
