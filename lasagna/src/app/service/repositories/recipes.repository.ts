@@ -3,18 +3,27 @@ import {IndexDbService} from '../services/index-db.service';
 import {RecipeFormValue} from '../../view/recipe/add-recipe/add-recipe-form.component';
 import {Product} from './products.repository';
 
+export interface Ingredient {
+  name: string
+  amount: number
+  uuid: string
+  product_id: Product
+  recipe_id?: Recipe
+}
+
 export interface Recipe {
   uuid: string
   name: string
   description: string
-  ingredients: Array<{
-    name: string
-    amount: number
-    unit: string
-    uuid: string
-    product_id: Product
-  }>
+  ingredients: Ingredient[]
   steps: string[]
+}
+
+export interface RecipeDbValue {
+  ingredients: Array<Omit<Ingredient, 'product_id' | 'recipe_id' | 'uuid'> & {
+    product_id: string
+    recipe_id: string
+  }>
 }
 
 @Injectable({
@@ -26,7 +35,7 @@ export class RecipesRepository {
   ) {
   }
 
-  async addRecipe(product: RecipeFormValue) {
+  async addRecipe(product: RecipeDbValue) {
     return new Promise<void>(async (resolve, reject) => {
       await this._indexDbService.addData('recipesStore', product);
       resolve();
@@ -56,7 +65,7 @@ export class RecipesRepository {
     });
   }
 
-  editRecipe(uuid: string, recipe: RecipeFormValue) {
+  editRecipe(uuid: string, recipe: RecipeDbValue) {
     return new Promise<void>(async (resolve, reject) => {
       await this._indexDbService.replaceData('recipesStore', uuid, recipe);
       resolve();

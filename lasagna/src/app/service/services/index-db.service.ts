@@ -52,6 +52,13 @@ export class IndexDbService {
         });
 
         recipesStore.createIndex("name", "name", {unique: false});
+
+        const categoryStore = db.createObjectStore("categoryStore", {
+          keyPath: "uuid",
+          autoIncrement: true
+        });
+
+        categoryStore.createIndex("name", "name", {unique: false});
       };
 
       resolve();

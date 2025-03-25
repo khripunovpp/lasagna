@@ -1,7 +1,7 @@
 import {Injectable, Optional} from '@angular/core';
 import {IndexDbSelectLoaderService} from './index-db-select-loader.service';
 import {resources} from '../const/select-resources.configs';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 export interface SelectResourceLoader<T = unknown> {
   load(name: string): Promise<unknown>
@@ -21,12 +21,16 @@ export class SelectResourcesService {
   ) {
   }
 
-  private _registry = new Map<string, SelectResource>();
+  _registry = new Map<string, SelectResource>();
   private _registry$ = new BehaviorSubject<Map<string, SelectResource>>(new Map());
 
   register<T>(name: string) {
     if (this._registry.has(name)) return;
     const cfg = resources[name];
+    if (!cfg) {
+      throw new Error(`SelectResource ${name} not found`);
+      return;
+    }
     this._registry.set(cfg.name, {
       name: cfg.name,
       list: [],

@@ -8,10 +8,12 @@ import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
-import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {JsonPipe} from '@angular/common';
+import {Router} from '@angular/router';
+import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -29,75 +31,48 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                   <lg-input formControlName="description"></lg-input>
               </lg-control>
 
-              <lg-gap-row>
-                  <lg-control-group label="Ingredients">
-                      <lg-gap-column>
-                          <lg-gap-column formArrayName="ingredients">
-                              @for (control of ingredients.controls;track $index;let i = $index) {
-                                  <ng-container [formGroupName]="i">
+              <lg-control-group label="Ingredients">
+                  <lg-gap-column>
+                      <lg-gap-column formArrayName="ingredients">
+                          @for (control of ingredients.controls;track $index;let i = $index) {
+                              <ng-container [formGroupName]="i">
 
-                                      <lg-control label="Name">
-                                          <lg-gap-column [size]="'medium'">
-                                              @if (displayTextName()) {
-                                                  <lg-input formControlName="name"></lg-input>
-                                                  <span (click)="displayTextName.set(false)">Hide</span>
-                                              } @else {
-                                                  <lg-multiselect [resource]="'products'"
-                                                                  formControlName="product_id"></lg-multiselect>
-                                                  <span (click)="displayTextName.set(true)">Show text field</span>
-                                              }
-                                          </lg-gap-column>
-                                      </lg-control>
+                                  <lg-control label="Name">
+                                      <lg-gap-column [size]="'medium'">
+                                          @if (displayTextName()) {
+                                              <lg-input formControlName="name"></lg-input>
+                                              <span (click)="displayTextName.set(false)">Hide</span>
+                                          } @else {
+                                              <lg-multiselect [resource]="'products'"
+                                                              formControlName="product_id"></lg-multiselect>
+                                              <span (click)="displayTextName.set(true)">Show text field</span>
+                                          }
 
-                                      <lg-control label="Amount">
-                                          <lg-input formControlName="amount"></lg-input>
-                                      </lg-control>
-
-                                      <lg-control label="Unit">
-                                          <lg-input formControlName="unit"></lg-input>
-                                      </lg-control>
-
-                                      <lg-button (click)="deleteIngredient(i)"
-                                                 [style]="'danger'"
-                                                 [size]="'small'">
-                                          Delete Ingredient
-                                      </lg-button>
-                                  </ng-container>
-                              }
-                          </lg-gap-column>
-
-                          <lg-button (click)="addIngredient()"
-                                     [size]="'small'"
-                                     [style]="'success'">
-                              Add Ingredient
-                          </lg-button>
-                      </lg-gap-column>
-                  </lg-control-group>
-
-                  <lg-control-group label="Steps">
-                      <lg-gap-column>
-                          <lg-gap-column formArrayName="steps">
-                              @for (control of steps.controls;track $index;let i = $index) {
-                                  <lg-control label="Step">
-                                      <lg-textarea formControlName="{{i}}"></lg-textarea>
+                                          <lg-multiselect [resource]="'recepies'"
+                                                          formControlName="recipe_id"></lg-multiselect>
+                                      </lg-gap-column>
                                   </lg-control>
 
-                                  <lg-button (click)="deleteStep(i)"
+                                  <lg-control label="Amount">
+                                      <lg-input formControlName="amount"></lg-input>
+                                  </lg-control>
+
+                                  <lg-button (click)="deleteIngredient(i)"
                                              [style]="'danger'"
                                              [size]="'small'">
-                                      Delete Step
+                                      Delete Ingredient
                                   </lg-button>
-                              }
-                          </lg-gap-column>
-
-                          <lg-button (click)="addStep()"
-                                     [size]="'small'"
-                                     [style]="'success'">
-                              Add Step
-                          </lg-button>
+                              </ng-container>
+                          }
                       </lg-gap-column>
-                  </lg-control-group>
-              </lg-gap-row>
+
+                      <lg-button (click)="addIngredient()"
+                                 [size]="'small'"
+                                 [style]="'success'">
+                          Add Ingredient
+                      </lg-button>
+                  </lg-gap-column>
+              </lg-control-group>
 
               @if (uuid()) {
                   <lg-button (click)="editRecipe(value)">
@@ -139,7 +114,8 @@ export class AddRecipeFormComponent
   implements OnInit {
   constructor(
     public _recipesRepository: RecipesRepository,
-    public _selectResourcesService: SelectResourcesService
+    public _selectResourcesService: SelectResourcesService,
+    private _router: Router,
   ) {
   }
 
@@ -147,16 +123,8 @@ export class AddRecipeFormComponent
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl('', Validators.required),
     ingredients: new FormArray([
-      new FormGroup({
-        name: new FormControl('', Validators.required),
-        amount: new FormControl(0, Validators.required),
-        unit: new FormControl('', Validators.required),
-        product_id: new FormControl<any>(null, Validators.required),
-      }),
+      this._getIngredientGroup(),
     ]),
-    steps: new FormArray([
-      new FormControl('', Validators.required)
-    ])
   });
   uuid = input<string>('');
   displayTextName = signal(false);
@@ -167,29 +135,15 @@ export class AddRecipeFormComponent
     this._recipesRepository.getOne(this.uuid(), recipe => {
       this.form.reset(recipe);
       (this.form.get('ingredients') as FormArray).clear();
-      (this.form.get('steps') as FormArray).clear();
 
       recipe.ingredients.forEach((ingredient: Recipe['ingredients'][number]) => {
-        this.ingredients.push(new FormGroup({
-          name: new FormControl(ingredient.name, Validators.required),
-          amount: new FormControl(ingredient.amount, Validators.required),
-          unit: new FormControl(ingredient.unit, Validators.required),
-          product_id: new FormControl(ingredient.product_id, Validators.required),
-        }));
+        this.ingredients.push(this._getIngredientGroup(ingredient));
       })
-
-      recipe.steps.forEach((step: Recipe['steps'][number]) => {
-        this.steps.push(new FormControl(step, Validators.required));
-      });
     });
   });
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;
-  }
-
-  get steps() {
-    return this.form.get('steps') as FormArray;
   }
 
   get value() {
@@ -198,16 +152,7 @@ export class AddRecipeFormComponent
 
   private get _values() {
     const values = this.form.value;
-    return {
-      ...values,
-      ingredients: values.ingredients?.map(ingredient => ({
-        ...ingredient,
-        product_id: ingredient.product_id ? {
-          uuid: ingredient.product_id.uuid
-        } : null
-      })),
-      steps: values.steps
-    } as any;
+    return flaterizeObjectWithUuid<RecipeDbValue>(values);
   }
 
   ngOnInit() {
@@ -231,7 +176,6 @@ export class AddRecipeFormComponent
     this.ingredients.push(new FormGroup({
       name: new FormControl('', Validators.required),
       amount: new FormControl(0, Validators.required),
-      unit: new FormControl('', Validators.required),
       product_id: new FormControl('', Validators.required),
     }));
   }
@@ -240,20 +184,12 @@ export class AddRecipeFormComponent
     this.ingredients.removeAt(index);
   }
 
-  addStep() {
-    this.steps.push(new FormControl('', Validators.required));
-  }
-
-  deleteStep(index: number) {
-    this.steps.removeAt(index);
-  }
-
   addRecipe(
     values: RecipeFormValue
   ) {
     this._recipesRepository.addRecipe(this._values).then(() => {
-      console.log('Recipe added');
-      this.form.reset({});
+
+      this._router.navigate(['/home']);
     });
   }
 
@@ -261,7 +197,20 @@ export class AddRecipeFormComponent
     values: RecipeFormValue
   ) {
     this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
-      console.log('Recipe edited');
+
+      this._router.navigate(['/home']);
+    });
+  }
+
+  private _getIngredientGroup(
+    ingredient?: Recipe['ingredients'][number]
+  ) {
+    console.log({ingredient})
+    return new FormGroup({
+      name: new FormControl(ingredient?.name),
+      amount: new FormControl(ingredient?.amount, Validators.required),
+      product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null, Validators.required),
+      recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null, Validators.required),
     });
   }
 }

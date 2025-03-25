@@ -18,7 +18,8 @@ export interface MultiselectItem {
                      [searchFn]="searchFn"
                      [compareWith]="compareWith"
                      [ngModel]="value"
-                     (ngModelChange)="onChangeInput($event)">
+                     (ngModelChange)="onChangeInput($event)"
+                     (change)="onChangeInput($event)">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item.value }}
               </ng-template>
@@ -114,10 +115,17 @@ export class MultiselectComponent
     const valA = a as any;
     const valB = b as any;
 
-    return valA?.uuid === valB?.uuid;
+    return valA?.uuid === valB
+      || valA === valB
+      || valA?.uuid === valB?.uuid
+      || valA === valB?.uuid;
   }
 
   writeValue(value: unknown): void {
+    this.change(value);
+  }
+
+  change(value: unknown) {
     this.value = value;
     this.onChange(this.value);
   }
@@ -131,14 +139,12 @@ export class MultiselectComponent
   }
 
   onChangeInput(value: unknown) {
-    this.onChange(value);
+    this.change(value);
   }
 
   ngOnInit() {
-    console.log({resource: this.resource()})
     this._selectResourcesService.register(this.resource());
     this._selectResourcesService.subscribe((registry) => {
-      console.log({registry})
       const items = registry.get(this.resource())?.list ?? [];
       this.loadedList.set(items as any);
     });

@@ -1,13 +1,18 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
-import {ProductFormValue} from '../../view/product/add-product/add-product-form.component';
+import {Category} from './category.repository';
 
 export interface Product {
   uuid: string
   name: string
-  unit: string
   price: number
-  description: string
+  amount: number
+  source: string
+  category_id: Category | null
+}
+
+export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
+  category_id: string | null
 }
 
 @Injectable({
@@ -19,9 +24,10 @@ export class ProductsRepository {
   ) {
   }
 
-  addProduct(product: ProductFormValue) {
+  addProduct(product: ProductDbValue) {
     return new Promise<void>(async (resolve, reject) => {
       await this._indexDbService.addData('productsStore', product);
+      resolve();
     });
   }
 

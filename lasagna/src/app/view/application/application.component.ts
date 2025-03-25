@@ -6,6 +6,7 @@ import {TitleComponent} from '../ui/layout/title/title.component';
 import {RecipesListComponent} from '../recipe/list/recipes-list.component';
 import {GapColumnComponent} from '../ui/layout/gap-column.component';
 import {ProductListComponent} from '../product/list/product-list.component';
+import {CategoryListComponent} from '../category/list/category-list.component';
 
 @Component({
   selector: 'app-application',
@@ -20,7 +21,8 @@ import {ProductListComponent} from '../product/list/product-list.component';
     TitleComponent,
     RecipesListComponent,
     GapColumnComponent,
-    ProductListComponent
+    ProductListComponent,
+    CategoryListComponent
   ]
 })
 export class ApplicationComponent {

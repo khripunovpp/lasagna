@@ -7,16 +7,14 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
 import {Router} from '@angular/router';
-import {MultiselectComponent} from '../../ui/form/multiselect.component';
-import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 
-export type ProductFormValue = Omit<Product, 'uuid'>
+export type CategoryFormValue = Omit<Category, 'uuid'>
 
 @Component({
-  selector: 'lg-add-product-form',
+  selector: 'lg-add-category-form',
   standalone: true,
   template: `
       <form [formGroup]="form">
@@ -25,25 +23,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
                   <lg-input formControlName="name"></lg-input>
               </lg-control>
 
-              <lg-control label="Amount">
-                  <lg-input formControlName="amount"></lg-input>
-              </lg-control>
-
-              <lg-control label="Price per unit">
-                  <lg-input formControlName="price"></lg-input>
-              </lg-control>
-
-              <lg-control label="Source">
-                  <lg-input formControlName="source"></lg-input>
-              </lg-control>
-
-              <lg-control label="Category">
-                  <lg-multiselect [resource]="'categories'"
-                                  formControlName="category_id"></lg-multiselect>
-              </lg-control>
-
-              <lg-button (click)="addProduct(value)">
-                  Add Product
+              <lg-button (click)="addCategory(value)">
+                  Add Category
               </lg-button>
           </lg-gap-column>
       </form>
@@ -57,7 +38,6 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ButtonComponent,
     TextareaComponent,
     GapRowComponent,
-    MultiselectComponent,
   ],
   styles: [
     `
@@ -70,10 +50,10 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     }
   ],
 })
-export class AddProductFormComponent
+export class AddCategoryFormComponent
   implements OnInit {
   constructor(
-    public _productsRepository: ProductsRepository,
+    public _categoryRepository: CategoryRepository,
     @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
     private _router: Router,
   ) {
@@ -81,30 +61,20 @@ export class AddProductFormComponent
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
-    amount: new FormControl(0, Validators.required),
-    price: new FormControl(0, Validators.required),
-    source: new FormControl(''),
-    category_id: new FormControl<any>(null, Validators.required),
   });
 
   get value() {
-    return this.form.value as ProductFormValue;
+    return this.form.value as CategoryFormValue;
   }
 
   ngOnInit() {
   }
 
-  addProduct(
-    values: ProductFormValue
+  addCategory(
+    values: CategoryFormValue
   ) {
-    this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+    this._categoryRepository.addCategory(values).then(() => {
       this._router.navigate(['/home']);
     });
-  }
-
-  ngAfterViewInit() {
-    this._selectResourcesService.load().then(resources => {
-      console.log({resources})
-    })
   }
 }

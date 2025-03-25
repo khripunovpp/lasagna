@@ -10,5 +10,19 @@ export const resources: Record<string, SelectResourcesConfig> = {
       name: 'indexDb',
       storeName: 'productsStore'
     }
-  }
+  },
+  categories: {
+    name: 'categories',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: 'categoryStore'
+    }
+  },
+  recepies: {
+    name: 'recepies',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: 'recipesStore'
+    },
+  },
 }
