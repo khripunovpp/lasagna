@@ -8,7 +8,7 @@ import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
-import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {Ingredient, Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {JsonPipe} from '@angular/common';
@@ -48,8 +48,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                               <span (click)="displayTextName.set(true)">Show text field</span>
                                           }
 
-                                          <lg-multiselect [resource]="'recepies'"
-                                                          formControlName="recipe_id"></lg-multiselect>
+                                          <!--                                          <lg-multiselect [resource]="'recepies'"-->
+                                          <!--                                                          formControlName="recipe_id"></lg-multiselect>-->
                                       </lg-gap-column>
                                   </lg-control>
 

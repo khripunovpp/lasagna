@@ -4,6 +4,7 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {RouterLink} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-recipes-list',
@@ -13,11 +14,19 @@ import {RouterLink} from '@angular/router';
           @for (recipe of recipes();track $index;let i = $index) {
               <lg-gap-row [center]="true">
                   <div class="expand">
-                      <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                      <a [routerLink]="'/calc-recipe/' + recipe.uuid">{{ recipe.name }}</a>
                   </div>
+                  <lg-button [style]="'primary'"
+                             [size]="'small'"
+                             [link]="'/edit-recipe/' + recipe.uuid"
+                             [flat]="true">
+                      Edit
+                  </lg-button>
                   <lg-button [style]="'danger'"
                              [size]="'small'"
-                             (click)="deleteRecipe(recipe)">Delete
+                             [icon]="true"
+                             (click)="deleteRecipe(recipe)">
+                      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
                   </lg-button>
               </lg-gap-row>
           } @empty {
@@ -30,6 +39,7 @@ import {RouterLink} from '@angular/router';
     GapRowComponent,
     ButtonComponent,
     RouterLink,
+    MatIcon,
   ],
   styles: [
     `:host {

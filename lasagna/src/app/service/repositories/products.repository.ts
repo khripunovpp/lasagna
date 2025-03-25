@@ -32,6 +32,18 @@ export class ProductsRepository {
   }
 
 
+  async getOne(
+    uuid: string,
+    onSuccess: (result: any) => void,
+  ) {
+    return new Promise<void>(async (resolve, reject) => {
+      await this._indexDbService.getOne('productsStore', uuid, (e)=>{
+        onSuccess(e);
+        resolve();
+      });
+    });
+  }
+
   getProducts(
     onSuccess: (result: any) => void,
   ) {

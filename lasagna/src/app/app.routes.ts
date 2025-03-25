@@ -1,4 +1,5 @@
 import {Routes} from '@angular/router';
+import {CalculateRecipeComponent} from './view/recipe/calculate/calculate-recipe.component';
 
 export const routes: Routes = [{
   path: '',
@@ -32,6 +33,11 @@ export const routes: Routes = [{
       path:'add-category',
       loadComponent: () => import('./view/category/add-category/add-category.component')
         .then(m => m.AddCategoryComponent)
+    },
+    {
+      path:'calc-recipe/:uuid',
+      loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')
+        .then(m => m.CalculateRecipeComponent)
     }
   ]
 }];
