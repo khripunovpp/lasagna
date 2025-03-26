@@ -1,16 +1,17 @@
-import {Component, ElementRef, input, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
-  selector: 'lg-textarea',
+  selector: 'lg-number-input',
   standalone: true,
   template: `
-      <textarea #input
-                (input)="onChangeInput($event)"
-                [placeholder]="placeholder()"
-                [value]="value"
-                class="textarea"
-                rows="5"></textarea>
+      <input #input
+             (input)="onChangeInput($event)"
+             [placeholder]="placeholder()"
+             [value]="value"
+             class="input"
+             type="number"
+      >
   `,
   styles: [
     `
@@ -19,8 +20,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         flex: 1;
       }
 
-      .textarea {
-
+      .input {
         flex: 1;
         border: none;
         border-radius: 12px;
@@ -30,11 +30,11 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         font-size: inherit;
       }
 
-      .textarea::placeholder {
+      .input::placeholder {
         color: var(--placeholder);
       }
 
-      .textarea:focus {
+      .input:focus {
         outline: none;
         box-shadow: var(--focus-shadow);
       }
@@ -46,13 +46,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: TextareaComponent,
+      useExisting: forwardRef(() => NumberInputComponent),
       multi: true
     }
   ]
 })
 
-export class TextareaComponent
+export class NumberInputComponent
   implements ControlValueAccessor {
   constructor() {
   }
@@ -68,29 +68,29 @@ export class TextareaComponent
   };
 
   writeValue(value: string): void {
-    this.changeValue(value);
+    this._change(value);
   }
 
   registerOnChange(fn: any) {
     this.onChange = fn;
   }
 
-  focus() {
-    this.input?.nativeElement.focus();
-  }
-
   registerOnTouched(fn: any) {
     this.onTouched = fn;
-  }
-
-  changeValue(value: string): void {
-    this.value = value;
-    this.onChange(this.value);
   }
 
   onChangeInput(
     event: Event
   ) {
-    this.changeValue((event.target as HTMLInputElement).value);
+    this._change((event.target as HTMLInputElement).value);
+  }
+
+  private _change(value: string) {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
+  focus() {
+    this.input?.nativeElement.focus();
   }
 }

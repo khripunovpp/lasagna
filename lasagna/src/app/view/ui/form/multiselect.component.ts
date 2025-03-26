@@ -1,4 +1,4 @@
-import {Component, input, OnInit, Optional, signal, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, input, OnInit, Optional, output, signal, ViewEncapsulation} from '@angular/core';
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
@@ -19,7 +19,7 @@ export interface MultiselectItem {
                      [compareWith]="compareWith"
                      [ngModel]="value"
                      (ngModelChange)="onChangeInput($event)"
-                     (change)="onChangeInput($event)">
+                     (change)="onChangeSelect($event)">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item.value }}
               </ng-template>
@@ -84,7 +84,7 @@ export interface MultiselectItem {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: MultiselectComponent,
+      useExisting: forwardRef(() => MultiselectComponent),
       multi: true
     }
   ],
@@ -99,7 +99,9 @@ export class MultiselectComponent
   }
 
   resource = input<string>('');
+  autoLoad = input<boolean>(false);
   loadedList = signal([]);
+  onSelected = output<unknown>();
   value?: unknown = null
   onChange: (value: unknown) => void = () => {
   };
@@ -142,8 +144,16 @@ export class MultiselectComponent
     this.change(value);
   }
 
+  onChangeSelect(value: unknown) {
+    this.change(value);
+    this.onSelected.emit(value);
+  }
+
   ngOnInit() {
     this._selectResourcesService.register(this.resource());
+    if (this.autoLoad()) {
+      this._selectResourcesService.load([this.resource()]);
+    }
     this._selectResourcesService.subscribe((registry) => {
       const items = registry.get(this.resource())?.list ?? [];
       this.loadedList.set(items as any);

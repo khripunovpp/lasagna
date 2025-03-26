@@ -18,8 +18,8 @@ export const resources: Record<string, SelectResourcesConfig> = {
       storeName: 'categoryStore'
     }
   },
-  recepies: {
-    name: 'recepies',
+  recipes: {
+    name: 'recipes',
     loaderConfig: {
       name: 'indexDb',
       storeName: 'recipesStore'

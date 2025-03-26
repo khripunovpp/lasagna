@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, computed, input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -6,6 +6,7 @@ import {NgClass} from '@angular/common';
   standalone: true,
   template: `
       <div [ngClass]="size()"
+           [style.align-items]="alignItems()"
            class="gap-column">
           <ng-content></ng-content>
       </div>
@@ -49,4 +50,22 @@ export class GapColumnComponent {
     'medium' |
     'tiny'
   >('default');
+  position = input<
+    'start' |
+    'center' |
+    'end'|
+    'stretch'
+  >('stretch');
+  alignItems = computed(() => {
+    const position = this.position();
+    if (position === 'start') {
+      return 'flex-start';
+    } else if (position === 'center') {
+      return 'center';
+    } else if (position === 'end') {
+      return 'flex-end';
+    } else {
+      return 'stretch';
+    }
+  });
 }

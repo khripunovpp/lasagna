@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {ExpandDirective} from './view/directives/expand.directive';
 
 @Component({
   selector: 'app-root',

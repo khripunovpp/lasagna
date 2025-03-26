@@ -12,6 +12,7 @@ import {SelectResourcesService} from '../../../service/services/select-resources
 import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
+import {NumberInputComponent} from '../../ui/form/number-input.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -26,11 +27,11 @@ export type ProductFormValue = Omit<Product, 'uuid'>
               </lg-control>
 
               <lg-control label="Amount">
-                  <lg-input formControlName="amount"></lg-input>
+                  <lg-number-input formControlName="amount"></lg-number-input>
               </lg-control>
 
               <lg-control label="Price per unit">
-                  <lg-input formControlName="price"></lg-input>
+                  <lg-number-input formControlName="price"></lg-number-input>
               </lg-control>
 
               <lg-control label="Source">
@@ -58,6 +59,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     TextareaComponent,
     GapRowComponent,
     MultiselectComponent,
+    NumberInputComponent,
   ],
   styles: [
     `

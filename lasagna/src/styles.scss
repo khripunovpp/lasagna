@@ -3,7 +3,8 @@
 :root {
 
   --text-color: #2c2c2c;
-  --focus-shadow: 0 0 0 2px #ff7e67;
+  --focus-shadow: 0 0 0 2px var(--active-color);
+  --active-color: #ff7e67;
 }
 
 body {
@@ -30,4 +31,13 @@ form {
 
 html, body {
   height: 100%;
+}
+
+.text-active {
+  color: var(--active-color);
+}
+
+
+.text-bold {
+  font-weight: bold;
 }

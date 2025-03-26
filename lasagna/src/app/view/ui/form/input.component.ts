@@ -1,15 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'lg-input',
   standalone: true,
   template: `
-      <input class="input"
-             [ngModel]="value"
-             (ngModelChange)="onChangeInput($event)"
+      <input (input)="onChangeInput($event)"
+             (change)="onInputChanged.emit(value)"
+             [placeholder]="placeholder()"
+             [value]="value"
+             class="input"
+             #input
              type="text"
-             placeholder="Enter text here">
+      >
   `,
   styles: [
     `
@@ -44,7 +47,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: InputComponent,
+      useExisting: forwardRef(() => InputComponent),
       multi: true
     }
   ]
@@ -55,15 +58,17 @@ export class InputComponent
   constructor() {
   }
 
+  @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
+  placeholder = input('Enter text here');
+  onInputChanged = output<string>();
   onChange: (value: string) => void = () => {
   };
   onTouched: () => void = () => {
   };
 
   writeValue(value: string): void {
-    this.value = value;
-    this.onChange(this.value);
+    this._change(value);
   }
 
   registerOnChange(fn: any) {
@@ -74,7 +79,18 @@ export class InputComponent
     this.onTouched = fn;
   }
 
-  onChangeInput(value: string) {
-    this.onChange(value);
+  onChangeInput(
+    event: Event
+  ) {
+    this._change((event.target as HTMLInputElement).value);
+  }
+
+  private _change(value: string) {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
+  focus() {
+    this.input?.nativeElement.focus();
   }
 }
