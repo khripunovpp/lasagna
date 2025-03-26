@@ -6,12 +6,11 @@ import {ControlGroupComponent} from '../../ui/form/control-group.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {debounceTime} from 'rxjs';
 import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {JsonPipe, NgClass} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {Router} from '@angular/router';
 import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
@@ -27,8 +26,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
       <form [formGroup]="form">
           <lg-gap-column [position]="'start'">
               <lg-control label="Name" lgExpand>
-                  <lg-input [placeholder]="''"
-                            (onInputChanged)="desc.focus()"
+                  <lg-input (onInputChanged)="desc.focus()"
+                            [placeholder]="''"
                             formControlName="name"></lg-input>
               </lg-control>
 
@@ -37,9 +36,12 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
               </lg-control>
 
               <lg-control-group label="Ingredients" lgExpand>
-                  <lg-gap-column>
-                      <lg-gap-column formArrayName="ingredients">
-                          @for (control of ingredients.controls;track control.value.product_id?.id;let i = $index) {
+                  <lg-gap-column [position]="'start'">
+                      <lg-gap-column formArrayName="ingredients" lgExpand>
+                          @for (control of ingredients.controls;track (control.value.product_id?.id
+                                  || control.value.name
+                                  || control.value.amount
+                          );let i = $index) {
                               <ng-container [formGroupName]="i">
                                   <lg-controls-row>
                                       @if (textFieldState()[i]) {
@@ -90,7 +92,10 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                       }
 
                                       <lg-control label="Amount">
-                                          <lg-number-input #amount formControlName="amount"></lg-number-input>
+                                          <lg-number-input #amount
+                                                           (onKeydown)="addLast()"
+                                                           [placeholder]="''"
+                                                           formControlName="amount"></lg-number-input>
                                       </lg-control>
 
                                       <ng-container ngProjectAs="rowActions">
@@ -134,9 +139,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     GapColumnComponent,
     ButtonComponent,
     TextareaComponent,
-    GapRowComponent,
     MultiselectComponent,
-    JsonPipe,
     NumberInputComponent,
     ControlsRowComponent,
     ExpandDirective,
@@ -203,6 +206,14 @@ export class AddRecipeFormComponent
   private get _values() {
     const values = this.form.value;
     return flaterizeObjectWithUuid<RecipeDbValue>(values);
+  }
+
+  addLast() {
+    const lastControl = this.ingredients.at(this.ingredients.length - 1);
+    // if last control is empty, skip, if not, add new control
+    if (lastControl.value.name || lastControl.value.amount || lastControl.value.product_id) {
+      this.addIngredient();
+    }
   }
 
   ngOnInit() {
@@ -302,7 +313,7 @@ export class AddRecipeFormComponent
     console.log({ingredient})
     return new FormGroup({
       name: new FormControl(ingredient?.name),
-      amount: new FormControl(ingredient?.amount.toString() ?? '0', Validators.required),
+      amount: new FormControl(ingredient?.amount.toString() ?? null, Validators.required),
       product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null, Validators.required),
       recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null, Validators.required),
     });

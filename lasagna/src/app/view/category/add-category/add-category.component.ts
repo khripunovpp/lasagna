@@ -4,7 +4,6 @@ import {CardComponent} from '../../ui/card/card.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddCategoryFormComponent} from './add-category-form.component';
 import {ActivatedRoute} from '@angular/router';
-import {AddRecipeFormComponent} from '../../recipe/add-recipe/add-recipe-form.component';
 
 @Component({
   selector: 'lg-add-category',
@@ -14,7 +13,6 @@ import {AddRecipeFormComponent} from '../../recipe/add-recipe/add-recipe-form.co
     CardComponent,
     TitleComponent,
     AddCategoryFormComponent,
-    AddRecipeFormComponent
   ],
   template: `
       <lg-container>

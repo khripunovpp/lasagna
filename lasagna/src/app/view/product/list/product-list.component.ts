@@ -5,7 +5,6 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ProductsRepository} from '../../../service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'lg-product-list',
@@ -41,7 +40,6 @@ import {RouterLink} from '@angular/router';
     GapRowComponent,
     ButtonComponent,
     MatIcon,
-    RouterLink,
   ],
   styles: [
     `:host {

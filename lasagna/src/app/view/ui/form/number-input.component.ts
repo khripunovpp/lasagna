@@ -1,4 +1,4 @@
-import {Component, ElementRef, forwardRef, input, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -7,6 +7,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   template: `
       <input #input
              (input)="onChangeInput($event)"
+             (keydown)="onKeydown.emit()"
              [placeholder]="placeholder()"
              [value]="value"
              class="input"
@@ -60,6 +61,7 @@ export class NumberInputComponent
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');
+  onKeydown = output();
 
   onChange: (value: string) => void = () => {
   };

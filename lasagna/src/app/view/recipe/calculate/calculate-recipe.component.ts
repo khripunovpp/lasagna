@@ -2,9 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CardComponent} from '../../ui/card/card.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
-import {JsonPipe} from '@angular/common';
 import {TableCardComponent} from '../../ui/card/table-card.component';
 
 @Component({
@@ -13,8 +11,6 @@ import {TableCardComponent} from '../../ui/card/table-card.component';
   imports: [
     ContainerComponent,
     TitleComponent,
-    CardComponent,
-    JsonPipe,
     TableCardComponent
   ],
   template: `

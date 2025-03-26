@@ -2,11 +2,8 @@ import {Component, effect, Inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
-import {ControlGroupComponent} from '../../ui/form/control-group.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {TextareaComponent} from '../../ui/form/textarea.component';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
 import {Router} from '@angular/router';
@@ -40,11 +37,8 @@ export type CategoryFormValue = Omit<Category, 'uuid'>
     ReactiveFormsModule,
     InputComponent,
     ControlComponent,
-    ControlGroupComponent,
     GapColumnComponent,
     ButtonComponent,
-    TextareaComponent,
-    GapRowComponent,
   ],
   styles: [
     `

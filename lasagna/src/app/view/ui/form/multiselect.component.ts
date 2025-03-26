@@ -32,7 +32,6 @@ export interface MultiselectItem {
   imports: [
     NgSelectComponent,
     FormsModule,
-    JsonPipe,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective
   ],
