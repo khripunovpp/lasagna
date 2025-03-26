@@ -29,6 +29,12 @@ export const routes: Routes = [{
       loadComponent: () => import('./view/product/add-product/add-product.component')
         .then(m => m.AddProductComponent)
     },
+
+    {
+      path:'edit-product/:uuid',
+      loadComponent: () => import('./view/product/add-product/add-product.component')
+        .then(m => m.AddProductComponent)
+    },
     {
       path:'add-category',
       loadComponent: () => import('./view/category/add-category/add-category.component')

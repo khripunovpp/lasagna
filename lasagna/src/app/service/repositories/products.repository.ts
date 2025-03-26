@@ -37,7 +37,7 @@ export class ProductsRepository {
     onSuccess: (result: any) => void,
   ) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.getOne('productsStore', uuid, (e)=>{
+      await this._indexDbService.getOne('productsStore', uuid, (e) => {
         onSuccess(e);
         resolve();
       });
@@ -54,6 +54,14 @@ export class ProductsRepository {
       request.onsuccess = (event: any) => {
         onSuccess(event.target.result);
       }
+    });
+  }
+
+
+  editProduct(uuid: string, product: ProductDbValue) {
+    return new Promise<void>(async (resolve, reject) => {
+      await this._indexDbService.replaceData('productsStore', uuid, product);
+      resolve();
     });
   }
 

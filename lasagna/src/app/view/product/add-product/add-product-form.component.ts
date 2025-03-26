@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, effect, Inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -43,9 +43,15 @@ export type ProductFormValue = Omit<Product, 'uuid'>
                                   formControlName="category_id"></lg-multiselect>
               </lg-control>
 
-              <lg-button (click)="addProduct(value)">
-                  Add Product
-              </lg-button>
+              @if (uuid()) {
+                  <lg-button (click)="editProduct(value)">
+                      Edit Product
+                  </lg-button>
+              } @else {
+                  <lg-button (click)="addProduct(value)">
+                      Add Product
+                  </lg-button>
+              }
           </lg-gap-column>
       </form>
   `,
@@ -89,6 +95,18 @@ export class AddProductFormComponent
     category_id: new FormControl<any>(null, Validators.required),
   });
 
+
+  uuid = input<string>('');
+  private uuidEffect = effect(() => {
+    if (!this.uuid()) {
+      return;
+    }
+    this._productsRepository.getOne(this.uuid(), product => {
+      console.log(product)
+      this.form.reset(product);
+    });
+  });
+
   get value() {
     return this.form.value as ProductFormValue;
   }
@@ -100,6 +118,14 @@ export class AddProductFormComponent
     values: ProductFormValue
   ) {
     this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+      this._router.navigate(['/home']);
+    });
+  }
+
+  editProduct(
+    values: ProductFormValue
+  ) {
+    this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this._router.navigate(['/home']);
     });
   }
