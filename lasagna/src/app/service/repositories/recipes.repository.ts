@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
-import {RecipeFormValue} from '../../view/recipe/add-recipe/add-recipe-form.component';
 import {Product} from './products.repository';
 
 export interface Ingredient {
@@ -56,12 +55,19 @@ export class RecipesRepository {
   }
 
   async getOne(
-    uuid: string,
+    uuid: Recipe | string | undefined,
     onSuccess: (result: any) => void,
   ) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.getOne('recipesStore', uuid, onSuccess);
-      resolve();
+      if (!uuid) {
+        resolve();
+        return;
+      }
+      uuid = (uuid as Recipe).uuid || uuid as string;
+      await this._indexDbService.getOne('recipesStore', uuid, (result: any) => {
+        onSuccess(result);
+        resolve();
+      });
     });
   }
 

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
 import {Category} from './category.repository';
+import {Recipe} from './recipes.repository';
 
 export interface Product {
   uuid: string
@@ -31,14 +32,18 @@ export class ProductsRepository {
     });
   }
 
-
   async getOne(
-    uuid: string,
+    uuid: Product | string | undefined,
     onSuccess: (result: any) => void,
   ) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.getOne('productsStore', uuid, (e) => {
-        onSuccess(e);
+      if (!uuid) {
+        resolve();
+        return;
+      }
+      uuid = (uuid as Product).uuid || uuid as string;
+      await this._indexDbService.getOne('productsStore', uuid, (result: any) => {
+        onSuccess(result);
         resolve();
       });
     });

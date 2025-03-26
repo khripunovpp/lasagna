@@ -22,3 +22,16 @@ export const flaterizeObjectWithUuid = <T>(value: any): T => {
   }
   return out as T;
 }
+
+// arrays includ
+export const clearEmpties = (value: any) => {
+  const out = {} as any;
+  for (const key in value) {
+    if (Array.isArray(value[key])) {
+      out[key] = value[key].filter((item: any) => item != null).map(clearEmpties);
+    } else if (value[key] != null) {
+      out[key] = value[key];
+    }
+  }
+  return out;
+}

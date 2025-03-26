@@ -12,7 +12,7 @@ import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {NgClass} from '@angular/common';
 import {Router} from '@angular/router';
-import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
+import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ControlsRowComponent} from '../../ui/form/controls-row.component';
 import {ExpandDirective} from '../../directives/expand.directive';
@@ -187,8 +187,15 @@ export class AddRecipeFormComponent
       });
       (this.form.get('ingredients') as FormArray).clear();
 
-      recipe.ingredients.forEach((ingredient: Recipe['ingredients'][number]) => {
+      recipe.ingredients.forEach((ingredient: Recipe['ingredients'][number], index: number) => {
         this.ingredients.push(this._getIngredientGroup(ingredient));
+        //openRecipeField
+        if (ingredient.recipe_id) {
+          this.openRecipeField(index);
+        }
+        if (ingredient.name) {
+          this.openTextField(index);
+        }
       })
 
       this.form.updateValueAndValidity();
@@ -205,7 +212,7 @@ export class AddRecipeFormComponent
 
   private get _values() {
     const values = this.form.value;
-    return flaterizeObjectWithUuid<RecipeDbValue>(values);
+    return clearEmpties(flaterizeObjectWithUuid<RecipeDbValue>(values));
   }
 
   addLast() {
