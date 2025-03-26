@@ -40,6 +40,12 @@ export const routes: Routes = [{
       loadComponent: () => import('./view/category/add-category/add-category.component')
         .then(m => m.AddCategoryComponent)
     },
+
+    {
+      path:'edit-category/:uuid',
+      loadComponent: () => import('./view/category/add-category/add-category.component')
+        .then(m => m.AddCategoryComponent)
+    },
     {
       path:'calc-recipe/:uuid',
       loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')

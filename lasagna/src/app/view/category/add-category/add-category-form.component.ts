@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, effect, Inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -23,9 +23,16 @@ export type CategoryFormValue = Omit<Category, 'uuid'>
                   <lg-input formControlName="name"></lg-input>
               </lg-control>
 
-              <lg-button (click)="addCategory(value)">
-                  Add Category
-              </lg-button>
+
+              @if (uuid()) {
+                  <lg-button (click)="editCategory(value)">
+                      Edit Category
+                  </lg-button>
+              } @else {
+                  <lg-button (click)="addCategory(value)">
+                      Add Category
+                  </lg-button>
+              }
           </lg-gap-column>
       </form>
   `,
@@ -62,6 +69,16 @@ export class AddCategoryFormComponent
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
+  uuid = input<string>('');
+  private uuidEffect = effect(() => {
+    if (!this.uuid()) {
+      return;
+    }
+    this._categoryRepository.getOne(this.uuid(), category => {
+      this.form.reset(category);
+      this.form.updateValueAndValidity();
+    });
+  });
 
   get value() {
     return this.form.value as CategoryFormValue;
@@ -74,6 +91,14 @@ export class AddCategoryFormComponent
     values: CategoryFormValue
   ) {
     this._categoryRepository.addCategory(values).then(() => {
+      this._router.navigate(['/home']);
+    });
+  }
+
+  editCategory(
+    values: CategoryFormValue
+  ) {
+    this._categoryRepository.editCategory(this.uuid(), values).then(() => {
       this._router.navigate(['/home']);
     });
   }

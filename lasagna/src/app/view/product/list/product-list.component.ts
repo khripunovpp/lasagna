@@ -13,15 +13,6 @@ import {RouterLink} from '@angular/router';
   template: `
       <lg-gap-column>
           @for (product of products();track $index;let i = $index) {
-              <!--              <lg-gap-row [center]="true">-->
-                      <!--                  <div class="expand">{{ product.name }}</div>-->
-                      <!--                  <lg-button [style]="'danger'"-->
-                      <!--                             [size]="'small'"-->
-                      <!--                             (click)="deleteProduct(product)">-->
-                      <!--                      Delete-->
-                      <!--                  </lg-button>-->
-                      <!--              </lg-gap-row>-->
-
               <lg-gap-row [center]="true">
                   <div class="expand">
                       {{ product.name }}

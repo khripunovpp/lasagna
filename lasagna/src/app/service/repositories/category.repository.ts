@@ -23,6 +23,16 @@ export class CategoryRepository {
     });
   }
 
+  async getOne(
+    uuid: string,
+    onSuccess: (result: any) => void,
+  ) {
+    return new Promise<void>(async (resolve, reject) => {
+      await this._indexDbService.getOne('categoryStore', uuid, onSuccess);
+      resolve();
+    });
+  }
+
 
   getCategory(
     onSuccess: (result: any) => void,
@@ -37,6 +47,12 @@ export class CategoryRepository {
     });
   }
 
+  editCategory(uuid: string, category: CategoryFormValue) {
+    return new Promise<void>(async (resolve, reject) => {
+      await this._indexDbService.replaceData('categoryStore', uuid, category);
+      resolve();
+    })
+  }
   deleteCategory(uuid: string, onSuccess: () => void) {
     this._indexDbService.openDb(async db => {
       const transaction = db.transaction('categoryStore', 'readwrite');

@@ -3,6 +3,7 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-category-list',
@@ -11,11 +12,21 @@ import {Category, CategoryRepository} from '../../../service/repositories/catego
       <lg-gap-column>
           @for (category of categories();track $index;let i = $index) {
               <lg-gap-row [center]="true">
-                  <div class="expand">{{ category.name }}</div>
+                  <div class="expand">
+                      {{ category.name }}
+                  </div>
+                  <lg-button [style]="'primary'"
+                             [size]="'small'"
+                             [link]="'/edit-category/' + category.uuid"
+                             [flat]="true">
+                      Edit
+                  </lg-button>
                   <lg-button [style]="'danger'"
                              [size]="'small'"
+                             [icon]="true"
                              (click)="deleteCategory(category)">
-                      Delete
+                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                fontIcon="close"></mat-icon>
                   </lg-button>
               </lg-gap-row>
           } @empty {
@@ -27,6 +38,7 @@ import {Category, CategoryRepository} from '../../../service/repositories/catego
     GapColumnComponent,
     GapRowComponent,
     ButtonComponent,
+    MatIcon,
   ],
   styles: [
     `:host {
