@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'lg-card',
   standalone: true,
   template: `
-      <div class="card">
+      <div [class.flat]="flat()"
+           class="card">
           <ng-content></ng-content>
       </div>
   `,
@@ -22,10 +23,15 @@ import {Component} from '@angular/core';
         margin: 10px;
         width: 100%;
       }
+
+      .card.flat {
+        padding: 0;
+      }
     `
   ]
 })
 export class CardComponent {
   constructor() {
   }
+  flat = input(false);
 }

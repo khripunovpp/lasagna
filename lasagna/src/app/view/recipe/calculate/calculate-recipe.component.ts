@@ -5,6 +5,7 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
 import {JsonPipe} from '@angular/common';
+import {TableCardComponent} from '../../ui/card/table-card.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -13,28 +14,41 @@ import {JsonPipe} from '@angular/common';
     ContainerComponent,
     TitleComponent,
     CardComponent,
-    JsonPipe
+    JsonPipe,
+    TableCardComponent
   ],
   template: `
       <lg-container>
           <lg-title>Calculate Recipe</lg-title>
-          <lg-card>
+          <lg-table-card>
               @if (result()) {
                   <table>
-                      @for (row of result()?.result;track $index;let i = $index) {
-                          <tr>
-                              <td>{{ row.name }}</td>
-                              <td>{{ row.amount }}</td>
-                              <td>{{ row.unit }}</td>
-                              <td>{{ row.price_per_gram }}</td>
-                              <td>{{ row.total }}</td>
-                          </tr>
-                      }
+                      <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Amount</th>
+                          <th>Unit</th>
+                          <th>Price per gram</th>
+                          <th>Total</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          @for (row of result()?.result;track $index;let i = $index) {
+                              <tr>
+                                  <td>{{ row.name }}</td>
+                                  <td>{{ row.amount }}</td>
+                                  <td>{{ row.unit }}</td>
+                                  <td>{{ row.price_per_gram }}</td>
+                                  <td>{{ row.total }}</td>
+                              </tr>
+                          }
+                      </tbody>
+
                   </table>
               } @else {
                   <div>Loading...</div>
               }
-          </lg-card>
+          </lg-table-card>
       </lg-container>
   `
 })
