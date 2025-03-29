@@ -5,14 +5,19 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'lg-number-input',
   standalone: true,
   template: `
-      <input #input
-             (input)="onChangeInput($event)"
-             (keydown)="onKeydown.emit()"
-             [placeholder]="placeholder()"
-             [value]="value"
-             class="input"
-             type="tel"
-      >
+      <div class="lg-number-input">
+          <input #input
+                 (input)="onChangeInput($event)"
+                 (keydown)="onKeydown.emit()"
+                 [placeholder]="placeholder()"
+                 [value]="value"
+                 class="input"
+                 type="tel">
+          <div class="lg-number-input__after">
+              <ng-content select="after"></ng-content>
+          </div>
+      </div>
+
   `,
   styles: [
     `
@@ -21,14 +26,30 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         flex: 1;
       }
 
+
+      .lg-number-input__after {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+      }
+
+      .lg-number-input {
+        display: flex;
+        flex: 1;
+        background-color: var(--control-bg);
+        border-radius: 12px;
+        gap: 16px;
+      }
+
       .input {
         flex: 1;
         border: none;
-        border-radius: 12px;
         padding: 16px;
-        background-color: var(--control-bg);
         font-family: inherit;
         font-size: inherit;
+        background-color: transparent;
+        border-radius: 12px;
       }
 
       .input::placeholder {
