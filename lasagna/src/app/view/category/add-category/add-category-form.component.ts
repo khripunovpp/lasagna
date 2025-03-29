@@ -85,7 +85,7 @@ export class AddCategoryFormComponent
     values: CategoryFormValue
   ) {
     this._categoryRepository.addCategory(values).then(() => {
-      this._router.navigate(['/home']);
+      this._router.navigate(['/categories']);
     });
   }
 
@@ -93,7 +93,7 @@ export class AddCategoryFormComponent
     values: CategoryFormValue
   ) {
     this._categoryRepository.editCategory(this.uuid(), values).then(() => {
-      this._router.navigate(['/home']);
+      this._router.navigate(['/categories']);
     });
   }
 }
