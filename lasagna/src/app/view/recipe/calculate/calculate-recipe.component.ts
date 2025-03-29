@@ -4,7 +4,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
 import {TableCardComponent} from '../../ui/card/table-card.component';
-import {NgClass} from '@angular/common';
+import {DecimalPipe, NgClass} from '@angular/common';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 
@@ -17,7 +17,8 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
     TableCardComponent,
     NgClass,
     ButtonComponent,
-    GapRowComponent
+    GapRowComponent,
+    DecimalPipe
   ],
   template: `
       <lg-container>
@@ -40,6 +41,25 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                   Back to list
               </lg-button>
           </lg-gap-row>
+
+          @if (result()?.total) {
+              <lg-gap-row [center]="true">
+                  @if (result()?.recipe?.outcome_unit) {
+                      <div>Calculation
+                          outcome: {{ result()?.recipe?.outcome_amount }} {{ result()?.recipe?.outcome_unit }}
+                      </div>
+
+                      <div>one portion
+                          costs: {{ (result()?.total || 1) / (result()?.recipe?.outcome_amount || 1) | number: '1.2-2' }}
+                      </div>
+                  } @else {
+                      <div>Calculation outcome: {{ result()?.totalWeight }} grams</div>
+
+                      <div>costs: {{ result()?.total | number: '1.2-2' }}</div>
+
+                  }
+              </lg-gap-row>
+          }
 
           <lg-table-card>
               @if (result()) {
@@ -64,7 +84,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                       </thead>
                       <tbody>
                           @for (row of result()?.result;track $index;let i = $index) {
-                              <tr>
+                              <tr [ngClass]="row.type">
                                   <td>{{ i + 1 }}</td>
                                   <td><span [ngClass]="'indent-' + row.indent">{{ row.name }}</span></td>
                                   <td>{{ row.amount }}</td>

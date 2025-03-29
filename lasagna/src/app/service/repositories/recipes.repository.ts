@@ -16,6 +16,8 @@ export interface Recipe {
   description: string
   ingredients: Ingredient[]
   steps: string[]
+  outcome_amount: number
+  outcome_unit: string
 }
 
 export interface RecipeDbValue {
