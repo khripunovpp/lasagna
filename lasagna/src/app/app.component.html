@@ -1,12 +1,21 @@
 <main class="app">
   <lg-gap-column>
     <lg-container>
-           <lg-button [flat]="true"
-                         [link]="'/home'"
-                         [size]="'small'"
-                         [style]="'primary'">
-                  My store
-              </lg-button>
+      <lg-gap-row>
+        <lg-button [flat]="true"
+                   [link]="'/home'"
+                   [size]="'small'"
+                   [style]="'primary'">
+          My store
+        </lg-button>
+
+        <lg-button [flat]="true"
+                   [link]="'/widgets'"
+                   [size]="'small'"
+                   [style]="'info'">
+          Widgets
+        </lg-button>
+      </lg-gap-row>
     </lg-container>
 
     <div>

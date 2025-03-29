@@ -5,14 +5,16 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'lg-input',
   standalone: true,
   template: `
-      <input (input)="onChangeInput($event)"
-             (change)="onInputChanged.emit(value)"
-             [placeholder]="placeholder()"
-             [value]="value"
-             class="input"
-             #input
-             type="text"
-      >
+      <div class="lg-input"
+           [class.contrast]="theme() === 'contrast'">
+          <input #input
+                 (change)="onInputChanged.emit(value)"
+                 (input)="onChangeInput($event)"
+                 [placeholder]="placeholder()"
+                 [value]="value"
+                 class="input"
+                 type="text">
+      </div>
   `,
   styles: [
     `
@@ -21,14 +23,22 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         flex: 1;
       }
 
+      .lg-input {
+        display: flex;
+        flex: 1;
+        background-color: var(--control-bg);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+
       .input {
         flex: 1;
         border: none;
-        border-radius: 12px;
         padding: 16px;
-        background-color: var(--control-bg);
         font-family: inherit;
         font-size: inherit;
+        background-color: transparent;
       }
 
       .input::placeholder {
@@ -62,6 +72,9 @@ export class InputComponent
   value: string = '';
   placeholder = input('Enter text here');
   onInputChanged = output<string>();
+  theme = input<
+    'default' | 'contrast'
+  >('default');
   onChange: (value: string) => void = () => {
   };
   onTouched: () => void = () => {
