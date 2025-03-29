@@ -32,6 +32,13 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                          [style]="'primary'">
                   Edit
               </lg-button>
+
+              <lg-button [flat]="true"
+                         [link]="'/recipes'"
+                         [size]="'small'"
+                         [style]="'warning'">
+                  Back to list
+              </lg-button>
           </lg-gap-row>
 
           <lg-table-card>
