@@ -19,9 +19,9 @@ import {Component} from '@angular/core';
         display: flex;
         flex-direction: column;
         margin: 0 auto;
-        width: 100vw;
+        width: 100%;
         max-width: 1920px;
-        gap: 16px;
+        gap: 32px;
       }
     `
   ]

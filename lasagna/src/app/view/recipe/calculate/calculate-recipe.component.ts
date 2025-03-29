@@ -4,6 +4,9 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
 import {TableCardComponent} from '../../ui/card/table-card.component';
+import {NgClass} from '@angular/common';
+import {ButtonComponent} from '../../ui/layout/button.component';
+import {GapRowComponent} from '../../ui/layout/gap-row.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -11,16 +14,40 @@ import {TableCardComponent} from '../../ui/card/table-card.component';
   imports: [
     ContainerComponent,
     TitleComponent,
-    TableCardComponent
+    TableCardComponent,
+    NgClass,
+    ButtonComponent,
+    GapRowComponent
   ],
   template: `
       <lg-container>
-          <lg-title>Calculate Recipe</lg-title>
+          <lg-gap-row [center]="true">
+              <lg-title>
+                  {{ result()?.recipe?.name }} cost calculation
+              </lg-title>
+
+              <lg-button [flat]="true"
+                         [link]="'/edit-recipe/' + result()?.recipe?.uuid"
+                         [size]="'small'"
+                         [style]="'primary'">
+                  Edit
+              </lg-button>
+          </lg-gap-row>
+
           <lg-table-card>
               @if (result()) {
                   <table>
+                      <colgroup>
+                          <col span="1" style="width: 1%;">
+                          <col span="1" style="width: 20%;">
+                          <col span="1" style="width: 5%;">
+                          <col span="1" style="width: 3%;">
+                          <col span="1" style="width: 5%;">
+                          <col span="1" style="width: 7%;">
+                      </colgroup>
                       <thead>
                       <tr>
+                          <th>#</th>
                           <th>Name</th>
                           <th>Amount</th>
                           <th>Unit</th>
@@ -31,7 +58,8 @@ import {TableCardComponent} from '../../ui/card/table-card.component';
                       <tbody>
                           @for (row of result()?.result;track $index;let i = $index) {
                               <tr>
-                                  <td>{{ row.name }}</td>
+                                  <td>{{ i + 1 }}</td>
+                                  <td><span [ngClass]="'indent-' + row.indent">{{ row.name }}</span></td>
                                   <td>{{ row.amount }}</td>
                                   <td>{{ row.unit }}</td>
                                   <td>{{ row.price_per_gram }}</td>

@@ -20,7 +20,6 @@ import {Component, input} from '@angular/core';
         background-color: #fff;
         padding: 24px;
         border-radius: 32px;
-        margin: 10px;
         width: 100%;
       }
 
