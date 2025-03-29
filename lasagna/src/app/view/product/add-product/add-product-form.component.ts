@@ -111,7 +111,7 @@ export class AddProductFormComponent
     values: ProductFormValue
   ) {
     this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this._router.navigate(['/home']);
+      this._router.navigate(['/products']);
     });
   }
 
@@ -119,7 +119,7 @@ export class AddProductFormComponent
     values: ProductFormValue
   ) {
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this._router.navigate(['/home']);
+      this._router.navigate(['/products']);
     });
   }
 

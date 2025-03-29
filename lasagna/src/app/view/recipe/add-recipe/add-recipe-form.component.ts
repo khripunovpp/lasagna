@@ -256,7 +256,7 @@ export class AddRecipeFormComponent
   ) {
     this._recipesRepository.addRecipe(this._values).then(() => {
 
-      this._router.navigate(['/home']);
+      this._router.navigate(['/recipes']);
     });
   }
 
@@ -265,7 +265,7 @@ export class AddRecipeFormComponent
   ) {
     this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
 
-      this._router.navigate(['/home']);
+      this._router.navigate(['/recipes']);
     });
   }
 
