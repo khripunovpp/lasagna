@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Ingredient, Recipe, RecipesRepository} from '../repositories/recipes.repository';
 import {ProductsRepository} from '../repositories/products.repository';
+import {parseFloatingNumber} from '../../helpers/number.helper';
 
 export interface Calculation {
   recipe?: Recipe
@@ -47,7 +48,7 @@ export class CalculateRecipeService {
         totalAmount += ingredientTotal || 0;
 
         totalWeight = recipe.ingredients.reduce((acc: number, ingredient: Ingredient) => {
-          return acc + parseInt(ingredient.amount as any);
+          return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
         }, 0);
 
         table.push(...ingredientTable);
@@ -79,7 +80,7 @@ export class CalculateRecipeService {
 
       await this._recipeRepository.getOne(ingredient.recipe_id, async recipe => {
         const recipeTotalAmount = recipe.ingredients.reduce((acc: number, ingredient: Ingredient) => {
-          return acc + parseInt(ingredient.amount as any);
+          return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
         }, 0);
         const scaleKeff = ingredientAmount / recipeTotalAmount;
 
@@ -140,8 +141,8 @@ export class CalculateRecipeService {
         const product = await this._productRepository.getOne(ingredient.product_id, async product => {
           if (!product?.price || !product?.amount) return;
 
-          const pricePerGram = product.price / product.amount;
-          const total = pricePerGram * ingredient.amount;
+          const pricePerGram = (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
+          const total = pricePerGram * (parseFloatingNumber(ingredient.amount) || 1);
 
           table.push(this._makeRow({
             name: product.name,

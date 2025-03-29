@@ -1,5 +1,4 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {Recipe} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -9,6 +8,7 @@ import {CardComponent} from '../../ui/card/card.component';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
+import {parseFloatingNumber} from '../../../helpers/number.helper';
 
 @Component({
   selector: 'lg-product-list',
@@ -86,7 +86,7 @@ export class ProductListComponent
   products = signal<Product[]>([])
 
   getPricePerGram(product: Product) {
-    return product.price / product.amount;
+    return (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
   }
 
   deleteProduct(
