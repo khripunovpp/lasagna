@@ -85,7 +85,11 @@ import {RouterLink} from '@angular/router';
       }
 
       .button.info {
-        background-color: #b6f1fa;
+        background-color: #2531c2;
+
+        &.flat {
+          color: #2531c2;
+        }
       }
 
       .button.small {

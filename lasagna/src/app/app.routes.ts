@@ -68,6 +68,14 @@ export const routes: Routes = [{
       path: 'categories',
       loadComponent: () => import('./view/category/list/category-list.component')
         .then(m => m.CategoryListComponent)
+    },
+
+
+
+    {
+      path: 'widgets',
+      loadComponent: () => import('./view/widgets/widgets-page/widgets-page.component')
+        .then(m => m.WidgetsPageComponent)
     }
   ]
 }];
