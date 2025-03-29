@@ -6,6 +6,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
+import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
 
 @Component({
   selector: 'lg-widgets-page',
@@ -21,6 +22,9 @@ import {CardComponent} from '../../ui/card/card.component';
           <lg-card>
               <lg-eggs-widget></lg-eggs-widget>
           </lg-card>
+<!--          <lg-card>-->
+<!--              <lg-jelly-widget></lg-jelly-widget>-->
+<!--          </lg-card>-->
       </lg-container>
 
   `,
@@ -31,7 +35,8 @@ import {CardComponent} from '../../ui/card/card.component';
     ContainerComponent,
     GapRowComponent,
     TitleComponent,
-    CardComponent
+    CardComponent,
+    JellyWidgetComponent
   ]
 })
 export class WidgetsPageComponent {
