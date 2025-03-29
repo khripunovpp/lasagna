@@ -23,3 +23,56 @@
     </div>
   </lg-gap-column>
 </main>
+
+<script>
+  (function ($) {
+    $(function () {
+      setTimeout(function () {
+        MultiformScripts.initRangeSlider($('#wahtmlcontrol_fields_field_45_3-1 input'), {
+          "type": "single",
+          "grid": "true",
+          "grid_num": "6"
+        });
+        MultiformScripts.initRangeSlider($('#wahtmlcontrol_fields_field_47_3-1 input'), {
+          "type": "single",
+          "grid": "true",
+          "grid_num": "6"
+        });
+        $(".multiform-wrap[data-id='3']").on('change keydown paste input multiform-loaded-3-1', function () {
+          $.multiformFrontend.updateFormula($(this));
+        });
+        $.multiformFrontend['formulaFunction19_3-1'] = function (form) {
+          return ($.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 15, "3-1", "radio", "number", "-1") == 1,
+            $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 1, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+              $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 2, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина + " + $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 6 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г воды",
+                $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 3, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 7 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+                  "0"
+                )
+              )
+            ),
+            $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 15, "3-1", "radio", "number", "-1") == 2,
+              $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 1, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+                $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 2, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина + " + $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 6 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г воды",
+                  $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 3, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 7 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+                    "0"
+                  )
+                )
+              ),
+              $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 15, "3-1", "radio", "number", "-1") == 3,
+                $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 1, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 0.14 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+                  $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 2, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 0.14 * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина + " + $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * 0.84, 0 - 1) + "г воды",
+                    $.multiformFrontend.formula.IF($.multiformFrontend.formula.getValue(form, 17, "3-1", "radio", "number", "-1") == 3, $.multiformFrontend.formula.ROUND($.multiformFrontend.formula.getValue(form, 18, "3-1", "number", "number", "-1") * $.multiformFrontend.formula.getValue(form, 45, "3-1", "number", "number", "-1") / $.multiformFrontend.formula.getValue(form, 47, "3-1", "number", "number", "-1"), 0 - 1) + "г желатина",
+                      "0"
+                    )
+                  )
+                ),
+                "0"
+              )
+            )
+          ));
+        };
+        $(".multiform-wrap[data-uid='3-1']").trigger("multiform-loaded").trigger("multiform-loaded-3-1");
+      })
+    }, 1000)
+  })(jQuery);
+</script>
