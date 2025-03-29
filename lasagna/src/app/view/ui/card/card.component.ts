@@ -5,6 +5,7 @@ import {Component, input} from '@angular/core';
   standalone: true,
   template: `
       <div [class.flat]="flat()"
+            [class.center]="center()"
            class="card">
           <ng-content></ng-content>
       </div>
@@ -21,10 +22,17 @@ import {Component, input} from '@angular/core';
         padding: 24px;
         border-radius: 32px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
       }
 
       .card.flat {
         padding: 0;
+      }
+
+      .card.center {
+        justify-content: center;
+        align-items: center;
       }
     `
   ]
@@ -33,4 +41,5 @@ export class CardComponent {
   constructor() {
   }
   flat = input(false);
+  center = input(false);
 }
