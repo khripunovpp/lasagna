@@ -9,6 +9,8 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
 import {parseFloatingNumber} from '../../../helpers/number.helper';
+import {CardListComponent} from '../../ui/card/card-list.component';
+import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 
 @Component({
   selector: 'lg-product-list',
@@ -28,14 +30,17 @@ import {parseFloatingNumber} from '../../../helpers/number.helper';
               </lg-button>
           </lg-gap-row>
 
-          <lg-card>
-              <lg-gap-column>
-                  @for (product of products();track $index;let i = $index) {
+          <lg-card-list>
+              @for (product of products();track $index;let i = $index) {
+                  <ng-template lgCardListItem>
                       <lg-gap-row [center]="true">
                           <div class="expand">
-                              {{ product.name }}
-                              {{ product.source ? '- ' + product.source : '' }}
-                              ({{ getPricePerGram(product) | number: '1.2-5' }}/per gram)
+                              <lg-gap-row [center]="true">
+                                  <div style="flex: 20%">{{ product.name }}</div>
+                                  <div style="flex: 10%"> {{ product.source ?? '' }}</div>
+                                  <div style="flex: 70%">({{ getPricePerGram(product) | number: '1.2-5' }}/per gram)
+                                  </div>
+                              </lg-gap-row>
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
@@ -51,11 +56,9 @@ import {parseFloatingNumber} from '../../../helpers/number.helper';
                                         fontIcon="close"></mat-icon>
                           </lg-button>
                       </lg-gap-row>
-                  } @empty {
-                      <div>No products found</div>
-                  }
-              </lg-gap-column>
-          </lg-card>
+                  </ng-template>
+              }
+          </lg-card-list>
       </lg-container>
   `,
   imports: [
@@ -67,6 +70,8 @@ import {parseFloatingNumber} from '../../../helpers/number.helper';
     ContainerComponent,
     TitleComponent,
     DecimalPipe,
+    CardListComponent,
+    CardListItemDirective
   ],
   styles: [
     `:host {
@@ -103,7 +108,8 @@ export class ProductListComponent
 
   loadProducts() {
     this._productsRepository.getProducts((products) => {
-      this.products.set(products);
+      const sorted = products.toSorted((a: Product, b: Product) => a.name.localeCompare(b.name));
+      this.products.set(sorted);
     });
   }
 
