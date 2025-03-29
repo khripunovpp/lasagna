@@ -11,7 +11,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
              [placeholder]="placeholder()"
              [value]="value"
              class="input"
-             type="number"
+             type="tel"
       >
   `,
   styles: [
