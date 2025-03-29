@@ -43,10 +43,10 @@ import {RouterLink} from '@angular/router';
       }
 
       .button.primary {
-        background-color: #0f7922;
+        background-color: #28a63c;
 
         &.flat {
-          color: #0f7922;
+          color: #28a63c;
         }
       }
 

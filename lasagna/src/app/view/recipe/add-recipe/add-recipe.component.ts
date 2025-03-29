@@ -23,12 +23,14 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
           <lg-gap-row [center]="true">
               <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Recipe</lg-title>
 
-              <lg-button [flat]="true"
-                         [link]="'/calc-recipe/' + uuid()"
-                         [size]="'small'"
-                         [style]="'primary'">
-                  Calculate
-              </lg-button>
+              @if (uuid()) {
+                  <lg-button [flat]="true"
+                             [link]="'/calc-recipe/' + uuid()"
+                             [size]="'small'"
+                             [style]="'primary'">
+                      Calculate
+                  </lg-button>
+              }
           </lg-gap-row>
 
           <lg-card>

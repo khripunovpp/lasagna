@@ -1,3 +1,16 @@
 <main class="app">
-  <router-outlet/>
+  <lg-gap-column>
+    <lg-container>
+           <lg-button [flat]="true"
+                         [link]="'/home'"
+                         [size]="'small'"
+                         [style]="'primary'">
+                  My store
+              </lg-button>
+    </lg-container>
+
+    <div>
+      <router-outlet/>
+    </div>
+  </lg-gap-column>
 </main>
