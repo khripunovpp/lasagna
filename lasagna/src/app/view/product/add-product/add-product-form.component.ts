@@ -96,7 +96,6 @@ export class AddProductFormComponent
       return;
     }
     this._productsRepository.getOne(this.uuid(), product => {
-      console.log(product)
       this.form.reset(product);
     });
   });
@@ -126,7 +125,6 @@ export class AddProductFormComponent
 
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
-      console.log({resources})
     })
   }
 }
