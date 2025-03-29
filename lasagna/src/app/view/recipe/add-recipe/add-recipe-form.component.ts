@@ -37,6 +37,19 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                formControlName="description"></lg-textarea>
               </lg-control>
 
+              <lg-controls-row lgExpand>
+                  <lg-control label="Amount of the outcome" lgExpand>
+                      <lg-number-input #amount
+                                       [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
+                                       formControlName="outcome_amount"></lg-number-input>
+                  </lg-control>
+
+                  <lg-control label="Outcome unit" lgExpand>
+                      <lg-input [placeholder]="'And here the unit of the outcome (e.g. grams, pieces, etc.)'"
+                                formControlName="outcome_unit"></lg-input>
+                  </lg-control>
+              </lg-controls-row>
+
               <lg-control-group label="Ingredients" lgExpand>
                   <lg-gap-column [position]="'start'">
                       <lg-gap-column formArrayName="ingredients" lgExpand>
@@ -53,8 +66,9 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                       <span (click)="closeTextField(i)">Hide</span>
                                                   </ng-container>
 
-                                                  <lg-input [placeholder]="'Here you can write the name of the ingredient'"
-                                                            formControlName="name"></lg-input>
+                                                  <lg-input
+                                                          [placeholder]="'Here you can write the name of the ingredient'"
+                                                          formControlName="name"></lg-input>
                                               </lg-control>
                                           </lg-gap-column>
 
@@ -172,6 +186,8 @@ export class AddRecipeFormComponent
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl('', Validators.required),
+    outcome_amount: new FormControl<number | string | null>(null, Validators.required),
+    outcome_unit: new FormControl<string>('', Validators.required),
     ingredients: new FormArray([
       this._getIngredientGroup(),
     ]),

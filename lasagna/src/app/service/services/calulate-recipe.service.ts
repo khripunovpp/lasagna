@@ -7,6 +7,7 @@ export interface Calculation {
   recipe?: Recipe
   result?: CalculationTableParams[]
   total: number
+  totalWeight?: number
 }
 
 export interface CalculationTableParams {
@@ -59,6 +60,7 @@ export class CalculateRecipeService {
           recipe: recipe,
           result: table,
           total: totalAmount,
+          totalWeight: totalWeight,
         });
       });
 
