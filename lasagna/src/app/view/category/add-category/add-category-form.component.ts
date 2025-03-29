@@ -17,7 +17,8 @@ export type CategoryFormValue = Omit<Category, 'uuid'>
       <form [formGroup]="form">
           <lg-gap-column>
               <lg-control label="Name">
-                  <lg-input formControlName="name"></lg-input>
+                  <lg-input formControlName="name"
+                            [placeholder]="'Your category name'"></lg-input>
               </lg-control>
 
 

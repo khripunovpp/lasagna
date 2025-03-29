@@ -7,7 +7,7 @@ import {ButtonComponent} from './view/ui/layout/button.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GapColumnComponent, ContainerComponent, RouterLink, RouterLinkActive, ButtonComponent],
+  imports: [RouterOutlet, GapColumnComponent, ContainerComponent, ButtonComponent],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss'

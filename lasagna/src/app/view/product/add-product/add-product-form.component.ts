@@ -20,19 +20,23 @@ export type ProductFormValue = Omit<Product, 'uuid'>
       <form [formGroup]="form">
           <lg-gap-column>
               <lg-control label="Name">
-                  <lg-input formControlName="name"></lg-input>
+                  <lg-input formControlName="name"
+                            [placeholder]="'Your product name'"></lg-input>
               </lg-control>
 
               <lg-control label="Amount">
-                  <lg-number-input formControlName="amount"></lg-number-input>
+                  <lg-number-input [placeholder]="'In grams'"
+                          formControlName="amount"></lg-number-input>
               </lg-control>
 
               <lg-control label="Price per unit">
-                  <lg-number-input formControlName="price"></lg-number-input>
+                  <lg-number-input formControlName="price"
+                          [placeholder]="'In your currency'"></lg-number-input>
               </lg-control>
 
               <lg-control label="Source">
-                  <lg-input formControlName="source"></lg-input>
+                  <lg-input formControlName="source"
+                            [placeholder]="'Where do you buy it?'"></lg-input>
               </lg-control>
 
               <lg-control label="Category">
@@ -83,8 +87,8 @@ export class AddProductFormComponent
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
-    amount: new FormControl(0, Validators.required),
-    price: new FormControl(0, Validators.required),
+    amount: new FormControl<number | null>(null, Validators.required),
+    price: new FormControl<number | null>(null, Validators.required),
     source: new FormControl(''),
     category_id: new FormControl<any>(null, Validators.required),
   });
