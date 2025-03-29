@@ -94,7 +94,8 @@ export class CategoryListComponent
 
   loadCategory() {
     this.categoryRepository.getCategory((categories) => {
-      this.categories.set(categories);
+      const sorted = categories.toSorted((a: Category, b: Category) => a.name.localeCompare(b.name));
+      this.categories.set(sorted);
     });
   }
 

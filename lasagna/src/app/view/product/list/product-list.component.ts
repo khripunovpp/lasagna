@@ -38,7 +38,7 @@ import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
                               <lg-gap-row [center]="true">
                                   <div style="flex: 20%">{{ product.name }}</div>
                                   <div style="flex: 10%"> {{ product.source ?? '' }}</div>
-                                  <div style="flex: 70%">({{ getPricePerGram(product) | number: '1.2-5' }}/per gram)
+                                  <div style="flex: 70%">{{ getPricePerGram(product) | number: '1.2-5' }} per gram
                                   </div>
                               </lg-gap-row>
                           </div>

@@ -95,7 +95,8 @@ export class RecipesListComponent
 
   loadRecipes() {
     this._recipesRepository.getRecipes((recipes) => {
-      this.recipes.set(recipes);
+      const sorted = recipes.toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name));
+      this.recipes.set(sorted);
     });
   }
 
