@@ -1,4 +1,4 @@
-import {Component, effect, Inject, input, OnInit} from '@angular/core';
+import {Component, effect, Inject, input, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -10,6 +10,9 @@ import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
+import {TooltipComponent} from '../../ui/tooltip.component';
+import {EggsWidgetComponent} from '../../widgets/eggs-widget/eggs-widget.component';
+import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -20,23 +23,34 @@ export type ProductFormValue = Omit<Product, 'uuid'>
       <form [formGroup]="form">
           <lg-gap-column>
               <lg-control label="Name">
-                  <lg-input formControlName="name"
-                            [placeholder]="'Your product name'"></lg-input>
+                  <lg-input [placeholder]="'Your product name'"
+                            formControlName="name"></lg-input>
               </lg-control>
 
               <lg-control label="Amount">
                   <lg-number-input [placeholder]="'In grams'"
-                          formControlName="amount"></lg-number-input>
+                                   formControlName="amount">
+
+                      <div ngProjectAs="after">
+                          <lg-tooltip>
+                              Widgets
+
+                              <div ngProjectAs="content">
+                                  <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+                              </div>
+                          </lg-tooltip>
+                      </div>
+                  </lg-number-input>
               </lg-control>
 
               <lg-control label="Price per unit">
-                  <lg-number-input formControlName="price"
-                          [placeholder]="'In your currency'"></lg-number-input>
+                  <lg-number-input [placeholder]="'In your currency'"
+                                   formControlName="price"></lg-number-input>
               </lg-control>
 
               <lg-control label="Source">
-                  <lg-input formControlName="source"
-                            [placeholder]="'Where do you buy it?'"></lg-input>
+                  <lg-input [placeholder]="'Where do you buy it?'"
+                            formControlName="source"></lg-input>
               </lg-control>
 
               <lg-control label="Category">
@@ -64,11 +78,18 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ButtonComponent,
     MultiselectComponent,
     NumberInputComponent,
+    TooltipComponent,
+    EggsWidgetComponent,
+    AmountWidgetsComponent,
   ],
   styles: [
     `
+      lg-eggs-widget {
+        min-width: 300px;
+      }
     `
   ],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: SelectResourcesService,
@@ -93,6 +114,12 @@ export class AddProductFormComponent
     category_id: new FormControl<any>(null, Validators.required),
   });
 
+
+  eggsChanged(event: any) {
+    this.form.patchValue({
+      amount: event
+    });
+  }
 
   uuid = input<string>('');
   private uuidEffect = effect(() => {

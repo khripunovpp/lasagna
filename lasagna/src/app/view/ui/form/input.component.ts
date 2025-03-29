@@ -14,6 +14,10 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
                  [value]="value"
                  class="input"
                  type="text">
+
+          <div class="lg-input__after">
+              <ng-content select="after"></ng-content>
+          </div>
       </div>
   `,
   styles: [
@@ -28,14 +32,20 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         flex: 1;
         background-color: var(--control-bg);
         border-radius: 12px;
-        overflow: hidden;
+        gap: 16px;
       }
 
+      .lg-input__after {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
 
       .input {
         flex: 1;
         border: none;
         padding: 16px;
+        border-radius: 12px;
         font-family: inherit;
         font-size: inherit;
         background-color: transparent;

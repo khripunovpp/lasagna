@@ -1,4 +1,4 @@
-import {Component, computed, model, signal} from '@angular/core';
+import {Component, computed, model, output, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
@@ -15,10 +15,11 @@ import {DecimalPipe} from '@angular/common';
           </lg-title>
 
           <lg-input [(ngModel)]="eggs"
+                    (ngModelChange)="changed.emit(calculated())"
                     [placeholder]="'How many eggs do you have?'"
                     [theme]="'contrast'"></lg-input>
           <div class="eggs-widget__eggs">
-              <div (click)="selected.set('small')"
+              <div (click)="onChooseEggSize('small')"
                    [class.selected]="selected() === 'small'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
@@ -27,7 +28,7 @@ import {DecimalPipe} from '@angular/common';
                       ~ {{ calculated() | number: '1.' }} grams
                   }
               </div>
-              <div (click)="selected.set('medium')"
+              <div (click)="onChooseEggSize('medium')"
                    [class.selected]="selected() === 'medium'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
@@ -37,7 +38,7 @@ import {DecimalPipe} from '@angular/common';
                       ~ {{ calculated() | number: '1.' }} grams
                   }
               </div>
-              <div (click)="selected.set('large')"
+              <div (click)="onChooseEggSize('large')"
                    [class.selected]="selected() === 'large'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
@@ -63,6 +64,10 @@ import {DecimalPipe} from '@angular/common';
       --control-bg: #fcfcfc;
     }
 
+    lg-eggs-widget {
+      display: flex;
+    }
+
     .eggs-widget {
       display: flex;
       flex-direction: column;
@@ -84,6 +89,7 @@ import {DecimalPipe} from '@angular/common';
       justify-content: center;
       flex: 1;
       flex-direction: column;
+      white-space: nowrap;
       gap: 8px;
       background-color: var(--control-bg);
       border-radius: 24px;
@@ -110,21 +116,29 @@ import {DecimalPipe} from '@angular/common';
       background-color: #ff8080;
     }
   `
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EggsWidgetComponent {
-  eggs = model<number|null>(null);
+  eggs = model<string | null>(null);
   selected = signal<string>('small');
   calculated = computed(() => {
-    const eggWeight:Record<string, number> = {
+    const number = parseFloat(this.eggs() ?? '');
+    const eggWeight: Record<string, number> = {
       small: 44,
       medium: 50,
       large: 56
     };
     const weight = eggWeight[this.selected()];
-    if (!this.eggs() || !weight) {
+    if (!number || !weight) {
       return '';
     }
-    return this.eggs()! * weight;
+    return number! * weight;
   });
+  changed = output<number | "">();
+
+  onChooseEggSize(size: string) {
+    this.selected.set(size);
+    this.changed.emit(this.calculated());
+  }
 }
