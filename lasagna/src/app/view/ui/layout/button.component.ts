@@ -77,7 +77,11 @@ import {RouterLink} from '@angular/router';
       }
 
       .button.warning {
-        background-color: #b6f1fa;
+        background-color: #ec7b1c;
+
+        &.flat {
+          color: #ec7b1c;
+        }
       }
 
       .button.info {
