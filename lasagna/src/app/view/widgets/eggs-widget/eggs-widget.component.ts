@@ -125,9 +125,9 @@ export class EggsWidgetComponent {
   calculated = computed(() => {
     const number = parseFloat(this.eggs() ?? '');
     const eggWeight: Record<string, number> = {
-      small: 44,
+      small: 46,
       medium: 50,
-      large: 56
+      large: 59
     };
     const weight = eggWeight[this.selected()];
     if (!number || !weight) {
