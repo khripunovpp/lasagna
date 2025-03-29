@@ -40,6 +40,8 @@ import {CardComponent} from './card.component';
       table thead th {
         text-align: left;
         padding: 16px 24px;
+        opacity: 0.4;
+        font-size: 0.8em;
       }
 
       table tbody tr {
