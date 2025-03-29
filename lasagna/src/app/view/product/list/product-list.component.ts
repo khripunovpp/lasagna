@@ -3,11 +3,12 @@ import {Recipe} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {ProductsRepository} from '../../../service/repositories/products.repository';
+import {Product, ProductsRepository} from '../../../service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
 import {CardComponent} from '../../ui/card/card.component';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-product-list',
@@ -33,6 +34,8 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
                       <lg-gap-row [center]="true">
                           <div class="expand">
                               {{ product.name }}
+                              {{ product.source ? '- ' + product.source : '' }}
+                              ({{ getPricePerGram(product) | number: '1.2-5' }}/per gram)
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
@@ -63,6 +66,7 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
     CardComponent,
     ContainerComponent,
     TitleComponent,
+    DecimalPipe,
   ],
   styles: [
     `:host {
@@ -79,10 +83,14 @@ export class ProductListComponent
 
   }
 
-  products = signal<Recipe[]>([])
+  products = signal<Product[]>([])
+
+  getPricePerGram(product: Product) {
+    return product.price / product.amount;
+  }
 
   deleteProduct(
-    recipe: Recipe,
+    recipe: Product,
   ) {
     this._productsRepository.deleteProduct(recipe.uuid, () => {
       this.loadProducts();
