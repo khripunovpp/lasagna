@@ -27,12 +27,14 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
           <lg-gap-column [position]="'start'">
               <lg-control label="Name" lgExpand>
                   <lg-input (onInputChanged)="desc.focus()"
-                            [placeholder]="''"
+                            [placeholder]="'Your recipe name'"
                             formControlName="name"></lg-input>
               </lg-control>
 
               <lg-control label="Description" lgExpand>
-                  <lg-textarea #desc [placeholder]="''" formControlName="description"></lg-textarea>
+                  <lg-textarea #desc
+                               [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"
+                               formControlName="description"></lg-textarea>
               </lg-control>
 
               <lg-control-group label="Ingredients" lgExpand>
@@ -51,7 +53,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                       <span (click)="closeTextField(i)">Hide</span>
                                                   </ng-container>
 
-                                                  <lg-input [placeholder]="''" formControlName="name"></lg-input>
+                                                  <lg-input [placeholder]="'Here you can write the name of the ingredient'"
+                                                            formControlName="name"></lg-input>
                                               </lg-control>
                                           </lg-gap-column>
 
@@ -94,7 +97,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                       <lg-control label="Amount">
                                           <lg-number-input #amount
                                                            (onKeydown)="addLast()"
-                                                           [placeholder]="''"
+                                                           [placeholder]="'In grams'"
                                                            formControlName="amount"></lg-number-input>
                                       </lg-control>
 
