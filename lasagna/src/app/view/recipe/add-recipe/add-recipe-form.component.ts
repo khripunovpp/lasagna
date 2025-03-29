@@ -228,15 +228,14 @@ export class AddRecipeFormComponent
       debounceTime(500),
     ).subscribe({
       next: values => {
-        console.log({values})
-
+        console.log(values)
       }
     });
   }
 
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
-      console.log({resources})
+
     })
   }
 
@@ -279,6 +278,11 @@ export class AddRecipeFormComponent
         [index]: true,
       }
     });
+
+    this.ingredients.at(index).patchValue({
+      product_id: null,
+      recipe_id: null,
+    });
   }
 
   closeTextField(
@@ -289,6 +293,12 @@ export class AddRecipeFormComponent
         ...value,
         [index]: false,
       }
+    });
+
+    this.ingredients.at(index).patchValue({
+      product_id: null,
+      recipe_id: null,
+      name: '',
     });
   }
 
@@ -301,6 +311,11 @@ export class AddRecipeFormComponent
         [index]: true,
       }
     });
+
+    this.ingredients.at(index).patchValue({
+      name: '',
+      product_id: null,
+    });
   }
 
   closeRecipeField(
@@ -312,12 +327,16 @@ export class AddRecipeFormComponent
         [index]: false,
       }
     });
+
+    this.ingredients.at(index).patchValue({
+      name: '',
+      product_id: null,
+    });
   }
 
   private _getIngredientGroup(
     ingredient?: Recipe['ingredients'][number]
   ) {
-    console.log({ingredient})
     return new FormGroup({
       name: new FormControl(ingredient?.name),
       amount: new FormControl(ingredient?.amount.toString() ?? null, Validators.required),
