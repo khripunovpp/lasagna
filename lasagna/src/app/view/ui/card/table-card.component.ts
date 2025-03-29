@@ -9,7 +9,11 @@ import {CardComponent} from './card.component';
   ],
   template: `
       <lg-card [flat]="true">
-          <ng-content></ng-content>
+          <div class="table">
+              <div class="table__scroll">
+                  <ng-content></ng-content>
+              </div>
+          </div>
       </lg-card>
   `,
   styles: [
@@ -17,6 +21,10 @@ import {CardComponent} from './card.component';
       :host {
         display: flex;
         width: 100%;
+      }
+
+      .table__scroll {
+        overflow-x: auto;
       }
 
       table {

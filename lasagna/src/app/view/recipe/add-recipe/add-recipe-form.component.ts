@@ -91,7 +91,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                           </lg-gap-column>
                                       }
 
-                                      <lg-control label="Amount">
+                                      <lg-control label="Amount" style="flex: 0 10%;">
                                           <lg-number-input #amount
                                                            (onKeydown)="addLast()"
                                                            [placeholder]="''"

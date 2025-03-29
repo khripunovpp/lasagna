@@ -4,13 +4,7 @@ import {ProductsRepository} from '../repositories/products.repository';
 
 export interface Calculation {
   recipe?: Recipe
-  result?: {
-    name: string | undefined
-    unit: string | undefined
-    price_per_gram: number | undefined
-    amount: number | undefined
-    total: number | undefined
-  }[]
+  result?: CalculationTableParams[]
   total: number
 }
 
@@ -20,6 +14,8 @@ export interface CalculationTableParams {
   price_per_gram: number | undefined
   amount: number | undefined
   total: number | undefined
+  indent: number
+  type: 'caption' | 'recipe-row' | 'total' | 'row'
 }
 
 @Injectable({
@@ -46,11 +42,9 @@ export class CalculateRecipeService {
         const {
           table: ingredientTable,
           totalAmount: ingredientTotal,
-          totalWeight: ingredientWeight,
         } = await this._makeIngredientTable(recipe);
 
         totalAmount += ingredientTotal || 0;
-        // totalWeight += ingredientWeight || 0;
 
         totalWeight = recipe.ingredients.reduce((acc: number, ingredient: Ingredient) => {
           return acc + parseInt(ingredient.amount as any);
@@ -89,12 +83,14 @@ export class CalculateRecipeService {
         }, 0);
         const scaleKeff = ingredientAmount / recipeTotalAmount;
 
-        const result = await this._makeIngredientTable(recipe, scaleKeff);
-        result.table = result.table.map(row => {
+        const result = await this._makeIngredientTable(recipe);
+        result.table = result.table.map((row, idx) => {
+
           return {
             ...row,
             amount: parseFloat((row.amount ? row.amount * scaleKeff : 0).toFixed(5)),
             total: parseFloat((row.total ? row.total * scaleKeff : 0).toFixed(5)),
+            indent: row.indent + 1,
           };
         })
 
@@ -124,13 +120,12 @@ export class CalculateRecipeService {
 
   private _makeIngredientTable(
     recipeInst: Recipe,
-    scaleKeff?: number,
   ) {
     const table: CalculationTableParams[] = [];
     let totalWeight = 0;
     let totalAmount = 0;
 
-    return Promise.all(recipeInst.ingredients.map(async (ingredient: Ingredient) => {
+    return Promise.all(recipeInst.ingredients.map(async (ingredient: Ingredient, index: number) => {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
@@ -185,7 +180,8 @@ export class CalculateRecipeService {
       amount: number | undefined
       total: number | undefined
       unit?: string | undefined
-    }
+      indent?: number
+    },
   ): CalculationTableParams {
     return {
       name: params.name,
@@ -193,6 +189,8 @@ export class CalculateRecipeService {
       amount: params.amount,
       total: parseFloat(params.total?.toFixed(5) ?? '0'),
       unit: 'g',
+      indent: params.indent ?? 0,
+      type: 'row',
     };
   }
 
@@ -205,6 +203,8 @@ export class CalculateRecipeService {
       price_per_gram: undefined,
       amount: undefined,
       total: undefined,
+      indent: 0,
+      type: 'caption',
     };
   }
 
@@ -222,6 +222,8 @@ export class CalculateRecipeService {
       amount: params.amount,
       total: parseFloat(params.total.toFixed(2)),
       unit: 'g',
+      indent: 0,
+      type: 'recipe-row',
     };
   }
 
@@ -235,6 +237,8 @@ export class CalculateRecipeService {
       unit: 'g',
       price_per_gram: parseFloat((total / totalWeight).toFixed(5)),
       total: parseFloat(total.toFixed(2)),
+      indent: 0,
+      type: 'total',
     };
   }
 }

@@ -4,6 +4,8 @@ import {CardComponent} from '../../ui/card/card.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute} from '@angular/router';
+import {ButtonComponent} from '../../ui/layout/button.component';
+import {GapRowComponent} from '../../ui/layout/gap-row.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -12,11 +14,23 @@ import {ActivatedRoute} from '@angular/router';
     ContainerComponent,
     CardComponent,
     TitleComponent,
-    AddRecipeFormComponent
+    AddRecipeFormComponent,
+    ButtonComponent,
+    GapRowComponent
   ],
   template: `
       <lg-container>
-          <lg-title>{{uuid() ? 'Edit' : 'Add'}} Recipe</lg-title>
+          <lg-gap-row [center]="true">
+              <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Recipe</lg-title>
+
+              <lg-button [flat]="true"
+                         [link]="'/calc-recipe/' + uuid()"
+                         [size]="'small'"
+                         [style]="'primary'">
+                  Calculate
+              </lg-button>
+          </lg-gap-row>
+
           <lg-card>
               <lg-add-recipe-form [uuid]="uuid()"></lg-add-recipe-form>
           </lg-card>
