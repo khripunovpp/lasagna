@@ -82,7 +82,7 @@ export class IndexDbService {
 
   replaceData(storeKey: string, uuid: string, value: any) {
     // Open the database
-    this.openDb(indexedDB => {
+    return this.openDb(indexedDB => {
       const transaction = indexedDB.transaction(storeKey, 'readwrite');
 
       const store = transaction.objectStore(storeKey);
@@ -92,6 +92,18 @@ export class IndexDbService {
         uuid
       });
     });
+  }
+
+  search(storeKey: string, indexField: string, value: string, onSuccess: (result: any) => void) {
+    this.openDb(indexedDB => {
+      const transaction = indexedDB.transaction(storeKey, 'readonly');
+      const store = transaction.objectStore(storeKey);
+      const index = store.index(indexField as any);
+      const request = index.getAll(value);
+      request.onsuccess = (event: any) => {
+        onSuccess(event.target.result);
+      }
+    })
   }
 
   getOne(storeKey: string, uuid: string, onSuccess: (result: any) => void) {
