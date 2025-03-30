@@ -87,10 +87,7 @@ export class IndexDbService {
 
       const store = transaction.objectStore(storeKey);
       // Put the data in the store
-      store.put({
-        ...value,
-        uuid
-      });
+      store.put(value, 'uuid');
     });
   }
 

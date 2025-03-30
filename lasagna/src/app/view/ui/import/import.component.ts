@@ -6,7 +6,7 @@ import {ZodObject} from 'zod';
 import {Stores} from '../../../service/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {IndexDbService} from '../../../service/services/index-db.service';
-import {Observable, scan, startWith, Subject, tap} from 'rxjs';
+import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialog/dialog.component';
 import {AsyncPipe, JsonPipe, KeyValuePipe, NgClass} from '@angular/common';
 import {GapRowComponent} from '../layout/gap-row.component';
@@ -44,27 +44,26 @@ import {FormsModule} from '@angular/forms';
                   @if (analize$ | async;as duplicates) {
                       <lg-gap-column [size]="'medium'">
                           @for (row of data;track row.name + row.uuid;let i = $index) {
-                              <lg-gap-column [size]="'small'"
-                                             [hidden]="skipAllDuplicates() && (duplicates[row.uuid] || duplicates[row.name])">
+                              <lg-gap-column [size]="'small'">
 
                                   <div class="import-row"
-                                       [class.old]="selectedOldRows[row.name]"
-                                       [class.applying]="selectedNewRows[row.name]"
-                                       [class.removing]="selectedDuplicates[row.name]">
+                                       [class.update]="rowsToUpdate[row.name]"
+                                       [class.add]="rowsToAdd[row.name]"
+                                       [class.disabled]="rowsToSkip[row.name]">
+
                                       @if ((duplicates[row.uuid] || duplicates[row.name])) {
-                                          <input [(ngModel)]="selectedOldRows[row.name]"
-                                                 [disabled]="selectedDuplicates[row.name]"
+                                          <input [(ngModel)]="rowsToUpdate[row.name]"
+                                                 [disabled]="rowsToSkip[row.name]"
                                                  type="checkbox">
-                                          @if (selectedOldRows[row.name]) {
-                                              Skip
-                                          }
+                                          Update
                                       } @else {
-                                          <input [(ngModel)]="selectedNewRows[row.name]"
-                                                 [disabled]="selectedDuplicates[row.name]"
+                                          <input [(ngModel)]="rowsToAdd[row.name]"
+                                                 [disabled]="rowsToSkip[row.name]"
                                                  checked
                                                  type="checkbox">
                                           Add
                                       }
+
                                       <span>{{ row.name }}</span>
                                       <span>{{ row.amount }}gr for {{ row.price }}</span>
                                       @if (row.source) {
@@ -75,13 +74,14 @@ import {FormsModule} from '@angular/forms';
 
                                   @if ((duplicates[row.uuid] || duplicates[row.name])) {
                                       <div class="import-row"
-                                           [ngClass]="selectedDuplicates[row.name] ? 'selected-duplicated' : 'duplicated'"
-                                           [class.selected-old]="selectedOldRows[row.name]"
+                                           [ngClass]="rowsToSkip[row.name] ? 'skip' : 'duplicated'"
+                                           [class.disabled]="rowsToUpdate[row.name]"
+                                           [class.skip]="rowsToUpdate[row.name]"
                                            style="margin-left: 16px">
-                                          <input [(ngModel)]="selectedDuplicates[row.name]"
-                                                 [disabled]="selectedNewRows[row.name] || selectedOldRows[row.name]"
+                                          <input [(ngModel)]="rowsToSkip[row.name]"
+                                                 [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
                                                  type="checkbox">
-                                          <span>{{ selectedDuplicates[row.name] ? 'Update with' : 'Duplicates' }}</span>
+                                          <span>{{ rowsToSkip[row.name] ? 'Skip' : 'Duplicates' }}</span>
                                           <span>{{ (duplicates[row.uuid] || duplicates[row.name])?.name }}</span>
                                           <span>{{ (duplicates[row.uuid] || duplicates[row.name])?.amount }} gr
                                               for {{ (duplicates[row.uuid] || duplicates[row.name])?.price }}</span>
@@ -97,7 +97,8 @@ import {FormsModule} from '@angular/forms';
               }
 
               <lg-gap-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
-                  <input [(ngModel)]="skipAllDuplicates"
+                  <input (change)="onSkipAllDuplicates()"
+                         [(ngModel)]="skipAllDuplicates"
                          type="checkbox">
                   <label>Skip all duplicates</label>
               </lg-gap-row>
@@ -128,14 +129,13 @@ import {FormsModule} from '@angular/forms';
       padding: 8px 16px;
     }
 
-    .import-row.removing,
-    .import-row.selected-old {
+    .import-row.disabled {
       opacity: 0.5;
     }
 
-    .import-row.selected-duplicated {
-      border-color: #8ca68c;
-      background-color: #e5f4e3;
+    .import-row.skip {
+      border-color: #008ad8;
+      background-color: #dceaff;
     }
 
     .import-row.duplicated {
@@ -143,14 +143,14 @@ import {FormsModule} from '@angular/forms';
       background-color: #fff4f4;
     }
 
-    .import-row.applying {
+    .import-row.update {
       border-color: #8ca68c;
       background-color: #e5f4e3;
     }
 
-    .import-row.old {
-      border-color: #008ad8;
-      background-color: #dceaff;
+    .import-row.add {
+      border-color: #8ca68c;
+      background-color: #e5f4e3;
     }
   `],
 })
@@ -161,9 +161,9 @@ export class ImportComponent {
   ) {
   }
 
-  selectedNewRows: Record<number, any> = {};
-  selectedOldRows: Record<number, any> = {};
-  selectedDuplicates: Record<number, any> = {};
+  rowsToAdd: Record<number, any> = {};
+  rowsToUpdate: Record<number, any> = {};
+  rowsToSkip: Record<number, any> = {};
   onDone = output();
   storeName = input<Stores | null>(null);
   schema = input<ZodObject<any>>();
@@ -174,7 +174,7 @@ export class ImportComponent {
   data$: Observable<any[]> = this.dataSubject.asObservable().pipe(
     startWith([]),
     scan((acc, value) => {
-      if (value== null) {
+      if (value == null) {
         return []
       }
       return [
@@ -206,10 +206,12 @@ export class ImportComponent {
 
   async onConfirm() {
     for (const item of this.parsedData) {
-      if (this.selectedNewRows[item.name]) {
+      if (this.rowsToAdd[item.name]) {
         await this._addData(item, this.storeName() as Stores);
-      } else if (this.selectedDuplicates[item.name] && !this.skipAllDuplicates()) {
+        console.log('add', item);
+      } else if (this.rowsToUpdate[item.name] && !this.skipAllDuplicates()) {
         await this._indexDbService.replaceData(this.storeName() as Stores, item.uuid, item);
+        console.log('replace', item);
       }
     }
 
@@ -220,26 +222,44 @@ export class ImportComponent {
 
   clear() {
     this.upload()!.clear();
-    this.selectedNewRows = {};
-    this.selectedOldRows = {};
-    this.selectedDuplicates = {};
+    this.rowsToAdd = {};
+    this.rowsToUpdate = {};
+    this.rowsToSkip = {};
     this.parsedData = [];
     this.dataSubject.next(null);
     this.analizeSubject.next(null);
+    this.skipAllDuplicates.set(false);
+    this.replaceAll.set(false);
+
   }
 
   onReplaceAll() {
-    // every duplciated should be selected
-
     if (this.replaceAll()) {
       this.parsedData.forEach((item) => {
-        if (this.selectedNewRows[item.name] || this.selectedOldRows[item.name]) {
+        if (this.rowsToAdd[item.name]) {
           return;
         }
-        this.selectedDuplicates[item.name] = true;
+        this.rowsToUpdate[item.name] = true;
       });
     } else {
-      this.selectedDuplicates = {};
+      this.rowsToAdd = {};
+    }
+  }
+
+  onSkipAllDuplicates() {
+    if (this.skipAllDuplicates()) {
+      this.parsedData.forEach((item) => {
+        if (this.rowsToAdd[item.name]) {
+          return;
+        }
+        this.rowsToSkip[item.name] = true;
+
+        if (this.rowsToUpdate[item.name]) {
+          this.rowsToUpdate[item.name] = false;
+        }
+      });
+    } else {
+      this.rowsToSkip = {};
     }
   }
 
@@ -264,7 +284,7 @@ export class ImportComponent {
           if (data.duplicate) {
             this.analizeSubject.next(data.data[0]);
           } else {
-            this.selectedNewRows[item.name] = true
+            this.rowsToAdd[item.name] = true
           }
         });
       }
