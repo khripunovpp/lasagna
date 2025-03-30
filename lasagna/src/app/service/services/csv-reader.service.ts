@@ -39,4 +39,24 @@ export class CsvReaderService {
       return obj;
     });
   }
+
+  makeCsv(data: any[]): string {
+    const keys = Object.keys(data[0]);
+    const rows = data.map(row => keys.map(key => row[key]));
+    const csv = [keys, ...rows].map(row => row.join(',')).join('\r\n');
+    return csv;
+  }
+
+  saveToFile(data: any[], filename: string) {
+    const csv = this.makeCsv(data);
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+
+    const link =document.createElement('a');
+    document.body.appendChild(link);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 }

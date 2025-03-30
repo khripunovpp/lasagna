@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Stores} from '../const/stores';
 
 
 declare const window: any;
@@ -39,21 +40,21 @@ export class IndexDbService {
         const db = (event.target as any)?.result as IDBDatabase;
 
         // Create an objectStore for this database
-        const productsStore = db.createObjectStore("productsStore", {
+        const productsStore = db.createObjectStore(Stores.PRODUCTS, {
           keyPath: "uuid",
           autoIncrement: true
         });
 
         productsStore.createIndex("name", "name", {unique: false});
 
-        const recipesStore = db.createObjectStore("recipesStore", {
+        const recipesStore = db.createObjectStore(Stores.RECIPES, {
           keyPath: "uuid",
           autoIncrement: true
         });
 
         recipesStore.createIndex("name", "name", {unique: false});
 
-        const categoryStore = db.createObjectStore("categoryStore", {
+        const categoryStore = db.createObjectStore(Stores.CATEGORIES, {
           keyPath: "uuid",
           autoIncrement: true
         });
