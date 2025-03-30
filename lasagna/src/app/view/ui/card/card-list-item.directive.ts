@@ -8,6 +8,5 @@ export class CardListItemDirective {
   constructor(
     public template: TemplateRef<any>
   ) {
-    console.log(template)
   }
 }

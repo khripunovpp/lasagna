@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, ElementRef, input, output, viewChild} from '@angular/core';
 
 @Component({
   selector: 'lg-upload',
@@ -25,6 +25,7 @@ import {Component, input, output} from '@angular/core';
 export class UploadComponent {
   filesSelected = output<File[]>();
   accept = input<string>('.csv');
+  input = viewChild<ElementRef>('input');
 
   onFileChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -32,5 +33,13 @@ export class UploadComponent {
     if (file) {
       this.filesSelected.emit([file]);
     }
+  }
+
+  clear() {
+    if (!this.input()?.nativeElement) {
+      return
+    }
+    this.input()!.nativeElement.value = '';
+    this.input()!.nativeElement.files = null;
   }
 }

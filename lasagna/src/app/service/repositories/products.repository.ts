@@ -102,7 +102,7 @@ export class ProductsRepository {
     };
   }
 
-  private _toDbValue(product: unknown): ProductDbValue {
+  private _toDbValue(product: unknown) {
     if ((product as any) != null) {
       return ProductDbInputScheme.parse({
         name: String((product as any).name || ''),

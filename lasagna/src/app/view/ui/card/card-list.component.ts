@@ -18,7 +18,7 @@ import {NgTemplateOutlet} from '@angular/common';
                       <ng-container [ngTemplateOutlet]="item.template"></ng-container>
                   </div>
               } @empty {
-                  <div>No items found</div>
+                  <div style="padding: 0 24px;">No items found</div>
               }
           </section>
       </lg-card>

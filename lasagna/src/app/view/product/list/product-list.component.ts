@@ -15,6 +15,8 @@ import {UploadComponent} from '../../ui/form/upload.component';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {TransferDataService} from '../../../service/services/transfer-data.service';
 import {Stores} from '../../../service/const/stores';
+import {ImportComponent} from '../../ui/import/import.component';
+import {ProductDbInputScheme} from '../../../schemas/product.scema';
 
 @Component({
   selector: 'lg-product-list',
@@ -33,14 +35,6 @@ import {Stores} from '../../../service/const/stores';
                   Add
               </lg-button>
 
-              <lg-upload (filesSelected)="uploadProducts($event)">
-                  <lg-button [flat]="true"
-                             [size]="'small'"
-                             [style]="'warning'">
-                      Upload
-                  </lg-button>
-              </lg-upload>
-
               <lg-button (click)="exportProducts()"
                          [flat]="true"
                          [size]="'small'"
@@ -48,13 +42,10 @@ import {Stores} from '../../../service/const/stores';
                   Export
               </lg-button>
 
-              <lg-upload (filesSelected)="importProducts($event)">
-                  <lg-button [flat]="true"
-                             [size]="'small'"
-                             [style]="'warning'">
-                      Import
-                  </lg-button>
-              </lg-upload>
+              <lg-import [schema]="ProductDbInputScheme"
+                         (onDone)="loadProducts()"
+                         [storeName]="Stores.PRODUCTS">
+              </lg-import>
           </lg-gap-row>
 
           <lg-card-list>
@@ -99,7 +90,8 @@ import {Stores} from '../../../service/const/stores';
     DecimalPipe,
     CardListComponent,
     CardListItemDirective,
-    UploadComponent
+    UploadComponent,
+    ImportComponent
   ],
   styles: [
     `:host {
@@ -124,34 +116,9 @@ export class ProductListComponent
     return (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
   }
 
-  uploadProducts(
-    files: File[]
-  ) {
-    return this._csvReaderService.readFromFile(files[0]).then(async (products) => {
-      const parsed = this._productsRepository.makeFromData(products) as Product[];
-      for (const product of parsed) {
-        await this._productsRepository.addProduct({
-          name: product.name,
-          amount: product.amount,
-          price: product.price,
-          source: product.source,
-          category_id: product.category_id as string | null
-        });
-      }
-      this.loadProducts();
-    });
-  }
-
   exportProducts() {
     this._transferDataService.exportTable(Stores.PRODUCTS);
   }
-
-  importProducts(
-    file: File[]
-  ) {
-    this._transferDataService.importTable(Stores.PRODUCTS, file[0]);
-  }
-
   deleteProduct(
     recipe: Product,
   ) {
@@ -174,4 +141,6 @@ export class ProductListComponent
     });
   }
 
+  protected readonly ProductDbInputScheme = ProductDbInputScheme;
+  protected readonly Stores = Stores;
 }
