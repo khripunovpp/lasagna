@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
 import {Category} from './category.repository';
-import {Recipe} from './recipes.repository';
 
 export interface Product {
-  uuid: string
+  uuid?: string
   name: string
   price: number
   amount: number
@@ -77,5 +76,28 @@ export class ProductsRepository {
       store.delete(uuid);
       onSuccess();
     });
+  }
+
+  makeFromData(
+    data: any | any[],
+  ): Product | Product[] {
+    if (Array.isArray(data)) {
+      return data.map(d => ({
+        uuid: d.uuid,
+        name: d.name,
+        price: d.price,
+        amount: d.amount,
+        source: d.source,
+        category_id: d.category_id,
+      }));
+    }
+    return {
+      uuid: data.uuid,
+      name: data.name,
+      price: data.price,
+      amount: data.amount,
+      source: data.source,
+      category_id: data.category_id,
+    };
   }
 }

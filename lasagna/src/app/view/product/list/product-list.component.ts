@@ -11,23 +11,33 @@ import {DecimalPipe} from '@angular/common';
 import {parseFloatingNumber} from '../../../helpers/number.helper';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {UploadComponent} from '../../ui/form/upload.component';
+import {CsvReaderService} from '../../../service/services/csv-reader.service';
 
 @Component({
   selector: 'lg-product-list',
   standalone: true,
   template: `
       <lg-container>
-          <lg-gap-row [center]="true">
-              <lg-title>
-                  Products
-              </lg-title>
+          <lg-title>
+              Products
+          </lg-title>
 
+          <lg-gap-row [center]="true">
               <lg-button [flat]="true"
                          [link]="'/add-product'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
               </lg-button>
+
+              <lg-upload (filesSelected)="uploadProducts($event)">
+                  <lg-button [flat]="true"
+                             [size]="'small'"
+                             [style]="'warning'">
+                      Upload
+                  </lg-button>
+              </lg-upload>
           </lg-gap-row>
 
           <lg-card-list>
@@ -71,7 +81,8 @@ import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
     TitleComponent,
     DecimalPipe,
     CardListComponent,
-    CardListItemDirective
+    CardListItemDirective,
+    UploadComponent
   ],
   styles: [
     `:host {
@@ -84,6 +95,7 @@ export class ProductListComponent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
+    private _csvReaderService: CsvReaderService,
   ) {
 
   }
@@ -94,9 +106,30 @@ export class ProductListComponent
     return (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
   }
 
+  uploadProducts(
+    files: File[]
+  ) {
+    return this._csvReaderService.readFromFile(files[0]).then(async (products) => {
+      const parsed = this._productsRepository.makeFromData(products) as Product[];
+      for (const product of parsed) {
+        await this._productsRepository.addProduct({
+          name: product.name,
+          amount: product.amount,
+          price: product.price,
+          source: product.source,
+          category_id: product.category_id as string | null
+        });
+      }
+      this.loadProducts();
+    });
+  }
+
   deleteProduct(
     recipe: Product,
   ) {
+    if (!recipe.uuid) {
+      return;
+    }
     this._productsRepository.deleteProduct(recipe.uuid, () => {
       this.loadProducts();
     });
