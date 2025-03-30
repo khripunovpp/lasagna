@@ -13,6 +13,8 @@ import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {UploadComponent} from '../../ui/form/upload.component';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
+import {TransferDataService} from '../../../service/services/transfer-data.service';
+import {Stores} from '../../../service/const/stores';
 
 @Component({
   selector: 'lg-product-list',
@@ -36,6 +38,21 @@ import {CsvReaderService} from '../../../service/services/csv-reader.service';
                              [size]="'small'"
                              [style]="'warning'">
                       Upload
+                  </lg-button>
+              </lg-upload>
+
+              <lg-button (click)="exportProducts()"
+                         [flat]="true"
+                         [size]="'small'"
+                         [style]="'info'">
+                  Export
+              </lg-button>
+
+              <lg-upload (filesSelected)="importProducts($event)">
+                  <lg-button [flat]="true"
+                             [size]="'small'"
+                             [style]="'warning'">
+                      Import
                   </lg-button>
               </lg-upload>
           </lg-gap-row>
@@ -96,6 +113,7 @@ export class ProductListComponent
   constructor(
     public _productsRepository: ProductsRepository,
     private _csvReaderService: CsvReaderService,
+    private _transferDataService: TransferDataService,
   ) {
 
   }
@@ -122,6 +140,16 @@ export class ProductListComponent
       }
       this.loadProducts();
     });
+  }
+
+  exportProducts() {
+    this._transferDataService.exportTable(Stores.PRODUCTS);
+  }
+
+  importProducts(
+    file: File[]
+  ) {
+    this._transferDataService.importTable(Stores.PRODUCTS, file[0]);
   }
 
   deleteProduct(

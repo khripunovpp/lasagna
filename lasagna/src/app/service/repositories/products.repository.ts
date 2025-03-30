@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {IndexDbService} from '../services/index-db.service';
 import {Category} from './category.repository';
+import {parseFloatingNumber} from '../../helpers/number.helper';
+import {ProductDbInputScheme} from '../../schemas/product.scema';
 
 export interface Product {
   uuid?: string
@@ -26,7 +28,7 @@ export class ProductsRepository {
 
   addProduct(product: ProductDbValue) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.addData('productsStore', product);
+      await this._indexDbService.addData('productsStore', this._toDbValue(product));
       resolve();
     });
   }
@@ -61,10 +63,9 @@ export class ProductsRepository {
     });
   }
 
-
   editProduct(uuid: string, product: ProductDbValue) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.replaceData('productsStore', uuid, product);
+      await this._indexDbService.replaceData('productsStore', uuid, this._toDbValue(product));
       resolve();
     });
   }
@@ -99,5 +100,18 @@ export class ProductsRepository {
       source: data.source,
       category_id: data.category_id,
     };
+  }
+
+  private _toDbValue(product: unknown): ProductDbValue {
+    if ((product as any) != null) {
+      return ProductDbInputScheme.parse({
+        name: String((product as any).name || ''),
+        price: parseFloatingNumber((product as any).price) || 0,
+        amount: parseFloatingNumber((product as any).amount) || 0,
+        source: String((product as any).source || ''),
+        category_id: String((product as any).category_id || ''),
+      })
+    }
+    return null as any;
   }
 }
