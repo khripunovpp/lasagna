@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {IndexDbService} from '../services/index-db.service';
 import {Product} from './products.repository';
+import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {Stores} from '../const/stores';
 
 export interface Ingredient {
   name: string
@@ -32,64 +33,38 @@ export interface RecipeDbValue {
 })
 export class RecipesRepository {
   constructor(
-    public _indexDbService: IndexDbService,
+    public _indexDbService: DexieIndexDbService,
   ) {
   }
 
   async addRecipe(product: RecipeDbValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.addData('recipesStore', product);
-      resolve();
-    });
+    return this._indexDbService.addData(Stores.RECIPES, product);
   }
 
-  getRecipes(
-    onSuccess: (result: any) => void,
-  ) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('recipesStore', 'readonly');
-      const store = transaction.objectStore('recipesStore');
-      const request = store.getAll();
-      request.onsuccess = (event: any) => {
-        onSuccess(event.target.result);
-      }
-    });
+  getRecipes() {
+    return this._indexDbService.getAll(Stores.RECIPES);
   }
 
   async getOne(
     uuid: Recipe | string | undefined,
-    onSuccess: (result: any) => void,
   ) {
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<Recipe | undefined>(async (resolve, reject) => {
       if (!uuid) {
-        resolve();
+        resolve(undefined);
         return;
       }
       uuid = (uuid as Recipe).uuid || uuid as string;
-      await this._indexDbService.getOne('recipesStore', uuid, (result: any) => {
-        onSuccess(result);
-        resolve();
+      await this._indexDbService.getOne(Stores.RECIPES, uuid).then((result: any) => {
+        resolve(result);
       });
     });
   }
 
   editRecipe(uuid: string, recipe: RecipeDbValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        await this._indexDbService.replaceData('recipesStore', uuid, recipe);
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
+    return this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
   }
 
-  deleteRecipe(uuid: string, onSuccess: () => void) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('recipesStore', 'readwrite');
-      const store = transaction.objectStore('recipesStore');
-      store.delete(uuid);
-      onSuccess();
-    });
+  deleteRecipe(uuid: string) {
+    return this._indexDbService.remove(Stores.RECIPES, uuid);
   }
 }

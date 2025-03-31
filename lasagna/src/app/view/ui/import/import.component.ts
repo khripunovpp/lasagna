@@ -5,13 +5,13 @@ import {ButtonComponent} from '../layout/button.component';
 import {ZodObject} from 'zod';
 import {Stores} from '../../../service/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
-import {IndexDbService} from '../../../service/services/index-db.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialog/dialog.component';
 import {AsyncPipe, JsonPipe, KeyValuePipe, NgClass} from '@angular/common';
 import {GapRowComponent} from '../layout/gap-row.component';
 import {GapColumnComponent} from '../layout/gap-column.component';
 import {FormsModule} from '@angular/forms';
+import {DexieIndexDbService} from '../../../service/services/dexie-index-db.service';
 
 @Component({
   selector: 'lg-import',
@@ -157,7 +157,7 @@ import {FormsModule} from '@angular/forms';
 export class ImportComponent {
   constructor(
     private _csvReaderService: CsvReaderService,
-    private _indexDbService: IndexDbService,
+    private _indexDbService: DexieIndexDbService,
   ) {
   }
 
@@ -207,7 +207,7 @@ export class ImportComponent {
   async onConfirm() {
     for (const item of this.parsedData) {
       if (this.rowsToAdd[item.name]) {
-        await this._addData(item, this.storeName() as Stores);
+        await this._indexDbService.addData(this.storeName() as Stores, item);
         console.log('add', item);
       } else if (this.rowsToUpdate[item.name] && !this.skipAllDuplicates()) {
         await this._indexDbService.replaceData(this.storeName() as Stores, item.uuid, item);
@@ -292,16 +292,6 @@ export class ImportComponent {
     });
   }
 
-  private _addData(
-    data: any,
-    storeName: Stores,
-  ) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.addData(storeName, data);
-      resolve();
-    });
-  }
-
   private _analyzeDuplicates(
     data: any,
   ) {
@@ -309,7 +299,7 @@ export class ImportComponent {
       data: any;
       duplicate: boolean
     }>((resolve, reject) => {
-      this._indexDbService.search(this.storeName() as Stores, 'name', data.name, (result: any) => {
+      this._indexDbService.search(this.storeName() as Stores, 'name', data.name).then((result: any) => {
         if (result.length) {
           resolve({
             data: result,

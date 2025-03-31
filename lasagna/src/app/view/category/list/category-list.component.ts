@@ -83,7 +83,7 @@ export class CategoryListComponent
   deleteCategory(
     category: Category,
   ) {
-    this.categoryRepository.deleteCategory(category.uuid, () => {
+    this.categoryRepository.deleteCategory(category.uuid).then(()=> {
       this.loadCategory();
     });
   }
@@ -93,7 +93,7 @@ export class CategoryListComponent
   }
 
   loadCategory() {
-    this.categoryRepository.getCategory((categories) => {
+    this.categoryRepository.getCategories().then((categories) => {
       const sorted = categories.toSorted((a: Category, b: Category) => a.name.localeCompare(b.name));
       this.categories.set(sorted);
     });

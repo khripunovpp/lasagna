@@ -1,41 +1,23 @@
 import {Injectable} from '@angular/core';
-import {IndexDbService} from './index-db.service';
 import {CsvReaderService} from './csv-reader.service';
-import {ZodObject} from 'zod';
+import {DexieIndexDbService} from './dexie-index-db.service';
+import {Stores} from '../const/stores';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransferDataService {
   constructor(
-    private _indexDbService: IndexDbService,
+    private _indexDbService: DexieIndexDbService,
     private _csvReaderService: CsvReaderService
   ) {
   }
 
   exportTable(
-    source: string,
+    source: Stores
   ) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction(source, 'readonly');
-      const store = transaction.objectStore(source);
-      const request = store.getAll();
-      request.onsuccess = (event: any) => {
-        const data = event.target.result;
-        this._csvReaderService.saveToFile(data, 'export.csv');
-      }
-    });
-  }
-
-  importTable(
-    source: string,
-    file: File,
-    schema?: ZodObject<any, any, any>,
-  ) {
-    return this._csvReaderService.readFromFile(file).then(async (items) => {
-      for (const item of items) {
-        // await this._indexDbService.addData(source, item, schema);
-      }
+    return this._indexDbService.getAll(source).then(data => {
+      this._csvReaderService.saveToFile(data, `${source}_export_${new Date().toISOString()}.csv`);
     });
   }
 

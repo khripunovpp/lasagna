@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {ExpandDirective} from './view/directives/expand.directive';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {GapColumnComponent} from './view/ui/layout/gap-column.component';
 import {ContainerComponent} from './view/ui/layout/container/container.component';
 import {ButtonComponent} from './view/ui/layout/button.component';

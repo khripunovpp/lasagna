@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {IndexDbService} from '../services/index-db.service';
 import {Category} from './category.repository';
 import {parseFloatingNumber} from '../../helpers/number.helper';
 import {ProductDbInputScheme} from '../../schemas/product.scema';
+import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {Stores} from '../const/stores';
 
 export interface Product {
   uuid?: string
@@ -22,61 +23,39 @@ export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
 })
 export class ProductsRepository {
   constructor(
-    public _indexDbService: IndexDbService,
+    public _indexDbService: DexieIndexDbService,
   ) {
   }
 
   addProduct(product: ProductDbValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.addData('productsStore', this._toDbValue(product));
-      resolve();
-    });
+    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product))
   }
 
   async getOne(
     uuid: Product | string | undefined,
-    onSuccess: (result: any) => void,
   ) {
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<Product|undefined>(async (resolve, reject) => {
       if (!uuid) {
-        resolve();
+        resolve(undefined);
         return;
       }
       uuid = (uuid as Product).uuid || uuid as string;
-      await this._indexDbService.getOne('productsStore', uuid, (result: any) => {
-        onSuccess(result);
-        resolve();
+      await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: any) => {
+        resolve(result);
       });
     });
   }
 
-  getProducts(
-    onSuccess: (result: any) => void,
-  ) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('productsStore', 'readonly');
-      const store = transaction.objectStore('productsStore');
-      const request = store.getAll();
-      request.onsuccess = (event: any) => {
-        onSuccess(event.target.result);
-      }
-    });
+  getProducts() {
+    return this._indexDbService.getAll(Stores.PRODUCTS) as Promise<Product[]>;
   }
 
   editProduct(uuid: string, product: ProductDbValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.replaceData('productsStore', uuid, this._toDbValue(product));
-      resolve();
-    });
+    return this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue(product));
   }
 
-  deleteProduct(uuid: string, onSuccess: () => void) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('productsStore', 'readwrite');
-      const store = transaction.objectStore('productsStore');
-      store.delete(uuid);
-      onSuccess();
-    });
+  deleteProduct(uuid: string) {
+    return this._indexDbService.remove(Stores.PRODUCTS, uuid);
   }
 
   makeFromData(

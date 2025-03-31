@@ -40,7 +40,7 @@ export class CalculateRecipeService {
       let totalAmount = 0;
       let totalWeight = 0;
 
-      await this._recipeRepository.getOne(recipeUUID, async recipe => {
+      await this._recipeRepository.getOne(recipeUUID).then(async recipe => {
         const {
           table: ingredientTable,
           totalAmount: ingredientTotal,
@@ -48,9 +48,9 @@ export class CalculateRecipeService {
 
         totalAmount += ingredientTotal || 0;
 
-        totalWeight = recipe.ingredients.reduce((acc: number, ingredient: Ingredient) => {
+        totalWeight = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
           return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
-        }, 0);
+        }, 0) ?? 0;
 
         table.push(...ingredientTable);
 
@@ -80,10 +80,10 @@ export class CalculateRecipeService {
       let totalAmount = 0;
       const ingredientAmount = ingredient.amount;
 
-      await this._recipeRepository.getOne(ingredient.recipe_id, async recipe => {
-        const recipeTotalAmount = recipe.ingredients.reduce((acc: number, ingredient: Ingredient) => {
+      await this._recipeRepository.getOne(ingredient.recipe_id).then(async recipe => {
+        const recipeTotalAmount = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
           return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
-        }, 0);
+        }, 0) ?? 0;
         const scaleKeff = ingredientAmount / recipeTotalAmount;
 
 
@@ -103,7 +103,7 @@ export class CalculateRecipeService {
         debugger
 
         table.push(this._makeRecipeCaption({
-          name: recipe.name,
+          name: recipe?.name || 'Unknown recipe',
           price_per_gram: perGram,
           amount: ingredient.amount,
           total: perGram * ingredient.amount,
@@ -125,17 +125,17 @@ export class CalculateRecipeService {
 
 
   private _makeIngredientTable(
-    recipeInst: Recipe,
+    recipeInst?: Recipe,
   ) {
     const table: CalculationTableParams[] = [];
     let totalWeight = 0;
     let totalAmount = 0;
 
-    return Promise.all(recipeInst.ingredients.map(async (ingredient: Ingredient, index: number) => {
+    return Promise.all(recipeInst?.ingredients.map(async (ingredient: Ingredient, index: number) => {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
-        debugger
+      debugger
       if (!hasRecipe && !hasProduct && !hasName) {
         const amount = ingredient.amount;
         return;
@@ -147,8 +147,8 @@ export class CalculateRecipeService {
         totalAmount += result.totalAmount;
         totalWeight += result.totalWeight;
       } else if (hasProduct) {
-        const product = await this._productRepository.getOne(ingredient.product_id, async product => {
-          if (!product){
+        const product = await this._productRepository.getOne(ingredient.product_id).then(async product => {
+          if (!product) {
             table.push(this._makeRow({
               name: 'Unknown product',
               price_per_gram: undefined,
@@ -201,7 +201,7 @@ export class CalculateRecipeService {
         totalWeight += +ingredient.amount;
       }
 
-    })).then(() => {
+    }) ?? []).then(() => {
       return {
         table,
         totalAmount,

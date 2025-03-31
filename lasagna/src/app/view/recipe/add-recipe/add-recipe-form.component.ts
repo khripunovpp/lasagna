@@ -199,14 +199,14 @@ export class AddRecipeFormComponent
     if (!this.uuid()) {
       return;
     }
-    this._recipesRepository.getOne(this.uuid(), recipe => {
+    this._recipesRepository.getOne(this.uuid()).then( recipe => {
       this.form.reset({
         ...recipe,
         ingredients: [],
       });
       (this.form.get('ingredients') as FormArray).clear();
 
-      recipe.ingredients.forEach((ingredient: Recipe['ingredients'][number], index: number) => {
+      recipe?.ingredients.forEach((ingredient: Recipe['ingredients'][number], index: number) => {
         this.ingredients.push(this._getIngredientGroup(ingredient));
         //openRecipeField
         if (ingredient.recipe_id) {
@@ -274,7 +274,6 @@ export class AddRecipeFormComponent
     values: RecipeFormValue
   ) {
     this._recipesRepository.addRecipe(this._values).then(() => {
-
       this._router.navigate(['/recipes']);
     });
   }
@@ -283,7 +282,6 @@ export class AddRecipeFormComponent
     values: RecipeFormValue
   ) {
     this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
-
       this._router.navigate(['/recipes']);
     }).catch(error => {
       console.error(error);

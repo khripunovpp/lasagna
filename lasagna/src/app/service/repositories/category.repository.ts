@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {IndexDbService} from '../services/index-db.service';
 import {CategoryFormValue} from '../../view/category/add-category/add-category-form.component';
+import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {Stores} from '../const/stores';
 
 export interface Category {
   uuid: string
@@ -12,53 +13,30 @@ export interface Category {
 })
 export class CategoryRepository {
   constructor(
-    public _indexDbService: IndexDbService,
+    public _indexDbService: DexieIndexDbService,
   ) {
   }
 
   addCategory(product: CategoryFormValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.addData('categoryStore', product);
-      resolve();
-    });
+    return this._indexDbService.addData(Stores.CATEGORIES, product);
   }
 
   async getOne(
     uuid: string,
-    onSuccess: (result: any) => void,
   ) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.getOne('categoryStore', uuid, onSuccess);
-      resolve();
-    });
+    return this._indexDbService.getOne(Stores.CATEGORIES, uuid);
   }
 
 
-  getCategory(
-    onSuccess: (result: any) => void,
-  ) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('categoryStore', 'readonly');
-      const store = transaction.objectStore('categoryStore');
-      const request = store.getAll();
-      request.onsuccess = (event: any) => {
-        onSuccess(event.target.result);
-      }
-    });
+  getCategories() {
+    return this._indexDbService.getAll(Stores.CATEGORIES) as Promise<Category[]>;
   }
 
   editCategory(uuid: string, category: CategoryFormValue) {
-    return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.replaceData('categoryStore', uuid, category);
-      resolve();
-    })
+    return this._indexDbService.replaceData(Stores.CATEGORIES, uuid, category);
   }
-  deleteCategory(uuid: string, onSuccess: () => void) {
-    this._indexDbService.openDb(async db => {
-      const transaction = db.transaction('categoryStore', 'readwrite');
-      const store = transaction.objectStore('categoryStore');
-      store.delete(uuid);
-      onSuccess();
-    });
+
+  deleteCategory(uuid: string) {
+    return this._indexDbService.remove(Stores.CATEGORIES, uuid);
   }
 }
