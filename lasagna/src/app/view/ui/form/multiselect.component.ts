@@ -109,7 +109,7 @@ export class MultiselectComponent
 
   searchFn = (term: string, item: MultiselectItem) => {
     const val = item as any;
-    return val.uuid === term;
+    return val.name?.toLowerCase().includes(term.toLowerCase())
   }
 
   compareWith = (a: MultiselectItem, b: MultiselectItem) => {
