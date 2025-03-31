@@ -19,50 +19,55 @@ export class IndexDbService {
     onSuccess: (event: IDBDatabase) => void,
   ) {
     return new Promise<void>(async (resolve, reject) => {
-      // Open a connection to the database
-      const db = await (window as any).indexedDB.open('lasagna-db', 1);
+      try {
+        // Open a connection to the database
+        const db = await (window as any).indexedDB.open('lasagna-db', 1);
 
-      // // Create a new object store if it doesn't exist
-      // if (!db.objectStoreNames.contains('my-store')) {
-      //   db.createObjectStore('my-store');
-      // }
+        // // Create a new object store if it doesn't exist
+        // if (!db.objectStoreNames.contains('my-store')) {
+        //   db.createObjectStore('my-store');
+        // }
 
-      db.onerror = (event: Event) => {
-        reject(event);
-      };
-      db.onsuccess = (event: Event) => {
-        onSuccess((event.target as any)?.result as IDBDatabase);
-      };
+        db.onerror = (event: Event) => {
+          reject(event);
+        };
+        db.onsuccess = (event: Event) => {
+          debugger
+          onSuccess((event.target as any)?.result as IDBDatabase);
+        };
 
-      // This event is only implemented in recent browsers
-      db.onupgradeneeded = (event: any) => {
-        // Save the IDBDatabase interface
-        const db = (event.target as any)?.result as IDBDatabase;
+        // This event is only implemented in recent browsers
+        db.onupgradeneeded = (event: any) => {
+          // Save the IDBDatabase interface
+          const db = (event.target as any)?.result as IDBDatabase;
 
-        // Create an objectStore for this database
-        const productsStore = db.createObjectStore(Stores.PRODUCTS, {
-          keyPath: "uuid",
-          autoIncrement: true
-        });
+          // Create an objectStore for this database
+          const productsStore = db.createObjectStore(Stores.PRODUCTS, {
+            keyPath: "uuid",
+            autoIncrement: true
+          });
 
-        productsStore.createIndex("name", "name", {unique: false});
+          productsStore.createIndex("name", "name", {unique: false});
 
-        const recipesStore = db.createObjectStore(Stores.RECIPES, {
-          keyPath: "uuid",
-          autoIncrement: true
-        });
+          const recipesStore = db.createObjectStore(Stores.RECIPES, {
+            keyPath: "uuid",
+            autoIncrement: true
+          });
 
-        recipesStore.createIndex("name", "name", {unique: false});
+          recipesStore.createIndex("name", "name", {unique: false});
 
-        const categoryStore = db.createObjectStore(Stores.CATEGORIES, {
-          keyPath: "uuid",
-          autoIncrement: true
-        });
+          const categoryStore = db.createObjectStore(Stores.CATEGORIES, {
+            keyPath: "uuid",
+            autoIncrement: true
+          });
 
-        categoryStore.createIndex("name", "name", {unique: false});
-      };
+          categoryStore.createIndex("name", "name", {unique: false});
+        };
 
-      resolve();
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
@@ -82,12 +87,18 @@ export class IndexDbService {
 
   replaceData(storeKey: string, uuid: string, value: any) {
     // Open the database
-    return this.openDb(indexedDB => {
-      const transaction = indexedDB.transaction(storeKey, 'readwrite');
+    return new Promise<void>((resolve, reject) => {
+      this.openDb(indexedDB => {
+        const transaction = indexedDB.transaction(storeKey, 'readwrite');
 
-      const store = transaction.objectStore(storeKey);
-      // Put the data in the store
-      store.put(value, 'uuid');
+        const store = transaction.objectStore(storeKey);
+        // Put the data in the store
+        debugger
+        store.put(value, 'uuid');
+        const readed = store.get(uuid);
+        console.log(readed);
+        resolve();
+      });
     });
   }
 
