@@ -261,7 +261,7 @@ export class AddRecipeFormComponent
   addIngredient() {
     this.ingredients.push(new FormGroup({
       name: new FormControl('', Validators.required),
-      amount: new FormControl(0, Validators.required),
+      amount: new FormControl('', Validators.required),
       product_id: new FormControl('', Validators.required),
     }));
   }
