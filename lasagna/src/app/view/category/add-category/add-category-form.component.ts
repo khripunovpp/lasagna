@@ -69,7 +69,7 @@ export class AddCategoryFormComponent
     if (!this.uuid()) {
       return;
     }
-    this._categoryRepository.getOne(this.uuid(), category => {
+    this._categoryRepository.getOne(this.uuid()).then(category => {
       this.form.reset(category);
       this.form.updateValueAndValidity();
     });

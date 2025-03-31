@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
-import {IndexDbService} from './index-db.service';
+import {DexieIndexDbService} from './dexie-index-db.service';
+import {Stores} from '../const/stores';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +9,13 @@ import {IndexDbService} from './index-db.service';
 export class IndexDbSelectLoaderService
   implements SelectResourceLoader {
   constructor(
-    private _indexDb: IndexDbService
+    private _indexDb: DexieIndexDbService,
   ) {
   }
 
   load<T>(
-    storeName: string
+    storeName: Stores
   ) {
-    return new Promise<any[]>((resolve, reject) => {
-      this._indexDb.openDb((db) => {
-        const transaction = db.transaction(storeName, 'readonly');
-        const store = transaction.objectStore(storeName);
-        const request = store.getAll();
-        request.onsuccess = () => {
-          resolve(request.result);
-        }
-      })
-    })
+    return this._indexDb.getAll(storeName)
   }
 }

@@ -111,6 +111,8 @@ export class ProductListComponent
   }
 
   products = signal<Product[]>([])
+  protected readonly ProductDbInputScheme = ProductDbInputScheme;
+  protected readonly Stores = Stores;
 
   getPricePerGram(product: Product) {
     return (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
@@ -119,13 +121,14 @@ export class ProductListComponent
   exportProducts() {
     this._transferDataService.exportTable(Stores.PRODUCTS);
   }
+
   deleteProduct(
     recipe: Product,
   ) {
     if (!recipe.uuid) {
       return;
     }
-    this._productsRepository.deleteProduct(recipe.uuid, () => {
+    this._productsRepository.deleteProduct(recipe.uuid).then(() => {
       this.loadProducts();
     });
   }
@@ -135,12 +138,9 @@ export class ProductListComponent
   }
 
   loadProducts() {
-    this._productsRepository.getProducts((products) => {
+    this._productsRepository.getProducts().then((products) => {
       const sorted = products.toSorted((a: Product, b: Product) => a.name.localeCompare(b.name));
       this.products.set(sorted);
     });
   }
-
-  protected readonly ProductDbInputScheme = ProductDbInputScheme;
-  protected readonly Stores = Stores;
 }

@@ -37,7 +37,7 @@ export class SelectResourcesService {
       lists: {},
       loader: {
         load: () => {
-          return this._indexDbSelectLoaderService.load(cfg.loaderConfig?.['storeName'] as string);
+          return this._indexDbSelectLoaderService.load(cfg.loaderConfig?.['storeName']);
         }
       }
     });

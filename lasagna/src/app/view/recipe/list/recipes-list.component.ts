@@ -84,7 +84,7 @@ export class RecipesListComponent
   deleteRecipe(
     recipe: Recipe,
   ) {
-    this._recipesRepository.deleteRecipe(recipe.uuid, () => {
+    this._recipesRepository.deleteRecipe(recipe.uuid).then(() => {
       this.loadRecipes();
     });
   }
@@ -94,7 +94,7 @@ export class RecipesListComponent
   }
 
   loadRecipes() {
-    this._recipesRepository.getRecipes((recipes) => {
+    this._recipesRepository.getRecipes().then((recipes) => {
       const sorted = recipes.toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name));
       this.recipes.set(sorted);
     });

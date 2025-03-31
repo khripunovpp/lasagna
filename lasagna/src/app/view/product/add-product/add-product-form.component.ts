@@ -126,7 +126,7 @@ export class AddProductFormComponent
     if (!this.uuid()) {
       return;
     }
-    this._productsRepository.getOne(this.uuid(), product => {
+    this._productsRepository.getOne(this.uuid()).then(product => {
       this.form.reset(product);
     });
   });
