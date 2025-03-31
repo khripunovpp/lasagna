@@ -86,9 +86,10 @@ export class CalculateRecipeService {
         }, 0);
         const scaleKeff = ingredientAmount / recipeTotalAmount;
 
-        const result = await this._makeIngredientTable(recipe);
-        result.table = result.table.map((row, idx) => {
 
+        const result = await this._makeIngredientTable(recipe);
+
+        result.table = result.table.map((row, idx) => {
           return {
             ...row,
             amount: parseFloat((row.amount ? row.amount * scaleKeff : 0).toFixed(5)),
@@ -97,7 +98,9 @@ export class CalculateRecipeService {
           };
         })
 
-        const perGram = result.totalAmount / result.totalWeight;
+        const perGram = result.totalAmount ? result.totalAmount / result.totalWeight : 0;
+
+        debugger
 
         table.push(this._makeRecipeCaption({
           name: recipe.name,
@@ -132,7 +135,11 @@ export class CalculateRecipeService {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
-      if (!hasRecipe && !hasProduct && !hasName) return;
+        debugger
+      if (!hasRecipe && !hasProduct && !hasName) {
+        const amount = ingredient.amount;
+        return;
+      }
 
       if (hasRecipe) {
         const result = await this._makeRecipeSubTable(ingredient);
@@ -141,7 +148,34 @@ export class CalculateRecipeService {
         totalWeight += result.totalWeight;
       } else if (hasProduct) {
         const product = await this._productRepository.getOne(ingredient.product_id, async product => {
-          if (!product?.price || !product?.amount) return;
+          if (!product){
+            table.push(this._makeRow({
+              name: 'Unknown product',
+              price_per_gram: undefined,
+              amount: ingredient.amount,
+              total: undefined,
+            }));
+            return
+          }
+          if (!product?.price) {
+            table.push(this._makeRow({
+              name: product.name,
+              price_per_gram: 0,
+              amount: ingredient.amount,
+              total: 0,
+            }));
+            return
+          }
+
+          if (!product?.amount) {
+            table.push(this._makeRow({
+              name: product.name,
+              price_per_gram: 0,
+              amount: ingredient.amount,
+              total: 0,
+            }));
+            return
+          }
 
           const pricePerGram = (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
           const total = pricePerGram * (parseFloatingNumber(ingredient.amount) || 1);

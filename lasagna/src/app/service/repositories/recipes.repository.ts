@@ -75,8 +75,12 @@ export class RecipesRepository {
 
   editRecipe(uuid: string, recipe: RecipeDbValue) {
     return new Promise<void>(async (resolve, reject) => {
-      await this._indexDbService.replaceData('recipesStore', uuid, recipe);
-      resolve();
+      try {
+        await this._indexDbService.replaceData('recipesStore', uuid, recipe);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
