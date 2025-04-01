@@ -62,7 +62,6 @@ export class RecipesRepository {
   }
 
   editRecipe(uuid: string, recipe: RecipeDbValue) {
-    debugger
     return this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
   }
 

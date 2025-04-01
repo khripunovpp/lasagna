@@ -280,7 +280,6 @@ export class ImportComponent {
         this.parsedData.push(dataValidated.data);
 
         await this._analyzeDuplicates(dataValidated.data).then((data) => {
-          debugger
           if (data.duplicate) {
             this.analizeSubject.next(data.data[0]);
           } else {
