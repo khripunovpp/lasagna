@@ -94,10 +94,10 @@ export type ButtonStyle = 'default' |
       }
 
       .button.secondary {
-        background-color: #cce8ee;
+        background-color: #fafafa;
 
         &.flat {
-          color: #cce8ee;
+          color: #fafafa;
         }
       }
 

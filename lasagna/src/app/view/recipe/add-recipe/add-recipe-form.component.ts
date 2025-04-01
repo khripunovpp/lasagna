@@ -18,6 +18,7 @@ import {ControlsRowComponent} from '../../ui/form/controls-row.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {NotificationsService} from '../../../service/services/notifications.service';
+import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -117,6 +118,10 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                            formControlName="amount"></lg-number-input>
                                       </lg-control>
 
+                                      <lg-buttons-group [items]="buttons"
+                                                        formControlName="unit">
+                                      </lg-buttons-group>
+
                                       <ng-container ngProjectAs="rowActions">
                                           <lg-button (click)="deleteIngredient(i)"
                                                      [style]="'danger'"
@@ -164,6 +169,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ExpandDirective,
     NgClass,
     ParseMathDirective,
+    ButtonsGroupComponent,
   ],
   styles: [
     `
@@ -329,7 +335,32 @@ export class AddRecipeFormComponent
       }
     });
   }
-
+buttons: ButtonGroupItem[] = [
+    {
+      label: 'Grams',
+      value: 'gram',
+      style: 'secondary',
+      onClick: () => {
+        console.log('Grams');
+      },
+    },
+    {
+      label: 'Portions',
+      value: 'portion',
+      style: 'secondary',
+      onClick: () => {
+        console.log('Portion');
+      }
+    },
+    {
+      label: 'Pieces',
+      value: 'piece',
+      style: 'secondary',
+      onClick: () => {
+        console.log('Piece');
+      }
+    },
+  ];
   closeTextField(
     index: number
   ) {
@@ -386,6 +417,7 @@ export class AddRecipeFormComponent
       amount: new FormControl(ingredient?.amount?.toString() ?? null),
       product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null),
       recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null),
+      unit: new FormControl(ingredient?.unit ?? 'gram'),
     }, (group) => {
       if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {
         return null
