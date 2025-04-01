@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Product} from './products.repository';
+import {Product, ProductUnit} from './products.repository';
 import {DexieIndexDbService} from '../services/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
@@ -9,6 +9,7 @@ export interface Ingredient {
   uuid: string
   product_id: Product
   recipe_id?: Recipe
+  unit: ProductUnit
 }
 
 export interface Recipe {
@@ -61,6 +62,7 @@ export class RecipesRepository {
   }
 
   editRecipe(uuid: string, recipe: RecipeDbValue) {
+    debugger
     return this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
   }
 

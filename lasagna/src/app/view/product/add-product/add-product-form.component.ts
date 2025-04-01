@@ -133,11 +133,11 @@ export class AddProductFormComponent
     category_id: new FormControl<any>(null, Validators.required),
   });
 
-  buttons:ButtonGroupItem[] = [
+  buttons: ButtonGroupItem[] = [
     {
       label: 'Grams',
       value: 'gram',
-      style:'secondary',
+      style: 'secondary',
       onClick: () => {
         console.log('Grams');
       },
@@ -145,7 +145,7 @@ export class AddProductFormComponent
     {
       label: 'Portions',
       value: 'portion',
-      style:'secondary',
+      style: 'secondary',
       onClick: () => {
         console.log('Portion');
       }
@@ -153,7 +153,7 @@ export class AddProductFormComponent
     {
       label: 'Pieces',
       value: 'piece',
-      style:'secondary',
+      style: 'secondary',
       onClick: () => {
         console.log('Piece');
       }

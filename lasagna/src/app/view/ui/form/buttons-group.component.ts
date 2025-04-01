@@ -45,6 +45,10 @@ export interface ButtonGroupItem {
       .buttons-group lg-button {
         flex: 1;
       }
+
+      .buttons-group lg-button button {
+        width: 100%;
+      }
     `
   ],
   imports: [
