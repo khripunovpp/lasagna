@@ -11,6 +11,7 @@ export interface Product {
   price: number
   amount: number
   source: string
+  unit?: string
   category_id: Category | null
 }
 
@@ -69,6 +70,7 @@ export class ProductsRepository {
         amount: d.amount,
         source: d.source,
         category_id: d.category_id,
+        unit: d.unit,
       }));
     }
     return {
@@ -78,6 +80,7 @@ export class ProductsRepository {
       amount: data.amount,
       source: data.source,
       category_id: data.category_id,
+      unit: data.unit,
     };
   }
 
@@ -89,6 +92,7 @@ export class ProductsRepository {
         amount: parseFloatingNumber((product as any).amount) || 0,
         source: String((product as any).source || ''),
         category_id: String((product as any).category_id || ''),
+        unit: String((product as any).unit || ''),
       })
     }
     return null as any;
