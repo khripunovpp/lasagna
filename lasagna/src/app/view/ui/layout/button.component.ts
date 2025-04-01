@@ -11,6 +11,7 @@ import {RouterLink} from '@angular/router';
               [class.icon]="icon()"
               [routerLink]="link() ? link() : null"
               [ngClass]="style() + ' ' + size()"
+              type="button"
               class="button">
           <ng-content></ng-content>
       </button>

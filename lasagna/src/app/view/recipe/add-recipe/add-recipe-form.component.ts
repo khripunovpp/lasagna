@@ -16,6 +16,7 @@ import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ControlsRowComponent} from '../../ui/form/controls-row.component';
 import {ExpandDirective} from '../../directives/expand.directive';
+import {ParseMathDirective} from '../../directives/parse-math.directive';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -71,9 +72,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                           formControlName="name"></lg-input>
                                               </lg-control>
                                           </lg-gap-column>
-
                                       } @else {
-
                                           <lg-gap-column [size]="'small'">
                                               <lg-control>
                                                   <ng-container ngProjectAs="labelTpl">
@@ -110,6 +109,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
                                       <lg-control label="Amount">
                                           <lg-number-input #amount
+                                                           lsParseMath
                                                            (onKeydown)="addLast()"
                                                            [placeholder]="'In grams'"
                                                            formControlName="amount"></lg-number-input>
@@ -161,6 +161,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ControlsRowComponent,
     ExpandDirective,
     NgClass,
+    ParseMathDirective,
   ],
   styles: [
     `
