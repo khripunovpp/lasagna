@@ -282,7 +282,7 @@ export class AddRecipeFormComponent
     values: RecipeFormValue
   ) {
     if (!this._formValid) {
-      this._notificationsService.error('Please fill out all the fields');
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
       return;
     }
     this._recipesRepository.addRecipe(this._values).then(() => {
@@ -370,7 +370,7 @@ export class AddRecipeFormComponent
     let match = false;
     for (const ingr of ingredients) {
       const hasSubRecipe = ingr.recipe_id?.uuid;
-      if (hasSubRecipe === recipeUUID) {
+      if (hasSubRecipe && hasSubRecipe === recipeUUID) {
         match = true;
         break;
       }
@@ -383,12 +383,17 @@ export class AddRecipeFormComponent
   ) {
     return new FormGroup({
       name: new FormControl(ingredient?.name),
-      amount: new FormControl(ingredient?.amount.toString() ?? null),
+      amount: new FormControl(ingredient?.amount?.toString() ?? null),
       product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null),
       recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null),
     }, (group) => {
       if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {
         return null
+      }
+      if (group.value.product_id || group.value.name || group.value.recipe_id && parseInt(group.value.amount)) {
+        return {
+          ingredientAmountRequired: true
+        }
       }
       if (!this.uuid) return null;
       const uuid = this.uuid();
