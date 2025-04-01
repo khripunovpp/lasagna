@@ -17,6 +17,7 @@ import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ControlsRowComponent} from '../../ui/form/controls-row.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {NotificationsService} from '../../../service/services/notifications.service';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -68,6 +69,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                   </ng-container>
 
                                                   <lg-input
+                                                          (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
                                                           [placeholder]="'Here you can write the name of the ingredient'"
                                                           formControlName="name"></lg-input>
                                               </lg-control>
@@ -93,12 +95,12 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
                                                   @if (recipeFieldState()[i]) {
                                                       <lg-multiselect [resource]="'recipes'"
-                                                                      (onSelected)="amount.focus()"
+                                                                      (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
                                                                       [autoLoad]="true"
                                                                       formControlName="recipe_id"></lg-multiselect>
                                                   } @else {
                                                       <lg-multiselect [resource]="'products'"
-                                                                      (onSelected)="amount.focus()"
+                                                                      (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
                                                                       [autoLoad]="true"
                                                                       formControlName="product_id"></lg-multiselect>
                                                   }
@@ -181,14 +183,15 @@ export class AddRecipeFormComponent
     public _recipesRepository: RecipesRepository,
     public _selectResourcesService: SelectResourcesService,
     private _router: Router,
+    private _notificationsService: NotificationsService
   ) {
   }
 
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
-    description: new FormControl('', Validators.required),
-    outcome_amount: new FormControl<number | string | null>(null, Validators.required),
-    outcome_unit: new FormControl<string>('', Validators.required),
+    description: new FormControl(''),
+    outcome_amount: new FormControl<number | string | null>(null),
+    outcome_unit: new FormControl<string>(''),
     ingredients: new FormArray([
       this._getIngredientGroup(),
     ]),
@@ -200,7 +203,7 @@ export class AddRecipeFormComponent
     if (!this.uuid()) {
       return;
     }
-    this._recipesRepository.getOne(this.uuid()).then( recipe => {
+    this._recipesRepository.getOne(this.uuid()).then(recipe => {
       this.form.reset({
         ...recipe,
         ingredients: [],
@@ -235,6 +238,10 @@ export class AddRecipeFormComponent
     return clearEmpties(flaterizeObjectWithUuid<RecipeDbValue>(values));
   }
 
+  private get _formValid() {
+    return this.form.valid && !this.checkCycleRecipe(this.form.value.ingredients as any, this.uuid());
+  }
+
   addLast() {
     const lastControl = this.ingredients.at(this.ingredients.length - 1);
     // if last control is empty, skip, if not, add new control
@@ -245,9 +252,13 @@ export class AddRecipeFormComponent
 
   ngOnInit() {
     this.form.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(100),
     ).subscribe({
       next: values => {
+        const hasCycledRecipe = this.checkCycleRecipe(values.ingredients as any, this.uuid());
+        if (hasCycledRecipe) {
+          this._notificationsService.error('You cannot add a recipe to itself');
+        }
         console.log(values)
       }
     });
@@ -260,11 +271,7 @@ export class AddRecipeFormComponent
   }
 
   addIngredient() {
-    this.ingredients.push(new FormGroup({
-      name: new FormControl('', Validators.required),
-      amount: new FormControl('', Validators.required),
-      product_id: new FormControl('', Validators.required),
-    }));
+    this.ingredients.push(this._getIngredientGroup());
   }
 
   deleteIngredient(index: number) {
@@ -274,6 +281,10 @@ export class AddRecipeFormComponent
   addRecipe(
     values: RecipeFormValue
   ) {
+    if (!this._formValid) {
+      this._notificationsService.error('Please fill out all the fields');
+      return;
+    }
     this._recipesRepository.addRecipe(this._values).then(() => {
       this._router.navigate(['/recipes']);
     });
@@ -282,10 +293,29 @@ export class AddRecipeFormComponent
   editRecipe(
     values: RecipeFormValue
   ) {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      return;
+    }
     this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
       this._router.navigate(['/recipes']);
     }).catch(error => {
       console.error(error);
+    });
+  }
+
+  onIngredientSelected(
+    amount: NumberInputComponent,
+    index: number,
+    clearField: string | string[],
+  ) {
+    amount.focus();
+
+    this.ingredients.at(index).patchValue({
+      ...(Array.isArray(clearField) ? clearField.reduce((acc, field) => ({
+        ...acc,
+        [field]: null
+      }), {}) : {[clearField]: null}),
     });
   }
 
@@ -298,11 +328,6 @@ export class AddRecipeFormComponent
         [index]: true,
       }
     });
-
-    this.ingredients.at(index).patchValue({
-      product_id: null,
-      recipe_id: null,
-    });
   }
 
   closeTextField(
@@ -313,12 +338,6 @@ export class AddRecipeFormComponent
         ...value,
         [index]: false,
       }
-    });
-
-    this.ingredients.at(index).patchValue({
-      product_id: null,
-      recipe_id: null,
-      name: '',
     });
   }
 
@@ -331,11 +350,6 @@ export class AddRecipeFormComponent
         [index]: true,
       }
     });
-
-    this.ingredients.at(index).patchValue({
-      name: '',
-      product_id: null,
-    });
   }
 
   closeRecipeField(
@@ -347,11 +361,21 @@ export class AddRecipeFormComponent
         [index]: false,
       }
     });
+  }
 
-    this.ingredients.at(index).patchValue({
-      name: '',
-      product_id: null,
-    });
+  checkCycleRecipe(
+    ingredients: Recipe['ingredients'][number][],
+    recipeUUID: string
+  ) {
+    let match = false;
+    for (const ingr of ingredients) {
+      const hasSubRecipe = ingr.recipe_id?.uuid;
+      if (hasSubRecipe === recipeUUID) {
+        match = true;
+        break;
+      }
+    }
+    return match;
   }
 
   private _getIngredientGroup(
@@ -359,9 +383,24 @@ export class AddRecipeFormComponent
   ) {
     return new FormGroup({
       name: new FormControl(ingredient?.name),
-      amount: new FormControl(ingredient?.amount.toString() ?? null, Validators.required),
-      product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null, Validators.required),
-      recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null, Validators.required),
+      amount: new FormControl(ingredient?.amount.toString() ?? null),
+      product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null),
+      recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null),
+    }, (group) => {
+      if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {
+        return null
+      }
+      if (!this.uuid) return null;
+      const uuid = this.uuid();
+      if (this.checkCycleRecipe([group.value], uuid)) {
+        return {cycleRecipe: true};
+      }
+
+      if (!group.value.product_id && !group.value.name && !group.value.recipe_id) {
+        return {ingredientRequired: true};
+      }
+
+      return null;
     });
   }
 }

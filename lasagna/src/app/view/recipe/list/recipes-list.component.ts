@@ -32,13 +32,13 @@ import {CardComponent} from '../../ui/card/card.component';
                   @for (recipe of recipes();track $index;let i = $index) {
                       <lg-gap-row [center]="true">
                           <div class="expand">
-                              <a [routerLink]="'/calc-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                              <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
-                                     [link]="'/edit-recipe/' + recipe.uuid"
+                                     [link]="'/calc-recipe/' + recipe.uuid"
                                      [flat]="true">
-                              Edit
+                              Calculate
                           </lg-button>
                           <lg-button [style]="'danger'"
                                      [size]="'small'"
