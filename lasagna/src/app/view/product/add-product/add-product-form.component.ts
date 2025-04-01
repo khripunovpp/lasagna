@@ -57,7 +57,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
                                        lsParseMath></lg-number-input>
                   </lg-control>
 
-                  <lg-buttons-group [items]="buttons">
+                  <lg-buttons-group [items]="buttons"
+                                    formControlName="unit">
                   </lg-buttons-group>
               </lg-gap-row>
 
@@ -127,6 +128,7 @@ export class AddProductFormComponent
     name: new FormControl('', Validators.required),
     amount: new FormControl<number | null>(null, Validators.required),
     price: new FormControl<number | null>(null, Validators.required),
+    unit: new FormControl('gram'),
     source: new FormControl(''),
     category_id: new FormControl<any>(null, Validators.required),
   });
@@ -155,6 +157,7 @@ export class AddProductFormComponent
       return;
     }
     this._productsRepository.getOne(this.uuid()).then(product => {
+      debugger
       this.form.reset(product);
     });
   });
@@ -170,6 +173,9 @@ export class AddProductFormComponent
   }
 
   ngOnInit() {
+    this.form.valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
 
   addProduct(
@@ -183,6 +189,7 @@ export class AddProductFormComponent
   editProduct(
     values: ProductFormValue
   ) {
+    debugger
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this._router.navigate(['/products']);
     });
