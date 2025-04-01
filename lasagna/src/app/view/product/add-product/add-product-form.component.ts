@@ -14,6 +14,9 @@ import {TooltipComponent} from '../../ui/tooltip.component';
 import {EggsWidgetComponent} from '../../widgets/eggs-widget/eggs-widget.component';
 import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
+import {ExpandDirective} from '../../directives/expand.directive';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -30,8 +33,9 @@ export type ProductFormValue = Omit<Product, 'uuid'>
 
               <lg-control label="Amount">
                   <lg-number-input [placeholder]="'In grams'"
-                                   lsParseMath
-                                   formControlName="amount">
+                                   (onInputChange)="priceInput.focus()"
+                                   formControlName="amount"
+                                   lsParseMath>
 
                       <div ngProjectAs="after">
                           <lg-tooltip>
@@ -45,11 +49,17 @@ export type ProductFormValue = Omit<Product, 'uuid'>
                   </lg-number-input>
               </lg-control>
 
-              <lg-control label="Price per unit">
-                  <lg-number-input [placeholder]="'In your currency'"
-                                   lsParseMath
-                                   formControlName="price"></lg-number-input>
-              </lg-control>
+              <lg-gap-row [bottom]="true">
+                  <lg-control label="Price per unit" lgExpand>
+                      <lg-number-input [placeholder]="'In your currency'"
+                                       #priceInput
+                                       formControlName="price"
+                                       lsParseMath></lg-number-input>
+                  </lg-control>
+
+                  <lg-buttons-group [items]="buttons">
+                  </lg-buttons-group>
+              </lg-gap-row>
 
               <lg-control label="Source">
                   <lg-input [placeholder]="'Where do you buy it?'"
@@ -85,6 +95,9 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     EggsWidgetComponent,
     AmountWidgetsComponent,
     ParseMathDirective,
+    GapRowComponent,
+    ButtonsGroupComponent,
+    ExpandDirective,
   ],
   styles: [
     `
@@ -118,13 +131,24 @@ export class AddProductFormComponent
     category_id: new FormControl<any>(null, Validators.required),
   });
 
-
-  eggsChanged(event: any) {
-    this.form.patchValue({
-      amount: event
-    });
-  }
-
+  buttons:ButtonGroupItem[] = [
+    {
+      label: 'Gram',
+      value: 'gram',
+      style:'secondary',
+      onClick: () => {
+        console.log('Grams');
+      },
+    },
+    {
+      label: 'Portion',
+      value: 'portion',
+      style:'secondary',
+      onClick: () => {
+        console.log('Portion');
+      }
+    },
+  ];
   uuid = input<string>('');
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
@@ -137,6 +161,12 @@ export class AddProductFormComponent
 
   get value() {
     return this.form.value as ProductFormValue;
+  }
+
+  eggsChanged(event: any) {
+    this.form.patchValue({
+      amount: event
+    });
   }
 
   ngOnInit() {
