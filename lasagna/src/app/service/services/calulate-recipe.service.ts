@@ -49,6 +49,7 @@ export class CalculateRecipeService {
         totalAmount += ingredientTotal || 0;
 
         totalWeight = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
+          if (ingredient.unit !== 'gram') return acc;
           return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
         }, 0) ?? 0;
 
@@ -82,6 +83,7 @@ export class CalculateRecipeService {
 
       await this._recipeRepository.getOne(ingredient.recipe_id).then(async recipe => {
         const recipeTotalAmount = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
+          if (ingredient.unit !== 'gram') return acc;
           return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
         }, 0) ?? 0;
         const scaleKeff = ingredientAmount / recipeTotalAmount;
@@ -186,10 +188,9 @@ export class CalculateRecipeService {
             total: total,
             unit: product.unit
           }));
-
           totalAmount += total;
+
           if (unitGram) {
-            debugger
             totalWeight += +ingredient.amount;
           }
         });
@@ -271,7 +272,6 @@ export class CalculateRecipeService {
     total: number,
     totalWeight: number,
   ): CalculationTableParams {
-    debugger
     return {
       name: 'Total',
       amount: totalWeight,

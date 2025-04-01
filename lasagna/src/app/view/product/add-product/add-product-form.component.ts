@@ -165,7 +165,6 @@ export class AddProductFormComponent
       return;
     }
     this._productsRepository.getOne(this.uuid()).then(product => {
-      debugger
       this.form.reset(product);
     });
   });
@@ -197,7 +196,6 @@ export class AddProductFormComponent
   editProduct(
     values: ProductFormValue
   ) {
-    debugger
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this._router.navigate(['/products']);
     });
