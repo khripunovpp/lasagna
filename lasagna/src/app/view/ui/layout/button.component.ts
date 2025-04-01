@@ -2,17 +2,31 @@ import {Component, input, output, ViewEncapsulation} from '@angular/core';
 import {NgClass} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
+export type ButtonStyle = 'default' |
+  'primary' |
+  'secondary' |
+  'success' |
+  'danger' |
+  'warning' |
+  'info'
+
 @Component({
   selector: 'lg-button',
   standalone: true,
   template: `
       <button (click)="onClick.emit($event)"
+              [class.active]="active()"
               [class.flat]="flat()"
               [class.icon]="icon()"
-              [routerLink]="link() ? link() : null"
+              [class.no-bottom-radius]="noBottomRadius()"
+              [class.no-left-radius]="noLeftRadius()"
+              [class.no-radius]="noRadius()"
+              [class.no-right-radius]="noRightRadius()"
+              [class.no-top-radius]="noTopRadius()"
               [ngClass]="style() + ' ' + size()"
-              type="button"
-              class="button">
+              [routerLink]="link() ? link() : null"
+              class="button"
+              type="button">
           <ng-content></ng-content>
       </button>
 
@@ -39,6 +53,34 @@ import {RouterLink} from '@angular/router';
         justify-content: center;
       }
 
+      .button.no-radius {
+        border-radius: 0;
+      }
+
+      .button.no-top-radius {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      .button.no-bottom-radius {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .button.no-right-radius {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .button.no-left-radius {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      .button.active {
+        filter: brightness(0.95);
+      }
+
       .button.default {
         background-color: #fab6b6;
       }
@@ -52,10 +94,10 @@ import {RouterLink} from '@angular/router';
       }
 
       .button.secondary {
-        background-color: #b6f1fa;
+        background-color: #cce8ee;
 
         &.flat {
-          color: #b6f1fa;
+          color: #cce8ee;
         }
       }
 
@@ -125,15 +167,7 @@ export class ButtonComponent {
   }
 
   onClick = output<any>();
-  style = input<
-    'default' |
-    'primary' |
-    'secondary' |
-    'success' |
-    'danger' |
-    'warning' |
-    'info'
-  >('default');
+  style = input<ButtonStyle>('default');
   size = input<
     'default' |
     'small'
@@ -141,4 +175,10 @@ export class ButtonComponent {
   icon = input<boolean>(false);
   flat = input<boolean>(false);
   link = input<string>('');
+  noRightRadius = input<boolean>(false);
+  noLeftRadius = input<boolean>(false);
+  noRadius = input<boolean>(false);
+  noTopRadius = input<boolean>(false);
+  noBottomRadius = input<boolean>(false);
+  active = input<boolean>(false);
 }

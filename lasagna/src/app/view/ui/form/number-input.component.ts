@@ -7,6 +7,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   template: `
       <div class="lg-number-input">
           <input #input
+                 (change)="onInputChange.emit(value)"
                  (input)="onChangeInput($event)"
                  (keydown)="onKeydown.emit()"
                  [placeholder]="placeholder()"
@@ -83,6 +84,7 @@ export class NumberInputComponent
   value: string = '';
   placeholder = input('Enter text here');
   onKeydown = output();
+  onInputChange = output<string>();
 
   onChange: (value: string) => void = () => {
   };
@@ -108,12 +110,12 @@ export class NumberInputComponent
     this._change((event.target as HTMLInputElement).value);
   }
 
+  focus() {
+    this.input?.nativeElement.focus();
+  }
+
   private _change(value: string) {
     this.value = value;
     this.onChange(this.value);
-  }
-
-  focus() {
-    this.input?.nativeElement.focus();
   }
 }
