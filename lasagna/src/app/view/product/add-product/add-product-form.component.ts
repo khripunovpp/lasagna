@@ -50,8 +50,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
               </lg-control>
 
               <lg-gap-row [bottom]="true">
-                  <lg-control label="Price per unit" lgExpand>
-                      <lg-number-input [placeholder]="'In your currency'"
+                  <lg-control label="Price" lgExpand>
+                      <lg-number-input [placeholder]="'For the entire product in your currency'"
                                        #priceInput
                                        formControlName="price"
                                        lsParseMath></lg-number-input>
@@ -135,7 +135,7 @@ export class AddProductFormComponent
 
   buttons:ButtonGroupItem[] = [
     {
-      label: 'Gram',
+      label: 'Grams',
       value: 'gram',
       style:'secondary',
       onClick: () => {
@@ -143,11 +143,19 @@ export class AddProductFormComponent
       },
     },
     {
-      label: 'Portion',
+      label: 'Portions',
       value: 'portion',
       style:'secondary',
       onClick: () => {
         console.log('Portion');
+      }
+    },
+    {
+      label: 'Pieces',
+      value: 'piece',
+      style:'secondary',
+      onClick: () => {
+        console.log('Piece');
       }
     },
   ];

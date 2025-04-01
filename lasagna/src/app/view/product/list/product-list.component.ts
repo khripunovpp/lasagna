@@ -42,8 +42,8 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
                   Export
               </lg-button>
 
-              <lg-import [schema]="ProductDbInputScheme"
-                         (onDone)="loadProducts()"
+              <lg-import (onDone)="loadProducts()"
+                         [schema]="ProductDbInputScheme"
                          [storeName]="Stores.PRODUCTS">
               </lg-import>
           </lg-gap-row>
@@ -56,7 +56,13 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
                               <lg-gap-row [center]="true">
                                   <div style="flex: 20%">{{ product.name }}</div>
                                   <div style="flex: 10%"> {{ product.source ?? '' }}</div>
-                                  <div style="flex: 70%">{{ getPricePerGram(product) | number: '1.2-5' }} per gram
+                                  <div style="flex: 70%">
+                                      {{ getPricePerGram(product) | number: '1.2-5' }}
+                                      @if (!product.unit || product.unit === 'gram') {
+                                          per gram
+                                      } @else {
+                                          per {{ product.unit }}
+                                      }
                                   </div>
                               </lg-gap-row>
                           </div>

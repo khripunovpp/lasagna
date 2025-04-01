@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Ingredient, Recipe, RecipesRepository} from '../repositories/recipes.repository';
-import {ProductsRepository} from '../repositories/products.repository';
+import {ProductsRepository, ProductUnit} from '../repositories/products.repository';
 import {parseFloatingNumber} from '../../helpers/number.helper';
 
 export interface Calculation {
@@ -12,7 +12,7 @@ export interface Calculation {
 
 export interface CalculationTableParams {
   name: string
-  unit: string | undefined
+  unit: ProductUnit | undefined
   price_per_gram: number | undefined
   amount: number | undefined
   total: number | undefined
@@ -177,16 +177,21 @@ export class CalculateRecipeService {
 
           const pricePerGram = (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
           const total = pricePerGram * (parseFloatingNumber(ingredient.amount) || 1);
+          const unitGram = product.unit === 'gram' || !product.unit;
 
           table.push(this._makeRow({
             name: product.name,
             price_per_gram: pricePerGram,
             amount: ingredient.amount,
             total: total,
+            unit: product.unit
           }));
 
           totalAmount += total;
-          totalWeight += +ingredient.amount;
+          if (unitGram) {
+            debugger
+            totalWeight += +ingredient.amount;
+          }
         });
       } else if (hasName) {
 
@@ -214,7 +219,7 @@ export class CalculateRecipeService {
       price_per_gram: number | undefined
       amount: number | undefined
       total: number | undefined
-      unit?: string | undefined
+      unit?: ProductUnit | undefined
       indent?: number
     },
   ): CalculationTableParams {
@@ -223,7 +228,7 @@ export class CalculateRecipeService {
       price_per_gram: parseFloat(params.price_per_gram?.toFixed(5) ?? '0'),
       amount: params.amount,
       total: parseFloat(params.total?.toFixed(5) ?? '0'),
-      unit: 'g',
+      unit: params.unit || 'gram',
       indent: params.indent ?? 0,
       type: 'row',
     };
@@ -256,7 +261,7 @@ export class CalculateRecipeService {
       price_per_gram: parseFloat(params.price_per_gram.toFixed(5)),
       amount: params.amount,
       total: parseFloat(params.total.toFixed(2)),
-      unit: 'g',
+      unit: 'gram',
       indent: 0,
       type: 'recipe-row',
     };
@@ -266,10 +271,11 @@ export class CalculateRecipeService {
     total: number,
     totalWeight: number,
   ): CalculationTableParams {
+    debugger
     return {
       name: 'Total',
       amount: totalWeight,
-      unit: 'g',
+      unit: 'gram',
       price_per_gram: parseFloat((total / totalWeight).toFixed(5)),
       total: parseFloat(total.toFixed(2)),
       indent: 0,
