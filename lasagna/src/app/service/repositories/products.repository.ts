@@ -5,13 +5,15 @@ import {ProductDbInputScheme} from '../../schemas/product.scema';
 import {DexieIndexDbService} from '../services/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
+export type ProductUnit = 'gram' | 'portion' | 'piece';
+
 export interface Product {
   uuid?: string
   name: string
   price: number
   amount: number
   source: string
-  unit?: string
+  unit?: ProductUnit
   category_id: Category | null
 }
 
@@ -35,7 +37,7 @@ export class ProductsRepository {
   async getOne(
     uuid: Product | string | undefined,
   ) {
-    return new Promise<Product|undefined>(async (resolve, reject) => {
+    return new Promise<Product | undefined>(async (resolve, reject) => {
       if (!uuid) {
         resolve(undefined);
         return;

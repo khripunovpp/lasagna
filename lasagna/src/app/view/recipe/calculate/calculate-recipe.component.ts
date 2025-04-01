@@ -78,7 +78,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                           <th>Name</th>
                           <th>Amount</th>
                           <th>Unit</th>
-                          <th>Price per gram</th>
+                          <th>Price per unit</th>
                           <th>Total</th>
                       </tr>
                       </thead>

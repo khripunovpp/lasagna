@@ -390,7 +390,7 @@ export class AddRecipeFormComponent
       if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {
         return null
       }
-      if (group.value.product_id || group.value.name || group.value.recipe_id && parseInt(group.value.amount)) {
+      if ((group.value.product_id || group.value.name || group.value.recipe_id) && !parseInt(group.value.amount)) {
         return {
           ingredientAmountRequired: true
         }
