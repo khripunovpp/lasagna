@@ -13,6 +13,7 @@ import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {TooltipComponent} from '../../ui/tooltip.component';
 import {EggsWidgetComponent} from '../../widgets/eggs-widget/eggs-widget.component';
 import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
+import {ParseMathDirective} from '../../directives/parse-math.directive';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -29,6 +30,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
 
               <lg-control label="Amount">
                   <lg-number-input [placeholder]="'In grams'"
+                                   lsParseMath
                                    formControlName="amount">
 
                       <div ngProjectAs="after">
@@ -45,6 +47,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
 
               <lg-control label="Price per unit">
                   <lg-number-input [placeholder]="'In your currency'"
+                                   lsParseMath
                                    formControlName="price"></lg-number-input>
               </lg-control>
 
@@ -81,6 +84,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     TooltipComponent,
     EggsWidgetComponent,
     AmountWidgetsComponent,
+    ParseMathDirective,
   ],
   styles: [
     `
