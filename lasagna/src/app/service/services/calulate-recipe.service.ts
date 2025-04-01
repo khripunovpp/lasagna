@@ -100,8 +100,6 @@ export class CalculateRecipeService {
 
         const perGram = result.totalAmount ? result.totalAmount / result.totalWeight : 0;
 
-        debugger
-
         table.push(this._makeRecipeCaption({
           name: recipe?.name || 'Unknown recipe',
           price_per_gram: perGram,
@@ -135,7 +133,7 @@ export class CalculateRecipeService {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
-      debugger
+
       if (!hasRecipe && !hasProduct && !hasName) {
         const amount = ingredient.amount;
         return;
