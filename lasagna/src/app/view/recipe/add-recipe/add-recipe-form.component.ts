@@ -47,10 +47,9 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                        formControlName="outcome_amount"></lg-number-input>
                   </lg-control>
 
-                  <lg-control label="Outcome unit" lgExpand>
-                      <lg-input [placeholder]="'And here the unit of the outcome (e.g. grams, pieces, etc.)'"
-                                formControlName="outcome_unit"></lg-input>
-                  </lg-control>
+                  <lg-buttons-group [items]="buttons"
+                                    formControlName="outcome_unit">
+                  </lg-buttons-group>
               </lg-controls-row>
 
               <lg-control-group label="Ingredients" lgExpand>
@@ -205,6 +204,24 @@ export class AddRecipeFormComponent
   uuid = input<string>('');
   textFieldState = signal<Record<number, boolean>>({});
   recipeFieldState = signal<Record<number, boolean>>({});
+  buttons: ButtonGroupItem[] = [
+    {
+      label: 'Grams',
+      value: 'gram',
+      style: 'secondary',
+      onClick: () => {
+        console.log('Grams');
+      },
+    },
+    {
+      label: 'Pieces',
+      value: 'piece',
+      style: 'secondary',
+      onClick: () => {
+        console.log('Piece');
+      }
+    },
+  ];
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       return;
@@ -335,32 +352,7 @@ export class AddRecipeFormComponent
       }
     });
   }
-buttons: ButtonGroupItem[] = [
-    {
-      label: 'Grams',
-      value: 'gram',
-      style: 'secondary',
-      onClick: () => {
-        console.log('Grams');
-      },
-    },
-    {
-      label: 'Portions',
-      value: 'portion',
-      style: 'secondary',
-      onClick: () => {
-        console.log('Portion');
-      }
-    },
-    {
-      label: 'Pieces',
-      value: 'piece',
-      style: 'secondary',
-      onClick: () => {
-        console.log('Piece');
-      }
-    },
-  ];
+
   closeTextField(
     index: number
   ) {

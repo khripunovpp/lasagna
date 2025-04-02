@@ -1,4 +1,4 @@
-import {Component, ElementRef, forwardRef, input, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, output, signal, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -15,7 +15,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
                  class="input"
                  type="text">
 
-          <div class="lg-input__after">
+          <div class="lg-input__after"
+               [style.display]="noAfter() ? 'none' : 'flex'">
               <ng-content select="after"></ng-content>
           </div>
       </div>
@@ -85,8 +86,11 @@ export class InputComponent
   theme = input<
     'default' | 'contrast'
   >('default');
+  noAfter = signal(false);
+
   onChange: (value: string) => void = () => {
   };
+
   onTouched: () => void = () => {
   };
 
@@ -108,12 +112,19 @@ export class InputComponent
     this._change((event.target as HTMLInputElement).value);
   }
 
+  focus() {
+    this.input?.nativeElement.focus();
+  }
+
+  ngAfterViewInit() {
+    const after = this.input?.nativeElement.nextElementSibling;
+    if (after?.childElementCount === 0) {
+      this.noAfter.set(true);
+    }
+  }
+
   private _change(value: string) {
     this.value = value;
     this.onChange(this.value);
-  }
-
-  focus() {
-    this.input?.nativeElement.focus();
   }
 }
