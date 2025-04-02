@@ -49,7 +49,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
                           outcome: {{ result()?.recipe?.outcome_amount }} {{ result()?.recipe?.outcome_unit }}
                       </div>
 
-                      <div>one portion
+                      <div>one {{ result()?.recipe?.outcome_unit }}
                           costs: {{ (result()?.total || 1) / (result()?.recipe?.outcome_amount || 1) | number: '1.2-2' }}
                       </div>
                   } @else {

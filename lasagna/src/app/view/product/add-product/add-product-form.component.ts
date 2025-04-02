@@ -31,36 +31,35 @@ export type ProductFormValue = Omit<Product, 'uuid'>
                             formControlName="name"></lg-input>
               </lg-control>
 
-              <lg-control label="Amount">
-                  <lg-number-input [placeholder]="'In grams'"
-                                   (onInputChange)="priceInput.focus()"
-                                   formControlName="amount"
-                                   lsParseMath>
-
-                      <div ngProjectAs="after">
-                          <lg-tooltip>
-                              Widgets
-
-                              <div ngProjectAs="content">
-                                  <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
-                              </div>
-                          </lg-tooltip>
-                      </div>
-                  </lg-number-input>
-              </lg-control>
-
               <lg-gap-row [bottom]="true">
-                  <lg-control label="Price" lgExpand>
-                      <lg-number-input [placeholder]="'For the entire product in your currency'"
-                                       #priceInput
-                                       formControlName="price"
-                                       lsParseMath></lg-number-input>
+                  <lg-control label="Amount" lgExpand>
+                      <lg-number-input (onInputChange)="priceInput.focus()"
+                                       [placeholder]="'In grams'"
+                                       formControlName="amount"
+                                       lsParseMath>
+                          <div ngProjectAs="after">
+                              <lg-tooltip>
+                                  Widgets
+
+                                  <div ngProjectAs="content">
+                                      <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+                                  </div>
+                              </lg-tooltip>
+                          </div>
+                      </lg-number-input>
                   </lg-control>
 
                   <lg-buttons-group [items]="buttons"
                                     formControlName="unit">
                   </lg-buttons-group>
               </lg-gap-row>
+
+              <lg-control label="Price">
+                  <lg-number-input #priceInput
+                                   [placeholder]="'For the entire product in your currency'"
+                                   formControlName="price"
+                                   lsParseMath></lg-number-input>
+              </lg-control>
 
               <lg-control label="Source">
                   <lg-input [placeholder]="'Where do you buy it?'"
@@ -141,14 +140,6 @@ export class AddProductFormComponent
       onClick: () => {
         console.log('Grams');
       },
-    },
-    {
-      label: 'Portions',
-      value: 'portion',
-      style: 'secondary',
-      onClick: () => {
-        console.log('Portion');
-      }
     },
     {
       label: 'Pieces',

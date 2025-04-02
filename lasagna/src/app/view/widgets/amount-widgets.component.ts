@@ -74,6 +74,7 @@ export class AmountWidgetsComponent {
 
 
   onEggsChanged(event: any) {
+    if (!event) return;
     this.eggsChanged.emit(event);
   }
 }

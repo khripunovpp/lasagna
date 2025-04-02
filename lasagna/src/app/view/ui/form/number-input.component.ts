@@ -1,4 +1,4 @@
-import {Component, ElementRef, forwardRef, input, output, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, output, signal, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -14,7 +14,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
                  [value]="value"
                  class="input"
                  type="tel">
-          <div class="lg-number-input__after">
+          <div class="lg-number-input__after"
+               [style.display]="noAfter() ? 'none' : 'flex'">
               <ng-content select="after"></ng-content>
           </div>
       </div>
@@ -83,6 +84,7 @@ export class NumberInputComponent
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');
+  noAfter = signal(false);
   onKeydown = output();
   onInputChange = output<string>();
 
@@ -112,6 +114,13 @@ export class NumberInputComponent
 
   focus() {
     this.input?.nativeElement.focus();
+  }
+
+  ngAfterViewInit() {
+    const after = this.input?.nativeElement.nextElementSibling;
+    if (after?.childElementCount === 0) {
+      this.noAfter.set(true);
+    }
   }
 
   private _change(value: string) {
