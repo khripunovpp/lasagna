@@ -62,9 +62,11 @@ export class CategoryRepository {
         'Алкогольные напитки', 'Хлеб и выпечка', 'Мясные изделия (колбасы, ветчина)',
         'Сыры', 'Фастфуд и полуфабрикаты', 'Диетические продукты',
         'Детское питание', 'Супы и бульоны'
-      ].map((name, index) => ({id: index + 1, name}));
-
-      await this._indexDbService.balkAdd(Stores.CATEGORIES, defaultCategories);
+      ].map((name, index) => ({
+        uuid: '' + index,
+        name,
+      }));
+      await this._indexDbService.balkAdd(Stores.CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesInstalled', 'true');
     }
   }
