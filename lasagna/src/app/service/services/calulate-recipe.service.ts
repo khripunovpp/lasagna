@@ -18,6 +18,7 @@ export interface CalculationTableParams {
   total: number | undefined
   indent: number
   type: 'caption' | 'recipe-row' | 'total' | 'row'
+  uuid?: string
 }
 
 @Injectable({
@@ -42,21 +43,18 @@ export class CalculateRecipeService {
       let totalWeight = 0;
 
       await this._recipeRepository.getOne(recipeUUID).then(async recipe => {
+
+        const forOutcomeKeff: number = (forOutcome || recipe?.outcome_amount || 1) / (recipe?.outcome_amount || 1);
         const {
           table: ingredientTable,
           totalAmount: ingredientTotal,
-        } = await this._makeIngredientTable(recipe, forOutcome);
+          totalWeight: ingredientWeight,
+        } = await this._makeIngredientTable(recipe, forOutcomeKeff);
+
+        debugger
 
         totalAmount += ingredientTotal || 0;
-
-
-    const forOutcomeKeff = forOutcome / (recipe?.outcome_amount || 1);
-
-        totalWeight = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
-          if (ingredient.unit !== 'gram') return acc;
-          const amount = (parseFloatingNumber(ingredient.amount as any) || 0);
-          return acc + (amount * (forOutcomeKeff || 1));
-        }, 0) ?? 0;
+        totalWeight += ingredientWeight || 0;
 
         table.push(...ingredientTable);
 
@@ -73,9 +71,41 @@ export class CalculateRecipeService {
     });
   }
 
+  async getRecipe(
+    recipeUUID: Recipe | string | undefined,
+  ): Promise<Recipe & {
+    totalAmountInGrams: number
+    pricePerUnit: number
+  } | undefined> {
+    if (!recipeUUID) {
+      return undefined;
+    }
+    const recipe = await this._recipeRepository.getOne(recipeUUID);
+    if (!recipe) {
+      return undefined;
+    }
+    let totalAmountInGrams = 0;
+
+    if (recipe.outcome_unit && recipe.outcome_amount) {
+      totalAmountInGrams = recipe.outcome_amount;
+    } else {
+      totalAmountInGrams = recipe?.ingredients?.reduce((acc: number, ingredient: Ingredient) => {
+        if (ingredient.unit !== 'gram') return acc;
+        const amount = (parseFloatingNumber(ingredient.amount as any) || 0);
+        return acc + amount;
+      }, 0) ?? 0;
+    }
+
+    return {
+      totalAmountInGrams: totalAmountInGrams || 0,
+      ...recipe,
+      pricePerUnit: 0
+    }
+  }
+
   private async _makeRecipeSubTable(
     ingredient: Ingredient,
-    forOutcome: number = 0,
+    forOutcomeKeff: number = 0,
   ) {
     return new Promise<{
       table: CalculationTableParams[],
@@ -87,37 +117,44 @@ export class CalculateRecipeService {
       let totalAmount = 0;
       const ingredientAmount = ingredient.amount;
 
-      await this._recipeRepository.getOne(ingredient.recipe_id).then(async recipe => {
-        const recipeTotalAmount = recipe?.ingredients.reduce((acc: number, ingredient: Ingredient) => {
-          if (ingredient.unit !== 'gram') return acc;
-          return acc + (parseFloatingNumber(ingredient.amount as any) || 0);
-        }, 0) ?? 0;
-        const scaleKeff = ingredientAmount / recipeTotalAmount;
+      await this.getRecipe(ingredient.recipe_id).then(async recipe => {
+        debugger
+        let scaleKeff = ingredientAmount / (recipe?.totalAmountInGrams || 1);
 
-
-        const result = await this._makeIngredientTable(recipe, forOutcome);
+        const result = await this._makeIngredientTable(recipe, forOutcomeKeff);
 
         result.table = result.table.map((row, idx) => {
+          const ingredientAmount = (row.amount || 0) * (forOutcomeKeff || 1) * scaleKeff;
+
           return {
             ...row,
-            amount: parseFloat((row.amount ? row.amount * scaleKeff : 0).toFixed(5)),
+            amount: parseFloat((ingredientAmount || 0).toFixed(5)),
             total: parseFloat((row.total ? row.total * scaleKeff : 0).toFixed(5)),
             indent: row.indent + 1,
           };
         })
 
-        const perGram = result.totalAmount ? result.totalAmount / result.totalWeight : 0;
+        let perGram = result.totalAmount
+          ? result.totalAmount / result.totalWeight
+          : 0;
+
+        debugger
+        const amount = (recipe?.totalAmountInGrams || 0) * forOutcomeKeff * scaleKeff;
+        const totalIngredsAmount = result.totalAmount * scaleKeff;
+
 
         table.push(this._makeRecipeCaption({
           name: recipe?.name || 'Unknown recipe',
           price_per_gram: perGram,
-          amount: ingredient.amount,
-          total: perGram * ingredient.amount,
+          amount: amount,
+          total: totalIngredsAmount,
+          unit: ingredient.unit,
+          uuid: recipe?.uuid || '',
         }));
 
         table.push(...result.table);
-        totalAmount += perGram * ingredient.amount;
-        totalWeight += result.totalWeight;
+        totalAmount += totalIngredsAmount;
+        totalWeight += result.totalWeight * scaleKeff;
 
         resolve({
           table,
@@ -132,17 +169,17 @@ export class CalculateRecipeService {
 
   private _makeIngredientTable(
     recipeInst?: Recipe,
-    forOutcome: number = 0,
+    forOutcomeKeff: number = 0,
   ) {
     const table: CalculationTableParams[] = [];
     let totalWeight = 0;
     let totalAmount = 0;
-    const forOutcomeKeff = forOutcome / (recipeInst?.outcome_amount || 1);
 
     return Promise.all(recipeInst?.ingredients.map(async (ingredient: Ingredient, index: number) => {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
+      debugger
 
       if (!hasRecipe && !hasProduct && !hasName) {
         const amount = ingredient.amount;
@@ -150,7 +187,8 @@ export class CalculateRecipeService {
       }
 
       if (hasRecipe) {
-        const result = await this._makeRecipeSubTable(ingredient, forOutcome);
+        const result = await this._makeRecipeSubTable(ingredient, forOutcomeKeff);
+        debugger
         table.push(...result.table);
         totalAmount += result.totalAmount;
         totalWeight += result.totalWeight;
@@ -162,6 +200,7 @@ export class CalculateRecipeService {
               price_per_gram: undefined,
               amount: ingredient.amount * (forOutcomeKeff || 1),
               total: undefined,
+              uuid: product?.['uuid'] || '',
             }));
             return
           }
@@ -171,6 +210,7 @@ export class CalculateRecipeService {
               price_per_gram: 0,
               amount: ingredient.amount * (forOutcomeKeff || 1),
               total: 0,
+              uuid: product?.['uuid'] || '',
             }));
             return
           }
@@ -181,12 +221,12 @@ export class CalculateRecipeService {
               price_per_gram: 0,
               amount: ingredient.amount * (forOutcomeKeff || 1),
               total: 0,
+              uuid: product?.['uuid'] || '',
             }));
             return
           }
 
           const ingredientAmount = ingredient.amount * (forOutcomeKeff || 1);
-          debugger
           const pricePerGram = (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
           const total = pricePerGram * (parseFloatingNumber(ingredientAmount) || 1);
           const unitGram = product.unit === 'gram' || !product.unit;
@@ -196,7 +236,8 @@ export class CalculateRecipeService {
             price_per_gram: pricePerGram,
             amount: ingredientAmount,
             total: total,
-            unit: product.unit
+            unit: product.unit,
+            uuid: product?.['uuid'] || '',
           }));
           totalAmount += total;
 
@@ -211,6 +252,7 @@ export class CalculateRecipeService {
           price_per_gram: undefined,
           amount: ingredient.amount * (forOutcomeKeff || 1),
           total: undefined,
+          uuid: '',
         }));
         totalWeight += +ingredient.amount * (forOutcomeKeff || 1);
       }
@@ -226,6 +268,7 @@ export class CalculateRecipeService {
 
   private _makeRow(
     params: {
+      uuid: string
       name: string
       price_per_gram: number | undefined
       amount: number | undefined
@@ -242,6 +285,7 @@ export class CalculateRecipeService {
       unit: params.unit || 'gram',
       indent: params.indent ?? 0,
       type: 'row',
+      uuid: params.uuid,
     };
   }
 
@@ -261,10 +305,12 @@ export class CalculateRecipeService {
 
   private _makeRecipeCaption(
     params: {
+      uuid: string
       name: string
       price_per_gram: number
       amount: number
       total: number
+      unit?: ProductUnit | undefined
     }
   ): CalculationTableParams {
     return {
@@ -272,9 +318,10 @@ export class CalculateRecipeService {
       price_per_gram: parseFloat(params.price_per_gram.toFixed(5)),
       amount: params.amount,
       total: parseFloat(params.total.toFixed(2)),
-      unit: 'gram',
+      unit: params.unit || 'gram',
       indent: 0,
       type: 'recipe-row',
+      uuid: params.uuid,
     };
   }
 
