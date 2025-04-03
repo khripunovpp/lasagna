@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {APP_INITIALIZER, Component, provideAppInitializer} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {GapColumnComponent} from './view/ui/layout/gap-column.component';
 import {ContainerComponent} from './view/ui/layout/container/container.component';
@@ -10,7 +10,9 @@ import {GapRowComponent} from './view/ui/layout/gap-row.component';
   imports: [RouterOutlet, GapColumnComponent, ContainerComponent, ButtonComponent, GapRowComponent],
   templateUrl: './app.component.html',
   standalone: true,
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers:[
+  ]
 })
 export class AppComponent {
   title = 'lasagna';

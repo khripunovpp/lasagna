@@ -8,7 +8,7 @@
     <lg-gap-row [bottom]="true">
       <lg-control label="Amount" lgExpand>
         <lg-number-input (onInputChange)="priceInput.focus()"
-                         [placeholder]="'In grams'"
+                         [placeholder]="'In '+ form.value.unit "
                          formControlName="amount"
                          lsParseMath>
           <div ngProjectAs="after">
@@ -35,19 +35,27 @@
                        lsParseMath></lg-number-input>
     </lg-control>
 
-    <lg-control label="Source">
-      <lg-input [placeholder]="'Where do you buy it?'"
-                formControlName="source"></lg-input>
-    </lg-control>
+    <lg-gap-column>
+      <lg-control label="Source">
+        <lg-input #sourceInput
+                  [placeholder]="'Where do you buy it?'"
+                  formControlName="source"></lg-input>
+      </lg-control>
+      @if (topSources().length) {
+        <lg-chips-list [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+      }
+    </lg-gap-column>
 
     <lg-gap-column>
       <lg-control label="Category">
-        <lg-multiselect [resource]="'categories'"
-                        #categorySelect
+        <lg-multiselect #categorySelect
+                        [resource]="'categories'"
                         formControlName="category_id"></lg-multiselect>
       </lg-control>
 
-      <lg-chips-list [items]="topCategories()" [control]="categorySelect"></lg-chips-list>
+      @if (topCategories().length) {
+        <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+      }
     </lg-gap-column>
 
     @if (uuid()) {

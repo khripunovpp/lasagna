@@ -33,8 +33,8 @@ export class ProductsRepository {
 
   addProduct(product: ProductDbValue) {
     return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(() => {
-      if (!product.category_id) return;
-      this._saveCategory(product.category_id);
+      if (product.category_id) this._saveCategory(product.category_id);
+      if (product.source) this._saveSource(product.source);
     })
   }
 
@@ -101,6 +101,12 @@ export class ProductsRepository {
     })
   }
 
+  async getTopSources() {
+    const topSources = JSON.parse(localStorage.getItem('topSources') || '{}');
+
+    return Object.keys(topSources);
+  }
+
   private _toDbValue(product: unknown) {
     if ((product as any) != null) {
       return ProductDbInputScheme.parse({
@@ -161,5 +167,47 @@ export class ProductsRepository {
     localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentCategories)));
     localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topCategories)));
 
+  }
+
+  private _saveSource(source: string) {
+    if (!source) return;
+
+    const key = 'sourcesHistory';
+    const recentKey = 'recentSources';
+    const topKey = 'topSources';
+
+    let sources: Record<string, {
+      count: number;
+      updatedAt: number
+    }> = JSON.parse(localStorage.getItem(key) || '{}');
+
+    const now = Date.now();
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000; // 30 дней в миллисекундах
+
+    // Обновляем или добавляем категорию
+    sources[source] = {
+      count: (sources[source]?.count || 0) + 1,
+      updatedAt: now
+    };
+
+    // Фильтруем записи старше 30 дней
+    let filteredSources = Object.entries(sources)
+      .filter(([_, data]) => data.updatedAt >= oneMonthAgo);
+
+    // Сортируем для разных списков:
+    // 1️⃣ Самые свежие (по дате обновления)
+    const recentSources = filteredSources
+      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+      .slice(0, 5);
+
+    // 2️⃣ Самые популярные (по количеству использований, затем по свежести)
+    const topSources = filteredSources
+      .sort((a, b) => b[1].count - a[1].count || b[1].updatedAt - a[1].updatedAt)
+      .slice(0, 5);
+
+    // Преобразуем обратно в объект и сохраняем
+    localStorage.setItem(key, JSON.stringify(Object.fromEntries(filteredSources)));
+    localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentSources)));
+    localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topSources)));
   }
 }

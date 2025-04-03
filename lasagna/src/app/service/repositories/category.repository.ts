@@ -46,4 +46,27 @@ export class CategoryRepository {
     return this._indexDbService.remove(Stores.CATEGORIES, uuid);
   }
 
+  async preloadCategories() {
+    const categoriesInstalled = localStorage.getItem('categoriesInstalled');
+    if (categoriesInstalled) {
+      return;
+    }
+    const categories = await this.getCategories();
+    if (categories.length === 0) {
+      const defaultCategories = [
+        'Молочные продукты', 'Мясо', 'Рыба и морепродукты', 'Овощи', 'Фрукты',
+        'Зелень', 'Яйца', 'Крупы и злаки', 'Макаронные изделия', 'Мука',
+        'Сахар и сладости', 'Мед', 'Орехи и семена', 'Бобовые', 'Грибы',
+        'Масла и жиры', 'Специи и приправы', 'Соусы и уксусы', 'Консервы',
+        'Замороженные продукты', 'Напитки безалкогольные', 'Кофе и чай',
+        'Алкогольные напитки', 'Хлеб и выпечка', 'Мясные изделия (колбасы, ветчина)',
+        'Сыры', 'Фастфуд и полуфабрикаты', 'Диетические продукты',
+        'Детское питание', 'Супы и бульоны'
+      ].map((name, index) => ({id: index + 1, name}));
+
+      await this._indexDbService.balkAdd(Stores.CATEGORIES, defaultCategories);
+      localStorage.setItem('categoriesInstalled', 'true');
+    }
+  }
+
 }

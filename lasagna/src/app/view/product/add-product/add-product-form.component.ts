@@ -97,6 +97,7 @@ export class AddProductFormComponent
   ];
   uuid = input<string>('');
   topCategories = signal<any[]>([]);
+  topSources = signal<any[]>([]);
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       return;
@@ -125,7 +126,14 @@ export class AddProductFormComponent
         label: category.name,
         value: category.uuid,
       })));
-    })
+    });
+
+    this._productsRepository.getTopSources().then(sources => {
+      this.topSources.set(sources.map(source => ({
+        label: source,
+        value: source,
+      })));
+    });
   }
 
   addProduct(
