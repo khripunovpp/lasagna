@@ -7,6 +7,9 @@ import {MatIcon} from '@angular/material/icon';
 import {CardComponent} from '../../ui/card/card.component';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
+import {CardListComponent} from '../../ui/card/card-list.component';
+import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-category-list',
@@ -26,9 +29,9 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
               </lg-button>
           </lg-gap-row>
 
-          <lg-card>
-              <lg-gap-column>
-                  @for (category of categories();track $index;let i = $index) {
+          <lg-card-list>
+              @for (category of categories();track $index;let i = $index) {
+                  <ng-template lgCardListItem>
                       <lg-gap-row [center]="true">
                           <div class="expand">
                               {{ category.name }}
@@ -47,11 +50,9 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
                                         fontIcon="close"></mat-icon>
                           </lg-button>
                       </lg-gap-row>
-                  } @empty {
-                      <div>No categories found</div>
-                  }
-              </lg-gap-column>
-          </lg-card>
+                  </ng-template>
+              }
+          </lg-card-list>
       </lg-container>
   `,
   imports: [
@@ -62,6 +63,9 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
     CardComponent,
     ContainerComponent,
     TitleComponent,
+    CardListComponent,
+    CardListItemDirective,
+    DecimalPipe,
   ],
   styles: [
     `:host {

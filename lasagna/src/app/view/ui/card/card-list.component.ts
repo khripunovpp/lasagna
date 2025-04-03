@@ -13,12 +13,13 @@ import {NgTemplateOutlet} from '@angular/common';
   template: `
       <lg-card [flat]="true">
           <section class="lg-card-list">
-              @for (item of items;track $index;let i = $index) {
-                  <div class="lg-card-list__item">
+              @for (item of items;track $index;let i = $index, even = $even) {
+                  <div class="lg-card-list__item"
+                       [class.colored]="!even">
                       <ng-container [ngTemplateOutlet]="item.template"></ng-container>
                   </div>
               } @empty {
-                  <div style="padding: 0 24px;">No items found</div>
+                  <div style="padding:16px 24px;">No items found</div>
               }
           </section>
       </lg-card>
@@ -34,12 +35,15 @@ import {NgTemplateOutlet} from '@angular/common';
         display: flex;
         flex-direction: column;
         width: 100%;
-        gap: 32px;
-        padding: 24px 0;
+        overflow: hidden;
       }
 
       .lg-card-list__item {
-        padding: 0 24px;
+        padding: 16px 24px;
+      }
+
+      .lg-card-list__item.colored {
+        background-color: #f6f6f6
       }
 
     `
