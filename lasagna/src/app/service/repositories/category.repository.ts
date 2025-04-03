@@ -32,6 +32,12 @@ export class CategoryRepository {
     return this._indexDbService.getAll(Stores.CATEGORIES) as Promise<Category[]>;
   }
 
+  getManyCategories(
+    uuids: string[],
+  ) {
+    return this._indexDbService.getMany(Stores.CATEGORIES, uuids);
+  }
+
   editCategory(uuid: string, category: CategoryFormValue) {
     return this._indexDbService.replaceData(Stores.CATEGORIES, uuid, category);
   }
@@ -39,4 +45,5 @@ export class CategoryRepository {
   deleteCategory(uuid: string) {
     return this._indexDbService.remove(Stores.CATEGORIES, uuid);
   }
+
 }

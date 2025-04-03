@@ -47,6 +47,12 @@ export class DexieIndexDbService extends Dexie {
     return table.toArray();
   }
 
+  async getMany(storeKey: Stores, uuids: string[]): Promise<any[]> {
+    // @ts-ignore
+    const table = (this[storeKey] as Table<any>)
+    return table.where('uuid').anyOf(uuids).toArray();
+  }
+
   async remove(storeKey: Stores, uuid: string): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).delete(uuid);
