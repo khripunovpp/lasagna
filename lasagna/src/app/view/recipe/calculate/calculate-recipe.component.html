@@ -21,7 +21,7 @@
 
   @if (result()?.total) {
     <lg-gap-row [center]="true">
-      @if (result()?.recipe?.outcome_unit) {
+      @if (result()?.recipe?.outcome_unit && result()?.recipe?.outcome_unit !== 'gram') {
 
         <lg-gap-row [fit]="true" [center]="true">
           <lg-gap-row [size]="'small'" [center]="true">
@@ -38,20 +38,20 @@
               <!--              {{ result()?.recipe?.outcome_amount }}-->
             </div>
 
-            <div>
+            <b>
               {{ result()?.recipe?.outcome_unit }}
-            </div>
+            </b>
           </lg-gap-row>
 
           <lg-gap-row [size]="'small'">
             <div>
               one
             </div>
-            <div>
+            <b>
               {{ result()?.recipe?.outcome_unit }}
-            </div>
+            </b>
             <div>
-              costs: {{ (result()?.total || 1) / (result()?.recipe?.outcome_amount || 1) | number: '1.2-2' }}
+              costs: {{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
             </div>
           </lg-gap-row>
         </lg-gap-row>
@@ -103,7 +103,19 @@
           @for (row of result()?.result;track $index;let i = $index) {
             <tr [ngClass]="row.type">
               <td>{{ i + 1 }}</td>
-              <td><span [ngClass]="'indent-' + row.indent">{{ row.name }}</span></td>
+              <td>
+                <span [ngClass]="'indent-' + row.indent">
+                  @if (row.type !== 'total') {
+
+                    <a [routerLink]="[row.type === 'recipe-row' ? '/edit-recipe/' : '/edit-product/', row.uuid]"
+                       target="_blank">
+                  {{ row.name }}
+                </a>
+                  } @else {
+                    {{ row.name }}
+                  }
+              </span>
+              </td>
               <td>{{ row.amount }}</td>
               <td>{{ row.unit }}</td>
               <td>{{ row.price_per_gram }}</td>

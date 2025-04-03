@@ -1,5 +1,5 @@
 import {Component, model, OnInit, signal, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
@@ -25,6 +25,7 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
     NumberInputComponent,
     FormsModule,
     ParseMathDirective,
+    RouterLink,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -49,9 +50,11 @@ export class CalculateRecipeComponent
   uuid = signal('');
   result = signal<Calculation | null>(null);
   outcome_amount = model(0);
+  showedOutcome = signal(0);
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
       this.result.set(result);
+      this.showedOutcome.set(value);
     });
   }
 
@@ -61,6 +64,7 @@ export class CalculateRecipeComponent
       this._calculateRecipeService.calculateRecipe(params['uuid']).then(result => {
         this.result.set(result);
         this.outcome_amount.set(result?.recipe?.outcome_amount || 0);
+        this.showedOutcome.set(result?.recipe?.outcome_amount || 0);
       });
     });
   }

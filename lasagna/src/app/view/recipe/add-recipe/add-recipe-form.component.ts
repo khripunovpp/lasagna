@@ -44,7 +44,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                   <lg-control label="Amount of the outcome" lgExpand>
                       <lg-number-input #amount
                                        [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
-                                       formControlName="outcome_amount"></lg-number-input>
+                                       formControlName="outcome_amount"
+                                       lgParseMath></lg-number-input>
                   </lg-control>
 
                   <lg-buttons-group [items]="buttons"
