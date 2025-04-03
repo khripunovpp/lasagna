@@ -24,6 +24,7 @@ import {Component, input} from '@angular/core';
         width: 100%;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
       }
 
       .card.flat {

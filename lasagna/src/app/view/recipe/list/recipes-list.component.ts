@@ -8,6 +8,8 @@ import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
+import {CardListComponent} from '../../ui/card/card-list.component';
+import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 
 @Component({
   selector: 'lg-recipes-list',
@@ -27,9 +29,10 @@ import {CardComponent} from '../../ui/card/card.component';
               </lg-button>
           </lg-gap-row>
 
-          <lg-card>
-              <lg-gap-column>
-                  @for (recipe of recipes();track $index;let i = $index) {
+
+          <lg-card-list>
+              @for (recipe of recipes();track $index;let i = $index) {
+                  <ng-template lgCardListItem>
                       <lg-gap-row [center]="true">
                           <div class="expand">
                               <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
@@ -47,11 +50,9 @@ import {CardComponent} from '../../ui/card/card.component';
                               <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
                           </lg-button>
                       </lg-gap-row>
-                  } @empty {
-                      <div>No recipes found</div>
-                  }
-              </lg-gap-column>
-          </lg-card>
+                  </ng-template>
+              }
+          </lg-card-list>
       </lg-container>
   `,
   imports: [
@@ -63,6 +64,8 @@ import {CardComponent} from '../../ui/card/card.component';
     ContainerComponent,
     TitleComponent,
     CardComponent,
+    CardListComponent,
+    CardListItemDirective,
   ],
   styles: [
     `:host {
