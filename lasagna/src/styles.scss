@@ -5,6 +5,8 @@
   --text-color: #2c2c2c;
   --focus-shadow: 0 0 0 2px var(--active-color);
   --active-color: #ff7e67;
+  --control-bg: #fafafa;
+  --placeholder: var(--text-color);
 }
 
 body {
@@ -15,12 +17,6 @@ body {
   height: 100%;
   font-size: 16px;
   color: var(--text-color);
-}
-
-
-form {
-  --control-bg: #fafafa;
-  --placeholder: var(--text-color);
 }
 
 

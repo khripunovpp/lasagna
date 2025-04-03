@@ -1,12 +1,13 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-gap-row',
   standalone: true,
   template: `
-      <div [class.gap-row__center]="center()"
-            [class.gap-row__bottom]="bottom()"
+      <div [class.gap-row__bottom]="bottom()"
+           [class.gap-row__center]="center()"
+           [class.gap-row__fit]="fit()"
            [ngClass]="size()"
            class="gap-row">
           <ng-content></ng-content>
@@ -44,8 +45,14 @@ import {NgClass} from '@angular/common';
     .gap-row.tiny {
       gap: 4px;
     }
+
+    .gap-row__fit > * {
+      flex: auto;
+
+    }
     `
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class GapRowComponent {
   constructor() {
@@ -53,6 +60,7 @@ export class GapRowComponent {
 
   center = input<boolean>(false);
   bottom = input<boolean>(false);
+  fit = input<boolean>(false);
   size = input<
     'default' |
     'small' |

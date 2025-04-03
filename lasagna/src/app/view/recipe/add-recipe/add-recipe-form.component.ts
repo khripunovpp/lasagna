@@ -111,7 +111,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
                                       <lg-control label="Amount">
                                           <lg-number-input #amount
-                                                           lsParseMath
+                                                           lgParseMath
                                                            (onKeydown)="addLast()"
                                                            [placeholder]="'In ' + (form.value.ingredients?.[i]?.unit || 'gram')"
                                                            formControlName="amount"></lg-number-input>

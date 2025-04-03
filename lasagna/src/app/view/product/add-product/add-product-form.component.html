@@ -10,7 +10,7 @@
         <lg-number-input (onInputChange)="priceInput.focus()"
                          [placeholder]="'In '+ form.value.unit "
                          formControlName="amount"
-                         lsParseMath>
+                         lgParseMath>
           <div ngProjectAs="after">
             <lg-tooltip>
               Widgets
@@ -32,7 +32,7 @@
       <lg-number-input #priceInput
                        [placeholder]="'For the entire product in your currency'"
                        formControlName="price"
-                       lsParseMath></lg-number-input>
+                       lgParseMath></lg-number-input>
     </lg-control>
 
     <lg-gap-column>
