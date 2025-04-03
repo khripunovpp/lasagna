@@ -1,0 +1,120 @@
+<lg-container>
+  <lg-gap-row [center]="true">
+    <lg-title>
+      {{ result()?.recipe?.name }} cost calculation
+    </lg-title>
+
+    <lg-button [flat]="true"
+               [link]="'/edit-recipe/' + result()?.recipe?.uuid"
+               [size]="'small'"
+               [style]="'primary'">
+      Edit
+    </lg-button>
+
+    <lg-button [flat]="true"
+               [link]="'/recipes'"
+               [size]="'small'"
+               [style]="'warning'">
+      Back to list
+    </lg-button>
+  </lg-gap-row>
+
+  @if (result()?.total) {
+    <lg-gap-row [center]="true">
+      @if (result()?.recipe?.outcome_unit) {
+
+        <lg-gap-row [fit]="true" [center]="true">
+          <lg-gap-row [size]="'small'" [center]="true">
+            <div>
+              Calculation
+              outcome:
+            </div>
+
+            <div>
+              <lg-number-input [(ngModel)]="outcome_amount"
+                               (onInputChange)="onOutcomeChange($event)"
+                               lgParseMath
+                               [placeholder]="'Amount'"></lg-number-input>
+              <!--              {{ result()?.recipe?.outcome_amount }}-->
+            </div>
+
+            <div>
+              {{ result()?.recipe?.outcome_unit }}
+            </div>
+          </lg-gap-row>
+
+          <lg-gap-row [size]="'small'">
+            <div>
+              one
+            </div>
+            <div>
+              {{ result()?.recipe?.outcome_unit }}
+            </div>
+            <div>
+              costs: {{ (result()?.total || 1) / (result()?.recipe?.outcome_amount || 1) | number: '1.2-2' }}
+            </div>
+          </lg-gap-row>
+        </lg-gap-row>
+      } @else {
+
+        <lg-gap-row [size]="'small'" [center]="true">
+          <div>
+            Calculation
+            outcome:
+          </div>
+
+          <div>
+            <lg-number-input [(ngModel)]="outcome_amount"
+                             (onInputChange)="onOutcomeChange($event)"
+                             lgParseMath
+                             [placeholder]="'Amount'"></lg-number-input>
+          </div>
+
+          <div>
+            costs: {{ result()?.total | number: '1.2-2' }}
+          </div>
+        </lg-gap-row>
+      }
+    </lg-gap-row>
+  }
+
+  <lg-table-card>
+    @if (result()) {
+      <table>
+        <colgroup>
+          <col span="1" style="width: 1%;">
+          <col span="1" style="width: 20%;">
+          <col span="1" style="width: 5%;">
+          <col span="1" style="width: 3%;">
+          <col span="1" style="width: 5%;">
+          <col span="1" style="width: 7%;">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Unit</th>
+          <th>Price per unit</th>
+          <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (row of result()?.result;track $index;let i = $index) {
+            <tr [ngClass]="row.type">
+              <td>{{ i + 1 }}</td>
+              <td><span [ngClass]="'indent-' + row.indent">{{ row.name }}</span></td>
+              <td>{{ row.amount }}</td>
+              <td>{{ row.unit }}</td>
+              <td>{{ row.price_per_gram }}</td>
+              <td>{{ row.total }}</td>
+            </tr>
+          }
+        </tbody>
+
+      </table>
+    } @else {
+      <div>Loading...</div>
+    }
+  </lg-table-card>
+</lg-container>

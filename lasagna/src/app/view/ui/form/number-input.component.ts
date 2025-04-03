@@ -52,6 +52,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         font-size: inherit;
         background-color: transparent;
         border-radius: 12px;
+        width: 100%;
       }
 
       .input::placeholder {

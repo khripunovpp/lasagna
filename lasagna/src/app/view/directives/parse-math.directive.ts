@@ -3,7 +3,7 @@ import {NgControl} from '@angular/forms';
 import {evaluate} from 'mathjs';
 
 @Directive({
-  selector: '[lsParseMath]',
+  selector: '[lgParseMath]',
   standalone: true
 })
 export class ParseMathDirective {
