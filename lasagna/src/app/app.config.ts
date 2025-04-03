@@ -1,9 +1,10 @@
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, inject, provideAppInitializer, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
+import {CategoryRepository} from './service/repositories/category.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,5 +12,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHotToastConfig(),
+
+    provideAppInitializer(() => {
+      const categoryRepository = inject(CategoryRepository);
+      return Promise.all([
+        categoryRepository.preloadCategories(),
+      ])
+    }),
   ]
 };

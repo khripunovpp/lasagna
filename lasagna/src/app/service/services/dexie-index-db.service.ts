@@ -61,4 +61,12 @@ export class DexieIndexDbService extends Dexie {
   private generateUuid(): string {
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
   }
+
+  async balkAdd(storeKey: Stores, values: any[]): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkPut(values.map(value => ({
+      ...value,
+      uuid: this.generateUuid(),
+    })));
+  }
 }
