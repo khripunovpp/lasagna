@@ -113,7 +113,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                           <lg-number-input #amount
                                                            lsParseMath
                                                            (onKeydown)="addLast()"
-                                                           [placeholder]="'In grams'"
+                                                           [placeholder]="'In ' + (form.value.ingredients?.[i]?.unit || 'gram')"
                                                            formControlName="amount"></lg-number-input>
                                       </lg-control>
 
@@ -334,11 +334,17 @@ export class AddRecipeFormComponent
   ) {
     amount.focus();
 
+    const value = this.ingredients.at(index).value;
+    const inGrams = value.product_id?.unit === 'gram' || value.recipe_id?.unit === 'gram';
+
+    console.log({value})
+
     this.ingredients.at(index).patchValue({
       ...(Array.isArray(clearField) ? clearField.reduce((acc, field) => ({
         ...acc,
         [field]: null
       }), {}) : {[clearField]: null}),
+      unit: value.product_id?.unit || value.recipe_id?.unit || 'gram'
     });
   }
 
