@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Category} from './category.repository';
+import {Category, CategoryRepository} from './category.repository';
 import {parseFloatingNumber} from '../../helpers/number.helper';
 import {ProductDbInputScheme} from '../../schemas/product.scema';
 import {DexieIndexDbService} from '../services/dexie-index-db.service';
@@ -27,11 +27,15 @@ export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
 export class ProductsRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
+    private _categoryRepository: CategoryRepository,
   ) {
   }
 
   addProduct(product: ProductDbValue) {
-    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product))
+    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(() => {
+      if (!product.category_id) return;
+      this._saveCategory(product.category_id);
+    })
   }
 
   async getOne(
@@ -86,6 +90,17 @@ export class ProductsRepository {
     };
   }
 
+  getTopCategories() {
+    const topCategories = JSON.parse(localStorage.getItem('topCategories') || '{}');
+    const keys = Object.keys(topCategories);
+
+    return this._categoryRepository.getManyCategories(keys).then(categories => {
+      return categories.toSorted((a, b) => {
+        return topCategories[b.uuid].count > topCategories[a.uuid].count ? 1 : -1;
+      });
+    })
+  }
+
   private _toDbValue(product: unknown) {
     if ((product as any) != null) {
       return ProductDbInputScheme.parse({
@@ -98,5 +113,53 @@ export class ProductsRepository {
       })
     }
     return null as any;
+  }
+
+  private _saveCategory(uuid: string) {
+    if (!uuid) return;
+
+    const key = 'categoriesHistory';
+    const recentKey = 'recentCategories';
+    const topKey = 'topCategories';
+
+    let categories: Record<string, {
+      count: number;
+      updatedAt: number
+    }> = JSON.parse(localStorage.getItem(key) || '{}');
+
+    const now = Date.now();
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000; // 30 дней в миллисекундах
+
+    // Обновляем или добавляем категорию
+    categories[uuid] = {
+      count: (categories[uuid]?.count || 0) + 1,
+      updatedAt: now
+    };
+
+    // Фильтруем записи старше 30 дней
+    let filteredCategories = Object.entries(categories)
+      .filter(([_, data]) => data.updatedAt >= oneMonthAgo);
+
+    // Сортируем для разных списков:
+    // 1️⃣ Самые свежие (по дате обновления)
+    const recentCategories = filteredCategories
+      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+      .slice(0, 5);
+
+    // 2️⃣ Самые популярные (по количеству использований, затем по свежести)
+    const topCategories = filteredCategories
+      .sort((a, b) => b[1].count - a[1].count || b[1].updatedAt - a[1].updatedAt)
+      .slice(0, 5);
+
+    // 3️⃣ Полный список последних 50 категорий
+    const fullHistory = Object.entries(categories)
+      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
+      .slice(0, 50);
+
+    // Преобразуем обратно в объект и сохраняем
+    localStorage.setItem(key, JSON.stringify(Object.fromEntries(fullHistory)));
+    localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentCategories)));
+    localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topCategories)));
+
   }
 }

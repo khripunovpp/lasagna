@@ -1,4 +1,4 @@
-import {Component, effect, Inject, input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, effect, Inject, input, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -17,72 +17,15 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {ExpandDirective} from '../../directives/expand.directive';
+import {JsonPipe} from '@angular/common';
+import {ChipsListComponent} from '../../ui/form/chips-list.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
 @Component({
   selector: 'lg-add-product-form',
   standalone: true,
-  template: `
-      <form [formGroup]="form">
-          <lg-gap-column>
-              <lg-control label="Name">
-                  <lg-input [placeholder]="'Your product name'"
-                            formControlName="name"></lg-input>
-              </lg-control>
-
-              <lg-gap-row [bottom]="true">
-                  <lg-control label="Amount" lgExpand>
-                      <lg-number-input (onInputChange)="priceInput.focus()"
-                                       [placeholder]="'In grams'"
-                                       formControlName="amount"
-                                       lsParseMath>
-                          <div ngProjectAs="after">
-                              <lg-tooltip>
-                                  Widgets
-
-                                  <div ngProjectAs="content">
-                                      <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
-                                  </div>
-                              </lg-tooltip>
-                          </div>
-                      </lg-number-input>
-                  </lg-control>
-
-                  <lg-buttons-group [items]="buttons"
-                                    formControlName="unit">
-                  </lg-buttons-group>
-              </lg-gap-row>
-
-              <lg-control label="Price">
-                  <lg-number-input #priceInput
-                                   [placeholder]="'For the entire product in your currency'"
-                                   formControlName="price"
-                                   lsParseMath></lg-number-input>
-              </lg-control>
-
-              <lg-control label="Source">
-                  <lg-input [placeholder]="'Where do you buy it?'"
-                            formControlName="source"></lg-input>
-              </lg-control>
-
-              <lg-control label="Category">
-                  <lg-multiselect [resource]="'categories'"
-                                  formControlName="category_id"></lg-multiselect>
-              </lg-control>
-
-              @if (uuid()) {
-                  <lg-button (click)="editProduct(value)">
-                      Edit Product
-                  </lg-button>
-              } @else {
-                  <lg-button (click)="addProduct(value)">
-                      Add Product
-                  </lg-button>
-              }
-          </lg-gap-column>
-      </form>
-  `,
+  templateUrl: './add-product-form.component.html',
   imports: [
     ReactiveFormsModule,
     InputComponent,
@@ -98,6 +41,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     GapRowComponent,
     ButtonsGroupComponent,
     ExpandDirective,
+    JsonPipe,
+    ChipsListComponent,
   ],
   styles: [
     `
@@ -151,6 +96,7 @@ export class AddProductFormComponent
     },
   ];
   uuid = input<string>('');
+  topCategories = signal<any[]>([]);
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       return;
@@ -174,6 +120,12 @@ export class AddProductFormComponent
     this.form.valueChanges.subscribe(value => {
       console.log(value);
     });
+    this._productsRepository.getTopCategories().then(categories => {
+      this.topCategories.set(categories.map(category => ({
+        label: category.name,
+        value: category.uuid,
+      })));
+    })
   }
 
   addProduct(
@@ -196,4 +148,5 @@ export class AddProductFormComponent
     this._selectResourcesService.load().then(resources => {
     })
   }
+
 }

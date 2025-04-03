@@ -1,0 +1,63 @@
+<form [formGroup]="form">
+  <lg-gap-column>
+    <lg-control label="Name">
+      <lg-input [placeholder]="'Your product name'"
+                formControlName="name"></lg-input>
+    </lg-control>
+
+    <lg-gap-row [bottom]="true">
+      <lg-control label="Amount" lgExpand>
+        <lg-number-input (onInputChange)="priceInput.focus()"
+                         [placeholder]="'In grams'"
+                         formControlName="amount"
+                         lsParseMath>
+          <div ngProjectAs="after">
+            <lg-tooltip>
+              Widgets
+
+              <div ngProjectAs="content">
+                <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+              </div>
+            </lg-tooltip>
+          </div>
+        </lg-number-input>
+      </lg-control>
+
+      <lg-buttons-group [items]="buttons"
+                        formControlName="unit">
+      </lg-buttons-group>
+    </lg-gap-row>
+
+    <lg-control label="Price">
+      <lg-number-input #priceInput
+                       [placeholder]="'For the entire product in your currency'"
+                       formControlName="price"
+                       lsParseMath></lg-number-input>
+    </lg-control>
+
+    <lg-control label="Source">
+      <lg-input [placeholder]="'Where do you buy it?'"
+                formControlName="source"></lg-input>
+    </lg-control>
+
+    <lg-gap-column>
+      <lg-control label="Category">
+        <lg-multiselect [resource]="'categories'"
+                        #categorySelect
+                        formControlName="category_id"></lg-multiselect>
+      </lg-control>
+
+      <lg-chips-list [items]="topCategories()" [control]="categorySelect"></lg-chips-list>
+    </lg-gap-column>
+
+    @if (uuid()) {
+      <lg-button (click)="editProduct(value)">
+        Edit Product
+      </lg-button>
+    } @else {
+      <lg-button (click)="addProduct(value)">
+        Add Product
+      </lg-button>
+    }
+  </lg-gap-column>
+</form>
