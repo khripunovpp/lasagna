@@ -40,7 +40,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                formControlName="description"></lg-textarea>
               </lg-control>
 
-              <lg-controls-row lgExpand>
+              <lg-controls-row lgExpand [mobileMode]="true">
                   <lg-control label="Amount of the outcome" lgExpand>
                       <lg-number-input #amount
                                        [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
@@ -61,7 +61,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                   || control.value.amount
                           );let i = $index) {
                               <ng-container [formGroupName]="i">
-                                  <lg-controls-row>
+                                  <lg-controls-row [mobileMode]="true">
                                       @if (textFieldState()[i]) {
                                           <lg-gap-column [size]="'small'">
                                               <lg-control label="Name">

@@ -20,7 +20,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
   ],
   template: `
       <lg-container>
-          <lg-gap-row [center]="true">
+          <lg-gap-row [center]="true" [mobileMode]="true">
               <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Recipe</lg-title>
 
               @if (uuid()) {

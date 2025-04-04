@@ -5,7 +5,7 @@
                 formControlName="name"></lg-input>
     </lg-control>
 
-    <lg-gap-row [bottom]="true">
+    <lg-gap-row [bottom]="true" [mobileMode]="true">
       <lg-control label="Amount" lgExpand>
         <lg-number-input (onInputChange)="priceInput.focus()"
                          [placeholder]="'In '+ form.value.unit "
