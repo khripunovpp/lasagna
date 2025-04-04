@@ -1,10 +1,11 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'lg-controls-row',
   standalone: true,
   template: `
-      <div class="controls-row">
+      <div class="controls-row"
+            [class.controls-row__mobile]="mobileMode()">
           <div class="controls-row__controls">
               <ng-content></ng-content>
           </div>
@@ -48,6 +49,16 @@ import {Component, ViewEncapsulation} from '@angular/core';
       .controls-row__actions > * {
         flex: 1;
       }
+
+      .controls-row__mobile {
+        flex-direction: column;
+        align-items: stretch;
+
+        & .controls-row__controls {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
     `
   ],
 
@@ -56,4 +67,5 @@ import {Component, ViewEncapsulation} from '@angular/core';
 export class ControlsRowComponent {
   constructor() {
   }
+  mobileMode = input(false);
 }

@@ -1,5 +1,5 @@
 <lg-container>
-  <lg-gap-row [center]="true">
+  <lg-gap-row [center]="true" [mobileMode]="true">
     <lg-title>
       {{ result()?.recipe?.name }} cost calculation
     </lg-title>
@@ -23,7 +23,7 @@
     <lg-gap-row [center]="true">
       @if (result()?.recipe?.outcome_unit && result()?.recipe?.outcome_unit !== 'gram') {
 
-        <lg-gap-row [fit]="true" [center]="true">
+        <lg-gap-row [fit]="true" [center]="true"  [mobileMode]="true">
           <lg-gap-row [size]="'small'" [center]="true">
             <div>
               Calculation
