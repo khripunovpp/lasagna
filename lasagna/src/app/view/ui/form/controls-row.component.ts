@@ -50,13 +50,17 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
         flex: 1;
       }
 
-      .controls-row__mobile {
-        flex-direction: column;
-        align-items: stretch;
 
-        & .controls-row__controls {
+      @media (max-width: 600px) {
+
+        .controls-row__mobile {
           flex-direction: column;
           align-items: stretch;
+
+          & .controls-row__controls {
+            flex-direction: column;
+            align-items: stretch;
+          }
         }
       }
     `

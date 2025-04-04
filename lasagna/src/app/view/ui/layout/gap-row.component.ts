@@ -52,9 +52,12 @@ import {NgClass} from '@angular/common';
 
     }
 
-    .gap-row__mobile {
-      flex-direction: column;
-      align-items: flex-start;
+    @media (max-width: 600px) {
+
+      .gap-row__mobile {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     `
   ],
