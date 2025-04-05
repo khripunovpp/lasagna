@@ -1,0 +1,135 @@
+{
+  "configVersion": 1,
+  "timestamp": 1743866329038,
+  "index": "https://khripunovpp.github.io/lasagna/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://khripunovpp.github.io/lasagna/chunk-2MQQJLC4.js",
+        "https://khripunovpp.github.io/lasagna/chunk-32O7IJMM.js",
+        "https://khripunovpp.github.io/lasagna/chunk-4QA2AROI.js",
+        "https://khripunovpp.github.io/lasagna/chunk-ATA2BTCJ.js",
+        "https://khripunovpp.github.io/lasagna/chunk-AYZPP7UL.js",
+        "https://khripunovpp.github.io/lasagna/chunk-B554CIE5.js",
+        "https://khripunovpp.github.io/lasagna/chunk-C4ZIA7Z2.js",
+        "https://khripunovpp.github.io/lasagna/chunk-EQ5JMCMC.js",
+        "https://khripunovpp.github.io/lasagna/chunk-EXR2ZECX.js",
+        "https://khripunovpp.github.io/lasagna/chunk-GBDEWOHT.js",
+        "https://khripunovpp.github.io/lasagna/chunk-HMCYKB5B.js",
+        "https://khripunovpp.github.io/lasagna/chunk-JL4AOETJ.js",
+        "https://khripunovpp.github.io/lasagna/chunk-KYYDJ2CN.js",
+        "https://khripunovpp.github.io/lasagna/chunk-NEKHWACR.js",
+        "https://khripunovpp.github.io/lasagna/chunk-NKBZGO4Y.js",
+        "https://khripunovpp.github.io/lasagna/chunk-NTM2FENS.js",
+        "https://khripunovpp.github.io/lasagna/chunk-OEFCFFOM.js",
+        "https://khripunovpp.github.io/lasagna/chunk-OKGIZKL6.js",
+        "https://khripunovpp.github.io/lasagna/chunk-SEXVTIMW.js",
+        "https://khripunovpp.github.io/lasagna/chunk-U43PWF3S.js",
+        "https://khripunovpp.github.io/lasagna/chunk-UNGG2BEL.js",
+        "https://khripunovpp.github.io/lasagna/chunk-UZBYRUYP.js",
+        "https://khripunovpp.github.io/lasagna/chunk-VHR6F3YK.js",
+        "https://khripunovpp.github.io/lasagna/chunk-XVXTNF3J.js",
+        "https://khripunovpp.github.io/lasagna/chunk-XW7PSHXX.js",
+        "https://khripunovpp.github.io/lasagna/chunk-YWV7BO4S.js",
+        "https://khripunovpp.github.io/lasagna/chunk-ZODG6CAR.js",
+        "https://khripunovpp.github.io/lasagna/favicon.ico",
+        "https://khripunovpp.github.io/lasagna/index.html",
+        "https://khripunovpp.github.io/lasagna/main-ALXLZ7UB.js",
+        "https://khripunovpp.github.io/lasagna/manifest.webmanifest",
+        "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js",
+        "https://khripunovpp.github.io/lasagna/styles-B735DJR6.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://khripunovpp.github.io/lasagna/icons/icon-128x128.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-144x144.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-152x152.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-192x192.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-384x384.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-512x512.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-72x72.png",
+        "https://khripunovpp.github.io/lasagna/icons/icon-96x96.png",
+        "https://khripunovpp.github.io/lasagna/img/egg.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://khripunovpp.github.io/lasagna/chunk-2MQQJLC4.js": "1eb112dd1fd7aef643d6ef6e3f779c3b909f8a3a",
+    "https://khripunovpp.github.io/lasagna/chunk-32O7IJMM.js": "da0c720767e8d70ecb666c0868187a6cc10bb185",
+    "https://khripunovpp.github.io/lasagna/chunk-4QA2AROI.js": "c75e99e90466b4951d6384aab2b5d860d3781e4f",
+    "https://khripunovpp.github.io/lasagna/chunk-ATA2BTCJ.js": "2b572ed62da3b4412a02c644ce4125148b9400c1",
+    "https://khripunovpp.github.io/lasagna/chunk-AYZPP7UL.js": "ac5fe73d25c25ebbf9cc254f0468b23477c8ae0c",
+    "https://khripunovpp.github.io/lasagna/chunk-B554CIE5.js": "3a45535f6df57384d96c451eee14971cc84ebfde",
+    "https://khripunovpp.github.io/lasagna/chunk-C4ZIA7Z2.js": "63bb19e8f0baa19689f4a875bb085173d51c1f29",
+    "https://khripunovpp.github.io/lasagna/chunk-EQ5JMCMC.js": "838825b8d430c0caff3b003931dd368255198eaf",
+    "https://khripunovpp.github.io/lasagna/chunk-EXR2ZECX.js": "96195c69f4acfa3816ba1d612bd268768ca8b5b7",
+    "https://khripunovpp.github.io/lasagna/chunk-GBDEWOHT.js": "0066251ecf0ba5183f62c973146f4837e7c2932d",
+    "https://khripunovpp.github.io/lasagna/chunk-HMCYKB5B.js": "008a2de208f6900f963061df0fad168c2b8a8b7d",
+    "https://khripunovpp.github.io/lasagna/chunk-JL4AOETJ.js": "ee2b89776a3ef13f493e9a04827fe4f08a8f8de0",
+    "https://khripunovpp.github.io/lasagna/chunk-KYYDJ2CN.js": "44d9a70b6646ccf28c2088ed037033eea37e1627",
+    "https://khripunovpp.github.io/lasagna/chunk-NEKHWACR.js": "3b8eb87d65c409cb4566e682035cac819b1acf4d",
+    "https://khripunovpp.github.io/lasagna/chunk-NKBZGO4Y.js": "89ebd97f141c7e9ef3d6d85e26d1d7d3106af7b2",
+    "https://khripunovpp.github.io/lasagna/chunk-NTM2FENS.js": "865280004fa8fd6a0972756dee52425cd3fea6ed",
+    "https://khripunovpp.github.io/lasagna/chunk-OEFCFFOM.js": "298475d35e3c9606edf0bf2f4ee9ae54bb1f55ef",
+    "https://khripunovpp.github.io/lasagna/chunk-OKGIZKL6.js": "60c2425b8382854fb1836f0c890205cebeb3e502",
+    "https://khripunovpp.github.io/lasagna/chunk-SEXVTIMW.js": "04fb7663ceebacbddd1b486b08005f33f8f232d9",
+    "https://khripunovpp.github.io/lasagna/chunk-U43PWF3S.js": "a06ab1ceb2592d10f1cb968e0d3b8d25a92dd2f8",
+    "https://khripunovpp.github.io/lasagna/chunk-UNGG2BEL.js": "7ac73d77ba063633e63318fffa5a051b6412c79b",
+    "https://khripunovpp.github.io/lasagna/chunk-UZBYRUYP.js": "0df777478d3c0c2c6d5ae0a3de0ec4ff0a21fd3c",
+    "https://khripunovpp.github.io/lasagna/chunk-VHR6F3YK.js": "63bd5b67f6e3303bd7e8ee4dddb7588612ee254b",
+    "https://khripunovpp.github.io/lasagna/chunk-XVXTNF3J.js": "03310e4a3130bef05d1b0cb8025da563edb28e70",
+    "https://khripunovpp.github.io/lasagna/chunk-XW7PSHXX.js": "4e47d8fc4af87e73cc627059d704bb54c457b0e0",
+    "https://khripunovpp.github.io/lasagna/chunk-YWV7BO4S.js": "16e773dea0d488f69929a648507b98d6a997b9e9",
+    "https://khripunovpp.github.io/lasagna/chunk-ZODG6CAR.js": "82664ad7f9efbb5cd561b3c37386f21e2c6ab672",
+    "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "https://khripunovpp.github.io/lasagna/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "https://khripunovpp.github.io/lasagna/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "https://khripunovpp.github.io/lasagna/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "https://khripunovpp.github.io/lasagna/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "https://khripunovpp.github.io/lasagna/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "https://khripunovpp.github.io/lasagna/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "https://khripunovpp.github.io/lasagna/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "https://khripunovpp.github.io/lasagna/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "https://khripunovpp.github.io/lasagna/img/egg.svg": "4d9a85d4b3f9001fa1563ba67e928f3724a6e083",
+    "https://khripunovpp.github.io/lasagna/index.html": "4ae39276cee1d51625deee2802bd765ffe8f137f",
+    "https://khripunovpp.github.io/lasagna/main-ALXLZ7UB.js": "7ee18e37ca9d96fd6626cf11387ca00c7c698b99",
+    "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "a8cb5fc2cd76e42761fd160683f3fc465007e54e",
+    "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
+    "https://khripunovpp.github.io/lasagna/styles-B735DJR6.css": "45d91cccff96b83bcea110d990301f8305fc6897"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

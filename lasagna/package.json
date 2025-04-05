@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --no-hmr",
+    "start": "ng serve --no-hmr --host 192.168.1.215 --port 4200 --disable-host-check",
     "build": "ng build --base-href https://khripunovpp.github.io/lasagna/ && cp ../docs/index.html ../docs/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -12,16 +12,17 @@
   "private": true,
   "dependencies": {
     "@angular/cdk": "^19.2.6",
-    "@angular/common": "^19.2.0",
-    "@angular/compiler": "^19.2.0",
-    "@angular/core": "^19.2.0",
-    "@angular/forms": "^19.2.0",
+    "@angular/common": "^20.0.0-next.5",
+    "@angular/compiler": "^20.0.0-next.5",
+    "@angular/core": "^20.0.0-next.5",
+    "@angular/forms": "^20.0.0-next.5",
     "@angular/material": "^19.2.6",
-    "@angular/platform-browser": "^19.2.0",
-    "@angular/platform-browser-dynamic": "^19.2.0",
-    "@angular/platform-server": "^19.2.0",
-    "@angular/router": "^19.2.0",
-    "@angular/ssr": "^19.2.4",
+    "@angular/platform-browser": "^20.0.0-next.5",
+    "@angular/platform-browser-dynamic": "^20.0.0-next.5",
+    "@angular/platform-server": "^20.0.0-next.5",
+    "@angular/router": "^20.0.0-next.5",
+    "@angular/service-worker": "^20.0.0-next.5",
+    "@angular/ssr": "^20.0.0-next.4",
     "@ng-select/ng-select": "^14.2.4",
     "@ngneat/overview": "6.1.1",
     "@ngxpert/hot-toast": "^4.1.2",
@@ -34,9 +35,9 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.4",
-    "@angular/cli": "^19.2.4",
-    "@angular/compiler-cli": "^19.2.0",
+    "@angular-devkit/build-angular": "^20.0.0-next.4",
+    "@angular/cli": "^20.0.0-next.4",
+    "@angular/compiler-cli": "^20.0.0-next.5",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
@@ -46,6 +47,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "typescript": "~5.8.3"
   }
 }
