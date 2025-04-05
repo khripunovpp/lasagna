@@ -1,4 +1,4 @@
-import {Component, effect, input, OnInit, signal} from '@angular/core';
+import {Component, effect, input, OnInit, signal, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -10,7 +10,7 @@ import {debounceTime} from 'rxjs';
 import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {NgClass} from '@angular/common';
+import {JsonPipe, NgClass} from '@angular/common';
 import {Router} from '@angular/router';
 import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
@@ -19,6 +19,9 @@ import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
+import {TooltipComponent} from '../../ui/tooltip.component';
+import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
+import {ShrinkDirective} from '../../directives/shrink.directive';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -40,7 +43,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                formControlName="description"></lg-textarea>
               </lg-control>
 
-              <lg-controls-row lgExpand [mobileMode]="true">
+              <lg-controls-row [mobileMode]="true" lgExpand>
                   <lg-control label="Amount of the outcome" lgExpand>
                       <lg-number-input #amount
                                        [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
@@ -52,6 +55,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                     formControlName="outcome_unit">
                   </lg-buttons-group>
               </lg-controls-row>
+
+              <pre>{{ value|json }}</pre>
 
               <lg-control-group label="Ingredients" lgExpand>
                   <lg-gap-column [position]="'start'">
@@ -103,12 +108,24 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
                                                       <lg-multiselect [resource]="'products'"
                                                                       (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
                                                                       [autoLoad]="true"
-                                                                      formControlName="product_id"></lg-multiselect>
+                                                                      #productsSelector
+                                                                      formControlName="product_id">
+                                                      </lg-multiselect>
                                                   }
 
                                               </lg-control>
                                           </lg-gap-column>
                                       }
+
+                                      <lg-tooltip lgShrink #tooltipComponent (onClose)="products.stopCamera()"
+                                                  [full]="!!products.selectedWidget()">
+                                          Widgets
+
+                                          <div ngProjectAs="content">
+                                              <lg-product-widgets (productAdded)="productAdded($event,i)"
+                                                                  #products></lg-product-widgets>
+                                          </div>
+                                      </lg-tooltip>
 
                                       <lg-control label="Amount">
                                           <lg-number-input #amount
@@ -170,6 +187,11 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     NgClass,
     ParseMathDirective,
     ButtonsGroupComponent,
+    ProductWidgetsComponent,
+    TooltipComponent,
+    ProductWidgetsComponent,
+    ShrinkDirective,
+    JsonPipe,
   ],
   styles: [
     `
@@ -223,6 +245,9 @@ export class AddRecipeFormComponent
       }
     },
   ];
+  tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
+  productsWidget = viewChildren<ProductWidgetsComponent>('products');
+  productsSelector = viewChildren<MultiselectComponent>('productsSelector');
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       return;
@@ -256,7 +281,6 @@ export class AddRecipeFormComponent
   get value() {
     return this.form.value as any;
   }
-
   private get _values() {
     const values = this.form.value;
     return clearEmpties(flaterizeObjectWithUuid<RecipeDbValue>(values));
@@ -264,6 +288,19 @@ export class AddRecipeFormComponent
 
   private get _formValid() {
     return this.form.valid && !this.checkCycleRecipe(this.form.value.ingredients as any, this.uuid());
+  }
+
+  async productAdded(
+    product: {
+      uuid: string
+      name: string
+    },
+    index: number
+  ) {
+    await this._selectResourcesService.load();
+    this.tooltipComponent()?.at(index)?.close();
+    this.productsWidget()?.at(index)?.stopCamera();
+    this.ingredients.at(index).get('product_id')?.reset({uuid: product.uuid, name: product.name});
   }
 
   addLast() {

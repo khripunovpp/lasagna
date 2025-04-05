@@ -14,6 +14,7 @@ export interface MultiselectItem {
   standalone: true,
   template: `
       <div class="multiselect">
+          <pre>{{value|json}}</pre>
           <ng-select [items]="loadedList()"
                      [searchFn]="searchFn"
                      [compareWith]="compareWith"
@@ -33,7 +34,8 @@ export interface MultiselectItem {
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective
+    NgLabelTemplateDirective,
+    JsonPipe
   ],
   styles: [
     `
@@ -157,5 +159,10 @@ export class MultiselectComponent
       const items = registry.get(this.resource())?.list ?? [];
       this.loadedList.set(items as any);
     });
+  }
+
+  reload() {
+    debugger
+    return this._selectResourcesService.load([this.resource()]);
   }
 }

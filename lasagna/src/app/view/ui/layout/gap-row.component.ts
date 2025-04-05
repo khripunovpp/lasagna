@@ -6,6 +6,7 @@ import {NgClass} from '@angular/common';
   standalone: true,
   template: `
       <div [class.gap-row__bottom]="bottom()"
+            [class.gap-row__top]="top()"
            [class.gap-row__center]="center()"
            [class.gap-row__fit]="fit()"
            [class.gap-row__mobile]="mobileMode()"
@@ -34,6 +35,10 @@ import {NgClass} from '@angular/common';
 
     .gap-row__bottom {
       align-items: flex-end;
+    }
+
+    .gap-row__top {
+      align-items: flex-start;
     }
 
     .gap-row.small {
@@ -87,6 +92,7 @@ export class GapRowComponent {
 
   center = input<boolean>(false);
   bottom = input<boolean>(false);
+  top = input<boolean>(false);
   fit = input<boolean>(false);
   mobileMode = input<boolean>(false);
   relaxed = input<boolean>(false);

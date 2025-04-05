@@ -32,9 +32,10 @@ export class ProductsRepository {
   }
 
   addProduct(product: ProductDbValue) {
-    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(() => {
+    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(uuid => {
       if (product.category_id) this._saveCategory(product.category_id);
       if (product.source) this._saveSource(product.source);
+      return uuid;
     })
   }
 
