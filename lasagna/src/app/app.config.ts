@@ -6,6 +6,7 @@ import {provideClientHydration, withEventReplay} from '@angular/platform-browser
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
 import {CategoryRepository} from './service/repositories/category.repository';
 import {provideServiceWorker} from '@angular/service-worker';
+import {provideHttpClient} from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHotToastConfig(),
+    provideHttpClient(),
 
     provideAppInitializer(() => {
       const categoryRepository = inject(CategoryRepository);
