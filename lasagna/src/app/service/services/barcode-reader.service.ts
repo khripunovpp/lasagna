@@ -19,23 +19,10 @@ export class BarcodeReaderService {
 
   hints = new Map();
   codeReader: BrowserMultiFormatReader;
+  controls: any;
 
-  private _decodeFromVideoDevice(
-    deviceId: string,
-    videoElement: string,
-    callback: (result: string | null) => void
-  ) {
-    this.codeReader.decodeFromVideoDevice(
-      deviceId,
-      videoElement,
-      (result, err) => {
-        if (result) {
-          callback(result.getText());
-        } else {
-          callback(null);
-        }
-      }
-    );
+  stopCamera() {
+    this.controls?.stop();
   }
 
   async startCamera(
@@ -47,8 +34,7 @@ export class BarcodeReaderService {
 
     if (videoInputs.length) {
       const backCam = videoInputs.find(d => d.label.toLowerCase().includes('back')) || videoInputs[0];
-
-      this._decodeFromVideoDevice(
+      this.controls = await this._decodeFromVideoDevice(
         backCam.deviceId,
         videoElement,
         (result) => {
@@ -64,5 +50,23 @@ export class BarcodeReaderService {
     } else {
       console.error('Нет видеоустройств');
     }
+  }
+
+  private _decodeFromVideoDevice(
+    deviceId: string,
+    videoElement: string,
+    callback: (result: string | null) => void
+  ) {
+    return this.codeReader.decodeFromVideoDevice(
+      deviceId,
+      videoElement,
+      (result, err) => {
+        if (result) {
+          callback(result.getText());
+        } else {
+          callback(null);
+        }
+      }
+    );
   }
 }

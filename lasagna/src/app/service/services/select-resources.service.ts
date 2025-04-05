@@ -66,6 +66,7 @@ export class SelectResourcesService {
         return acc;
       }, {} as Record<string, T[]>);
     }).then(() => {
+      console.log('SelectResourcesService loaded', this._registry);
       this._registry$.next(this._registry);
     });
   }
