@@ -10,6 +10,11 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {FormsModule} from '@angular/forms';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {CardListComponent} from "../../ui/card/card-list.component";
+import {CardListItemDirective} from "../../ui/card/card-list-item.directive";
+import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {ExpandDirective} from '../../directives/expand.directive';
+import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -26,6 +31,11 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
     FormsModule,
     ParseMathDirective,
     RouterLink,
+    CardListComponent,
+    CardListItemDirective,
+    GapColumnComponent,
+    ExpandDirective,
+    TaxesAndFeesListComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -51,6 +61,7 @@ export class CalculateRecipeComponent
   result = signal<Calculation | null>(null);
   outcome_amount = model(0);
   showedOutcome = signal(0);
+  totalTaxes = signal(0);
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
       this.result.set(result);
@@ -67,5 +78,9 @@ export class CalculateRecipeComponent
         this.showedOutcome.set(result?.recipe?.outcome_amount || 0);
       });
     });
+  }
+
+  onTotalTaxesChanged = (value: number) => {
+    this.totalTaxes.set(value);
   }
 }

@@ -51,8 +51,6 @@ export class CalculateRecipeService {
           totalWeight: ingredientWeight,
         } = await this._makeIngredientTable(recipe, forOutcomeKeff);
 
-        debugger
-
         totalAmount += ingredientTotal || 0;
         totalWeight += ingredientWeight || 0;
 
@@ -118,7 +116,6 @@ export class CalculateRecipeService {
       const ingredientAmount = ingredient.amount;
 
       await this.getRecipe(ingredient.recipe_id).then(async recipe => {
-        debugger
         let scaleKeff = ingredientAmount / (recipe?.totalAmountInGrams || 1);
 
         const result = await this._makeIngredientTable(recipe, forOutcomeKeff);
@@ -138,7 +135,6 @@ export class CalculateRecipeService {
           ? result.totalAmount / result.totalWeight
           : 0;
 
-        debugger
         const amount = (recipe?.totalAmountInGrams || 0) * forOutcomeKeff * scaleKeff;
         const totalIngredsAmount = result.totalAmount * scaleKeff;
 
@@ -179,7 +175,6 @@ export class CalculateRecipeService {
       const hasRecipe = ingredient.recipe_id;
       const hasProduct = ingredient.product_id;
       const hasName = ingredient.name;
-      debugger
 
       if (!hasRecipe && !hasProduct && !hasName) {
         const amount = ingredient.amount;
@@ -188,7 +183,6 @@ export class CalculateRecipeService {
 
       if (hasRecipe) {
         const result = await this._makeRecipeSubTable(ingredient, forOutcomeKeff);
-        debugger
         table.push(...result.table);
         totalAmount += result.totalAmount;
         totalWeight += result.totalWeight;
@@ -330,7 +324,7 @@ export class CalculateRecipeService {
     totalWeight: number,
   ): CalculationTableParams {
     return {
-      name: 'Total',
+      name: 'Total (without taxes and fees)',
       amount: totalWeight,
       unit: 'gram',
       price_per_gram: parseFloat((total / totalWeight).toFixed(5)),

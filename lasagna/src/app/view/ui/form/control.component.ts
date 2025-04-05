@@ -8,11 +8,8 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
           <label class="control__label">
               <ng-content select="beforeLabelTpl"></ng-content>
 
-              <span class="control__label-string">
-                  <ng-content select="labelTpl"></ng-content>
-                  {{ label() }}
-              </span>
-
+              <span class="control__label-string"><ng-content select="labelTpl"></ng-content>
+                  {{ label() }}</span>
               <ng-content select="afterLabelTpl"></ng-content>
 
               <div class="control__label-end">
@@ -46,7 +43,12 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
         margin-left: auto;
       }
 
-      .control__label-string {
+      .control__label-end:empty {
+        display: none;
+      }
+
+      .control__label-string:empty {
+        display: none;
       }
 
       .control__content {
