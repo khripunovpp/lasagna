@@ -1,0 +1,49 @@
+<lg-gap-column [size]="'medium'">
+  <lg-title>
+    📷 Scan barcode or enter manually
+
+  </lg-title>
+  <video id="video"></video>
+
+  <lg-gap-row>
+    <lg-input [(ngModel)]="barcode"
+              [placeholder]="'Barcode'"
+              lgExpand
+              lgParseMath></lg-input>
+
+    <lg-button (click)="onBarcodeManualInput()">Search</lg-button>
+  </lg-gap-row>
+
+  @if (productResult()) {
+    <lg-gap-row [fit]="true" [bottom]="true">
+      <lg-control [label]="'Name'">
+        <lg-input [(ngModel)]="product.name"
+                  [placeholder]="'Name'"
+                  lgExpand
+                  lgParseMath></lg-input>
+      </lg-control>
+      <lg-control [label]="'Amount'">
+        <lg-number-input [(ngModel)]="product.amount"
+                         [placeholder]="'Amount'"
+                         lgExpand
+                         lgParseMath></lg-number-input>
+      </lg-control>
+
+      <lg-control [label]="'Price'">
+        <lg-number-input [(ngModel)]="product.price"
+                         [placeholder]="'Price'"
+                         lgExpand
+                         lgParseMath></lg-number-input>
+        <div>{{ product.unit }}</div>
+      </lg-control>
+
+      <lg-button lgShrink (click)="addProduct()">Add product</lg-button>
+    </lg-gap-row>
+  }
+
+  <div class="actions">
+    <button (click)="confirm()">✅ Подтвердить</button>
+    <button (click)="cancel()">❌ Отмена</button>
+  </div>
+
+</lg-gap-column>

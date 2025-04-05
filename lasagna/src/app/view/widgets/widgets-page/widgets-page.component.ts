@@ -7,6 +7,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
 import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
+import {BarcodePopupComponent} from '../barcode-seeker/barcode-seeker.component';
 
 @Component({
   selector: 'lg-widgets-page',
@@ -22,9 +23,13 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
           <lg-card>
               <lg-eggs-widget></lg-eggs-widget>
           </lg-card>
-<!--          <lg-card>-->
-<!--              <lg-jelly-widget></lg-jelly-widget>-->
-<!--          </lg-card>-->
+          <lg-card>
+              <app-barcode-popup
+              ></app-barcode-popup>
+          </lg-card>
+          <!--          <lg-card>-->
+          <!--              <lg-jelly-widget></lg-jelly-widget>-->
+          <!--          </lg-card>-->
       </lg-container>
 
   `,
@@ -36,7 +41,8 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
     GapRowComponent,
     TitleComponent,
     CardComponent,
-    JellyWidgetComponent
+    JellyWidgetComponent,
+    BarcodePopupComponent
   ]
 })
 export class WidgetsPageComponent {
