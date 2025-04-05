@@ -43,6 +43,7 @@ import {NgTemplateOutlet} from '@angular/common';
         min-width: fit-content;
         width: 100%;
         overflow: hidden;
+        white-space: nowrap;
       }
 
       .lg-card-list__item {

@@ -8,7 +8,8 @@ import {NgClass} from '@angular/common';
       <div [class.gap-row__bottom]="bottom()"
            [class.gap-row__center]="center()"
            [class.gap-row__fit]="fit()"
-            [class.gap-row__mobile]="mobileMode()"
+           [class.gap-row__mobile]="mobileMode()"
+           [class.gap-row__relaxed]="relaxed()"
            [ngClass]="size()"
            class="gap-row">
           <ng-content></ng-content>
@@ -52,11 +53,28 @@ import {NgClass} from '@angular/common';
 
     }
 
+    .gap-row__relaxed {
+      justify-content: space-between;
+    }
+
     @media (max-width: 600px) {
 
       .gap-row__mobile {
         flex-direction: column;
         align-items: flex-start;
+        gap: 16px;
+      }
+
+      .gap-row__mobile.small {
+        gap: 4px;
+      }
+
+      .gap-row__mobile.medium {
+        gap: 8px;
+      }
+
+      .gap-row__mobile.tiny {
+        gap: 2px;
       }
     }
     `
@@ -71,6 +89,7 @@ export class GapRowComponent {
   bottom = input<boolean>(false);
   fit = input<boolean>(false);
   mobileMode = input<boolean>(false);
+  relaxed = input<boolean>(false);
   size = input<
     'default' |
     'small' |

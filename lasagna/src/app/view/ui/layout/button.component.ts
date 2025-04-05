@@ -53,6 +53,9 @@ export type ButtonStyle = 'default' |
         justify-content: center;
       }
 
+      .button:focus {
+        outline-color: var(--active-color);
+      }
       .button.no-radius {
         border-radius: 0;
       }

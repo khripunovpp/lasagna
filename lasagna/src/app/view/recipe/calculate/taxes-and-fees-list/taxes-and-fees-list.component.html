@@ -1,0 +1,81 @@
+<lg-gap-column>
+  <lg-card-list [formGroup]="taxesForm">
+    <ng-container formArrayName="rows">
+      @for (taxControl of taxesForm.controls.rows.controls;track taxControl.value.name;let i = $index, odd = $odd) {
+        <ng-template lgCardListItem>
+          <section class="taxes" [formGroupName]="i">
+            <div class="taxes__row"
+                 [class.taxes__row--odd]="odd">
+              <lg-gap-row [bottom]="true" [fit]="true">
+
+                <small>Apply for all</small>
+                <lg-control [label]="'Name'">
+                  <lg-input
+                    formControlName="name"
+                    [placeholder]="'Name'"
+                  ></lg-input>
+                </lg-control>
+
+                <lg-control [label]="'Description'">
+                  <lg-input
+                    formControlName="description"
+                    [placeholder]="'Description'"
+                  ></lg-input>
+                </lg-control>
+
+                <lg-control [label]="'Value'">
+                  <lg-number-input
+                    lgParseMath
+                    (onInputChange)="onTaxValueChange(i)"
+                    formControlName="value"
+                    [placeholder]="'Value'"
+                  ></lg-number-input>
+                </lg-control>
+
+                <lg-control [label]="'Use percentage'">
+                  <lg-checkbox
+                    (onCheckboxChanged)="onTaxValueChange(i)"
+                    [customMark]="'%'"
+                    formControlName="percentage"></lg-checkbox>
+                </lg-control>
+
+                <lg-control [label]="'Amount'">
+                  <lg-number-input
+                    [disabled]="true"
+                    formControlName="amount"
+                    [placeholder]="'Amount'"
+                  ></lg-number-input>
+                </lg-control>
+
+                <lg-button [style]="'danger'"
+                           lgSelfCenter
+                           lgShrink
+                           [size]="'small'"
+                           [icon]="true"
+                           (click)="deleteTxRow(i)">
+                  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
+                </lg-button>
+              </lg-gap-row>
+            </div>
+          </section>
+        </ng-template>
+      }
+    </ng-container>
+  </lg-card-list>
+
+  <lg-title [level]="4">
+    <lg-gap-row [center]="true"
+                [mobileMode]="true"
+                [relaxed]="true">
+      Total taxes and fees
+
+      <b>{{ totalTaxes() }}</b>
+    </lg-gap-row>
+  </lg-title>
+
+  <lg-button (click)="addTxRow()"
+             lgSelfCenter
+             lgShrink>
+    Add tax
+  </lg-button>
+</lg-gap-column>

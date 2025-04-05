@@ -5,17 +5,19 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'lg-number-input',
   standalone: true,
   template: `
-      <div class="lg-number-input">
+      <div [class.disabled]="disabled()"
+           class="lg-number-input">
           <input #input
                  (change)="onInputChange.emit(value)"
                  (input)="onChangeInput($event)"
                  (keydown)="onKeydown.emit()"
+                 [disabled]="disabled()"
                  [placeholder]="placeholder()"
                  [value]="value"
                  class="input"
                  type="tel">
-          <div class="lg-number-input__after"
-               [style.display]="noAfter() ? 'none' : 'flex'">
+          <div [style.display]="noAfter() ? 'none' : 'flex'"
+               class="lg-number-input__after">
               <ng-content select="after"></ng-content>
           </div>
       </div>
@@ -42,6 +44,10 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         background-color: var(--control-bg);
         border-radius: 12px;
         gap: 16px;
+      }
+
+      .lg-number-input.disabled {
+        opacity: 0.7;
       }
 
       .input {
@@ -86,6 +92,7 @@ export class NumberInputComponent
   value: string = '';
   placeholder = input('Enter text here');
   noAfter = signal(false);
+  disabled = input<boolean>(false);
   onKeydown = output();
   onInputChange = output<string>();
 
