@@ -22,7 +22,7 @@
 
     @if (result()?.total) {
       <lg-gap-row [center]="true">
-        @if (result()?.recipe?.outcome_unit && result()?.recipe?.outcome_unit !== 'gram') {
+        @if (notInGrams()) {
 
           <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
             <lg-gap-row [size]="'small'" [center]="true">
@@ -46,16 +46,19 @@
 
             <lg-gap-row [size]="'small'" [mobileMode]="true">
               <div>
-                one  <b>
+                one <b>
                 {{ result()?.recipe?.outcome_unit }}
               </b>
               </div>
 
               <div>
-                costs: {{ ((result()?.total || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
-                ({{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
+                costs:
+                <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
+                (
+                <ng-container *ngTemplateOutlet="rawAmount"></ng-container>
                 +
-                {{ totalTaxes() / showedOutcome()| number: '1.2-2' }} of taxes and fees)
+                <ng-container *ngTemplateOutlet="taxAmount"></ng-container>
+                of taxes and fees)
               </div>
             </lg-gap-row>
           </lg-gap-row>
@@ -75,12 +78,54 @@
             </div>
 
             <div>
-              costs: {{ result()?.total | number: '1.2-2' }}
+              costs:
+              <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
+              (
+              <ng-container *ngTemplateOutlet="rawAmount"></ng-container>
+              +
+              <ng-container *ngTemplateOutlet="taxAmount"></ng-container>
+              of taxes and fees)
+            </div>
+
+            <div>
+              per gram:
+              <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
             </div>
           </lg-gap-row>
         }
       </lg-gap-row>
     }
+
+    <ng-template #taxAmount>
+      @if (notInGrams()) {
+        {{ totalTaxes() / showedOutcome() | number: '1.2-2' }}
+      } @else {
+        {{ totalTaxes() | number: '1.2-2' }}
+      }
+    </ng-template>
+
+    <ng-template #rawAmount>
+      @if (notInGrams()) {
+        {{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
+      } @else {
+        {{ result()?.total | number: '1.2-2' }}
+      }
+    </ng-template>
+
+    <ng-template #totalAmount>
+      @if (notInGrams()) {
+        {{ ((result()?.total || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
+      } @else {
+        {{ (result()?.total || 1) + totalTaxes() | number: '1.2-2' }}
+      }
+    </ng-template>
+    <ng-template #perGramAmount>
+      @if (notInGrams()) {
+
+      } @else {
+        {{ ((result()?.total || 1) + totalTaxes()) / outcome_amount() | number: '1.2-2' }}
+      }
+    </ng-template>
 
     <lg-table-card>
       @if (result()) {

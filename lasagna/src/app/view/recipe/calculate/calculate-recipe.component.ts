@@ -1,10 +1,10 @@
-import {Component, model, OnInit, signal, ViewEncapsulation} from '@angular/core';
+import {Component, computed, model, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
 import {TableCardComponent} from '../../ui/card/table-card.component';
-import {DecimalPipe, NgClass} from '@angular/common';
+import {DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
@@ -36,6 +36,7 @@ import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-li
     GapColumnComponent,
     ExpandDirective,
     TaxesAndFeesListComponent,
+    NgTemplateOutlet,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -68,6 +69,10 @@ export class CalculateRecipeComponent
       this.showedOutcome.set(value);
     });
   }
+
+  notInGrams = computed(()=>{
+    return this.result()?.recipe?.outcome_unit && this.result()?.recipe?.outcome_unit !== 'gram'
+  })
 
   ngOnInit() {
     this._aRoute.params.subscribe(params => {
