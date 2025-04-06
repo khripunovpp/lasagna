@@ -24,7 +24,7 @@
       <lg-gap-row [center]="true">
         @if (notInGrams()) {
 
-          <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
+          <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true" style="--control-bg: white">
             <lg-gap-row [size]="'small'" [center]="true">
               <div>
                 Calculation
@@ -179,13 +179,71 @@
       }
     </lg-table-card>
 
-    <lg-title>
-      Taxes and fees
-    </lg-title>
+    <lg-gap-row [center]="true" [mobileMode]="true">
+      <lg-title>
+        Taxes and fees
+      </lg-title>
 
-    <lg-taxes-and-fees-list
-      (totalTaxesChanged)="onTotalTaxesChanged($event)"
-      [total]="result()?.total ?? 0"
-    ></lg-taxes-and-fees-list>
+      <lg-gap-row [center]="true">
+        @if (!taxSaveTemplateForm.showed()) {
+          <lg-button (click)="taxSaveTemplateForm.show()"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'primary'">
+            Save as template
+          </lg-button>
+        }
+
+        <lg-view-show #taxSaveTemplateForm style="--control-bg: white">
+          <lg-gap-row [center]="true" [size]="'small'">
+            <lg-input [(ngModel)]="tax_template_name"
+                      [placeholder]="'Template name'"></lg-input>
+
+            <lg-button (click)="saveTaxTemplate()"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'primary'">
+              Save
+            </lg-button>
+          </lg-gap-row>
+        </lg-view-show>
+      </lg-gap-row>
+
+       <lg-button (click)="saveDefaultTaxTemplate()"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'primary'">
+            Save as default template
+          </lg-button>
+
+      <lg-gap-row [center]="true">
+        @if (!taxTemplateForm.showed()) {
+          <lg-button (click)="taxTemplateForm.show()"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            Apply template
+          </lg-button>
+        }
+
+        <lg-view-show #taxTemplateForm style="--control-bg: white">
+          <lg-gap-row [center]="true" [size]="'small'">
+            <lg-input [(ngModel)]="tax_template_name"
+                      [placeholder]="'Template name'"></lg-input>
+
+            <lg-button (click)="loadTaxTemplate()"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'primary'">
+              Apply
+            </lg-button>
+          </lg-gap-row>
+        </lg-view-show>
+      </lg-gap-row>
+    </lg-gap-row>
+
+    <lg-taxes-and-fees-list (totalTaxesChanged)="onTotalTaxesChanged($event)"
+                            [rows]="taxRows()"
+                            [total]="result()?.total ?? 0"></lg-taxes-and-fees-list>
   </lg-gap-column>
 </lg-container>

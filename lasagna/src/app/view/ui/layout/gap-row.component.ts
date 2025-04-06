@@ -6,11 +6,11 @@ import {NgClass} from '@angular/common';
   standalone: true,
   template: `
       <div [class.gap-row__bottom]="bottom()"
-            [class.gap-row__top]="top()"
            [class.gap-row__center]="center()"
            [class.gap-row__fit]="fit()"
            [class.gap-row__mobile]="mobileMode()"
            [class.gap-row__relaxed]="relaxed()"
+           [class.gap-row__top]="top()"
            [ngClass]="size()"
            class="gap-row">
           <ng-content></ng-content>
