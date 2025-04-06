@@ -17,6 +17,8 @@ import {GapColumnComponent} from '../../../ui/layout/gap-column.component';
 import {ParseMathDirective} from '../../../directives/parse-math.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {TitleComponent} from '../../../ui/layout/title/title.component';
+import {TaxTemplateRow} from '../../../../service/services/form-templates.service';
+import {TextareaComponent} from '../../../ui/form/textarea.component';
 
 export interface TaxRow {
   name: string;
@@ -48,7 +50,8 @@ export interface TaxRow {
     ShrinkDirective,
     GapColumnComponent,
     ParseMathDirective,
-    TitleComponent
+    TitleComponent,
+    TextareaComponent
   ],
 })
 export class TaxesAndFeesListComponent {
@@ -56,43 +59,7 @@ export class TaxesAndFeesListComponent {
   }
 
   totalTaxesChanged = output<number>();
-  rows = input<TaxRow[]>([
-    {
-      name: 'VAT',
-      description: 'Value-Added Tax applied to ingredient purchases or product sales',
-      value: 0.2, // 20%
-      amount: 0,
-      percentage: true
-    },
-    {
-      name: 'Income Tax',
-      description: 'Tax on profit from selling the final product',
-      value: 0.15, // 15%
-      amount: 0,
-      percentage: true
-    },
-    {
-      name: 'Import Duty',
-      description: 'Customs fee on imported ingredients or packaging',
-      value: 50, // Flat fee in currency
-      amount: 0,
-      percentage: false
-    },
-    {
-      name: 'Sales Commission',
-      description: 'Fee paid to marketplaces or resellers per unit sold',
-      value: 0.1, // 10%
-      amount: 0,
-      percentage: true
-    },
-    {
-      name: 'Certification Fee',
-      description: 'Cost of food certification, sanitation checks, or licensing',
-      value: 100, // Flat fee in currency
-      amount: 0,
-      percentage: false
-    }
-  ]);
+  rows = input<TaxTemplateRow[]>([]);
   total = input<number>(0);
 
   taxesForm = new FormGroup({

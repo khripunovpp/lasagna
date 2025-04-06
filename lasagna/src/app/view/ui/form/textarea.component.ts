@@ -7,10 +7,11 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   template: `
       <textarea #input
                 (input)="onChangeInput($event)"
+                [attr.rows]="rows()"
                 [placeholder]="placeholder()"
                 [value]="value"
                 class="textarea"
-                rows="5"></textarea>
+      ></textarea>
   `,
   styles: [
     `
@@ -57,6 +58,7 @@ export class TextareaComponent
   constructor() {
   }
 
+  rows = input<number>(5);
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');

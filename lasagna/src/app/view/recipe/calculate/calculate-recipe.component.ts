@@ -1,4 +1,4 @@
-import {Component, computed, model, OnInit, signal, ViewEncapsulation} from '@angular/core';
+import {Component, computed, model, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
@@ -15,6 +15,9 @@ import {CardListItemDirective} from "../../ui/card/card-list-item.directive";
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
+import {FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
+import {ViewShowComponent} from '../../ui/layout/view-show.component';
+import {InputComponent} from '../../ui/form/input.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -37,13 +40,11 @@ import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-li
     ExpandDirective,
     TaxesAndFeesListComponent,
     NgTemplateOutlet,
+    ViewShowComponent,
+    InputComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
-    :host {
-      --control-bg: #fff;
-    }
-
     lg-number-input .lg-number-input {
       width: 100px;
     }
@@ -55,6 +56,7 @@ export class CalculateRecipeComponent
   constructor(
     private _aRoute: ActivatedRoute,
     private _calculateRecipeService: CalculateRecipeService,
+    private _formTemplateService: FormTemplateService,
   ) {
   }
 
@@ -63,6 +65,13 @@ export class CalculateRecipeComponent
   outcome_amount = model(0);
   showedOutcome = signal(0);
   totalTaxes = signal(0);
+  notInGrams = computed(() => {
+    return this.result()?.recipe?.outcome_unit && this.result()?.recipe?.outcome_unit !== 'gram'
+  });
+  taxesComponent = viewChild(TaxesAndFeesListComponent);
+  tax_template_name = '';
+  taxRows = signal<TaxTemplateRow[]>([]);
+
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
       this.result.set(result);
@@ -70,9 +79,57 @@ export class CalculateRecipeComponent
     });
   }
 
-  notInGrams = computed(()=>{
-    return this.result()?.recipe?.outcome_unit && this.result()?.recipe?.outcome_unit !== 'gram'
-  })
+  saveTaxTemplate() {
+    this._formTemplateService.saveTemplate('tax', {
+      name: this.tax_template_name,
+      createdAt: new Date().toISOString(),
+      id: new Date().toISOString(),
+      data: this.taxesComponent()?.taxesForm.value.rows?.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })) || [],
+    });
+  }
+
+  saveDefaultTaxTemplate() {
+    this._formTemplateService.saveTemplate('tax', {
+      name: 'Default Tax Template',
+      createdAt: new Date().toISOString(),
+      id: new Date().toISOString(),
+      data: this.taxesComponent()?.taxesForm.value.rows?.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })) || [],
+    });
+  }
+
+  loadDefaultTaxTemplate() {
+    const template = this._formTemplateService.getTemplateByName('tax', 'Default Tax Template');
+    if (template) {
+      this.taxRows.set(template.data.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })));
+    }
+  }
+
+  loadTaxTemplate() {
+    const template = this._formTemplateService.getTemplateByName('tax', this.tax_template_name);
+    if (template) {
+      this.taxRows.set(template.data.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })));
+    }
+  }
 
   ngOnInit() {
     this._aRoute.params.subscribe(params => {
@@ -81,6 +138,7 @@ export class CalculateRecipeComponent
         this.result.set(result);
         this.outcome_amount.set(result?.recipe?.outcome_amount || 0);
         this.showedOutcome.set(result?.recipe?.outcome_amount || 0);
+        this.loadDefaultTaxTemplate();
       });
     });
   }
