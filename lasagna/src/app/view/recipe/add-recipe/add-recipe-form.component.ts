@@ -7,7 +7,7 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {debounceTime} from 'rxjs';
-import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {Ingredient, Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {JsonPipe, NgClass} from '@angular/common';
@@ -90,7 +90,18 @@ export class AddRecipeFormComponent
     ingredients: new FormArray([
       this._getIngredientGroup(),
     ]),
-  });
+  }, (group) => {
+    const outcomeAmount = group.value?.outcome_amount;
+    const ingredientsAmount = group.value?.ingredients?.reduce((acc: number, item: Ingredient) => {
+      if (item.unit !== 'gram') return acc;
+
+      return acc + (+item.amount || 0);
+    }, 0) || 0;
+    if (outcomeAmount && outcomeAmount > ingredientsAmount) {
+      return {outcomeAmountGreaterThanIngredients: true};
+    }
+    return null;
+  })
   textFieldState = signal<Record<number, boolean>>({});
   recipeFieldState = signal<Record<number, boolean>>({});
   buttons: ButtonGroupItem[] = [

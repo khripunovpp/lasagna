@@ -39,6 +39,11 @@ export class NotificationsService {
     control: FormGroup | FormArray
   ): string[] {
     const errors = [];
+    if (control.errors) {
+      errors.push(...Object.entries(control.errors).map(([key, value]) => {
+        return `Form: ${key}`;
+      }));
+    }
     for (const controlKey in control.controls) {
       const childControl = (control.controls as any)[controlKey];
       if (childControl instanceof FormGroup || childControl instanceof FormArray) {

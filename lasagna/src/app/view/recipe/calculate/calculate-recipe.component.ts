@@ -20,6 +20,7 @@ import {ViewShowComponent} from '../../ui/layout/view-show.component';
 import {InputComponent} from '../../ui/form/input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
+import {Ingredient} from '../../../service/repositories/recipes.repository';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -64,8 +65,17 @@ export class CalculateRecipeComponent
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
-      this.outcome_amount.set(data['result']?.recipe?.outcome_amount || 0);
-      this.showedOutcome.set(data['result']?.recipe?.outcome_amount || 0);
+      const outcomeAmount = data['result']?.recipe?.outcome_amount;
+      const ingredientsAmount = data['result']?.recipe?.ingredients?.reduce((acc: number, item: Ingredient) => {
+        if (item.unit !== 'gram') return acc;
+
+        return acc + (+item.amount || 0);
+      }, 0);
+      const totalAmount = outcomeAmount
+        ? outcomeAmount
+        : ingredientsAmount;
+      this.outcome_amount.set(totalAmount);
+      this.showedOutcome.set(totalAmount);
       this.loadDefaultTaxTemplate();
     });
   }
