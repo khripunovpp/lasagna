@@ -1,7 +1,7 @@
 <lg-gap-column>
   <lg-card-list [formGroup]="taxesForm">
     <ng-container formArrayName="rows">
-      @for (taxControl of taxesForm.controls.rows.controls;track taxControl.value.name;let i = $index, odd = $odd) {
+      @for (taxControl of taxesForm.controls.rows.controls;track taxControl.value.name && taxControl.value.amount;let i = $index, odd = $odd) {
         <ng-template lgCardListItem>
           <section class="taxes" [formGroupName]="i">
             <div class="taxes__row"

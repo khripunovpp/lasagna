@@ -48,8 +48,22 @@ export class FormTemplateService {
 
   saveTemplate<T extends TemplateType>(type: T, template: Template<T>): void {
     const templates = this.getTemplates(type);
-    templates.push(template);
-    this._storeTemplates(type, templates);
+    const isUnique = this._checkUniqName(templates, template.name);
+    if (!isUnique) {
+      this.updateTemplateData(type, template.name, template.data);
+    } else {
+      templates.push(template);
+      this._storeTemplates(type, templates);
+    }
+  }
+
+  updateTemplateData<T extends TemplateType>(type: T, name: string, templateData: TemplateMap[T][]): void {
+    const templates = this.getTemplates(type);
+    const template = templates.find(t => t.name === name);
+    if (template) {
+      template.data = templateData;
+      this._storeTemplates(type, templates);
+    }
   }
 
   deleteTemplate<T extends TemplateType>(type: T, id: string): void {
@@ -62,6 +76,10 @@ export class FormTemplateService {
       t.id === updated.id ? updated : t
     );
     this._storeTemplates(type, updatedList);
+  }
+
+  private _checkUniqName<T extends TemplateType>(templates: Template<T>[], name: string): boolean {
+    return !templates.some(t => t.name === name);
   }
 
   private getStorageKey<T extends TemplateType>(type: T): string {

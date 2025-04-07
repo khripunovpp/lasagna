@@ -60,6 +60,7 @@ export class TaxesAndFeesListComponent {
   }
 
   totalTaxesChanged = output<number>();
+  taxesChanged = output<TaxTemplateRow[]>();
   rows = input<TaxTemplateRow[]>([]);
   total = input<number>(0);
 
@@ -69,10 +70,12 @@ export class TaxesAndFeesListComponent {
     ]),
   });
   rowsEffect = effect(() => {
+    debugger;
     this._rowsFormArray.clear();
     this.rows().forEach((row, index) => {
       this._rowsFormArray.push(this._getRowGroup(row));
     });
+    this.taxesForm.updateValueAndValidity();
     this._recalculateTaxes();
   });
 
@@ -92,6 +95,7 @@ export class TaxesAndFeesListComponent {
     this.formValues.subscribe((value) => {
       this.totalTaxes.set(this._getTotalTaxes());
       this.totalTaxesChanged.emit(this.totalTaxes());
+      this.taxesChanged.emit(this.taxesForm.value.rows as TaxTemplateRow[]);
     })
   }
 

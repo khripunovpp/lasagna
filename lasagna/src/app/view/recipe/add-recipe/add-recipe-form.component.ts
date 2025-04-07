@@ -7,7 +7,7 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
 import {debounceTime} from 'rxjs';
-import {Ingredient, Recipe, RecipeDbValue, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {Ingredient, Recipe, RecipeDTO, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {JsonPipe, NgClass} from '@angular/common';
@@ -159,7 +159,7 @@ export class AddRecipeFormComponent
 
   private get _values() {
     const values = this.form.value;
-    return clearEmpties(flaterizeObjectWithUuid<RecipeDbValue>(values));
+    return clearEmpties(flaterizeObjectWithUuid<RecipeDTO>(values));
   }
 
   private get _formValid() {
@@ -327,8 +327,8 @@ export class AddRecipeFormComponent
     return new FormGroup({
       name: new FormControl(ingredient?.name),
       amount: new FormControl(ingredient?.amount?.toString() ?? null),
-      product_id: new FormControl(ingredient?.product_id ? {uuid: ingredient.product_id} : null),
-      recipe_id: new FormControl(ingredient?.recipe_id ? {uuid: ingredient.recipe_id} : null),
+      product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
+      recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
       unit: new FormControl(ingredient?.unit ?? 'gram'),
     }, (group) => {
       if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {

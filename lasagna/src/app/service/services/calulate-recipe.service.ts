@@ -33,6 +33,24 @@ export class CalculateRecipeService {
 
   calculation?: Calculation;
 
+  linkTaxTemplate(
+    recipeUUID: string,
+    taxTemplateName: string,
+  ) {
+    return new Promise<Recipe | null>(async (resolve, reject) => {
+      await this._recipeRepository.getOne(recipeUUID).then(async recipe => {
+        if (!recipe) {
+          resolve(null);
+          return;
+        }
+        recipe.taxTemplateName = taxTemplateName;
+        await this._recipeRepository.editRecipe(recipe.uuid, this._recipeRepository.recipeToDto(recipe));
+
+        resolve(recipe);
+      });
+    });
+  }
+
   calculateRecipe(
     recipeUUID: string,
     forOutcome: number = 0,
@@ -242,7 +260,7 @@ export class CalculateRecipeService {
       } else if (hasName) {
 
         table.push(this._makeRow({
-          name: ingredient.name,
+          name: ingredient.name ?? 'Unknown ingredient',
           price_per_gram: undefined,
           amount: ingredient.amount * (forOutcomeKeff || 1),
           total: undefined,

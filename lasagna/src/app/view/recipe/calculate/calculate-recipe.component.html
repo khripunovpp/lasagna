@@ -184,33 +184,6 @@
         Taxes and fees
       </lg-title>
 
-      @if (canSaveTemplate()) {
-        <lg-gap-row [center]="true">
-          @if (!taxSaveTemplateForm.showed()) {
-            <lg-button (click)="taxSaveTemplateForm.show()"
-                       [flat]="true"
-                       [size]="'small'"
-                       [style]="'primary'">
-              Save as template
-            </lg-button>
-          }
-
-          <lg-view-show #taxSaveTemplateForm style="--control-bg: white">
-            <lg-gap-row [center]="true" [size]="'small'">
-              <lg-input [(ngModel)]="tax_template_name"
-                        [placeholder]="'Template name'"></lg-input>
-
-              <lg-button (click)="saveTaxTemplate()"
-                         [flat]="true"
-                         [size]="'small'"
-                         [style]="'primary'">
-                Save
-              </lg-button>
-            </lg-gap-row>
-          </lg-view-show>
-        </lg-gap-row>
-      }
-
       @if (canSaveDefaultTemplate()) {
         <lg-button (click)="saveDefaultTaxTemplate()"
                    [flat]="true"
@@ -250,6 +223,7 @@
     </lg-gap-row>
 
     <lg-taxes-and-fees-list (totalTaxesChanged)="onTotalTaxesChanged($event)"
+                            (taxesChanged)="onTaxesChanged($event)"
                             [rows]="taxRows()"
                             [total]="result()?.total ?? 0"></lg-taxes-and-fees-list>
   </lg-gap-column>
