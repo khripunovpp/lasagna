@@ -23,7 +23,7 @@ export interface TaxTemplateRow {
   name: string;
   description: string;
   value: number;
-  percentage: boolean;
+  percentage?: boolean;
 }
 
 @Injectable({providedIn: 'root'})

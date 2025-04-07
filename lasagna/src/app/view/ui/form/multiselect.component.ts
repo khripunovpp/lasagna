@@ -2,7 +2,6 @@ import {Component, forwardRef, input, OnInit, Optional, output, signal, ViewEnca
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {IndexDbSelectLoaderService} from '../../../service/services/index-db-select-loader.service';
 import {JsonPipe} from '@angular/common';
 
 export interface MultiselectItem {
@@ -41,6 +40,7 @@ export interface MultiselectItem {
       lg-multiselect {
         display: flex;
         flex: 1;
+        min-width: 150px;
       }
 
       .multiselect {
@@ -94,7 +94,6 @@ export class MultiselectComponent
   implements ControlValueAccessor, OnInit {
   constructor(
     @Optional() private _selectResourcesService: SelectResourcesService,
-    @Optional() private _indexDbSelectLoaderService: IndexDbSelectLoaderService
   ) {
   }
 

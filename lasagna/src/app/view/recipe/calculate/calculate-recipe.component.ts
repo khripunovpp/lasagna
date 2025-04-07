@@ -15,12 +15,15 @@ import {CardListItemDirective} from "../../ui/card/card-list-item.directive";
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
-import {FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
+import {BaseTemplate, FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
 import {ViewShowComponent} from '../../ui/layout/view-show.component';
 import {InputComponent} from '../../ui/form/input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
 import {Ingredient} from '../../../service/repositories/recipes.repository';
+import {MultiselectComponent} from '../../ui/form/multiselect.component';
+import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -45,6 +48,7 @@ import {Ingredient} from '../../../service/repositories/recipes.repository';
     NgTemplateOutlet,
     ViewShowComponent,
     InputComponent,
+    MultiselectComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -53,6 +57,9 @@ import {Ingredient} from '../../../service/repositories/recipes.repository';
     }
   `],
   encapsulation: ViewEncapsulation.None,
+  providers: [
+    SelectResourcesService,
+  ]
 })
 export class CalculateRecipeComponent
   implements OnInit {
@@ -91,6 +98,10 @@ export class CalculateRecipeComponent
   taxesComponent = viewChild(TaxesAndFeesListComponent);
   tax_template_name = '';
   taxRows = signal<TaxTemplateRow[]>([]);
+  taxTemplateToApply = model<BaseTemplate<TaxTemplateRow>>();
+  canApplyTemplates = signal(true);
+  canSaveTemplate = signal(true);
+  canSaveDefaultTemplate = signal(true);
 
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
@@ -111,6 +122,7 @@ export class CalculateRecipeComponent
         percentage: item.percentage,
       })) || [],
     });
+    this.canSaveTemplate.set(false);
   }
 
   saveDefaultTaxTemplate() {
@@ -125,6 +137,7 @@ export class CalculateRecipeComponent
         percentage: item.percentage,
       })) || [],
     });
+    this.canSaveDefaultTemplate.set(false);
   }
 
   loadDefaultTaxTemplate() {
@@ -136,11 +149,15 @@ export class CalculateRecipeComponent
         value: item.value,
         percentage: item.percentage,
       })));
+    } else {
+      this.taxRows.set(defaultTxTemplates);
     }
   }
 
   loadTaxTemplate() {
-    const template = this._formTemplateService.getTemplateByName('tax', this.tax_template_name);
+    const name = this.taxTemplateToApply()?.name;
+    if (!name) return;
+    const template = this._formTemplateService.getTemplateByName('tax', name);
     if (template) {
       this.taxRows.set(template.data.map((item: any) => ({
         name: item.name,

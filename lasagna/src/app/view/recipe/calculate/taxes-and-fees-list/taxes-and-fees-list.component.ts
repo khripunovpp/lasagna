@@ -19,6 +19,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {TitleComponent} from '../../../ui/layout/title/title.component';
 import {TaxTemplateRow} from '../../../../service/services/form-templates.service';
 import {TextareaComponent} from '../../../ui/form/textarea.component';
+import {defaultTxTemplates} from '../../../../service/const/default-tx-templates';
 
 export interface TaxRow {
   name: string;
@@ -72,6 +73,7 @@ export class TaxesAndFeesListComponent {
     this.rows().forEach((row, index) => {
       this._rowsFormArray.push(this._getRowGroup(row));
     });
+    this._recalculateTaxes();
   });
 
   totalTaxes = signal(0);
