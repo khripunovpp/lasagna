@@ -1,7 +1,8 @@
 import {Injectable, Optional} from '@angular/core';
 import {IndexDbSelectLoaderService} from './index-db-select-loader.service';
-import {resources} from '../const/select-resources.configs';
+import {IndexDbSelectLoaderConfig, LocalstorageSelectLoaderConfig, resources} from '../const/select-resources.configs';
 import {BehaviorSubject} from 'rxjs';
+import {LocalstorageSelectLoaderService} from './localstorage-select-loader.service';
 
 export interface SelectResourceLoader<T = unknown> {
   load(name: string): Promise<unknown>
@@ -17,7 +18,8 @@ export interface SelectResource<T = unknown> {
 @Injectable()
 export class SelectResourcesService {
   constructor(
-    @Optional() private _indexDbSelectLoaderService: IndexDbSelectLoaderService
+    @Optional() private _indexDbSelectLoaderService: IndexDbSelectLoaderService,
+    @Optional() private _localstorageSelectLoaderService: LocalstorageSelectLoaderService,
   ) {
   }
 
@@ -37,7 +39,10 @@ export class SelectResourcesService {
       lists: {},
       loader: {
         load: () => {
-          return this._indexDbSelectLoaderService.load(cfg.loaderConfig?.['storeName']);
+          if (cfg.loaderConfig?.name === 'localStorage') {
+            return this._localstorageSelectLoaderService.load((cfg.loaderConfig as LocalstorageSelectLoaderConfig)?.['key']!);
+          }
+          return this._indexDbSelectLoaderService.load((cfg.loaderConfig as IndexDbSelectLoaderConfig)?.['storeName']!)
         }
       }
     });
