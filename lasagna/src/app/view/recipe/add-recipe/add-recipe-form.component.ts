@@ -1,4 +1,4 @@
-import {Component, effect, input, OnInit, signal, viewChildren} from '@angular/core';
+import {Component, effect, OnInit, signal, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -11,7 +11,7 @@ import {Recipe, RecipeDbValue, RecipesRepository} from '../../../service/reposit
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {JsonPipe, NgClass} from '@angular/common';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ControlsRowComponent} from '../../ui/form/controls-row.component';
@@ -22,156 +22,15 @@ import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-grou
 import {TooltipComponent} from '../../ui/tooltip.component';
 import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {injectParams} from '../../../helpers/route.helpers';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
 @Component({
   selector: 'lg-add-recipe-form',
   standalone: true,
-  template: `
-      <form [formGroup]="form">
-          <lg-gap-column [position]="'start'">
-              <lg-control label="Name" lgExpand>
-                  <lg-input (onInputChanged)="desc.focus()"
-                            [placeholder]="'Your recipe name'"
-                            formControlName="name"></lg-input>
-              </lg-control>
-
-              <lg-control label="Description" lgExpand>
-                  <lg-textarea #desc
-                               [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"
-                               formControlName="description"></lg-textarea>
-              </lg-control>
-
-              <lg-controls-row [mobileMode]="true" lgExpand>
-                  <lg-control label="Amount of the outcome" lgExpand>
-                      <lg-number-input #amount
-                                       [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
-                                       formControlName="outcome_amount"
-                                       lgParseMath></lg-number-input>
-                  </lg-control>
-
-                  <lg-buttons-group [items]="buttons"
-                                    formControlName="outcome_unit">
-                  </lg-buttons-group>
-              </lg-controls-row>
-
-              <pre>{{ value|json }}</pre>
-
-              <lg-control-group label="Ingredients" lgExpand>
-                  <lg-gap-column [position]="'start'">
-                      <lg-gap-column formArrayName="ingredients" lgExpand>
-                          @for (control of ingredients.controls;track (control.value.product_id?.id
-                                  || control.value.name
-                                  || control.value.amount
-                          );let i = $index) {
-                              <ng-container [formGroupName]="i">
-                                  <lg-controls-row [mobileMode]="true">
-                                      @if (textFieldState()[i]) {
-                                          <lg-gap-column [size]="'small'">
-                                              <lg-control label="Name">
-                                                  <ng-container ngProjectAs="endLabelTpl">
-                                                      <span (click)="closeTextField(i)">Hide</span>
-                                                  </ng-container>
-
-                                                  <lg-input
-                                                          (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
-                                                          [placeholder]="'Here you can write the name of the ingredient'"
-                                                          formControlName="name"></lg-input>
-                                              </lg-control>
-                                          </lg-gap-column>
-                                      } @else {
-                                          <lg-gap-column [size]="'small'">
-                                              <lg-control>
-                                                  <ng-container ngProjectAs="labelTpl">
-                                                      <span (click)="closeRecipeField(i)"
-                                                            [ngClass]="!recipeFieldState()[i] ? 'text-active text-bold' : ''">
-                                                          Product
-                                                      </span>
-                                                  </ng-container>
-
-                                                  <ng-container ngProjectAs="afterLabelTpl">
-                                                      <span (click)="openRecipeField(i)"
-                                                            [ngClass]="recipeFieldState()[i] ? 'text-active text-bold' : ''">Recipe</span>
-                                                  </ng-container>
-
-                                                  <ng-container ngProjectAs="endLabelTpl">
-                                                      <span (click)="openTextField(i)">As text</span>
-                                                  </ng-container>
-
-                                                  @if (recipeFieldState()[i]) {
-                                                      <lg-multiselect [resource]="'recipes'"
-                                                                      (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
-                                                                      [autoLoad]="true"
-                                                                      formControlName="recipe_id"></lg-multiselect>
-                                                  } @else {
-                                                      <lg-multiselect [resource]="'products'"
-                                                                      (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
-                                                                      [autoLoad]="true"
-                                                                      #productsSelector
-                                                                      formControlName="product_id">
-                                                      </lg-multiselect>
-                                                  }
-
-                                              </lg-control>
-                                          </lg-gap-column>
-                                      }
-
-                                      <lg-tooltip lgShrink #tooltipComponent (onClose)="products.stopCamera()"
-                                                  [full]="!!products.selectedWidget()">
-                                          Widgets
-
-                                          <div ngProjectAs="content">
-                                              <lg-product-widgets (productAdded)="productAdded($event,i)"
-                                                                  #products></lg-product-widgets>
-                                          </div>
-                                      </lg-tooltip>
-
-                                      <lg-control label="Amount">
-                                          <lg-number-input #amount
-                                                           lgParseMath
-                                                           (onKeydown)="addLast()"
-                                                           [placeholder]="'In ' + (form.value.ingredients?.[i]?.unit || 'gram')"
-                                                           formControlName="amount"></lg-number-input>
-                                      </lg-control>
-
-                                      <lg-buttons-group [items]="buttons"
-                                                        formControlName="unit">
-                                      </lg-buttons-group>
-
-                                      <ng-container ngProjectAs="rowActions">
-                                          <lg-button (click)="deleteIngredient(i)"
-                                                     [style]="'danger'"
-                                                     [size]="'small'">
-                                              Delete Ingredient
-                                          </lg-button>
-                                      </ng-container>
-
-                                  </lg-controls-row>
-                              </ng-container>
-                          }
-                      </lg-gap-column>
-
-                      <lg-button (click)="addIngredient()"
-                                 [size]="'small'"
-                                 [style]="'success'">
-                          Add Ingredient
-                      </lg-button>
-                  </lg-gap-column>
-              </lg-control-group>
-
-              @if (uuid()) {
-                  <lg-button (click)="editRecipe(value)">
-                      Edit Recipe
-                  </lg-button>
-              } @else {
-                  <lg-button (click)="addRecipe(value)">
-                      Add Recipe
-                  </lg-button>
-              }
-          </lg-gap-column>
-      </form>
-  `,
+  templateUrl: './add-recipe-form.component.html',
   imports: [
     ReactiveFormsModule,
     InputComponent,
@@ -211,10 +70,18 @@ export class AddRecipeFormComponent
     public _recipesRepository: RecipesRepository,
     public _selectResourcesService: SelectResourcesService,
     private _router: Router,
+    private _aRoute: ActivatedRoute,
     private _notificationsService: NotificationsService
   ) {
+    this._aRoute.data.pipe(
+      takeUntilDestroyed(),
+    ).subscribe((data) => {
+      this.recipe.set(data['recipe'] || null);
+    });
   }
 
+  recipe = signal<Recipe | null>(null);
+  uuid = injectParams<string>('uuid');
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl(''),
@@ -224,7 +91,6 @@ export class AddRecipeFormComponent
       this._getIngredientGroup(),
     ]),
   });
-  uuid = input<string>('');
   textFieldState = signal<Record<number, boolean>>({});
   recipeFieldState = signal<Record<number, boolean>>({});
   buttons: ButtonGroupItem[] = [
@@ -248,30 +114,28 @@ export class AddRecipeFormComponent
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
-  private uuidEffect = effect(() => {
-    if (!this.uuid()) {
+  private recipeEffect = effect(() => {
+    if (!this.recipe()) {
       return;
     }
-    this._recipesRepository.getOne(this.uuid()).then(recipe => {
-      this.form.reset({
-        ...recipe,
-        ingredients: [],
-      });
-      (this.form.get('ingredients') as FormArray).clear();
-
-      recipe?.ingredients.forEach((ingredient: Recipe['ingredients'][number], index: number) => {
-        this.ingredients.push(this._getIngredientGroup(ingredient));
-        //openRecipeField
-        if (ingredient.recipe_id) {
-          this.openRecipeField(index);
-        }
-        if (ingredient.name) {
-          this.openTextField(index);
-        }
-      })
-
-      this.form.updateValueAndValidity();
+    this.form.reset({
+      ...this.recipe(),
+      ingredients: [],
     });
+    (this.form.get('ingredients') as FormArray).clear();
+
+    this.recipe()?.ingredients.forEach((ingredient: Recipe['ingredients'][number], index: number) => {
+      this.ingredients.push(this._getIngredientGroup(ingredient));
+
+      if (ingredient.recipe_id) {
+        this.openRecipeField(index);
+      }
+      if (ingredient.name) {
+        this.openTextField(index);
+      }
+    })
+
+    this.form.updateValueAndValidity();
   });
 
   get ingredients() {
@@ -281,6 +145,7 @@ export class AddRecipeFormComponent
   get value() {
     return this.form.value as any;
   }
+
   private get _values() {
     const values = this.form.value;
     return clearEmpties(flaterizeObjectWithUuid<RecipeDbValue>(values));

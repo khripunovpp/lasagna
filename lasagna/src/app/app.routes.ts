@@ -1,4 +1,7 @@
 import {Routes} from '@angular/router';
+import {recipesListResolver} from './service/resolvers/recipes-list.resolver';
+import {recipeCalculationResolver} from './service/resolvers/recipe-calculation.resolver';
+import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -16,24 +19,32 @@ export const routes: Routes = [{
     {
       path: 'add-recipe',
       loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
-        .then(m => m.AddRecipeComponent)
+        .then(m => m.AddRecipeComponent),
     },
     {
       path: 'edit-recipe/:uuid',
       loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
-        .then(m => m.AddRecipeComponent)
+        .then(m => m.AddRecipeComponent),
+      resolve: {
+        recipe: recipeEditResolver,
+      }
     },
     {
       path: 'calc-recipe/:uuid',
       loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')
-        .then(m => m.CalculateRecipeComponent)
+        .then(m => m.CalculateRecipeComponent),
+      resolve: {
+        result: recipeCalculationResolver,
+      }
     },
     {
       path: 'recipes',
       loadComponent: () => import('./view/recipe/list/recipes-list.component')
-        .then(m => m.RecipesListComponent)
+        .then(m => m.RecipesListComponent),
+      resolve: {
+        list: recipesListResolver,
+      }
     },
-
 
 
     {
@@ -53,7 +64,6 @@ export const routes: Routes = [{
     },
 
 
-
     {
       path: 'add-category',
       loadComponent: () => import('./view/category/add-category/add-category.component')
@@ -69,7 +79,6 @@ export const routes: Routes = [{
       loadComponent: () => import('./view/category/list/category-list.component')
         .then(m => m.CategoryListComponent)
     },
-
 
 
     {

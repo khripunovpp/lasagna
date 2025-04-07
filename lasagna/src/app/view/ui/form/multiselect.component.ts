@@ -14,7 +14,6 @@ export interface MultiselectItem {
   standalone: true,
   template: `
       <div class="multiselect">
-          <pre>{{value|json}}</pre>
           <ng-select [items]="loadedList()"
                      [searchFn]="searchFn"
                      [compareWith]="compareWith"

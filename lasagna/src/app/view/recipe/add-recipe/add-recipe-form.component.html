@@ -1,0 +1,140 @@
+<form [formGroup]="form">
+  <lg-gap-column [position]="'start'">
+    <lg-control label="Name" lgExpand>
+      <lg-input (onInputChanged)="desc.focus()"
+                [placeholder]="'Your recipe name'"
+                formControlName="name"></lg-input>
+    </lg-control>
+
+    <lg-control label="Description" lgExpand>
+      <lg-textarea #desc
+                   [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"
+                   formControlName="description"></lg-textarea>
+    </lg-control>
+
+    <lg-controls-row [mobileMode]="true" lgExpand>
+      <lg-control label="Amount of the outcome" lgExpand>
+        <lg-number-input #amount
+                         [placeholder]="form.value.outcome_unit || 'Here you can write the amount of the outcome (e.g. 100, 12, etc.)'"
+                         formControlName="outcome_amount"
+                         lgParseMath></lg-number-input>
+      </lg-control>
+
+      <lg-buttons-group [items]="buttons"
+                        formControlName="outcome_unit">
+      </lg-buttons-group>
+    </lg-controls-row>
+
+    <lg-control-group label="Ingredients" lgExpand>
+      <lg-gap-column [position]="'start'">
+        <lg-gap-column formArrayName="ingredients" lgExpand>
+          @for (control of ingredients.controls;track (control.value.product_id?.id
+            || control.value.name
+            || control.value.amount
+          );let i = $index) {
+            <ng-container [formGroupName]="i">
+              <lg-controls-row [mobileMode]="true">
+                @if (textFieldState()[i]) {
+                  <lg-gap-column [size]="'small'">
+                    <lg-control label="Name">
+                      <ng-container ngProjectAs="endLabelTpl">
+                        <span (click)="closeTextField(i)">Hide</span>
+                      </ng-container>
+
+                      <lg-input
+                        (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
+                        [placeholder]="'Here you can write the name of the ingredient'"
+                        formControlName="name"></lg-input>
+                    </lg-control>
+                  </lg-gap-column>
+                } @else {
+                  <lg-gap-column [size]="'small'">
+                    <lg-control>
+                      <ng-container ngProjectAs="labelTpl">
+                                                      <span (click)="closeRecipeField(i)"
+                                                            [ngClass]="!recipeFieldState()[i] ? 'text-active text-bold' : ''">
+                                                          Product
+                                                      </span>
+                      </ng-container>
+
+                      <ng-container ngProjectAs="afterLabelTpl">
+                                                      <span (click)="openRecipeField(i)"
+                                                            [ngClass]="recipeFieldState()[i] ? 'text-active text-bold' : ''">Recipe</span>
+                      </ng-container>
+
+                      <ng-container ngProjectAs="endLabelTpl">
+                        <span (click)="openTextField(i)">As text</span>
+                      </ng-container>
+
+                      @if (recipeFieldState()[i]) {
+                        <lg-multiselect [resource]="'recipes'"
+                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
+                                        [autoLoad]="true"
+                                        formControlName="recipe_id"></lg-multiselect>
+                      } @else {
+                        <lg-multiselect [resource]="'products'"
+                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                        [autoLoad]="true"
+                                        #productsSelector
+                                        formControlName="product_id">
+                        </lg-multiselect>
+                      }
+
+                    </lg-control>
+                  </lg-gap-column>
+                }
+
+<!--                <lg-tooltip lgShrink #tooltipComponent (onClose)="products.stopCamera()"-->
+<!--                            [full]="!!products.selectedWidget()">-->
+<!--                  Widgets-->
+
+<!--                  <div ngProjectAs="content">-->
+<!--                    <lg-product-widgets (productAdded)="productAdded($event,i)"-->
+<!--                                        #products></lg-product-widgets>-->
+<!--                  </div>-->
+<!--                </lg-tooltip>-->
+
+                <lg-control label="Amount">
+                  <lg-number-input #amount
+                                   lgParseMath
+                                   (onKeydown)="addLast()"
+                                   [placeholder]="'In ' + (form.value.ingredients?.[i]?.unit || 'gram')"
+                                   formControlName="amount"></lg-number-input>
+                </lg-control>
+
+                <lg-buttons-group [items]="buttons"
+                                  formControlName="unit">
+                </lg-buttons-group>
+
+                <ng-container ngProjectAs="rowActions">
+                  <lg-button (click)="deleteIngredient(i)"
+                             [style]="'danger'"
+                             [size]="'small'">
+                    Delete Ingredient
+                  </lg-button>
+                </ng-container>
+
+              </lg-controls-row>
+            </ng-container>
+          }
+        </lg-gap-column>
+
+        <lg-button (click)="addIngredient()"
+                   [size]="'small'"
+                   [style]="'success'">
+          Add Ingredient
+        </lg-button>
+      </lg-gap-column>
+    </lg-control-group>
+
+    @if (uuid()) {
+      <lg-button (click)="editRecipe(value)">
+        Edit Recipe
+      </lg-button>
+    } @else {
+      <lg-button (click)="addRecipe(value)">
+        Add Recipe
+      </lg-button>
+    }
+  </lg-gap-column>
+</form>

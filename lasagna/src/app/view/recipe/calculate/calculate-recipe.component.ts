@@ -18,6 +18,8 @@ import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-li
 import {FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
 import {ViewShowComponent} from '../../ui/layout/view-show.component';
 import {InputComponent} from '../../ui/form/input.component';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {injectParams} from '../../../helpers/route.helpers';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -58,9 +60,17 @@ export class CalculateRecipeComponent
     private _calculateRecipeService: CalculateRecipeService,
     private _formTemplateService: FormTemplateService,
   ) {
+    this._aRoute.data.pipe(
+      takeUntilDestroyed(),
+    ).subscribe((data) => {
+      this.result.set(data['result']);
+      this.outcome_amount.set(data['result']?.recipe?.outcome_amount || 0);
+      this.showedOutcome.set(data['result']?.recipe?.outcome_amount || 0);
+      this.loadDefaultTaxTemplate();
+    });
   }
 
-  uuid = signal('');
+  uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
   outcome_amount = model(0);
   showedOutcome = signal(0);
@@ -132,15 +142,6 @@ export class CalculateRecipeComponent
   }
 
   ngOnInit() {
-    this._aRoute.params.subscribe(params => {
-      this.uuid.set(params['uuid']);
-      this._calculateRecipeService.calculateRecipe(params['uuid']).then(result => {
-        this.result.set(result);
-        this.outcome_amount.set(result?.recipe?.outcome_amount || 0);
-        this.showedOutcome.set(result?.recipe?.outcome_amount || 0);
-        this.loadDefaultTaxTemplate();
-      });
-    });
   }
 
   onTotalTaxesChanged = (value: number) => {

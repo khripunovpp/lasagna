@@ -6,6 +6,7 @@ import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {injectParams} from '../../../helpers/route.helpers';
 
 @Component({
   selector: 'app-add-recipe',
@@ -41,7 +42,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
           </lg-gap-row>
 
           <lg-card>
-              <lg-add-recipe-form [uuid]="uuid()"></lg-add-recipe-form>
+              <lg-add-recipe-form></lg-add-recipe-form>
           </lg-card>
       </lg-container>
   `,
@@ -56,11 +57,6 @@ export class AddRecipeComponent {
   ) {
   }
 
-  uuid = signal('')
+  uuid = injectParams('uuid');
 
-  ngOnInit() {
-    this._aRoute.params.subscribe(params => {
-      this.uuid.set(params['uuid']);
-    });
-  }
 }
