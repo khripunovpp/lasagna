@@ -1,15 +1,16 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lg-recipes-list',
@@ -74,12 +75,16 @@ import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
     `
   ]
 })
-export class RecipesListComponent
-  implements OnInit {
+export class RecipesListComponent {
   constructor(
-    public _recipesRepository: RecipesRepository,
+    private _activatedRoute: ActivatedRoute,
+    private _recipesRepository: RecipesRepository,
   ) {
-
+    this._activatedRoute.data.pipe(
+      takeUntilDestroyed(),
+    ).subscribe((data) => {
+      this.recipes.set(data['list']);
+    });
   }
 
   recipes = signal<Recipe[]>([])
@@ -92,14 +97,9 @@ export class RecipesListComponent
     });
   }
 
-  async ngOnInit() {
-    await this.loadRecipes();
-  }
-
   loadRecipes() {
     this._recipesRepository.getRecipes().then((recipes) => {
-      const sorted = recipes.toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name));
-      this.recipes.set(sorted);
+      this.recipes.set(recipes);
     });
   }
 
