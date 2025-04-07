@@ -1,4 +1,4 @@
-import {Component, computed, model, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
+import {Component, computed, Injector, model, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
@@ -20,7 +20,7 @@ import {ViewShowComponent} from '../../ui/layout/view-show.component';
 import {InputComponent} from '../../ui/form/input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
-import {Ingredient} from '../../../service/repositories/recipes.repository';
+import {Ingredient, Recipe} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
@@ -67,10 +67,12 @@ export class CalculateRecipeComponent
     private _aRoute: ActivatedRoute,
     private _calculateRecipeService: CalculateRecipeService,
     private _formTemplateService: FormTemplateService,
+    private _injector: Injector
   ) {
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
+      console.log('data', data);
       this.result.set(data['result']);
       const outcomeAmount = data['result']?.recipe?.outcome_amount;
       const ingredientsAmount = data['result']?.recipe?.ingredients?.reduce((acc: number, item: Ingredient) => {
@@ -83,7 +85,7 @@ export class CalculateRecipeComponent
         : ingredientsAmount;
       this.outcome_amount.set(totalAmount);
       this.showedOutcome.set(totalAmount);
-      this.loadDefaultTaxTemplate();
+      this.loadRecipeTaxTemplate();
     });
   }
 
@@ -96,33 +98,22 @@ export class CalculateRecipeComponent
     return this.result()?.recipe?.outcome_unit && this.result()?.recipe?.outcome_unit !== 'gram'
   });
   taxesComponent = viewChild(TaxesAndFeesListComponent);
-  tax_template_name = '';
   taxRows = signal<TaxTemplateRow[]>([]);
   taxTemplateToApply = model<BaseTemplate<TaxTemplateRow>>();
   canApplyTemplates = signal(true);
-  canSaveTemplate = signal(true);
   canSaveDefaultTemplate = signal(true);
+
+  onTaxTemplateChange(
+    value: any
+  ) {
+    this.linkTaxTemplate(value.name);
+  }
 
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
       this.result.set(result);
       this.showedOutcome.set(value);
     });
-  }
-
-  saveTaxTemplate() {
-    this._formTemplateService.saveTemplate('tax', {
-      name: this.tax_template_name,
-      createdAt: new Date().toISOString(),
-      id: new Date().toISOString(),
-      data: this.taxesComponent()?.taxesForm.value.rows?.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })) || [],
-    });
-    this.canSaveTemplate.set(false);
   }
 
   saveDefaultTaxTemplate() {
@@ -140,10 +131,24 @@ export class CalculateRecipeComponent
     this.canSaveDefaultTemplate.set(false);
   }
 
-  loadDefaultTaxTemplate() {
-    const template = this._formTemplateService.getTemplateByName('tax', 'Default Tax Template');
-    if (template) {
-      this.taxRows.set(template.data.map((item: any) => ({
+  loadRecipeTemplate() {
+    return this._formTemplateService.getTemplateByName('tax', this._taxTemplateName(this.result()?.recipe!))
+  }
+
+  loadRecipeTaxTemplate() {
+    const recipeTpl = this.loadRecipeTemplate();
+    if (recipeTpl) {
+      this.taxRows.set(recipeTpl.data.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })));
+      return
+    }
+    const defTemplate = this._formTemplateService.getTemplateByName('tax', 'Default Tax Template');
+    if (defTemplate) {
+      this.taxRows.set(defTemplate.data.map((item: any) => ({
         name: item.name,
         description: item.description,
         value: item.value,
@@ -152,11 +157,35 @@ export class CalculateRecipeComponent
     } else {
       this.taxRows.set(defaultTxTemplates);
     }
+
+    const name = this._taxTemplateName(this.result()?.recipe!);
+
+    this.saveTaxTemplate(name, this.taxesComponent()?.taxesForm.value.rows ?? []);
+    this.linkTaxTemplate(name);
+  }
+
+  saveTaxTemplate(
+    name: string,
+    rows: TaxTemplateRow[]
+  ) {
+    this._formTemplateService.saveTemplate('tax', {
+      name: name,
+      createdAt: new Date().toISOString(),
+      id: new Date().toISOString(),
+      data: rows.map((item: any) => ({
+        name: item.name,
+        description: item.description,
+        value: item.value,
+        percentage: item.percentage,
+      })) || [],
+    });
   }
 
   loadTaxTemplate() {
     const name = this.taxTemplateToApply()?.name;
-    if (!name) return;
+    if (!name || name === this.result()?.recipe?.taxTemplateName) {
+      return
+    }
     const template = this._formTemplateService.getTemplateByName('tax', name);
     if (template) {
       this.taxRows.set(template.data.map((item: any) => ({
@@ -165,13 +194,32 @@ export class CalculateRecipeComponent
         value: item.value,
         percentage: item.percentage,
       })));
+      this.onTaxTemplateChange(template);
     }
   }
 
   ngOnInit() {
   }
 
+  linkTaxTemplate(
+    name: string,
+  ) {
+    this._calculateRecipeService.linkTaxTemplate(this.uuid(), name).then(() => {
+      console.log('Tax template linked');
+    });
+  }
+
   onTotalTaxesChanged = (value: number) => {
     this.totalTaxes.set(value);
+  }
+
+  onTaxesChanged = (value: TaxTemplateRow[]) => {
+    this.saveTaxTemplate(this._taxTemplateName(this.result()?.recipe!), value);
+  }
+
+  private _taxTemplateName(
+    recipe: Recipe,
+  ): string {
+    return recipe.name + ' Tax Template';
   }
 }

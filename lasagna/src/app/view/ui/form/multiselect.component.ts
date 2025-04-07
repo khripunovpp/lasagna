@@ -160,7 +160,6 @@ export class MultiselectComponent
   }
 
   reload() {
-    debugger
     return this._selectResourcesService.load([this.resource()]);
   }
 }
