@@ -16,6 +16,7 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
 import {BarcodeReaderService} from '../../../service/services/barcode-reader.service';
 import {ProductsRepository} from '../../../service/repositories/products.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
+import {ThisReceiver} from '@angular/compiler';
 
 
 @Component({
@@ -109,6 +110,18 @@ export class BarcodeSeekerWidgetComponent {
   openScanner() {
     this.showScanner.set(true);
     this.startCamera();
+  }
+
+  clear(){
+    this.barcode.set('');
+    this.product = {
+      name: '',
+      price: 0,
+      amount: 0,
+      unit: 'gram' as 'gram' | 'piece'
+    };
+    this.showProductForm.set(false);
+    this.lockRequest = false;
   }
 
   closeScanner() {
