@@ -88,6 +88,13 @@ export const routes: Routes = [{
       path: 'widgets',
       loadComponent: () => import('./view/widgets/widgets-page/widgets-page.component')
         .then(m => m.WidgetsPageComponent)
-    }
+    },
+
+
+    {
+      path: 'settings',
+      loadComponent: () => import('./view/settings/settings.component')
+        .then(m => m.SettingsComponent),
+    },
   ]
 }];
