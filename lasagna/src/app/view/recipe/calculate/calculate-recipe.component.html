@@ -156,8 +156,7 @@
                 <span [ngClass]="'indent-' + row.indent">
                   @if (row.type !== 'total') {
 
-                    <a [routerLink]="[row.type === 'recipe-row' ? '/edit-recipe/' : '/edit-product/', row.uuid]"
-                       target="_blank">
+                    <a [routerLink]="[row.type === 'recipe-row' ? '/edit-recipe/' : '/edit-product/', row.uuid]">
                   {{ row.name }}
                 </a>
                   } @else {
