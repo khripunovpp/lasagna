@@ -17,6 +17,7 @@ import {TransferDataService} from '../../../service/services/transfer-data.servi
 import {Stores} from '../../../service/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {ProductDbInputScheme} from '../../../schemas/product.scema';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'lg-product-list',
@@ -54,7 +55,9 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
                       <lg-gap-row [center]="true">
                           <div class="expand">
                               <lg-gap-row [center]="true">
-                                  <div style="flex: 20%">{{ product.name }}</div>
+                                  <div style="flex: 20%">
+                                      <a [routerLink]="'/edit-product/' + product.uuid">{{ product.name }}</a>
+                                  </div>
                                   <div style="flex: 10%"> {{ product.source ?? '' }}</div>
                                   <div style="flex: 70%">
                                       {{ getPricePerGram(product) | number: '1.2-5' }}
@@ -66,12 +69,7 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
                                   </div>
                               </lg-gap-row>
                           </div>
-                          <lg-button [style]="'primary'"
-                                     [size]="'small'"
-                                     [link]="'/edit-product/' + product.uuid"
-                                     [flat]="true">
-                              Edit
-                          </lg-button>
+
                           <lg-button [style]="'danger'"
                                      [size]="'small'"
                                      [icon]="true"
@@ -97,7 +95,8 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
     CardListComponent,
     CardListItemDirective,
     UploadComponent,
-    ImportComponent
+    ImportComponent,
+    RouterLink
   ],
   styles: [
     `:host {
