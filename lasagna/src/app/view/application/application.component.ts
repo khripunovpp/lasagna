@@ -3,8 +3,6 @@ import {ContainerComponent} from '../ui/layout/container/container.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {CardComponent} from '../ui/card/card.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
-import {GapColumnComponent} from '../ui/layout/gap-column.component';
-import {PwaInstallComponent} from './pwa-install.component';
 
 @Component({
   selector: 'app-application',
@@ -17,7 +15,6 @@ import {PwaInstallComponent} from './pwa-install.component';
     RouterLinkActive,
     CardComponent,
     TitleComponent,
-    PwaInstallComponent,
   ]
 })
 export class ApplicationComponent {
