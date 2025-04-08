@@ -4,6 +4,7 @@ import {recipesListResolver} from './service/resolvers/recipes-list.resolver';
 import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
 import {recipeCalculationResolver,} from './service/resolvers/recipe-calculation.resolver';
 import {recipeCalculationTemplateResolver} from './service/resolvers/recipe-tax-template.resolver';
+import {productListResolver} from './service/resolvers/product-list.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -63,7 +64,10 @@ export const routes: Routes = [{
     {
       path: 'products',
       loadComponent: () => import('./view/product/list/product-list.component')
-        .then(m => m.ProductListComponent)
+        .then(m => m.ProductListComponent),
+      resolve: {
+        list: productListResolver,
+      }
     },
 
 
@@ -80,7 +84,7 @@ export const routes: Routes = [{
     {
       path: 'categories',
       loadComponent: () => import('./view/category/list/category-list.component')
-        .then(m => m.CategoryListComponent)
+        .then(m => m.CategoryListComponent),
     },
 
 
