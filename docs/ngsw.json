@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1744131231146,
+  "timestamp": 1744142095717,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -14,6 +14,7 @@
         "https://khripunovpp.github.io/lasagna/chunk-234JSS2H.js",
         "https://khripunovpp.github.io/lasagna/chunk-2CXQCMUY.js",
         "https://khripunovpp.github.io/lasagna/chunk-2PNTZ6X2.js",
+        "https://khripunovpp.github.io/lasagna/chunk-2Z2OSASX.js",
         "https://khripunovpp.github.io/lasagna/chunk-3AY3FMR5.js",
         "https://khripunovpp.github.io/lasagna/chunk-44CGF4BV.js",
         "https://khripunovpp.github.io/lasagna/chunk-5W4DENKR.js",
@@ -35,7 +36,6 @@
         "https://khripunovpp.github.io/lasagna/chunk-MCS5HOGQ.js",
         "https://khripunovpp.github.io/lasagna/chunk-NR3MIRL2.js",
         "https://khripunovpp.github.io/lasagna/chunk-OOFC6OHE.js",
-        "https://khripunovpp.github.io/lasagna/chunk-OU43M7CQ.js",
         "https://khripunovpp.github.io/lasagna/chunk-PLSDI45O.js",
         "https://khripunovpp.github.io/lasagna/chunk-QJR4QN2B.js",
         "https://khripunovpp.github.io/lasagna/chunk-RIW6MEUW.js",
@@ -46,7 +46,7 @@
         "https://khripunovpp.github.io/lasagna/chunk-YF232BSG.js",
         "https://khripunovpp.github.io/lasagna/favicon.ico",
         "https://khripunovpp.github.io/lasagna/index.html",
-        "https://khripunovpp.github.io/lasagna/main-QTS4CYUS.js",
+        "https://khripunovpp.github.io/lasagna/main-3XN77B3E.js",
         "https://khripunovpp.github.io/lasagna/manifest.webmanifest",
         "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js",
         "https://khripunovpp.github.io/lasagna/styles-YNACSFG6.css"
@@ -72,6 +72,7 @@
     "https://khripunovpp.github.io/lasagna/chunk-234JSS2H.js": "e487ab14e17117265e962c6586ebbbf662c4fd1e",
     "https://khripunovpp.github.io/lasagna/chunk-2CXQCMUY.js": "a50352bb95ddf0005983ccb130037e01c90dd234",
     "https://khripunovpp.github.io/lasagna/chunk-2PNTZ6X2.js": "34c7defbc9a8325f6e703933d4d536d499010e1c",
+    "https://khripunovpp.github.io/lasagna/chunk-2Z2OSASX.js": "aaff1fd48d75dca9b0119240d72dcabdbde350ed",
     "https://khripunovpp.github.io/lasagna/chunk-3AY3FMR5.js": "d6a2c6b841cac1fdf7c1e59e34b9deaad86a1ed5",
     "https://khripunovpp.github.io/lasagna/chunk-44CGF4BV.js": "6c198747f472665dd7cabbbadb7af994064e1fd8",
     "https://khripunovpp.github.io/lasagna/chunk-5W4DENKR.js": "d30bf937c613d152caba42aa99abd77713831311",
@@ -93,7 +94,6 @@
     "https://khripunovpp.github.io/lasagna/chunk-MCS5HOGQ.js": "f85f422fa0e43bc6a2f62de60b8db93680a1478a",
     "https://khripunovpp.github.io/lasagna/chunk-NR3MIRL2.js": "05527711ac9ed4a8a2e508b96c0c0cf9b17cfe3b",
     "https://khripunovpp.github.io/lasagna/chunk-OOFC6OHE.js": "3769f56f5570eb5fc1580a5ffe69128223d86465",
-    "https://khripunovpp.github.io/lasagna/chunk-OU43M7CQ.js": "527e11c95e3697b957fce74eaea426540ddc8970",
     "https://khripunovpp.github.io/lasagna/chunk-PLSDI45O.js": "57de7d97644eae84c0b280ff89fc3f310d3cc874",
     "https://khripunovpp.github.io/lasagna/chunk-QJR4QN2B.js": "090048e774d310c2e9929ac6cbd6f0dff800218e",
     "https://khripunovpp.github.io/lasagna/chunk-RIW6MEUW.js": "85f395e16746a4843470940efa5ff594626331a0",
@@ -104,9 +104,9 @@
     "https://khripunovpp.github.io/lasagna/chunk-YF232BSG.js": "b46e507c205b535ed97ddb42a378f3c1c8eb5dce",
     "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://khripunovpp.github.io/lasagna/img/egg.svg": "4d9a85d4b3f9001fa1563ba67e928f3724a6e083",
-    "https://khripunovpp.github.io/lasagna/index.html": "5fad9fe719e217b693ed16e4e09706d444ac417e",
+    "https://khripunovpp.github.io/lasagna/index.html": "9eda942f169b2f704359936baa9757086b937840",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
-    "https://khripunovpp.github.io/lasagna/main-QTS4CYUS.js": "6a0027ec59aabdb2370dfc07cccd87902c4c607b",
+    "https://khripunovpp.github.io/lasagna/main-3XN77B3E.js": "7221f2a002473936a8becabf3a3e0468e2a55991",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8fb62517a3e27c1ff3530bdc36ad55a93166cb12",
     "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
     "https://khripunovpp.github.io/lasagna/styles-YNACSFG6.css": "5bc9a63d5f7b6603e6cbe3414a7eede27c355617"
