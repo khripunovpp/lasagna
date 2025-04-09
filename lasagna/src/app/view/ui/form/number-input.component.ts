@@ -132,7 +132,8 @@ export class NumberInputComponent
   }
 
   private _change(value: string) {
-    this.value = value;
+    this.value = value ? String(value).replace(',', '.') : '';
+    console.log('change', value,this.value );
     this.onChange(this.value);
   }
 }
