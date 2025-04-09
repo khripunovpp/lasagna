@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
-import {DexieIndexDbService} from './dexie-index-db.service';
+import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
 @Injectable({
