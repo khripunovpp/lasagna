@@ -21,10 +21,10 @@
     </lg-gap-row>
 
     @if (result()?.total) {
-      <lg-gap-row [center]="true">
+      <lg-gap-row [center]="true" style="--control-bg: white">
         @if (notInGrams()) {
 
-          <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true" style="--control-bg: white">
+          <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
             <lg-gap-row [size]="'small'" [center]="true">
               <div>
                 Calculation
@@ -203,7 +203,7 @@
             </lg-button>
           }
 
-          <lg-view-show #taxTemplateForm style="--control-bg: white">
+          <lg-view-show #taxTemplateForm>
             <lg-gap-row [center]="true" [size]="'small'">
               <lg-multiselect [(ngModel)]="taxTemplateToApply"
                               [autoLoad]="true"

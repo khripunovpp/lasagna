@@ -63,6 +63,13 @@
     </ng-container>
   </lg-card-list>
 
+  <lg-button (click)="addTxRow()"
+              [style]="'success'"
+             lgSelfCenter
+             lgShrink>
+    Add row
+  </lg-button>
+
   <lg-title [level]="4">
     <lg-gap-row [center]="true"
                 [mobileMode]="true"
@@ -73,9 +80,13 @@
     </lg-gap-row>
   </lg-title>
 
-  <lg-button (click)="addTxRow()"
-             lgSelfCenter
-             lgShrink>
-    Add tax
-  </lg-button>
+  <lg-title [level]="4">
+    <lg-gap-row [center]="true"
+                [mobileMode]="true"
+                [relaxed]="true">
+      Total
+
+      <b>{{ totalTaxes() + total() }}</b>
+    </lg-gap-row>
+  </lg-title>
 </lg-gap-column>
