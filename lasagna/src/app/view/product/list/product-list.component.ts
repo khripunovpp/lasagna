@@ -52,7 +52,7 @@ export type ProductList = Record<string, Product[]>;
               </lg-import>
           </lg-gap-row>
 
-          @for (category of products()|keyvalue;track category.value.category) {
+          @for (category of products()|keyvalue;track category.value?.category) {
               @if (category.value;as value) {
                   <lg-title>
                       {{ value.category || 'Uncategorized' }}

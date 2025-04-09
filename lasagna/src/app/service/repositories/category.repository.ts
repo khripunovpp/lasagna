@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CategoryFormValue} from '../../view/category/add-category/add-category-form.component';
-import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
 export interface Category {
@@ -18,32 +18,32 @@ export class CategoryRepository {
   }
 
   addCategory(product: CategoryFormValue) {
-    return this._indexDbService.addData(Stores.CATEGORIES, product);
+    return this._indexDbService.addData(Stores.PRODUCTS_CATEGORIES, product);
   }
 
   async getOne(
     uuid: string,
   ) {
-    return this._indexDbService.getOne(Stores.CATEGORIES, uuid);
+    return this._indexDbService.getOne(Stores.PRODUCTS_CATEGORIES, uuid);
   }
 
 
   getCategories() {
-    return this._indexDbService.getAll(Stores.CATEGORIES) as Promise<Category[]>;
+    return this._indexDbService.getAll(Stores.PRODUCTS_CATEGORIES) as Promise<Category[]>;
   }
 
   getManyCategories(
     uuids: string[],
   ) {
-    return this._indexDbService.getMany(Stores.CATEGORIES, uuids);
+    return this._indexDbService.getMany(Stores.PRODUCTS_CATEGORIES, uuids);
   }
 
   editCategory(uuid: string, category: CategoryFormValue) {
-    return this._indexDbService.replaceData(Stores.CATEGORIES, uuid, category);
+    return this._indexDbService.replaceData(Stores.PRODUCTS_CATEGORIES, uuid, category);
   }
 
   deleteCategory(uuid: string) {
-    return this._indexDbService.remove(Stores.CATEGORIES, uuid);
+    return this._indexDbService.remove(Stores.PRODUCTS_CATEGORIES, uuid);
   }
 
   async preloadCategories() {
@@ -83,7 +83,7 @@ export class CategoryRepository {
         uuid: '' + index,
         name,
       }));
-      await this._indexDbService.balkAdd(Stores.CATEGORIES, defaultCategories, false);
+      await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesInstalled', 'true');
     }
   }

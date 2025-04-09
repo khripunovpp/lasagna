@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
 import {Stores} from '../const/stores';
+import {migrations} from './migrations';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,19 @@ import {Stores} from '../const/stores';
 export class DexieIndexDbService extends Dexie {
   constructor() {
     super('lasagna-db');
-    this.version(1).stores({
-      [Stores.PRODUCTS]: '++uuid,name',
-      [Stores.RECIPES]: '++uuid,name',
-      [Stores.CATEGORIES]: '++uuid,name',
-    });
+
+    const seen = new Set();
+    for (const migration of migrations) {
+      if (seen.has(migration.version)) {
+        throw new Error(`Duplicate migration version: ${migration.version}`);
+      }
+      seen.add(migration.version);
+      const schema = this.version(migration.version).stores(migration.schema);
+      if (migration.update) {
+        schema.upgrade(migration.update);
+      }
+      console.log(`Migration ${migration.version} applied`);
+    }
   }
 
   productsStore!: Table<any, string>;

@@ -11,7 +11,7 @@ import {AsyncPipe, JsonPipe, KeyValuePipe, NgClass} from '@angular/common';
 import {GapRowComponent} from '../layout/gap-row.component';
 import {GapColumnComponent} from '../layout/gap-column.component';
 import {FormsModule} from '@angular/forms';
-import {DexieIndexDbService} from '../../../service/services/dexie-index-db.service';
+import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 
 @Component({
   selector: 'lg-import',

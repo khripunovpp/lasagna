@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product, ProductUnit} from './products.repository';
-import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
 export interface Ingredient {

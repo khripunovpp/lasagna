@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Category, CategoryRepository} from './category.repository';
 import {parseFloatingNumber} from '../../helpers/number.helper';
 import {ProductDbInputScheme} from '../../schemas/product.scema';
-import {DexieIndexDbService} from '../services/dexie-index-db.service';
+import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
 export type ProductUnit = 'gram' | 'portion' | 'piece';
