@@ -25,6 +25,8 @@ export const productListResolver: ResolveFn<any> = async (
     });
   }
 
+  if (!list.length) return [];
+
   const [first,...sortedList]  = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
 
   // без категории всегда внизу
