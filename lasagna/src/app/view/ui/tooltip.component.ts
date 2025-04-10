@@ -1,29 +1,36 @@
-import {Component, HostListener, input, output, signal} from '@angular/core';
+import {Component, ElementRef, HostListener, input, output, signal, viewChild} from '@angular/core';
 import {JsonPipe, NgClass} from '@angular/common';
+import {PortalComponent} from './layout/portal.component';
 
 @Component({
   selector: 'lg-tooltip',
   standalone: true,
   template: `
       <div [class.fullscreen]="full()"
-           [style.--gap.px]="gap()"
            [ngClass]="position()"
+           [style.--gap.px]="gap()"
            class="tooltip">
           <div class="tooltip__anchor">
-              <div (click)="toggle()">
+              <div (click)="toggle($event)">
                   <ng-content></ng-content>
               </div>
               @if (displayed()) {
-                  <div class="tooltip__content">
+                  <div class="tooltip__content" #element
+                       [style.left.px]="coordinates().x"
+                       [style.top.px]="coordinates().y">
                       <ng-content select="content"></ng-content>
                   </div>
+                  <lg-portal [appendTarget]="'body'" [targetElement]="element" [wrapClass]="'tooltip'">
+                  </lg-portal>
               }
+
           </div>
       </div>
   `,
   imports: [
     NgClass,
-    JsonPipe
+    JsonPipe,
+    PortalComponent,
   ],
   styles: [
     `
@@ -98,12 +105,45 @@ export class TooltipComponent {
   position = input<
     'top' | 'bottom' | 'left' | 'right'
   >('top');
+  element = viewChild<ElementRef>('element');
   onClose = output<void>();
+  coordinates = signal<{ x: number, y: number }>({x: 0, y: 0});
 
-  toggle() {
+  toggle(
+    event?: MouseEvent,
+  ) {
     this.displayed.set(!this.displayed());
     if (!this.displayed()) {
       this.onClose.emit();
+    }
+
+    if (event) {
+      event.stopPropagation();
+      const [x, y] = [event.clientX, event.clientY];
+      setTimeout(() => {
+        const tooltip = this.element()?.nativeElement;
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const tooltipWidth = tooltipRect.width;
+        const tooltipHeight = tooltipRect.height;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const offset = 16;
+        let newX = x;
+        let newY = y;
+        if (x + tooltipWidth + offset > screenWidth) {
+          newX = screenWidth - tooltipWidth - offset;
+        }
+        if (y + tooltipHeight + offset > screenHeight) {
+          newY = screenHeight - tooltipHeight - offset;
+        }
+        if (x - tooltipWidth - offset < 0) {
+          newX = offset;
+        }
+        if (y - tooltipHeight - offset < 0) {
+          newY = offset;
+        }
+        this.coordinates.set({x: newX, y: newY});
+      })
     }
   }
 

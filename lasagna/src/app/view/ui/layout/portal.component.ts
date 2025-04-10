@@ -21,10 +21,10 @@ export class PortalComponent implements AfterViewInit, OnDestroy {
   ) {
   }
 
-  @Input() targetElement!: ElementRef;
+  @Input() targetElement!: ElementRef | HTMLElement | null;
   @Input() appendTarget: string = '';
   @Input() wrapClass: string = '';
-  private portalContainer: HTMLElement;
+  private portalContainer!: HTMLElement;
 
   private get _appendTarget() {
     if (!this.appendTarget) {
