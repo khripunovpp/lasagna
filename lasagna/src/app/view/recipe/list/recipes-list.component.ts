@@ -63,9 +63,13 @@ import {NotificationsService} from '../../../service/services/notifications.serv
                       }
                   </lg-card-list>
               }
+          } @empty {
+              <lg-gap-row [center]="true">
+                  <lg-title [level]="5">
+                      No recipes found
+                  </lg-title>
+              </lg-gap-row>
           }
-
-
       </lg-container>
   `,
   imports: [
