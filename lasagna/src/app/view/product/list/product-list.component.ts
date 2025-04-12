@@ -92,6 +92,12 @@ export type ProductList = Record<string, Product[]>;
                       }
                   </lg-card-list>
               }
+          } @empty {
+              <lg-gap-row [center]="true">
+                  <lg-title [level]="5">
+                      No products found
+                  </lg-title>
+              </lg-gap-row>
           }
       </lg-container>
   `,

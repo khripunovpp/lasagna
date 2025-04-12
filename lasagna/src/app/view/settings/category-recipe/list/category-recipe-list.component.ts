@@ -40,7 +40,7 @@ import {NotificationsService} from '../../../../service/services/notifications.s
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
-                                     [link]="'/edit-category/' + category.uuid"
+                                     [link]="'/edit-recipe-category/' + category.uuid"
                                      [flat]="true">
                               Edit
                           </lg-button>
