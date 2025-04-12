@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {EggsWidgetComponent} from '../eggs-widget/eggs-widget.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {CardListComponent} from '../../ui/card/card-list.component';
+
+
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
-import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
+
 import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
 
 @Component({
@@ -34,15 +34,12 @@ import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.com
   `,
   imports: [
     EggsWidgetComponent,
-    ButtonComponent,
-    CardListComponent,
     ContainerComponent,
     GapRowComponent,
     TitleComponent,
     CardComponent,
-    JellyWidgetComponent,
     BarcodeSeekerWidgetComponent
-  ]
+]
 })
 export class WidgetsPageComponent {
 }

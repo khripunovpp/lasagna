@@ -1,13 +1,13 @@
 import {Component, effect, input, output, signal} from '@angular/core';
 import {CardListComponent} from '../../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../../ui/card/card-list-item.directive';
-import {ExpandDirective} from '../../../directives/expand.directive';
+
 import {GapRowComponent} from '../../../ui/layout/gap-row.component';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ControlComponent} from '../../../ui/form/control.component';
 import {InputComponent} from '../../../ui/form/input.component';
 import {CheckboxComponent} from '../../../ui/form/chckbox.component';
-import {JsonPipe} from '@angular/common';
+
 import {NumberInputComponent} from '../../../ui/form/number-input.component';
 import {ButtonComponent} from '../../../ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
@@ -37,13 +37,11 @@ export interface TaxRow {
   imports: [
     CardListComponent,
     CardListItemDirective,
-    ExpandDirective,
     GapRowComponent,
     ReactiveFormsModule,
     ControlComponent,
     InputComponent,
     CheckboxComponent,
-    JsonPipe,
     NumberInputComponent,
     ButtonComponent,
     MatIcon,
@@ -53,7 +51,7 @@ export interface TaxRow {
     ParseMathDirective,
     TitleComponent,
     TextareaComponent
-  ],
+],
 })
 export class TaxesAndFeesListComponent {
   constructor() {

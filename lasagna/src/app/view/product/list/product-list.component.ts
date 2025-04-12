@@ -1,17 +1,17 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {Product, ProductsRepository} from '../../../service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
-import {CardComponent} from '../../ui/card/card.component';
+
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe, JsonPipe, KeyValuePipe} from '@angular/common';
+import {DecimalPipe, KeyValuePipe} from '@angular/common';
 import {parseFloatingNumber} from '../../../helpers/number.helper';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-import {UploadComponent} from '../../ui/form/upload.component';
+
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {TransferDataService} from '../../../service/services/transfer-data.service';
 import {Stores} from '../../../service/const/stores';
@@ -95,22 +95,18 @@ export type ProductList = Record<string, Product[]>;
       </lg-container>
   `,
   imports: [
-    GapColumnComponent,
     GapRowComponent,
     ButtonComponent,
     MatIcon,
-    CardComponent,
     ContainerComponent,
     TitleComponent,
     DecimalPipe,
     CardListComponent,
     CardListItemDirective,
-    UploadComponent,
     ImportComponent,
     RouterLink,
-    KeyValuePipe,
-    JsonPipe
-  ],
+    KeyValuePipe
+],
   styles: [
     `:host {
       display: block;

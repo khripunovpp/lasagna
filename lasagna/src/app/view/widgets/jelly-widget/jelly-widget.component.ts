@@ -1,9 +1,9 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {InputComponent} from '../../ui/form/input.component';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe} from '@angular/common';
+
+
+
+
 
 @Component({
   selector: 'lg-jelly-widget',
@@ -68,12 +68,8 @@ import {DecimalPipe} from '@angular/common';
   `,
   imports: [
     FormsModule,
-    InputComponent,
-    GapColumnComponent,
-    TitleComponent,
-    DecimalPipe,
     ReactiveFormsModule
-  ],
+],
   styles: [`
     :host {
 

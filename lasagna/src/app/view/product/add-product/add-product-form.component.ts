@@ -11,13 +11,13 @@ import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {TooltipComponent} from '../../ui/tooltip.component';
-import {EggsWidgetComponent} from '../../widgets/eggs-widget/eggs-widget.component';
+
 import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {ExpandDirective} from '../../directives/expand.directive';
-import {JsonPipe} from '@angular/common';
+
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
@@ -35,15 +35,13 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     MultiselectComponent,
     NumberInputComponent,
     TooltipComponent,
-    EggsWidgetComponent,
     AmountWidgetsComponent,
     ParseMathDirective,
     GapRowComponent,
     ButtonsGroupComponent,
     ExpandDirective,
-    JsonPipe,
-    ChipsListComponent,
-  ],
+    ChipsListComponent
+],
   styles: [
     `
       lg-eggs-widget {

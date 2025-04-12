@@ -1,11 +1,11 @@
 import {Component, computed, input, output, resource, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {DecimalPipe, NgIf} from '@angular/common';
+
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {InputComponent} from '../../ui/form/input.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {ControlsRowComponent} from '../../ui/form/controls-row.component';
+
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
@@ -24,22 +24,18 @@ import {ThisReceiver} from '@angular/compiler';
   standalone: true,
   templateUrl: './barcode-seeker.component.html',
   imports: [
-
     FormsModule,
-    NgIf,
-    DecimalPipe,
     GapColumnComponent,
     InputComponent,
     TitleComponent,
     ButtonComponent,
-    ControlsRowComponent,
     ExpandDirective,
     ParseMathDirective,
     GapRowComponent,
     NumberInputComponent,
     ControlComponent,
-    ShrinkDirective,
-  ],
+    ShrinkDirective
+],
 
   styles: [
     `
