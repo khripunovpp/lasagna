@@ -1,6 +1,6 @@
-import {Component, input, output, ViewEncapsulation} from '@angular/core';
-import {NgClass} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Component, HostBinding, input, output, viewChild, viewChildren, ViewEncapsulation} from '@angular/core';
+import {NgClass, NgTemplateOutlet} from '@angular/common';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 export type ButtonStyle = 'default' |
   'primary' |
@@ -14,27 +14,48 @@ export type ButtonStyle = 'default' |
   selector: 'lg-button',
   standalone: true,
   template: `
-      <button (click)="onClick.emit($event)"
-              [class.active]="active()"
-              [class.flat]="flat()"
-              [class.icon]="icon()"
-              [class.no-bottom-radius]="noBottomRadius()"
-              [class.no-left-radius]="noLeftRadius()"
-              [class.no-radius]="noRadius()"
-              [class.no-right-radius]="noRightRadius()"
-              [class.no-top-radius]="noTopRadius()"
-              [ngClass]="style() + ' ' + size()"
-              [routerLink]="link() ? link() : null"
-              class="button"
-              type="button">
-          <ng-content></ng-content>
-      </button>
+      @if (link()) {
+          <a [class.active]="active()"
+             [class.flat]="flat()"
+             [class.icon]="icon()"
+             [class.no-bottom-radius]="noBottomRadius()"
+             [class.no-left-radius]="noLeftRadius()"
+             [class.no-radius]="noRadius()"
+             [class.no-right-radius]="noRightRadius()"
+             [class.no-top-radius]="noTopRadius()"
+             [ngClass]="style() + ' ' + size()"
+             [routerLink]="link() ? link() : null"
+             [routerLinkActive]="['route-active']"
+             class="button">
+              <ng-container *ngTemplateOutlet="content"></ng-container>
+          </a>
+      } @else {
+          <button (click)="onClick.emit($event)"
+                  [class.active]="active()"
+                  [class.flat]="flat()"
+                  [class.icon]="icon()"
+                  [class.no-bottom-radius]="noBottomRadius()"
+                  [class.no-left-radius]="noLeftRadius()"
+                  [class.no-radius]="noRadius()"
+                  [class.no-right-radius]="noRightRadius()"
+                  [class.no-top-radius]="noTopRadius()"
+                  [ngClass]="style() + ' ' + size()"
+                  class="button"
+                  type="button">
+              <ng-container *ngTemplateOutlet="content"></ng-container>
+          </button>
+      }
 
+      <ng-template #content>
+          <ng-content></ng-content>
+      </ng-template>
   `,
   encapsulation: ViewEncapsulation.None,
   imports: [
     NgClass,
-    RouterLink
+    RouterLink,
+    NgTemplateOutlet,
+    RouterLinkActive
   ],
   styles: [
     `
@@ -168,7 +189,6 @@ export type ButtonStyle = 'default' |
 export class ButtonComponent {
   constructor() {
   }
-
   onClick = output<any>();
   style = input<ButtonStyle>('default');
   size = input<
@@ -184,4 +204,5 @@ export class ButtonComponent {
   noTopRadius = input<boolean>(false);
   noBottomRadius = input<boolean>(false);
   active = input<boolean>(false);
+  routerLinkActive = viewChild(RouterLinkActive);
 }
