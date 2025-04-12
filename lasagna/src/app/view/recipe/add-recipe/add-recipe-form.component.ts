@@ -24,6 +24,7 @@ import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
 
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
+import {ChipsListComponent} from '../../ui/form/chips-list.component';
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -45,8 +46,9 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ExpandDirective,
     NgClass,
     ParseMathDirective,
-    ButtonsGroupComponent
-],
+    ButtonsGroupComponent,
+    ChipsListComponent
+  ],
   styles: [
     `
     `
@@ -85,6 +87,7 @@ export class AddRecipeFormComponent
     ingredients: new FormArray([
       this._getIngredientGroup(),
     ]),
+    category_id: new FormControl<any>(null),
   }, (group) => {
     const outcomeAmount = group.value?.outcome_amount;
     const ingredientsAmount = group.value?.ingredients?.reduce((acc: number, item: Ingredient) => {
@@ -120,6 +123,7 @@ export class AddRecipeFormComponent
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
+  topCategories = signal<any[]>([]);
   private recipeEffect = effect(() => {
     if (!this.recipe()) {
       return;
@@ -183,6 +187,7 @@ export class AddRecipeFormComponent
   }
 
   ngOnInit() {
+    this._loadUsingHistory();
     this.form.valueChanges.pipe(
       debounceTime(100),
     ).subscribe({
@@ -218,7 +223,11 @@ export class AddRecipeFormComponent
       return;
     }
     this._recipesRepository.addRecipe(this._values).then(() => {
-      this._router.navigate(['/recipes']);
+      this.ingredients.clear();
+      this.form.reset({});
+      this.addIngredient();
+      this._loadUsingHistory();
+      this._notificationsService.success('Recipe added');
     });
   }
 
@@ -230,7 +239,7 @@ export class AddRecipeFormComponent
       return;
     }
     this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
-      this._router.navigate(['/recipes']);
+      this._notificationsService.success('Recipe edited');
     }).catch(error => {
       console.error(error);
     });
@@ -244,9 +253,6 @@ export class AddRecipeFormComponent
     amount.focus();
 
     const value = this.ingredients.at(index).value;
-    const inGrams = value.product_id?.unit === 'gram' || value.recipe_id?.unit === 'gram';
-
-    console.log({value})
 
     this.ingredients.at(index).patchValue({
       ...(Array.isArray(clearField) ? clearField.reduce((acc, field) => ({
@@ -314,6 +320,15 @@ export class AddRecipeFormComponent
       }
     }
     return match;
+  }
+
+  private _loadUsingHistory() {
+    this._recipesRepository.getTopCategories().then(categories => {
+      this.topCategories.set(categories.map(category => ({
+        label: category.name,
+        value: category.uuid,
+      })));
+    });
   }
 
   private _getIngredientGroup(

@@ -1,14 +1,18 @@
 import {Component, effect, Inject, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {InputComponent} from '../../ui/form/input.component';
-import {ControlComponent} from '../../ui/form/control.component';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
+import {InputComponent} from '../../../ui/form/input.component';
+import {ControlComponent} from '../../../ui/form/control.component';
+import {GapColumnComponent} from '../../../ui/layout/gap-column.component';
+import {ButtonComponent} from '../../../ui/layout/button.component';
+import {SelectResourcesService} from '../../../../service/services/select-resources.service';
+import {
+  CategoryProduct,
+  CategoryProductsRepository
+} from '../../../../service/repositories/category-products-repository.service';
 import {Router} from '@angular/router';
+import {NotificationsService} from '../../../../service/services/notifications.service';
 
-export type CategoryFormValue = Omit<Category, 'uuid'>
+export type CategoryFormValue = Omit<CategoryProduct, 'uuid'>
 
 @Component({
   selector: 'lg-add-category-form',
@@ -55,9 +59,10 @@ export type CategoryFormValue = Omit<Category, 'uuid'>
 export class AddCategoryFormComponent
   implements OnInit {
   constructor(
-    public _categoryRepository: CategoryRepository,
+    public _categoryRepository: CategoryProductsRepository,
     @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
     private _router: Router,
+    private _notificationsService: NotificationsService,
   ) {
   }
 
@@ -71,7 +76,6 @@ export class AddCategoryFormComponent
     }
     this._categoryRepository.getOne(this.uuid()).then(category => {
       this.form.reset(category);
-      this.form.updateValueAndValidity();
     });
   });
 
@@ -86,7 +90,8 @@ export class AddCategoryFormComponent
     values: CategoryFormValue
   ) {
     this._categoryRepository.addCategory(values).then(() => {
-      this._router.navigate(['/categories']);
+      this.form.reset({});
+      this._notificationsService.success('Category added');
     });
   }
 
@@ -94,7 +99,7 @@ export class AddCategoryFormComponent
     values: CategoryFormValue
   ) {
     this._categoryRepository.editCategory(this.uuid(), values).then(() => {
-      this._router.navigate(['/categories']);
+      this._notificationsService.success('Category edited');
     });
   }
 }

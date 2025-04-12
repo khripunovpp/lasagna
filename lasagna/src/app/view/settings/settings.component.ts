@@ -6,6 +6,7 @@ import {ContainerComponent} from '../ui/layout/container/container.component';
 import {GapRowComponent} from '../ui/layout/gap-row.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {GapColumnComponent} from '../ui/layout/gap-column.component';
 
 @Component({
   selector: 'lg-settings',
@@ -18,8 +19,9 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
     GapRowComponent,
     TitleComponent,
     RouterLink,
-    RouterLinkActive
-]
+    RouterLinkActive,
+    GapColumnComponent
+  ]
 })
 export class SettingsComponent {
 }

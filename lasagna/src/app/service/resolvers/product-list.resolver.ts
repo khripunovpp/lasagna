@@ -2,14 +2,14 @@ import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from '@angular/r
 import {inject} from '@angular/core';
 import {Product, ProductsRepository} from '../repositories/products.repository';
 import {groupBy} from '../../helpers/grouping.helper';
-import {CategoryRepository} from '../repositories/category.repository';
+import {CategoryProductsRepository} from '../repositories/category-products-repository.service';
 
 export const productListResolver: ResolveFn<any> = async (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
 ) => {
   const productsRepository = inject(ProductsRepository);
-  const categoryRepository = inject(CategoryRepository);
+  const categoryRepository = inject(CategoryProductsRepository);
   const products = await productsRepository.getProducts()
   const sorted = products.toSorted((a: Product, b: Product) => a.name.localeCompare(b.name));
   const grouped = groupBy(sorted, 'category_id');

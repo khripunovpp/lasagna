@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Product, ProductUnit} from './products.repository';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
+import {CategoryRecipe, CategoryRecipesRepository} from './category-recipes-repository.service';
+import {UsingHistoryService} from '../services/using-history.service';
 
 export interface Ingredient {
   name?: string
@@ -20,13 +22,15 @@ export interface Recipe {
   outcome_amount: number
   outcome_unit: string
   taxTemplateName?: string
+  category_id?: CategoryRecipe | null
 }
 
-export type RecipeDTO = Omit<Recipe, 'ingredients'> & {
+export type RecipeDTO = Omit<Recipe, 'ingredients' | 'category_id'> & {
   ingredients: Array<Omit<Ingredient, 'product_id' | 'recipe_id'> & {
     product_id: string | undefined
     recipe_id: string | undefined
   }>
+  category_id: string | null
 }
 
 @Injectable({
@@ -35,11 +39,16 @@ export type RecipeDTO = Omit<Recipe, 'ingredients'> & {
 export class RecipesRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
+    private _usingHistoryService: UsingHistoryService,
+    private _categoryRepository: CategoryRecipesRepository,
   ) {
   }
 
-  async addRecipe(product: RecipeDTO) {
-    return this._indexDbService.addData(Stores.RECIPES, product);
+  async addRecipe(recipe: RecipeDTO) {
+    return this._indexDbService.addData(Stores.RECIPES, recipe).then(uuid => {
+      if (recipe.category_id) this._saveCategory(recipe.category_id);
+      return uuid;
+    })
   }
 
   getRecipes() {
@@ -94,6 +103,7 @@ export class RecipesRepository {
         recipe_id: ingredient.recipe_id ? {uuid: ingredient.recipe_id} as Recipe : undefined,
       })),
       taxTemplateName: recipe.taxTemplateName,
+      category_id: recipe.category_id ? {uuid: recipe.category_id} as CategoryRecipe : null,
     };
   }
 
@@ -106,6 +116,25 @@ export class RecipesRepository {
       uuid: recipe.uuid,
       ingredients: recipe.ingredients.map(ingredient => this.ingredientToDto(ingredient)),
       taxTemplateName: recipe.taxTemplateName,
+      category_id: recipe.category_id ? recipe.category_id.uuid : null,
     };
+  }
+
+  getTopCategories() {
+    const {top} = this._usingHistoryService.read('recipes_categories');
+    const keys = Object.keys(top);
+    if (keys.length === 0) {
+      return Promise.resolve([]);
+    }
+
+    return this._categoryRepository.getManyCategories(keys).then(categories => {
+      return categories.toSorted((a, b) => {
+        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+      });
+    })
+  }
+
+  private _saveCategory(uuid: string) {
+    this._usingHistoryService.count('recipes_categories', uuid);
   }
 }

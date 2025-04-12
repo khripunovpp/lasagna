@@ -4,9 +4,10 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
-import {CategoryRepository} from './service/repositories/category.repository';
+import {CategoryProductsRepository} from './service/repositories/category-products-repository.service';
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideHttpClient} from '@angular/common/http';
+import {CategoryRecipesRepository} from './service/repositories/category-recipes-repository.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,9 +18,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
 
     provideAppInitializer(() => {
-      const categoryRepository = inject(CategoryRepository);
+      const categoryRepository = inject(CategoryProductsRepository);
+      const recipeCategoryRepository = inject(CategoryRecipesRepository);
       return Promise.all([
         categoryRepository.preloadCategories(),
+        recipeCategoryRepository.preloadCategories(),
       ])
     }),
     provideServiceWorker('ngsw-worker.js', {

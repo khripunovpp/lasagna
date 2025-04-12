@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {CategoryFormValue} from '../../view/category/add-category/add-category-form.component';
+import {CategoryFormValue} from '../../view/settings/category/add-category/add-category-form.component';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 
-export interface Category {
+export interface CategoryProduct {
   uuid: string
   name: string
 }
@@ -11,7 +11,7 @@ export interface Category {
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryRepository {
+export class CategoryProductsRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
   ) {
@@ -29,7 +29,7 @@ export class CategoryRepository {
 
 
   getCategories() {
-    return this._indexDbService.getAll(Stores.PRODUCTS_CATEGORIES) as Promise<Category[]>;
+    return this._indexDbService.getAll(Stores.PRODUCTS_CATEGORIES) as Promise<CategoryProduct[]>;
   }
 
   getManyCategories(

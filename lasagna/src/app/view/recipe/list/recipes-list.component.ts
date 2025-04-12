@@ -11,6 +11,8 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NotificationsService} from '../../../service/services/notifications.service';
+
 
 @Component({
   selector: 'lg-recipes-list',
@@ -30,30 +32,40 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               </lg-button>
           </lg-gap-row>
 
+          @for (category of recipes();track category?.category) {
+              @if (category?.category;as value) {
+                  <lg-title [level]="3">
+                      {{ value || 'Uncategorized' }}
+                  </lg-title>
 
-          <lg-card-list>
-              @for (recipe of recipes();track $index;let i = $index) {
-                  <ng-template lgCardListItem>
-                      <lg-gap-row [center]="true">
-                          <div class="expand">
-                              <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
-                          </div>
-                          <lg-button [style]="'primary'"
-                                     [size]="'small'"
-                                     [link]="'/calc-recipe/' + recipe.uuid"
-                                     [flat]="true">
-                              Calculate
-                          </lg-button>
-                          <lg-button [style]="'danger'"
-                                     [size]="'small'"
-                                     [icon]="true"
-                                     (click)="deleteRecipe(recipe)">
-                              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
-                          </lg-button>
-                      </lg-gap-row>
-                  </ng-template>
+                  <lg-card-list>
+                      @for (recipe of category.recipes;track $index;let i = $index) {
+                          <ng-template lgCardListItem>
+                              <lg-gap-row [center]="true">
+                                  <div class="expand">
+                                      <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                                  </div>
+                                  <lg-button [style]="'primary'"
+                                             [size]="'small'"
+                                             [link]="'/calc-recipe/' + recipe.uuid"
+                                             [flat]="true">
+                                      Calculate
+                                  </lg-button>
+                                  <lg-button [style]="'danger'"
+                                             [size]="'small'"
+                                             [icon]="true"
+                                             (click)="deleteRecipe(recipe)">
+                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                fontIcon="close"></mat-icon>
+                                  </lg-button>
+                              </lg-gap-row>
+                          </ng-template>
+                      }
+                  </lg-card-list>
               }
-          </lg-card-list>
+          }
+
+
       </lg-container>
   `,
   imports: [
@@ -77,6 +89,7 @@ export class RecipesListComponent {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _recipesRepository: RecipesRepository,
+    private _notificationsService: NotificationsService,
   ) {
     this._activatedRoute.data.pipe(
       takeUntilDestroyed(),
@@ -85,13 +98,14 @@ export class RecipesListComponent {
     });
   }
 
-  recipes = signal<Recipe[]>([])
+  recipes = signal<any[]>([])
 
   deleteRecipe(
     recipe: Recipe,
   ) {
     this._recipesRepository.deleteRecipe(recipe.uuid).then(() => {
       this.loadRecipes();
+      this._notificationsService.success('Recipe deleted');
     });
   }
 

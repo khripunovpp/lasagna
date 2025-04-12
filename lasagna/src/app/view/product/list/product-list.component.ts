@@ -19,6 +19,7 @@ import {ImportComponent} from '../../ui/import/import.component';
 import {ProductDbInputScheme} from '../../../schemas/product.scema';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NotificationsService} from '../../../service/services/notifications.service';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -54,7 +55,7 @@ export type ProductList = Record<string, Product[]>;
 
           @for (category of products()|keyvalue;track category.value?.category) {
               @if (category.value;as value) {
-                  <lg-title>
+                  <lg-title [level]="3">
                       {{ value.category || 'Uncategorized' }}
                   </lg-title>
 
@@ -121,12 +122,12 @@ export class ProductListComponent
     private _csvReaderService: CsvReaderService,
     private _transferDataService: TransferDataService,
     private _activatedRoute: ActivatedRoute,
+    private _notificationsService: NotificationsService,
   ) {
 
     this._activatedRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
-      console.log(data)
       this.products.set(data['list']);
     });
   }
@@ -151,6 +152,7 @@ export class ProductListComponent
     }
     this._productsRepository.deleteProduct(recipe.uuid).then(() => {
       this.loadProducts();
+      this._notificationsService.success('Product deleted');
     });
   }
 

@@ -1,37 +1,37 @@
 import {Component, signal} from '@angular/core';
-import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {CardComponent} from '../../ui/card/card.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
-import {AddCategoryFormComponent} from './add-category-form.component';
+import {ContainerComponent} from '../../../ui/layout/container/container.component';
+import {CardComponent} from '../../../ui/card/card.component';
+import {TitleComponent} from '../../../ui/layout/title/title.component';
+import {AddCategoryRecipeFormComponent} from './add-category-recipe-form.component';
 import {ActivatedRoute} from '@angular/router';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
+import {GapRowComponent} from '../../../ui/layout/gap-row.component';
+import {ButtonComponent} from '../../../ui/layout/button.component';
 
 @Component({
-  selector: 'lg-add-category',
+  selector: 'lg-add-category-recipe',
   standalone: true,
   imports: [
     ContainerComponent,
     CardComponent,
     TitleComponent,
-    AddCategoryFormComponent,
+    AddCategoryRecipeFormComponent,
     GapRowComponent,
     ButtonComponent,
   ],
   template: `
       <lg-container>
           <lg-gap-row [center]="true">
-              <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Category</lg-title>
+              <lg-title>{{ uuid() ? 'Edit' : 'Add' }} recipe category</lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/categories'"
+                         [link]="'/recipes-categories'"
                          [size]="'small'"
                          [style]="'warning'">
                   Back to list
               </lg-button>
           </lg-gap-row>
           <lg-card>
-              <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>
+              <lg-add-category-recipe-form [uuid]="uuid()"></lg-add-category-recipe-form>
           </lg-card>
       </lg-container>
   `,
@@ -40,7 +40,7 @@ import {ButtonComponent} from '../../ui/layout/button.component';
     `
   ]
 })
-export class AddCategoryComponent {
+export class AddCategoryRecipeComponent {
   constructor(
     private _aRoute: ActivatedRoute,
   ) {
