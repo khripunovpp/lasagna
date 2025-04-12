@@ -52,7 +52,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ChipsListComponent,
     AutocompleteComponent,
     FormsModule
-],
+  ],
   styles: [
     `
     `
@@ -94,12 +94,13 @@ export class AddRecipeFormComponent
     category_id: new FormControl<any>(null),
   }, (group) => {
     const outcomeAmount = group.value?.outcome_amount;
+    const outcomeUnit = group.value?.outcome_unit;
     const ingredientsAmount = group.value?.ingredients?.reduce((acc: number, item: Ingredient) => {
       if (item.unit !== 'gram') return acc;
 
       return acc + (+item.amount || 0);
     }, 0) || 0;
-    if (outcomeAmount && outcomeAmount > ingredientsAmount) {
+    if (outcomeAmount && outcomeUnit == 'gram' && outcomeAmount > ingredientsAmount) {
       return {outcomeAmountGreaterThanIngredients: true};
     }
     return null;
