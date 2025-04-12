@@ -9,6 +9,7 @@ export interface SelectResourcesConfig {
 export interface IndexDbSelectLoaderConfig {
   name: string
   storeName: Stores
+  selectUniqueKey?: string
 }
 
 export interface LocalstorageSelectLoaderConfig {
@@ -43,6 +44,28 @@ export const resources: Record<string, SelectResourcesConfig> = {
     loaderConfig: {
       name: 'indexDb',
       storeName: Stores.RECIPES,
+    },
+  },
+  'recipes-names': {
+    name: 'recipes-names',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.RECIPES,
+    },
+  },
+  'products-names': {
+    name: 'products-names',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.PRODUCTS,
+    },
+  },
+  'sources': {
+    name: 'sources',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.PRODUCTS,
+      selectUniqueKey: 'source',
     },
   },
   taxTemplates: {

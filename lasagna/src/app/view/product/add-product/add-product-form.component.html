@@ -1,8 +1,9 @@
 <form [formGroup]="form">
   <lg-gap-column>
     <lg-control label="Name">
-      <lg-input [placeholder]="'Your product name'"
-                formControlName="name"></lg-input>
+      <lg-autocomplete [key]="'name'"
+                       [resource]="'products-names'"
+                       formControlName="name"></lg-autocomplete>
     </lg-control>
 
     <lg-gap-row [bottom]="true" [mobileMode]="true">
@@ -37,13 +38,18 @@
 
     <lg-gap-column>
       <lg-control label="Source">
+
         <lg-input #sourceInput
                   [placeholder]="'Where do you buy it?'"
                   formControlName="source"></lg-input>
+        <!--        <lg-multiselect #sourceInput-->
+        <!--                        [resource]="'sources'"-->
+        <!--                        formControlName="source"></lg-multiselect>-->
       </lg-control>
-      @if (topSources().length) {
-        <lg-chips-list [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-      }
+
+      <div [hidden]="!topSources().length">
+        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+      </div>
     </lg-gap-column>
 
     <lg-gap-column>

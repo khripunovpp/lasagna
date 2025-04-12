@@ -86,4 +86,8 @@ export class ChipsListComponent
   ngOnInit() {
   }
 
+  clearSelected() {
+    this.value = null;
+  }
+
 }

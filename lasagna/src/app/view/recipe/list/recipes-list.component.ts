@@ -33,36 +33,34 @@ import {NotificationsService} from '../../../service/services/notifications.serv
           </lg-gap-row>
 
           @for (category of recipes();track category?.category) {
-              @if (category?.category;as value) {
-                  <lg-title [level]="3">
-                      {{ value || 'Uncategorized' }}
-                  </lg-title>
+              <lg-title [level]="3">
+                  {{ category?.category || 'Uncategorized' }}
+              </lg-title>
 
-                  <lg-card-list>
-                      @for (recipe of category.recipes;track $index;let i = $index) {
-                          <ng-template lgCardListItem>
-                              <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
-                                  </div>
-                                  <lg-button [style]="'primary'"
-                                             [size]="'small'"
-                                             [link]="'/calc-recipe/' + recipe.uuid"
-                                             [flat]="true">
-                                      Calculate
-                                  </lg-button>
-                                  <lg-button [style]="'danger'"
-                                             [size]="'small'"
-                                             [icon]="true"
-                                             (click)="deleteRecipe(recipe)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              }
+              <lg-card-list>
+                  @for (recipe of category.recipes;track $index;let i = $index) {
+                      <ng-template lgCardListItem>
+                          <lg-gap-row [center]="true">
+                              <div class="expand">
+                                  <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                              </div>
+                              <lg-button [style]="'primary'"
+                                         [size]="'small'"
+                                         [link]="'/calc-recipe/' + recipe.uuid"
+                                         [flat]="true">
+                                  Calculate
+                              </lg-button>
+                              <lg-button [style]="'danger'"
+                                         [size]="'small'"
+                                         [icon]="true"
+                                         (click)="deleteRecipe(recipe)">
+                                  <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                            fontIcon="close"></mat-icon>
+                              </lg-button>
+                          </lg-gap-row>
+                      </ng-template>
+                  }
+              </lg-card-list>
           } @empty {
               <lg-gap-row [center]="true">
                   <lg-title [level]="5">

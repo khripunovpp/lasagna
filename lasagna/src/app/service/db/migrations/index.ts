@@ -86,4 +86,22 @@ export const migrations: {
       })
     }
   },
+  {
+    version: 6,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name',
+      [Stores.RECIPES]: '++uuid,name,source',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+    },
+  },
+  {
+    version: 7,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+    },
+  }
 ]
