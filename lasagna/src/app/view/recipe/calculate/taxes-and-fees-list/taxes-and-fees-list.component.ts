@@ -68,7 +68,6 @@ export class TaxesAndFeesListComponent {
     ]),
   });
   rowsEffect = effect(() => {
-    debugger;
     this._rowsFormArray.clear();
     this.rows().forEach((row, index) => {
       this._rowsFormArray.push(this._getRowGroup(row));

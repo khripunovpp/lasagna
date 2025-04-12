@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Category, CategoryRepository} from './category.repository';
+import {CategoryProduct, CategoryProductsRepository} from './category-products-repository.service';
 import {parseFloatingNumber} from '../../helpers/number.helper';
 import {ProductDbInputScheme} from '../../schemas/product.scema';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
+import {UsingHistoryService} from '../services/using-history.service';
 
 export type ProductUnit = 'gram' | 'portion' | 'piece';
 
@@ -14,7 +15,7 @@ export interface Product {
   amount: number
   source: string
   unit?: ProductUnit
-  category_id: Category | null
+  category_id: CategoryProduct | null
 }
 
 export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
@@ -27,7 +28,8 @@ export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
 export class ProductsRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
-    private _categoryRepository: CategoryRepository,
+    private _categoryRepository: CategoryProductsRepository,
+    private _usingHistoryService: UsingHistoryService,
   ) {
   }
 
@@ -92,20 +94,18 @@ export class ProductsRepository {
   }
 
   getTopCategories() {
-    const topCategories = JSON.parse(localStorage.getItem('topCategories') || '{}');
-    const keys = Object.keys(topCategories);
+    const {top} = this._usingHistoryService.read('products_categories');
+    const keys = Object.keys(top);
 
     return this._categoryRepository.getManyCategories(keys).then(categories => {
       return categories.toSorted((a, b) => {
-        return topCategories[b.uuid].count > topCategories[a.uuid].count ? 1 : -1;
+        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       });
     })
   }
 
   async getTopSources() {
-    const topSources = JSON.parse(localStorage.getItem('topSources') || '{}');
-
-    return Object.keys(topSources);
+    return Object.keys(this._usingHistoryService.read('products_sources').top);
   }
 
   private _toDbValue(product: unknown) {
@@ -123,92 +123,10 @@ export class ProductsRepository {
   }
 
   private _saveCategory(uuid: string) {
-    if (!uuid) return;
-
-    const key = 'categoriesHistory';
-    const recentKey = 'recentCategories';
-    const topKey = 'topCategories';
-
-    let categories: Record<string, {
-      count: number;
-      updatedAt: number
-    }> = JSON.parse(localStorage.getItem(key) || '{}');
-
-    const now = Date.now();
-    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000; // 30 дней в миллисекундах
-
-    // Обновляем или добавляем категорию
-    categories[uuid] = {
-      count: (categories[uuid]?.count || 0) + 1,
-      updatedAt: now
-    };
-
-    // Фильтруем записи старше 30 дней
-    let filteredCategories = Object.entries(categories)
-      .filter(([_, data]) => data.updatedAt >= oneMonthAgo);
-
-    // Сортируем для разных списков:
-    // 1️⃣ Самые свежие (по дате обновления)
-    const recentCategories = filteredCategories
-      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
-      .slice(0, 5);
-
-    // 2️⃣ Самые популярные (по количеству использований, затем по свежести)
-    const topCategories = filteredCategories
-      .sort((a, b) => b[1].count - a[1].count || b[1].updatedAt - a[1].updatedAt)
-      .slice(0, 5);
-
-    // 3️⃣ Полный список последних 50 категорий
-    const fullHistory = Object.entries(categories)
-      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
-      .slice(0, 50);
-
-    // Преобразуем обратно в объект и сохраняем
-    localStorage.setItem(key, JSON.stringify(Object.fromEntries(fullHistory)));
-    localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentCategories)));
-    localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topCategories)));
-
+    this._usingHistoryService.count('products_categories', uuid);
   }
 
   private _saveSource(source: string) {
-    if (!source) return;
-
-    const key = 'sourcesHistory';
-    const recentKey = 'recentSources';
-    const topKey = 'topSources';
-
-    let sources: Record<string, {
-      count: number;
-      updatedAt: number
-    }> = JSON.parse(localStorage.getItem(key) || '{}');
-
-    const now = Date.now();
-    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000; // 30 дней в миллисекундах
-
-    // Обновляем или добавляем категорию
-    sources[source] = {
-      count: (sources[source]?.count || 0) + 1,
-      updatedAt: now
-    };
-
-    // Фильтруем записи старше 30 дней
-    let filteredSources = Object.entries(sources)
-      .filter(([_, data]) => data.updatedAt >= oneMonthAgo);
-
-    // Сортируем для разных списков:
-    // 1️⃣ Самые свежие (по дате обновления)
-    const recentSources = filteredSources
-      .sort((a, b) => b[1].updatedAt - a[1].updatedAt)
-      .slice(0, 5);
-
-    // 2️⃣ Самые популярные (по количеству использований, затем по свежести)
-    const topSources = filteredSources
-      .sort((a, b) => b[1].count - a[1].count || b[1].updatedAt - a[1].updatedAt)
-      .slice(0, 5);
-
-    // Преобразуем обратно в объект и сохраняем
-    localStorage.setItem(key, JSON.stringify(Object.fromEntries(filteredSources)));
-    localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentSources)));
-    localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topSources)));
+    this._usingHistoryService.count('products_sources', source);
   }
 }

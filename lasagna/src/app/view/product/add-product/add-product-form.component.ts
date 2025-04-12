@@ -19,6 +19,7 @@ import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-grou
 import {ExpandDirective} from '../../directives/expand.directive';
 
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
+import {NotificationsService} from '../../../service/services/notifications.service';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -41,7 +42,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ButtonsGroupComponent,
     ExpandDirective,
     ChipsListComponent
-],
+  ],
   styles: [
     `
       lg-eggs-widget {
@@ -63,6 +64,7 @@ export class AddProductFormComponent
     public _productsRepository: ProductsRepository,
     @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
     private _router: Router,
+    private _notificationsService: NotificationsService,
   ) {
   }
 
@@ -109,6 +111,17 @@ export class AddProductFormComponent
     return this.form.value as ProductFormValue;
   }
 
+  private get _defFormValue() {
+    return {
+      name: '',
+      amount: null,
+      price: null,
+      source: '',
+      category_id: null,
+      unit: 'gram',
+    };
+  }
+
   eggsChanged(event: any) {
     this.form.patchValue({
       amount: event
@@ -116,9 +129,33 @@ export class AddProductFormComponent
   }
 
   ngOnInit() {
-    this.form.valueChanges.subscribe(value => {
-      console.log(value);
+    this._loadUsingHistory();
+  }
+
+  addProduct(
+    values: ProductFormValue
+  ) {
+    this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+      this.form.reset(this._defFormValue);
+      this._notificationsService.success('Product added');
+      this._loadUsingHistory();
     });
+  }
+
+  editProduct(
+    values: ProductFormValue
+  ) {
+    this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+      this._notificationsService.success('Product edited');
+    });
+  }
+
+  ngAfterViewInit() {
+    this._selectResourcesService.load().then(resources => {
+    })
+  }
+
+  private _loadUsingHistory() {
     this._productsRepository.getTopCategories().then(categories => {
       this.topCategories.set(categories.map(category => ({
         label: category.name,
@@ -132,27 +169,6 @@ export class AddProductFormComponent
         value: source,
       })));
     });
-  }
-
-  addProduct(
-    values: ProductFormValue
-  ) {
-    this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this._router.navigate(['/products']);
-    });
-  }
-
-  editProduct(
-    values: ProductFormValue
-  ) {
-    this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this._router.navigate(['/products']);
-    });
-  }
-
-  ngAfterViewInit() {
-    this._selectResourcesService.load().then(resources => {
-    })
   }
 
 }

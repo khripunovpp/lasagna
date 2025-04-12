@@ -1,28 +1,30 @@
 import {Component, OnInit, signal} from '@angular/core';
 
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
+import {GapRowComponent} from '../../../ui/layout/gap-row.component';
+import {ButtonComponent} from '../../../ui/layout/button.component';
+import {CategoryProduct} from '../../../../service/repositories/category-products-repository.service';
 import {MatIcon} from '@angular/material/icon';
 
-import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CardListComponent} from '../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {ContainerComponent} from '../../../ui/layout/container/container.component';
+import {TitleComponent} from '../../../ui/layout/title/title.component';
+import {CardListComponent} from '../../../ui/card/card-list.component';
+import {CardListItemDirective} from '../../../ui/card/card-list-item.directive';
+import {CategoryRecipesRepository} from '../../../../service/repositories/category-recipes-repository.service';
+import {NotificationsService} from '../../../../service/services/notifications.service';
 
 
 @Component({
-  selector: 'lg-category-list',
+  selector: 'lg-category-recipe-list',
   standalone: true,
   template: `
       <lg-container>
           <lg-gap-row [center]="true">
               <lg-title>
-                  Categories
+                  Recipes' categories
               </lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/add-category'"
+                         [link]="'/add-recipe-category'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
@@ -63,7 +65,7 @@ import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
     TitleComponent,
     CardListComponent,
     CardListItemDirective
-],
+  ],
   styles: [
     `:host {
       display: block;
@@ -71,21 +73,23 @@ import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
     `
   ]
 })
-export class CategoryListComponent
+export class CategoryRecipeListComponent
   implements OnInit {
   constructor(
-    public categoryRepository: CategoryRepository,
+    public categoryRepository: CategoryRecipesRepository,
+    private _notificationsService: NotificationsService,
   ) {
 
   }
 
-  categories = signal<Category[]>([])
+  categories = signal<CategoryProduct[]>([])
 
   deleteCategory(
-    category: Category,
+    category: CategoryProduct,
   ) {
-    this.categoryRepository.deleteCategory(category.uuid).then(()=> {
+    this.categoryRepository.deleteCategory(category.uuid).then(() => {
       this.loadCategory();
+      this._notificationsService.success('Category deleted');
     });
   }
 
@@ -95,7 +99,7 @@ export class CategoryListComponent
 
   loadCategory() {
     this.categoryRepository.getCategories().then((categories) => {
-      const sorted = categories.toSorted((a: Category, b: Category) => a.name.localeCompare(b.name));
+      const sorted = categories.toSorted((a: CategoryProduct, b: CategoryProduct) => a.name.localeCompare(b.name));
       this.categories.set(sorted);
     });
   }

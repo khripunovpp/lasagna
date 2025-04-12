@@ -1,14 +1,19 @@
 <lg-container>
   <lg-gap-row [center]="true">
     <lg-title>Settings</lg-title>
-
   </lg-gap-row>
 
-  <lg-gap-row>
-    <a routerLink="/categories" routerLinkActive="active">
+  <lg-gap-column>
+    <a routerLink="/products-categories" routerLinkActive="active">
       <lg-card [center]="true">
-        Categories
+        Products categories
       </lg-card>
     </a>
-  </lg-gap-row>
+
+     <a routerLink="/recipes-categories" routerLinkActive="active">
+      <lg-card [center]="true">
+        Recipes categories
+      </lg-card>
+    </a>
+  </lg-gap-column>
 </lg-container>

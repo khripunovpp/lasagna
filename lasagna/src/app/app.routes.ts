@@ -72,19 +72,37 @@ export const routes: Routes = [{
 
 
     {
-      path: 'add-category',
-      loadComponent: () => import('./view/category/add-category/add-category.component')
+      path: 'add-product-category',
+      loadComponent: () => import('./view/settings/category/add-category/add-category.component')
         .then(m => m.AddCategoryComponent)
     },
     {
-      path: 'edit-category/:uuid',
-      loadComponent: () => import('./view/category/add-category/add-category.component')
+      path: 'edit-product-category/:uuid',
+      loadComponent: () => import('./view/settings/category/add-category/add-category.component')
         .then(m => m.AddCategoryComponent)
     },
     {
-      path: 'categories',
-      loadComponent: () => import('./view/category/list/category-list.component')
+      path: 'products-categories',
+      loadComponent: () => import('./view/settings/category/list/category-list.component')
         .then(m => m.CategoryListComponent),
+    },
+
+
+    {
+      path: 'add-recipe-category',
+      loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
+        .then(m => m.AddCategoryRecipeComponent)
+    },
+    {
+      path: 'edit-recipe-category/:uuid',
+      loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
+        .then(m => m.AddCategoryRecipeComponent)
+
+    },
+    {
+      path: 'recipes-categories',
+      loadComponent: () => import('./view/settings/category-recipe/list/category-recipe-list.component')
+        .then(m => m.CategoryRecipeListComponent),
     },
 
 

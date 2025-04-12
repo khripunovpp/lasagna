@@ -1,14 +1,12 @@
 <form [formGroup]="form">
   <lg-gap-column [position]="'start'">
     <lg-control label="Name" lgExpand>
-      <lg-input (onInputChanged)="desc.focus()"
-                [placeholder]="'Your recipe name'"
+      <lg-input [placeholder]="'Your recipe name'"
                 formControlName="name"></lg-input>
     </lg-control>
 
     <lg-control label="Description" lgExpand>
-      <lg-textarea #desc
-                   [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"
+      <lg-textarea [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"
                    formControlName="description"></lg-textarea>
     </lg-control>
 
@@ -84,15 +82,15 @@
                   </lg-gap-column>
                 }
 
-<!--                <lg-tooltip lgShrink #tooltipComponent (onClose)="products.stopCamera()"-->
-<!--                            [full]="!!products.selectedWidget()">-->
-<!--                  Widgets-->
+                <!--                <lg-tooltip lgShrink #tooltipComponent (onClose)="products.stopCamera()"-->
+                <!--                            [full]="!!products.selectedWidget()">-->
+                <!--                  Widgets-->
 
-<!--                  <div ngProjectAs="content">-->
-<!--                    <lg-product-widgets (productAdded)="productAdded($event,i)"-->
-<!--                                        #products></lg-product-widgets>-->
-<!--                  </div>-->
-<!--                </lg-tooltip>-->
+                <!--                  <div ngProjectAs="content">-->
+                <!--                    <lg-product-widgets (productAdded)="productAdded($event,i)"-->
+                <!--                                        #products></lg-product-widgets>-->
+                <!--                  </div>-->
+                <!--                </lg-tooltip>-->
 
                 <lg-control label="Amount">
                   <lg-number-input #amount
@@ -126,6 +124,17 @@
         </lg-button>
       </lg-gap-column>
     </lg-control-group>
+
+
+    <lg-control label="Category" lgExpand>
+      <lg-multiselect #categorySelect
+                      [resource]="'recipes-categories'"
+                      formControlName="category_id"></lg-multiselect>
+    </lg-control>
+
+    @if (topCategories().length) {
+      <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+    }
 
     @if (uuid()) {
       <lg-button (click)="editRecipe(value)">
