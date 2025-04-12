@@ -1,34 +1,9 @@
 <lg-pwa-install></lg-pwa-install>
 
 <main class="app">
-  <lg-gap-column>
-    <lg-container>
-      <lg-gap-row>
-        <lg-button [flat]="true"
-                   [link]="'/home'"
-                   [size]="'small'"
-                   [style]="'primary'">
-          My store
-        </lg-button>
+  <lg-header></lg-header>
 
-        <lg-button [flat]="true"
-                   [link]="'/widgets'"
-                   [size]="'small'"
-                   [style]="'info'">
-          Widgets
-        </lg-button>
-
-        <lg-button [flat]="true"
-                   [link]="'/settings'"
-                   [size]="'small'"
-                   [style]="'danger'">
-          Settings
-        </lg-button>
-      </lg-gap-row>
-    </lg-container>
-
-    <div>
-      <router-outlet/>
-    </div>
-  </lg-gap-column>
+  <div class="app-content">
+    <router-outlet/>
+  </div>
 </main>

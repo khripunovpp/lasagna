@@ -21,7 +21,7 @@ import {ExpandDirective} from '../../directives/expand.directive';
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
-import {JsonPipe} from '@angular/common';
+
 import {InputComponent} from '../../ui/form/input.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
@@ -45,9 +45,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    JsonPipe,
     InputComponent
-  ],
+],
   styles: [
     `
       lg-eggs-widget {
