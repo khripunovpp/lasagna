@@ -45,6 +45,11 @@ export class DexieIndexDbService extends Dexie {
     return (this[storeKey] as Table<any>).where(indexField).equals(value).toArray();
   }
 
+  async filter(storeKey: Stores, indexField: string, value: string): Promise<any[]> {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).filter((item: any) => item[indexField].toLowerCase().includes(value.toLowerCase())).toArray();
+  }
+
   async getOne(storeKey: Stores, uuid: string): Promise<any> {
     // @ts-ignore
     return (this[storeKey] as Table<any>).get(uuid);
@@ -77,5 +82,10 @@ export class DexieIndexDbService extends Dexie {
       ...value,
       uuid: autoUUID ? this.generateUuid() : value.uuid,
     })));
+  }
+
+  async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).orderBy(indexField).uniqueKeys();
   }
 }

@@ -1,12 +1,12 @@
 import {Component, effect, OnInit, signal, viewChildren} from '@angular/core';
-import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
 import {ControlGroupComponent} from '../../ui/form/control-group.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {TextareaComponent} from '../../ui/form/textarea.component';
-import {debounceTime} from 'rxjs';
+import {debounceTime, Observable, of} from 'rxjs';
 import {Ingredient, Recipe, RecipeDTO, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
@@ -25,6 +25,8 @@ import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
+import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
+
 
 export type RecipeFormValue = Omit<Recipe, 'uuid'>
 
@@ -47,8 +49,10 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     NgClass,
     ParseMathDirective,
     ButtonsGroupComponent,
-    ChipsListComponent
-  ],
+    ChipsListComponent,
+    AutocompleteComponent,
+    FormsModule
+],
   styles: [
     `
     `
@@ -124,6 +128,25 @@ export class AddRecipeFormComponent
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
   topCategories = signal<any[]>([]);
+  people$: Observable<any[]> = of([
+    {
+      uuid: '5a15b13c36e7a7f00cf0d7cb',
+      name: 'John Doe',
+    },
+    {
+      uuid: '352f3a2c36e7a7f00cf0d7cb',
+      name: 'Alice Smith',
+    },
+    {
+      uuid: '5a15b13c36e7a7f00cf0d7cb',
+      name: 'Bob Johnson',
+    },
+    {
+      uuid: '352f3a2c36e7a7f00cf0d7cb',
+      name: 'Charlie Brown',
+    },
+  ]);
+  selectedPersonId = '5a15b13c36e7a7f00cf0d7cb';
   private recipeEffect = effect(() => {
     if (!this.recipe()) {
       return;

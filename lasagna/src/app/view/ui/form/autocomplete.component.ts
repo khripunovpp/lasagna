@@ -12,26 +12,32 @@ import {
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {JsonPipe} from '@angular/common';
+import {debounceTime, of, Subject, switchMap} from 'rxjs';
 
 
-export interface MultiselectItem {
+
+export interface autocompleteItem {
   value: unknown
 }
 
 @Component({
-  selector: 'lg-multiselect',
+  selector: 'lg-autocomplete',
   standalone: true,
   template: `
-      <div class="multiselect">
+      <div class="autocomplete">
           <ng-select (change)="onChangeSelect($event)"
-                     [compareWith]="compareWith"
-                     [addTag]="tags()"
+                     (ngModelChange)="onChangeInput($event)"
+                     (search)="onSearch($event)"
                      [addTagText]="'Apply by enter'"
+                     [addTag]="true"
+                     [bindValue]="key()"
+                     [compareWith]="compareWith"
+                     [editableSearchTerm]="true"
                      [items]="loadedList()"
                      [ngModel]="value"
-                     (ngModelChange)="onChangeInput($event)"
-                     [searchFn]="searchFn">
+                     [searchFn]="searchFn"
+                     bindLabel="name"
+                     notFoundText="Start typing to search">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item.value ?? item }}
               </ng-template>
@@ -45,18 +51,17 @@ export interface MultiselectItem {
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective,
-    JsonPipe
-  ],
+    NgLabelTemplateDirective
+],
   styles: [
     `
-      lg-multiselect {
+      lg-autocomplete {
         display: flex;
         flex: 1;
         min-width: 150px;
       }
 
-      .multiselect {
+      .autocomplete {
         flex: 1;
 
         .ng-select.ng-select-single .ng-select-container {
@@ -90,6 +95,10 @@ export interface MultiselectItem {
             border-radius: 12px;
           }
         }
+
+        .ng-arrow-wrapper {
+          display: none;
+        }
       }
 
     `
@@ -97,26 +106,31 @@ export interface MultiselectItem {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultiselectComponent),
+      useExisting: forwardRef(() => AutocompleteComponent),
       multi: true
     }
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class MultiselectComponent
+export class AutocompleteComponent
   implements ControlValueAccessor, OnInit {
   constructor(
     @Optional() private _selectResourcesService: SelectResourcesService,
   ) {
   }
 
+
   resource = input<string>('');
-  autoLoad = input<boolean>(false);
-  tags = input<boolean>(false);
+  key = input<string>('');
+  strict = input<boolean>(false);
   loadedList = signal([]);
   onSelected = output<unknown>();
-  value?: unknown = null
   selectComponent = viewChild(NgSelectComponent);
+  value?: unknown = null
+  private _onSearch$ = new Subject<{
+    term: string
+    items: unknown[]
+  }>();
 
   onChange: (value: unknown) => void = () => {
   };
@@ -124,12 +138,12 @@ export class MultiselectComponent
   onTouched: () => void = () => {
   };
 
-  searchFn = (term: string, item: MultiselectItem) => {
+  searchFn = (term: string, item: autocompleteItem) => {
     const val = item as any;
     return val.name?.toLowerCase().includes(term.toLowerCase())
   }
 
-  compareWith = (a: MultiselectItem, b: MultiselectItem) => {
+  compareWith = (a: autocompleteItem, b: autocompleteItem) => {
     const valA = a as any;
     const valB = b as any;
 
@@ -140,10 +154,8 @@ export class MultiselectComponent
   }
 
   writeValue(value: unknown): void {
-    console.log('writeValue', value);
     this.change(value);
     this.selectComponent()!.searchTerm = '';
-    console.log(this.selectComponent())
   }
 
   change(value: unknown) {
@@ -164,22 +176,38 @@ export class MultiselectComponent
   }
 
   onChangeSelect(value: unknown) {
-    this.change(value);
-    this.onSelected.emit(value);
+    const val = typeof value === 'string' ? value : (value as any)?.[this.key()];
+    this.change(val);
+    this.onSelected.emit(val);
+  }
+
+  onSearch(
+    event: {
+      term: string
+      items: unknown[]
+    }) {
+    this._onSearch$.next(event);
   }
 
   ngOnInit() {
     this._selectResourcesService.register(this.resource());
-    if (this.autoLoad()) {
-      this._selectResourcesService.load([this.resource()]);
-    }
-    this._selectResourcesService.subscribe((registry) => {
-      const items = registry.get(this.resource())?.list ?? [];
+
+    this._onSearch$.asObservable().pipe(
+      debounceTime(300),
+    ).subscribe(event => {
+      this._selectResourcesService.autocomplete(this.resource(), this.key(), event.term);
+    });
+    this._selectResourcesService.registryStream.pipe(
+      switchMap((registry) => {
+        const res = registry.get(this.resource());
+        return res?.stream ?? of([]);
+      }),
+    ).subscribe(items => {
       this.loadedList.set(items as any);
     });
   }
 
   reload() {
-    return this._selectResourcesService.load([this.resource()], true);
+    // return this._selectResourcesService.load([this.resource()]);
   }
 }

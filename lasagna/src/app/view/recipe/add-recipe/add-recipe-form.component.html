@@ -1,9 +1,12 @@
+
 <form [formGroup]="form">
   <lg-gap-column [position]="'start'">
     <lg-control label="Name" lgExpand>
-      <lg-input [placeholder]="'Your recipe name'"
-                formControlName="name"></lg-input>
+      <lg-autocomplete [resource]="'recipes-names'"
+                       [key]="'name'"
+        formControlName="name"></lg-autocomplete>
     </lg-control>
+
 
     <lg-control label="Description" lgExpand>
       <lg-textarea [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"

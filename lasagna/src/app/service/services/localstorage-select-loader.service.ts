@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
-import {Localstorage} from '../const/localstorages';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +30,13 @@ export class LocalstorageSelectLoaderService
         resolve([]);
       }
     });
+  }
+
+  search(token: string): Promise<unknown[]> {
+    return of([]) as any;
+  }
+
+  uniqueKeys(storeName: string, field: string): Promise<any[]> {
+    return Promise.resolve([]);
   }
 }

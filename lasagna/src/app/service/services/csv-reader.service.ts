@@ -25,7 +25,8 @@ export class CsvReaderService {
   }
 
   parseData(data: string): string[][] {
-    return data.split('\r\n')
+    // split \r\n or \n
+    return data.split(/\r\n|\n/)
       .map(row => row.split(','))
       .filter(row => row.length > 1 && row.some(cell => cell.length > 0));
   }

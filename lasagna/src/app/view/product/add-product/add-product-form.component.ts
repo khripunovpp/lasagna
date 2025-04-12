@@ -1,6 +1,6 @@
 import {Component, effect, Inject, input, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {InputComponent} from '../../ui/form/input.component';
+
 import {ControlComponent} from '../../ui/form/control.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -20,6 +20,9 @@ import {ExpandDirective} from '../../directives/expand.directive';
 
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '../../../service/services/notifications.service';
+import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
+import {JsonPipe} from '@angular/common';
+import {InputComponent} from '../../ui/form/input.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -29,7 +32,6 @@ export type ProductFormValue = Omit<Product, 'uuid'>
   templateUrl: './add-product-form.component.html',
   imports: [
     ReactiveFormsModule,
-    InputComponent,
     ControlComponent,
     GapColumnComponent,
     ButtonComponent,
@@ -41,7 +43,10 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     GapRowComponent,
     ButtonsGroupComponent,
     ExpandDirective,
-    ChipsListComponent
+    ChipsListComponent,
+    AutocompleteComponent,
+    JsonPipe,
+    InputComponent
   ],
   styles: [
     `
@@ -51,29 +56,24 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     `
   ],
   encapsulation: ViewEncapsulation.None,
-  providers: [
-    {
-      provide: SelectResourcesService,
-      useClass: SelectResourcesService,
-    }
-  ],
+
 })
 export class AddProductFormComponent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
-    @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
+    public _selectResourcesService: SelectResourcesService,
     private _router: Router,
     private _notificationsService: NotificationsService,
   ) {
   }
 
   form = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl<string | null>(null, Validators.required),
     amount: new FormControl<number | null>(null, Validators.required),
     price: new FormControl<number | null>(null, Validators.required),
     unit: new FormControl('gram'),
-    source: new FormControl(''),
+    source: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null, Validators.required),
   });
 
@@ -113,10 +113,10 @@ export class AddProductFormComponent
 
   private get _defFormValue() {
     return {
-      name: '',
+      name: null,
       amount: null,
       price: null,
-      source: '',
+      source: null,
       category_id: null,
       unit: 'gram',
     };
@@ -139,6 +139,8 @@ export class AddProductFormComponent
       this.form.reset(this._defFormValue);
       this._notificationsService.success('Product added');
       this._loadUsingHistory();
+
+      console.log('form', this.form.value);
     });
   }
 
@@ -147,6 +149,7 @@ export class AddProductFormComponent
   ) {
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this._notificationsService.success('Product edited');
+      this._loadUsingHistory();
     });
   }
 

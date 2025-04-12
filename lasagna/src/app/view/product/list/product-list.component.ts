@@ -157,8 +157,8 @@ export class ProductListComponent
       return;
     }
     this._productsRepository.deleteProduct(recipe.uuid).then(() => {
-      this.loadProducts();
       this._notificationsService.success('Product deleted');
+      this.loadProducts();
     });
   }
 

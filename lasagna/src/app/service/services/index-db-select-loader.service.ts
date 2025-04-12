@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
+import {liveQuery} from 'dexie';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,29 @@ export class IndexDbSelectLoaderService
   load<T>(
     storeName: Stores
   ) {
-    return this._indexDb.getAll(storeName)
+    return this._indexDb.getAll(storeName) as Promise<T[]>;
+  }
+
+  live<T>(
+    storeName: Stores,
+  ) {
+    return liveQuery(() => {
+      return this._indexDb.getAll(storeName) as Promise<T[]>;
+    });
+  }
+
+  search<T>(
+    storeName: Stores,
+    autoCompleteBy = 'name',
+    value = '',
+  ) {
+    return this._indexDb.filter(storeName, autoCompleteBy, value) as Promise<T[]>;
+  }
+
+  uniqueKeys<T>(
+    storeName: Stores,
+    field = 'name',
+  ) {
+    return this._indexDb.uniqueKeys(storeName, field) as Promise<T[]>;
   }
 }
