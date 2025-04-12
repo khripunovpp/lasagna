@@ -10,7 +10,7 @@ import {debounceTime} from 'rxjs';
 import {Ingredient, Recipe, RecipeDTO, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {JsonPipe, NgClass} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
@@ -21,7 +21,7 @@ import {NotificationsService} from '../../../service/services/notifications.serv
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {TooltipComponent} from '../../ui/tooltip.component';
 import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
-import {ShrinkDirective} from '../../directives/shrink.directive';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
 
@@ -45,13 +45,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ExpandDirective,
     NgClass,
     ParseMathDirective,
-    ButtonsGroupComponent,
-    ProductWidgetsComponent,
-    TooltipComponent,
-    ProductWidgetsComponent,
-    ShrinkDirective,
-    JsonPipe,
-  ],
+    ButtonsGroupComponent
+],
   styles: [
     `
     `

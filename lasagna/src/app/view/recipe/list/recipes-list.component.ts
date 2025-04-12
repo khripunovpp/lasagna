@@ -1,13 +1,13 @@
 import {Component, signal} from '@angular/core';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CardComponent} from '../../ui/card/card.component';
+
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -57,17 +57,15 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
       </lg-container>
   `,
   imports: [
-    GapColumnComponent,
     GapRowComponent,
     ButtonComponent,
     RouterLink,
     MatIcon,
     ContainerComponent,
     TitleComponent,
-    CardComponent,
     CardListComponent,
-    CardListItemDirective,
-  ],
+    CardListItemDirective
+],
   styles: [
     `:host {
       display: block;

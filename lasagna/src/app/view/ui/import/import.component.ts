@@ -1,5 +1,5 @@
 import {Component, input, model, output, viewChild, ViewChild} from '@angular/core';
-import {ContainerComponent} from '../layout/container/container.component';
+
 import {UploadComponent} from '../form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
 import {ZodObject} from 'zod';
@@ -7,7 +7,7 @@ import {Stores} from '../../../service/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialog/dialog.component';
-import {AsyncPipe, JsonPipe, KeyValuePipe, NgClass} from '@angular/common';
+import {AsyncPipe, NgClass} from '@angular/common';
 import {GapRowComponent} from '../layout/gap-row.component';
 import {GapColumnComponent} from '../layout/gap-column.component';
 import {FormsModule} from '@angular/forms';
@@ -17,18 +17,15 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
   selector: 'lg-import',
   standalone: true,
   imports: [
-    ContainerComponent,
     UploadComponent,
     ButtonComponent,
     DialogComponent,
     AsyncPipe,
-    KeyValuePipe,
-    JsonPipe,
     GapRowComponent,
     GapColumnComponent,
     FormsModule,
     NgClass
-  ],
+],
   template: `
       <lg-upload (filesSelected)="onFileSelected($event)">
           <lg-button [flat]="true"

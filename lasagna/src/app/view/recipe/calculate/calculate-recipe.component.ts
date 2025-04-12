@@ -10,14 +10,14 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {FormsModule} from '@angular/forms';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {CardListComponent} from "../../ui/card/card-list.component";
-import {CardListItemDirective} from "../../ui/card/card-list-item.directive";
+
+
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {ExpandDirective} from '../../directives/expand.directive';
+
 import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
 import {BaseTemplate, FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
 import {ViewShowComponent} from '../../ui/layout/view-show.component';
-import {InputComponent} from '../../ui/form/input.component';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
 import {Ingredient, Recipe} from '../../../service/repositories/recipes.repository';
@@ -40,16 +40,12 @@ import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
     FormsModule,
     ParseMathDirective,
     RouterLink,
-    CardListComponent,
-    CardListItemDirective,
     GapColumnComponent,
-    ExpandDirective,
     TaxesAndFeesListComponent,
     NgTemplateOutlet,
     ViewShowComponent,
-    InputComponent,
-    MultiselectComponent,
-  ],
+    MultiselectComponent
+],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {

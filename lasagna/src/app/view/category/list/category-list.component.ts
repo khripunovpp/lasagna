@@ -1,15 +1,15 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {Category, CategoryRepository} from '../../../service/repositories/category.repository';
 import {MatIcon} from '@angular/material/icon';
-import {CardComponent} from '../../ui/card/card.component';
+
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-import {DecimalPipe} from '@angular/common';
+
 
 @Component({
   selector: 'lg-category-list',
@@ -56,17 +56,14 @@ import {DecimalPipe} from '@angular/common';
       </lg-container>
   `,
   imports: [
-    GapColumnComponent,
     GapRowComponent,
     ButtonComponent,
     MatIcon,
-    CardComponent,
     ContainerComponent,
     TitleComponent,
     CardListComponent,
-    CardListItemDirective,
-    DecimalPipe,
-  ],
+    CardListItemDirective
+],
   styles: [
     `:host {
       display: block;

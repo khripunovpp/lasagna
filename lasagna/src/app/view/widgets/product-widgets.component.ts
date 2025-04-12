@@ -1,5 +1,5 @@
 import {Component, effect, output, signal, viewChild} from '@angular/core';
-import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
+
 import {BarcodeSeekerWidgetComponent} from './barcode-seeker/barcode-seeker.component';
 
 @Component({
@@ -22,9 +22,8 @@ import {BarcodeSeekerWidgetComponent} from './barcode-seeker/barcode-seeker.comp
       </div>
   `,
   imports: [
-    EggsWidgetComponent,
     BarcodeSeekerWidgetComponent
-  ],
+],
   styles: [
     `
       .product-widgets {

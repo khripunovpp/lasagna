@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, input, output, signal, viewChild} from '@angular/core';
-import {JsonPipe, NgClass} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {PortalComponent} from './layout/portal.component';
 
 @Component({
@@ -29,9 +29,8 @@ import {PortalComponent} from './layout/portal.component';
   `,
   imports: [
     NgClass,
-    JsonPipe,
-    PortalComponent,
-  ],
+    PortalComponent
+],
   styles: [
     `
       .tooltip {
