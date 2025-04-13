@@ -1,10 +1,8 @@
 import {Routes} from '@angular/router';
-import {recipesListResolver} from './service/resolvers/recipes-list.resolver';
 
 import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
 import {recipeCalculationResolver,} from './service/resolvers/recipe-calculation.resolver';
 import {recipeCalculationTemplateResolver} from './service/resolvers/recipe-tax-template.resolver';
-import {productListResolver} from './service/resolvers/product-list.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -26,9 +24,6 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./view/recipe/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
-          resolve: {
-            list: recipesListResolver,
-          },
         },
         {
           path: 'add',
@@ -62,9 +57,6 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./view/product/list/product-list.component')
             .then(m => m.ProductListComponent),
-          resolve: {
-            list: productListResolver,
-          },
         },
         {
           path: 'add',

@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -7,7 +7,7 @@ import {MatIcon} from '@angular/material/icon';
 
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe, KeyValuePipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 import {parseFloatingNumber} from '../../../helpers/number.helper';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
@@ -17,10 +17,11 @@ import {TransferDataService} from '../../../service/services/transfer-data.servi
 import {Stores} from '../../../service/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {ProductDbInputScheme} from '../../../schemas/product.scema';
-import {ActivatedRoute, RouterLink} from '@angular/router';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {RouterLink} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
+import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-products-list.token';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -70,45 +71,43 @@ export type ProductList = Record<string, Product[]>;
               </lg-import>
           </lg-gap-row>
 
-          @for (category of products()|keyvalue;track category.value?.category) {
-              @if (category.value;as value) {
-                  <lg-title [level]="3">
-                      {{ value.category || 'Uncategorized' }}
-                  </lg-title>
+          @for (category of products();track category?.category) {
+              <lg-title [level]="3">
+                  {{ category?.category || 'Uncategorized' }}
+              </lg-title>
 
-                  <lg-card-list>
-                      @for (product of value.products;track $index;let i = $index) {
-                          <ng-template lgCardListItem>
-                              <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <lg-gap-row [center]="true">
-                                          <div style="flex: 20%">
-                                              <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
-                                          </div>
-                                          <div style="flex: 10%"> {{ product.source ?? '' }}</div>
-                                          <div style="flex: 70%">
-                                              {{ getPricePerGram(product) | number: '1.2-5' }}
-                                              @if (!product.unit || product.unit === 'gram') {
-                                                  per gram
-                                              } @else {
-                                                  per {{ product.unit }}
-                                              }
-                                          </div>
-                                      </lg-gap-row>
-                                  </div>
+              <lg-card-list>
+                  @for (product of category.products;track $index;let i = $index) {
+                      <ng-template lgCardListItem>
+                          <lg-gap-row [center]="true">
+                              <div class="expand">
+                                  <lg-gap-row [center]="true">
+                                      <div style="flex: 20%">
+                                          <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
+                                      </div>
+                                      <div style="flex: 10%"> {{ product.source ?? '' }}</div>
+                                      <div style="flex: 70%">
+                                          {{ getPricePerGram(product) | number: '1.2-5' }}
+                                          @if (!product.unit || product.unit === 'gram') {
+                                              per gram
+                                          } @else {
+                                              per {{ product.unit }}
+                                          }
+                                      </div>
+                                  </lg-gap-row>
+                              </div>
 
-                                  <lg-button [style]="'danger'"
-                                             [size]="'small'"
-                                             [icon]="true"
-                                             (click)="deleteProduct(product)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              }
+                              <lg-button [style]="'danger'"
+                                         [size]="'small'"
+                                         [icon]="true"
+                                         (click)="deleteProduct(product)">
+                                  <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                            fontIcon="close"></mat-icon>
+                              </lg-button>
+                          </lg-gap-row>
+                      </ng-template>
+                  }
+              </lg-card-list>
           } @empty {
               <lg-gap-row [center]="true">
                   <lg-title [level]="5">
@@ -129,9 +128,8 @@ export type ProductList = Record<string, Product[]>;
     CardListItemDirective,
     ImportComponent,
     RouterLink,
-    KeyValuePipe,
     ImportRowTplDirective
-  ],
+],
   styles: [
     `:host {
       display: block;
@@ -145,18 +143,11 @@ export class ProductListComponent
     public _productsRepository: ProductsRepository,
     private _csvReaderService: CsvReaderService,
     private _transferDataService: TransferDataService,
-    private _activatedRoute: ActivatedRoute,
     private _notificationsService: NotificationsService,
   ) {
-
-    this._activatedRoute.data.pipe(
-      takeUntilDestroyed(),
-    ).subscribe((data) => {
-      this.products.set(data['list']);
-    });
   }
 
-  products = signal<any[]>([])
+  products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
   protected readonly ProductDbInputScheme = ProductDbInputScheme;
   protected readonly Stores = Stores;
 
@@ -165,7 +156,7 @@ export class ProductListComponent
   }
 
   exportProducts() {
-    this._transferDataService.exportTable(Stores.PRODUCTS,'json');
+    this._transferDataService.exportTable(Stores.PRODUCTS, 'json');
   }
 
   deleteProduct(
@@ -180,11 +171,11 @@ export class ProductListComponent
     });
   }
 
-  async ngOnInit() {
-    await this.loadProducts();
+  ngOnInit() {
+    this.loadProducts();
   }
 
   loadProducts() {
-
+    this._productsRepository.loadRecipes();
   }
 }

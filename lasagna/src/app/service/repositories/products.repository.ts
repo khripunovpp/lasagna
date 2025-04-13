@@ -5,6 +5,7 @@ import {ProductDbInputScheme} from '../../schemas/product.scema';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 import {UsingHistoryService} from '../services/using-history.service';
+import {Subject} from 'rxjs';
 
 export type ProductUnit = 'gram' | 'portion' | 'piece';
 
@@ -31,6 +32,19 @@ export class ProductsRepository {
     private _categoryRepository: CategoryProductsRepository,
     private _usingHistoryService: UsingHistoryService,
   ) {
+  }
+
+  private _stream$ = new Subject<Product[]>();
+
+  get products$() {
+    return this._stream$.asObservable();
+  }
+
+  loadRecipes() {
+    return this._indexDbService.getAll(Stores.PRODUCTS).then(recipes => {
+      this._stream$.next(recipes);
+      return recipes;
+    });
   }
 
   addProduct(product: ProductDbValue) {
