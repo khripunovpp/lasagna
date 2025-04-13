@@ -12,6 +12,12 @@ import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../service/services/notifications.service';
+import {Stores} from '../../../service/const/stores';
+import {ImportComponent} from '../../ui/import/import.component';
+import {RecipeDbInputScheme} from '../../../schemas/recipe.scema';
+import {TransferDataService} from '../../../service/services/transfer-data.service';
+import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
@@ -30,6 +36,21 @@ import {NotificationsService} from '../../../service/services/notifications.serv
                          [style]="'primary'">
                   Add
               </lg-button>
+
+              <lg-button (click)="exportRecipes()"
+                         [flat]="true"
+                         [size]="'small'"
+                         [style]="'info'">
+                  Export
+              </lg-button>
+
+              <lg-import (onDone)="loadRecipes()"
+                         [schema]="RecipeDbInputScheme"
+                         [storeName]="Stores.RECIPES">
+                  <ng-template let-flow="flow" let-row lgImportRowTpl>
+                      <span>{{ row?.name }}</span>
+                  </ng-template>
+              </lg-import>
           </lg-gap-row>
 
           @for (category of recipes();track category?.category) {
@@ -78,8 +99,11 @@ import {NotificationsService} from '../../../service/services/notifications.serv
     ContainerComponent,
     TitleComponent,
     CardListComponent,
-    CardListItemDirective
-],
+    CardListItemDirective,
+    ImportComponent,
+    ImportRowTplDirective,
+    JsonPipe
+  ],
   styles: [
     `:host {
       display: block;
@@ -92,6 +116,7 @@ export class RecipesListComponent {
     private _activatedRoute: ActivatedRoute,
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
+    private _transferDataService: TransferDataService,
   ) {
     this._activatedRoute.data.pipe(
       takeUntilDestroyed(),
@@ -101,6 +126,8 @@ export class RecipesListComponent {
   }
 
   recipes = signal<any[]>([])
+  protected readonly Stores = Stores;
+  protected readonly RecipeDbInputScheme = RecipeDbInputScheme;
 
   deleteRecipe(
     recipe: Recipe,
@@ -117,4 +144,7 @@ export class RecipesListComponent {
     });
   }
 
+  exportRecipes() {
+    this._transferDataService.exportTable(Stores.RECIPES, 'json');
+  }
 }

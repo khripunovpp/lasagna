@@ -20,6 +20,7 @@ import {ProductDbInputScheme} from '../../../schemas/product.scema';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../service/services/notifications.service';
+import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -50,6 +51,22 @@ export type ProductList = Record<string, Product[]>;
               <lg-import (onDone)="loadProducts()"
                          [schema]="ProductDbInputScheme"
                          [storeName]="Stores.PRODUCTS">
+                  <ng-template let-flow="flow" let-row lgImportRowTpl>
+                      @if (flow === 'new') {
+                          <span>{{ row.name }}</span>
+                          <span>{{ row.amount }}gr for {{ row.price }}</span>
+                          @if (row.source) {
+                              <span>from {{ row.source }}</span>
+                          }
+                      } @else {
+                          <span>{{ row?.name }}</span>
+                          <span>{{ row?.amount }} gr
+                                              for {{ row?.price }}</span>
+                          @if (row?.source) {
+                              <span>from {{ row?.source }}</span>
+                          }
+                      }
+                  </ng-template>
               </lg-import>
           </lg-gap-row>
 
@@ -112,8 +129,9 @@ export type ProductList = Record<string, Product[]>;
     CardListItemDirective,
     ImportComponent,
     RouterLink,
-    KeyValuePipe
-],
+    KeyValuePipe,
+    ImportRowTplDirective
+  ],
   styles: [
     `:host {
       display: block;
