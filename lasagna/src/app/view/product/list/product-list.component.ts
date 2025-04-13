@@ -34,7 +34,7 @@ export type ProductList = Record<string, Product[]>;
 
           <lg-gap-row [center]="true">
               <lg-button [flat]="true"
-                         [link]="'/add-product'"
+                         [link]="'/products/add'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
@@ -66,7 +66,7 @@ export type ProductList = Record<string, Product[]>;
                                   <div class="expand">
                                       <lg-gap-row [center]="true">
                                           <div style="flex: 20%">
-                                              <a [routerLink]="'/edit-product/' + product.uuid">{{ product.name }}</a>
+                                              <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
                                           </div>
                                           <div style="flex: 10%"> {{ product.source ?? '' }}</div>
                                           <div style="flex: 70%">

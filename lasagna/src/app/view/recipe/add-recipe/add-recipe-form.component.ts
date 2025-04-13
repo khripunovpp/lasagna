@@ -365,10 +365,10 @@ export class AddRecipeFormComponent
       recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
       unit: new FormControl(ingredient?.unit ?? 'gram'),
     }, (group) => {
-      if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseInt(group.value.amount)) {
+      if (!group.value.product_id && !group.value.name && !group.value.recipe_id && !parseFloat(group.value.amount)) {
         return null
       }
-      if ((group.value.product_id || group.value.name || group.value.recipe_id) && !parseInt(group.value.amount)) {
+      if ((group.value.product_id || group.value.name || group.value.recipe_id) && !parseFloat(group.value.amount)) {
         return {
           ingredientAmountRequired: true
         }

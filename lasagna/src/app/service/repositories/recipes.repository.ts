@@ -90,7 +90,10 @@ export class RecipesRepository {
     };
   }
 
-  recipeFromDTO(recipe: RecipeDTO): Recipe {
+  recipeFromDTO(recipe: RecipeDTO): Recipe|undefined {
+    if (!recipe) {
+      return undefined
+    }
     return {
       name: recipe.name,
       description: recipe.description,

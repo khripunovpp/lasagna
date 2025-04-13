@@ -24,7 +24,7 @@ import {NotificationsService} from '../../../../service/services/notifications.s
               </lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/add-recipe-category'"
+                         [link]="'/settings/categories/recipes/add'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
@@ -40,7 +40,7 @@ import {NotificationsService} from '../../../../service/services/notifications.s
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
-                                     [link]="'/edit-recipe-category/' + category.uuid"
+                                     [link]="'/settings/categories/recipes/edit/' + category.uuid"
                                      [flat]="true">
                               Edit
                           </lg-button>
