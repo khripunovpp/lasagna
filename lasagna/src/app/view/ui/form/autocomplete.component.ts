@@ -9,11 +9,15 @@ import {
   viewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
+import {
+  NgLabelTemplateDirective,
+  NgOptionTemplateDirective,
+  NgSelectComponent,
+  NgTagTemplateDirective
+} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
-
 
 
 export interface autocompleteItem {
@@ -28,7 +32,6 @@ export interface autocompleteItem {
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
                      (search)="onSearch($event)"
-                     [addTagText]="'Apply by enter'"
                      [addTag]="true"
                      [bindValue]="key()"
                      [compareWith]="compareWith"
@@ -39,10 +42,13 @@ export interface autocompleteItem {
                      bindLabel="name"
                      notFoundText="Start typing to search">
               <ng-template let-item="item" ng-label-tmp>
-                  {{ item?.name ?? item.value ?? item }}
+                  {{ item?.name ?? item?.value ?? item }}
               </ng-template>
               <ng-template let-item="item" ng-option-tmp>
-                  {{ item?.name ?? item.value ?? item }}
+                  {{ item?.name ?? item?.value ?? item }}
+              </ng-template>
+              <ng-template let-searchTerm="searchTerm" ng-tag-tmp>
+                  {{ searchTerm }}
               </ng-template>
           </ng-select>
       </div>
@@ -51,8 +57,9 @@ export interface autocompleteItem {
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective
-],
+    NgLabelTemplateDirective,
+    NgTagTemplateDirective
+  ],
   styles: [
     `
       lg-autocomplete {
@@ -66,6 +73,12 @@ export interface autocompleteItem {
 
         .ng-select.ng-select-single .ng-select-container {
           height: 51px;
+        }
+
+        .ng-select.ng-select-focused .ng-select-container {
+          outline: none;
+          box-shadow: var(--focus-shadow);
+          border-radius: 12px;
         }
 
         .ng-select .ng-select-container {
@@ -187,6 +200,9 @@ export class AutocompleteComponent
       items: unknown[]
     }) {
     this._onSearch$.next(event);
+    this.selectComponent()?.selectTag();
+    this.loadedList.set([]);
+    this.selectComponent()!.searchTerm = this._capitalizeFirstLetter(event.term);
   }
 
   ngOnInit() {
@@ -209,5 +225,9 @@ export class AutocompleteComponent
 
   reload() {
     // return this._selectResourcesService.load([this.resource()]);
+  }
+
+  private _capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
