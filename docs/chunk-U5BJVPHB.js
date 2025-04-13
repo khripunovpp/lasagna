@@ -1,0 +1,1 @@
+import{pa as r,xa as n}from"./chunk-FL5UAJ26.js";var o=class t{constructor(){}width="100%";static \u0275fac=function(i){return new(i||t)};static \u0275dir=r({type:t,selectors:[["","lgExpand",""]],hostVars:2,hostBindings:function(i,e){i&2&&n("width",e.width)}})};export{o as a};

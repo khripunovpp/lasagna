@@ -17,7 +17,7 @@ import {ImportComponent} from '../../ui/import/import.component';
 import {RecipeDbInputScheme} from '../../../schemas/recipe.scema';
 import {TransferDataService} from '../../../service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
-import {JsonPipe} from '@angular/common';
+
 
 
 @Component({
@@ -101,9 +101,8 @@ import {JsonPipe} from '@angular/common';
     CardListComponent,
     CardListItemDirective,
     ImportComponent,
-    ImportRowTplDirective,
-    JsonPipe
-  ],
+    ImportRowTplDirective
+],
   styles: [
     `:host {
       display: block;
