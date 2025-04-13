@@ -68,7 +68,6 @@ export class CalculateRecipeComponent
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
-      console.log('data', data);
       this.result.set(data['result']);
       const outcomeAmount = data['result']?.recipe?.outcome_amount;
       const ingredientsAmount = data['result']?.recipe?.ingredients?.reduce((acc: number, item: Ingredient) => {

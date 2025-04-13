@@ -1,6 +1,6 @@
 import {Component, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from './button.component';
-import {GapRowComponent} from './gap-row.component';
+
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 
@@ -110,12 +110,10 @@ import {MatIcon} from '@angular/material/icon';
     }
   `],
   imports: [
-    ButtonComponent,
-    GapRowComponent,
     RouterLink,
     RouterLinkActive,
-    MatIcon,
-  ]
+    MatIcon
+]
 })
 export class HeaderComponent {
   constructor() {

@@ -205,10 +205,8 @@ export class ImportComponent {
     for (const item of this.parsedData) {
       if (this.rowsToAdd[item.name]) {
         await this._indexDbService.addData(this.storeName() as Stores, item);
-        console.log('add', item);
       } else if (this.rowsToUpdate[item.name] && !this.skipAllDuplicates()) {
         await this._indexDbService.replaceData(this.storeName() as Stores, item.uuid, item);
-        console.log('replace', item);
       }
     }
 

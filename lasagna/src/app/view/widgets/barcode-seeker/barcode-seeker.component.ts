@@ -172,7 +172,6 @@ export class BarcodeSeekerWidgetComponent {
     return this._arcodeReaderService.startCamera(
       'video',
       (result) => {
-        console.log({result});
         if (result) {
           this.barcode.set(result);
         }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {GapColumnComponent} from './view/ui/layout/gap-column.component';
+
 
 
 
@@ -11,7 +11,6 @@ import {HeaderComponent} from './view/ui/layout/header.component';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    GapColumnComponent,
     PwaInstallComponent,
     HeaderComponent
 ],
