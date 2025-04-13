@@ -1,23 +1,23 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {Stores} from '../../../service/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {RecipeDbInputScheme} from '../../../schemas/recipe.scema';
 import {TransferDataService} from '../../../service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
-
+import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-recipes-list.token';
 
 
 @Component({
@@ -102,7 +102,7 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
     CardListItemDirective,
     ImportComponent,
     ImportRowTplDirective
-],
+  ],
   styles: [
     `:host {
       display: block;
@@ -112,21 +112,19 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 })
 export class RecipesListComponent {
   constructor(
-    private _activatedRoute: ActivatedRoute,
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
     private _transferDataService: TransferDataService,
   ) {
-    this._activatedRoute.data.pipe(
-      takeUntilDestroyed(),
-    ).subscribe((data) => {
-      this.recipes.set(data['list']);
-    });
   }
 
-  recipes = signal<any[]>([])
+  recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
   protected readonly RecipeDbInputScheme = RecipeDbInputScheme;
+
+  ngOnInit() {
+    this.loadRecipes();
+  }
 
   deleteRecipe(
     recipe: Recipe,
@@ -138,9 +136,7 @@ export class RecipesListComponent {
   }
 
   loadRecipes() {
-    this._recipesRepository.getRecipes().then((recipes) => {
-      this.recipes.set(recipes);
-    });
+    this._recipesRepository.loadRecipes();
   }
 
   exportRecipes() {

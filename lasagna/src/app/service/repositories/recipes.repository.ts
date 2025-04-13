@@ -4,6 +4,7 @@ import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 import {CategoryRecipe, CategoryRecipesRepository} from './category-recipes-repository.service';
 import {UsingHistoryService} from '../services/using-history.service';
+import {Subject} from 'rxjs';
 
 export interface Ingredient {
   name?: string
@@ -44,11 +45,24 @@ export class RecipesRepository {
   ) {
   }
 
+  private _stream$ = new Subject<Recipe[]>();
+
+  get recipes$() {
+    return this._stream$.asObservable();
+  }
+
   async addRecipe(recipe: RecipeDTO) {
     return this._indexDbService.addData(Stores.RECIPES, recipe).then(uuid => {
       if (recipe.category_id) this._saveCategory(recipe.category_id);
       return uuid;
     })
+  }
+
+  loadRecipes() {
+    return this._indexDbService.getAll(Stores.RECIPES).then(recipes => {
+      this._stream$.next(recipes);
+      return recipes;
+    });
   }
 
   getRecipes() {
@@ -90,7 +104,7 @@ export class RecipesRepository {
     };
   }
 
-  recipeFromDTO(recipe: RecipeDTO): Recipe|undefined {
+  recipeFromDTO(recipe: RecipeDTO): Recipe | undefined {
     if (!recipe) {
       return undefined
     }
