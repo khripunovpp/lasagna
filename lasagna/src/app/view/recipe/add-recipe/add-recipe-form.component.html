@@ -1,10 +1,9 @@
-
 <form [formGroup]="form">
   <lg-gap-column [position]="'start'">
     <lg-control label="Name" lgExpand>
-      <lg-autocomplete [resource]="'recipes-names'"
-                       [key]="'name'"
-        formControlName="name"></lg-autocomplete>
+      <lg-autocomplete [key]="'name'"
+                       [resource]="'recipes-names'"
+                       formControlName="name"></lg-autocomplete>
     </lg-control>
 
 
@@ -52,15 +51,20 @@
                   <lg-gap-column [size]="'small'">
                     <lg-control>
                       <ng-container ngProjectAs="labelTpl">
-                                                      <span (click)="closeRecipeField(i)"
-                                                            [ngClass]="!recipeFieldState()[i] ? 'text-active text-bold' : ''">
-                                                          Product
-                                                      </span>
+                        <lg-button (click)="closeRecipeField(i)"
+                                   [flat]="true"
+                                   [size]="'small'"
+                                   [active]="!recipeFieldState()[i]">
+                          Product
+                        </lg-button>
                       </ng-container>
 
                       <ng-container ngProjectAs="afterLabelTpl">
-                                                      <span (click)="openRecipeField(i)"
-                                                            [ngClass]="recipeFieldState()[i] ? 'text-active text-bold' : ''">Recipe</span>
+                        <lg-button (click)="openRecipeField(i)"
+                                   [flat]="true"
+                                   [size]="'small'"
+                                   [active]="recipeFieldState()[i]">Recipe
+                        </lg-button>
                       </ng-container>
 
                       <ng-container ngProjectAs="endLabelTpl">

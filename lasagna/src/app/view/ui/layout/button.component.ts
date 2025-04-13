@@ -103,6 +103,10 @@ export type ButtonStyle = 'default' |
 
       .button.active {
         filter: brightness(0.95);
+
+        &.flat {
+          color: var(--active-color);
+        }
       }
 
       .button.default {
