@@ -23,6 +23,7 @@ import {NotificationsService} from '../../../service/services/notifications.serv
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 
 import {InputComponent} from '../../ui/form/input.component';
+import {ShrinkDirective} from '../../directives/shrink.directive';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -45,8 +46,9 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    InputComponent
-],
+    InputComponent,
+    ShrinkDirective
+  ],
   styles: [
     `
       lg-eggs-widget {
@@ -102,6 +104,7 @@ export class AddProductFormComponent
       return;
     }
     this._productsRepository.getOne(this.uuid()).then(product => {
+      console.log({product})
       this.form.reset(product);
     });
   });
@@ -135,6 +138,7 @@ export class AddProductFormComponent
     values: ProductFormValue
   ) {
     this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+      debugger
       this.form.reset(this._defFormValue);
       this._notificationsService.success('Product added');
       this._loadUsingHistory();
@@ -143,8 +147,9 @@ export class AddProductFormComponent
 
   editProduct(
     values: ProductFormValue
-  ) {
+  ) {      debugger
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
+       debugger
       this._notificationsService.success('Product edited');
       this._loadUsingHistory();
     });
