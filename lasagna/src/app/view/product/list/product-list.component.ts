@@ -147,7 +147,7 @@ export class ProductListComponent
   }
 
   exportProducts() {
-    this._transferDataService.exportTable(Stores.PRODUCTS);
+    this._transferDataService.exportTable(Stores.PRODUCTS,'json');
   }
 
   deleteProduct(
