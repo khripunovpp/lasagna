@@ -1,5 +1,7 @@
 import {Stores} from '../../const/stores';
 import {Transaction} from 'dexie';
+import {Product, ProductDbValue} from '../../repositories/products.repository';
+import {CategoryProduct} from '../../repositories/category-products-repository.service';
 
 export const migrations: {
   version: number
@@ -103,5 +105,72 @@ export const migrations: {
       [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
       [Stores.RECIPES_CATEGORIES]: '++uuid,name',
     },
+  },
+  // migrate categories to new format
+  // uuid should replced with the same as name
+  // also update products and recipes with the new categories
+  {
+    version: 8,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+    },
+    update: tx => {
+      const tables = [
+        Stores.PRODUCTS,
+        Stores.RECIPES,
+        Stores.PRODUCTS_CATEGORIES,
+        Stores.RECIPES_CATEGORIES,
+      ];
+      return Promise.all([
+        new Promise<void>(async (resolve) => {
+          const categoriesTable = tx.table<CategoryProduct>(Stores.PRODUCTS_CATEGORIES);
+          const categories = await categoriesTable.toArray();
+          const productsTable = tx.table<ProductDbValue>(Stores.PRODUCTS);
+          const products = await productsTable.toArray();
+
+          // first update products with the new uuid
+          await Promise.all(products.map((item:any) => {
+            const category = categories.find((i) => i.uuid === item.category_id);
+            if (category) {
+              return productsTable.update(item.uuid, {category_id: category.name});
+            }
+            return Promise.resolve();
+          }));
+
+          // update categories with the new uuid
+          await Promise.all(categories.map((item: any) => {
+            return categoriesTable.update(item.uuid, {uuid: item.name});
+          }));
+
+          resolve();
+        }),
+
+        new Promise<void>(async (resolve) => {
+          const categoriesTable = tx.table<CategoryProduct>(Stores.RECIPES_CATEGORIES);
+          const categories = await categoriesTable.toArray();
+          const recipesTable = tx.table<ProductDbValue>(Stores.RECIPES);
+          const recipes = await recipesTable.toArray();
+
+          // first update recipes with the new categories
+          await Promise.all(recipes.map((item:any) => {
+            const category = categories.find((i) => i.uuid === item.category_id);
+            if (category) {
+              return recipesTable.update(item.uuid, {category_id: category.name});
+            }
+            return Promise.resolve();
+          }));
+
+          // update categories with the new uuid
+          await Promise.all(categories.map((item: any) => {
+            return categoriesTable.update(item.uuid, {uuid: item.name});
+          }));
+
+          resolve();
+        }),
+      ]).then(() => {})
+    }
   }
 ]
