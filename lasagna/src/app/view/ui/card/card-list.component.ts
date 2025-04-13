@@ -47,6 +47,9 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
 
       .lg-card-list {
         overflow-x: auto;
+      }
+
+      .lg-checkbox {
         --control-bg: #abc2ff;
         --control-bg-selected: #abc2ff;
       }
