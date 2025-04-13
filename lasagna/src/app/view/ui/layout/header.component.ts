@@ -41,6 +41,7 @@ import {MatIcon} from '@angular/material/icon';
   styles: [`
     .lg-header {
       position: fixed;
+      z-index: 3;
       height: var(--header-height);
       left: 0;
       right: 0;

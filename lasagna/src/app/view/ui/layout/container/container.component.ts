@@ -13,6 +13,10 @@ import {Component} from '@angular/core';
         display: flex;
         height: 100%;
         padding: 0 32px;
+
+        @media (max-width: 768px) {
+          padding: 0 16px;
+        }
       }
 
       .container {
