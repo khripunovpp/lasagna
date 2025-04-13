@@ -24,7 +24,7 @@ import {ButtonComponent} from '../../../ui/layout/button.component';
               <lg-title>{{ uuid() ? 'Edit' : 'Add' }} recipe category</lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/recipes-categories'"
+                         [link]="'/settings/categories/recipes'"
                          [size]="'small'"
                          [style]="'warning'">
                   Back to list

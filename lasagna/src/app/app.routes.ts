@@ -20,89 +20,123 @@ export const routes: Routes = [{
         .then(m => m.ApplicationComponent)
     },
     {
-      path: 'add-recipe',
-      loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
-        .then(m => m.AddRecipeComponent),
-    },
-    {
-      path: 'edit-recipe/:uuid',
-      loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
-        .then(m => m.AddRecipeComponent),
-      resolve: {
-        recipe: recipeEditResolver,
-      }
-    },
-    {
-      path: 'calc-recipe/:uuid',
-      loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')
-        .then(m => m.CalculateRecipeComponent),
-      resolve: {
-        result: recipeCalculationResolver,
-        template: recipeCalculationTemplateResolver,
-      }
-    },
-    {
       path: 'recipes',
-      loadComponent: () => import('./view/recipe/list/recipes-list.component')
-        .then(m => m.RecipesListComponent),
-      resolve: {
-        list: recipesListResolver,
-      }
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./view/recipe/list/recipes-list.component')
+            .then(m => m.RecipesListComponent),
+          resolve: {
+            list: recipesListResolver,
+          },
+        },
+        {
+          path: 'add',
+          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+            .then(m => m.AddRecipeComponent),
+        },
+        {
+          path: 'edit/:uuid',
+          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+            .then(m => m.AddRecipeComponent),
+          resolve: {
+            recipe: recipeEditResolver,
+          }
+        },
+        {
+          path: 'calculate/:uuid',
+          loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')
+            .then(m => m.CalculateRecipeComponent),
+          resolve: {
+            result: recipeCalculationResolver,
+            template: recipeCalculationTemplateResolver,
+          }
+        },
+      ]
     },
 
-
-    {
-      path: 'add-product',
-      loadComponent: () => import('./view/product/add-product/add-product.component')
-        .then(m => m.AddProductComponent)
-    },
-    {
-      path: 'edit-product/:uuid',
-      loadComponent: () => import('./view/product/add-product/add-product.component')
-        .then(m => m.AddProductComponent)
-    },
     {
       path: 'products',
-      loadComponent: () => import('./view/product/list/product-list.component')
-        .then(m => m.ProductListComponent),
-      resolve: {
-        list: productListResolver,
-      }
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./view/product/list/product-list.component')
+            .then(m => m.ProductListComponent),
+          resolve: {
+            list: productListResolver,
+          },
+        },
+        {
+          path: 'add',
+          loadComponent: () => import('./view/product/add-product/add-product.component')
+            .then(m => m.AddProductComponent),
+        },
+        {
+          path: 'edit/:uuid',
+          loadComponent: () => import('./view/product/add-product/add-product.component')
+            .then(m => m.AddProductComponent),
+          resolve: {
+            product: recipeEditResolver,
+          }
+        },
+      ]
     },
 
+    {
+      path: 'settings',
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./view/settings/settings.component')
+            .then(m => m.SettingsComponent),
+        },
+        {
+          path: 'categories',
+          children: [
+            {
+              path: 'products',
+              children: [
+                {
+                  path: '',
+                  loadComponent: () => import('./view/settings/category/list/category-list.component')
+                    .then(m => m.CategoryListComponent),
+                },
+                {
+                  path: 'add',
+                  loadComponent: () => import('./view/settings/category/add-category/add-category.component')
+                    .then(m => m.AddCategoryComponent)
+                },
+                {
+                  path: 'edit/:uuid',
+                  loadComponent: () => import('./view/settings/category/add-category/add-category.component')
+                    .then(m => m.AddCategoryComponent)
+                }
+              ]
+            },
+            {
+              path: 'recipes',
+              children: [
+                {
+                  path: '',
+                  loadComponent: () => import('./view/settings/category-recipe/list/category-recipe-list.component')
+                    .then(m => m.CategoryRecipeListComponent),
+                },
+                {
+                  path: 'add',
+                  loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
+                    .then(m => m.AddCategoryRecipeComponent)
 
-    {
-      path: 'add-product-category',
-      loadComponent: () => import('./view/settings/category/add-category/add-category.component')
-        .then(m => m.AddCategoryComponent)
-    },
-    {
-      path: 'edit-product-category/:uuid',
-      loadComponent: () => import('./view/settings/category/add-category/add-category.component')
-        .then(m => m.AddCategoryComponent)
-    },
-    {
-      path: 'products-categories',
-      loadComponent: () => import('./view/settings/category/list/category-list.component')
-        .then(m => m.CategoryListComponent),
-    },
-
-
-    {
-      path: 'add-recipe-category',
-      loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
-        .then(m => m.AddCategoryRecipeComponent)
-    },
-    {
-      path: 'edit-recipe-category/:uuid',
-      loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
-        .then(m => m.AddCategoryRecipeComponent)
-
-    },
-    {
-      path: 'recipes-categories',
-      loadComponent: () => import('./view/settings/category-recipe/list/category-recipe-list.component')
-        .then(m => m.CategoryRecipeListComponent),
+                },
+                {
+                  path: 'edit/:uuid',
+                  loadComponent: () => import('./view/settings/category-recipe/add-category/add-category-recipe.component')
+                    .then(m => m.AddCategoryRecipeComponent)
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
 
 
@@ -112,11 +146,5 @@ export const routes: Routes = [{
         .then(m => m.WidgetsPageComponent)
     },
 
-
-    {
-      path: 'settings',
-      loadComponent: () => import('./view/settings/settings.component')
-        .then(m => m.SettingsComponent),
-    },
   ]
 }];

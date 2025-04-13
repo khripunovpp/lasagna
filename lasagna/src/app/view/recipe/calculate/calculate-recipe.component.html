@@ -6,7 +6,7 @@
       </lg-title>
 
       <lg-button [flat]="true"
-                 [link]="'/edit-recipe/' + result()?.recipe?.uuid"
+                 [link]="'/recipes/edit/' + result()?.recipe?.uuid"
                  [size]="'small'"
                  [style]="'primary'">
         Edit
@@ -156,7 +156,7 @@
                 <span [ngClass]="'indent-' + row.indent">
                   @if (row.type !== 'total') {
 
-                    <a [routerLink]="[row.type === 'recipe-row' ? '/edit-recipe/' : '/edit-product/', row.uuid]">
+                    <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit' : '/edit-product/', row.uuid]">
                   {{ row.name }}
                 </a>
                   } @else {

@@ -9,7 +9,8 @@ import {MatIcon} from '@angular/material/icon';
   standalone: true,
   template: `
       <header class="lg-header">
-          <a [routerLinkActive]="['route-active']"
+          <a [routerLinkActiveOptions]="{ exact: false }"
+             [routerLinkActive]="['route-active']"
              [routerLink]="'/home'"
              class="lg-header__icon">
               <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
@@ -19,19 +20,22 @@ import {MatIcon} from '@angular/material/icon';
               @for (item of items();track item.label) {
                   <a [routerLink]="item.link"
                      [routerLinkActive]="['route-active']"
+                     [routerLinkActiveOptions]="{ exact: false }"
                      class="lg-header__link">
                       {{ item.label }}
                   </a>
               }
           </div>
 
-          <a [routerLinkActive]="['route-active']"
+          <a [routerLinkActiveOptions]="{ exact: false }"
+             [routerLinkActive]="['route-active']"
              [routerLink]="'/settings'"
              class="lg-header__icon">
               <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
           </a>
 
-          <a [routerLinkActive]="['route-active']"
+          <a [routerLinkActiveOptions]="{ exact: false }"
+             [routerLinkActive]="['route-active']"
              [routerLink]="'/widgets'"
              class="lg-header__icon">
               <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>

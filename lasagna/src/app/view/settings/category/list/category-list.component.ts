@@ -23,7 +23,7 @@ import {NotificationsService} from '../../../../service/services/notifications.s
               </lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/add-product-category'"
+                         [link]="'/settings/categories/products/add'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
@@ -39,7 +39,7 @@ import {NotificationsService} from '../../../../service/services/notifications.s
                           </div>
                           <lg-button [style]="'primary'"
                                      [size]="'small'"
-                                     [link]="'/edit-product-category/' + category.uuid"
+                                     [link]="'/settings/categories/products/edit/' + category.uuid"
                                      [flat]="true">
                               Edit
                           </lg-button>

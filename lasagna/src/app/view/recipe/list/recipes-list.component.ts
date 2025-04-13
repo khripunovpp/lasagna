@@ -25,7 +25,7 @@ import {NotificationsService} from '../../../service/services/notifications.serv
               </lg-title>
 
               <lg-button [flat]="true"
-                         [link]="'/add-recipe'"
+                         [link]="'/recipes/add'"
                          [size]="'small'"
                          [style]="'primary'">
                   Add
@@ -42,11 +42,11 @@ import {NotificationsService} from '../../../service/services/notifications.serv
                       <ng-template lgCardListItem>
                           <lg-gap-row [center]="true">
                               <div class="expand">
-                                  <a [routerLink]="'/edit-recipe/' + recipe.uuid">{{ recipe.name }}</a>
+                                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
                               </div>
                               <lg-button [style]="'primary'"
                                          [size]="'small'"
-                                         [link]="'/calc-recipe/' + recipe.uuid"
+                                         [link]="'/recipes/calculate/' + recipe.uuid"
                                          [flat]="true">
                                   Calculate
                               </lg-button>
