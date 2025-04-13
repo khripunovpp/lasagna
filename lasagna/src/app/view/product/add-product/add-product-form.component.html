@@ -39,17 +39,17 @@
     <lg-gap-column>
       <lg-control label="Source">
 
-        <lg-input #sourceInput
-                  [placeholder]="'Where do you buy it?'"
-                  formControlName="source"></lg-input>
-        <!--        <lg-multiselect #sourceInput-->
-        <!--                        [resource]="'sources'"-->
-        <!--                        formControlName="source"></lg-multiselect>-->
+<!--        <lg-input #sourceInput-->
+<!--                  [placeholder]="'Where do you buy it?'"-->
+<!--                  formControlName="source"></lg-input>-->
+                <lg-multiselect #sourceInput
+                                [resource]="'sources'"
+                                formControlName="source"></lg-multiselect>
       </lg-control>
 
-      <div [hidden]="!topSources().length">
-        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-      </div>
+<!--      <div [hidden]="!topSources().length">-->
+<!--        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>-->
+<!--      </div>-->
     </lg-gap-column>
 
     <lg-gap-column>

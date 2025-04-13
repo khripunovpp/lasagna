@@ -12,7 +12,7 @@ import {
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-
+import {JsonPipe} from '@angular/common';
 
 
 export interface MultiselectItem {
@@ -25,12 +25,10 @@ export interface MultiselectItem {
   template: `
       <div class="multiselect">
           <ng-select (change)="onChangeSelect($event)"
+                     (ngModelChange)="onChangeInput($event)"
                      [compareWith]="compareWith"
-                     [addTag]="tags()"
-                     [addTagText]="'Apply by enter'"
                      [items]="loadedList()"
                      [ngModel]="value"
-                     (ngModelChange)="onChangeInput($event)"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item.value ?? item }}
@@ -45,8 +43,9 @@ export interface MultiselectItem {
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective
-],
+    NgLabelTemplateDirective,
+    JsonPipe
+  ],
   styles: [
     `
       lg-multiselect {
@@ -111,7 +110,6 @@ export class MultiselectComponent
 
   resource = input<string>('');
   autoLoad = input<boolean>(false);
-  tags = input<boolean>(false);
   loadedList = signal([]);
   onSelected = output<unknown>();
   value?: unknown = null
@@ -126,6 +124,7 @@ export class MultiselectComponent
   searchFn = (term: string, item: MultiselectItem) => {
     const val = item as any;
     return val.name?.toLowerCase().includes(term.toLowerCase())
+      || val?.toString().toLowerCase().includes(term.toLowerCase())
   }
 
   compareWith = (a: MultiselectItem, b: MultiselectItem) => {
