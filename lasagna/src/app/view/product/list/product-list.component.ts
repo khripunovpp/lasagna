@@ -23,6 +23,7 @@ import {NotificationsService} from '../../../service/services/notifications.serv
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-products-list.token';
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
+import {FadeInComponent} from '../../ui/fade-in.component';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -30,98 +31,101 @@ export type ProductList = Record<string, Product[]>;
   selector: 'lg-product-list',
   standalone: true,
   template: `
-      <lg-container>
-          <lg-title>
-              Products
-          </lg-title>
 
-          <lg-gap-row [center]="true">
-              <lg-button [flat]="true"
-                         [link]="'/products/add'"
-                         [size]="'small'"
-                         [style]="'primary'">
-                  Add
-              </lg-button>
+      <lg-fade-in>
+          <lg-container>
+              <lg-title>
+                  Products
+              </lg-title>
 
-              <lg-button (click)="exportProducts(selectionZone.selected())"
-                         [flat]="true"
-                         [size]="'small'"
-                         [style]="'info'">
-                  Export
-              </lg-button>
+              <lg-gap-row [center]="true">
+                  <lg-button [flat]="true"
+                             [link]="'/products/add'"
+                             [size]="'small'"
+                             [style]="'primary'">
+                      Add
+                  </lg-button>
 
-              <lg-import (onDone)="loadProducts()"
-                         [schema]="ProductDbInputScheme"
-                         [storeName]="Stores.PRODUCTS">
-                  <ng-template let-flow="flow" let-row lgImportRowTpl>
-                      @if (flow === 'new') {
-                          <span>{{ row.name }}</span>
-                          <span>{{ row.amount }}gr for {{ row.price }}</span>
-                          @if (row.source) {
-                              <span>from {{ row.source }}</span>
-                          }
-                      } @else {
-                          <span>{{ row?.name }}</span>
-                          <span>{{ row?.amount }} gr
+                  <lg-button (click)="exportProducts(selectionZone.selected())"
+                             [flat]="true"
+                             [size]="'small'"
+                             [style]="'info'">
+                      Export
+                  </lg-button>
+
+                  <lg-import (onDone)="loadProducts()"
+                             [schema]="ProductDbInputScheme"
+                             [storeName]="Stores.PRODUCTS">
+                      <ng-template let-flow="flow" let-row lgImportRowTpl>
+                          @if (flow === 'new') {
+                              <span>{{ row.name }}</span>
+                              <span>{{ row.amount }}gr for {{ row.price }}</span>
+                              @if (row.source) {
+                                  <span>from {{ row.source }}</span>
+                              }
+                          } @else {
+                              <span>{{ row?.name }}</span>
+                              <span>{{ row?.amount }} gr
                                               for {{ row?.price }}</span>
-                          @if (row?.source) {
-                              <span>from {{ row?.source }}</span>
+                              @if (row?.source) {
+                                  <span>from {{ row?.source }}</span>
+                              }
                           }
-                      }
-                  </ng-template>
-              </lg-import>
-          </lg-gap-row>
+                      </ng-template>
+                  </lg-import>
+              </lg-gap-row>
 
-          <lg-selection-zone #selectionZone>
-              @for (category of products();track category?.category) {
-                  <lg-title [level]="3">
-                      {{ category?.category || 'Uncategorized' }}
-                  </lg-title>
-
-                  <lg-card-list [mode]="selectionZone.selectionMode()"
-                                (onSelected)="selectionZone.putSelected($event)"
-                                [selectAll]="selectionZone.selectAll()"
-                                [deselectAll]="selectionZone.deselectAll()">
-                      @for (product of category.products;track $index;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="product.uuid">
-                              <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <lg-gap-row [center]="true">
-                                          <div style="flex: 20%">
-                                              <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
-                                          </div>
-                                          <div style="flex: 10%"> {{ product.source ?? '' }}</div>
-                                          <div style="flex: 70%">
-                                              {{ getPricePerGram(product) | number: '1.2-5' }}
-                                              @if (!product.unit || product.unit === 'gram') {
-                                                  per gram
-                                              } @else {
-                                                  per {{ product.unit }}
-                                              }
-                                          </div>
-                                      </lg-gap-row>
-                                  </div>
-
-                                  <lg-button [style]="'danger'"
-                                             [size]="'small'"
-                                             [icon]="true"
-                                             (click)="deleteProduct(product)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              } @empty {
-                  <lg-gap-row [center]="true">
-                      <lg-title [level]="5">
-                          No products found
+              <lg-selection-zone #selectionZone>
+                  @for (category of products();track category?.category) {
+                      <lg-title [level]="3">
+                          {{ category?.category || 'Uncategorized' }}
                       </lg-title>
-                  </lg-gap-row>
-              }
-          </lg-selection-zone>
-      </lg-container>
+
+                      <lg-card-list [mode]="selectionZone.selectionMode()"
+                                    (onSelected)="selectionZone.putSelected($event)"
+                                    [selectAll]="selectionZone.selectAll()"
+                                    [deselectAll]="selectionZone.deselectAll()">
+                          @for (product of category.products;track $index;let i = $index) {
+                              <ng-template lgCardListItem [uuid]="product.uuid">
+                                  <lg-gap-row [center]="true">
+                                      <div class="expand">
+                                          <lg-gap-row [center]="true">
+                                              <div style="flex: 20%">
+                                                  <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
+                                              </div>
+                                              <div style="flex: 10%"> {{ product.source ?? '' }}</div>
+                                              <div style="flex: 70%">
+                                                  {{ getPricePerGram(product) | number: '1.2-5' }}
+                                                  @if (!product.unit || product.unit === 'gram') {
+                                                      per gram
+                                                  } @else {
+                                                      per {{ product.unit }}
+                                                  }
+                                              </div>
+                                          </lg-gap-row>
+                                      </div>
+
+                                      <lg-button [style]="'danger'"
+                                                 [size]="'small'"
+                                                 [icon]="true"
+                                                 (click)="deleteProduct(product)">
+                                          <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                    fontIcon="close"></mat-icon>
+                                      </lg-button>
+                                  </lg-gap-row>
+                              </ng-template>
+                          }
+                      </lg-card-list>
+                  } @empty {
+                      <lg-gap-row [center]="true">
+                          <lg-title [level]="5">
+                              No products found
+                          </lg-title>
+                      </lg-gap-row>
+                  }
+              </lg-selection-zone>
+          </lg-container>
+      </lg-fade-in>
   `,
   imports: [
     GapRowComponent,
@@ -135,7 +139,8 @@ export type ProductList = Record<string, Product[]>;
     ImportComponent,
     RouterLink,
     ImportRowTplDirective,
-    SelectionZoneComponent
+    SelectionZoneComponent,
+    FadeInComponent
   ],
   styles: [
     `:host {

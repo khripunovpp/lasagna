@@ -1,30 +1,70 @@
-<lg-container>
-  <lg-gap-column>
-    <lg-gap-row [center]="true" [mobileMode]="true">
-      <lg-title>
-        {{ result()?.recipe?.name }} cost calculation
-      </lg-title>
+<lg-fade-in>
+  <lg-container>
+    <lg-gap-column>
+      <lg-gap-row [center]="true" [mobileMode]="true">
+        <lg-title>
+          {{ result()?.recipe?.name }} cost calculation
+        </lg-title>
 
-      <lg-button [flat]="true"
-                 [link]="'/recipes/edit/' + result()?.recipe?.uuid"
-                 [size]="'small'"
-                 [style]="'primary'">
-        Edit
-      </lg-button>
+        <lg-button [flat]="true"
+                   [link]="'/recipes/edit/' + result()?.recipe?.uuid"
+                   [size]="'small'"
+                   [style]="'primary'">
+          Edit
+        </lg-button>
 
-      <lg-button [flat]="true"
-                 [link]="'/recipes'"
-                 [size]="'small'"
-                 [style]="'warning'">
-        Back to list
-      </lg-button>
-    </lg-gap-row>
+        <lg-button [flat]="true"
+                   [link]="'/recipes'"
+                   [size]="'small'"
+                   [style]="'warning'">
+          Back to list
+        </lg-button>
+      </lg-gap-row>
 
-    @if (result()?.total) {
-      <lg-gap-row [center]="true" style="--control-bg: white">
-        @if (notInGrams()) {
+      @if (result()?.total) {
+        <lg-gap-row [center]="true" style="--control-bg: white">
+          @if (notInGrams()) {
 
-          <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
+            <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
+              <lg-gap-row [size]="'small'" [center]="true">
+                <div>
+                  Calculation
+                  outcome:
+                </div>
+
+                <div>
+                  <lg-number-input [(ngModel)]="outcome_amount"
+                                   (onInputChange)="onOutcomeChange($event)"
+                                   lgParseMath
+                                   [placeholder]="'Amount'"></lg-number-input>
+                  <!--              {{ result()?.recipe?.outcome_amount }}-->
+                </div>
+
+                <b>
+                  {{ result()?.recipe?.outcome_unit }}
+                </b>
+              </lg-gap-row>
+
+              <lg-gap-row [size]="'small'" [mobileMode]="true">
+                <div>
+                  one <b>
+                  {{ result()?.recipe?.outcome_unit }}
+                </b>
+                </div>
+
+                <div>
+                  costs:
+                  <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
+                  (
+                  <ng-container *ngTemplateOutlet="rawAmount"></ng-container>
+                  +
+                  <ng-container *ngTemplateOutlet="taxAmount"></ng-container>
+                  of taxes and fees)
+                </div>
+              </lg-gap-row>
+            </lg-gap-row>
+          } @else {
+
             <lg-gap-row [size]="'small'" [center]="true">
               <div>
                 Calculation
@@ -36,19 +76,6 @@
                                  (onInputChange)="onOutcomeChange($event)"
                                  lgParseMath
                                  [placeholder]="'Amount'"></lg-number-input>
-                <!--              {{ result()?.recipe?.outcome_amount }}-->
-              </div>
-
-              <b>
-                {{ result()?.recipe?.outcome_unit }}
-              </b>
-            </lg-gap-row>
-
-            <lg-gap-row [size]="'small'" [mobileMode]="true">
-              <div>
-                one <b>
-                {{ result()?.recipe?.outcome_unit }}
-              </b>
               </div>
 
               <div>
@@ -60,99 +87,73 @@
                 <ng-container *ngTemplateOutlet="taxAmount"></ng-container>
                 of taxes and fees)
               </div>
+
+              <div>
+                per gram:
+                <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
+              </div>
             </lg-gap-row>
-          </lg-gap-row>
+          }
+        </lg-gap-row>
+      }
+
+      <ng-template #taxAmount>
+        @if (notInGrams()) {
+          {{ totalTaxes() / showedOutcome() | number: '1.2-2' }}
         } @else {
-
-          <lg-gap-row [size]="'small'" [center]="true">
-            <div>
-              Calculation
-              outcome:
-            </div>
-
-            <div>
-              <lg-number-input [(ngModel)]="outcome_amount"
-                               (onInputChange)="onOutcomeChange($event)"
-                               lgParseMath
-                               [placeholder]="'Amount'"></lg-number-input>
-            </div>
-
-            <div>
-              costs:
-              <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
-              (
-              <ng-container *ngTemplateOutlet="rawAmount"></ng-container>
-              +
-              <ng-container *ngTemplateOutlet="taxAmount"></ng-container>
-              of taxes and fees)
-            </div>
-
-            <div>
-              per gram:
-              <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
-            </div>
-          </lg-gap-row>
+          {{ totalTaxes() | number: '1.2-2' }}
         }
-      </lg-gap-row>
-    }
+      </ng-template>
 
-    <ng-template #taxAmount>
-      @if (notInGrams()) {
-        {{ totalTaxes() / showedOutcome() | number: '1.2-2' }}
-      } @else {
-        {{ totalTaxes() | number: '1.2-2' }}
-      }
-    </ng-template>
+      <ng-template #rawAmount>
+        @if (notInGrams()) {
+          {{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
+        } @else {
+          {{ result()?.total | number: '1.2-2' }}
+        }
+      </ng-template>
 
-    <ng-template #rawAmount>
-      @if (notInGrams()) {
-        {{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
-      } @else {
-        {{ result()?.total | number: '1.2-2' }}
-      }
-    </ng-template>
+      <ng-template #totalAmount>
+        @if (notInGrams()) {
+          {{ ((result()?.total || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
+        } @else {
+          {{ (result()?.total || 1) + totalTaxes() | number: '1.2-2' }}
+        }
+      </ng-template>
+      <ng-template #perGramAmount>
+        @if (notInGrams()) {
 
-    <ng-template #totalAmount>
-      @if (notInGrams()) {
-        {{ ((result()?.total || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
-      } @else {
-        {{ (result()?.total || 1) + totalTaxes() | number: '1.2-2' }}
-      }
-    </ng-template>
-    <ng-template #perGramAmount>
-      @if (notInGrams()) {
+        } @else {
+          {{ ((result()?.total || 1) + totalTaxes()) / outcome_amount() | number: '1.2-2' }}
+        }
+      </ng-template>
 
-      } @else {
-        {{ ((result()?.total || 1) + totalTaxes()) / outcome_amount() | number: '1.2-2' }}
-      }
-    </ng-template>
-
-    <lg-table-card>
-      @if (result()) {
-        <table>
-          <colgroup>
-            <col span="1" style="width: 1%;">
-            <col span="1" style="width: 20%;">
-            <col span="1" style="width: 5%;">
-            <col span="1" style="width: 3%;">
-            <col span="1" style="width: 5%;">
-            <col span="1" style="width: 7%;">
-          </colgroup>
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Unit</th>
-            <th>Price per unit</th>
-            <th>Total</th>
-          </tr>
-          </thead>
-          <tbody>
-            @for (row of result()?.result;track $index;let i = $index) {
-              <tr [ngClass]="row.type">
-                <td>{{ i + 1 }}</td>
-                <td>
+      <lg-table-card>
+        @if (result()) {
+          <table>
+            <colgroup>
+              <col span="1" style="width: 1%;">
+              <col span="1" style="width: 20%;">
+              <col span="1" style="width: 5%;">
+              <col span="1" style="width: 3%;">
+              <col span="1" style="width: 5%;">
+              <col span="1" style="width: 7%;">
+            </colgroup>
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Unit</th>
+              <th>Price per unit</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (row of result()?.result;track $index;let i = $index) {
+                <tr [ngClass]="row.type">
+                  <td>{{ i + 1 }}</td>
+                  <td>
                 <span [ngClass]="'indent-' + row.indent">
                   @if (row.type !== 'total') {
 
@@ -163,67 +164,68 @@
                     {{ row.name }}
                   }
               </span>
-                </td>
-                <td>{{ row.amount }}</td>
-                <td>{{ row.unit }}</td>
-                <td>{{ row.price_per_gram }}</td>
-                <td>{{ row.total }}</td>
-              </tr>
-            }
-          </tbody>
+                  </td>
+                  <td>{{ row.amount }}</td>
+                  <td>{{ row.unit }}</td>
+                  <td>{{ row.price_per_gram }}</td>
+                  <td>{{ row.total }}</td>
+                </tr>
+              }
+            </tbody>
 
-        </table>
-      } @else {
-        <div>Loading...</div>
-      }
-    </lg-table-card>
+          </table>
+        } @else {
+          <div>Loading...</div>
+        }
+      </lg-table-card>
 
-    <lg-gap-row [center]="true" [mobileMode]="true">
-      <lg-title>
-        Taxes and fees
-      </lg-title>
+      <lg-gap-row [center]="true" [mobileMode]="true">
+        <lg-title>
+          Taxes and fees
+        </lg-title>
 
-      @if (canSaveDefaultTemplate()) {
-        <lg-button (click)="saveDefaultTaxTemplate()"
-                   [flat]="true"
-                   [size]="'small'"
-                   [style]="'primary'">
-          Save as default template
-        </lg-button>
-      }
+        @if (canSaveDefaultTemplate()) {
+          <lg-button (click)="saveDefaultTaxTemplate()"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'primary'">
+            Save as default template
+          </lg-button>
+        }
 
-      @if (canApplyTemplates()) {
-        <lg-gap-row [center]="true">
-          @if (!taxTemplateForm.showed()) {
-            <lg-button (click)="taxTemplateForm.show()"
-                       [flat]="true"
-                       [size]="'small'"
-                       [style]="'warning'">
-              Apply template
-            </lg-button>
-          }
-
-          <lg-view-show #taxTemplateForm>
-            <lg-gap-row [center]="true" [size]="'small'">
-              <lg-multiselect [(ngModel)]="taxTemplateToApply"
-                              [autoLoad]="true"
-                              [resource]="'taxTemplates'"></lg-multiselect>
-
-              <lg-button (click)="loadTaxTemplate()"
+        @if (canApplyTemplates()) {
+          <lg-gap-row [center]="true">
+            @if (!taxTemplateForm.showed()) {
+              <lg-button (click)="taxTemplateForm.show()"
                          [flat]="true"
                          [size]="'small'"
-                         [style]="'primary'">
-                Apply
+                         [style]="'warning'">
+                Apply template
               </lg-button>
-            </lg-gap-row>
-          </lg-view-show>
-        </lg-gap-row>
-      }
-    </lg-gap-row>
+            }
 
-    <lg-taxes-and-fees-list (totalTaxesChanged)="onTotalTaxesChanged($event)"
-                            (taxesChanged)="onTaxesChanged($event)"
-                            [rows]="taxRows()"
-                            [total]="result()?.total ?? 0"></lg-taxes-and-fees-list>
-  </lg-gap-column>
-</lg-container>
+            <lg-view-show #taxTemplateForm>
+              <lg-gap-row [center]="true" [size]="'small'">
+                <lg-multiselect [(ngModel)]="taxTemplateToApply"
+                                [autoLoad]="true"
+                                [resource]="'taxTemplates'"></lg-multiselect>
+
+                <lg-button (click)="loadTaxTemplate()"
+                           [flat]="true"
+                           [size]="'small'"
+                           [style]="'primary'">
+                  Apply
+                </lg-button>
+              </lg-gap-row>
+            </lg-view-show>
+          </lg-gap-row>
+        }
+      </lg-gap-row>
+
+      <lg-taxes-and-fees-list (taxesChanged)="onTaxesChanged($event)"
+                              (totalTaxesChanged)="onTotalTaxesChanged($event)"
+                              [rows]="taxRows()"
+                              [total]="result()?.total ?? 0"></lg-taxes-and-fees-list>
+    </lg-gap-column>
+  </lg-container>
+</lg-fade-in>

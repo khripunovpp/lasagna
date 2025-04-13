@@ -24,6 +24,7 @@ import {Ingredient, Recipe} from '../../../service/repositories/recipes.reposito
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
+import {FadeInComponent} from '../../ui/fade-in.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -44,8 +45,9 @@ import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
     TaxesAndFeesListComponent,
     NgTemplateOutlet,
     ViewShowComponent,
-    MultiselectComponent
-],
+    MultiselectComponent,
+    FadeInComponent
+  ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {

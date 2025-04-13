@@ -19,83 +19,86 @@ import {TransferDataService} from '../../../service/services/transfer-data.servi
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-recipes-list.token';
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
+import {FadeInComponent} from '../../ui/fade-in.component';
 
 
 @Component({
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
-      <lg-container>
-          <lg-gap-row [center]="true">
-              <lg-title>
-                  Recipes
-              </lg-title>
-
-              <lg-button [flat]="true"
-                         [link]="'/recipes/add'"
-                         [size]="'small'"
-                         [style]="'primary'">
-                  Add
-              </lg-button>
-
-              <lg-button (click)="exportRecipes(selectionZone.selected())"
-                         [flat]="true"
-                         [size]="'small'"
-                         [style]="'info'">
-                  Export
-              </lg-button>
-
-              <lg-import (onDone)="loadRecipes()"
-                         [schema]="RecipeDbInputScheme"
-                         [storeName]="Stores.RECIPES">
-                  <ng-template let-flow="flow" let-row lgImportRowTpl>
-                      <span>{{ row?.name }}</span>
-                  </ng-template>
-              </lg-import>
-          </lg-gap-row>
-
-          <lg-selection-zone #selectionZone>
-              @for (category of recipes();track category?.category) {
-                  <lg-title [level]="3">
-                      {{ category?.category || 'Uncategorized' }}
+      <lg-fade-in>
+          <lg-container>
+              <lg-gap-row [center]="true">
+                  <lg-title>
+                      Recipes
                   </lg-title>
 
-                  <lg-card-list [mode]="selectionZone.selectionMode()"
-                                (onSelected)="selectionZone.putSelected($event)"
-                                [selectAll]="selectionZone.selectAll()"
-                                [deselectAll]="selectionZone.deselectAll()">
-                      @for (recipe of category.recipes;track $index;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="recipe.uuid">
-                              <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
-                                  </div>
-                                  <lg-button [style]="'primary'"
-                                             [size]="'small'"
-                                             [link]="'/recipes/calculate/' + recipe.uuid"
-                                             [flat]="true">
-                                      Calculate
-                                  </lg-button>
-                                  <lg-button [style]="'danger'"
-                                             [size]="'small'"
-                                             [icon]="true"
-                                             (click)="deleteRecipe(recipe)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              } @empty {
-                  <lg-gap-row [center]="true">
-                      <lg-title [level]="5">
-                          No recipes found
+                  <lg-button [flat]="true"
+                             [link]="'/recipes/add'"
+                             [size]="'small'"
+                             [style]="'primary'">
+                      Add
+                  </lg-button>
+
+                  <lg-button (click)="exportRecipes(selectionZone.selected())"
+                             [flat]="true"
+                             [size]="'small'"
+                             [style]="'info'">
+                      Export
+                  </lg-button>
+
+                  <lg-import (onDone)="loadRecipes()"
+                             [schema]="RecipeDbInputScheme"
+                             [storeName]="Stores.RECIPES">
+                      <ng-template let-flow="flow" let-row lgImportRowTpl>
+                          <span>{{ row?.name }}</span>
+                      </ng-template>
+                  </lg-import>
+              </lg-gap-row>
+
+              <lg-selection-zone #selectionZone>
+                  @for (category of recipes();track category?.category) {
+                      <lg-title [level]="3">
+                          {{ category?.category || 'Uncategorized' }}
                       </lg-title>
-                  </lg-gap-row>
-              }
-          </lg-selection-zone>
-      </lg-container>
+
+                      <lg-card-list [mode]="selectionZone.selectionMode()"
+                                    (onSelected)="selectionZone.putSelected($event)"
+                                    [selectAll]="selectionZone.selectAll()"
+                                    [deselectAll]="selectionZone.deselectAll()">
+                          @for (recipe of category.recipes;track $index;let i = $index) {
+                              <ng-template lgCardListItem [uuid]="recipe.uuid">
+                                  <lg-gap-row [center]="true">
+                                      <div class="expand">
+                                          <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                                      </div>
+                                      <lg-button [style]="'primary'"
+                                                 [size]="'small'"
+                                                 [link]="'/recipes/calculate/' + recipe.uuid"
+                                                 [flat]="true">
+                                          Calculate
+                                      </lg-button>
+                                      <lg-button [style]="'danger'"
+                                                 [size]="'small'"
+                                                 [icon]="true"
+                                                 (click)="deleteRecipe(recipe)">
+                                          <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                    fontIcon="close"></mat-icon>
+                                      </lg-button>
+                                  </lg-gap-row>
+                              </ng-template>
+                          }
+                      </lg-card-list>
+                  } @empty {
+                      <lg-gap-row [center]="true">
+                          <lg-title [level]="5">
+                              No recipes found
+                          </lg-title>
+                      </lg-gap-row>
+                  }
+              </lg-selection-zone>
+          </lg-container>
+      </lg-fade-in>
   `,
   imports: [
     GapRowComponent,
@@ -108,7 +111,8 @@ import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
     CardListItemDirective,
     ImportComponent,
     ImportRowTplDirective,
-    SelectionZoneComponent
+    SelectionZoneComponent,
+    FadeInComponent
   ],
   styles: [
     `:host {

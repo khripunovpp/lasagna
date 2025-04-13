@@ -8,6 +8,7 @@ import {CategoryProductsRepository} from './service/repositories/category-produc
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideHttpClient} from '@angular/common/http';
 import {CategoryRecipesRepository} from './service/repositories/category-recipes-repository.service';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHotToastConfig(),
     provideHttpClient(),
+    provideAnimationsAsync(),
 
     provideAppInitializer(() => {
       const categoryRepository = inject(CategoryProductsRepository);

@@ -6,6 +6,7 @@ import {AddCategoryFormComponent} from './add-category-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {GapRowComponent} from '../../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../../ui/layout/button.component';
+import {FadeInComponent} from '../../../ui/fade-in.component';
 
 @Component({
   selector: 'lg-add-category',
@@ -17,23 +18,26 @@ import {ButtonComponent} from '../../../ui/layout/button.component';
     AddCategoryFormComponent,
     GapRowComponent,
     ButtonComponent,
+    FadeInComponent,
   ],
   template: `
-      <lg-container>
-          <lg-gap-row [center]="true">
-              <lg-title>{{ uuid() ? 'Edit' : 'Add' }} product category</lg-title>
+      <lg-fade-in>
+          <lg-container>
+              <lg-gap-row [center]="true">
+                  <lg-title>{{ uuid() ? 'Edit' : 'Add' }} product category</lg-title>
 
-              <lg-button [flat]="true"
-                         [link]="'/settings/categories/products'"
-                         [size]="'small'"
-                         [style]="'warning'">
-                  Back to list
-              </lg-button>
-          </lg-gap-row>
-          <lg-card>
-              <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>
-          </lg-card>
-      </lg-container>
+                  <lg-button [flat]="true"
+                             [link]="'/settings/categories/products'"
+                             [size]="'small'"
+                             [style]="'warning'">
+                      Back to list
+                  </lg-button>
+              </lg-gap-row>
+              <lg-card>
+                  <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>
+              </lg-card>
+          </lg-container>
+      </lg-fade-in>
   `,
   styles: [
     `
