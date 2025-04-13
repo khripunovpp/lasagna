@@ -13,6 +13,12 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
           <span class="lg-checkbox__mark">
               @if (customMark()) {
                   {{ customMark() }}
+              } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                       viewBox="0 0 24 24">
+                      <path fill="currentColor"
+                            d="M9.5 16.5l-4.25-4.25 1.4-1.4L9.5 13.7l7.35-7.35 1.4 1.4z"/>
+                  </svg>
               }
           </span>
 
