@@ -1,4 +1,4 @@
-import {Component, input, model, output, viewChild, ViewChild} from '@angular/core';
+import {Component, contentChild, contentChildren, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
@@ -7,11 +7,12 @@ import {Stores} from '../../../service/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialog/dialog.component';
-import {AsyncPipe, NgClass} from '@angular/common';
+import {AsyncPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {GapRowComponent} from '../layout/gap-row.component';
 import {GapColumnComponent} from '../layout/gap-column.component';
 import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
+import {ImportRowTplDirective} from './import-row-tpl.directive';
 
 @Component({
   selector: 'lg-import',
@@ -24,8 +25,9 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
     GapRowComponent,
     GapColumnComponent,
     FormsModule,
-    NgClass
-],
+    NgClass,
+    NgTemplateOutlet
+  ],
   template: `
       <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
           <lg-button [flat]="true"
@@ -61,10 +63,9 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
                                           Add
                                       }
 
-                                      <span>{{ row.name }}</span>
-                                      <span>{{ row.amount }}gr for {{ row.price }}</span>
-                                      @if (row.source) {
-                                          <span>from {{ row.source }}</span>
+                                      @if (rowTemplate()) {
+                                          <ng-container
+                                                  *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
                                       }
 
                                   </div>
@@ -79,11 +80,9 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
                                                  [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
                                                  type="checkbox">
                                           <span>{{ rowsToSkip[row.name] ? 'Skip' : 'Duplicates' }}</span>
-                                          <span>{{ (duplicates[row.uuid] || duplicates[row.name])?.name }}</span>
-                                          <span>{{ (duplicates[row.uuid] || duplicates[row.name])?.amount }} gr
-                                              for {{ (duplicates[row.uuid] || duplicates[row.name])?.price }}</span>
-                                          @if ((duplicates[row.uuid] || duplicates[row.name])?.source) {
-                                              <span>from {{ (duplicates[row.uuid] || duplicates[row.name])?.source }}</span>
+                                          @if (rowTemplate()) {
+                                              <ng-container
+                                                      *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
                                           }
                                       </div>
                                   }
@@ -171,6 +170,7 @@ export class ImportComponent {
   schema = input<ZodObject<any>>();
   skipAllDuplicates = model<boolean>(false);
   replaceAll = model<boolean>(false);
+  rowTemplate = contentChild(ImportRowTplDirective);
   analizeSubject = new Subject<any>();
   dataSubject = new Subject<any>();
   data$: Observable<any[]> = this.dataSubject.asObservable().pipe(
