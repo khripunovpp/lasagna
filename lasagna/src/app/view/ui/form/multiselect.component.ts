@@ -139,10 +139,8 @@ export class MultiselectComponent
   }
 
   writeValue(value: unknown): void {
-    console.log('writeValue', value);
     this.change(value);
     this.selectComponent()!.searchTerm = '';
-    console.log(this.selectComponent())
   }
 
   change(value: unknown) {

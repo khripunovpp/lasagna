@@ -220,7 +220,6 @@ export class AddRecipeFormComponent
         if (hasCycledRecipe) {
           this._notificationsService.error('You cannot add a recipe to itself');
         }
-        console.log(values)
       }
     });
   }

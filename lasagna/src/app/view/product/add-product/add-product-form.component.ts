@@ -138,8 +138,6 @@ export class AddProductFormComponent
       this.form.reset(this._defFormValue);
       this._notificationsService.success('Product added');
       this._loadUsingHistory();
-
-      console.log('form', this.form.value);
     });
   }
 
