@@ -13,17 +13,28 @@ export class TransferDataService {
   ) {
   }
 
-  exportTable(
+  async exportTable(
     source: Stores,
     fileType: 'csv' | 'json' = 'csv',
+    options: { selected?: string[] } = {},
   ) {
-    return this._indexDbService.getAll(source).then(data => {
-      if (fileType === 'json') {
-        this._csvReaderService.saveToJSONFile(data, this._getFileName(source, fileType));
-        return;
-      }
-      this._csvReaderService.saveToCSVFile(data, this._getFileName(source, fileType));
-    });
+    let data: any[] = [];
+    if (options.selected?.length) {
+      data = await this._indexDbService.getMany(source, options.selected);
+    } else {
+      data = await this._indexDbService.getAll(source);
+    }
+    if (fileType === 'json') {
+      this._csvReaderService.saveToJSONFile(data, this._getFileName(source, fileType));
+      return;
+    }
+    this._csvReaderService.saveToCSVFile(data, this._getFileName(source, fileType));
+  }
+
+  makeCsv(
+    data: any[],
+  ) {
+    return this._csvReaderService.makeCsv(data);
   }
 
   private _getFileName(
@@ -32,11 +43,5 @@ export class TransferDataService {
   ) {
     const date = new Date().toISOString();
     return `${source}_export_${date}.${fileType}`;
-  }
-
-  makeCsv(
-    data: any[],
-  ) {
-    return this._csvReaderService.makeCsv(data);
   }
 }

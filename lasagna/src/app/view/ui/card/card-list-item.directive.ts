@@ -1,4 +1,4 @@
-import {Directive, TemplateRef} from '@angular/core';
+import {Directive, input, TemplateRef} from '@angular/core';
 
 @Directive({
   selector: '[lgCardListItem]',
@@ -9,4 +9,6 @@ export class CardListItemDirective {
     public template: TemplateRef<any>
   ) {
   }
+
+  uuid = input<string>();
 }

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, model} from '@angular/core';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
@@ -18,6 +18,7 @@ import {RecipeDbInputScheme} from '../../../schemas/recipe.scema';
 import {TransferDataService} from '../../../service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-recipes-list.token';
+import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
 
 
 @Component({
@@ -37,7 +38,7 @@ import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-reci
                   Add
               </lg-button>
 
-              <lg-button (click)="exportRecipes()"
+              <lg-button (click)="exportRecipes(selectionZone.selected())"
                          [flat]="true"
                          [size]="'small'"
                          [style]="'info'">
@@ -53,42 +54,47 @@ import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-reci
               </lg-import>
           </lg-gap-row>
 
-          @for (category of recipes();track category?.category) {
-              <lg-title [level]="3">
-                  {{ category?.category || 'Uncategorized' }}
-              </lg-title>
-
-              <lg-card-list>
-                  @for (recipe of category.recipes;track $index;let i = $index) {
-                      <ng-template lgCardListItem>
-                          <lg-gap-row [center]="true">
-                              <div class="expand">
-                                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
-                              </div>
-                              <lg-button [style]="'primary'"
-                                         [size]="'small'"
-                                         [link]="'/recipes/calculate/' + recipe.uuid"
-                                         [flat]="true">
-                                  Calculate
-                              </lg-button>
-                              <lg-button [style]="'danger'"
-                                         [size]="'small'"
-                                         [icon]="true"
-                                         (click)="deleteRecipe(recipe)">
-                                  <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                            fontIcon="close"></mat-icon>
-                              </lg-button>
-                          </lg-gap-row>
-                      </ng-template>
-                  }
-              </lg-card-list>
-          } @empty {
-              <lg-gap-row [center]="true">
-                  <lg-title [level]="5">
-                      No recipes found
+          <lg-selection-zone #selectionZone>
+              @for (category of recipes();track category?.category) {
+                  <lg-title [level]="3">
+                      {{ category?.category || 'Uncategorized' }}
                   </lg-title>
-              </lg-gap-row>
-          }
+
+                  <lg-card-list [mode]="selectionZone.selectionMode()"
+                                (onSelected)="selectionZone.putSelected($event)"
+                                [selectAll]="selectionZone.selectAll()"
+                                [deselectAll]="selectionZone.deselectAll()">
+                      @for (recipe of category.recipes;track $index;let i = $index) {
+                          <ng-template lgCardListItem [uuid]="recipe.uuid">
+                              <lg-gap-row [center]="true">
+                                  <div class="expand">
+                                      <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                                  </div>
+                                  <lg-button [style]="'primary'"
+                                             [size]="'small'"
+                                             [link]="'/recipes/calculate/' + recipe.uuid"
+                                             [flat]="true">
+                                      Calculate
+                                  </lg-button>
+                                  <lg-button [style]="'danger'"
+                                             [size]="'small'"
+                                             [icon]="true"
+                                             (click)="deleteRecipe(recipe)">
+                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                fontIcon="close"></mat-icon>
+                                  </lg-button>
+                              </lg-gap-row>
+                          </ng-template>
+                      }
+                  </lg-card-list>
+              } @empty {
+                  <lg-gap-row [center]="true">
+                      <lg-title [level]="5">
+                          No recipes found
+                      </lg-title>
+                  </lg-gap-row>
+              }
+          </lg-selection-zone>
       </lg-container>
   `,
   imports: [
@@ -101,7 +107,8 @@ import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-reci
     CardListComponent,
     CardListItemDirective,
     ImportComponent,
-    ImportRowTplDirective
+    ImportRowTplDirective,
+    SelectionZoneComponent
   ],
   styles: [
     `:host {
@@ -139,7 +146,11 @@ export class RecipesListComponent {
     this._recipesRepository.loadRecipes();
   }
 
-  exportRecipes() {
-    this._transferDataService.exportTable(Stores.RECIPES, 'json');
+  exportRecipes(
+    selected: Set<string>,
+  ) {
+    this._transferDataService.exportTable(Stores.RECIPES, 'json',{
+      selected: Array.from(selected),
+    });
   }
 }
