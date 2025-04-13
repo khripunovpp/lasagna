@@ -1,19 +1,22 @@
-<lg-container>
-  <lg-gap-row [center]="true">
-    <lg-title>Settings</lg-title>
-  </lg-gap-row>
+<lg-fade-in>
+  <lg-container>
+    <lg-gap-row [center]="true">
+      <lg-title>Settings</lg-title>
+    </lg-gap-row>
 
-  <lg-gap-column>
-    <a routerLink="/settings/categories/products" routerLinkActive="active">
-      <lg-card [center]="true">
-        Products categories
-      </lg-card>
-    </a>
+    <lg-gap-column>
+      <a routerLink="/settings/categories/products" routerLinkActive="active">
+        <lg-card [center]="true">
+          Products categories
+        </lg-card>
+      </a>
 
-     <a routerLink="/settings/categories/recipes" routerLinkActive="active">
-      <lg-card [center]="true">
-        Recipes categories
-      </lg-card>
-    </a>
-  </lg-gap-column>
-</lg-container>
+      <a routerLink="/settings/categories/recipes" routerLinkActive="active">
+        <lg-card [center]="true">
+          Recipes categories
+        </lg-card>
+      </a>
+    </lg-gap-column>
+  </lg-container>
+</lg-fade-in>
+

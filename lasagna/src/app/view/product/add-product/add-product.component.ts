@@ -6,6 +6,7 @@ import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {FadeInComponent} from '../../ui/fade-in.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -16,26 +17,30 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
     TitleComponent,
     AddProductFormComponent,
     ButtonComponent,
-    GapRowComponent
+    GapRowComponent,
+    FadeInComponent
   ],
   template: `
-      <lg-container>
-          <lg-gap-row [center]="true">
-              <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Product</lg-title>
+
+      <lg-fade-in>
+          <lg-container>
+              <lg-gap-row [center]="true">
+                  <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Product</lg-title>
 
 
-              <lg-button [flat]="true"
-                         [link]="'/products'"
-                         [size]="'small'"
-                         [style]="'warning'">
-                  Back to list
-              </lg-button>
-          </lg-gap-row>
+                  <lg-button [flat]="true"
+                             [link]="'/products'"
+                             [size]="'small'"
+                             [style]="'warning'">
+                      Back to list
+                  </lg-button>
+              </lg-gap-row>
 
-          <lg-card>
-              <lg-add-product-form [uuid]="uuid()"></lg-add-product-form>
-          </lg-card>
-      </lg-container>
+              <lg-card>
+                  <lg-add-product-form [uuid]="uuid()"></lg-add-product-form>
+              </lg-card>
+          </lg-container>
+      </lg-fade-in>
   `,
   styles: [
     `

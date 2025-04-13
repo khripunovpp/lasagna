@@ -3,6 +3,7 @@ import {ContainerComponent} from '../ui/layout/container/container.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {CardComponent} from '../ui/card/card.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
+import {FadeInComponent} from '../ui/fade-in.component';
 
 @Component({
   selector: 'app-application',
@@ -15,6 +16,7 @@ import {TitleComponent} from '../ui/layout/title/title.component';
     RouterLinkActive,
     CardComponent,
     TitleComponent,
+    FadeInComponent,
   ]
 })
 export class ApplicationComponent {

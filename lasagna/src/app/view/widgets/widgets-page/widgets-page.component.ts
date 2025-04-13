@@ -8,29 +8,31 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardComponent} from '../../ui/card/card.component';
 
 import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
+import {FadeInComponent} from '../../ui/fade-in.component';
 
 @Component({
   selector: 'lg-widgets-page',
   standalone: true,
   template: `
-      <lg-container>
-          <lg-gap-row [center]="true">
-              <lg-title>
-                  Widgets
-              </lg-title>
-          </lg-gap-row>
+      <lg-fade-in>
+          <lg-container>
+              <lg-gap-row [center]="true">
+                  <lg-title>
+                      Widgets
+                  </lg-title>
+              </lg-gap-row>
 
-          <lg-card>
-              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
-          </lg-card>
-          <lg-card>
-              <lg-eggs-widget></lg-eggs-widget>
-          </lg-card>
-          <!--          <lg-card>-->
-          <!--              <lg-jelly-widget></lg-jelly-widget>-->
-          <!--          </lg-card>-->
-      </lg-container>
-
+              <lg-card>
+                  <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
+              </lg-card>
+              <lg-card>
+                  <lg-eggs-widget></lg-eggs-widget>
+              </lg-card>
+              <!--          <lg-card>-->
+              <!--              <lg-jelly-widget></lg-jelly-widget>-->
+              <!--          </lg-card>-->
+          </lg-container>
+      </lg-fade-in>
   `,
   imports: [
     EggsWidgetComponent,
@@ -38,8 +40,9 @@ import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.com
     GapRowComponent,
     TitleComponent,
     CardComponent,
-    BarcodeSeekerWidgetComponent
-]
+    BarcodeSeekerWidgetComponent,
+    FadeInComponent
+  ]
 })
 export class WidgetsPageComponent {
 }
