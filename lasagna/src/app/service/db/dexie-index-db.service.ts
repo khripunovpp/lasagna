@@ -47,7 +47,7 @@ export class DexieIndexDbService extends Dexie {
 
   async filter(storeKey: Stores, indexField: string, value: string): Promise<any[]> {
     // @ts-ignore
-    return (this[storeKey] as Table<any>).filter((item: any) => item[indexField].toLowerCase().includes(value.toLowerCase())).toArray();
+    return (this[storeKey] as Table<any>).filter((item: any) => item[indexField]?.toLowerCase().includes(value.toLowerCase())).toArray();
   }
 
   async getOne(storeKey: Stores, uuid: string): Promise<any> {

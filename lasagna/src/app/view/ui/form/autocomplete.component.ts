@@ -18,6 +18,7 @@ import {
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
+import {MultiselectItem} from './multiselect.component';
 
 
 export interface autocompleteItem {
@@ -112,6 +113,10 @@ export interface autocompleteItem {
         .ng-arrow-wrapper {
           display: none;
         }
+
+        .ng-clear-wrapper {
+          display: none;
+        }
       }
 
     `
@@ -133,6 +138,7 @@ export class AutocompleteComponent
   }
 
 
+  noLoad = input<boolean>(false);
   resource = input<string>('');
   key = input<string>('');
   strict = input<boolean>(false);
@@ -151,19 +157,33 @@ export class AutocompleteComponent
   onTouched: () => void = () => {
   };
 
-  searchFn = (term: string, item: autocompleteItem) => {
+  searchFn = (term: string, item: MultiselectItem) => {
     const val = item as any;
-    return val.name?.toLowerCase().includes(term.toLowerCase())
+    const res = val?.toLowerCase()?.includes(term.toLowerCase())
+    console.log('searchFn',{
+      term,
+      val,
+      res
+    })
+    return res;
   }
 
   compareWith = (a: autocompleteItem, b: autocompleteItem) => {
     const valA = a as any;
     const valB = b as any;
 
-    return valA?.uuid === valB
-      || valA === valB
+    const res = valA?.uuid === valB?.toLowerCase()
+      || valA?.toLowerCase() === valB?.toLowerCase()
       || valA?.uuid === valB?.uuid
-      || valA === valB?.uuid;
+      || valA?.toLowerCase() === valB?.uuid;
+
+    console.log('compareWith',{
+      valA,
+      valB,
+      res
+    })
+
+    return res;
   }
 
   writeValue(value: unknown): void {
@@ -199,10 +219,13 @@ export class AutocompleteComponent
       term: string
       items: unknown[]
     }) {
+    if (!this.noLoad()) {
+
     this._onSearch$.next(event);
+    }
     this.selectComponent()?.selectTag();
-    this.loadedList.set([]);
     this.selectComponent()!.searchTerm = this._capitalizeFirstLetter(event.term);
+    this.loadedList.set([]);
   }
 
   ngOnInit() {
@@ -220,8 +243,12 @@ export class AutocompleteComponent
       }),
     ).subscribe(items => {
       this.loadedList.set(items as any);
+      if (this.initialList().length) return;
+      this.initialList.set(items as any);
     });
   }
+
+  initialList = signal<unknown[]>([]);
 
   reload() {
     // return this._selectResourcesService.load([this.resource()]);

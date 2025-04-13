@@ -39,17 +39,21 @@
     <lg-gap-column>
       <lg-control label="Source">
 
-<!--        <lg-input #sourceInput-->
-<!--                  [placeholder]="'Where do you buy it?'"-->
-<!--                  formControlName="source"></lg-input>-->
-                <lg-multiselect #sourceInput
-                                [resource]="'sources'"
-                                formControlName="source"></lg-multiselect>
+        <!--        <lg-input #sourceInput-->
+        <!--                  [placeholder]="'Where do you buy it?'"-->
+        <!--                  formControlName="source"></lg-input>-->
+<!--        <lg-multiselect #sourceInput-->
+<!--                        [resource]="'sources'"-->
+<!--                        formControlName="source"></lg-multiselect>-->
+
+        <lg-autocomplete [resource]="'sources'"
+                         [noLoad]="true"
+                         formControlName="source"></lg-autocomplete>
       </lg-control>
 
-<!--      <div [hidden]="!topSources().length">-->
-<!--        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>-->
-<!--      </div>-->
+      <!--      <div [hidden]="!topSources().length">-->
+      <!--        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>-->
+      <!--      </div>-->
     </lg-gap-column>
 
     <lg-gap-column>
@@ -65,11 +69,11 @@
     </lg-gap-column>
 
     @if (uuid()) {
-      <lg-button (click)="editProduct(value)">
+      <lg-button lgShrink (click)="editProduct(value)">
         Edit Product
       </lg-button>
     } @else {
-      <lg-button (click)="addProduct(value)">
+      <lg-button lgShrink (click)="addProduct(value)">
         Add Product
       </lg-button>
     }
