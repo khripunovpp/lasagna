@@ -27,7 +27,7 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
     NgClass
 ],
   template: `
-      <lg-upload (filesSelected)="onFileSelected($event)">
+      <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
           <lg-button [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
@@ -107,6 +107,11 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
               </lg-gap-row>
 
               <lg-gap-row [center]="true">
+                  <lg-button (click)="onClose()"
+                             [size]="'small'"
+                             [style]="'danger'">
+                      Close
+                  </lg-button>
                   <lg-button (click)="onConfirm()"
                              [size]="'small'"
                              [style]="'success'">
@@ -215,6 +220,11 @@ export class ImportComponent {
     this.dialog.close();
   }
 
+  onClose() {
+    this.clear();
+    this.dialog.close();
+  }
+
   clear() {
     this.upload()!.clear();
     this.rowsToAdd = {};
@@ -260,7 +270,7 @@ export class ImportComponent {
 
   onFileSelected(file: File[]) {
     this.dialog.open();
-    this._csvReaderService.readFromFile(file[0]).then(async (data) => {
+    this._csvReaderService.readFromJSONFile(file[0]).then(async (data) => {
       for (const item of data) {
         const dataValidated = this.schema()?.safeParse(item);
         if (!dataValidated?.success) {

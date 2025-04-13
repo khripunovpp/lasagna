@@ -14,11 +14,24 @@ export class TransferDataService {
   }
 
   exportTable(
-    source: Stores
+    source: Stores,
+    fileType: 'csv' | 'json' = 'csv',
   ) {
     return this._indexDbService.getAll(source).then(data => {
-      this._csvReaderService.saveToFile(data, `${source}_export_${new Date().toISOString()}.csv`);
+      if (fileType === 'json') {
+        this._csvReaderService.saveToJSONFile(data, this._getFileName(source, fileType));
+        return;
+      }
+      this._csvReaderService.saveToCSVFile(data, this._getFileName(source, fileType));
     });
+  }
+
+  private _getFileName(
+    source: Stores,
+    fileType: 'csv' | 'json',
+  ) {
+    const date = new Date().toISOString();
+    return `${source}_export_${date}.${fileType}`;
   }
 
   makeCsv(

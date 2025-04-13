@@ -7,7 +7,7 @@ export class CsvReaderService {
   constructor() {
   }
 
-  readFromFile(file: File): Promise<any[]> {
+  readFromCSVFile(file: File): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -16,6 +16,25 @@ export class CsvReaderService {
         const [first, ...others] = rows;
         const obj = this.arrayToObjects(others, first);
         resolve(obj);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  readFromJSONFile(file: File): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const result = reader.result as string;
+          const json = JSON.parse(result);
+          resolve(json);
+        } catch (error) {
+          reject(error);
+        }
       };
       reader.onerror = () => {
         reject(reader.error);
@@ -48,12 +67,25 @@ export class CsvReaderService {
     return csv;
   }
 
-  saveToFile(data: any[], filename: string) {
+  saveToCSVFile(data: any[], filename: string) {
     const csv = this.makeCsv(data);
     const blob = new Blob([csv], {type: 'text/csv'});
     const url = URL.createObjectURL(blob);
 
-    const link =document.createElement('a');
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  saveToJSONFile(data: any[], filename: string) {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
     document.body.appendChild(link);
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
