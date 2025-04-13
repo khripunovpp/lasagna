@@ -49,8 +49,10 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         transition: all 0.2s ease-in-out;
       }
 
-      .lg-checkbox__mark:hover {
-        opacity: 1;
+      @media (hover: hover) {
+        .lg-checkbox__mark:hover {
+          opacity: 1;
+        }
       }
 
       .checkbox {
