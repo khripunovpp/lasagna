@@ -146,6 +146,7 @@ export class AutocompleteComponent
   onSelected = output<unknown>();
   selectComponent = viewChild(NgSelectComponent);
   value?: unknown = null
+  initialList = signal<unknown[]>([]);
   private _onSearch$ = new Subject<{
     term: string
     items: unknown[]
@@ -159,31 +160,41 @@ export class AutocompleteComponent
 
   searchFn = (term: string, item: MultiselectItem) => {
     const val = item as any;
-    const res = val?.toLowerCase()?.includes(term.toLowerCase())
-    console.log('searchFn',{
-      term,
-      val,
-      res
-    })
-    return res;
+    if (typeof val === 'string') {
+      return val.toLowerCase().includes(term?.toLowerCase() ?? '');
+    }
+    return val.name?.toLowerCase().includes(term?.toLowerCase() ?? '')
   }
 
   compareWith = (a: autocompleteItem, b: autocompleteItem) => {
     const valA = a as any;
     const valB = b as any;
 
-    const res = valA?.uuid === valB?.toLowerCase()
-      || valA?.toLowerCase() === valB?.toLowerCase()
-      || valA?.uuid === valB?.uuid
-      || valA?.toLowerCase() === valB?.uuid;
-
-    console.log('compareWith',{
+    console.log({
       valA,
-      valB,
-      res
+      valB
     })
 
-    return res;
+    if (!a || !b) {
+      return false;
+    }
+
+    if (typeof valA !== 'string' && typeof valB !== 'string') {
+      return valA?.name === valB?.name
+        || valA?.uuid === valB?.uuid;
+    }
+
+    if (typeof valA === 'string' && typeof valB !== 'string') {
+      return valA === valB?.name
+        || valA === valB?.uuid;
+    }
+
+    if (typeof valA !== 'string' && typeof valB === 'string') {
+      return valA?.name === valB
+        || valA?.uuid === valB;
+    }
+
+    return false;
   }
 
   writeValue(value: unknown): void {
@@ -209,6 +220,7 @@ export class AutocompleteComponent
   }
 
   onChangeSelect(value: unknown) {
+    debugger
     const val = typeof value === 'string' ? value : (value as any)?.[this.key()];
     this.change(val);
     this.onSelected.emit(val);
@@ -219,13 +231,22 @@ export class AutocompleteComponent
       term: string
       items: unknown[]
     }) {
+    if (!event.term) {
+      this.writeValue('');
+      return
+    }
     if (!this.noLoad()) {
 
-    this._onSearch$.next(event);
+      this._onSearch$.next(event);
     }
+    debugger
     this.selectComponent()?.selectTag();
-    this.selectComponent()!.searchTerm = this._capitalizeFirstLetter(event.term);
-    this.loadedList.set([]);
+    this.selectComponent()!.searchTerm = event.term ? this._capitalizeFirstLetter(event.term) : '';
+    if (this.noLoad()) {
+      this.loadedList.set(event.items?.length ? event.items as any : this.initialList());
+    } else {
+      this.loadedList.set([]);
+    }
   }
 
   ngOnInit() {
@@ -247,8 +268,6 @@ export class AutocompleteComponent
       this.initialList.set(items as any);
     });
   }
-
-  initialList = signal<unknown[]>([]);
 
   reload() {
     // return this._selectResourcesService.load([this.resource()]);
