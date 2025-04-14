@@ -24,6 +24,7 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-products-list.token';
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
+import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -31,49 +32,48 @@ export type ProductList = Record<string, Product[]>;
   selector: 'lg-product-list',
   standalone: true,
   template: `
+      <lg-controls-bar>
+          <lg-button [flat]="true"
+                     [link]="'/products/add'"
+                     [size]="'small'"
+                     [style]="'primary'">
+              Add
+          </lg-button>
+
+          <lg-button (click)="exportProducts(selectionZone.selected())"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'info'">
+              Export
+          </lg-button>
+
+          <lg-import (onDone)="loadProducts()"
+                     [schema]="ProductDbInputScheme"
+                     [storeName]="Stores.PRODUCTS">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                  @if (flow === 'new') {
+                      <span>{{ row.name }}</span>
+                      <span>{{ row.amount }}gr for {{ row.price }}</span>
+                      @if (row.source) {
+                          <span>from {{ row.source }}</span>
+                      }
+                  } @else {
+                      <span>{{ row?.name }}</span>
+                      <span>{{ row?.amount }} gr
+                                              for {{ row?.price }}</span>
+                      @if (row?.source) {
+                          <span>from {{ row?.source }}</span>
+                      }
+                  }
+              </ng-template>
+          </lg-import>
+      </lg-controls-bar>
 
       <lg-fade-in>
           <lg-container>
               <lg-title>
                   Products
               </lg-title>
-
-              <lg-gap-row [center]="true">
-                  <lg-button [flat]="true"
-                             [link]="'/products/add'"
-                             [size]="'small'"
-                             [style]="'primary'">
-                      Add
-                  </lg-button>
-
-                  <lg-button (click)="exportProducts(selectionZone.selected())"
-                             [flat]="true"
-                             [size]="'small'"
-                             [style]="'info'">
-                      Export
-                  </lg-button>
-
-                  <lg-import (onDone)="loadProducts()"
-                             [schema]="ProductDbInputScheme"
-                             [storeName]="Stores.PRODUCTS">
-                      <ng-template let-flow="flow" let-row lgImportRowTpl>
-                          @if (flow === 'new') {
-                              <span>{{ row.name }}</span>
-                              <span>{{ row.amount }}gr for {{ row.price }}</span>
-                              @if (row.source) {
-                                  <span>from {{ row.source }}</span>
-                              }
-                          } @else {
-                              <span>{{ row?.name }}</span>
-                              <span>{{ row?.amount }} gr
-                                              for {{ row?.price }}</span>
-                              @if (row?.source) {
-                                  <span>from {{ row?.source }}</span>
-                              }
-                          }
-                      </ng-template>
-                  </lg-import>
-              </lg-gap-row>
 
               <lg-selection-zone #selectionZone>
                   @for (category of products();track category?.category) {
@@ -140,7 +140,8 @@ export type ProductList = Record<string, Product[]>;
     RouterLink,
     ImportRowTplDirective,
     SelectionZoneComponent,
-    FadeInComponent
+    FadeInComponent,
+    ControlsBarComponent
   ],
   styles: [
     `:host {

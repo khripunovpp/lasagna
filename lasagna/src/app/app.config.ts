@@ -1,14 +1,21 @@
-import {ApplicationConfig, inject, isDevMode, provideAppInitializer, provideZoneChangeDetection} from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  isDevMode,
+  provideAppInitializer,
+  provideZoneChangeDetection
+} from '@angular/core';
 import {provideRouter} from '@angular/router';
-
 import {routes} from './app.routes';
-import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
+import {HammerModule, provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
 import {CategoryProductsRepository} from './service/repositories/category-products-repository.service';
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideHttpClient} from '@angular/common/http';
 import {CategoryRecipesRepository} from './service/repositories/category-recipes-repository.service';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import 'hammerjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +38,7 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
+
+    importProvidersFrom(HammerModule),
   ]
 };

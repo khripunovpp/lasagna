@@ -84,6 +84,7 @@ import {MatIcon} from '@angular/material/icon';
       align-items: center;
       justify-content: center;
       scroll-snap-align: center;
+      transition: all 0.3s ease-in-out;
     }
 
     .lg-header__link.route-active {
