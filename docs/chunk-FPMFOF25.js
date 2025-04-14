@@ -1,0 +1,1 @@
+import{jb as r,vb as n}from"./chunk-46OIECST.js";var s=class t{constructor(){}flex="0 1 auto";alignSelf="flex-start";static \u0275fac=function(i){return new(i||t)};static \u0275dir=r({type:t,selectors:[["","lgShrink",""]],hostVars:4,hostBindings:function(i,e){i&2&&n("flex",e.flex)("align-self",e.alignSelf)}})};export{s as a};
