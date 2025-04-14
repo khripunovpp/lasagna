@@ -43,7 +43,10 @@ import {CardComponent} from '../card/card.component';
     }
 
     .dialog__wrap {
-      padding: 32px;
+      padding: 96px 32px 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .dialog__box {
