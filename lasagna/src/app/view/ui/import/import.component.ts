@@ -13,6 +13,7 @@ import {GapColumnComponent} from '../layout/gap-column.component';
 import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
+import {PortalComponent} from '../layout/portal.component';
 
 @Component({
   selector: 'lg-import',
@@ -26,7 +27,8 @@ import {ImportRowTplDirective} from './import-row-tpl.directive';
     GapColumnComponent,
     FormsModule,
     NgClass,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    PortalComponent
   ],
   template: `
       <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
@@ -37,88 +39,95 @@ import {ImportRowTplDirective} from './import-row-tpl.directive';
           </lg-button>
       </lg-upload>
 
-      <lg-dialog>
-          <lg-gap-column>
-              @if (data$ | async;as data) {
-                  @if (analize$ | async;as duplicates) {
-                      <lg-gap-column [size]="'medium'">
-                          @for (row of data;track row.name + row.uuid;let i = $index) {
-                              <lg-gap-column [size]="'small'">
+      <div #dialog>
+          <lg-dialog>
+              <lg-gap-column>
+                  @if (data$ | async;as data) {
+                      @if (analize$ | async;as duplicates) {
+                          <lg-gap-column [size]="'medium'">
+                              @for (row of data;track row.name + row.uuid;let i = $index) {
+                                  <lg-gap-column [size]="'small'">
 
-                                  <div class="import-row"
-                                       [class.update]="rowsToUpdate[row.name]"
-                                       [class.add]="rowsToAdd[row.name]"
-                                       [class.disabled]="rowsToSkip[row.name]">
-
-                                      @if ((duplicates[row.uuid] || duplicates[row.name])) {
-                                          <input [(ngModel)]="rowsToUpdate[row.name]"
-                                                 [disabled]="rowsToSkip[row.name]"
-                                                 type="checkbox">
-                                          Update
-                                      } @else {
-                                          <input [(ngModel)]="rowsToAdd[row.name]"
-                                                 [disabled]="rowsToSkip[row.name]"
-                                                 checked
-                                                 type="checkbox">
-                                          Add
-                                      }
-
-                                      @if (rowTemplate()) {
-                                          <ng-container
-                                                  *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
-                                      }
-
-                                  </div>
-
-                                  @if ((duplicates[row.uuid] || duplicates[row.name])) {
                                       <div class="import-row"
-                                           [ngClass]="rowsToSkip[row.name] ? 'skip' : 'duplicated'"
-                                           [class.disabled]="rowsToUpdate[row.name]"
-                                           [class.skip]="rowsToUpdate[row.name]"
-                                           style="margin-left: 16px">
-                                          <input [(ngModel)]="rowsToSkip[row.name]"
-                                                 [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
-                                                 type="checkbox">
-                                          <span>{{ rowsToSkip[row.name] ? 'Skip' : 'Duplicates' }}</span>
+                                           [class.update]="rowsToUpdate[row.name]"
+                                           [class.add]="rowsToAdd[row.name]"
+                                           [class.disabled]="rowsToSkip[row.name]">
+
+                                          @if ((duplicates[row.uuid] || duplicates[row.name])) {
+                                              <input [(ngModel)]="rowsToUpdate[row.name]"
+                                                     [disabled]="rowsToSkip[row.name]"
+                                                     type="checkbox">
+                                              Update
+                                          } @else {
+                                              <input [(ngModel)]="rowsToAdd[row.name]"
+                                                     [disabled]="rowsToSkip[row.name]"
+                                                     checked
+                                                     type="checkbox">
+                                              Add
+                                          }
+
                                           @if (rowTemplate()) {
                                               <ng-container
-                                                      *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
+                                                      *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
                                           }
+
                                       </div>
-                                  }
-                              </lg-gap-column>
-                          }
-                      </lg-gap-column>
+
+                                      @if ((duplicates[row.uuid] || duplicates[row.name])) {
+                                          <div class="import-row"
+                                               [ngClass]="rowsToSkip[row.name] ? 'skip' : 'duplicated'"
+                                               [class.disabled]="rowsToUpdate[row.name]"
+                                               [class.skip]="rowsToUpdate[row.name]"
+                                               style="margin-left: 16px">
+                                              <input [(ngModel)]="rowsToSkip[row.name]"
+                                                     [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
+                                                     type="checkbox">
+                                              <span>{{ rowsToSkip[row.name] ? 'Skip' : 'Duplicates' }}</span>
+                                              @if (rowTemplate()) {
+                                                  <ng-container
+                                                          *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
+                                              }
+                                          </div>
+                                      }
+                                  </lg-gap-column>
+                              }
+                          </lg-gap-column>
+                      }
                   }
-              }
 
-              <lg-gap-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
-                  <input (change)="onSkipAllDuplicates()"
-                         [(ngModel)]="skipAllDuplicates"
-                         type="checkbox">
-                  <label>Skip all duplicates</label>
-              </lg-gap-row>
+                  <lg-gap-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
+                      <input (change)="onSkipAllDuplicates()"
+                             [(ngModel)]="skipAllDuplicates"
+                             type="checkbox">
+                      <label>Skip all duplicates</label>
+                  </lg-gap-row>
 
-              <lg-gap-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
-                  <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
-                         type="checkbox">
-                  <label>Replace all with new</label>
-              </lg-gap-row>
+                  <lg-gap-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
+                      <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
+                             type="checkbox">
+                      <label>Replace all with new</label>
+                  </lg-gap-row>
 
-              <lg-gap-row [center]="true">
-                  <lg-button (click)="onClose()"
-                             [size]="'small'"
-                             [style]="'danger'">
-                      Close
-                  </lg-button>
-                  <lg-button (click)="onConfirm()"
-                             [size]="'small'"
-                             [style]="'success'">
-                      Confirm
-                  </lg-button>
-              </lg-gap-row>
-          </lg-gap-column>
-      </lg-dialog>
+                  <lg-gap-row [center]="true">
+                      <lg-button (click)="onClose()"
+                                 [size]="'small'"
+                                 [style]="'danger'">
+                          Close
+                      </lg-button>
+                      <lg-button (click)="onConfirm()"
+                                 [size]="'small'"
+                                 [style]="'success'">
+                          Confirm
+                      </lg-button>
+                  </lg-gap-row>
+              </lg-gap-column>
+          </lg-dialog>
+      </div>
+
+
+      <lg-portal [appendTarget]="'body'" [targetElement]="dialog">
+
+      </lg-portal>
   `,
   styles: [`
     .import-row {
