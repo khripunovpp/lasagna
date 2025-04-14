@@ -48,7 +48,7 @@ import {FadeInComponent} from '../../../ui/fade-in.component';
                                   Edit
                               </lg-button>
                               <lg-button [style]="'danger'"
-                                         [size]="'small'"
+                                         [size]="'tiny'"
                                          [icon]="true"
                                          (click)="deleteCategory(category)">
                                   <mat-icon aria-hidden="false" aria-label="Example home icon"
