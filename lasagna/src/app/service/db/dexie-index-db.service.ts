@@ -28,8 +28,8 @@ export class DexieIndexDbService extends Dexie {
   recipesStore!: Table<any, string>;
   categoryStore!: Table<any, string>;
 
-  async addData(storeKey: Stores, value: any): Promise<string> {
-    const uuid = this.generateUuid();
+  async addData(storeKey: Stores, value: any,customUUID?:string): Promise<string> {
+    const uuid = customUUID || this.generateUuid();
     // @ts-ignore
     await (this[storeKey] as Table<any>).put({...value, uuid});
     return uuid;
