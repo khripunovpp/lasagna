@@ -5,7 +5,7 @@ import {TitleComponent} from '../../../ui/layout/title/title.component';
 import {AddCategoryFormComponent} from './add-category-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {GapRowComponent} from '../../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../../ui/layout/button.component';
+
 import {FadeInComponent} from '../../../ui/fade-in.component';
 
 @Component({
@@ -17,21 +17,13 @@ import {FadeInComponent} from '../../../ui/fade-in.component';
     TitleComponent,
     AddCategoryFormComponent,
     GapRowComponent,
-    ButtonComponent,
-    FadeInComponent,
-  ],
+    FadeInComponent
+],
   template: `
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
                   <lg-title>{{ uuid() ? 'Edit' : 'Add' }} product category</lg-title>
-
-                  <lg-button [flat]="true"
-                             [link]="'/settings/categories/products'"
-                             [size]="'small'"
-                             [style]="'warning'">
-                      Back to list
-                  </lg-button>
               </lg-gap-row>
               <lg-card>
                   <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>

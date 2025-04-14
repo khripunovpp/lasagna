@@ -20,40 +20,43 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-recipes-list.token';
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
+import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 
 
 @Component({
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
+      <lg-controls-bar>
+          <lg-button [flat]="true"
+                     [link]="'/recipes/add'"
+                     [size]="'small'"
+                     [style]="'primary'">
+              Add
+          </lg-button>
+
+          <lg-button (click)="exportRecipes(selectionZone.selected())"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'info'">
+              Export
+          </lg-button>
+
+          <lg-import (onDone)="loadRecipes()"
+                     [schema]="RecipeDbInputScheme"
+                     [storeName]="Stores.RECIPES">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                  <span>{{ row?.name }}</span>
+              </ng-template>
+          </lg-import>
+      </lg-controls-bar>
+
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
                   <lg-title>
                       Recipes
                   </lg-title>
-
-                  <lg-button [flat]="true"
-                             [link]="'/recipes/add'"
-                             [size]="'small'"
-                             [style]="'primary'">
-                      Add
-                  </lg-button>
-
-                  <lg-button (click)="exportRecipes(selectionZone.selected())"
-                             [flat]="true"
-                             [size]="'small'"
-                             [style]="'info'">
-                      Export
-                  </lg-button>
-
-                  <lg-import (onDone)="loadRecipes()"
-                             [schema]="RecipeDbInputScheme"
-                             [storeName]="Stores.RECIPES">
-                      <ng-template let-flow="flow" let-row lgImportRowTpl>
-                          <span>{{ row?.name }}</span>
-                      </ng-template>
-                  </lg-import>
               </lg-gap-row>
 
               <lg-selection-zone #selectionZone>
@@ -112,7 +115,8 @@ import {FadeInComponent} from '../../ui/fade-in.component';
     ImportComponent,
     ImportRowTplDirective,
     SelectionZoneComponent,
-    FadeInComponent
+    FadeInComponent,
+    ControlsBarComponent
   ],
   styles: [
     `:host {

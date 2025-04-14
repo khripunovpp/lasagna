@@ -2,6 +2,7 @@
 }
 
 .app-content {
-  padding-top: calc(var(--header-height) + 44px);
+  --app-content-top-padding: calc(var(--header-height) + 44px);
+  padding-top: var(--app-content-top-padding);
   padding-bottom: 32px;
 }

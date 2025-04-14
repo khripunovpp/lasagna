@@ -36,13 +36,6 @@ import {FadeInComponent} from '../../ui/fade-in.component';
                           Calculate
                       </lg-button>
                   }
-
-                  <lg-button [flat]="true"
-                             [link]="'/recipes'"
-                             [size]="'small'"
-                             [style]="'warning'">
-                      Back to list
-                  </lg-button>
               </lg-gap-row>
 
               <lg-card>
