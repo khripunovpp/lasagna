@@ -25,6 +25,7 @@ import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-pro
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
+import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -33,12 +34,14 @@ export type ProductList = Record<string, Product[]>;
   standalone: true,
   template: `
       <lg-controls-bar>
-          <lg-button [flat]="true"
-                     [link]="'/products/add'"
-                     [size]="'small'"
-                     [style]="'primary'">
-              Add
-          </lg-button>
+          <ng-template lgQuickActionsTpl>
+              <lg-button [icon]="true"
+                         [link]="'/products/add'"
+                         [size]="'medium'"
+                         [style]="'success'">
+                  <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+              </lg-button>
+          </ng-template>
 
           <lg-button (click)="exportProducts(selectionZone.selected())"
                      [flat]="true"
@@ -106,7 +109,7 @@ export type ProductList = Record<string, Product[]>;
                                       </div>
 
                                       <lg-button [style]="'danger'"
-                                                 [size]="'small'"
+                                                 [size]="'tiny'"
                                                  [icon]="true"
                                                  (click)="deleteProduct(product)">
                                           <mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -141,7 +144,8 @@ export type ProductList = Record<string, Product[]>;
     ImportRowTplDirective,
     SelectionZoneComponent,
     FadeInComponent,
-    ControlsBarComponent
+    ControlsBarComponent,
+    QuickActionsTplDirective
   ],
   styles: [
     `:host {

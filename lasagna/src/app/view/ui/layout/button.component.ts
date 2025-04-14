@@ -8,6 +8,7 @@ export type ButtonStyle = 'default' |
   'success' |
   'danger' |
   'warning' |
+  'transcluent' |
   'info'
 
 @Component({
@@ -71,12 +72,14 @@ export type ButtonStyle = 'default' |
         appearance: none;
         display: flex;
         align-items: center;
+        text-decoration: none;
         justify-content: center;
       }
 
       .button:focus {
         outline-color: var(--active-color);
       }
+
       .button.no-radius {
         border-radius: 0;
       }
@@ -169,14 +172,48 @@ export type ButtonStyle = 'default' |
         border-radius: 12px;
       }
 
+      .button.transcluent {
+        backdrop-filter: blur(3px);
+
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+
       .button.icon {
-        padding: 2px;
         border-radius: 50%;
+        padding: 16px;
+
+        &.medium {
+          padding: 10px;
+
+          .mat-icon {
+            font-size: 16px;
+          }
+        }
+
+        &.small {
+          padding: 6px;
+
+          .mat-icon {
+            font-size: 16px;
+          }
+        }
+
+
+        &.tiny {
+          padding: 2px;
+
+          .mat-icon {
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+          }
+        }
+
 
         & .mat-icon {
-          font-size: 10px;
-          width: 16px;
-          height: 16px;
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -197,7 +234,9 @@ export class ButtonComponent {
   style = input<ButtonStyle>('default');
   size = input<
     'default' |
-    'small'
+    'medium' |
+    'small' |
+    'tiny'
   >('default');
   icon = input<boolean>(false);
   flat = input<boolean>(false);

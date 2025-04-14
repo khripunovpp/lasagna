@@ -21,6 +21,7 @@ import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-reci
 import {SelectionZoneComponent} from '../../ui/form/selection-zone.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
+import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 
 
 @Component({
@@ -28,12 +29,14 @@ import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component
   standalone: true,
   template: `
       <lg-controls-bar>
-          <lg-button [flat]="true"
-                     [link]="'/recipes/add'"
-                     [size]="'small'"
-                     [style]="'primary'">
-              Add
-          </lg-button>
+          <ng-template lgQuickActionsTpl>
+              <lg-button [link]="'/recipes/add'"
+                         [icon]="true"
+                         [size]="'medium'"
+                         [style]="'success'">
+                   <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+              </lg-button>
+          </ng-template>
 
           <lg-button (click)="exportRecipes(selectionZone.selected())"
                      [flat]="true"
@@ -82,7 +85,7 @@ import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component
                                           Calculate
                                       </lg-button>
                                       <lg-button [style]="'danger'"
-                                                 [size]="'small'"
+                                                 [size]="'tiny'"
                                                  [icon]="true"
                                                  (click)="deleteRecipe(recipe)">
                                           <mat-icon aria-hidden="false" aria-label="Example home icon"
@@ -116,7 +119,8 @@ import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component
     ImportRowTplDirective,
     SelectionZoneComponent,
     FadeInComponent,
-    ControlsBarComponent
+    ControlsBarComponent,
+    QuickActionsTplDirective
   ],
   styles: [
     `:host {
