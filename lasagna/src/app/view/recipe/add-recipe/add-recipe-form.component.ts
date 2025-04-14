@@ -10,7 +10,7 @@ import {debounceTime, Observable, of} from 'rxjs';
 import {Ingredient, Recipe, RecipeDTO, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {NgClass} from '@angular/common';
+
 import {ActivatedRoute, Router} from '@angular/router';
 import {clearEmpties, flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
@@ -46,13 +46,12 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     NumberInputComponent,
     ControlsRowComponent,
     ExpandDirective,
-    NgClass,
     ParseMathDirective,
     ButtonsGroupComponent,
     ChipsListComponent,
     AutocompleteComponent,
     FormsModule
-  ],
+],
   styles: [
     `
     `

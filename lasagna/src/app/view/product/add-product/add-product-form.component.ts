@@ -22,7 +22,7 @@ import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 
-import {InputComponent} from '../../ui/form/input.component';
+
 import {ShrinkDirective} from '../../directives/shrink.directive';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
@@ -46,9 +46,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    InputComponent,
     ShrinkDirective
-  ],
+],
   styles: [
     `
       lg-eggs-widget {

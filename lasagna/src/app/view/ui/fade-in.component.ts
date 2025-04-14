@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {NgIf} from '@angular/common';
+
 
 @Component({
   selector: 'lg-fade-in',
@@ -22,9 +22,7 @@ import {NgIf} from '@angular/common';
       ])
     ])
   ],
-  imports: [
-    NgIf
-  ],
+  imports: [],
   styles: [`
 
   `]
