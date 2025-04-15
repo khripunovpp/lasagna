@@ -6,6 +6,8 @@ import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
+import {DraftFormsService} from '../services/draft-forms.service';
+import {ProductFormValue} from '../../view/product/add-product/add-product-form.component';
 
 export type ProductUnit = 'gram' | 'portion' | 'piece';
 
@@ -31,6 +33,7 @@ export class ProductsRepository {
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
     private _usingHistoryService: UsingHistoryService,
+    private _draftFormsService: DraftFormsService,
   ) {
   }
 
@@ -120,6 +123,41 @@ export class ProductsRepository {
 
   async getTopSources() {
     return Object.keys(this._usingHistoryService.read('products_sources').top);
+  }
+
+  saveDraftProduct(product: ProductFormValue, uuid?: string) {
+    return this._draftFormsService.setDraftForm<ProductFormValue>(
+      'draft_products',
+      product,
+      uuid?.length ? 'edit' : 'add',
+      uuid ? {
+        uuid: uuid,
+      } : {});
+  }
+
+  updateDraftProduct(key: string, product: ProductFormValue, uuid?: string) {
+    return this._draftFormsService.updateDraftForm<ProductFormValue>(
+      'draft_products',
+      product,
+      key,
+      uuid?.length ? 'edit' : 'add',
+      uuid ? {
+        uuid: uuid,
+      } : {});
+  }
+
+  getDraftProducts(uuid?: string) {
+    const draft = this._draftFormsService.getDraftForms<ProductFormValue>('draft_products');
+    if (uuid && draft?.[uuid]) {
+      return [draft?.[uuid]];
+    }
+    return draft
+      ? Object.values(draft)
+      : [];
+  }
+
+  removeDraftProduct(key: string) {
+    this._draftFormsService.removeDraftForm('draft_products', key);
   }
 
   private _toDbValue(product: unknown) {

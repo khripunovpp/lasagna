@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, effect, OnInit, signal, viewChild, viewChildren} from '@angular/core';
+import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -74,14 +74,9 @@ export class AddRecipeFormComponent
     private _aRoute: ActivatedRoute,
     private _notificationsService: NotificationsService
   ) {
-    this._aRoute.data.pipe(
-      takeUntilDestroyed(),
-    ).subscribe((data) => {
-      this.recipe.set(data['recipe'] || null);
-    });
   }
 
-  recipe = signal<Recipe | null>(null);
+  recipe = input<Recipe | null>(null);
   uuid = injectParams<string>('uuid');
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
@@ -130,25 +125,6 @@ export class AddRecipeFormComponent
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
-  people$: Observable<any[]> = of([
-    {
-      uuid: '5a15b13c36e7a7f00cf0d7cb',
-      name: 'John Doe',
-    },
-    {
-      uuid: '352f3a2c36e7a7f00cf0d7cb',
-      name: 'Alice Smith',
-    },
-    {
-      uuid: '5a15b13c36e7a7f00cf0d7cb',
-      name: 'Bob Johnson',
-    },
-    {
-      uuid: '352f3a2c36e7a7f00cf0d7cb',
-      name: 'Charlie Brown',
-    },
-  ]);
-  selectedPersonId = '5a15b13c36e7a7f00cf0d7cb';
   private recipeEffect = effect(() => {
     if (!this.recipe()) {
       return;
@@ -171,6 +147,8 @@ export class AddRecipeFormComponent
     })
 
     this.form.updateValueAndValidity();
+
+    this.form.markAsPristine();
   });
 
   get ingredients() {
@@ -188,6 +166,24 @@ export class AddRecipeFormComponent
 
   private get _formValid() {
     return this.form.valid && !this.checkCycleRecipe(this.form.value.ingredients as any, this.uuid());
+  }
+
+  resetForm(
+    values?: Recipe
+  ) {
+    this.ingredients.clear();
+    this.form.reset({});
+    this.addIngredient();
+    this._loadUsingHistory();
+    this.form.markAsPristine();
+  }
+
+  validateForm() {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      return false;
+    }
+    return true
   }
 
   async productAdded(
@@ -239,36 +235,6 @@ export class AddRecipeFormComponent
 
   deleteIngredient(index: number) {
     this.ingredients.removeAt(index);
-  }
-
-  addRecipe(
-    values: RecipeFormValue
-  ) {
-    if (!this._formValid) {
-      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
-      return;
-    }
-    this._recipesRepository.addRecipe(this._values).then(() => {
-      this.ingredients.clear();
-      this.form.reset({});
-      this.addIngredient();
-      this._loadUsingHistory();
-      this._notificationsService.success('Recipe added');
-    });
-  }
-
-  editRecipe(
-    values: RecipeFormValue
-  ) {
-    if (!this._formValid) {
-      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
-      return;
-    }
-    this._recipesRepository.editRecipe(this.uuid(), this._values).then(() => {
-      this._notificationsService.success('Recipe edited');
-    }).catch(error => {
-      console.error(error);
-    });
   }
 
   onIngredientSelected(

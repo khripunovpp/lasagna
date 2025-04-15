@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
 import {Stores} from '../const/stores';
 import {migrations} from './migrations';
+import {generateUuid} from '../../helpers/attribute.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   generateUuid(): string {
-    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+    return generateUuid();
   }
 
   async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<void> {
