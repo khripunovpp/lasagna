@@ -39,6 +39,12 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
 
+    provideHotToastConfig({
+      autoClose: true,
+      position: 'bottom-right',
+      dismissible: true,
+    }),
+
     importProvidersFrom(HammerModule),
   ]
 };
