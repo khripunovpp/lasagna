@@ -1,8 +1,8 @@
 <form [formGroup]="form">
   <lg-gap-column>
     <lg-control label="Name">
-      <lg-autocomplete [key]="'name'"
-                       #nameField
+      <lg-autocomplete #nameField
+                       [key]="'name'"
                        [resource]="'products-names'"
                        formControlName="name"></lg-autocomplete>
     </lg-control>
@@ -62,15 +62,5 @@
         <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
       }
     </lg-gap-column>
-
-    @if (uuid()) {
-      <lg-button lgShrink (click)="editProduct(value)">
-        Edit Product
-      </lg-button>
-    } @else {
-      <lg-button lgShrink (click)="addProduct(value)">
-        Add Product
-      </lg-button>
-    }
   </lg-gap-column>
 </form>

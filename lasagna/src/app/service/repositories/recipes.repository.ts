@@ -5,6 +5,7 @@ import {Stores} from '../const/stores';
 import {CategoryRecipe, CategoryRecipesRepository} from './category-recipes-repository.service';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
+import {DraftFormsService} from '../services/draft-forms.service';
 
 export interface Ingredient {
   name?: string
@@ -42,6 +43,7 @@ export class RecipesRepository {
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
     private _categoryRepository: CategoryRecipesRepository,
+    private _draftFormsService: DraftFormsService,
   ) {
   }
 
@@ -87,6 +89,41 @@ export class RecipesRepository {
 
   editRecipe(uuid: string, recipe: RecipeDTO) {
     return this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
+  }
+
+  saveDraftRecipe(recipe: Recipe, uuid?: string) {
+    return this._draftFormsService.setDraftForm<Recipe>(
+      'draft_recipes',
+      recipe,
+      uuid?.length ? 'edit' : 'add',
+      uuid ? {
+        uuid: uuid,
+      } : {});
+  }
+
+  updateDraftRecipe(key: string, product: Recipe, uuid?: string) {
+    return this._draftFormsService.updateDraftForm<Recipe>(
+      'draft_recipes',
+      product,
+      key,
+      uuid?.length ? 'edit' : 'add',
+      uuid ? {
+        uuid: uuid,
+      } : {});
+  }
+
+  getDraftRecipe(uuid?: string) {
+    const draft = this._draftFormsService.getDraftForms<Recipe>('draft_recipes');
+    if (uuid && draft?.[uuid]) {
+      return [draft?.[uuid]];
+    }
+    return draft
+      ? Object.values(draft)
+      : [];
+  }
+
+  removeDraftRecipe(key: string) {
+    this._draftFormsService.removeDraftForm('draft_recipes', key);
   }
 
   deleteRecipe(uuid: string) {
