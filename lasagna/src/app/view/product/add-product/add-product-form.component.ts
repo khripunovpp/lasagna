@@ -137,7 +137,6 @@ export class AddProductFormComponent
     values: ProductFormValue
   ) {
     this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      debugger
       this.form.reset(this._defFormValue);
       this._notificationsService.success('Product added');
       this._loadUsingHistory();
@@ -146,9 +145,8 @@ export class AddProductFormComponent
 
   editProduct(
     values: ProductFormValue
-  ) {      debugger
+  ) {
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-       debugger
       this._notificationsService.success('Product edited');
       this._loadUsingHistory();
     });

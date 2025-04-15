@@ -80,7 +80,7 @@ export class CategoryProductsRepository {
         "Пасты",
         "Соль"
       ].map((name, index) => ({
-        uuid: '' + index,
+        uuid: name,
         name,
       }));
       await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);

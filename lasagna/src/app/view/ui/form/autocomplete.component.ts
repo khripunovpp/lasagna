@@ -220,7 +220,6 @@ export class AutocompleteComponent
   }
 
   onChangeSelect(value: unknown) {
-    debugger
     const val = typeof value === 'string' ? value : (value as any)?.[this.key()];
     this.change(val);
     this.onSelected.emit(val);
@@ -239,7 +238,7 @@ export class AutocompleteComponent
 
       this._onSearch$.next(event);
     }
-    debugger
+
     this.selectComponent()?.selectTag();
     this.selectComponent()!.searchTerm = event.term ? this._capitalizeFirstLetter(event.term) : '';
     if (this.noLoad()) {
