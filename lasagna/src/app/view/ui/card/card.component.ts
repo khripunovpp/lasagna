@@ -18,7 +18,7 @@ import {Component, input} from '@angular/core';
       }
 
       .card {
-        background-color: #fff;
+        background-color: var(--card-bg);
         padding: 24px;
         border-radius: 32px;
         width: 100%;

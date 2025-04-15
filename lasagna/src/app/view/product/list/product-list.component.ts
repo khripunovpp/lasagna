@@ -1,13 +1,13 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {Product, ProductsRepository} from '../../../service/repositories/products.repository';
+import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
 
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import {parseFloatingNumber} from '../../../helpers/number.helper';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
@@ -26,8 +26,10 @@ import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
+import {DraftForm} from '../../../service/services/draft-forms.service';
+import {ProductFormValue} from '../add-product/add-product-form.component';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -82,6 +84,28 @@ export type ProductList = Record<string, Product[]>;
                   Products
               </lg-title>
 
+              @if (draft()?.length) {
+                  <lg-card-list style="--card-bg: #bee5ff">
+                      @for (item of draft();track item?.createdAt) {
+                          <ng-template lgCardListItem>
+                              <a [routerLink]="'/products/draft/' + item?.uuid">
+                                  <lg-gap-row [center]="true">
+                                      <div>
+                                          @if (item?.meta?.['uuid']) {
+                                              Unsaved existing product:
+                                          } @else {
+                                              Draft product:
+                                          }
+                                          {{ item?.data?.name ?? '' }}
+                                      </div>
+
+                                      <div>Created at: {{ item?.createdAt | date: 'medium' }}</div>
+                                  </lg-gap-row>
+                              </a>
+                          </ng-template>
+                      }
+                  </lg-card-list>
+              }
 
               @for (category of products();track category?.category) {
                   <lg-title [level]="3">
@@ -148,9 +172,9 @@ export type ProductList = Record<string, Product[]>;
     FadeInComponent,
     ControlsBarComponent,
     QuickActionsTplDirective,
-    GapColumnComponent,
-    SelectionToolsComponent
-  ],
+    SelectionToolsComponent,
+    DatePipe
+],
   providers: [
     SelectionZoneService,
   ],
@@ -173,6 +197,7 @@ export class ProductListComponent
   }
 
   products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
+  draft = signal<Array<DraftForm<ProductFormValue> | null>>([]);
   protected readonly ProductDbInputScheme = ProductDbInputScheme;
   protected readonly Stores = Stores;
 
@@ -202,6 +227,10 @@ export class ProductListComponent
 
   ngOnInit() {
     this.loadProducts();
+    const draft = this._productsRepository.getDraftProducts();
+    if (draft) {
+      this.draft.set(draft);
+    }
   }
 
   loadProducts() {

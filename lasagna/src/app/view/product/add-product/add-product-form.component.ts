@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 
 import {ControlComponent} from '../../ui/form/control.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
+
 import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {Router} from '@angular/router';
@@ -23,7 +23,7 @@ import {NotificationsService} from '../../../service/services/notifications.serv
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 
 
-import {ShrinkDirective} from '../../directives/shrink.directive';
+
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -35,7 +35,6 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ReactiveFormsModule,
     ControlComponent,
     GapColumnComponent,
-    ButtonComponent,
     MultiselectComponent,
     NumberInputComponent,
     TooltipComponent,
@@ -45,9 +44,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ButtonsGroupComponent,
     ExpandDirective,
     ChipsListComponent,
-    AutocompleteComponent,
-    ShrinkDirective
-  ],
+    AutocompleteComponent
+],
   styles: [
     `
       lg-eggs-widget {
@@ -77,7 +75,6 @@ export class AddProductFormComponent
     source: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null, Validators.required),
   });
-
   buttons: ButtonGroupItem[] = [
     {
       label: 'Grams',
@@ -96,18 +93,16 @@ export class AddProductFormComponent
       }
     },
   ];
-  uuid = input<string>('');
+  product = input<Product | null>(null);
   topCategories = signal<any[]>([]);
   topSources = signal<any[]>([]);
   nameField = viewChild<AutocompleteComponent>('nameField');
-  private uuidEffect = effect(() => {
-    if (!this.uuid()) {
+  private productEffect = effect(() => {
+    if (!this.product()) {
       return;
     }
-    this._productsRepository.getOne(this.uuid()).then(product => {
-      console.log({product})
-      this.form.reset(product);
-    });
+    this.form.reset(this.product() as any);
+    this.form.markAsPristine();
   });
 
   get value() {
@@ -129,6 +124,10 @@ export class AddProductFormComponent
     return this.form.valid;
   }
 
+  private get _productModel() {
+    return flaterizeObjectWithUuid<ProductDbValue>(this.value);
+  }
+
   eggsChanged(event: any) {
     this.form.patchValue({
       amount: event
@@ -139,31 +138,20 @@ export class AddProductFormComponent
     this._loadUsingHistory();
   }
 
-  addProduct(
-    values: ProductFormValue
+  resetForm(
+    values?: ProductFormValue
   ) {
-    if (!this._formValid) {
-      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
-      return;
-    }
-    this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this.form.reset(this._defFormValue);
-      this._notificationsService.success('Product added');
-      this._loadUsingHistory();
-    });
+    this.form.reset(values ?? this._defFormValue);
+    this.form.markAsPristine();
+    this._loadUsingHistory();
   }
 
-  editProduct(
-    values: ProductFormValue
-  ) {
+  validateForm() {
     if (!this._formValid) {
       this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
-      return;
+      return false;
     }
-    this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
-      this._notificationsService.success('Product edited');
-      this._loadUsingHistory();
-    });
+    return true
   }
 
   ngAfterViewInit() {
@@ -171,7 +159,8 @@ export class AddProductFormComponent
     });
 
 
-    this.nameField()!.focus();
+    // this.nameField()!.focus();
+    this.form.markAsPristine()
   }
 
   private _loadUsingHistory() {
