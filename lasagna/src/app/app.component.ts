@@ -1,23 +1,20 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-
-
-
-
-import {PwaInstallComponent} from './view/application/pwa-install.component';
 import {HeaderComponent} from './view/ui/layout/header.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FadeInComponent} from './view/ui/fade-in.component';
+import {PwaUpdateComponent} from './view/application/pwa-update.component';
+import {PwaInstallComponent} from './view/application/pwa-install.component';
 
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    PwaInstallComponent,
     HeaderComponent,
-    FadeInComponent
-],
+    FadeInComponent,
+    PwaUpdateComponent,
+    PwaInstallComponent,
+  ],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss',
