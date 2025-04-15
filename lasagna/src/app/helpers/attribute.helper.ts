@@ -13,7 +13,7 @@ export const flaterizeObjectWithUuid = <T>(value: any): T => {
       out[key] = value[key].reduce((acc: any[], item: any) => {
         acc.push(flaterizeObjectWithUuid(item));
         return acc;
-      },[]);
+      }, []);
     } else if (value[key]?.uuid != null) {
       out[key] = value[key].uuid;
     } else {
@@ -34,4 +34,9 @@ export const clearEmpties = (value: any) => {
     }
   }
   return out;
+}
+
+
+export const generateUuid = (): string => {
+  return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }

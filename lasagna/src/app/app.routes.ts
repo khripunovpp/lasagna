@@ -3,6 +3,8 @@ import {Routes} from '@angular/router';
 import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
 import {recipeCalculationResolver,} from './service/resolvers/recipe-calculation.resolver';
 import {recipeCalculationTemplateResolver} from './service/resolvers/recipe-tax-template.resolver';
+import {recipeDraftResolver} from './service/resolvers/recipe-draft.resolver';
+import {productDraftResolver} from './service/resolvers/product-draft.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -36,6 +38,20 @@ export const routes: Routes = [{
             .then(m => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver,
+          },
+          data: {
+            editRoute: true,
+          }
+        },
+        {
+          path: 'draft/:uuid',
+          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+            .then(m => m.AddRecipeComponent),
+          resolve: {
+            draft: recipeDraftResolver,
+          },
+          data: {
+            draftRoute: true,
           }
         },
         {
@@ -69,6 +85,20 @@ export const routes: Routes = [{
             .then(m => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver,
+          },
+          data: {
+            editRoute: true,
+          }
+        },
+        {
+          path: 'draft/:uuid',
+          loadComponent: () => import('./view/product/add-product/add-product.component')
+            .then(m => m.AddProductComponent),
+          resolve: {
+            draft: productDraftResolver,
+          },
+          data: {
+            draftRoute: true,
           }
         },
       ]

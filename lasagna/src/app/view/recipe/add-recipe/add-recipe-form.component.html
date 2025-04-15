@@ -143,15 +143,5 @@
     @if (topCategories().length) {
       <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
     }
-
-    @if (uuid()) {
-      <lg-button (click)="editRecipe(value)">
-        Edit Recipe
-      </lg-button>
-    } @else {
-      <lg-button (click)="addRecipe(value)">
-        Add Recipe
-      </lg-button>
-    }
   </lg-gap-column>
 </form>

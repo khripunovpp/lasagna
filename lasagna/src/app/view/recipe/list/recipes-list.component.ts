@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -21,6 +21,8 @@ import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
+import {DraftForm} from '../../../service/services/draft-forms.service';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -62,6 +64,29 @@ import {SelectionZoneService} from '../../../service/services/selection-zone.ser
                       Recipes
                   </lg-title>
               </lg-gap-row>
+
+              @if (draft()?.length) {
+                  <lg-card-list style="--card-bg: #bee5ff">
+                      @for (item of draft();track item?.createdAt) {
+                          <ng-template lgCardListItem>
+                              <a [routerLink]="'/recipes/draft/' + item?.uuid">
+                                  <lg-gap-row [center]="true">
+                                      <div>
+                                          @if (item?.meta?.['uuid']) {
+                                              Unsaved existing recipe:
+                                          } @else {
+                                              Draft recipe:
+                                          }
+                                          {{ item?.data?.name ?? '' }}
+                                      </div>
+
+                                      <div>Created at: {{ item?.createdAt | date: 'medium' }}</div>
+                                  </lg-gap-row>
+                              </a>
+                          </ng-template>
+                      }
+                  </lg-card-list>
+              }
 
               @for (category of recipes();track category?.category) {
                   <lg-title [level]="3">
@@ -122,7 +147,8 @@ import {SelectionZoneService} from '../../../service/services/selection-zone.ser
     FadeInComponent,
     ControlsBarComponent,
     QuickActionsTplDirective,
-    SelectionToolsComponent
+    SelectionToolsComponent,
+    DatePipe
   ],
   styles: [
     `:host {
@@ -140,12 +166,18 @@ export class RecipesListComponent {
   ) {
   }
 
+  draft = signal<Array<DraftForm<Recipe> | undefined>>([]);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
   protected readonly RecipeDbInputScheme = RecipeDbInputScheme;
 
   ngOnInit() {
     this.loadRecipes();
+
+    const draft = this._recipesRepository.getDraftRecipe();
+    if (draft) {
+      this.draft.set(draft);
+    }
   }
 
   deleteRecipe(
