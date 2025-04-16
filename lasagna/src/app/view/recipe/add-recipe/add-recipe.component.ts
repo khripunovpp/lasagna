@@ -30,7 +30,7 @@ import {FadeInComponent} from '../../ui/fade-in.component';
 
                   @if (uuid()) {
                       <lg-button [flat]="true"
-                                 [link]="'/calc-recipe/' + uuid()"
+                                 [link]="'/recipes/calculate/' + uuid()"
                                  [size]="'small'"
                                  [style]="'primary'">
                           Calculate
