@@ -2,6 +2,7 @@
   <lg-gap-column>
     <lg-control label="Name">
       <lg-autocomplete [key]="'name'"
+                       #nameField
                        [resource]="'products-names'"
                        formControlName="name"></lg-autocomplete>
     </lg-control>

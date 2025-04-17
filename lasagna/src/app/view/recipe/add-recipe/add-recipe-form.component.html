@@ -2,6 +2,7 @@
   <lg-gap-column [position]="'start'">
     <lg-control label="Name" lgExpand>
       <lg-autocomplete [key]="'name'"
+                       #nameField
                        [resource]="'recipes-names'"
                        formControlName="name"></lg-autocomplete>
     </lg-control>

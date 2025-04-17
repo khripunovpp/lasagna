@@ -1,4 +1,4 @@
-import {Component, effect, Inject, input, OnInit, signal, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {ControlComponent} from '../../ui/form/control.component';
@@ -47,7 +47,7 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ChipsListComponent,
     AutocompleteComponent,
     ShrinkDirective
-],
+  ],
   styles: [
     `
       lg-eggs-widget {
@@ -59,7 +59,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
 
 })
 export class AddProductFormComponent
-  implements OnInit {
+  implements OnInit,
+    AfterViewInit {
   constructor(
     public _productsRepository: ProductsRepository,
     public _selectResourcesService: SelectResourcesService,
@@ -98,6 +99,7 @@ export class AddProductFormComponent
   uuid = input<string>('');
   topCategories = signal<any[]>([]);
   topSources = signal<any[]>([]);
+  nameField = viewChild<AutocompleteComponent>('nameField');
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       return;
@@ -123,6 +125,10 @@ export class AddProductFormComponent
     };
   }
 
+  private get _formValid() {
+    return this.form.valid;
+  }
+
   eggsChanged(event: any) {
     this.form.patchValue({
       amount: event
@@ -136,6 +142,10 @@ export class AddProductFormComponent
   addProduct(
     values: ProductFormValue
   ) {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      return;
+    }
     this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this.form.reset(this._defFormValue);
       this._notificationsService.success('Product added');
@@ -146,6 +156,10 @@ export class AddProductFormComponent
   editProduct(
     values: ProductFormValue
   ) {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      return;
+    }
     this._productsRepository.editProduct(this.uuid(), flaterizeObjectWithUuid<ProductDbValue>(values)).then(() => {
       this._notificationsService.success('Product edited');
       this._loadUsingHistory();
@@ -154,7 +168,10 @@ export class AddProductFormComponent
 
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
-    })
+    });
+
+
+    this.nameField()!.focus();
   }
 
   private _loadUsingHistory() {
