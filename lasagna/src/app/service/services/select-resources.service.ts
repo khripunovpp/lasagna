@@ -125,10 +125,10 @@ export class SelectResourcesService {
 
     return Promise.all(keys.map(async key => {
       const cfg = this.get<SelectResource<T>>(key);
-      const cacheLifetime = 1000 * 60 * 5; // 5 minutes
-      if (cfg.updatedAt && Date.now() - cfg.updatedAt < cacheLifetime && !force) {
-        return;
-      }
+      // const cacheLifetime = 1000 * 60 * 5; // 5 minutes
+      // if (cfg.updatedAt && Date.now() - cfg.updatedAt < cacheLifetime && !force) {
+      //   return;
+      // }
       let result: any;
       const loaderCfg = cfg.cfg.loaderConfig as IndexDbSelectLoaderConfig;
       if (loaderCfg?.selectUniqueKey?.length) {
