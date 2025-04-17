@@ -1,45 +1,61 @@
 import {Component, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from './button.component';
-
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'lg-header',
   standalone: true,
   template: `
       <header class="lg-header">
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/home'"
-             class="lg-header__icon">
-              <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
-          </a>
-
-          <div class="lg-header__inner">
-              @for (item of items();track item.label) {
-                  <a [routerLink]="item.link"
-                     [routerLinkActive]="['route-active']"
-                     [routerLinkActiveOptions]="{ exact: false }"
-                     class="lg-header__link">
-                      {{ item.label }}
-                  </a>
-              }
+          <div class="lg-header__left">
+              <button (click)="location.back()"
+                      class="lg-header__icon lg-header__icon--left">
+                  <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
+              </button>
           </div>
 
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/settings'"
-             class="lg-header__icon">
-              <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
-          </a>
+          <div class="lg-header__leftToMiddle">
+              <a [routerLinkActiveOptions]="{ exact: false }"
+                 [routerLinkActive]="['route-active']"
+                 [routerLink]="'/home'"
+                 class="lg-header__icon">
+                  <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
+              </a>
+          </div>
 
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/widgets'"
-             class="lg-header__icon">
-              <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
-          </a>
+          <div class="lg-header__middle">
+              <div class="lg-header__inner">
+                  @for (item of items();track item.label) {
+                      <a [routerLink]="item.link"
+                         [routerLinkActive]="['route-active']"
+                         [routerLinkActiveOptions]="{ exact: false }"
+                         class="lg-header__link">
+                          {{ item.label }}
+                      </a>
+                  }
+              </div>
+          </div>
+          <div class="lg-header__rightToMiddle">
+              <a [routerLinkActiveOptions]="{ exact: false }"
+                 [routerLinkActive]="['route-active']"
+                 [routerLink]="'/settings'"
+                 class="lg-header__icon">
+                  <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
+              </a>
+
+              <a [routerLinkActiveOptions]="{ exact: false }"
+                 [routerLinkActive]="['route-active']"
+                 [routerLink]="'/widgets'"
+                 class="lg-header__icon">
+                  <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
+              </a>
+          </div>
+
+          <div class="lg-header__right">
+
+          </div>
       </header>
   `,
   styles: [`
@@ -52,7 +68,7 @@ import {MatIcon} from '@angular/material/icon';
       top: 12px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       gap: 16px;
       overflow-x: auto;
       white-space: nowrap;
@@ -63,6 +79,30 @@ import {MatIcon} from '@angular/material/icon';
         overscroll-behavior-x: contain;
         scrollbar-width: none;
       }
+    }
+
+    .lg-header__left,
+    .lg-header__right,
+    .lg-header__leftToMiddle,
+    .lg-header__rightToMiddle,
+    .lg-header__middle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      scroll-snap-align: center;
+      gap: 8px;
+    }
+
+    .lg-header__leftToMiddle {
+      margin-left: auto;
+    }
+
+    .lg-header__rightToMiddle {
+      margin-right: auto;
+    }
+
+    .lg-header__right {
+
     }
 
     .lg-header__inner {
@@ -85,6 +125,7 @@ import {MatIcon} from '@angular/material/icon';
       justify-content: center;
       scroll-snap-align: center;
       transition: all 0.3s ease-in-out;
+      appearance: none;
     }
 
     .lg-header__link.route-active {
@@ -100,9 +141,14 @@ import {MatIcon} from '@angular/material/icon';
       padding: 8px;
       cursor: pointer;
       scroll-snap-align: center;
-
+      border: none;
+      appearance: none;
       backdrop-filter: blur(3px);
       background-color: rgba(255, 255, 255, 0.7);
+
+      &--left {
+
+      }
     }
 
     .lg-header__icon.route-active {
@@ -114,10 +160,12 @@ import {MatIcon} from '@angular/material/icon';
     RouterLink,
     RouterLinkActive,
     MatIcon
-]
+  ]
 })
 export class HeaderComponent {
-  constructor() {
+  constructor(
+    public location: Location,
+  ) {
   }
 
   items = signal([
