@@ -32,6 +32,7 @@ export interface autocompleteItem {
       <div class="autocomplete">
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
+                     (blur)="onBlur()"
                      (search)="onSearch($event)"
                      [addTag]="true"
                      [bindValue]="key()"
@@ -151,6 +152,7 @@ export class AutocompleteComponent
     term: string
     items: unknown[]
   }>();
+  private _currentSearchTerm: string | null = null;
 
   onChange: (value: unknown) => void = () => {
   };
@@ -225,26 +227,40 @@ export class AutocompleteComponent
     this.onSelected.emit(val);
   }
 
-  onSearch(
-    event: {
-      term: string
-      items: unknown[]
-    }) {
+  onSearch(event: { term: string, items: unknown[] }) {
     if (!event.term) {
       this.writeValue('');
-      return
+      return;
     }
-    if (!this.noLoad()) {
 
+    this._currentSearchTerm = event.term;
+
+    if (!this.noLoad()) {
       this._onSearch$.next(event);
     }
 
-    this.selectComponent()?.selectTag();
-    this.selectComponent()!.searchTerm = event.term ? this._capitalizeFirstLetter(event.term) : '';
-    if (this.noLoad()) {
-      this.loadedList.set(event.items?.length ? event.items as any : this.initialList());
+    // Устанавливаем текущий запрос как тег, если нет найденных элементов
+    if (event.items.length === 0) {
+      this.loadedList.set([{name: event.term, value: event.term}] as any);
     } else {
-      this.loadedList.set([]);
+      this.loadedList.set(event.items as any);
+    }
+
+    // Устанавливаем правильный текст в поиске
+    this.selectComponent()!.searchTerm = this._capitalizeFirstLetter(event.term);
+  }
+
+  onBlur() {
+    const select = this.selectComponent();
+    if (select?.searchTerm) {
+      // Принудительно добавить текущий searchTerm как тег
+      const searchValue = select.searchTerm.trim();
+      if (searchValue) {
+        const tag = {name: searchValue, value: searchValue};
+        this.loadedList.set([tag] as any)// заменить список, если нужно
+        this.change(searchValue);   // обновить модель формы
+        this.onSelected.emit(searchValue); // эмитнуть наружу
+      }
     }
   }
 
