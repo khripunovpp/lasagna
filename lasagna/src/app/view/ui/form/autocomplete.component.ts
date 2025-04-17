@@ -291,4 +291,11 @@ export class AutocompleteComponent
   private _capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  focus() {
+    const select = this.selectComponent();
+    if (select) {
+      select.focus();
+    }
+  }
 }

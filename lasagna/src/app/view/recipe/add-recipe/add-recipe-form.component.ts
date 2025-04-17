@@ -1,4 +1,4 @@
-import {Component, effect, OnInit, signal, viewChildren} from '@angular/core';
+import {AfterViewInit, Component, effect, OnInit, signal, viewChild, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
 import {ControlComponent} from '../../ui/form/control.component';
@@ -51,7 +51,7 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
     ChipsListComponent,
     AutocompleteComponent,
     FormsModule
-],
+  ],
   styles: [
     `
     `
@@ -65,7 +65,8 @@ export type RecipeFormValue = Omit<Recipe, 'uuid'>
   ],
 })
 export class AddRecipeFormComponent
-  implements OnInit {
+  implements OnInit,
+    AfterViewInit {
   constructor(
     public _recipesRepository: RecipesRepository,
     public _selectResourcesService: SelectResourcesService,
@@ -127,6 +128,7 @@ export class AddRecipeFormComponent
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
+  nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
   people$: Observable<any[]> = of([
     {
@@ -226,7 +228,9 @@ export class AddRecipeFormComponent
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
 
-    })
+    });
+
+    this.nameField()!.focus();
   }
 
   addIngredient() {
