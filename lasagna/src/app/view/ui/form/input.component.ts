@@ -82,6 +82,7 @@ export class InputComponent
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');
+  autoFocus = input(false);
   onInputChanged = output<string>();
   theme = input<
     'default' | 'contrast'
@@ -116,10 +117,15 @@ export class InputComponent
     this.input?.nativeElement.focus();
   }
 
+
   ngAfterViewInit() {
     const after = this.input?.nativeElement.nextElementSibling;
     if (after?.childElementCount === 0) {
       this.noAfter.set(true);
+    }
+
+    if (this.autoFocus()) {
+      this.focus();
     }
   }
 
