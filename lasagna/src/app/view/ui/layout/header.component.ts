@@ -3,6 +3,7 @@ import {ButtonComponent} from './button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location} from '@angular/common';
+import {GlobalSearchService} from '../../../service/services/global-search.service';
 
 @Component({
   selector: 'lg-header',
@@ -23,6 +24,11 @@ import {Location} from '@angular/common';
                  class="lg-header__icon">
                   <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
               </a>
+
+              <button (click)="globalSearchService.showBar()"
+                      class="lg-header__icon">
+                  <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+              </button>
           </div>
 
           <div class="lg-header__middle">
@@ -165,6 +171,7 @@ import {Location} from '@angular/common';
 export class HeaderComponent {
   constructor(
     public location: Location,
+    public globalSearchService: GlobalSearchService,
   ) {
   }
 

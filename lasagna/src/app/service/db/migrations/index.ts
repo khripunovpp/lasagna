@@ -172,5 +172,15 @@ export const migrations: {
         }),
       ]).then(() => {})
     }
-  }
+  },
+   {
+    version: 9,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++table_name',
+    },
+  },
 ]

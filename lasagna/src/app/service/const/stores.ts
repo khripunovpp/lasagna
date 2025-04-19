@@ -7,4 +7,5 @@ export enum Stores {
   CATEGORIES = 'categoryStore',
   PRODUCTS_CATEGORIES = 'categoryProductsStore',
   RECIPES_CATEGORIES = 'categoryRecipesStore',
+  INDICES = 'indicesStore',
 }
