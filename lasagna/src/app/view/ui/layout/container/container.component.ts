@@ -12,10 +12,10 @@ import {Component} from '@angular/core';
       :host {
         display: flex;
         height: 100%;
-        padding: 0 32px;
+        padding: 0 var(--app-container-side-padding);
 
         @media (max-width: 768px) {
-          padding: 0 16px;
+          padding: 0  var(--app-container-side-padding);
         }
       }
 
@@ -24,7 +24,7 @@ import {Component} from '@angular/core';
         flex-direction: column;
         margin: 0 auto;
         width: 100%;
-        max-width: 1920px;
+        max-width:  var(--app-container-width);
         gap: 32px;
       }
     `

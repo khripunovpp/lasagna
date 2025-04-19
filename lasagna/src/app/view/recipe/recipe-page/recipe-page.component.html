@@ -1,0 +1,23 @@
+<section [class.recipe-page--collapsed]="collapse()"
+         class="recipe-page">
+  <div class="recipe-page__inner">
+    <div class="recipe-page__left">
+      <div #leftColumn
+           class="recipe-page__column">
+
+
+<lg-common-recipe-section></lg-common-recipe-section>
+
+      </div>
+      <button (click)="toggleCollapse()" class="recipe-page__collapseBtn" type="button">
+        <mat-icon aria-hidden="false" fontIcon="first_page"></mat-icon>
+
+      </button>
+    </div>
+    <div class="recipe-page__right">
+      <div class="recipe-page__column">
+        right
+      </div>
+    </div>
+  </div>
+</section>

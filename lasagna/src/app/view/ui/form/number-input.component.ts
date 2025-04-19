@@ -6,6 +6,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   standalone: true,
   template: `
       <div [class.disabled]="disabled()"
+           [class.flatten]="flatten()"
            class="lg-number-input">
           <input #input
                  (change)="onInputChange.emit(value)"
@@ -55,7 +56,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         border: none;
         padding: 16px;
         font-family: inherit;
-        font-size: inherit;
+        font-size: var(--control-font-size);
         background-color: transparent;
         border-radius: 12px;
         width: 100%;
@@ -68,6 +69,20 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
       .input:focus {
         outline: none;
         box-shadow: var(--focus-shadow);
+      }
+
+      .lg-number-input.flatten {
+        background-color: transparent;
+
+        .input {
+          padding: 0;
+          border-radius: 0;
+        }
+
+        .input:focus,
+        .input:hover {
+          box-shadow: var(--control-hover-focus-shadow);
+        }
       }
     `
   ],
@@ -93,6 +108,7 @@ export class NumberInputComponent
   placeholder = input('Enter text here');
   noAfter = signal(false);
   disabled = input<boolean>(false);
+  flatten = input<boolean>(false);
   onKeydown = output();
   onInputChange = output<string>();
 

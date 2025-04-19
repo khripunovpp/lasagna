@@ -6,6 +6,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   standalone: true,
   template: `
       <div class="lg-input"
+
+           [class.flatten]="flatten()"
            [class.contrast]="theme() === 'contrast'">
           <input #input
                  (change)="onInputChanged.emit(value)"
@@ -60,6 +62,15 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         outline: none;
         box-shadow: var(--focus-shadow);
       }
+
+      .lg-input.flatten {
+        background-color: transparent;
+
+        .input {
+          padding: 0;
+          border-radius: 0;
+        }
+      }
     `
   ],
   imports: [
@@ -79,6 +90,7 @@ export class InputComponent
   constructor() {
   }
 
+  flatten = input<boolean>(false);
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');

@@ -1,0 +1,35 @@
+<section [formGroup]="selected" class="lg-controls-table">
+  <div class="lg-controls-table__header">
+    @for (column of items.first?.columns;track $index;let i = $index) {
+      <div [style.flex-basis.%]="column.width"
+           [style.justify-content]="column.align === 'start' ? 'flex-start' : column.align === 'center' ? 'center' : 'flex-end'">
+        {{ column.label }}
+      </div>
+    }
+  </div>
+  <section class="lg-controls-table__inner" formArrayName="items">
+    @for (item of items;track $index;let i = $index, even = $even, last = $last) {
+      <div class="lg-controls-table__item"
+           [class.colored]="!even">
+        @if (mode() === 'selection') {
+          <lg-checkbox [formControlName]="i"
+                       (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
+        }
+        <div class="lg-controls-table__item__inner">
+          <ng-container [ngTemplateOutlet]="item.template"
+                        [ngTemplateOutletContext]="{ $implicit: item}"
+          ></ng-container>
+        </div>
+      </div>
+      @if (last && lastRow()) {
+        <div class="lg-controls-table__item lg-controls-table__item--last">
+          <div class="lg-controls-table__item__inner">
+            <ng-container [ngTemplateOutlet]="lastRow()!.templateRef"></ng-container>
+          </div>
+        </div>
+      }
+    } @empty {
+      <div style="padding:16px 24px;">No items found</div>
+    }
+  </section>
+</section>

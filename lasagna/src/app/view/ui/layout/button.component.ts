@@ -74,6 +74,7 @@ export type ButtonStyle = 'default' |
         align-items: center;
         text-decoration: none;
         justify-content: center;
+        transition: all 0.2s ease;
       }
 
       .button:focus {
@@ -125,10 +126,15 @@ export type ButtonStyle = 'default' |
       }
 
       .button.secondary {
-        background-color: #fafafa;
+        background-color: #c9c9c9;
 
         &.flat {
-          color: #fafafa;
+          color: #c9c9c9;
+
+          &:hover {
+            background-color: #c9c9c9;
+            color: #101010;
+          }
         }
       }
 
@@ -174,7 +180,6 @@ export type ButtonStyle = 'default' |
 
       .button.transcluent {
         backdrop-filter: blur(3px);
-
         background-color: rgba(255, 255, 255, 0.5);
       }
 
@@ -196,6 +201,10 @@ export type ButtonStyle = 'default' |
           .mat-icon {
             font-size: 16px;
           }
+
+          &.flat {
+            padding: 0;
+          }
         }
 
 
@@ -206,6 +215,10 @@ export type ButtonStyle = 'default' |
             font-size: 10px;
             width: 16px;
             height: 16px;
+          }
+
+          &.flat {
+            padding: 0;
           }
         }
 

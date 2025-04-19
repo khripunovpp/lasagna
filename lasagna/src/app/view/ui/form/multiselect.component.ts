@@ -23,12 +23,16 @@ export interface MultiselectItem {
   selector: 'lg-multiselect',
   standalone: true,
   template: `
-      <div class="multiselect">
+      <div [class.multiselect--flatten]="flatten()"
+           class="multiselect">
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
+                     [appendTo]="appendTo()"
+                     [clearable]="clearable()"
                      [compareWith]="compareWith"
                      [items]="loadedList()"
                      [ngModel]="value"
+                     [placeholder]="placeholder()"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item.value ?? item }}
@@ -65,13 +69,27 @@ export interface MultiselectItem {
           border-radius: 12px;
           background-color: var(--control-bg);
 
+          &:hover {
+            box-shadow: var(--control-hover-focus-shadow);
+          }
+
+          .ng-placeholder {
+            color: var(--placeholder);
+            font-size: var(--control-font-size);
+          }
+
+          .ng-value {
+            font-size: var(--control-font-size);
+          }
+
           .ng-input {
             top: 16px !important;
+            font-size: var(--control-font-size);
 
             & > input {
               color: var(--text);
               font-family: inherit;
-              font-size: inherit;
+              font-size: var(--control-font-size);
             }
           }
         }
@@ -86,6 +104,38 @@ export interface MultiselectItem {
             padding: 16px;
             border-radius: 12px;
           }
+        }
+      }
+
+
+      .multiselect--flatten {
+        flex: 1;
+        width: 100%;
+
+        .ng-select.ng-select-single .ng-select-container {
+          height: 20px;
+          min-height: 20px;
+          border-radius: 0;
+          background-color: transparent;
+          overflow: visible !important;
+
+          .ng-input {
+            padding: 0;
+            top: auto !important;
+          }
+        }
+
+        .ng-select .ng-select-container .ng-value-container {
+          padding: 0;
+          overflow: visible !important;
+        }
+
+        .ng-select.ng-select-focused .ng-select-container {
+          box-shadow: none;
+        }
+
+        .ng-select .ng-arrow-wrapper {
+          display: none;
         }
       }
 
@@ -107,8 +157,12 @@ export class MultiselectComponent
   ) {
   }
 
+  flatten = input<boolean>(false);
   resource = input<string>('');
+  placeholder = input<string>('');
+  appendTo = input<string>('');
   autoLoad = input<boolean>(false);
+  clearable = input<boolean>(false);
   loadedList = signal([]);
   onSelected = output<unknown>();
   value?: unknown = null

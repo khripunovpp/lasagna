@@ -29,13 +29,15 @@ export interface autocompleteItem {
   selector: 'lg-autocomplete',
   standalone: true,
   template: `
-      <div class="autocomplete">
+      <div [class.autocomplete--flatten]="flatten()"
+           class="autocomplete">
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
                      (blur)="onBlur()"
                      (search)="onSearch($event)"
                      [addTag]="true"
                      [bindValue]="key()"
+                     [placeholder]="placeholder()"
                      [compareWith]="compareWith"
                      [editableSearchTerm]="true"
                      [items]="loadedList()"
@@ -87,6 +89,16 @@ export interface autocompleteItem {
           border: none;
           border-radius: 12px;
           background-color: var(--control-bg);
+          font-size: var(--control-font-size);
+
+          &:hover {
+            box-shadow: var(--control-hover-focus-shadow);
+          }
+
+          .ng-placeholder {
+            color: var(--placeholder);
+            font-size: var(--control-font-size);
+          }
 
           .ng-input {
             top: 16px !important;
@@ -120,6 +132,34 @@ export interface autocompleteItem {
         }
       }
 
+      .autocomplete--flatten {
+        flex: 1;
+        width: 100%;
+
+        .ng-select.ng-select-single .ng-select-container {
+          height: var(--control-font-size);
+          min-height: var(--control-font-size);
+          border-radius: 0;
+          background-color: transparent;
+          overflow: visible !important;
+
+          .ng-input {
+            padding: 0;
+            top: auto !important;
+          }
+        }
+
+        .ng-select .ng-select-container .ng-value-container {
+          padding: 0;
+          overflow: visible !important;
+        }
+
+        .ng-select.ng-select-focused .ng-select-container {
+          box-shadow: none;
+        }
+
+      }
+
     `
   ],
   providers: [
@@ -139,9 +179,11 @@ export class AutocompleteComponent
   }
 
 
+  flatten = input<boolean>(false);
   noLoad = input<boolean>(false);
   resource = input<string>('');
   key = input<string>('');
+  placeholder = input<string>('');
   strict = input<boolean>(false);
   loadedList = signal([]);
   onSelected = output<unknown>();

@@ -26,7 +26,7 @@ import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 
 export type ProductList = Record<string, Product[]>;
@@ -148,9 +148,8 @@ export type ProductList = Record<string, Product[]>;
     FadeInComponent,
     ControlsBarComponent,
     QuickActionsTplDirective,
-    GapColumnComponent,
     SelectionToolsComponent
-  ],
+],
   providers: [
     SelectionZoneService,
   ],
