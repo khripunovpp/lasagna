@@ -7,8 +7,16 @@
   --active-color: #ff7e67;
   --control-bg: #fafafa;
   --control-bg-selected: #c4e2ea;
-  --placeholder: var(--text-color);
+  --placeholder: #a9a9a9;
   --header-height: 51px;
+  --app-content-top-padding: var(--app-top-padding);
+  --app-top-padding: calc(var(--header-height) + 44px);
+  --app-content-bottom-padding: var(--app-bottom-padding);
+  --app-bottom-padding: 32px;
+  --app-container-side-padding: 32px;
+  --app-container-width: 1920px;
+  --control-font-size: 16px;
+  --control-hover-focus-shadow: 0 1px 0 rgba(0, 0, 0, .06);
 }
 
 body {
@@ -63,6 +71,7 @@ $indents: 1 2 3 4 5 6 7 8 9 10;
 
 a {
   color: inherit;
+
   &:hover {
     text-decoration: none;
   }

@@ -1,0 +1,99 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --left-column-width-percent: 0.3;
+}
+
+.recipe-page {
+  --left-width: calc(var(--app-container-width) * var(--left-column-width-percent));
+  --right-width: calc(var(--app-container-width) - var(--left-width));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__inner {
+    display: flex;
+    height: 100%;
+  }
+
+  &__left,
+  &__right {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+
+    .recipe-page__column {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  &__left {
+    flex: var(--left-width);
+    background-color: #fff;
+    padding-top: var(--app-top-padding);
+    padding-bottom: var(--app-bottom-padding);
+    align-items: flex-end;
+    padding-right: var(--app-container-side-padding);
+    padding-left: var(--app-container-side-padding);
+    position: relative;
+
+    .recipe-page__column {
+      width: 100%;
+      max-width: calc(var(--left-width) - var(--app-container-side-padding));
+      will-change: auto;
+    }
+  }
+
+  &__right {
+    flex: var(--right-width);
+    padding-top: var(--app-top-padding);
+    padding-bottom: var(--app-bottom-padding);
+    align-items: flex-start;
+    padding-left: var(--app-container-side-padding);
+    padding-right: var(--app-container-side-padding);
+
+    .recipe-page__column {
+      width: 100%;
+      max-width: calc(var(--right-width) - var(--app-container-side-padding));
+    }
+  }
+
+  &__collapseBtn {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    transform: translateY(-50%);
+    appearance: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    color: #a26dc7;
+
+    &:hover {
+      background-color: rgba(#a26dc7, 0.4);
+      color: #fff;
+    }
+
+    .mat-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 36px;
+    }
+  }
+
+  &--collapsed {
+    .recipe-page__collapseBtn {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .recipe-page__left .recipe-page__column {
+      opacity: 0;
+      position: absolute;
+    }
+  }
+}

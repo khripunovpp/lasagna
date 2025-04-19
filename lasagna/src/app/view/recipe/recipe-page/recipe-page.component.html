@@ -1,0 +1,65 @@
+<section [class.recipe-page--collapsed]="collapse()"
+         class="recipe-page">
+  <div class="recipe-page__inner">
+    <div class="recipe-page__left">
+      <div #leftColumn
+           class="recipe-page__column">
+        <lg-gap-column>
+          <lg-gap-column [size]="'medium'">
+            <lg-multiselect #categorySelect
+                            [flatten]="true"
+                            [placeholder]="'No category'"
+                            [resource]="'recipes-categories'"></lg-multiselect>
+
+            <lg-autocomplete [flatten]="true"
+                             [key]="'name'"
+                             [placeholder]="'New recipe name'"
+                             [resource]="'recipes-names'"
+                             style="--control-font-size: 30px"></lg-autocomplete>
+            <lg-textarea
+              [flatten]="true"
+              [placeholder]="'Describe your recipe, how to make it, what to pay attention to, etc.'"></lg-textarea>
+          </lg-gap-column>
+
+          <lg-title [level]="6">
+            Ingredients
+          </lg-title>
+
+          <lg-controls-table>
+            @for (recipe of recipes()[0].recipes;track $index;let i = $index) {
+              <lg-controls-table-row>
+                <div lgControlsTableColumn [width]="50" [label]="'Name'">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                </div>
+
+                <div lgControlsTableColumn [width]="30" [label]="'Weight'">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                </div>
+
+                <div lgControlsTableColumn [width]="20" [label]="''" [align]="'end'">
+                  <lg-button [style]="'secondary'"
+                             [size]="'small'"
+                             [flat]="true"
+                             [icon]="true">
+                    <mat-icon aria-hidden="false"
+                              aria-label="Example home icon"
+                              fontIcon="close"></mat-icon>
+                  </lg-button>
+                </div>
+              </lg-controls-table-row>
+            }
+          </lg-controls-table>
+        </lg-gap-column>
+      </div>
+      <button (click)="toggleCollapse()" class="recipe-page__collapseBtn" type="button">
+        <mat-icon aria-hidden="false" fontIcon="first_page"></mat-icon>
+
+      </button>
+    </div>
+    <div class="recipe-page__right">
+      <div class="recipe-page__column">
+        right
+      </div>
+    </div>
+  </div>
+</section>
