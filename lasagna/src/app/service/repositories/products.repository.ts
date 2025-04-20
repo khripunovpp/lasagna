@@ -54,6 +54,7 @@ export class ProductsRepository {
     return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(uuid => {
       if (product.category_id) this._saveCategory(product.category_id);
       if (product.source) this._saveSource(product.source);
+      this._saveProductToHistory(uuid);
       return uuid;
     })
   }
@@ -77,8 +78,27 @@ export class ProductsRepository {
     return this._indexDbService.getAll(Stores.PRODUCTS) as Promise<Product[]>;
   }
 
-  editProduct(uuid: string, product: ProductDbValue) {
-    return this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue(product));
+  getLastProducts() {
+     const {top} = this._usingHistoryService.read('products');
+    const keys = Object.keys(top);
+    if (keys.length === 0) {
+      return Promise.resolve([]);
+    }
+
+    return this._indexDbService.getMany(Stores.PRODUCTS, keys).then(recipes => {
+      return recipes.toSorted((a, b) => {
+        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+      }).map(product => ({
+        product: product,
+        updatedAt: top[product.uuid].updatedAt,
+        count: top[product.uuid].count,
+      }))
+    })
+  }
+
+  async editProduct(uuid: string, product: ProductDbValue) {
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue(product));
+    this._saveProductToHistory(uuid);
   }
 
   deleteProduct(uuid: string) {
@@ -180,5 +200,10 @@ export class ProductsRepository {
 
   private _saveSource(source: string) {
     this._usingHistoryService.count('products_sources', source);
+  }
+
+
+  private _saveProductToHistory(uuid: string) {
+    this._usingHistoryService.count('products', uuid);
   }
 }

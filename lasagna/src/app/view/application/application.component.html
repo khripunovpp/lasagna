@@ -6,20 +6,15 @@
       <nav>
         <ul>
           <li>
-            <a routerLink="/recipes" routerLinkActive="active">
-              <lg-card [center]="true">
-                Recipes
-              </lg-card>
-            </a>
+            <lg-card>
+              <lg-last-edited-recipes></lg-last-edited-recipes>
+            </lg-card>
           </li>
 
           <li>
-            <a routerLink="/products" routerLinkActive="active">
-              <lg-card [center]="true">
-                Products
-              </lg-card>
-            </a>
-          </li>
+            <lg-card>
+              <lg-last-edited-products></lg-last-edited-products>
+            </lg-card>
         </ul>
       </nav>
     </section>
