@@ -4,7 +4,7 @@ import {GlobalSearchService, SearchResultContext} from '../../../service/service
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {debounceTime, from, Observable, of, switchMap, tap} from 'rxjs';
-import {AsyncPipe, JsonPipe} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {FadeInComponent} from '../fade-in.component';
 import {FocusTrapDirective} from '../focus-trap.directive';
 import hotkeys from 'hotkeys-js';
@@ -184,10 +184,9 @@ import {TitleComponent} from './title/title.component';
     AsyncPipe,
     FadeInComponent,
     ReactiveFormsModule,
-    JsonPipe,
     FocusTrapDirective,
     TitleComponent
-  ]
+]
 })
 export class GlobalSearchComponent {
   constructor(

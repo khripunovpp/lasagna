@@ -4,7 +4,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import {CardComponent} from '../ui/card/card.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
 import {FadeInComponent} from '../ui/fade-in.component';
-import {GlobalSearchComponent} from "../ui/layout/global-search.component";
+
 
 @Component({
   selector: 'app-application',
@@ -17,9 +17,8 @@ import {GlobalSearchComponent} from "../ui/layout/global-search.component";
     RouterLinkActive,
     CardComponent,
     TitleComponent,
-    FadeInComponent,
-    GlobalSearchComponent,
-  ]
+    FadeInComponent
+]
 })
 export class ApplicationComponent {
   title = 'lasagna';
