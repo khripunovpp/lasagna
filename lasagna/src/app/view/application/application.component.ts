@@ -6,6 +6,7 @@ import {TitleComponent} from '../ui/layout/title/title.component';
 import {FadeInComponent} from '../ui/fade-in.component';
 import {LastEditedRecipesComponent} from './last-edited-recipes/last-edited-recipes.component';
 import {LastEditedProductsComponent} from './last-edited-products/last-edited-products.component';
+import {GapRowComponent} from '../ui/layout/gap-row.component';
 
 
 @Component({
@@ -19,8 +20,9 @@ import {LastEditedProductsComponent} from './last-edited-products/last-edited-pr
     TitleComponent,
     FadeInComponent,
     LastEditedRecipesComponent,
-    LastEditedProductsComponent
-]
+    LastEditedProductsComponent,
+    GapRowComponent
+  ]
 })
 export class ApplicationComponent {
   title = 'lasagna';
