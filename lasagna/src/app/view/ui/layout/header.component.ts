@@ -97,6 +97,11 @@ import {GlobalSearchService} from '../../../service/services/global-search.servi
       justify-content: center;
       scroll-snap-align: center;
       gap: 8px;
+      min-width: 40px;
+       @media (max-width: 768px) {
+        flex: 0 0 auto;
+        min-width: 0;
+       }
     }
 
     .lg-header__leftToMiddle {
