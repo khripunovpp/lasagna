@@ -56,6 +56,7 @@ export class RecipesRepository {
   async addRecipe(recipe: RecipeDTO) {
     return this._indexDbService.addData(Stores.RECIPES, recipe).then(uuid => {
       if (recipe.category_id) this._saveCategory(recipe.category_id);
+      this._saveRecipeToHistory(uuid);
       return uuid;
     })
   }
@@ -87,8 +88,9 @@ export class RecipesRepository {
     });
   }
 
-  editRecipe(uuid: string, recipe: RecipeDTO) {
-    return this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
+  async editRecipe(uuid: string, recipe: RecipeDTO) {
+    await this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
+    this._saveRecipeToHistory(uuid);
   }
 
   saveDraftRecipe(recipe: Recipe, uuid?: string) {
@@ -188,7 +190,29 @@ export class RecipesRepository {
     })
   }
 
+  getLastRecipes() {
+    const {top} = this._usingHistoryService.read('recipes');
+    const keys = Object.keys(top);
+    if (keys.length === 0) {
+      return Promise.resolve([]);
+    }
+
+    return this._indexDbService.getMany(Stores.RECIPES, keys).then(recipes => {
+      return recipes.toSorted((a, b) => {
+        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+      }).map(recipe => ({
+        recipe: recipe,
+        updatedAt: top[recipe.uuid].updatedAt,
+        count: top[recipe.uuid].count,
+      }))
+    })
+  }
+
   private _saveCategory(uuid: string) {
     this._usingHistoryService.count('recipes_categories', uuid);
+  }
+
+  private _saveRecipeToHistory(uuid: string) {
+    this._usingHistoryService.count('recipes', uuid);
   }
 }
