@@ -158,6 +158,12 @@ export class DexieIndexDbService extends Dexie {
     return table.toArray();
   }
 
+  async getFirst(storeKey: Stores): Promise<any> {
+    // @ts-ignore
+    const table = (this[storeKey] as Table<any>)
+    return table.toCollection().first();
+  }
+
   async getMany(storeKey: Stores, uuids: string[]): Promise<any[]> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)

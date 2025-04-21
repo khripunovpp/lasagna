@@ -168,5 +168,18 @@ export const routes: Routes = [{
         .then(m => m.WidgetsPageComponent)
     },
 
+    {
+      path: 'docs',
+      loadComponent: () => import('./view/documentation/documentation-tree.component')
+        .then(m => m.DocumentationTreeComponent),
+      children: [
+        {
+          path: '**',
+
+          loadComponent: () => import('./view/documentation/article.component')
+            .then(m => m.ArticleComponent),
+        }
+      ]
+    }
   ]
 }];
