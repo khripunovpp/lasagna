@@ -1,0 +1,24 @@
+[
+  {
+    "type": "file",
+    "name": "requirenments.md",
+    "path": "getting-started/install/requirenments.md",
+    "title": "Требования",
+    "data": {
+      "title": "Требования",
+      "type": "card"
+    },
+    "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "intro.md",
+    "path": "getting-started/intro.md",
+    "title": "Начало работы",
+    "data": {
+      "title": "Начало работы",
+      "type": "card"
+    },
+    "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n<h2>Шаг 2</h2>\n<p>Запусти <code>npm install</code>.</p>\n"
+  }
+]
