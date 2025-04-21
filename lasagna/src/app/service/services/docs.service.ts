@@ -38,7 +38,7 @@ export class DocsService {
   private tree$ = new BehaviorSubject<TreeNode[]>([]);
 
   async init() {
-    const remoteMeta = await firstValueFrom(this._http.get<MetaInfo>('/docs/meta.json'));
+    const remoteMeta = await firstValueFrom(this._http.get<MetaInfo>('./docs/meta.json'));
     const localData = await this._indexedDB.getAll(Stores.DOCUMENTATION);
     const localMeta = localData?.find((item:any) => item.key === 'meta')?.value;
 
@@ -56,8 +56,8 @@ export class DocsService {
         DocFile[],
         TreeNode[]
       ] = await Promise.all([
-        firstValueFrom(this._http.get<DocFile[]>('/docs/data.json')),
-        firstValueFrom(this._http.get<TreeNode[]>('/docs/tree.json')),
+        firstValueFrom(this._http.get<DocFile[]>('./docs/data.json')),
+        firstValueFrom(this._http.get<TreeNode[]>('./docs/tree.json')),
       ]);
 
       await this._indexedDB.balkAdd(Stores.DOCUMENTATION, [
