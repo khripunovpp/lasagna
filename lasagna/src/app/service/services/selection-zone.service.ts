@@ -36,7 +36,5 @@ export class SelectionZoneService {
       }
       return value;
     })
-
-    console.log('selected', this.selected());
   }
 }

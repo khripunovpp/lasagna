@@ -51,15 +51,12 @@ export class DexieIndexDbService extends Dexie {
     const indexData = await this.getOne(Stores.INDICES, table);
 
     if (indexData) {
-      console.log('Index loaded:', table, indexData);
       await this.flexsearchIndexService.importIndex(table, indexData.indexData);
     } else {
-      console.log('No index found for table:', table);
       await this.getAll(table as Stores).then(async (data) => {
         for (const item of data) {
           await this.flexsearchIndexService.addToIndex(table, item);
         }
-        console.log('Index created for table:', table);
       });
 
       await this.saveIndex(table);
@@ -90,8 +87,6 @@ export class DexieIndexDbService extends Dexie {
 
   async loadIndex(table: string) {
     const indexData = await this.filter(Stores.INDICES, 'table', table, true);
-
-    console.log('Index data:', indexData);
 
     if (indexData?.[0]) {
       return indexData[0].indexData;

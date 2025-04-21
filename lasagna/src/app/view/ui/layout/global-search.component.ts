@@ -222,9 +222,6 @@ export class GlobalSearchComponent {
         } as any;
       }));
     }),
-    tap((group) => {
-      console.log(group);
-    }),
   );
 
   showBar = computed(() => this._globalSearchService.displayBar());
