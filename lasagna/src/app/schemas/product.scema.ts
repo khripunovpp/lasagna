@@ -8,6 +8,8 @@ export const ProductDbInputScheme = z.object({
   category_id: z.string().nullable().optional(),
   uuid: z.string().optional(),
   unit: z.string(),
+  createdAt: z.number().optional(),
+  updatedAt: z.number().optional(),
 });
 
 export type ProductDbInputSchemeT = z.infer<typeof ProductDbInputScheme>;

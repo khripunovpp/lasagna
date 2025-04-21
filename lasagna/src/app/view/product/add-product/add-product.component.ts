@@ -14,6 +14,7 @@ import {debounceTime} from 'rxjs';
 
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -27,14 +28,18 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
     GapRowComponent,
     FadeInComponent,
     ButtonComponent,
-    ShrinkDirective
-],
+    ShrinkDirective,
+    DatePipe
+  ],
   template: `
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>Edit Product</lg-title>
+                      @if (product()?.updatedAt) {
+                          (last edited {{ product()?.updatedAt | date: 'short' }})
+                      }
                   } @else {
                       <lg-title>Add Product</lg-title>
                   }
@@ -47,7 +52,7 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
                   <lg-add-product-form [product]="product()"></lg-add-product-form>
               </lg-card>
 
-              <lg-gap-row [relaxed]="true" [mobileMode]="true">
+              <lg-gap-row [mobileMode]="true" [relaxed]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-button lgShrink (click)="onEditProduct()">
                           Edit Product

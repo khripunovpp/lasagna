@@ -19,6 +19,8 @@ export interface Product {
   source: string
   unit?: ProductUnit
   category_id: CategoryProduct | null
+  createdAt?: number
+  updatedAt?: number
 }
 
 export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
@@ -50,8 +52,13 @@ export class ProductsRepository {
     });
   }
 
-  addProduct(product: ProductDbValue) {
-    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue(product)).then(uuid => {
+  addProduct(
+    product: Omit<ProductDbValue, 'createdAt'>,
+  ) {
+    return this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue({
+      ...product,
+      createdAt: Date.now(),
+    })).then(uuid => {
       if (product.category_id) this._saveCategory(product.category_id);
       if (product.source) this._saveSource(product.source);
       this._saveProductToHistory(uuid);
@@ -79,7 +86,7 @@ export class ProductsRepository {
   }
 
   getLastProducts() {
-     const {top} = this._usingHistoryService.read('products');
+    const {top} = this._usingHistoryService.read('products');
     const keys = Object.keys(top);
     if (keys.length === 0) {
       return Promise.resolve([]);
@@ -96,38 +103,19 @@ export class ProductsRepository {
     })
   }
 
-  async editProduct(uuid: string, product: ProductDbValue) {
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue(product));
+  async editProduct(
+    uuid: string,
+    product: Omit<ProductDbValue, 'updatedAt'>
+  ) {
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue({
+      ...product,
+      updatedAt: Date.now(),
+    }));
     this._saveProductToHistory(uuid);
   }
 
   deleteProduct(uuid: string) {
     return this._indexDbService.remove(Stores.PRODUCTS, uuid);
-  }
-
-  makeFromData(
-    data: any | any[],
-  ): Product | Product[] {
-    if (Array.isArray(data)) {
-      return data.map(d => ({
-        uuid: d.uuid,
-        name: d.name,
-        price: d.price,
-        amount: d.amount,
-        source: d.source,
-        category_id: d.category_id,
-        unit: d.unit,
-      }));
-    }
-    return {
-      uuid: data.uuid,
-      name: data.name,
-      price: data.price,
-      amount: data.amount,
-      source: data.source,
-      category_id: data.category_id,
-      unit: data.unit,
-    };
   }
 
   getTopCategories() {
@@ -189,6 +177,8 @@ export class ProductsRepository {
         source: String((product as any).source || ''),
         category_id: String((product as any).category_id || ''),
         unit: String((product as any).unit || ''),
+        createdAt: Number((product as any).createdAt),
+        updatedAt: Number((product as any).updatedAt),
       })
     }
     return null as any;
