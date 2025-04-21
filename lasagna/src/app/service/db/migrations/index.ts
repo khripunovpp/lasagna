@@ -1,6 +1,6 @@
 import {Stores} from '../../const/stores';
 import {Transaction} from 'dexie';
-import {Product, ProductDbValue} from '../../repositories/products.repository';
+import {ProductDbValue} from '../../repositories/products.repository';
 import {CategoryProduct} from '../../repositories/category-products-repository.service';
 
 export const migrations: {
@@ -132,7 +132,7 @@ export const migrations: {
           const products = await productsTable.toArray();
 
           // first update products with the new uuid
-          await Promise.all(products.map((item:any) => {
+          await Promise.all(products.map((item: any) => {
             const category = categories.find((i) => i.uuid === item.category_id);
             if (category) {
               return productsTable.update(item.uuid, {category_id: category.name});
@@ -155,7 +155,7 @@ export const migrations: {
           const recipes = await recipesTable.toArray();
 
           // first update recipes with the new categories
-          await Promise.all(recipes.map((item:any) => {
+          await Promise.all(recipes.map((item: any) => {
             const category = categories.find((i) => i.uuid === item.category_id);
             if (category) {
               return recipesTable.update(item.uuid, {category_id: category.name});
@@ -170,17 +170,29 @@ export const migrations: {
 
           resolve();
         }),
-      ]).then(() => {})
+      ]).then(() => {
+      })
     }
   },
-   {
+  {
     version: 9,
     schema: {
       [Stores.PRODUCTS]: '++uuid,name,source',
       [Stores.RECIPES]: '++uuid,name',
       [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
       [Stores.RECIPES_CATEGORIES]: '++uuid,name',
-      [Stores.INDICES]: '++table_name',
+      [Stores.INDICES]: '++uuid',
+    },
+  },
+  {
+    version: 10,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
     },
   },
 ]

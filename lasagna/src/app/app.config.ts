@@ -16,6 +16,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {CategoryRecipesRepository} from './service/repositories/category-recipes-repository.service';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import 'hammerjs';
+import {DocsService} from './service/services/docs.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,9 +30,11 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const categoryRepository = inject(CategoryProductsRepository);
       const recipeCategoryRepository = inject(CategoryRecipesRepository);
+      const docsService = inject(DocsService);
       return Promise.all([
         categoryRepository.preloadCategories(),
         recipeCategoryRepository.preloadCategories(),
+        docsService.init(),
       ])
     }),
     provideServiceWorker('ngsw-worker.js', {
