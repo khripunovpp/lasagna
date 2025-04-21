@@ -172,11 +172,6 @@ export class AutocompleteComponent
     const valA = a as any;
     const valB = b as any;
 
-    console.log({
-      valA,
-      valB
-    })
-
     if (!a || !b) {
       return false;
     }

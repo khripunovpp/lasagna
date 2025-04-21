@@ -79,7 +79,7 @@ export class DocsService {
       this.tree$.next(tree);
     } else {
       const docsRecords = await this._indexedDB.getAll(Stores.DOCUMENTATION);
-      console.log({docsRecords})
+
       const tree = docsRecords?.find((item:any) => item.key === 'tree')?.value;
       const docs = docsRecords?.find((item:any) => item.key === 'data')?.value;
 

@@ -134,6 +134,5 @@ export class ControlsBarComponent {
   }
 
   ngOnInit() {
-    console.log('Controls bar mounted');
   }
 }

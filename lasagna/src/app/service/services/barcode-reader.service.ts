@@ -38,8 +38,6 @@ export class BarcodeReaderService {
         backCam.deviceId,
         videoElement,
         (result) => {
-          console.log({result});
-
           if (result) {
             callback(result);
           } else {

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {DocsService} from '../../service/services/docs.service';
-import {AsyncPipe, JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
@@ -48,10 +48,9 @@ import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
   imports: [
     AsyncPipe,
     RouterLink,
-    JsonPipe,
     NgTemplateOutlet,
     RouterOutlet
-  ],
+],
 })
 export class DocumentationTreeComponent {
   constructor(
