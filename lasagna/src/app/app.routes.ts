@@ -180,6 +180,12 @@ export const routes: Routes = [{
             .then(m => m.ArticleComponent),
         }
       ]
+    },
+
+    {
+      path: '**',
+      loadComponent: () => import('./view/ui/error-page-404.component')
+        .then(m => m.ErrorPage404Component),
     }
   ]
 }];

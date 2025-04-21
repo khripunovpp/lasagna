@@ -36,6 +36,9 @@ export class ArticleComponent {
       url: this.route.snapshot.url.map(segment => segment.path).join('/'),
     })),
     map(({data,url}) => {
+      if (!url) {
+        return 'Start';
+      }
       const doc = data.find(doc => doc.path.includes(url));
       return doc?.html || '404 Not Found';
     }),
