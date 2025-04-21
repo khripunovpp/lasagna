@@ -25,6 +25,8 @@ export interface Recipe {
   outcome_unit: string
   taxTemplateName?: string
   category_id?: CategoryRecipe | null
+  createdAt?: number
+  updatedAt?: number
 }
 
 export type RecipeDTO = Omit<Recipe, 'ingredients' | 'category_id'> & {
@@ -53,8 +55,12 @@ export class RecipesRepository {
     return this._stream$.asObservable();
   }
 
-  async addRecipe(recipe: RecipeDTO) {
-    return this._indexDbService.addData(Stores.RECIPES, recipe).then(uuid => {
+  async addRecipe(
+    recipe: Omit<RecipeDTO, 'createdAt'>
+  ) {
+    return this._indexDbService.addData(Stores.RECIPES, Object.assign(recipe, {
+      createdAt: Date.now(),
+    })).then(uuid => {
       if (recipe.category_id) this._saveCategory(recipe.category_id);
       this._saveRecipeToHistory(uuid);
       return uuid;
@@ -88,8 +94,13 @@ export class RecipesRepository {
     });
   }
 
-  async editRecipe(uuid: string, recipe: RecipeDTO) {
-    await this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe);
+  async editRecipe(
+    uuid: string,
+    recipe: Omit<RecipeDTO, 'updatedAt'>
+  ) {
+    await this._indexDbService.replaceData(Stores.RECIPES, uuid, Object.assign(recipe,{
+      updatedAt: Date.now(),
+    }));
     this._saveRecipeToHistory(uuid);
   }
 
@@ -160,6 +171,8 @@ export class RecipesRepository {
       })),
       taxTemplateName: recipe.taxTemplateName,
       category_id: recipe.category_id ? {uuid: recipe.category_id} as CategoryRecipe : null,
+      createdAt: recipe.createdAt,
+      updatedAt: recipe.updatedAt,
     };
   }
 
@@ -173,6 +186,8 @@ export class RecipesRepository {
       ingredients: recipe.ingredients.map(ingredient => this.ingredientToDto(ingredient)),
       taxTemplateName: recipe.taxTemplateName,
       category_id: recipe.category_id ? recipe.category_id.uuid : null,
+      createdAt: recipe.createdAt,
+      updatedAt: recipe.updatedAt,
     };
   }
 

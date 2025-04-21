@@ -15,6 +15,7 @@ import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {re} from 'mathjs';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-recipe',
@@ -27,7 +28,8 @@ import {re} from 'mathjs';
     ButtonComponent,
     GapRowComponent,
     FadeInComponent,
-    ShrinkDirective
+    ShrinkDirective,
+    DatePipe
   ],
   template: `
 
@@ -36,6 +38,9 @@ import {re} from 'mathjs';
               <lg-gap-row [center]="true" [mobileMode]="true">
                   @if ((recipe() && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
                       <lg-title>Edit Recipe</lg-title>
+                      @if (recipe()?.updatedAt) {
+                          (last edited {{ recipe()?.updatedAt | date: 'short' }})
+                      }
                   } @else {
                       <lg-title>Add Recipe</lg-title>
                   }
