@@ -21,9 +21,7 @@ import {ExpandDirective} from '../../directives/expand.directive';
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
-
-
-
+import {TagsControlComponent} from '../../ui/form/tags-control.component';
 
 export type ProductFormValue = Omit<Product, 'uuid'>
 
@@ -44,8 +42,9 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ButtonsGroupComponent,
     ExpandDirective,
     ChipsListComponent,
-    AutocompleteComponent
-],
+    AutocompleteComponent,
+    TagsControlComponent
+  ],
   styles: [
     `
       lg-eggs-widget {
@@ -74,6 +73,7 @@ export class AddProductFormComponent
     unit: new FormControl('gram'),
     source: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null, Validators.required),
+    tags: new FormControl<string[]>([]),
   });
   buttons: ButtonGroupItem[] = [
     {
@@ -117,6 +117,7 @@ export class AddProductFormComponent
       source: null,
       category_id: null,
       unit: 'gram',
+      tags: [],
     };
   }
 

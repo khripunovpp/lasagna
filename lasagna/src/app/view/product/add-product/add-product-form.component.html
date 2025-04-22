@@ -1,5 +1,10 @@
 <form [formGroup]="form">
   <lg-gap-column>
+     <lg-control label="Tags">
+        <lg-tags-control [resource]="'tags'"
+                         [multi]="true"
+                         formControlName="tags"></lg-tags-control>
+      </lg-control>
     <lg-control label="Name">
       <lg-autocomplete #nameField
                        [key]="'name'"

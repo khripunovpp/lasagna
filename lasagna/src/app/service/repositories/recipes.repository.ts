@@ -6,6 +6,8 @@ import {CategoryRecipe, CategoryRecipesRepository} from './category-recipes-repo
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
 import {DraftFormsService} from '../services/draft-forms.service';
+import {TagsRepositoryService} from './tags-repository.service';
+import {randomRGB} from '../../helpers/color.helper';
 
 export interface Ingredient {
   name?: string
@@ -27,6 +29,7 @@ export interface Recipe {
   category_id?: CategoryRecipe | null
   createdAt?: number
   updatedAt?: number
+  tags?: string[]
 }
 
 export type RecipeDTO = Omit<Recipe, 'ingredients' | 'category_id'> & {
@@ -46,6 +49,7 @@ export class RecipesRepository {
     private _usingHistoryService: UsingHistoryService,
     private _categoryRepository: CategoryRecipesRepository,
     private _draftFormsService: DraftFormsService,
+    private _tagsRepository: TagsRepositoryService,
   ) {
   }
 
@@ -58,13 +62,20 @@ export class RecipesRepository {
   async addRecipe(
     recipe: Omit<RecipeDTO, 'createdAt'>
   ) {
-    return this._indexDbService.addData(Stores.RECIPES, Object.assign(recipe, {
+    const uuid = await this._indexDbService.addData(Stores.RECIPES, Object.assign(recipe, {
       createdAt: Date.now(),
-    })).then(uuid => {
-      if (recipe.category_id) this._saveCategory(recipe.category_id);
-      this._saveRecipeToHistory(uuid);
-      return uuid;
-    })
+    }));
+
+    if (recipe.category_id) this._saveCategory(recipe.category_id);
+    this._saveRecipeToHistory(uuid);
+
+    if (recipe.tags?.length) {
+      for (const tag of recipe.tags) {
+        await this._saveTag(tag);
+      }
+    }
+
+    return uuid;
   }
 
   loadRecipes() {
@@ -98,10 +109,15 @@ export class RecipesRepository {
     uuid: string,
     recipe: Omit<RecipeDTO, 'updatedAt'>
   ) {
-    await this._indexDbService.replaceData(Stores.RECIPES, uuid, Object.assign(recipe,{
+    await this._indexDbService.replaceData(Stores.RECIPES, uuid, Object.assign(recipe, {
       updatedAt: Date.now(),
     }));
     this._saveRecipeToHistory(uuid);
+    if (recipe.tags?.length) {
+      for (const tag of recipe.tags) {
+        await this._saveTag(tag);
+      }
+    }
   }
 
   saveDraftRecipe(recipe: Recipe, uuid?: string) {
@@ -229,5 +245,12 @@ export class RecipesRepository {
 
   private _saveRecipeToHistory(uuid: string) {
     this._usingHistoryService.count('recipes', uuid);
+  }
+
+  private _saveTag(tag: string) {
+    return this._tagsRepository.addOne({
+      name: tag,
+      style: randomRGB(),
+    });
   }
 }
