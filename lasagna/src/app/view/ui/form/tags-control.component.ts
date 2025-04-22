@@ -9,33 +9,56 @@ import {
   viewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
+import {
+  NgLabelTemplateDirective,
+  NgMultiLabelTemplateDirective,
+  NgOptionTemplateDirective,
+  NgSelectComponent
+} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {JsonPipe, SlicePipe} from '@angular/common';
 
 
 
-export interface MultiselectItem {
+export interface TagsItem {
   value: unknown
 }
 
 @Component({
-  selector: 'lg-multiselect',
+  selector: 'lg-tags-control',
   standalone: true,
   template: `
-      <div class="multiselect">
+      <div class="tags-control">
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
+                     [addTag]="true"
                      [compareWith]="compareWith"
-                     [multiple]="multi()"
                      [items]="loadedList()"
+                     [multiple]="multi()"
+                     [bindValue]="'name'"
                      [ngModel]="value"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
+               {{ item?.name ?? item }}
               </ng-template>
               <ng-template let-item="item" ng-option-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
+                  {{ item?.name ?? item }}
+              </ng-template>
+              <ng-template let-clear="clear" let-items="items" ng-multi-label-tmp>
+                  @for (item of items | slice: 0 : 2;track item) {
+                      <div class="ng-value">
+                          <span class="ng-value-label">
+                               {{ $any(item)?.name ?? item }}
+                          </span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                      </div>
+                  }
+                  @if (items.length > 2) {
+                      <div class="ng-value">
+                          <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                      </div>
+                  }
               </ng-template>
           </ng-select>
       </div>
@@ -44,17 +67,20 @@ export interface MultiselectItem {
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective
-],
+    NgLabelTemplateDirective,
+    JsonPipe,
+    NgMultiLabelTemplateDirective,
+    SlicePipe
+  ],
   styles: [
     `
-      lg-multiselect {
+      lg-tags-control {
         display: flex;
         flex: 1;
         min-width: 150px;
       }
 
-      .multiselect {
+      .tags-control {
         flex: 1;
 
         .ng-select.ng-select-single .ng-select-container {
@@ -95,13 +121,13 @@ export interface MultiselectItem {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultiselectComponent),
+      useExisting: forwardRef(() => TagsControlComponent),
       multi: true
     }
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class MultiselectComponent
+export class TagsControlComponent
   implements ControlValueAccessor, OnInit {
   constructor(
     @Optional() private _selectResourcesService: SelectResourcesService,
@@ -122,25 +148,20 @@ export class MultiselectComponent
   onTouched: () => void = () => {
   };
 
-  searchFn = (term: string, item: MultiselectItem) => {
+  searchFn = (term: string, item: TagsItem) => {
     const val = item as any;
-    return val.name?.toLowerCase().includes(term.toLowerCase())
-      || val?.toString().toLowerCase().includes(term.toLowerCase())
+    return val?.toString().toLowerCase().includes(term.toLowerCase())
   }
 
-  compareWith = (a: MultiselectItem, b: MultiselectItem) => {
+  compareWith = (a: TagsItem, b: TagsItem) => {
     const valA = a as any;
     const valB = b as any;
 
-    return valA?.uuid === valB
-      || valA === valB
-      || valA?.uuid === valB?.uuid
-      || valA === valB?.uuid;
+    return valA === valB
   }
 
   writeValue(value: unknown): void {
     this.change(value);
-    this.selectComponent()!.searchTerm = '';
   }
 
   change(value: unknown) {

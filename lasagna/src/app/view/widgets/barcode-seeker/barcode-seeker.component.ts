@@ -145,7 +145,7 @@ export class BarcodeSeekerWidgetComponent {
   }
 
   addProduct() {
-    this._productRepository.addProduct({
+    this._productRepository.addOne({
       name: this.product.name,
       price: this.product.price,
       amount: this.product.amount,

@@ -195,4 +195,16 @@ export const migrations: {
       [Stores.DOCUMENTATION]: '++key',
     },
   },
+  {
+    version: 11,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.TAGS]: '++name',
+    },
+  },
 ]
