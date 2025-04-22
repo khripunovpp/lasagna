@@ -11,6 +11,10 @@ export const flaterizeObjectWithUuid = <T>(value: any): T => {
   for (const key in value) {
     if (Array.isArray(value[key])) {
       out[key] = value[key].reduce((acc: any[], item: any) => {
+        if (typeof item === 'string') {
+          acc.push(item);
+          return acc;
+        }
         acc.push(flaterizeObjectWithUuid(item));
         return acc;
       }, []);

@@ -68,6 +68,13 @@ export const resources: Record<string, SelectResourcesConfig> = {
       selectUniqueKey: 'source',
     },
   },
+  'tags': {
+    name: 'tags',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.TAGS,
+    },
+  },
   taxTemplates: {
     name: 'taxTemplates',
     loaderConfig: {
