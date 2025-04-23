@@ -1,12 +1,8 @@
 import {Injectable} from '@angular/core';
-import {CategoryFormValue} from '../../view/settings/category/add-category/add-category-form.component';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
-
-export interface CategoryProduct {
-  uuid: string
-  name: string
-}
+import {CategoryProduct} from '../models/CategoryProduct';
+import {CategoryProductDTO} from '../shemes/CategoryProduct.scheme';
 
 @Injectable({
   providedIn: 'root'
@@ -17,32 +13,37 @@ export class CategoryProductsRepository {
   ) {
   }
 
-  addCategory(product: CategoryFormValue) {
-    return this._indexDbService.addData(Stores.PRODUCTS_CATEGORIES, product);
+  addOne(product: CategoryProduct) {
+    return this._indexDbService.addData(Stores.PRODUCTS_CATEGORIES, product.toDTO(), product.name);
+  }
+
+  updateOne(uuid: string, category: CategoryProduct) {
+    return this._indexDbService.replaceData(Stores.PRODUCTS_CATEGORIES, uuid, category.toDTO());
   }
 
   async getOne(
     uuid: string,
   ) {
-    return this._indexDbService.getOne(Stores.PRODUCTS_CATEGORIES, uuid);
+    return this._indexDbService
+      .getOne<CategoryProduct>(Stores.PRODUCTS_CATEGORIES, uuid)
+      .then(category => {
+        return CategoryProduct.fromRaw(category);
+      });
   }
 
-
-  getCategories() {
-    return this._indexDbService.getAll(Stores.PRODUCTS_CATEGORIES) as Promise<CategoryProduct[]>;
+  getAll() {
+    return this._indexDbService.getAll<CategoryProduct>(Stores.PRODUCTS_CATEGORIES)
+      .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
   }
 
-  getManyCategories(
+  getMany(
     uuids: string[],
   ) {
-    return this._indexDbService.getMany(Stores.PRODUCTS_CATEGORIES, uuids);
+    return this._indexDbService.getMany<CategoryProduct>(Stores.PRODUCTS_CATEGORIES, uuids)
+     .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
   }
 
-  editCategory(uuid: string, category: CategoryFormValue) {
-    return this._indexDbService.replaceData(Stores.PRODUCTS_CATEGORIES, uuid, category);
-  }
-
-  deleteCategory(uuid: string) {
+  deleteOne(uuid: string) {
     return this._indexDbService.remove(Stores.PRODUCTS_CATEGORIES, uuid);
   }
 
@@ -51,7 +52,7 @@ export class CategoryProductsRepository {
     if (categoriesInstalled) {
       return;
     }
-    const categories = await this.getCategories();
+    const categories = await this.getAll();
     if (categories.length === 0) {
       const defaultCategories = [
         "Кремы и начинки",
@@ -79,10 +80,10 @@ export class CategoryProductsRepository {
         "Овощи",
         "Пасты",
         "Соль"
-      ].map((name, index) => ({
+      ].map((name, index) => CategoryProduct.fromRaw({
         uuid: name,
         name,
-      }));
+      }).toDTO());
       await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesInstalled', 'true');
     }

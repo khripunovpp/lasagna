@@ -20,7 +20,6 @@ import {SelectResourcesService} from '../../../service/services/select-resources
 import {JsonPipe, SlicePipe} from '@angular/common';
 
 
-
 export interface TagsItem {
   value: unknown
 }
@@ -33,32 +32,28 @@ export interface TagsItem {
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
                      [addTag]="true"
+                     [bindValue]="'name'"
                      [compareWith]="compareWith"
                      [items]="loadedList()"
                      [multiple]="multi()"
-                     [bindValue]="'name'"
                      [ngModel]="value"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
-               {{ item?.name ?? item }}
+                  {{ $any(item)?.name ?? $any(item)?.label ?? item }}
               </ng-template>
               <ng-template let-item="item" ng-option-tmp>
-                  {{ item?.name ?? item }}
+                  {{ $any(item)?.name ?? $any(item)?.label ?? item }}
               </ng-template>
               <ng-template let-clear="clear" let-items="items" ng-multi-label-tmp>
-                  @for (item of items | slice: 0 : 2;track item) {
+                  @for (item of items;track $any(item)?.name ?? $any(item)?.label ?? item) {
                       <div class="ng-value">
                           <span class="ng-value-label">
-                               {{ $any(item)?.name ?? item }}
+                              {{ $any(item)?.name ?? $any(item)?.label ?? item }}
                           </span>
                           <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
                       </div>
                   }
-                  @if (items.length > 2) {
-                      <div class="ng-value">
-                          <span class="ng-value-label">{{ items.length - 2 }} more...</span>
-                      </div>
-                  }
+
               </ng-template>
           </ng-select>
       </div>
@@ -83,7 +78,7 @@ export interface TagsItem {
       .tags-control {
         flex: 1;
 
-        .ng-select.ng-select-single .ng-select-container {
+        .ng-select .ng-select-container {
           height: 51px;
         }
 

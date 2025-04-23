@@ -1,12 +1,8 @@
 import {Injectable} from '@angular/core';
-import {CategoryFormValue} from '../../view/settings/category/add-category/add-category-form.component';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
-
-export interface CategoryRecipe {
-  uuid: string
-  name: string
-}
+import {CategoryRecipe} from '../models/CategoryRecipe';
+import {CategoryRecipeDTO} from '@service/shemes/CategoryRecipe.scheme';
 
 @Injectable({
   providedIn: 'root'
@@ -17,29 +13,38 @@ export class CategoryRecipesRepository {
   ) {
   }
 
-  addCategory(product: CategoryFormValue) {
-    return this._indexDbService.addData(Stores.RECIPES_CATEGORIES, product);
+  addCategory(category: CategoryRecipe) {
+    return this._indexDbService.addData<CategoryRecipeDTO>(Stores.RECIPES_CATEGORIES, category.toDTO(), category.name);
+  }
+
+  editCategory(uuid: string, category: CategoryRecipe) {
+    return this._indexDbService.replaceData(Stores.RECIPES_CATEGORIES, uuid, category.toDTO());
   }
 
   async getOne(
     uuid: string,
   ) {
-    return this._indexDbService.getOne(Stores.RECIPES_CATEGORIES, uuid);
+    return this._indexDbService
+      .getOne<CategoryRecipe>(Stores.RECIPES_CATEGORIES, uuid)
+      .then(category => {
+        return CategoryRecipe.fromRaw(category);
+      });
   }
 
 
   getCategories() {
-    return this._indexDbService.getAll(Stores.RECIPES_CATEGORIES) as Promise<CategoryRecipe[]>;
+    return this._indexDbService.getAll<CategoryRecipe>(Stores.RECIPES_CATEGORIES).then(categories => {
+      return categories.map(category => CategoryRecipe.fromRaw(category));
+    });
   }
 
   getManyCategories(
     uuids: string[],
   ) {
-    return this._indexDbService.getMany(Stores.RECIPES_CATEGORIES, uuids);
-  }
-
-  editCategory(uuid: string, category: CategoryFormValue) {
-    return this._indexDbService.replaceData(Stores.RECIPES_CATEGORIES, uuid, category);
+    return this._indexDbService.getMany<CategoryRecipe>(Stores.RECIPES_CATEGORIES, uuids)
+      .then(categories => {
+        return categories.map(category => CategoryRecipe.fromRaw(category));
+      })
   }
 
   deleteCategory(uuid: string) {
@@ -84,10 +89,10 @@ export class CategoryRecipesRepository {
         'Веганские десерты',
         'Завтраки',
         'Авторские десерты'
-      ].map((name, index) => ({
+      ].map((name, index) => CategoryRecipe.fromRaw({
         uuid: name,
         name,
-      }));
+      }).toDTO());
       await this._indexDbService.balkAdd(Stores.RECIPES_CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesRecipesInstalled', 'true');
     }

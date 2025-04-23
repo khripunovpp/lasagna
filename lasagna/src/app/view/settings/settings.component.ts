@@ -8,6 +8,7 @@ import {TitleComponent} from '../ui/layout/title/title.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {GapColumnComponent} from '../ui/layout/gap-column.component';
 import {FadeInComponent} from "../ui/fade-in.component";
+import {ExpandDirective} from '@view/directives/expand.directive';
 
 @Component({
   selector: 'lg-settings',
@@ -22,7 +23,8 @@ import {FadeInComponent} from "../ui/fade-in.component";
     RouterLink,
     RouterLinkActive,
     GapColumnComponent,
-    FadeInComponent
+    FadeInComponent,
+    ExpandDirective
   ]
 })
 export class SettingsComponent {

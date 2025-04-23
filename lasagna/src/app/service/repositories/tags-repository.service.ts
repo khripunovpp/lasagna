@@ -1,11 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
-
-export interface Tag {
-  name: string
-  style: string // CSS color or string token
-}
+import {Tag} from '@service/models/Tag';
+import {TagDTO} from '@service/shemes/Tag.scheme';
 
 @Injectable({
   providedIn: 'root'
@@ -17,28 +14,27 @@ export class TagsRepositoryService {
   }
 
   addOne(tag: Tag) {
-    return this._indexDbService.addData(Stores.TAGS, tag);
+    return this._indexDbService.addData<TagDTO>(Stores.TAGS, tag.toDTO(), tag.name);
   }
 
   async getOne(
     uuid: string,
   ) {
-    return this._indexDbService.getOne(Stores.TAGS, uuid);
+    return this._indexDbService.getOne<TagDTO>(Stores.TAGS, uuid);
   }
 
-
   getAll() {
-    return this._indexDbService.getAll(Stores.TAGS) as Promise<Tag[]>;
+    return this._indexDbService.getAll<TagDTO>(Stores.TAGS);
   }
 
   getMany(
     uuids: string[],
   ) {
-    return this._indexDbService.getMany(Stores.TAGS, uuids);
+    return this._indexDbService.getMany<TagDTO>(Stores.TAGS, uuids);
   }
 
   editOne(uuid: string, tag: Tag) {
-    return this._indexDbService.replaceData(Stores.TAGS, uuid, tag);
+    return this._indexDbService.replaceData<TagDTO>(Stores.TAGS, uuid, tag.toDTO());
   }
 
   deleteOne(uuid: string) {

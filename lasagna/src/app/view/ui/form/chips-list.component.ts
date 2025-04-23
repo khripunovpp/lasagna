@@ -6,7 +6,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   standalone: true,
   template: `
       <div class="chips-list">
-          @for (item of items;track item;let last = $last) {
+          @for (item of items;track item.label;let last = $last) {
               <span class="chip"
                     (click)="onSelect(item)"
                     [class.selected]="item.value === value"

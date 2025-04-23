@@ -7,16 +7,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
-import {Recipe, RecipeDTO, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {DraftForm} from '../../../service/services/draft-forms.service';
-import {debounceTime} from 'rxjs';
-import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
+import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {re} from 'mathjs';
 import {DatePipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
+import {Recipe} from '../../../service/models/Recipe';
 
 @Component({
   selector: 'app-add-recipe',
@@ -39,7 +38,10 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
           <lg-container>
               <lg-gap-row [center]="true" [mobileMode]="true">
                   @if ((recipe() && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-title>Edit Recipe</lg-title>
+                      <lg-title>
+                          Edit
+                          <span class="text-active">{{ recipe()?.name }}</span>
+                      </lg-title>
                       @if (recipe()?.updatedAt) {
                           (last edited {{ recipe()?.updatedAt | timeAgo }})
                       }
@@ -111,25 +113,30 @@ export class AddRecipeComponent
   }
 
   draftOrRecipeUUID = signal<string | undefined>(undefined);
-  recipe = signal<Recipe | null>(null);
+  recipe = signal<Recipe | undefined>(undefined);
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
-  draftRef = signal<DraftForm<Recipe> | null>(null);
+  draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
   draftByExistingRecipe = computed(() => {
     return this.draftRef()!.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
-  protected readonly re = re;
+  draftRecipeModel?: Recipe;
 
   ngOnInit() {
-    this._aRoute.params.subscribe(params => {
+    combineLatest([
+      this._aRoute.params,
+      this._aRoute.data
+    ]).subscribe(([params, data]) => {
+      const draft = data['draft'] as DraftForm<Recipe>;
       this.draftOrRecipeUUID.set(params['uuid']);
-      this._loadRecipe(this.draftOrRecipeUUID());
-    });
 
-    this._aRoute.data.subscribe(data => {
-      if (data['draft']) {
-        this.draftRef.set(data['draft']);
-        this.recipe.set(data['draft'].data);
+      if (draft) {
+        this.draftRef.set(draft);
+        this.recipe.set(draft.data);
+      } else if (data['recipe']) {
+        this.recipe.set(data['recipe']);
+      } else {
+        this._loadRecipe(this.draftOrRecipeUUID());
       }
       this.isDraftRoute.set(!!data['draftRoute']);
     });
@@ -144,32 +151,42 @@ export class AddRecipeComponent
         return
       }
 
+      this.recipe.update((recipe) => {
+        if (recipe) {
+          recipe.update(value)
+          return recipe;
+        }
+        return Recipe.fromRaw(value);
+      });
+
       if (this.draftRef()?.uuid) {
         this._recipesRepository.updateDraftRecipe(
           this.draftRef()!.uuid,
-          value as any,
+          this.recipe()!,
           this.draftRef()!.meta?.['uuid']
         );
       } else {
         this.draftRef.set(this._recipesRepository.saveDraftRecipe(
-          value as any,
+          this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));
       }
     });
   }
 
   onAddRecipe() {
-    if (!this.formComponent()?.validateForm()) {
+    if (!this.formComponent()?.validateForm()
+      || !this.recipe()) {
       return;
     }
-    this._addRecipe(this.formComponent()!.value);
+    this._addRecipe(this.recipe()!);
   }
 
   onEditRecipe() {
-    if (!this.formComponent()?.validateForm()) {
+    if (!this.formComponent()?.validateForm()
+      || !this.recipe()) {
       return;
     }
-    this._editRecipe(this.formComponent()!.value);
+    this._editRecipe(this.recipe()!);
   }
 
   onRemoveDraft() {
@@ -178,7 +195,7 @@ export class AddRecipeComponent
   }
 
   private _addRecipe(recipe: Recipe) {
-    this._recipesRepository.addRecipe(flaterizeObjectWithUuid<RecipeDTO>(recipe)).then(() => {
+    this._recipesRepository.addRecipe(recipe).then(() => {
       this.formComponent()?.resetForm();
       this._notificationsService.success('Recipe added');
 
@@ -197,7 +214,7 @@ export class AddRecipeComponent
       return;
     }
     let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
-    this._recipesRepository.editRecipe(recipeUUID as string, flaterizeObjectWithUuid<RecipeDTO>(recipe)).then(() => {
+    this._recipesRepository.editRecipe(recipeUUID as string, recipe).then(() => {
       this.formComponent()?.resetForm(recipe);
       this._notificationsService.success('Recipe edited');
 
@@ -216,7 +233,7 @@ export class AddRecipeComponent
       return;
     }
     this._recipesRepository.removeDraftRecipe(this.draftRef()!.uuid)
-    this.draftRef.set(null);
+    this.draftRef.set(undefined);
   }
 
   private _loadRecipe(uuid?: string) {

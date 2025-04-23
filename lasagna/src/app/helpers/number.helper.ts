@@ -6,7 +6,7 @@ export const parseFloatingNumber = (value :any) => {
     // Заменяем запятую на точку
     const normalized = value.replace(',', '.');
     const parsed = parseFloat(normalized);
-    return isNaN(parsed) ? null : parsed;
+    return isNaN(parsed) ? 0 : parsed;
   }
-  return null;
+  return 0;
 }

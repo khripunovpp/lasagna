@@ -1,7 +1,7 @@
 import {Stores} from '../../const/stores';
 import {Transaction} from 'dexie';
-import {ProductDbValue} from '../../repositories/products.repository';
-import {CategoryProduct} from '../../repositories/category-products-repository.service';
+import {ProductDTO} from '../../shemes/Product.scheme';
+import {CategoryProductDTO} from '../../shemes/CategoryProduct.scheme';
 
 export const migrations: {
   version: number
@@ -126,9 +126,9 @@ export const migrations: {
       ];
       return Promise.all([
         new Promise<void>(async (resolve) => {
-          const categoriesTable = tx.table<CategoryProduct>(Stores.PRODUCTS_CATEGORIES);
+          const categoriesTable = tx.table<CategoryProductDTO>(Stores.PRODUCTS_CATEGORIES);
           const categories = await categoriesTable.toArray();
-          const productsTable = tx.table<ProductDbValue>(Stores.PRODUCTS);
+          const productsTable = tx.table<ProductDTO>(Stores.PRODUCTS);
           const products = await productsTable.toArray();
 
           // first update products with the new uuid
@@ -149,9 +149,9 @@ export const migrations: {
         }),
 
         new Promise<void>(async (resolve) => {
-          const categoriesTable = tx.table<CategoryProduct>(Stores.RECIPES_CATEGORIES);
+          const categoriesTable = tx.table<CategoryProductDTO>(Stores.RECIPES_CATEGORIES);
           const categories = await categoriesTable.toArray();
-          const recipesTable = tx.table<ProductDbValue>(Stores.RECIPES);
+          const recipesTable = tx.table<ProductDTO>(Stores.RECIPES);
           const recipes = await recipesTable.toArray();
 
           // first update recipes with the new categories

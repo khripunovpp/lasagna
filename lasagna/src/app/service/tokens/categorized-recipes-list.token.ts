@@ -1,8 +1,10 @@
 import {inject, InjectionToken} from '@angular/core';
-import {Recipe, RecipesRepository} from '../repositories/recipes.repository';
+import {RecipesRepository} from '../repositories/recipes.repository';
 import {CategoryRecipesRepository} from '../repositories/category-recipes-repository.service';
 import {from, map, mergeMap, Observable, switchMap} from 'rxjs';
-import {groupBy} from '../../helpers/grouping.helper';
+import {groupBy} from '@helpers/grouping.helper';
+import {Recipe} from '../models/Recipe';
+import {RecipeDTO} from '@service/shemes/Recipe.scheme';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<any>>('CategorizedRecipesList', {
   factory: () => {
@@ -10,21 +12,21 @@ export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<any>>('Cat
     const categoryRepository = inject(CategoryRecipesRepository);
     const recipes = from(recipesRepository.loadRecipes()).pipe(
       switchMap(() => recipesRepository.recipes$),
+      map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
     );
 
     return recipes.pipe(
-      map((recipes: Recipe[]) => recipes.toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name))),
-      map((recipes: Recipe[]) => groupBy(recipes, 'category_id')),
-      mergeMap(async (grouped: Record<string, Recipe[]>) => {
+      map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
+      map((recipes: RecipeDTO[]) => groupBy(recipes, 'category_id')),
+      mergeMap(async (grouped: Record<string, RecipeDTO[]>) => {
           const list = [];
 
           for (const category in grouped) {
             const recipes = grouped[category];
             const categoryName = await categoryRepository.getOne(category);
-
             list.push({
               category: categoryName?.name,
-              recipes: recipes,
+              recipes: recipes.map((recipe) => Recipe.fromRaw(recipe)),
             });
           }
 

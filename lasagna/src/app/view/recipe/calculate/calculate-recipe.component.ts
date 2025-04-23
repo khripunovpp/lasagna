@@ -20,11 +20,12 @@ import {ViewShowComponent} from '../../ui/layout/view-show.component';
 
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
-import {Ingredient, Recipe} from '../../../service/repositories/recipes.repository';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
 import {FadeInComponent} from '../../ui/fade-in.component';
+import {Ingredient} from '../../../service/models/Ingredient';
+import {Recipe} from '../../../service/models/Recipe';
 
 @Component({
   selector: 'lg-calculate-recipe',

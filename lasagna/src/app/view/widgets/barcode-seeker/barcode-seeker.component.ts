@@ -17,6 +17,7 @@ import {BarcodeReaderService} from '../../../service/services/barcode-reader.ser
 import {ProductsRepository} from '../../../service/repositories/products.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {ThisReceiver} from '@angular/compiler';
+import {Product} from '../../../service/models/Product';
 
 
 @Component({
@@ -145,14 +146,16 @@ export class BarcodeSeekerWidgetComponent {
   }
 
   addProduct() {
-    this._productRepository.addOne({
+    this._productRepository.addOne(Product.fromRaw({
       name: this.product.name,
       price: this.product.price,
       amount: this.product.amount,
       unit: this.product.unit as any,
       source: 'openfoodfacts',
-      category_id: null,
-    }).then((uuid) => {
+      category_id: '',
+      tags: [],
+      createdAt: Date.now(),
+    })).then((uuid) => {
       this.productAdded.emit({
         uuid: uuid,
         name: this.product.name,
