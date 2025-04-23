@@ -41,6 +41,7 @@ export class DexieIndexDbService extends Dexie {
       this.initIndex(Stores.RECIPES),
       this.initIndex(Stores.PRODUCTS_CATEGORIES),
       this.initIndex(Stores.RECIPES_CATEGORIES),
+      this.initIndex(Stores.TAGS),
     ]).then(() => {
 
     });
@@ -112,6 +113,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async replaceData(storeKey: Stores, uuid: string, value: any): Promise<void> {
+    debugger
     const obj = {...value, uuid};
     // @ts-ignore
     await (this[storeKey] as Table<any>).put(obj);

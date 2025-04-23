@@ -36,6 +36,7 @@ export interface autocompleteItem {
                      (search)="onSearch($event)"
                      [addTag]="true"
                      [bindValue]="key()"
+                     [multiple]="multi()"
                      [compareWith]="compareWith"
                      [editableSearchTerm]="true"
                      [items]="loadedList()"
@@ -143,6 +144,7 @@ export class AutocompleteComponent
   resource = input<string>('');
   key = input<string>('');
   strict = input<boolean>(false);
+  multi = input<boolean>(false);
   loadedList = signal([]);
   onSelected = output<unknown>();
   selectComponent = viewChild(NgSelectComponent);

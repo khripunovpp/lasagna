@@ -155,7 +155,8 @@ export class AddProductComponent
   }
 
   private _addProduct(product: ProductFormValue) {
-    this._productsRepository.addProduct(flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
+    this._productsRepository.addOne(flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
+
       this.formComponent()?.resetForm();
       this._notificationsService.success('Product added');
 
@@ -170,11 +171,12 @@ export class AddProductComponent
   }
 
   private _editProduct(product: ProductFormValue) {
+
     if (!this.draftOrProductUUID()) {
       return;
     }
     let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
-    this._productsRepository.editProduct(productUUID as string, flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
+    this._productsRepository.updateOne(productUUID as string, flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
       this.formComponent()?.resetForm(product);
       this._notificationsService.success('Product edited');
 

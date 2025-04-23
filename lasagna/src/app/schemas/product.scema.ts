@@ -10,6 +10,7 @@ export const ProductDbInputScheme = z.object({
   unit: z.string(),
   createdAt: z.number().optional(),
   updatedAt: z.number().optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 export type ProductDbInputSchemeT = z.infer<typeof ProductDbInputScheme>;
