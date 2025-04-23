@@ -1,12 +1,11 @@
 import {Component, signal} from '@angular/core';
-import {ContainerComponent} from '../../../ui/layout/container/container.component';
-import {CardComponent} from '../../../ui/card/card.component';
-import {TitleComponent} from '../../../ui/layout/title/title.component';
+import {ContainerComponent} from '@view/ui/layout/container/container.component';
+import {CardComponent} from '@view/ui/card/card.component';
+import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {AddCategoryFormComponent} from './add-category-form.component';
 import {ActivatedRoute} from '@angular/router';
-import {GapRowComponent} from '../../../ui/layout/gap-row.component';
-
-import {FadeInComponent} from '../../../ui/fade-in.component';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+import {FadeInComponent} from '@view/ui/fade-in.component';
 
 @Component({
   selector: 'lg-add-category',
@@ -25,6 +24,7 @@ import {FadeInComponent} from '../../../ui/fade-in.component';
               <lg-gap-row [center]="true">
                   <lg-title>{{ uuid() ? 'Edit' : 'Add' }} product category</lg-title>
               </lg-gap-row>
+
               <lg-card>
                   <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>
               </lg-card>

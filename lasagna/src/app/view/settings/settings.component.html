@@ -4,19 +4,19 @@
       <lg-title>Settings</lg-title>
     </lg-gap-row>
 
-    <lg-gap-column>
-      <a routerLink="/settings/categories/products" routerLinkActive="active">
+    <lg-gap-row>
+      <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
         <lg-card [center]="true">
           Products categories
         </lg-card>
       </a>
 
-      <a routerLink="/settings/categories/recipes" routerLinkActive="active">
+      <a lgExpand routerLink="/settings/categories/recipes" routerLinkActive="active">
         <lg-card [center]="true">
           Recipes categories
         </lg-card>
       </a>
-    </lg-gap-column>
+    </lg-gap-row>
   </lg-container>
 </lg-fade-in>
 

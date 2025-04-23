@@ -1,16 +1,15 @@
 import {Component, OnInit, signal} from '@angular/core';
-
-import {GapRowComponent} from '../../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../../ui/layout/button.component';
-import {CategoryProduct, CategoryProductsRepository} from '../../../../service/repositories/category-products-repository.service';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+import {ButtonComponent} from '@view/ui/layout/button.component';
+import {CategoryProductsRepository} from '@service/repositories/category-products-repository.service';
 import {MatIcon} from '@angular/material/icon';
-
-import {ContainerComponent} from '../../../ui/layout/container/container.component';
-import {TitleComponent} from '../../../ui/layout/title/title.component';
-import {CardListComponent} from '../../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../../ui/card/card-list-item.directive';
-import {NotificationsService} from '../../../../service/services/notifications.service';
-import {FadeInComponent} from '../../../ui/fade-in.component';
+import {ContainerComponent} from '@view/ui/layout/container/container.component';
+import {TitleComponent} from '@view/ui/layout/title/title.component';
+import {CardListComponent} from '@view/ui/card/card-list.component';
+import {CardListItemDirective} from '@view/ui/card/card-list-item.directive';
+import {NotificationsService} from '@service/services/notifications.service';
+import {FadeInComponent} from '@view/ui/fade-in.component';
+import {CategoryProduct} from '@service/models/CategoryProduct';
 
 
 @Component({
@@ -90,7 +89,10 @@ export class CategoryListComponent
   deleteCategory(
     category: CategoryProduct,
   ) {
-    this.categoryRepository.deleteCategory(category.uuid).then(()=> {
+    if (!category.uuid) {
+      return Promise.resolve()
+    }
+    return this.categoryRepository.deleteOne(category.uuid).then(() => {
       this.loadCategory();
       this._notificationsService.success('Category deleted');
     });
@@ -101,7 +103,7 @@ export class CategoryListComponent
   }
 
   loadCategory() {
-    this.categoryRepository.getCategories().then((categories) => {
+    this.categoryRepository.getAll().then((categories) => {
       const sorted = categories.toSorted((a: CategoryProduct, b: CategoryProduct) => a.name.localeCompare(b.name));
       this.categories.set(sorted);
     });

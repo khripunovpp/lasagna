@@ -1,7 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Ingredient, Recipe, RecipesRepository} from '../repositories/recipes.repository';
-import {ProductsRepository, ProductUnit} from '../repositories/products.repository';
+import {RecipesRepository} from '../repositories/recipes.repository';
+import {ProductsRepository} from '../repositories/products.repository';
 import {parseFloatingNumber} from '../../helpers/number.helper';
+import {Recipe} from '../models/Recipe';
+import {Ingredient} from '../models/Ingredient';
+import {RecipeDTO} from '../shemes/Recipe.scheme';
+import {Unit} from '../types/Unit.types';
 
 export interface Calculation {
   recipe?: Recipe
@@ -12,7 +16,7 @@ export interface Calculation {
 
 export interface CalculationTableParams {
   name: string
-  unit: ProductUnit | undefined
+  unit: Unit | undefined | string
   price_per_gram: number | undefined
   amount: number | undefined
   total: number | undefined
@@ -38,13 +42,13 @@ export class CalculateRecipeService {
     taxTemplateName: string,
   ) {
     return new Promise<Recipe | null>(async (resolve, reject) => {
-      await this._recipeRepository.getOne(recipeUUID).then(async recipe => {
+      await this._recipeRepository.getOne(recipeUUID).then(async (recipe:any) => {
         if (!recipe) {
           resolve(null);
           return;
         }
         recipe.taxTemplateName = taxTemplateName;
-        await this._recipeRepository.editRecipe(recipe.uuid, this._recipeRepository.recipeToDto(recipe));
+        await this._recipeRepository.editRecipe(recipe.uuid, recipe);
 
         resolve(recipe);
       });
@@ -89,7 +93,7 @@ export class CalculateRecipeService {
 
   async getRecipe(
     recipeUUID: Recipe | string | undefined,
-  ): Promise<Recipe & {
+  ): Promise<RecipeDTO & {
     totalAmountInGrams: number
     pricePerUnit: number
   } | undefined> {
@@ -114,7 +118,7 @@ export class CalculateRecipeService {
 
     return {
       totalAmountInGrams: totalAmountInGrams || 0,
-      ...recipe,
+      ...recipe.toDTO(),
       pricePerUnit: 0
     }
   }
@@ -136,7 +140,7 @@ export class CalculateRecipeService {
       await this.getRecipe(ingredient.recipe_id).then(async recipe => {
         let scaleKeff = ingredientAmount / (recipe?.totalAmountInGrams || 1);
 
-        const result = await this._makeIngredientTable(recipe, forOutcomeKeff);
+        const result = await this._makeIngredientTable(recipe as any, forOutcomeKeff);
 
         result.table = result.table.map((row, idx) => {
           const ingredientAmount = (row.amount || 0) * (forOutcomeKeff || 1) * scaleKeff;
@@ -285,7 +289,7 @@ export class CalculateRecipeService {
       price_per_gram: number | undefined
       amount: number | undefined
       total: number | undefined
-      unit?: ProductUnit | undefined
+      unit?: Unit | undefined | string
       indent?: number
     },
   ): CalculationTableParams {
@@ -322,7 +326,7 @@ export class CalculateRecipeService {
       price_per_gram: number
       amount: number
       total: number
-      unit?: ProductUnit | undefined
+      unit?: Unit | undefined | string
     }
   ): CalculationTableParams {
     return {

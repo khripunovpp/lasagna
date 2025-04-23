@@ -1,29 +1,25 @@
 import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-
 import {ControlComponent} from '../../ui/form/control.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-
-import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
-import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {ProductsRepository} from '@service/repositories/products.repository';
+import {SelectResourcesService} from '@service/services/select-resources.service';
 import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../ui/form/multiselect.component';
-import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {TooltipComponent} from '../../ui/tooltip.component';
-
 import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {ExpandDirective} from '../../directives/expand.directive';
-
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
-import {NotificationsService} from '../../../service/services/notifications.service';
+import {NotificationsService} from '@service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 import {TagsControlComponent} from '../../ui/form/tags-control.component';
-
-export type ProductFormValue = Omit<Product, 'uuid'>
+import {Product} from '@service/models/Product';
+import {productToFormValue} from '@helpers/product.helpers';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -43,7 +39,8 @@ export type ProductFormValue = Omit<Product, 'uuid'>
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    TagsControlComponent
+    TagsControlComponent,
+    JsonPipe
   ],
   styles: [
     `
@@ -97,17 +94,14 @@ export class AddProductFormComponent
   topCategories = signal<any[]>([]);
   topSources = signal<any[]>([]);
   nameField = viewChild<AutocompleteComponent>('nameField');
+
   private productEffect = effect(() => {
     if (!this.product()) {
       return;
     }
-    this.form.reset(this.product() as any);
+    this.form.reset(productToFormValue(this.product()!));
     this.form.markAsPristine();
   });
-
-  get value() {
-    return this.form.value as ProductFormValue;
-  }
 
   private get _defFormValue() {
     return {
@@ -125,10 +119,6 @@ export class AddProductFormComponent
     return this.form.valid;
   }
 
-  private get _productModel() {
-    return flaterizeObjectWithUuid<ProductDbValue>(this.value);
-  }
-
   eggsChanged(event: any) {
     this.form.patchValue({
       amount: event
@@ -137,12 +127,15 @@ export class AddProductFormComponent
 
   ngOnInit() {
     this._loadUsingHistory();
+    this.form.valueChanges.subscribe(values => {
+      this.product()?.update(values);
+    })
   }
 
   resetForm(
-    values?: ProductFormValue
+    value?: Product
   ) {
-    this.form.reset(values ?? this._defFormValue);
+    this.form.reset(value ? value?.toDTO() as any : this._defFormValue);
     this.form.markAsPristine();
     this._loadUsingHistory();
   }

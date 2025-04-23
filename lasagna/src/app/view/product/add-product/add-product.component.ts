@@ -1,22 +1,21 @@
 import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
-import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {CardComponent} from '../../ui/card/card.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {AddProductFormComponent, ProductFormValue} from './add-product-form.component';
+import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
-import {DraftForm} from '../../../service/services/draft-forms.service';
-import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {flaterizeObjectWithUuid} from '../../../helpers/attribute.helper';
-import {debounceTime} from 'rxjs';
-
+import {DraftForm} from '@service/services/draft-forms.service';
+import {ProductsRepository} from '@service/repositories/products.repository';
+import {NotificationsService} from '@service/services/notifications.service';
+import {combineLatest, debounceTime} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
-import {DatePipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-
+import {DatePipe, DecimalPipe, JsonPipe} from '@angular/common';
+import {Product} from '@service/models/Product';
+import {ProductDTO} from '@service/shemes/Product.scheme';
+import {ContainerComponent} from '../../ui/layout/container/container.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -31,17 +30,21 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
     ButtonComponent,
     ShrinkDirective,
     DatePipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    JsonPipe,
+    DecimalPipe
   ],
   template: `
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                      <lg-title>Edit Product</lg-title>
-                      @if (product()?.updatedAt) {
-                          (last edited {{ product()?.updatedAt | timeAgo }})
-                      }
+                      <lg-title>
+                          Edit
+                          <span class="text-active">
+                              {{ product()?.name }}
+                          </span>
+                      </lg-title>
                   } @else {
                       <lg-title>Add Product</lg-title>
                   }
@@ -49,6 +52,16 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
                       (saved as draft)
                   }
               </lg-gap-row>
+
+              <div>
+                  @if (product()?.updatedAt) {
+                      (last edited {{ product()?.updatedAt | timeAgo }})
+                  }
+
+                  @if (product()?.pricePerUnit) {
+                      ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-2' }})
+                  }
+              </div>
 
               <lg-card>
                   <lg-add-product-form [product]="product()"></lg-add-product-form>
@@ -69,6 +82,11 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
                       <lg-button lgShrink [style]="'danger'"
                                  (click)="onRemoveDraft()">
                           Delete this draft
+                      </lg-button>
+                  } @else if (product()?.uuid) {
+                      <lg-button lgShrink [style]="'danger'"
+                                 (click)="onDeleteProduct()">
+                          Delete Product
                       </lg-button>
                   }
               </lg-gap-row>
@@ -93,22 +111,23 @@ export class AddProductComponent
   draftOrProductUUID = signal<string | undefined>(undefined);
   product = signal<Product | null>(null);
   formComponent = viewChild<AddProductFormComponent | null>(AddProductFormComponent);
-  draftRef = signal<DraftForm<ProductFormValue> | null>(null);
+  draftRef = signal<DraftForm<ProductDTO> | null>(null);
   draftByExistingProduct = computed(() => {
     return this.draftRef()!.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
 
   ngOnInit() {
-    this._aRoute.params.subscribe(params => {
+    combineLatest([
+      this._aRoute.params,
+      this._aRoute.data,
+    ]).subscribe(([params, data]) => {
       this.draftOrProductUUID.set(params['uuid']);
-      this._loadProduct(this.draftOrProductUUID());
-    });
-
-    this._aRoute.data.subscribe(data => {
       if (data['draft']) {
         this.draftRef.set(data['draft']);
-        this.product.set(data['draft'].data);
+        this.product.set(Product.fromRaw(data['draft'].data));
+      } else {
+        this._loadProduct(this.draftOrProductUUID());
       }
       this.isDraftRoute.set(!!data['draftRoute']);
     });
@@ -123,32 +142,42 @@ export class AddProductComponent
         return
       }
 
+      this.product.update((product) => {
+        if (product) {
+          product.update(value)
+          return product;
+        }
+        return Product.empty();
+      });
+
       if (this.draftRef()?.uuid) {
         this._productsRepository.updateDraftProduct(
           this.draftRef()!.uuid,
-          value as ProductFormValue,
+          this.product()!,
           this.draftRef()!.meta?.['uuid']
         );
       } else {
         this.draftRef.set(this._productsRepository.saveDraftProduct(
-          value as ProductFormValue,
+          this.product()!,
           this.draftOrProductUUID() ?? ''));
       }
     });
   }
 
   onAddProduct() {
-    if (!this.formComponent()?.validateForm()) {
+    if (!this.formComponent()?.validateForm()
+      || !this.product()) {
       return;
     }
-    this._addProduct(this.formComponent()!.value);
+    this._addProduct(this.product()!);
   }
 
   onEditProduct() {
-    if (!this.formComponent()?.validateForm()) {
+    if (!this.formComponent()?.validateForm()
+      || !this.product()) {
       return;
     }
-    this._editProduct(this.formComponent()!.value);
+    this._editProduct(this.product()!);
   }
 
   onRemoveDraft() {
@@ -156,8 +185,18 @@ export class AddProductComponent
     this._router.navigate(['products']);
   }
 
-  private _addProduct(product: ProductFormValue) {
-    this._productsRepository.addOne(flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
+  onDeleteProduct() {
+    if (!this.product()?.uuid) {
+      return;
+    }
+    this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
+      this._notificationsService.success('Product deleted');
+      this._router.navigate(['products']);
+    });
+  }
+
+  private _addProduct(product: Product) {
+    this._productsRepository.addOne(product).then(() => {
 
       this.formComponent()?.resetForm();
       this._notificationsService.success('Product added');
@@ -172,13 +211,12 @@ export class AddProductComponent
     });
   }
 
-  private _editProduct(product: ProductFormValue) {
-
+  private _editProduct(product: Product) {
     if (!this.draftOrProductUUID()) {
       return;
     }
     let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
-    this._productsRepository.updateOne(productUUID as string, flaterizeObjectWithUuid<ProductDbValue>(product)).then(() => {
+    this._productsRepository.updateOne(productUUID as string, product).then(() => {
       this.formComponent()?.resetForm(product);
       this._notificationsService.success('Product edited');
 

@@ -1,5 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
-import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import {RecipesRepository} from '@service/repositories/recipes.repository';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {RouterLink} from '@angular/router';
@@ -9,21 +9,25 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {Stores} from '../../../service/const/stores';
+import {NotificationsService} from '@service/services/notifications.service';
+import {Stores} from '@service/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
-import {RecipeDbInputScheme} from '../../../schemas/recipe.scema';
-import {TransferDataService} from '../../../service/services/transfer-data.service';
+import {TransferDataService} from '@service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
-import {CATEGORIZED_RECIPES_LIST} from '../../../service/tokens/categorized-recipes-list.token';
+import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
-import {SelectionZoneService} from '../../../service/services/selection-zone.service';
-import {DraftForm} from '../../../service/services/draft-forms.service';
-import {DatePipe} from '@angular/common';
+import {SelectionZoneService} from '@service/services/selection-zone.service';
+import {DraftForm} from '@service/services/draft-forms.service';
+import {DatePipe, JsonPipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
+import {Recipe} from '@service/models/Recipe';
+import {RecipeDTO, RecipeScheme} from '@service/shemes/Recipe.scheme';
+import {ExpandDirective} from '@view/directives/expand.directive';
+import {ProductDTO} from '@service/shemes/Product.scheme';
+import {PullDirective} from '@view/directives/pull.directive';
 
 
 @Component({
@@ -50,7 +54,7 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
           </lg-button>
 
           <lg-import (onDone)="loadRecipes()"
-                     [schema]="RecipeDbInputScheme"
+                     [schema]="RecipeScheme"
                      [storeName]="Stores.RECIPES">
               <ng-template let-flow="flow" let-row lgImportRowTpl>
                   <span>{{ row?.name }}</span>
@@ -70,20 +74,28 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
                   <lg-card-list style="--card-bg: #bee5ff">
                       @for (item of draft();track item?.createdAt) {
                           <ng-template lgCardListItem>
-                              <a [routerLink]="'/recipes/draft/' + item?.uuid">
-                                  <lg-gap-row [center]="true">
-                                      <div>
-                                          @if (item?.meta?.['uuid']) {
-                                              Unsaved existing recipe:
-                                          } @else {
-                                              Draft recipe:
-                                          }
-                                          {{ item?.data?.name ?? '' }}
-                                      </div>
+                              <lg-gap-row [center]="true">
+                                  <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
+                                      @if (item?.meta?.['uuid']) {
+                                          Unsaved existing recipe:
+                                      } @else {
+                                          Draft recipe:
+                                      }
+                                      {{ item?.data?.name ?? '' }}
+                                  </a>
 
-                                      <div>Created at: {{ item?.createdAt | timeAgo }}</div>
-                                  </lg-gap-row>
-                              </a>
+                                  <small class="text-muted text-cursive">
+                                      edited at: {{ (item?.createdAt || item?.updatedAt) | timeAgo }}
+                                  </small>
+
+                                  <lg-button [style]="'danger'"
+                                             [size]="'tiny'"
+                                             [icon]="true"
+                                             (click)="deleteDraft($any(item))">
+                                      <mat-icon aria-hidden="false"
+                                                fontIcon="close"></mat-icon>
+                                  </lg-button>
+                              </lg-gap-row>
                           </ng-template>
                       }
                   </lg-card-list>
@@ -101,15 +113,19 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
                       @for (recipe of category.recipes;track $index;let i = $index) {
                           <ng-template lgCardListItem [uuid]="recipe.uuid">
                               <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
-                                  </div>
+                                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+
                                   <lg-button [style]="'primary'"
                                              [size]="'small'"
                                              [link]="'/recipes/calculate/' + recipe.uuid"
                                              [flat]="true">
                                       Calculate
                                   </lg-button>
+
+                                  <small class="text-muted text-cursive" lgPull>
+                                      edited at: {{ (recipe?.createdAt || recipe?.updatedAt) | timeAgo }}
+                                  </small>
+
                                   <lg-button [style]="'danger'"
                                              [size]="'tiny'"
                                              [icon]="true"
@@ -150,7 +166,10 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
     QuickActionsTplDirective,
     SelectionToolsComponent,
     DatePipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    ExpandDirective,
+    JsonPipe,
+    PullDirective
   ],
   styles: [
     `:host {
@@ -168,10 +187,9 @@ export class RecipesListComponent {
   ) {
   }
 
-  draft = signal<Array<DraftForm<Recipe> | undefined>>([]);
+  draft = signal<Array<DraftForm<RecipeDTO> | undefined>>([]);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
-  protected readonly RecipeDbInputScheme = RecipeDbInputScheme;
 
   ngOnInit() {
     this.loadRecipes();
@@ -185,7 +203,8 @@ export class RecipesListComponent {
   deleteRecipe(
     recipe: Recipe,
   ) {
-    this._recipesRepository.deleteRecipe(recipe.uuid).then(() => {
+    if (!recipe.uuid) return Promise.resolve();
+    return this._recipesRepository.deleteRecipe(recipe.uuid).then(() => {
       this.loadRecipes();
       this._notificationsService.success('Recipe deleted');
     });
@@ -202,4 +221,16 @@ export class RecipesListComponent {
       selected: Array.from(selected),
     });
   }
+
+
+  deleteDraft(
+    draft: DraftForm<ProductDTO>,
+  ) {
+    this._recipesRepository.removeDraftRecipe(draft.uuid);
+    this.draft.update((drafts) => {
+      return drafts.filter((item) => item?.uuid !== draft.uuid);
+    });
+  }
+
+  protected readonly RecipeScheme = RecipeScheme;
 }

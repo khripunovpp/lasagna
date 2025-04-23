@@ -66,7 +66,7 @@ export class GlobalSearchService {
       for (const d of data) {
         resultsPayload.push({
           context: item.context,
-          uuid: encodeURIComponent(d.uuid),
+          uuid: encodeURIComponent(d?.uuid ?? ''),
           data: d as any,
         });
       }
