@@ -10,6 +10,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
           <input #input
                  (change)="onInputChanged.emit(value)"
                  (input)="onChangeInput($event)"
+                  (keydown.enter)="onEnter.emit()"
                  [placeholder]="placeholder()"
                  [value]="value"
                  class="input"
@@ -84,6 +85,7 @@ export class InputComponent
   placeholder = input('Enter text here');
   autoFocus = input(false);
   onInputChanged = output<string>();
+  onEnter = output<void>();
   theme = input<
     'default' | 'contrast'
   >('default');

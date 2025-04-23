@@ -86,9 +86,12 @@ import {ButtonComponent} from '../layout/button.component';
         top: 66px;
       }
 
-      .lg-controls-bar.opened .lg-controls-bar__caret {
-        //background-color: rgba(#a26dc7, 0.8);
-        transform: rotate(180deg);
+      .lg-controls-bar.opened {
+
+        .lg-controls-bar__caret {
+          //background-color: rgba(#a26dc7, 0.8);
+          transform: rotate(180deg);
+        }
       }
 
       .lg-controls-bar__content {
@@ -102,6 +105,7 @@ import {ButtonComponent} from '../layout/button.component';
 
         backdrop-filter: blur(3px);
         background-color: rgba(255, 255, 255, 0.7);
+
 
         @media (max-width: 768px) {
           min-width: 100px;

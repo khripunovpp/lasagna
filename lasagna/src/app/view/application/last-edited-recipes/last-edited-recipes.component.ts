@@ -1,10 +1,13 @@
 import {Component, signal} from '@angular/core';
-import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
+import { RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
+import {Recipe} from '../../../service/models/Recipe';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+import {PullDirective} from '@view/directives/pull.directive';
 
 @Component({
   selector: 'lg-last-edited-recipes',
@@ -12,20 +15,23 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
       <lg-gap-column>
           <lg-title [level]="4">Last Edited Recipes</lg-title>
 
-          <div class="last-edited-recipes">
-              @for (recipe of recipes();track recipe.recipe.uuid) {
-                  <a [routerLink]="['/recipes/edit/', recipe.recipe.uuid]" class="last-edited-recipe">
-                      <div class="last-edited-recipe-name">
-                          {{ recipe.recipe.name }}
-                          (last edited {{ recipe.updatedAt |timeAgo }})
-                      </div>
-                  </a>
+          <lg-gap-column [size]="'medium'">
+              @for (item of recipes();track item.recipe.uuid) {
+                  <lg-gap-row [center]="true">
+                      <a [routerLink]="['/recipes/edit/', item.recipe.uuid]" class="last-edited-recipe">
+                          {{ item.recipe.name }}
+                      </a>
+
+                      <small class="text-muted text-cursive" lgPull>
+                          {{ (item?.updatedAt) | timeAgo }}
+                      </small>
+                  </lg-gap-row>
               } @empty {
                   <div class="last-edited-recipe-name">
                       No recipes found
                   </div>
               }
-          </div>
+          </lg-gap-column>
       </lg-gap-column>
   `,
   styles: [
@@ -43,7 +49,9 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
     RouterLink,
     DatePipe,
     TitleComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    GapRowComponent,
+    PullDirective
   ]
 })
 export class LastEditedRecipesComponent {

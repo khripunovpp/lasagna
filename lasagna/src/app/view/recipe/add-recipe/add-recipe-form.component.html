@@ -29,10 +29,7 @@
     <lg-control-group label="Ingredients" lgExpand>
       <lg-gap-column [position]="'start'">
         <lg-gap-column formArrayName="ingredients" lgExpand>
-          @for (control of ingredients.controls;track (control.value.product_id?.id
-            || control.value.name
-            || control.value.amount
-          );let i = $index) {
+          @for (control of ingredients.controls;track (control.value.amount + i);let i = $index) {
             <ng-container [formGroupName]="i">
               <lg-controls-row [mobileMode]="true">
                 @if (textFieldState()[i]) {

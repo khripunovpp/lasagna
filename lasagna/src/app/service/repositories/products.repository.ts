@@ -1,34 +1,14 @@
 import {Injectable} from '@angular/core';
-import {CategoryProduct, CategoryProductsRepository} from './category-products-repository.service';
-import {parseFloatingNumber} from '../../helpers/number.helper';
-import {ProductDbInputScheme} from '../../schemas/product.scema';
+import {CategoryProductsRepository} from './category-products-repository.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
 import {DraftFormsService} from '../services/draft-forms.service';
-import {ProductFormValue} from '../../view/product/add-product/add-product-form.component';
-import {Tag, TagsRepositoryService} from './tags-repository.service';
-import {randomRGB} from '../../helpers/color.helper';
-
-export type ProductUnit = 'gram' | 'portion' | 'piece';
-
-export interface Product {
-  uuid?: string
-  name: string
-  price: number
-  amount: number
-  source: string
-  unit?: ProductUnit
-  category_id: CategoryProduct | null
-  createdAt?: number
-  updatedAt?: number
-  tags?: string[]
-}
-
-export type ProductDbValue = Omit<Product, 'category_id' | 'uuid'> & {
-  category_id: string | null
-}
+import {TagsRepositoryService} from './tags-repository.service';
+import {Product} from '../models/Product';
+import {ProductDTO} from '../shemes/Product.scheme';
+import {Tag} from '@service/models/Tag';
 
 @Injectable({
   providedIn: 'root'
@@ -49,22 +29,19 @@ export class ProductsRepository {
     return this._stream$.asObservable();
   }
 
-  loadRecipes() {
-    return this._indexDbService.getAll(Stores.PRODUCTS).then(recipes => {
-      this._stream$.next(recipes);
-      return recipes;
+  loadAll() {
+    return this._indexDbService.getAll(Stores.PRODUCTS).then(products => {
+      this._stream$.next(products.map(product => Product.fromRaw(product)));
+      return products;
     });
   }
 
   async addOne(
-    product: Omit<ProductDbValue, 'createdAt'>,
+    product: Product,
   ) {
-    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, this._toDbValue({
-      ...product,
-      createdAt: Date.now(),
-    }))
+    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, product.toDTO());
 
-    if (product.category_id) this._saveCategory(product.category_id);
+    if (product.category_id) this._saveCategory(product.category_id.toString());
     if (product.source) this._saveSource(product.source);
     this._saveProductToHistory(uuid);
     if (product.tags) {
@@ -77,16 +54,9 @@ export class ProductsRepository {
 
   async updateOne(
     uuid: string,
-    product: Omit<ProductDbValue, 'updatedAt'>
+    product: Product
   ) {
-    console.log('updateOne', product, this._toDbValue({
-      ...product,
-      updatedAt: Date.now(),
-    }));
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, this._toDbValue({
-      ...product,
-      updatedAt: Date.now(),
-    }));
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
     this._saveProductToHistory(uuid);
     if (product.tags) {
       for (const tag of product.tags) {
@@ -99,13 +69,13 @@ export class ProductsRepository {
     uuid: Product | string | undefined,
   ) {
     return new Promise<Product | undefined>(async (resolve, reject) => {
+      uuid = typeof uuid === 'string' ? uuid : (uuid as Product).uuid;
       if (!uuid) {
         resolve(undefined);
         return;
       }
-      uuid = (uuid as Product).uuid || uuid as string;
-      await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: any) => {
-        resolve(result);
+      await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: ProductDTO) => {
+        resolve(Product.fromRaw(result));
       });
     });
   }
@@ -121,13 +91,16 @@ export class ProductsRepository {
       return Promise.resolve([]);
     }
 
-    return this._indexDbService.getMany(Stores.PRODUCTS, keys).then(recipes => {
+    return this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, keys).then(recipes => {
       return recipes.toSorted((a, b) => {
+        if (!a.uuid || !b.uuid) {
+          return 0;
+        }
         return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       }).map(product => ({
-        product: product,
-        updatedAt: top[product.uuid].updatedAt,
-        count: top[product.uuid].count,
+        product: Product.fromRaw(product),
+        updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,
+        count: product.uuid ? top[product.uuid].count : 0,
       }))
     })
   }
@@ -140,8 +113,11 @@ export class ProductsRepository {
     const {top} = this._usingHistoryService.read('products_categories');
     const keys = Object.keys(top);
 
-    return this._categoryRepository.getManyCategories(keys).then(categories => {
+    return this._categoryRepository.getMany(keys).then(categories => {
       return categories.toSorted((a, b) => {
+        if (!a.uuid || !b.uuid) {
+          return 0;
+        }
         return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       });
     })
@@ -151,20 +127,20 @@ export class ProductsRepository {
     return Object.keys(this._usingHistoryService.read('products_sources').top);
   }
 
-  saveDraftProduct(product: ProductFormValue, uuid?: string) {
-    return this._draftFormsService.setDraftForm<ProductFormValue>(
+  saveDraftProduct(product: Product, uuid?: string) {
+    return this._draftFormsService.setDraftForm(
       'draft_products',
-      product,
+      product.toDTO(),
       uuid?.length ? 'edit' : 'add',
       uuid ? {
         uuid: uuid,
       } : {});
   }
 
-  updateDraftProduct(key: string, product: ProductFormValue, uuid?: string) {
-    return this._draftFormsService.updateDraftForm<ProductFormValue>(
+  updateDraftProduct(key: string, product: Product, uuid?: string) {
+    return this._draftFormsService.updateDraftForm<ProductDTO>(
       'draft_products',
-      product,
+      product.toDTO(),
       key,
       uuid?.length ? 'edit' : 'add',
       uuid ? {
@@ -173,7 +149,7 @@ export class ProductsRepository {
   }
 
   getDraftProducts(uuid?: string) {
-    const draft = this._draftFormsService.getDraftForms<ProductFormValue>('draft_products');
+    const draft = this._draftFormsService.getDraftForms<ProductDTO>('draft_products');
     if (uuid && draft?.[uuid]) {
       return [draft?.[uuid]];
     }
@@ -184,25 +160,6 @@ export class ProductsRepository {
 
   removeDraftProduct(key: string) {
     this._draftFormsService.removeDraftForm('draft_products', key);
-  }
-
-  private _toDbValue(product: unknown) {
-    debugger
-    console.log( Array.from((product as any).tags || []).map((tag: any) => String(tag?.name ?? tag)))
-    if ((product as any) != null) {
-      return ProductDbInputScheme.parse({
-        name: String((product as any).name || ''),
-        price: parseFloatingNumber((product as any).price) || 0,
-        amount: parseFloatingNumber((product as any).amount) || 0,
-        source: String((product as any).source || ''),
-        category_id: String((product as any).category_id || ''),
-        unit: String((product as any).unit || ''),
-        createdAt: (product as any).createdAt ? Number((product as any).createdAt) : Date.now(),
-        updatedAt: (product as any).updatedAt ? Number((product as any).updatedAt) : Date.now(),
-        tags: Array.from((product as any).tags || []).map((tag: any) => String(tag?.name ?? tag)),
-      })
-    }
-    return null as any;
   }
 
   private _saveCategory(uuid: string) {
@@ -217,10 +174,7 @@ export class ProductsRepository {
     this._usingHistoryService.count('products', uuid);
   }
 
-  private _saveTag(tag: string | Tag) {
-    return this._tagsRepository.addOne(typeof tag === 'string' ? {
-      name: tag,
-      style: randomRGB(),
-    } as Tag : tag);
+  private _saveTag(tag: Tag) {
+    return this._tagsRepository.addOne(tag)
   }
 }

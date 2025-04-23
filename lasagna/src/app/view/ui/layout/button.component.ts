@@ -18,6 +18,7 @@ export type ButtonStyle = 'default' |
       @if (link()) {
           <a [class.active]="active()"
              [class.flat]="flat()"
+             [class.disabled]="disabled()"
              [class.icon]="icon()"
              [class.no-bottom-radius]="noBottomRadius()"
              [class.no-left-radius]="noLeftRadius()"
@@ -34,6 +35,7 @@ export type ButtonStyle = 'default' |
           <button (click)="onClick.emit($event)"
                   [class.active]="active()"
                   [class.flat]="flat()"
+                  [class.disabled]="disabled()"
                   [class.icon]="icon()"
                   [class.no-bottom-radius]="noBottomRadius()"
                   [class.no-left-radius]="noLeftRadius()"
@@ -74,6 +76,12 @@ export type ButtonStyle = 'default' |
         align-items: center;
         text-decoration: none;
         justify-content: center;
+      }
+
+      .button.disabled {
+        opacity: 0.5;
+        user-select: none;
+        pointer-events: none;
       }
 
       .button:focus {
@@ -247,5 +255,6 @@ export class ButtonComponent {
   noTopRadius = input<boolean>(false);
   noBottomRadius = input<boolean>(false);
   active = input<boolean>(false);
+  disabled = input<boolean>(false);
   routerLinkActive = viewChild(RouterLinkActive);
 }

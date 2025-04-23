@@ -6,17 +6,17 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {SelectResourcesService} from '@service/services/select-resources.service';
 import {Router} from '@angular/router';
-import {CategoryRecipesRepository} from '@service/repositories/category-recipes-repository.service';
 import {NotificationsService} from '@service/services/notifications.service';
-import {CategoryRecipe} from '@service/models/CategoryRecipe';
-import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '@helpers/recipe.helpers';
+import {CategoryProductsRepository} from '@service/repositories/category-products-repository.service';
+import {CategoryProduct} from '@service/models/CategoryProduct';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {ExpandDirective} from '@view/directives/expand.directive';
-import {ShrinkDirective} from '@view/directives/shrink.directive';
 import {NoWrapDirective} from '@view/directives/no-wrap.directive';
+import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '@helpers/product.helpers';
+
 
 @Component({
-  selector: 'lg-add-category-recipe-form',
+  selector: 'lg-add-category-form',
   standalone: true,
   template: `
       <form [formGroup]="form">
@@ -45,8 +45,7 @@ import {NoWrapDirective} from '@view/directives/no-wrap.directive';
                               Enter a name
                           }
                       </lg-button>
-                  }
-              </div>
+                  }</div>
           </lg-gap-row>
       </form>
   `,
@@ -58,7 +57,6 @@ import {NoWrapDirective} from '@view/directives/no-wrap.directive';
     ButtonComponent,
     GapRowComponent,
     ExpandDirective,
-    ShrinkDirective,
     NoWrapDirective,
   ],
   styles: [
@@ -72,10 +70,10 @@ import {NoWrapDirective} from '@view/directives/no-wrap.directive';
     }
   ],
 })
-export class AddCategoryRecipeFormComponent
+export class AddCategoryFormComponent
   implements OnInit {
   constructor(
-    public _categoryRepository: CategoryRecipesRepository,
+    public _categoryRepository: CategoryProductsRepository,
     @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
     private _router: Router,
     private _notificationsService: NotificationsService,
@@ -85,15 +83,15 @@ export class AddCategoryRecipeFormComponent
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });
-  category = signal<CategoryRecipe | undefined>(undefined);
+  category = signal<CategoryProduct | undefined>(undefined);
   uuid = input<string>('');
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
-      this.category.set(CategoryRecipe.empty());
+      this.category.set(CategoryProduct.empty());
       return;
     }
     this._categoryRepository.getOne(this.uuid()).then(category => {
-      this.form.reset(categoryRecipeToFormValue(category));
+      this.form.reset(categoryProductToFormValue(category));
       this.category.set(category);
       this.form.markAsPristine();
     });
@@ -101,7 +99,7 @@ export class AddCategoryRecipeFormComponent
 
   ngOnInit() {
     this.form.valueChanges.subscribe(values => {
-      this.category()?.update(categoryRecipeDTOFromFormValue(values));
+      this.category()?.update(categoryProductDTOFromFormValue(values));
     })
   }
 
@@ -109,7 +107,7 @@ export class AddCategoryRecipeFormComponent
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.addCategory(this.category()!).then(() => {
+    return this._categoryRepository.addOne(this.category()!).then(() => {
       this.form.reset({});
       this._notificationsService.success('Category added');
       this.form.markAsPristine();
@@ -120,7 +118,7 @@ export class AddCategoryRecipeFormComponent
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.editCategory(this.uuid(), this.category()!).then(() => {
+    return this._categoryRepository.updateOne(this.uuid(), this.category()!).then(() => {
       this._notificationsService.success('Category edited');
       this.form.markAsPristine();
     });

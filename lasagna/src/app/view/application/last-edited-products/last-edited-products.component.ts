@@ -1,32 +1,39 @@
 import {Component, signal} from '@angular/core';
-import {Recipe, RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {Product, ProductsRepository} from '../../../service/repositories/products.repository';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
+import {ProductsRepository} from '../../../service/repositories/products.repository';
+import {Product} from '../../../service/models/Product';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+import {PullDirective} from '@view/directives/pull.directive';
 
 @Component({
   selector: 'lg-last-edited-products',
   template: `
       <lg-gap-column>
-        <lg-title [level]="4">Last Edited Products</lg-title>
+          <lg-title [level]="4">Last Edited Products</lg-title>
 
-        <div class="last-edited-recipes">
-            @for ( product of products(); track product.product.uuid ) {
-                <a [routerLink]="['/products/edit/', product.product.uuid]" class="last-edited-product">
-                    <div class="last-edited-recipe-name">
-                        {{ product.product.name }}
-                        (last edited {{product.updatedAt | timeAgo}})
-                    </div>
-                </a>
-            } @empty {
-                <div class="last-edited-recipe-name">
-                    No products found
-                </div>
-            }
-        </div>
+          <div class="last-edited-recipes">
+              <lg-gap-column [size]="'medium'">
+                  @for (item of products();track item.product.uuid) {
+                      <lg-gap-row [center]="true">
+                          <a [routerLink]="['/products/edit/', item.product.uuid]" class="last-edited-product">
+                              {{ item.product.name }}
+                          </a>
+
+                          <small class="text-muted text-cursive" lgPull>
+                              {{ (item?.updatedAt) | timeAgo }}
+                          </small>
+                      </lg-gap-row>
+                  } @empty {
+                      <div class="last-edited-recipe-name">
+                          No products found
+                      </div>
+                  }
+              </lg-gap-column>
+          </div>
       </lg-gap-column>
   `,
   styles: [
@@ -44,7 +51,9 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
     RouterLink,
     DatePipe,
     TitleComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    GapRowComponent,
+    PullDirective
   ]
 })
 export class LastEditedProductsComponent {

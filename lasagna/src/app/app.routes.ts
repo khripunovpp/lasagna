@@ -120,17 +120,17 @@ export const routes: Routes = [{
               children: [
                 {
                   path: '',
-                  loadComponent: () => import('./view/settings/category/list/category-list.component')
+                  loadComponent: () => import('@view/settings/category-product/list/category-list.component')
                     .then(m => m.CategoryListComponent),
                 },
                 {
                   path: 'add',
-                  loadComponent: () => import('./view/settings/category/add-category/add-category.component')
+                  loadComponent: () => import('@view/settings/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 },
                 {
                   path: 'edit/:uuid',
-                  loadComponent: () => import('./view/settings/category/add-category/add-category.component')
+                  loadComponent: () => import('@view/settings/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 }
               ]

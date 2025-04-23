@@ -31,6 +31,7 @@ export class FlexsearchIndexService {
 
   async addToIndex(table: string, record: any) {
     const index = this.indices[table];
+
     if (index) {
       index.add(record);
     }

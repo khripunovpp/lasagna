@@ -95,7 +95,7 @@ export class DexieIndexDbService extends Dexie {
     return null;
   }
 
-  async addData(storeKey: Stores, value: any, customUUID?: string): Promise<string> {
+  async addData<T = any>(storeKey: Stores, value: T, customUUID?: string): Promise<string> {
     try {
       const uuid = customUUID || this.generateUuid();
       const obj = {...value, uuid};
@@ -112,8 +112,7 @@ export class DexieIndexDbService extends Dexie {
     }
   }
 
-  async replaceData(storeKey: Stores, uuid: string, value: any): Promise<void> {
-    debugger
+  async replaceData<T = any>(storeKey: Stores, uuid: string, value: T): Promise<void> {
     const obj = {...value, uuid};
     // @ts-ignore
     await (this[storeKey] as Table<any>).put(obj);
@@ -144,12 +143,12 @@ export class DexieIndexDbService extends Dexie {
     return this[storeKey] as Table<any, string>;
   }
 
-  async getOne(storeKey: Stores, uuid: string): Promise<any> {
+  async getOne<T = any>(storeKey: Stores, uuid: string): Promise<T> {
     // @ts-ignore
     return (this[storeKey] as Table<any>).get(uuid);
   }
 
-  async getAll(storeKey: Stores): Promise<any[]> {
+  async getAll<T = any>(storeKey: Stores): Promise<T[]> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)
     return table.toArray();
@@ -161,13 +160,14 @@ export class DexieIndexDbService extends Dexie {
     return table.toCollection().first();
   }
 
-  async getMany(storeKey: Stores, uuids: string[]): Promise<any[]> {
+  async getMany<T = any>(storeKey: Stores, uuids: string[]): Promise<T[]> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)
     return table.where('uuid').anyOf(uuids).toArray();
   }
 
   async remove(storeKey: Stores, uuid: string): Promise<void> {
+    debugger
     // @ts-ignore
     await (this[storeKey] as Table<any>).delete(uuid);
     if (storeKey === Stores.INDICES) {

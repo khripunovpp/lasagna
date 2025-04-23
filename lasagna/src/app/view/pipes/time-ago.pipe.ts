@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {formatDistanceToNow} from 'date-fns';
-import {ru} from 'date-fns/locale';
+import {differenceInSeconds, formatDistanceToNow} from 'date-fns';
 
 @Pipe({
   name: 'timeAgo',
@@ -8,11 +7,24 @@ import {ru} from 'date-fns/locale';
   standalone: true,
 })
 export class TimeAgoPipe implements PipeTransform {
+
   transform(value: any): string {
-    if (!value) return '';
+    if (!value) return 'unknown';
 
-    const date = value instanceof Date ? value : new Date(value.seconds ? value.seconds * 1000 : value);
+    const date = value instanceof Date
+      ? value
+      : new Date(value.seconds ? value.seconds * 1000 : value);
 
-    return formatDistanceToNow(date, {addSuffix: true, locale: ru});
+    return this.customFormat(date);
+  }
+
+  customFormat(date: Date): string {
+    const diffInSeconds = differenceInSeconds(new Date(), date);
+
+    if (diffInSeconds < 60) {
+      return 'Just now';
+    }
+
+    return formatDistanceToNow(date, {addSuffix: true});
   }
 }

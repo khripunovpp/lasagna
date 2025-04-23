@@ -1,38 +1,33 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
-
+import {Component, inject, OnInit, Signal, signal} from '@angular/core';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
-import {Product, ProductDbValue, ProductsRepository} from '../../../service/repositories/products.repository';
+import {ProductsRepository} from '@service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
-
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DatePipe, DecimalPipe} from '@angular/common';
-import {parseFloatingNumber} from '../../../helpers/number.helper';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-
-import {CsvReaderService} from '../../../service/services/csv-reader.service';
-import {TransferDataService} from '../../../service/services/transfer-data.service';
-import {Stores} from '../../../service/const/stores';
+import {CsvReaderService} from '@service/services/csv-reader.service';
+import {TransferDataService} from '@service/services/transfer-data.service';
+import {Stores} from '@service/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
-import {ProductDbInputScheme} from '../../../schemas/product.scema';
 import {RouterLink} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {NotificationsService} from '../../../service/services/notifications.service';
+import {NotificationsService} from '@service/services/notifications.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
-import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-products-list.token';
+import {CATEGORIZED_PRODUCTS_LIST} from '@service/tokens/categorized-products-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
-import {SelectionZoneService} from '../../../service/services/selection-zone.service';
-
+import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
-import {DraftForm} from '../../../service/services/draft-forms.service';
-import {ProductFormValue} from '../add-product/add-product-form.component';
+import {DraftForm} from '@service/services/draft-forms.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-
-export type ProductList = Record<string, Product[]>;
+import {Product} from '@service/models/Product';
+import {ProductDTO, ProductScheme} from '@service/shemes/Product.scheme';
+import {ExpandDirective} from '@view/directives/expand.directive';
+import {PullDirective} from '@view/directives/pull.directive';
 
 @Component({
   selector: 'lg-product-list',
@@ -89,26 +84,34 @@ export type ProductList = Record<string, Product[]>;
                   <lg-card-list style="--card-bg: #bee5ff">
                       @for (item of draft();track item?.createdAt) {
                           <ng-template lgCardListItem>
-                              <a [routerLink]="'/products/draft/' + item?.uuid">
-                                  <lg-gap-row [center]="true">
-                                      <div>
-                                          @if (item?.meta?.['uuid']) {
-                                              Unsaved existing product:
-                                          } @else {
-                                              Draft product:
-                                          }
-                                          {{ item?.data?.name ?? '' }}
-                                      </div>
+                              <lg-gap-row [center]="true">
+                                  <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
+                                      @if (item?.meta?.['uuid']) {
+                                          Unsaved existing product:
+                                      } @else {
+                                          Draft product:
+                                      }
+                                      {{ item?.data?.name || 'Unknown' }}
+                                  </a>
 
-                                      <div>Created at: {{ item?.createdAt | timeAgo }}</div>
-                                  </lg-gap-row>
-                              </a>
+                                  <small class="text-muted text-cursive" lgPull>
+                                      edited at: {{ (item?.createdAt || item?.updatedAt) | timeAgo }}
+                                  </small>
+
+                                  <lg-button [style]="'danger'"
+                                             [size]="'tiny'"
+                                             [icon]="true"
+                                             (click)="deleteDraft($any(item))">
+                                      <mat-icon aria-hidden="false"
+                                                fontIcon="close"></mat-icon>
+                                  </lg-button>
+                              </lg-gap-row>
                           </ng-template>
                       }
                   </lg-card-list>
               }
 
-              @for (category of products();track $index; let i = $index) {
+              @for (category of products();track $index;let i = $index) {
                   <lg-title [level]="3">
                       {{ category?.category || 'Uncategorized' }}
                   </lg-title>
@@ -122,18 +125,20 @@ export type ProductList = Record<string, Product[]>;
                               <lg-gap-row [center]="true">
                                   <div class="expand">
                                       <lg-gap-row [center]="true">
-                                          <div style="flex: 20%">
-                                              <a [routerLink]="'/products/edit/' + product.uuid">{{ product.name }}</a>
-                                          </div>
-                                          <div style="flex: 10%"> {{ product.source ?? '' }}</div>
-                                          <div style="flex: 70%">
-                                              {{ getPricePerGram(product) | number: '1.2-5' }}
-                                              @if (!product.unit || product.unit === 'gram') {
-                                                  per gram
-                                              } @else {
-                                                  per {{ product.unit }}
-                                              }
-                                          </div>
+                                          <lg-gap-row [center]="true" lgExpand>
+                                              <a [routerLink]="'/products/edit/' + product.uuid">
+                                                  {{ product.name }} {{ product.source ? '- ' + product.source : '' }}
+                                              </a>
+
+                                              <div>
+                                                  {{ $any(product).pricePerUnit | number: '1.2-5' }}
+                                                  {{ $any(product).perUnitLabel }}
+                                              </div>
+                                          </lg-gap-row>
+
+                                          <small class="text-muted text-cursive">
+                                              edited at: {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
+                                          </small>
                                       </lg-gap-row>
                                   </div>
 
@@ -175,7 +180,9 @@ export type ProductList = Record<string, Product[]>;
     QuickActionsTplDirective,
     SelectionToolsComponent,
     DatePipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    ExpandDirective,
+    PullDirective
   ],
   providers: [
     SelectionZoneService,
@@ -198,14 +205,13 @@ export class ProductListComponent
   ) {
   }
 
-  products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
-  draft = signal<Array<DraftForm<ProductFormValue> | null>>([]);
-  protected readonly ProductDbInputScheme = ProductDbInputScheme;
+  products: Signal<{
+    category: string;
+    products: Product[];
+  }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
+  draft = signal<(DraftForm<ProductDTO> | undefined)[]>([]);
+  protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
-
-  getPricePerGram(product: Product) {
-    return (parseFloatingNumber(product.price) || 1) / (parseFloatingNumber(product.amount) || 1);
-  }
 
   exportProducts(
     selected: Set<string>,
@@ -227,6 +233,15 @@ export class ProductListComponent
     });
   }
 
+  deleteDraft(
+    draft: DraftForm<ProductDTO>,
+  ) {
+    this._productsRepository.removeDraftProduct(draft.uuid);
+    this.draft.update((drafts) => {
+      return drafts.filter((item) => item?.uuid !== draft.uuid);
+    });
+  }
+
   ngOnInit() {
     this.loadProducts();
     const draft = this._productsRepository.getDraftProducts();
@@ -236,7 +251,7 @@ export class ProductListComponent
   }
 
   loadProducts() {
-    this._productsRepository.loadRecipes();
+    this._productsRepository.loadAll();
   }
 
 }

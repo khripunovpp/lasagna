@@ -1,17 +1,16 @@
 import {Component, OnInit, signal} from '@angular/core';
-
-import {GapRowComponent} from '../../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../../ui/layout/button.component';
-import {CategoryProduct} from '../../../../service/repositories/category-products-repository.service';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+import {ButtonComponent} from '@view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
-
-import {ContainerComponent} from '../../../ui/layout/container/container.component';
-import {TitleComponent} from '../../../ui/layout/title/title.component';
-import {CardListComponent} from '../../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../../ui/card/card-list-item.directive';
-import {CategoryRecipesRepository} from '../../../../service/repositories/category-recipes-repository.service';
-import {NotificationsService} from '../../../../service/services/notifications.service';
-import {FadeInComponent} from '../../../ui/fade-in.component';
+import {ContainerComponent} from '@view/ui/layout/container/container.component';
+import {TitleComponent} from '@view/ui/layout/title/title.component';
+import {CardListComponent} from '@view/ui/card/card-list.component';
+import {CardListItemDirective} from '@view/ui/card/card-list-item.directive';
+import {CategoryRecipesRepository} from '@service/repositories/category-recipes-repository.service';
+import {NotificationsService} from '@service/services/notifications.service';
+import {FadeInComponent} from '@view/ui/fade-in.component';
+import {CategoryRecipe} from '@service/models/CategoryRecipe';
+import {CategoryRecipeDTO} from '@service/shemes/CategoryRecipe.scheme';
 
 
 @Component({
@@ -87,12 +86,13 @@ export class CategoryRecipeListComponent
 
   }
 
-  categories = signal<CategoryProduct[]>([])
+  categories = signal<CategoryRecipe[]>([])
 
   deleteCategory(
-    category: CategoryProduct,
+    category: CategoryRecipe,
   ) {
-    this.categoryRepository.deleteCategory(category.uuid).then(() => {
+    if (!category.uuid) return Promise.resolve();
+    return this.categoryRepository.deleteCategory(category.uuid).then(() => {
       this.loadCategory();
       this._notificationsService.success('Category deleted');
     });
@@ -104,7 +104,7 @@ export class CategoryRecipeListComponent
 
   loadCategory() {
     this.categoryRepository.getCategories().then((categories) => {
-      const sorted = categories.toSorted((a: CategoryProduct, b: CategoryProduct) => a.name.localeCompare(b.name));
+      const sorted = categories.toSorted((a, b) => a.name.localeCompare(b.name));
       this.categories.set(sorted);
     });
   }

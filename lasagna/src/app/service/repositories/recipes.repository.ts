@@ -1,44 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Product, ProductUnit} from './products.repository';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../const/stores';
-import {CategoryRecipe, CategoryRecipesRepository} from './category-recipes-repository.service';
+import {CategoryRecipesRepository} from './category-recipes-repository.service';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
-import {DraftFormsService} from '../services/draft-forms.service';
+import {DraftForm, DraftFormsService} from '../services/draft-forms.service';
 import {TagsRepositoryService} from './tags-repository.service';
-import {randomRGB} from '../../helpers/color.helper';
-
-export interface Ingredient {
-  name?: string
-  amount: number
-  uuid: string
-  product_id?: Product
-  recipe_id?: Recipe
-  unit: ProductUnit
-}
-
-export interface Recipe {
-  uuid: string
-  name: string
-  description: string
-  ingredients: Ingredient[]
-  outcome_amount: number
-  outcome_unit: string
-  taxTemplateName?: string
-  category_id?: CategoryRecipe | null
-  createdAt?: number
-  updatedAt?: number
-  tags?: string[]
-}
-
-export type RecipeDTO = Omit<Recipe, 'ingredients' | 'category_id'> & {
-  ingredients: Array<Omit<Ingredient, 'product_id' | 'recipe_id'> & {
-    product_id: string | undefined
-    recipe_id: string | undefined
-  }>
-  category_id: string | null
-}
+import {Recipe} from '../models/Recipe';
+import {RecipeDTO} from '../shemes/Recipe.scheme';
+import {Tag} from '@service/models/Tag';
 
 @Injectable({
   providedIn: 'root'
@@ -60,13 +30,13 @@ export class RecipesRepository {
   }
 
   async addRecipe(
-    recipe: Omit<RecipeDTO, 'createdAt'>
+    recipe: Recipe
   ) {
-    const uuid = await this._indexDbService.addData(Stores.RECIPES, Object.assign(recipe, {
-      createdAt: Date.now(),
-    }));
+    recipe.clearEmpty();
+    const data = recipe.toDTO();
+    const uuid = await this._indexDbService.addData(Stores.RECIPES, data);
 
-    if (recipe.category_id) this._saveCategory(recipe.category_id);
+    if (data.category_id) this._saveCategory(data.category_id);
     this._saveRecipeToHistory(uuid);
 
     if (recipe.tags?.length) {
@@ -79,7 +49,8 @@ export class RecipesRepository {
   }
 
   loadRecipes() {
-    return this._indexDbService.getAll(Stores.RECIPES).then(recipes => {
+    return this._indexDbService.getAll(Stores.RECIPES).then(resp => {
+      const recipes = resp.map(recipe => Recipe.fromRaw(recipe));
       this._stream$.next(recipes);
       return recipes;
     });
@@ -87,7 +58,8 @@ export class RecipesRepository {
 
   getRecipes() {
     return this._indexDbService.getAll(Stores.RECIPES)
-      .then(res => res.toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name)));
+      .then(res => res.map(recipe => Recipe.fromRaw(recipe))
+        .toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name)));
   }
 
   async getOne(
@@ -99,19 +71,18 @@ export class RecipesRepository {
         return;
       }
       uuid = (uuid as Recipe).uuid || uuid as string;
-      await this._indexDbService.getOne(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
-        resolve(this.recipeFromDTO(result));
+      await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
+        resolve(Recipe.fromRaw(result));
       });
     });
   }
 
   async editRecipe(
     uuid: string,
-    recipe: Omit<RecipeDTO, 'updatedAt'>
+    recipe: Recipe
   ) {
-    await this._indexDbService.replaceData(Stores.RECIPES, uuid, Object.assign(recipe, {
-      updatedAt: Date.now(),
-    }));
+    recipe.clearEmpty();
+    await this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe.toDTO());
     this._saveRecipeToHistory(uuid);
     if (recipe.tags?.length) {
       for (const tag of recipe.tags) {
@@ -121,19 +92,24 @@ export class RecipesRepository {
   }
 
   saveDraftRecipe(recipe: Recipe, uuid?: string) {
-    return this._draftFormsService.setDraftForm<Recipe>(
+    const draft = this._draftFormsService.setDraftForm<RecipeDTO>(
       'draft_recipes',
-      recipe,
+      recipe.toDTO(),
       uuid?.length ? 'edit' : 'add',
       uuid ? {
         uuid: uuid,
       } : {});
+
+    return draft ? {
+      ...draft,
+      data: recipe,
+    } as DraftForm<Recipe> : undefined;
   }
 
-  updateDraftRecipe(key: string, product: Recipe, uuid?: string) {
-    return this._draftFormsService.updateDraftForm<Recipe>(
+  updateDraftRecipe(key: string, recipe: Recipe, uuid?: string) {
+    this._draftFormsService.updateDraftForm<RecipeDTO>(
       'draft_recipes',
-      product,
+      recipe.toDTO(),
       key,
       uuid?.length ? 'edit' : 'add',
       uuid ? {
@@ -142,7 +118,7 @@ export class RecipesRepository {
   }
 
   getDraftRecipe(uuid?: string) {
-    const draft = this._draftFormsService.getDraftForms<Recipe>('draft_recipes');
+    const draft = this._draftFormsService.getDraftForms<RecipeDTO>('draft_recipes');
     if (uuid && draft?.[uuid]) {
       return [draft?.[uuid]];
     }
@@ -159,54 +135,6 @@ export class RecipesRepository {
     return this._indexDbService.remove(Stores.RECIPES, uuid);
   }
 
-  ingredientToDto(ingredient: Ingredient): RecipeDTO['ingredients'][number] {
-    return {
-      name: ingredient.name,
-      amount: ingredient.amount,
-      unit: ingredient.unit,
-      product_id: ingredient.product_id?.uuid,
-      recipe_id: ingredient.recipe_id?.uuid,
-      uuid: ingredient.uuid,
-    };
-  }
-
-  recipeFromDTO(recipe: RecipeDTO): Recipe | undefined {
-    if (!recipe) {
-      return undefined
-    }
-    return {
-      name: recipe.name,
-      description: recipe.description,
-      outcome_amount: recipe.outcome_amount,
-      outcome_unit: recipe.outcome_unit,
-      uuid: recipe.uuid,
-      ingredients: recipe.ingredients.map(ingredient => ({
-        ...ingredient,
-        product_id: ingredient.product_id ? {uuid: ingredient.product_id} as Product : undefined,
-        recipe_id: ingredient.recipe_id ? {uuid: ingredient.recipe_id} as Recipe : undefined,
-      })),
-      taxTemplateName: recipe.taxTemplateName,
-      category_id: recipe.category_id ? {uuid: recipe.category_id} as CategoryRecipe : null,
-      createdAt: recipe.createdAt,
-      updatedAt: recipe.updatedAt,
-    };
-  }
-
-  recipeToDto(recipe: Recipe): RecipeDTO {
-    return {
-      name: recipe.name,
-      description: recipe.description,
-      outcome_amount: recipe.outcome_amount,
-      outcome_unit: recipe.outcome_unit,
-      uuid: recipe.uuid,
-      ingredients: recipe.ingredients.map(ingredient => this.ingredientToDto(ingredient)),
-      taxTemplateName: recipe.taxTemplateName,
-      category_id: recipe.category_id ? recipe.category_id.uuid : null,
-      createdAt: recipe.createdAt,
-      updatedAt: recipe.updatedAt,
-    };
-  }
-
   getTopCategories() {
     const {top} = this._usingHistoryService.read('recipes_categories');
     const keys = Object.keys(top);
@@ -216,6 +144,9 @@ export class RecipesRepository {
 
     return this._categoryRepository.getManyCategories(keys).then(categories => {
       return categories.toSorted((a, b) => {
+        if (!a.uuid || !b.uuid) {
+          return 0;
+        }
         return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       });
     })
@@ -232,7 +163,7 @@ export class RecipesRepository {
       return recipes.toSorted((a, b) => {
         return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       }).map(recipe => ({
-        recipe: recipe,
+        recipe: Recipe.fromRaw(recipe),
         updatedAt: top[recipe.uuid].updatedAt,
         count: top[recipe.uuid].count,
       }))
@@ -247,10 +178,7 @@ export class RecipesRepository {
     this._usingHistoryService.count('recipes', uuid);
   }
 
-  private _saveTag(tag: string) {
-    return this._tagsRepository.addOne({
-      name: tag,
-      style: randomRGB(),
-    });
+  private _saveTag(tag: Tag) {
+    return this._tagsRepository.addOne(tag)
   }
 }
