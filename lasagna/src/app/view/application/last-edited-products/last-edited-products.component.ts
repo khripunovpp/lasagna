@@ -5,6 +5,7 @@ import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {Product, ProductsRepository} from '../../../service/repositories/products.repository';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'lg-last-edited-products',
@@ -17,7 +18,7 @@ import {Product, ProductsRepository} from '../../../service/repositories/product
                 <a [routerLink]="['/products/edit/', product.product.uuid]" class="last-edited-product">
                     <div class="last-edited-recipe-name">
                         {{ product.product.name }}
-                        (last edited {{product.updatedAt | date: 'short'}})
+                        (last edited {{product.updatedAt | timeAgo}})
                     </div>
                 </a>
             } @empty {
@@ -42,7 +43,8 @@ import {Product, ProductsRepository} from '../../../service/repositories/product
     GapColumnComponent,
     RouterLink,
     DatePipe,
-    TitleComponent
+    TitleComponent,
+    TimeAgoPipe
   ]
 })
 export class LastEditedProductsComponent {

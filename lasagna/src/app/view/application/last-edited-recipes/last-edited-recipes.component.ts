@@ -4,27 +4,28 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {TitleComponent} from '../../ui/layout/title/title.component';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'lg-last-edited-recipes',
   template: `
       <lg-gap-column>
-        <lg-title [level]="4">Last Edited Recipes</lg-title>
+          <lg-title [level]="4">Last Edited Recipes</lg-title>
 
-        <div class="last-edited-recipes">
-            @for ( recipe of recipes(); track recipe.recipe.uuid ) {
-                <a [routerLink]="['/recipes/edit/', recipe.recipe.uuid]" class="last-edited-recipe">
-                    <div class="last-edited-recipe-name">
-                        {{ recipe.recipe.name }}
-                        (last edited {{recipe.updatedAt | date: 'short'}})
-                    </div>
-                </a>
-            } @empty {
-                <div class="last-edited-recipe-name">
-                    No recipes found
-                </div>
-            }
-        </div>
+          <div class="last-edited-recipes">
+              @for (recipe of recipes();track recipe.recipe.uuid) {
+                  <a [routerLink]="['/recipes/edit/', recipe.recipe.uuid]" class="last-edited-recipe">
+                      <div class="last-edited-recipe-name">
+                          {{ recipe.recipe.name }}
+                          (last edited {{ recipe.updatedAt |timeAgo }})
+                      </div>
+                  </a>
+              } @empty {
+                  <div class="last-edited-recipe-name">
+                      No recipes found
+                  </div>
+              }
+          </div>
       </lg-gap-column>
   `,
   styles: [
@@ -41,7 +42,8 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
     GapColumnComponent,
     RouterLink,
     DatePipe,
-    TitleComponent
+    TitleComponent,
+    TimeAgoPipe
   ]
 })
 export class LastEditedRecipesComponent {
