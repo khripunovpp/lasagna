@@ -108,7 +108,7 @@ export type ProductList = Record<string, Product[]>;
                   </lg-card-list>
               }
 
-              @for (category of products();track category?.category) {
+              @for (category of products();track $index; let i = $index) {
                   <lg-title [level]="3">
                       {{ category?.category || 'Uncategorized' }}
                   </lg-title>
