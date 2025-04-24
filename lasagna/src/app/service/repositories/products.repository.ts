@@ -177,8 +177,8 @@ export class ProductsRepository {
         source: String((product as any).source || ''),
         category_id: String((product as any).category_id || ''),
         unit: String((product as any).unit || ''),
-        createdAt: Number((product as any).createdAt),
-        updatedAt: Number((product as any).updatedAt),
+        createdAt: (product as any).createdAt ? Number((product as any).createdAt) : Date.now(),
+        updatedAt: (product as any).updatedAt ? Number((product as any).updatedAt) : Date.now(),
       })
     }
     return null as any;
