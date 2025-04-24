@@ -23,6 +23,7 @@ import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
 import {DraftForm} from '../../../service/services/draft-forms.service';
 import {DatePipe} from '@angular/common';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 
 @Component({
@@ -80,7 +81,7 @@ import {DatePipe} from '@angular/common';
                                           {{ item?.data?.name ?? '' }}
                                       </div>
 
-                                      <div>Created at: {{ item?.createdAt | date: 'medium' }}</div>
+                                      <div>Created at: {{ item?.createdAt | timeAgo }}</div>
                                   </lg-gap-row>
                               </a>
                           </ng-template>
@@ -148,7 +149,8 @@ import {DatePipe} from '@angular/common';
     ControlsBarComponent,
     QuickActionsTplDirective,
     SelectionToolsComponent,
-    DatePipe
+    DatePipe,
+    TimeAgoPipe
   ],
   styles: [
     `:host {

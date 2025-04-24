@@ -30,6 +30,7 @@ import {SelectionZoneService} from '../../../service/services/selection-zone.ser
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {DraftForm} from '../../../service/services/draft-forms.service';
 import {ProductFormValue} from '../add-product/add-product-form.component';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 export type ProductList = Record<string, Product[]>;
 
@@ -99,7 +100,7 @@ export type ProductList = Record<string, Product[]>;
                                           {{ item?.data?.name ?? '' }}
                                       </div>
 
-                                      <div>Created at: {{ item?.createdAt | date: 'medium' }}</div>
+                                      <div>Created at: {{ item?.createdAt | timeAgo }}</div>
                                   </lg-gap-row>
                               </a>
                           </ng-template>
@@ -173,8 +174,9 @@ export type ProductList = Record<string, Product[]>;
     ControlsBarComponent,
     QuickActionsTplDirective,
     SelectionToolsComponent,
-    DatePipe
-],
+    DatePipe,
+    TimeAgoPipe
+  ],
   providers: [
     SelectionZoneService,
   ],

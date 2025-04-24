@@ -16,6 +16,7 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {re} from 'mathjs';
 import {DatePipe} from '@angular/common';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-add-recipe',
@@ -29,7 +30,8 @@ import {DatePipe} from '@angular/common';
     GapRowComponent,
     FadeInComponent,
     ShrinkDirective,
-    DatePipe
+    DatePipe,
+    TimeAgoPipe
   ],
   template: `
 
@@ -39,7 +41,7 @@ import {DatePipe} from '@angular/common';
                   @if ((recipe() && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
                       <lg-title>Edit Recipe</lg-title>
                       @if (recipe()?.updatedAt) {
-                          (last edited {{ recipe()?.updatedAt | date: 'short' }})
+                          (last edited {{ recipe()?.updatedAt | timeAgo }})
                       }
                   } @else {
                       <lg-title>Add Recipe</lg-title>

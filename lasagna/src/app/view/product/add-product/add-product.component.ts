@@ -15,6 +15,7 @@ import {debounceTime} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {DatePipe} from '@angular/common';
+import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 
 
 @Component({
@@ -29,7 +30,8 @@ import {DatePipe} from '@angular/common';
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
-    DatePipe
+    DatePipe,
+    TimeAgoPipe
   ],
   template: `
       <lg-fade-in>
@@ -38,7 +40,7 @@ import {DatePipe} from '@angular/common';
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>Edit Product</lg-title>
                       @if (product()?.updatedAt) {
-                          (last edited {{ product()?.updatedAt | date: 'short' }})
+                          (last edited {{ product()?.updatedAt | timeAgo }})
                       }
                   } @else {
                       <lg-title>Add Product</lg-title>
