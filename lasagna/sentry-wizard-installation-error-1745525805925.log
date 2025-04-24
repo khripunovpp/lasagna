@@ -1,0 +1,39 @@
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: @angular/animations@20.0.0-next.6
+npm error Found: @angular/common@20.0.0-next.5
+npm error node_modules/@angular/common
+npm error   peer @angular/common@"^20.0.0-0 || ^20.1.0-0 || ^20.2.0-0 || ^20.3.0-0 || ^21.0.0-0" from @angular/cdk@20.0.0-next.6
+npm error   node_modules/@angular/cdk
+npm error     peer @angular/cdk@"20.0.0-next.6" from @angular/material@20.0.0-next.6
+npm error     node_modules/@angular/material
+npm error       @angular/material@"^20.0.0-next.5" from the root project
+npm error     @angular/cdk@"^20.0.0-next.5" from the root project
+npm error   peer @angular/common@"20.0.0-next.5" from @angular/forms@20.0.0-next.5
+npm error   node_modules/@angular/forms
+npm error     peer @angular/forms@"^20.0.0-0 || ^20.1.0-0 || ^20.2.0-0 || ^20.3.0-0 || ^21.0.0-0" from @angular/material@20.0.0-next.6
+npm error     node_modules/@angular/material
+npm error       @angular/material@"^20.0.0-next.5" from the root project
+npm error     @angular/forms@"^20.0.0-next.5" from the root project
+npm error   7 more (@angular/material, @angular/platform-browser, ...)
+npm error
+npm error Could not resolve dependency:
+npm error peer @angular/common@"20.0.0-next.6" from @angular/animations@20.0.0-next.6
+npm error node_modules/@angular/animations
+npm error   @angular/animations@"^20.0.0-next.6" from the root project
+npm error
+npm error Conflicting peer dependency: @angular/common@20.0.0-next.6
+npm error node_modules/@angular/common
+npm error   peer @angular/common@"20.0.0-next.6" from @angular/animations@20.0.0-next.6
+npm error   node_modules/@angular/animations
+npm error     @angular/animations@"^20.0.0-next.6" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /Users/khripunovpavel/.npm/_logs/2025-04-24T20_16_43_316Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/khripunovpavel/.npm/_logs/2025-04-24T20_16_43_316Z-debug-0.log
