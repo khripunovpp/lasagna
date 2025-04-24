@@ -9,8 +9,7 @@
     "cleanup": "ng generate @angular/core:cleanup-unused-imports",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:lasagna": "node dist/lasagna/server/server.mjs"
-  },
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.0.0-next.6",
@@ -29,6 +28,8 @@
     "@ng-select/ng-select": "^14.2.6",
     "@ngneat/overview": "6.1.1",
     "@ngxpert/hot-toast": "^4.1.2",
+    "@sentry/angular": "^9.7.0-alpha.0",
+    "@sentry/cli": "^2.43.0",
     "@zxing/browser": "^0.1.5",
     "dexie": "^4.0.11",
     "express": "^4.18.2",
