@@ -4,6 +4,7 @@ import {Stores} from '../const/stores';
 import {migrations} from './migrations';
 import {generateUuid} from '../../helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
+import {BuckupData} from '@service/services/transfer-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -203,5 +204,23 @@ export class DexieIndexDbService extends Dexie {
   async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
     // @ts-ignore
     return (this[storeKey] as Table<any>).orderBy(indexField).uniqueKeys();
+  }
+
+  async getVersion(storeKey: Stores): Promise<number> {
+    return (this as any).idbdb.version;
+  }
+
+  async restoreAllData(data: BuckupData[]): Promise<void> {
+    const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
+    for (const store of stores) {
+      const items = data.find(item => item.store === store);
+      if (items) {
+        // TODO validate schema
+        await this.clear(store);
+        await this.balkAdd(store, items.data, false);
+      } else {
+        throw new Error(`Store ${store} not found in backup data`);
+      }
+    }
   }
 }

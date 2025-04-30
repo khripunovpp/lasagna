@@ -10,4 +10,5 @@ export class ShrinkDirective {
 
   @HostBinding('style.flex') flex = '0 1 auto';
   @HostBinding('style.align-self') alignSelf = 'flex-start';
+  @HostBinding('style.width') width = 'auto';
 }

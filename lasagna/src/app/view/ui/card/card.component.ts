@@ -5,7 +5,7 @@ import {Component, input} from '@angular/core';
   standalone: true,
   template: `
       <div [class.flat]="flat()"
-            [class.center]="center()"
+           [class.center]="center()"
            class="card">
           <ng-content></ng-content>
       </div>
@@ -41,6 +41,7 @@ import {Component, input} from '@angular/core';
 export class CardComponent {
   constructor() {
   }
+
   flat = input(false);
   center = input(false);
 }

@@ -1,8 +1,6 @@
 <lg-fade-in>
   <lg-container>
-    <lg-gap-row [center]="true">
-      <lg-title>Settings</lg-title>
-    </lg-gap-row>
+    <lg-title>Settings</lg-title>
 
     <lg-gap-row>
       <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
@@ -17,6 +15,33 @@
         </lg-card>
       </a>
     </lg-gap-row>
+
+    <lg-title [level]="3">Actions</lg-title>
+
+
+    <lg-title [level]="5">Backup</lg-title>
+
+    <lg-gap-column>
+      <lg-button (click)="onBackup()"
+                 [style]="'success'">
+        Make backup
+      </lg-button>
+
+
+      <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
+        <lg-card style="--card-bg:#e78888">
+          <lg-gap-column [position]="'center'">
+           <span class="text-center text-inverse">
+             Be aware! <br>
+             This will override all your current settings.
+           </span>
+            <lg-button [style]="'danger'">
+              Restore backup
+            </lg-button>
+          </lg-gap-column>
+        </lg-card>
+      </lg-upload>
+    </lg-gap-column>
   </lg-container>
 </lg-fade-in>
 

@@ -24,7 +24,7 @@ export class CsvReaderService {
     });
   }
 
-  readFromJSONFile(file: File): Promise<any[]> {
+  readFromJSONFile<T = any>(file: File): Promise<T[]> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
