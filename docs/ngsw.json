@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1746046893418,
+  "timestamp": 1746047405233,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -72,7 +72,7 @@
         "https://khripunovpp.github.io/lasagna/chunk-ZA26GV76.js",
         "https://khripunovpp.github.io/lasagna/favicon.ico",
         "https://khripunovpp.github.io/lasagna/index.html",
-        "https://khripunovpp.github.io/lasagna/main-HRKMUTZV.js",
+        "https://khripunovpp.github.io/lasagna/main-UK6AJGC5.js",
         "https://khripunovpp.github.io/lasagna/manifest.webmanifest",
         "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js",
         "https://khripunovpp.github.io/lasagna/styles-XXSI5QBI.css"
@@ -156,9 +156,9 @@
     "https://khripunovpp.github.io/lasagna/chunk-ZA26GV76.js": "d0c5ff27113957203916a56ed98ee64b730f083c",
     "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://khripunovpp.github.io/lasagna/img/egg.svg": "4d9a85d4b3f9001fa1563ba67e928f3724a6e083",
-    "https://khripunovpp.github.io/lasagna/index.html": "88ed63d8a1a6f671e16e9ec727889d88be7ca4a8",
+    "https://khripunovpp.github.io/lasagna/index.html": "111e40d89f25724b3054cd9ee02f534864b42fbb",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
-    "https://khripunovpp.github.io/lasagna/main-HRKMUTZV.js": "eccb3cd82313adcdb1577e4df33523a19cf9a369",
+    "https://khripunovpp.github.io/lasagna/main-UK6AJGC5.js": "07bcbe2a34a1221e05875ac9c933e39422a319a6",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8fb62517a3e27c1ff3530bdc36ad55a93166cb12",
     "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
     "https://khripunovpp.github.io/lasagna/styles-XXSI5QBI.css": "f547bfaf845d1ee3cfdbd0f8a11babad561a5ebd"
