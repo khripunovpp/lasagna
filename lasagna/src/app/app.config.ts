@@ -18,27 +18,7 @@ import {CategoryRecipesRepository} from './service/repositories/category-recipes
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import 'hammerjs';
 import {DocsService} from './service/services/docs.service';
-import {isPlatformServer} from '@angular/common';
 import * as Sentry from '@sentry/angular';
-
-function provideSentryProviders(platformId: object): unknown[] {
-  if (isPlatformServer(platformId)) {
-    return [];
-  }
-  return [
-    {
-      provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler({
-        logErrors: true,
-        showDialog: true,
-      }),
-    },
-    {
-      provide: Sentry.TraceService,
-      deps: [Router],
-    },
-  ];
-}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -73,8 +53,15 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HammerModule),
 
     {
-      provide: 'sentryProviders',
-      useFactory: provideSentryProviders,
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        logErrors: true,
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
     },
   ]
 };
