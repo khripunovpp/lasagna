@@ -17,5 +17,46 @@
 <body>
 <app-root></app-root>
 <noscript>Please enable JavaScript to continue using this application.</noscript>
+
+
+<!-- Вставь это внутрь <body> -->
+<div id="pwa-update-banner" style=" display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;">
+  <button style="
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+  ">Ваша версия устарела. Нажмите чтобы обновить</button>
+</div>
+
+<script>
+  if ('serviceWorker' in navigator && 'Notification' in window) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (!reg || !reg.waiting) return;
+
+        // Показать баннер
+        const banner = document.getElementById('pwa-update-banner');
+        banner.style.display = 'flex';
+
+        banner.querySelector('button').addEventListener('click', () => {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          window.location.reload();
+        });
+      });
+
+      // Слушаем обновление
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('Service worker updated.');
+      });
+    });
+  }
+</script>
 </body>
 </html>
