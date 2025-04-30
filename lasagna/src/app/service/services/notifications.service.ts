@@ -32,7 +32,29 @@ export class NotificationsService {
   }
 
   loading(message: string) {
-    this._toast.loading(message);
+    return this._toast.loading(message);
+  }
+
+  showJsonErrors(
+    errors: unknown[],
+    title: string = 'Errors',
+  ) {
+    const errorMessages = errors.map((error) => {
+      if (typeof error === 'string') {
+        return error;
+      } else if (typeof error === 'object' && error !== null) {
+        return JSON.stringify(error, null, 2);
+      }
+      return String(error);
+    });
+    this._toast.error(errorMessages.join('\n'), {
+      duration: 10000,
+      style: {
+        whiteSpace: 'pre-wrap',
+        maxHeight: '300px',
+        overflowY: 'auto',
+      },
+    });
   }
 
   parseFormErrors(

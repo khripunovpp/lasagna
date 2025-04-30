@@ -3,6 +3,7 @@
 :root {
 
   --text-color: #2c2c2c;
+  --text-color-inverse: #f5f5f5;
   --focus-shadow: 0 0 0 2px var(--active-color);
   --active-color: #ff7e67;
   --control-bg: #fafafa;
@@ -15,13 +16,17 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Inter, "Helvetica Neue", sans-serif;
   background-color: #eef5ef;
   height: 100%;
   font-size: 16px;
   color: var(--text-color);
+  letter-spacing: 0.2px;
 }
 
+.text-inverse {
+  color: var(--text-color-inverse);
+}
 
 .expand {
   width: 100%;
