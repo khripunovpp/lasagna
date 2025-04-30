@@ -76,6 +76,7 @@ import {GlobalSearchService} from '../../../service/services/global-search.servi
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      overflow: hidden;
       overflow-x: auto;
       white-space: nowrap;
       padding: 0 16px;
@@ -98,10 +99,10 @@ import {GlobalSearchService} from '../../../service/services/global-search.servi
       scroll-snap-align: center;
       gap: 8px;
       min-width: 40px;
-       @media (max-width: 768px) {
+      @media (max-width: 768px) {
         flex: 0 0 auto;
         min-width: 0;
-       }
+      }
     }
 
     .lg-header__leftToMiddle {
