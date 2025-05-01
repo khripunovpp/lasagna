@@ -9,6 +9,7 @@ import {TagsRepositoryService} from './tags-repository.service';
 import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../shemes/Recipe.scheme';
 import {Tag} from '@service/models/Tag';
+import {ProductsRepository} from '@service/repositories/products.repository';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class RecipesRepository {
     private _categoryRepository: CategoryRecipesRepository,
     private _draftFormsService: DraftFormsService,
     private _tagsRepository: TagsRepositoryService,
+    private _productsRepository: ProductsRepository,
   ) {
   }
 
@@ -75,6 +77,23 @@ export class RecipesRepository {
         resolve(Recipe.fromRaw(result));
       });
     });
+  }
+
+  async getOneVerbose(
+    uuid: Recipe | string | undefined,
+  ) {
+    const recipe = await this.getOne(uuid);
+
+    for (const ingredient of recipe?.ingredients || []) {
+      if (ingredient.product_id) {
+        ingredient.product_id = await this._productsRepository.getOne(ingredient.product_id);
+      }
+      if (ingredient.recipe_id) {
+        ingredient.recipe_id = await this.getOneVerbose(ingredient.recipe_id);
+      }
+    }
+
+    return recipe;
   }
 
   async editRecipe(

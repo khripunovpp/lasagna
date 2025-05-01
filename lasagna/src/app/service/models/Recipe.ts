@@ -81,18 +81,6 @@ export class Recipe {
     }, 0);
   }
 
-  get checkCycleRecipe() {
-    let match = false;
-    for (const ingr of this.ingredients) {
-      const hasSubRecipe = ingr.recipe_id;
-      if (hasSubRecipe && hasSubRecipe === this.uuid) {
-        match = true;
-        break;
-      }
-    }
-    return match;
-  }
-
   get outcomeAmountGreaterThanIngredients() {
     return parseFloatingNumber(this.outcome_amount) > this.totalIngredientsWeight;
   }

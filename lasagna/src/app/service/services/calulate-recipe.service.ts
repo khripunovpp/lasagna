@@ -6,6 +6,7 @@ import {Recipe} from '../models/Recipe';
 import {Ingredient} from '../models/Ingredient';
 import {RecipeDTO} from '../shemes/Recipe.scheme';
 import {Unit} from '../types/Unit.types';
+import {RecipeCalculation} from '@service/models/RecipeCalculation';
 
 export interface Calculation {
   recipe?: Recipe
@@ -42,7 +43,7 @@ export class CalculateRecipeService {
     taxTemplateName: string,
   ) {
     return new Promise<Recipe | null>(async (resolve, reject) => {
-      await this._recipeRepository.getOne(recipeUUID).then(async (recipe:any) => {
+      await this._recipeRepository.getOne(recipeUUID).then(async (recipe: any) => {
         if (!recipe) {
           resolve(null);
           return;
@@ -55,6 +56,7 @@ export class CalculateRecipeService {
     });
   }
 
+
   calculateRecipe(
     recipeUUID: string,
     forOutcome: number = 0,
@@ -63,6 +65,16 @@ export class CalculateRecipeService {
       const table: CalculationTableParams[] = [];
       let totalAmount = 0;
       let totalWeight = 0;
+
+
+      const recipe = await this._recipeRepository.getOneVerbose(recipeUUID);
+      const calculation = new RecipeCalculation(recipe);
+
+      console.log({
+        calculation,
+        totalAmount: calculation.totalAmount,
+      })
+
 
       await this._recipeRepository.getOne(recipeUUID).then(async recipe => {
 
