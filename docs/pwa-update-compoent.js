@@ -1,7 +1,6 @@
-
 function createUpdateButton() {
   const button = document.createElement('button');
-  button.innerText = 'Обновить приложение';
+  button.innerText = 'New version available! Click to update.';
   button.style.backgroundColor = '#007bff';
   button.style.color = 'white';
   button.style.border = 'none';
@@ -13,6 +12,48 @@ function createUpdateButton() {
   });
 
   return button;
+}
+
+function downloadBackupDirectlyIndexDB() {
+  const dbName = 'lasagna-db';
+  const request = indexedDB.open(dbName);
+  request.onsuccess = function (event) {
+    const db = event.target.result;
+
+    const storeNames = Array.from(db.objectStoreNames).filter(store => store !== 'indicesStore');
+    const transaction = db.transaction(storeNames, 'readonly');
+    const backup = {};
+
+    storeNames.forEach(store => {
+      const objectStore = transaction.objectStore(store);
+      const getAllRequest = objectStore.getAll();
+
+      getAllRequest.onsuccess = function (event) {
+        backup[store] = {
+          data: event.target.result,
+          version: db.version,
+          createdAt: Date.now(),
+          store: store
+        };
+
+        if (Object.keys(backup).length === storeNames.length) {
+          downloadBackup(backup);
+        }
+      };
+    });
+  };
+}
+
+function downloadBackup(data) {
+  const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.download = 'backup.json';
+  a.href = url;
+  a.click();
+  URL.revokeObjectURL(url);
+  console.log('Backup downloaded successfully');
 }
 
 function createUpdateBanner() {
@@ -30,18 +71,17 @@ function createUpdateBanner() {
 function dialog() {
   const dialog = document.createElement('dialog');
   dialog.innerHTML = `
-    <p>Обновление доступно. Хотите обновить приложение?</p>
-    <button id="save-backup">Сохранить бэкап</button>
-    <button id="update-app">Обновить приложение</button>
+    <p>New version available!</p>
+    <p>We recommend to save a backup of your data before updating.</p>
+    <button id="save-backup">Save Backup</button>
+    <button id="update-app">Update App without Backup</button>
   `;
   document.body.appendChild(dialog);
 
   const saveBackupButton = dialog.querySelector('#save-backup');
 
   saveBackupButton.addEventListener('click', (e) => {
-    const url = `${window.location.origin}/settings?download_backup=true`;
-    window.history.pushState({}, '', url);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    downloadBackupDirectlyIndexDB();
   });
 
   return dialog;
@@ -63,7 +103,6 @@ if ('serviceWorker' in navigator && 'Notification' in window) {
       console.log('Service worker registration:', reg);
       if (!reg || !reg.waiting) return;
 
-      // Показать баннер
       banner.style.display = 'flex';
 
       const updateAppButton = dialog.querySelector('#update-app');
@@ -74,7 +113,6 @@ if ('serviceWorker' in navigator && 'Notification' in window) {
       });
     });
 
-    // Слушаем обновление
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       console.log('Service worker updated.');
     });
