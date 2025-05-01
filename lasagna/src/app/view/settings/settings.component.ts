@@ -56,7 +56,7 @@ export class SettingsComponent
     try {
       await this.transferDataService.exportAll('json');
       this.notificationsService.success('Backup created successfully');
-
+      localStorage.setItem('lastBackupDate', Date.now().toString());
     } catch (e) {
       this.notificationsService.showJsonErrors([JSON.stringify(e)], 'Backup failed');
       console.error(e);

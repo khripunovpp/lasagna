@@ -55,10 +55,10 @@ export class TransferDataService {
       });
     }
     if (fileType === 'json') {
-      this._csvReaderService.saveToJSONFile(data, this._getFileName(source[0], fileType));
+      this._csvReaderService.saveToJSONFile(data, this._getFileName('buckup' as any, fileType));
       return;
     }
-    this._csvReaderService.saveToCSVFile(data, this._getFileName(source[0], fileType));
+    this._csvReaderService.saveToCSVFile(data, this._getFileName('buckup' as any, fileType));
   }
 
   async restoreAllData(
@@ -80,7 +80,7 @@ export class TransferDataService {
   }
 
   private _getFileName(
-    source: Stores,
+    source: string,
     fileType: 'csv' | 'json',
   ) {
     const date = new Date().toISOString();
