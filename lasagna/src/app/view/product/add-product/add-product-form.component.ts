@@ -20,6 +20,7 @@ import {TagsControlComponent} from '../../ui/form/tags-control.component';
 import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
 import {JsonPipe} from '@angular/common';
+import {debounceTime} from 'rxjs';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -127,7 +128,12 @@ export class AddProductFormComponent
 
   ngOnInit() {
     this._loadUsingHistory();
-    this.form.valueChanges.subscribe(values => {
+    this.form.valueChanges.pipe(
+      debounceTime(100),
+    ).subscribe(values => {
+      if (!this.form.dirty) {
+        return
+      }
       this.product()?.update(values);
     })
   }
