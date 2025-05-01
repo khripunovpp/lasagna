@@ -1,15 +1,14 @@
 import {Component, computed, HostListener} from '@angular/core';
-import {InputComponent} from '../form/input.component';
-import {GlobalSearchService, SearchResultContext} from '../../../service/services/global-search.service';
+import {InputComponent} from './form/input.component';
+import {GlobalSearchService, SearchResultContext} from '@service/services/global-search.service';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
-import {debounceTime, from, Observable, of, switchMap, tap} from 'rxjs';
+import {debounceTime, from, Observable, of, switchMap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
-import {FadeInComponent} from '../fade-in.component';
-import {FocusTrapDirective} from '../focus-trap.directive';
-import hotkeys from 'hotkeys-js';
-import {groupBy} from '../../../helpers/grouping.helper';
-import {TitleComponent} from './title/title.component';
+import {FadeInComponent} from './fade-in.component';
+import {FocusTrapDirective} from './focus-trap.directive';
+import {groupBy} from '@helpers/grouping.helper';
+import {TitleComponent} from './layout/title/title.component';
 
 @Component({
   selector: 'lg-global-search',
@@ -186,7 +185,7 @@ import {TitleComponent} from './title/title.component';
     ReactiveFormsModule,
     FocusTrapDirective,
     TitleComponent
-]
+  ]
 })
 export class GlobalSearchComponent {
   constructor(
