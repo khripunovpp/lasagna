@@ -19,6 +19,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
 import {MultiselectItem} from './multiselect.component';
+import {JsonPipe} from '@angular/common';
 
 
 export interface autocompleteItem {
@@ -31,7 +32,6 @@ export interface autocompleteItem {
   template: `
       <div class="autocomplete">
           <ng-select (change)="onChangeSelect($event)"
-                     (ngModelChange)="onChangeInput($event)"
                      (blur)="onBlur()"
                      (search)="onSearch($event)"
                      [addTag]="true"
@@ -40,7 +40,7 @@ export interface autocompleteItem {
                      [compareWith]="compareWith"
                      [editableSearchTerm]="true"
                      [items]="loadedList()"
-                     [ngModel]="value"
+                     [(ngModel)]="value"
                      [searchFn]="searchFn"
                      bindLabel="name"
                      notFoundText="Start typing to search">
@@ -61,7 +61,8 @@ export interface autocompleteItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    NgTagTemplateDirective
+    NgTagTemplateDirective,
+    JsonPipe
   ],
   styles: [
     `
@@ -171,8 +172,11 @@ export class AutocompleteComponent
   }
 
   compareWith = (a: autocompleteItem, b: autocompleteItem) => {
+    debugger
     const valA = a as any;
     const valB = b as any;
+
+    return true;
 
     if (!a || !b) {
       return false;
@@ -219,6 +223,7 @@ export class AutocompleteComponent
   }
 
   onChangeSelect(value: unknown) {
+    debugger
     const val = typeof value === 'string' ? value : (value as any)?.[this.key()];
     this.change(val);
     this.onSelected.emit(val);
@@ -250,6 +255,7 @@ export class AutocompleteComponent
   onBlur() {
     const select = this.selectComponent();
     if (select?.searchTerm) {
+      debugger
       // Принудительно добавить текущий searchTerm как тег
       const searchValue = select.searchTerm.trim();
       if (searchValue) {
@@ -285,14 +291,14 @@ export class AutocompleteComponent
     // return this._selectResourcesService.load([this.resource()]);
   }
 
-  private _capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   focus() {
     const select = this.selectComponent();
     if (select) {
       select.focus();
     }
+  }
+
+  private _capitalizeFirstLetter(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
