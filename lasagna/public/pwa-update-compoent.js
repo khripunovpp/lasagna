@@ -38,10 +38,16 @@ function downloadBackupDirectlyIndexDB() {
 
         if (Object.keys(backup).length === storeNames.length) {
           downloadBackup(backup);
+          setLastBackupDate();
         }
       };
     });
   };
+}
+
+function setLastBackupDate() {
+  const lastBackupDate = Date.now()
+  localStorage.setItem('lastBackupDate', String(lastBackupDate));
 }
 
 function downloadBackup(data) {
