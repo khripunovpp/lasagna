@@ -155,6 +155,10 @@ export class DexieIndexDbService extends Dexie {
     return table.toArray();
   }
 
+  async getAllUUIDs(storeKey: Stores){
+
+  }
+
   async getFirst(storeKey: Stores): Promise<any> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)

@@ -20,6 +20,7 @@ import {TitleComponent} from '../../../ui/layout/title/title.component';
 import {TaxTemplateRow} from '../../../../service/services/form-templates.service';
 import {TextareaComponent} from '../../../ui/form/textarea.component';
 import {defaultTxTemplates} from '../../../../service/const/default-tx-templates';
+import {DecimalPipe} from '@angular/common';
 
 export interface TaxRow {
   name: string;
@@ -50,8 +51,9 @@ export interface TaxRow {
     GapColumnComponent,
     ParseMathDirective,
     TitleComponent,
-    TextareaComponent
-],
+    TextareaComponent,
+    DecimalPipe
+  ],
 })
 export class TaxesAndFeesListComponent {
   constructor() {

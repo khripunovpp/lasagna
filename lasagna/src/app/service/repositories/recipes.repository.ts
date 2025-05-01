@@ -64,6 +64,10 @@ export class RecipesRepository {
         .toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name)));
   }
 
+  getAllUUIDs() {
+    return this._indexDbService.getAllUUIDs(Stores.RECIPES)
+  }
+
   async getOne(
     uuid: Recipe | string | undefined,
   ) {
@@ -94,6 +98,15 @@ export class RecipesRepository {
     }
 
     return recipe;
+  }
+
+  async getAllVerbose() {
+    const recipes = await this.getRecipes();
+    const result = [];
+    for (const recipe of recipes) {
+      result.push(await this.getOneVerbose(recipe.uuid));
+    }
+    return result;
   }
 
   async editRecipe(

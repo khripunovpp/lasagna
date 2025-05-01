@@ -21,7 +21,7 @@ import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {DraftForm} from '@service/services/draft-forms.service';
-import {DatePipe, JsonPipe} from '@angular/common';
+import {DatePipe, DecimalPipe, JsonPipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
 import {RecipeDTO, RecipeScheme} from '@service/shemes/Recipe.scheme';
@@ -115,6 +115,12 @@ import {PullDirective} from '@view/directives/pull.directive';
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
+
+                                  <div>
+                                      {{ $any(recipe).totalPrice | number: '1.2-5' }}
+<!--                                      {{ $any(recipe).perUnitLabel }}-->
+                                  </div>
+
                                   <lg-button [style]="'primary'"
                                              [size]="'small'"
                                              [link]="'/recipes/calculate/' + recipe.uuid"
@@ -169,7 +175,8 @@ import {PullDirective} from '@view/directives/pull.directive';
     TimeAgoPipe,
     ExpandDirective,
     JsonPipe,
-    PullDirective
+    PullDirective,
+    DecimalPipe
   ],
   styles: [
     `:host {

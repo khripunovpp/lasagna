@@ -42,6 +42,8 @@ export class Recipe {
     });
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
+
+    debugger
   }
 
   name: string;
@@ -56,23 +58,28 @@ export class Recipe {
   updatedAt?: number | undefined;
   tags?: Tag[];
 
-  removeIngredient(
-    index: number
-  ) {
-    this.ingredients.splice(index, 1);
-  }
-
-  addIngredient(
-    ingredient: Ingredient
-  ) {
-    this.ingredients.push(ingredient);
-  }
-
   get valid() {
     return this.name
       && this.ingredients.length > 0
       && this.outcome_amount > 0
       && this.category_id
+  }
+
+  get totalPrice() {
+    return this.ingredients.reduce((acc, ingredient) => {
+      return acc + ingredient.totalPrice;
+    }, 0);
+  }
+
+  get perUnitLabel() {
+    return !this.outcome_unit || this.outcome_unit === 'gram' ? 'per gram' : `per ${this.outcome_unit}`;
+  }
+
+  get pricePerUnit() {
+    if (this.outcome_unit && this.outcome_unit !== 'gram') {
+      return this.totalPrice / this.outcome_amount;
+    }
+    return this.totalPrice / this.totalIngredientsWeight;
   }
 
   get totalIngredientsWeight() {
@@ -114,6 +121,18 @@ export class Recipe {
       createdAt: undefined,
       updatedAt: undefined,
     });
+  }
+
+  removeIngredient(
+    index: number
+  ) {
+    this.ingredients.splice(index, 1);
+  }
+
+  addIngredient(
+    ingredient: Ingredient
+  ) {
+    this.ingredients.push(ingredient);
   }
 
   clearEmpty() {

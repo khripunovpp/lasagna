@@ -5,13 +5,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'lg-number-input',
   standalone: true,
   template: `
-      <div [class.disabled]="disabled()"
+      <div [class.disabled]="disable()"
            class="lg-number-input">
           <input #input
                  (change)="onInputChange.emit(value)"
                  (input)="onChangeInput($event)"
                  (keydown)="onKeydown.emit()"
-                 [disabled]="disabled()"
+                 [disabled]="disable()"
                  [placeholder]="placeholder()"
                  [value]="value"
                  class="input"
@@ -92,7 +92,7 @@ export class NumberInputComponent
   value: string = '';
   placeholder = input('Enter text here');
   noAfter = signal(false);
-  disabled = input<boolean>(false);
+  disable = input<boolean>(false);
   onKeydown = output();
   onInputChange = output<string>();
 
