@@ -18,3 +18,19 @@ export function injectParams<T = Params | string | null>(
 
   return toSignal(route.params.pipe(map(getParam)), {requireSync: true});
 }
+
+export function injectQueryParams<T = Params | string | null>(
+  keyOrTransform?: string | ((params: Params) => T),
+): Signal<T> {
+  assertInInjectionContext(injectParams);
+  const route = inject(ActivatedRoute);
+
+  if (typeof keyOrTransform === 'function') {
+    return toSignal(route.queryParams.pipe(map(keyOrTransform)), {requireSync: true});
+  }
+
+  const getParam = (params: Params) =>
+    keyOrTransform ? params?.[keyOrTransform] ?? null : params;
+
+  return toSignal(route.queryParams.pipe(map(getParam)), {requireSync: true});
+}
