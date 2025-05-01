@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {AfterViewInit, Component, inject} from '@angular/core';
 
 
 import {CardComponent} from '../ui/card/card.component';
@@ -14,6 +14,7 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {UploadComponent} from '@view/ui/form/upload.component';
 import {NotificationsService} from '@service/services/notifications.service';
+import {injectQueryParams} from '@helpers/route.helpers';
 
 @Component({
   selector: 'lg-settings',
@@ -35,12 +36,20 @@ import {NotificationsService} from '@service/services/notifications.service';
     UploadComponent
   ]
 })
-export class SettingsComponent {
+export class SettingsComponent
+  implements AfterViewInit {
   constructor() {
   }
 
+  downloadBackupParam = injectQueryParams('download_backup');
   transferDataService = inject(TransferDataService);
   notificationsService = inject(NotificationsService);
+
+  ngAfterViewInit() {
+    if (this.downloadBackupParam()) {
+      this.onBackup();
+    }
+  }
 
   async onBackup() {
     const loader = this.notificationsService.loading('Creating backup');
