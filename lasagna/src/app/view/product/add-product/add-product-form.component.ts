@@ -97,7 +97,7 @@ export class AddProductFormComponent
   nameField = viewChild<AutocompleteComponent>('nameField');
 
   private productEffect = effect(() => {
-    if (!this.product()) {
+    if (!this.product() || this.form.dirty) {
       return;
     }
     this.form.reset(productToFormValue(this.product()!));

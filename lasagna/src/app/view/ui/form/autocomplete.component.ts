@@ -19,7 +19,6 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
 import {MultiselectItem} from './multiselect.component';
-import {JsonPipe} from '@angular/common';
 
 
 export interface autocompleteItem {
@@ -31,16 +30,16 @@ export interface autocompleteItem {
   standalone: true,
   template: `
       <div class="autocomplete">
-          <ng-select (change)="onChangeSelect($event)"
-                     (blur)="onBlur()"
+          <ng-select (blur)="onBlur()"
+                     (change)="onChangeSelect($event)"
                      (search)="onSearch($event)"
                      [addTag]="true"
                      [bindValue]="key()"
-                     [multiple]="multi()"
                      [compareWith]="compareWith"
                      [editableSearchTerm]="true"
                      [items]="loadedList()"
-                     [(ngModel)]="value"
+                     [multiple]="multi()"
+                     [ngModel]="value"
                      [searchFn]="searchFn"
                      bindLabel="name"
                      notFoundText="Start typing to search">
@@ -61,8 +60,7 @@ export interface autocompleteItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    NgTagTemplateDirective,
-    JsonPipe
+    NgTagTemplateDirective
   ],
   styles: [
     `
@@ -172,7 +170,6 @@ export class AutocompleteComponent
   }
 
   compareWith = (a: autocompleteItem, b: autocompleteItem) => {
-    debugger
     const valA = a as any;
     const valB = b as any;
 
@@ -223,7 +220,6 @@ export class AutocompleteComponent
   }
 
   onChangeSelect(value: unknown) {
-    debugger
     const val = typeof value === 'string' ? value : (value as any)?.[this.key()];
     this.change(val);
     this.onSelected.emit(val);
@@ -255,7 +251,6 @@ export class AutocompleteComponent
   onBlur() {
     const select = this.selectComponent();
     if (select?.searchTerm) {
-      debugger
       // Принудительно добавить текущий searchTerm как тег
       const searchValue = select.searchTerm.trim();
       if (searchValue) {
