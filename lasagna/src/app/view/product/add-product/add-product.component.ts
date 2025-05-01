@@ -8,7 +8,7 @@ import {FadeInComponent} from '../../ui/fade-in.component';
 import {DraftForm} from '@service/services/draft-forms.service';
 import {ProductsRepository} from '@service/repositories/products.repository';
 import {NotificationsService} from '@service/services/notifications.service';
-import {combineLatest, debounceTime} from 'rxjs';
+import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
@@ -38,7 +38,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
-                  @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+                  @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>
                           Edit
                           <span class="text-active">
@@ -121,13 +121,15 @@ export class AddProductComponent
     combineLatest([
       this._aRoute.params,
       this._aRoute.data,
-    ]).subscribe(([params, data]) => {
+    ]).pipe(take(1)).subscribe(([params, data]) => {
       this.draftOrProductUUID.set(params['uuid']);
       if (data['draft']) {
         this.draftRef.set(data['draft']);
         this.product.set(Product.fromRaw(data['draft'].data));
-      } else {
+      } else if (this.draftOrProductUUID()) {
         this._loadProduct(this.draftOrProductUUID());
+      } else {
+        this.product.set(Product.empty());
       }
       this.isDraftRoute.set(!!data['draftRoute']);
     });
@@ -138,17 +140,9 @@ export class AddProductComponent
     this.formComponent()?.form.valueChanges.pipe(
       debounceTime(500),
     ).subscribe((value) => {
-      if (!this.formComponent()!.form.dirty) {
+      if (!this.formComponent()!.form.dirty || !this.product()) {
         return
       }
-
-      this.product.update((product) => {
-        if (product) {
-          product.update(value)
-          return product;
-        }
-        return Product.empty();
-      });
 
       if (this.draftRef()?.uuid) {
         this._productsRepository.updateDraftProduct(
@@ -200,6 +194,7 @@ export class AddProductComponent
 
       this.formComponent()?.resetForm();
       this._notificationsService.success('Product added');
+      this.product.set(null);
 
       if (this.draftRef()) {
         this._removeDraft();

@@ -1,16 +1,23 @@
 <form [formGroup]="form">
   <lg-gap-column>
-     <lg-control label="Tags">
-        <lg-tags-control [resource]="'tags'"
-                         [multi]="true"
-                         formControlName="tags"></lg-tags-control>
-      </lg-control>
     <lg-control label="Name">
       <lg-autocomplete #nameField
                        [key]="'name'"
                        [resource]="'products-names'"
                        formControlName="name"></lg-autocomplete>
     </lg-control>
+
+    <lg-gap-column>
+      <lg-control label="Category">
+        <lg-multiselect #categorySelect
+                        [resource]="'categories'"
+                        formControlName="category_id"></lg-multiselect>
+      </lg-control>
+
+      @if (topCategories().length) {
+        <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+      }
+    </lg-gap-column>
 
     <lg-gap-row [bottom]="true" [mobileMode]="true">
       <lg-control label="Amount" lgExpand>
@@ -56,16 +63,10 @@
       </div>
     </lg-gap-column>
 
-    <lg-gap-column>
-      <lg-control label="Category">
-        <lg-multiselect #categorySelect
-                        [resource]="'categories'"
-                        formControlName="category_id"></lg-multiselect>
-      </lg-control>
-
-      @if (topCategories().length) {
-        <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
-      }
-    </lg-gap-column>
+    <lg-control label="Tags">
+      <lg-tags-control [multi]="true"
+                       [resource]="'tags'"
+                       formControlName="tags"></lg-tags-control>
+    </lg-control>
   </lg-gap-column>
 </form>

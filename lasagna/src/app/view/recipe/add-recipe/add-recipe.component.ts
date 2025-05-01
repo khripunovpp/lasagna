@@ -7,15 +7,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
-import {RecipesRepository} from '../../../service/repositories/recipes.repository';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {DraftForm} from '../../../service/services/draft-forms.service';
+import {RecipesRepository} from '@service/repositories/recipes.repository';
+import {NotificationsService} from '@service/services/notifications.service';
+import {DraftForm} from '@service/services/draft-forms.service';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {DatePipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {Recipe} from '../../../service/models/Recipe';
+import {Recipe} from '@service/models/Recipe';
 
 @Component({
   selector: 'app-add-recipe',
@@ -52,20 +52,6 @@ import {Recipe} from '../../../service/models/Recipe';
                       (saved as draft)
                   }
               </lg-gap-row>
-
-
-              <!--              <lg-gap-row [center]="true" [mobileMode]="true">-->
-              <!--                  <lg-title>{{ uuid() ? 'Edit' : 'Add' }} Recipe</lg-title>-->
-
-              <!--                  @if (uuid()) {-->
-              <!--                      <lg-button [flat]="true"-->
-              <!--                                 [link]="'/recipes/calculate/' + uuid()"-->
-              <!--                                 [size]="'small'"-->
-              <!--                                 [style]="'primary'">-->
-              <!--                          Calculate-->
-              <!--                      </lg-button>-->
-              <!--                  }-->
-              <!--              </lg-gap-row>-->
 
               <lg-card>
                   <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
@@ -135,8 +121,10 @@ export class AddRecipeComponent
         this.recipe.set(draft.data);
       } else if (data['recipe']) {
         this.recipe.set(data['recipe']);
-      } else {
+      } else if (this.draftOrRecipeUUID()) {
         this._loadRecipe(this.draftOrRecipeUUID());
+      } else {
+        this.recipe.set(Recipe.empty());
       }
       this.isDraftRoute.set(!!data['draftRoute']);
     });
@@ -150,14 +138,6 @@ export class AddRecipeComponent
       if (!this.formComponent()!.form.dirty) {
         return
       }
-
-      this.recipe.update((recipe) => {
-        if (recipe) {
-          recipe.update(value)
-          return recipe;
-        }
-        return Recipe.fromRaw(value);
-      });
 
       if (this.draftRef()?.uuid) {
         this._recipesRepository.updateDraftRecipe(
@@ -198,6 +178,7 @@ export class AddRecipeComponent
     this._recipesRepository.addRecipe(recipe).then(() => {
       this.formComponent()?.resetForm();
       this._notificationsService.success('Recipe added');
+      this.recipe.set(undefined);
 
       if (this.draftRef()) {
         this._removeDraft();

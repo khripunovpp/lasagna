@@ -2,6 +2,8 @@ import {Unit} from '@service/types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
 import {ProductDTO} from '@service/shemes/Product.scheme';
 import {Product} from '@service/models/Product';
+import {Recipe} from '@service/models/Recipe';
+import {RecipeDTO} from '@service/shemes/Recipe.scheme';
 
 export class Ingredient {
   constructor(
@@ -9,7 +11,7 @@ export class Ingredient {
       name?: string
       amount: number
       product_id?: string | ProductDTO
-      recipe_id?: string
+      recipe_id?: string | RecipeDTO
       unit: Unit | string
     }
   ) {
@@ -18,15 +20,42 @@ export class Ingredient {
     this.product_id = props.product_id ? Product.fromRaw(typeof props.product_id === 'string' ? {
       uuid: props.product_id,
     } : props.product_id) : undefined;
-    this.recipe_id = props.recipe_id;
+    this.recipe_id = props.recipe_id ? Recipe.fromRaw(typeof props.recipe_id === 'string' ? {
+      uuid: props.recipe_id,
+    } : props.recipe_id) : undefined;
     this.unit = props.unit as Unit;
   }
 
   name?: string;
   product_id?: Product;
-  recipe_id?: string;
+  recipe_id?: Recipe;
   amount: number;
   unit: Unit;
+
+  get totalAmount() {
+    return parseFloatingNumber(this.amount);
+  }
+
+  get totalAmountGram() {
+    if (this.unit !== 'gram') {
+      return 0
+    }
+    return this.totalAmount;
+  }
+
+  get pricePerUnit() {
+    if (this.product_id) {
+      return this.product_id.pricePerUnit;
+    }
+    return 0;
+  }
+
+  get totalPrice() {
+    if (this.product_id) {
+      return this.product_id.pricePerUnit * this.totalAmount;
+    }
+    return 0;
+  }
 
   get blanked() {
     return !this.amount;
@@ -74,7 +103,7 @@ export class Ingredient {
       name: this.name?.trim(),
       amount: parseFloatingNumber(this.amount),
       product_id: this.product_id?.uuid,
-      recipe_id: this.recipe_id,
+      recipe_id: this.recipe_id?.uuid,
       unit: this.unit || 'gram',
     };
   }
