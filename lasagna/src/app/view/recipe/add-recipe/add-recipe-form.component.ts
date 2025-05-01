@@ -189,6 +189,9 @@ export class AddRecipeFormComponent
       debounceTime(100),
     ).subscribe({
       next: values => {
+        if (!this.form.dirty) {
+          return
+        }
         this.recipe()?.update(this.form.getRawValue());
         const hasCycledRecipe = this.checkCycleRecipe(this.form.getRawValue().ingredients, this.uuid());
         if (hasCycledRecipe) {

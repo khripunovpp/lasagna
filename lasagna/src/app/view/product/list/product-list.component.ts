@@ -95,7 +95,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                   </a>
 
                                   <small class="text-muted text-cursive" lgPull>
-                                      edited at: {{ (item?.createdAt || item?.updatedAt) | timeAgo }}
+                                      edited at: {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"

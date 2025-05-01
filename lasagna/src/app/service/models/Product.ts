@@ -95,7 +95,7 @@ export class Product {
     this.tags = dto.tags?.map((tag: any) => Tag.fromRaw(tag)) || this.tags;
     this.uuid = dto.uuid || this.uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
-    this.updatedAt = Date.now();
+    this.updatedAt = dto?.updatedAt || Date.now();
     return this as Product;
   }
 

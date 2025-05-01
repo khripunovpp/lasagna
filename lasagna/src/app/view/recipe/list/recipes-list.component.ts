@@ -85,7 +85,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                   </a>
 
                                   <small class="text-muted text-cursive">
-                                      edited at: {{ (item?.createdAt || item?.updatedAt) | timeAgo }}
+                                      edited at: {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"
@@ -123,7 +123,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                   </lg-button>
 
                                   <small class="text-muted text-cursive" lgPull>
-                                      edited at: {{ (recipe?.createdAt || recipe?.updatedAt) | timeAgo }}
+                                      edited at: {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"
