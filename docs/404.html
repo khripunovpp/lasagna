@@ -16,45 +16,6 @@
 <app-root></app-root>
 <noscript>Please enable JavaScript to continue using this application.</noscript>
 
-
-<!-- Вставь это внутрь <body> -->
-<div id="pwa-update-banner" style=" display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;">
-  <button style="
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    width: 100%;
-  ">Ваша версия устарела. Нажмите чтобы обновить</button>
-</div>
-
-<script>
-  if ('serviceWorker' in navigator && 'Notification' in window) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.getRegistration().then(reg => {
-        if (!reg || !reg.waiting) return;
-
-        // Показать баннер
-        const banner = document.getElementById('pwa-update-banner');
-        banner.style.display = 'flex';
-
-        banner.querySelector('button').addEventListener('click', () => {
-          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-          window.location.reload();
-        });
-      });
-
-      // Слушаем обновление
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service worker updated.');
-      });
-    });
-  }
-</script>
-<link rel="modulepreload" href="chunk-5VMLUVBS.js"><link rel="modulepreload" href="chunk-FDG5Y424.js"><link rel="modulepreload" href="chunk-MWFZAAYT.js"><link rel="modulepreload" href="chunk-GSWW333I.js"><link rel="modulepreload" href="chunk-PRC2TUST.js"><link rel="modulepreload" href="chunk-ILRWMGPI.js"><link rel="modulepreload" href="chunk-P6RB7BRR.js"><link rel="modulepreload" href="chunk-X4OHOYN7.js"><link rel="modulepreload" href="chunk-2AFL4M32.js"><link rel="modulepreload" href="chunk-5NZRDCXS.js"><script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-OR66GYBG.js" type="module"></script></body>
+<script src="pwa-update-compoent.js"></script>
+<link rel="modulepreload" href="chunk-5VMLUVBS.js"><link rel="modulepreload" href="chunk-FDG5Y424.js"><link rel="modulepreload" href="chunk-MWFZAAYT.js"><link rel="modulepreload" href="chunk-GSWW333I.js"><link rel="modulepreload" href="chunk-PRC2TUST.js"><link rel="modulepreload" href="chunk-ILRWMGPI.js"><link rel="modulepreload" href="chunk-P6RB7BRR.js"><link rel="modulepreload" href="chunk-X4OHOYN7.js"><link rel="modulepreload" href="chunk-2AFL4M32.js"><link rel="modulepreload" href="chunk-5NZRDCXS.js"><script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-AYZ4CLOZ.js" type="module"></script></body>
 </html>
