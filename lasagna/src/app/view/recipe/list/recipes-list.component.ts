@@ -115,12 +115,6 @@ import {PullDirective} from '@view/directives/pull.directive';
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
-
-                                  <div>
-                                      {{ $any(recipe).totalPrice | number: '1.2-5' }}
-<!--                                      {{ $any(recipe).perUnitLabel }}-->
-                                  </div>
-
                                   <lg-button [style]="'primary'"
                                              [size]="'small'"
                                              [link]="'/recipes/calculate/' + recipe.uuid"
