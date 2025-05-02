@@ -15,6 +15,7 @@ import {TransferDataService} from '@service/services/transfer-data.service';
 import {UploadComponent} from '@view/ui/form/upload.component';
 import {NotificationsService} from '@service/services/notifications.service';
 import {injectQueryParams} from '@helpers/route.helpers';
+import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
 
 @Component({
   selector: 'lg-settings',
@@ -33,7 +34,8 @@ import {injectQueryParams} from '@helpers/route.helpers';
     ExpandDirective,
     ButtonComponent,
     ShrinkDirective,
-    UploadComponent
+    UploadComponent,
+    TimeAgoPipe
   ]
 })
 export class SettingsComponent

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
-import {Stores} from './const/stores';
 import {migrations} from './migrations';
-import {generateUuid} from '../../helpers/attribute.helper';
+import {generateUuid} from '@helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
 import {BuckupData} from '@service/services/transfer-data.service';
 import {relationsMap} from '@service/db/const/relations-maps';
+import {Stores} from '@service/db/const/stores';
 
 @Injectable({
   providedIn: 'root'

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {RecipesRepository} from '../repositories/recipes.repository';
 import {ProductsRepository} from '../repositories/products.repository';
-import {parseFloatingNumber} from '../../helpers/number.helper';
+import {parseFloatingNumber} from '@helpers/number.helper';
 import {Recipe} from '../models/Recipe';
 import {Ingredient} from '../models/Ingredient';
-import {RecipeDTO} from '../shemes/Recipe.scheme';
 import {Unit} from '../types/Unit.types';
 import {RecipeCalculation} from '@service/models/RecipeCalculation';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 export interface Calculation {
   recipe?: Recipe

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../db/const/stores';
 import {CategoryProduct} from '../models/CategoryProduct';
-import {CategoryProductDTO} from '@service/db/shemes/CategoryProduct.scheme';
+import {Stores} from '@service/db/const/stores';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +39,7 @@ export class CategoryProductsRepository {
     uuids: string[],
   ) {
     return this._indexDbService.getMany<CategoryProduct>(Stores.PRODUCTS_CATEGORIES, uuids)
-     .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
+      .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
   }
 
   deleteOne(uuid: string) {
