@@ -16,6 +16,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
+import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -29,18 +30,29 @@ import {Recipe} from '@service/models/Recipe';
     GapRowComponent,
     FadeInComponent,
     ShrinkDirective,
-    TimeAgoPipe
-],
+    TimeAgoPipe,
+    GapColumnComponent
+  ],
   template: `
 
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true" [mobileMode]="true">
-                  @if ((recipe() && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-title>
-                          Edit
-                          <span class="text-active">{{ recipe()?.name }}</span>
-                      </lg-title>
+              <lg-gap-column>
+                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+                      <lg-gap-row [mobileMode]="true" [center]="true">
+                          <lg-title>
+                              Edit
+                              <span class="text-active">{{ recipe()?.name }}</span>
+                          </lg-title>
+
+                          <lg-button [flat]="true"
+                                     [link]="'/recipes/calculate/' + recipe()?.uuid"
+                                     [size]="'small'"
+                                     [style]="'primary'">
+                              Calculate
+                          </lg-button>
+                      </lg-gap-row>
+
                       @if (recipe()?.updatedAt) {
                           (last edited {{ recipe()?.updatedAt | timeAgo }})
                       }
@@ -50,20 +62,32 @@ import {Recipe} from '@service/models/Recipe';
                   @if (draftRef()) {
                       (saved as draft)
                   }
-              </lg-gap-row>
+              </lg-gap-column>
 
               <lg-card>
                   <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
               </lg-card>
 
               <lg-gap-row [mobileMode]="true" [relaxed]="true">
-                  @if ((recipe() && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-button lgShrink (click)="onEditRecipe()">
-                          Edit Recipe
+                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+                      <lg-button [disabled]="!formComponent()?.form?.dirty"
+                                 lgShrink
+                                 (click)="onEditRecipe()">
+                          @if (formComponent()?.form?.dirty) {
+                              Save recipe
+                          } @else {
+                              No changes
+                          }
                       </lg-button>
                   } @else {
-                      <lg-button lgShrink (click)="onAddRecipe()">
-                          Add Recipe
+                      <lg-button [disabled]="!formComponent()?.form?.dirty"
+                                 lgShrink
+                                 (click)="onAddRecipe()">
+                          @if (formComponent()?.form?.dirty) {
+                              Add Recipe
+                          } @else {
+                              Enter a name
+                          }
                       </lg-button>
                   }
 
@@ -71,6 +95,11 @@ import {Recipe} from '@service/models/Recipe';
                       <lg-button lgShrink [style]="'danger'"
                                  (click)="onRemoveDraft()">
                           Delete this draft
+                      </lg-button>
+                  } @else if (recipe()?.uuid) {
+                      <lg-button lgShrink [style]="'danger'"
+                                 (click)="onDeleteRecipe()">
+                          Delete Recipe
                       </lg-button>
                   }
               </lg-gap-row>
@@ -162,6 +191,7 @@ export class AddRecipeComponent
 
   onEditRecipe() {
     if (!this.formComponent()?.validateForm()
+      || !this.formComponent()?.form.dirty
       || !this.recipe()) {
       return;
     }
@@ -171,6 +201,16 @@ export class AddRecipeComponent
   onRemoveDraft() {
     this._removeDraft();
     this._router.navigate(['recipes']);
+  }
+
+  onDeleteRecipe() {
+    if (!this.recipe()?.uuid) {
+      return;
+    }
+    this._recipesRepository.deleteRecipe(this.recipe()!.uuid!).then(() => {
+      this._notificationsService.success('Recipe deleted');
+      this._router.navigate(['recipes']);
+    });
   }
 
   private _addRecipe(recipe: Recipe) {

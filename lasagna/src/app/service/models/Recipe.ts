@@ -23,15 +23,15 @@ export class Recipe {
       tags?: string[] | undefined
     }
   ) {
-    this.name = String(props.name).trim();
-    this.description = String(props.description).trim();
+    this.name = String(props.name ?? '').trim();
+    this.description = String(props.description ?? '').trim();
     this.ingredients = props.ingredients.map((ingredient) => {
       return Ingredient.fromRaw(ingredient);
     });
-    this.outcome_amount = parseFloat(String(props.outcome_amount));
-    this.outcome_unit = (String(props.outcome_unit) || 'gram') as Unit;
-    this.uuid = String(props.uuid).trim() || undefined;
-    this.taxTemplateName = String(props.taxTemplateName).trim() || undefined;
+    this.outcome_amount = parseFloat(String(props.outcome_amount ?? ''));
+    this.outcome_unit = (String(props.outcome_unit ?? '') || 'gram') as Unit;
+    this.uuid = String(props.uuid ?? '').trim() || undefined;
+    this.taxTemplateName = String(props.taxTemplateName ?? '').trim() || undefined;
     this.category_id = CategoryRecipe.fromRaw(
       typeof props.category_id === 'string' ? {
         uuid: props.category_id,
