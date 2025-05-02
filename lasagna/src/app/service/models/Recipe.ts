@@ -42,8 +42,6 @@ export class Recipe {
     });
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
-
-    debugger
   }
 
   name: string;

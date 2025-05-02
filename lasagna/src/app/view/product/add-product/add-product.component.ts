@@ -57,7 +57,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
                   }
 
                   @if (product()?.pricePerUnit) {
-                      ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-2' }})
+                      ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
                   }
               </div>
 
