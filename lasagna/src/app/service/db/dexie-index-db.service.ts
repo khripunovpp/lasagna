@@ -36,6 +36,7 @@ export class DexieIndexDbService extends Dexie {
   productsStore!: Table<any, string>;
   recipesStore!: Table<any, string>;
   categoryStore!: Table<any, string>;
+  relations = new Map<string, string[]>();
 
   initIndexes(): Promise<void> {
     return Promise.all([
@@ -86,7 +87,6 @@ export class DexieIndexDbService extends Dexie {
       throw error;
     }
   }
-
 
   async loadIndex(table: string) {
     const indexData = await this.filter(Stores.INDICES, 'table', table, true);
@@ -150,38 +150,75 @@ export class DexieIndexDbService extends Dexie {
     return (this[storeKey] as Table<any>).get(uuid);
   }
 
-  async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<T | undefined> {
+  async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<{
+    data: T | null,
+    relations: Record<string, Record<string, any>>,
+  }> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)
     const item = await table.get(uuid);
     if (!item) {
-      return Promise.resolve(undefined);
+      return Promise.resolve({
+        data: null,
+        relations: {},
+      });
     }
 
-    const itemFields = Object.keys(item);
+    const relations: Record<string, Record<string, any>> = {};
+    const rel = await this.parse(item, relations);
+    this.apply(item, rel);
 
-    for (const field of itemFields) {
-      if (Array.isArray(item[field])) {
-        for (const itemField of item[field]) {
-          const itemFieldKeys = Object.keys(itemField);
-          for (const itemFieldKey of itemFieldKeys) {
-            const relation = await this._parseRelationAndGet(itemFieldKey, itemField[itemFieldKey]);
+    return {
+      data: item,
+      relations,
+    }
+  }
 
-            if (relation) {
-              itemField[itemFieldKey] = relation[0];
-            }
-          }
+  async parse(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
+    const entries = Object.entries(obj);
+    for (const [key, value] of entries) {
+      if (Array.isArray(value)) {
+        for (const subItem of obj[key]) {
+          const rel = await this.parse(subItem, relations);
         }
       } else {
-        const relation = await this._parseRelationAndGet(field, item[field]);
+        const relation = relationsMap[key];
+        if (relation && value) {
+          const {tableName, key: uniqKey} = this._parseRelations(relation);
+          const response = await this.getOneWithRelations(tableName as any, value);
 
-        if (relation) {
-          item[field] = relation[0];
+          const newItem = {
+            [value]: response.data,
+          };
+
+          relations[key] = {
+            ...(relations[key] || {}),
+            ...newItem
+          };
         }
       }
+
     }
 
-    return item;
+    return relations;
+  }
+
+  apply(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
+    const entries = Object.entries(obj);
+    for (const [key, value] of entries) {
+      if (Array.isArray(value)) {
+        for (const subItem of obj[key]) {
+          this.apply(subItem, relations);
+        }
+      } else {
+        const relationsStore = relations[key];
+        const relation = relationsMap[key];
+        if (!relation) {
+          continue;
+        }
+        obj[key] = relationsStore?.[obj[key]]
+      }
+    }
   }
 
   async getAll<T = any>(storeKey: Stores): Promise<T[]> {
@@ -203,7 +240,6 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async remove(storeKey: Stores, uuid: string): Promise<void> {
-    debugger
     // @ts-ignore
     await (this[storeKey] as Table<any>).delete(uuid);
     if (storeKey === Stores.INDICES) {
@@ -255,6 +291,24 @@ export class DexieIndexDbService extends Dexie {
         await this.balkAdd(store, items.data, false);
       } else {
         throw new Error(`Store ${store} not found in backup data`);
+      }
+    }
+  }
+
+  private async _putRelations(obj: Record<any, any>, getter: (field: string, searchValue: string) => Promise<any>) {
+    const itemFields = Object.keys(obj);
+    for (const field of itemFields) {
+      if (Array.isArray(obj[field])) {
+// recursive
+        for (let i = 0; i < obj[field].length; i++) {
+          await this._putRelations(obj[field][i], getter);
+        }
+      } else {
+        const relation = await getter(field, obj[field]);
+
+        if (relation) {
+          obj[field] = relation[0];
+        }
       }
     }
   }

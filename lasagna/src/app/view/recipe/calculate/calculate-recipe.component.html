@@ -18,7 +18,7 @@
         <lg-gap-row [center]="true" style="--control-bg: white">
           @if (notInGrams()) {
 
-            <lg-gap-row [fit]="true" [center]="true" [mobileMode]="true">
+            <lg-gap-column [size]="'small'">
               <lg-gap-row [size]="'small'" [center]="true">
                 <div>
                   Calculation
@@ -27,7 +27,6 @@
 
                 <div>
                   <lg-number-input [(ngModel)]="outcome_amount"
-                                   (onInputChange)="onOutcomeChange($event)"
                                    lgParseMath
                                    [placeholder]="'Amount'"></lg-number-input>
                 </div>
@@ -54,7 +53,7 @@
                   of taxes and fees)
                 </div>
               </lg-gap-row>
-            </lg-gap-row>
+            </lg-gap-column>
           } @else {
 
             <lg-gap-row [size]="'small'" [center]="true">

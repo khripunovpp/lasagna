@@ -75,8 +75,8 @@ export class RecipesRepository {
       }
       uuid = (uuid as Recipe).uuid || uuid as string;
       if (verbose) {
-        await this._indexDbService.getOneWithRelations(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
-          resolve(Recipe.fromRaw(result));
+        await this._indexDbService.getOneWithRelations(Stores.RECIPES, uuid).then((result) => {
+          resolve(Recipe.fromRaw(result.data));
         });
       } else {
         await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {

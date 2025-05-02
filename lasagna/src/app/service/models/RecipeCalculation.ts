@@ -1,5 +1,6 @@
 import {Recipe} from './Recipe';
 import {CalculationTableParams} from '../services/calulate-recipe.service';
+import {parseFloatingNumber} from '@helpers/number.helper';
 
 export class RecipeCalculation {
   constructor(
@@ -39,5 +40,21 @@ export class RecipeCalculation {
     return this.recipe.ingredients.reduce((acc, ingredient) => {
       return acc + ingredient.totalWeightGram;
     }, 0);
+  }
+
+  get outcomeAmount(): number {
+    if (!this.recipe) {
+      return 0;
+    }
+
+    return parseFloatingNumber(this.recipe.outcome_amount);
+  }
+
+  get outcomeUnit(): string {
+    if (!this.recipe) {
+      return 'gram';
+    }
+
+    return this.recipe.outcome_unit || 'gram';
   }
 }
