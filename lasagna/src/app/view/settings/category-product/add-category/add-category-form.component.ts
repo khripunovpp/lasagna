@@ -2,7 +2,7 @@ import {Component, effect, Inject, input, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '@view/ui/form/input.component';
 import {ControlComponent} from '@view/ui/form/control.component';
-import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
+
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {SelectResourcesService} from '@service/services/select-resources.service';
 import {Router} from '@angular/router';
@@ -53,12 +53,11 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '@help
     ReactiveFormsModule,
     InputComponent,
     ControlComponent,
-    GapColumnComponent,
     ButtonComponent,
     GapRowComponent,
     ExpandDirective,
-    NoWrapDirective,
-  ],
+    NoWrapDirective
+],
   styles: [
     `
     `

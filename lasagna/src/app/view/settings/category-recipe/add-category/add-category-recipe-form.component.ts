@@ -2,7 +2,7 @@ import {Component, effect, Inject, input, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '@view/ui/form/input.component';
 import {ControlComponent} from '@view/ui/form/control.component';
-import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
+
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {SelectResourcesService} from '@service/services/select-resources.service';
 import {Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {CategoryRecipe} from '@service/models/CategoryRecipe';
 import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '@helpers/recipe.helpers';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {ExpandDirective} from '@view/directives/expand.directive';
-import {ShrinkDirective} from '@view/directives/shrink.directive';
+
 import {NoWrapDirective} from '@view/directives/no-wrap.directive';
 
 @Component({
@@ -54,13 +54,11 @@ import {NoWrapDirective} from '@view/directives/no-wrap.directive';
     ReactiveFormsModule,
     InputComponent,
     ControlComponent,
-    GapColumnComponent,
     ButtonComponent,
     GapRowComponent,
     ExpandDirective,
-    ShrinkDirective,
-    NoWrapDirective,
-  ],
+    NoWrapDirective
+],
   styles: [
     `
     `

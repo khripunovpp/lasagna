@@ -5,7 +5,7 @@ import {ProductsRepository} from '@service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DatePipe, DecimalPipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {CsvReaderService} from '@service/services/csv-reader.service';
@@ -179,11 +179,10 @@ import {PullDirective} from '@view/directives/pull.directive';
     ControlsBarComponent,
     QuickActionsTplDirective,
     SelectionToolsComponent,
-    DatePipe,
     TimeAgoPipe,
     ExpandDirective,
     PullDirective
-  ],
+],
   providers: [
     SelectionZoneService,
   ],

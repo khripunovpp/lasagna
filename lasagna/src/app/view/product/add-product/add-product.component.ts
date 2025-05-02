@@ -12,7 +12,7 @@ import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {DatePipe, DecimalPipe, JsonPipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
@@ -29,11 +29,9 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
-    DatePipe,
     TimeAgoPipe,
-    JsonPipe,
     DecimalPipe
-  ],
+],
   template: `
       <lg-fade-in>
           <lg-container>
