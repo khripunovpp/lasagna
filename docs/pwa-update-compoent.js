@@ -138,4 +138,26 @@ if ('serviceWorker' in navigator) {
     console.log('Service worker updated.');
     window.location.reload();
   });
+
+  let currentWorker = null;
+
+  const updateController = () => {
+    const {controller} = navigator.serviceWorker;
+    if (controller === null) {
+      return;
+    }
+    currentWorker = controller;
+    console.log('Current worker:', currentWorker);
+  };
+  navigator.serviceWorker.addEventListener('controllerchange', updateController);
+  updateController();
+
+
+  const messageListener = (event) => {
+    console.log({
+      event,
+    })
+  };
+  navigator.serviceWorker.addEventListener('message', messageListener);
+
 }
