@@ -27,6 +27,7 @@ import {Ingredient} from '@service/models/Ingredient';
 
 import {recipeToFormValue} from '@helpers/recipe.helpers';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -48,8 +49,9 @@ import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
     ButtonsGroupComponent,
     ChipsListComponent,
     AutocompleteComponent,
-    FormsModule
-],
+    FormsModule,
+    MatIcon,
+  ],
   providers: [
     {
       provide: SelectResourcesService,

@@ -1,8 +1,8 @@
 <form [formGroup]="form">
   <lg-gap-column [position]="'start'">
     <lg-control label="Name" lgExpand>
-      <lg-autocomplete [key]="'name'"
-                       #nameField
+      <lg-autocomplete #nameField
+                       [key]="'name'"
                        [resource]="'recipes-names'"
                        formControlName="name"></lg-autocomplete>
     </lg-control>
@@ -110,10 +110,11 @@
                 </lg-buttons-group>
 
                 <ng-container ngProjectAs="rowActions">
-                  <lg-button (click)="deleteIngredient(i)"
-                             [style]="'danger'"
-                             [size]="'small'">
-                    Delete Ingredient
+                  <lg-button [style]="'danger'"
+                             [size]="'tiny'"
+                             [icon]="true"
+                             (click)="deleteIngredient(i)">
+                    <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
                   </lg-button>
                 </ng-container>
 
