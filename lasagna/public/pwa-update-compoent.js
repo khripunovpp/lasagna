@@ -149,18 +149,29 @@ if ('serviceWorker' in navigator) {
     currentWorker = controller;
     console.log('Current worker:', currentWorker);
 
-    currentWorker.postMessage('CHECK_FOR_UPDATES', {
+    currentWorker.postMessage({
+      action: 'CHECK_FOR_UPDATES',
       nonce: Math.random(),
     })
   };
   navigator.serviceWorker.addEventListener('controllerchange', updateController);
   updateController();
 
+  setInterval(() => updateController(), 60_000);
+
 
   const messageListener = (event) => {
+    const versionDetected = event?.data?.type === "VERSION_DETECTED";
+    if (!versionDetected) return;
+    banner.style.display = 'flex';
     console.log({
       event,
     })
+
+    const updateAppButton = updateDialog.querySelector('#update-app');
+    updateAppButton.addEventListener('click', () => {
+      window.location.reload();
+    });
   };
   navigator.serviceWorker.addEventListener('message', messageListener);
 }
