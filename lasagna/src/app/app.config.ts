@@ -54,10 +54,31 @@ export const appConfig: ApplicationConfig = {
 
     {
       provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler({
-        logErrors: true,
-        showDialog: true,
-      }),
+      useFactory: () => {
+        const sentryHandler = Sentry.createErrorHandler({
+          showDialog: false // отключаем дефолтное окно
+        });
+
+        return {
+          handleError(error: any): void {
+            const eventId = Sentry.captureException(error);
+
+            // Кастомизированное окно
+            Sentry.showReportDialog({
+              eventId,
+              title: 'Ой, произошла ошибка!',
+              subtitle: 'Пожалуйста, расскажите нам, как это случилось.',
+              labelName: 'Имя',
+              labelEmail: 'Электронная почта',
+              labelComments: 'Что вы делали?',
+              labelSubmit: 'Отправить',
+              successMessage: 'Спасибо за помощь!',
+            });
+
+            sentryHandler.handleError(error); // передаём дальше
+          }
+        };
+      }
     },
     {
       provide: Sentry.TraceService,

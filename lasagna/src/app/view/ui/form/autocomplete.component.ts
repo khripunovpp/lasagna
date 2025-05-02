@@ -72,6 +72,7 @@ export interface autocompleteItem {
 
       .autocomplete {
         flex: 1;
+        width: 100%;
 
         .ng-select.ng-select-single .ng-select-container {
           height: 51px;
@@ -90,6 +91,7 @@ export interface autocompleteItem {
 
           .ng-input {
             top: 16px !important;
+            padding-right: 10px !important;
 
             & > input {
               color: var(--text);
