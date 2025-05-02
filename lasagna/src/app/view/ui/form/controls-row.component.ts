@@ -62,6 +62,10 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
             flex-direction: column;
             align-items: stretch;
           }
+
+          & .controls-row__actions {
+            align-self: flex-end;
+          }
         }
       }
     `
