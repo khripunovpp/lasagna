@@ -71,9 +71,8 @@ export class CalculateRecipeComponent
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
-
-      this.outcome_amount.set(this.result()?.calculation?.totalWeight || 0);
-      this.showedOutcome.set(this.result()?.calculation?.totalWeight || 0);
+      this.outcome_amount.set(this.result()?.calculation?.outcomeAmount || 0);
+      this.showedOutcome.set(this.result()?.calculation?.outcomeAmount || 0);
       this.loadRecipeTaxTemplate();
     });
   }

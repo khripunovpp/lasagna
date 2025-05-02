@@ -42,6 +42,10 @@ export class Ingredient {
 
   get totalWeightGram() {
     if (this.unit !== 'gram') {
+      if (this.recipe_id) {
+        const weightPerUnit = this.recipe_id.totalIngredientsWeight / this.recipe_id.outcome_amount;
+        return weightPerUnit * this.amount;
+      }
       return 0
     }
     return parseFloatingNumber(this.amount);
@@ -50,6 +54,10 @@ export class Ingredient {
   get pricePerUnit() {
     if (this.product_id && this.product_id.unit !== 'gram') {
       return this.product_id?.pricePerUnit;
+    }
+
+    if (this.recipe_id) {
+      return this.recipe_id.pricePerUnit;
     }
 
     return this.totalPrice / this.totalWeightGram;
@@ -66,7 +74,7 @@ export class Ingredient {
     }
 
     if (this.recipe_id) {
-      total += this.recipe_id.totalPrice;
+      total += this.recipe_id.pricePerUnit * this.amount;
     }
 
     return total;

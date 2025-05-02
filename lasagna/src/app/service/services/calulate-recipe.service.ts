@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {RecipesRepository} from '../repositories/recipes.repository';
-import {ProductsRepository} from '../repositories/products.repository';
 import {Recipe} from '../models/Recipe';
 import {Unit} from '../types/Unit.types';
 import {RecipeCalculation} from '@service/models/RecipeCalculation';
@@ -28,7 +27,6 @@ export interface CalculationTableParams {
 export class CalculateRecipeService {
   constructor(
     private _recipeRepository: RecipesRepository,
-    private _productRepository: ProductsRepository,
   ) {
   }
 
@@ -62,6 +60,7 @@ export class CalculateRecipeService {
       const table: CalculationTableParams[] = [];
 
       const recipe = await this._recipeRepository.getOne(recipeUUID, true);
+      console.log(recipe)
       const calculation = new RecipeCalculation(recipe);
 
       calculation.ingredients.forEach(ingredient => {
