@@ -4,7 +4,7 @@ import {CategoryRecipesRepository} from '../repositories/category-recipes-reposi
 import {from, map, mergeMap, Observable, switchMap} from 'rxjs';
 import {groupBy} from '@helpers/grouping.helper';
 import {Recipe} from '../models/Recipe';
-import {RecipeDTO} from '@service/shemes/Recipe.scheme';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<any>>('CategorizedRecipesList', {
   factory: () => {

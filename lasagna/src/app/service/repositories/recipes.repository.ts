@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../const/stores';
+import {Stores} from '../db/const/stores';
 import {CategoryRecipesRepository} from './category-recipes-repository.service';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
 import {DraftForm, DraftFormsService} from '../services/draft-forms.service';
 import {TagsRepositoryService} from './tags-repository.service';
 import {Recipe} from '../models/Recipe';
-import {RecipeDTO} from '../shemes/Recipe.scheme';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {Tag} from '@service/models/Tag';
 import {ProductsRepository} from '@service/repositories/products.repository';
 
@@ -66,6 +66,7 @@ export class RecipesRepository {
 
   async getOne(
     uuid: Recipe | string | undefined,
+    verbose: boolean = false,
   ) {
     return new Promise<Recipe | undefined>(async (resolve, reject) => {
       if (!uuid) {
@@ -73,27 +74,16 @@ export class RecipesRepository {
         return;
       }
       uuid = (uuid as Recipe).uuid || uuid as string;
-      await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
-        resolve(Recipe.fromRaw(result));
-      });
+      if (verbose) {
+        await this._indexDbService.getOneWithRelations(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
+          resolve(Recipe.fromRaw(result));
+        });
+      } else {
+        await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
+          resolve(Recipe.fromRaw(result));
+        });
+      }
     });
-  }
-
-  async getOneVerbose(
-    uuid: Recipe | string | undefined,
-  ) {
-    const recipe = await this.getOne(uuid);
-
-    for (const ingredient of recipe?.ingredients || []) {
-      if (ingredient.product_id) {
-        ingredient.product_id = await this._productsRepository.getOne(ingredient.product_id);
-      }
-      if (ingredient.recipe_id) {
-        ingredient.recipe_id = await this.getOneVerbose(ingredient.recipe_id);
-      }
-    }
-
-    return recipe;
   }
 
   async editRecipe(

@@ -1,9 +1,9 @@
 import {Unit} from '@service/types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
-import {ProductDTO} from '@service/shemes/Product.scheme';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Product} from '@service/models/Product';
 import {Recipe} from '@service/models/Recipe';
-import {RecipeDTO} from '@service/shemes/Recipe.scheme';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 export class Ingredient {
   constructor(
