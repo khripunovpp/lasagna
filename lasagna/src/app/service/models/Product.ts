@@ -1,8 +1,8 @@
 import {Tag} from './Tag';
 import {CategoryProduct} from './CategoryProduct';
-import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Unit} from '../types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 
 export class Product {
   constructor(

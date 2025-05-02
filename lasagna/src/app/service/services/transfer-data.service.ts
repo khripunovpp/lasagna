@@ -20,6 +20,12 @@ export class TransferDataService {
   ) {
   }
 
+  get currenBackupDate() {
+    const date = localStorage.getItem('lastBackupDate');
+    if (!date) return null;
+    return new Date(Number(date));
+  }
+
   async exportTable(
     source: Stores,
     fileType: 'csv' | 'json' = 'csv',

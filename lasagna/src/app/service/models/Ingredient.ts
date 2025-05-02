@@ -1,8 +1,8 @@
 import {Unit} from '@service/types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
-import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Product} from '@service/models/Product';
 import {Recipe} from '@service/models/Recipe';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 export class Ingredient {

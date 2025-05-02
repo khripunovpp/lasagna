@@ -20,7 +20,7 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '@help
   standalone: true,
   template: `
       <form [formGroup]="form">
-          <lg-gap-row [bottom]="true">
+          <lg-gap-row [bottom]="true" [mobileMode]="true">
               <lg-control label="Name" lgExpand>
                   <lg-input (onEnter)="onEnter()"
                             [placeholder]="'Your category name'"
