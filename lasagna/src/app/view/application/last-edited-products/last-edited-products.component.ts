@@ -18,7 +18,7 @@ import {PullDirective} from '@view/directives/pull.directive';
           <div class="last-edited-recipes">
               <lg-gap-column [size]="'medium'">
                   @for (item of products();track item.product.uuid) {
-                      <lg-gap-row [center]="true">
+                      <lg-gap-row [center]="true" [size]="'medium'" [mobileMode]="true">
                           <a [routerLink]="['/products/edit/', item.product.uuid]" class="last-edited-product">
                               {{ item.product.name }}
                           </a>
