@@ -1,8 +1,7 @@
-
+import {Stores} from '../const/stores';
 import {Transaction} from 'dexie';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {CategoryProductDTO} from '@service/db/shemes/CategoryProduct.scheme';
-import {Stores} from '@service/db/const/stores';
 
 export const migrations: {
   version: number

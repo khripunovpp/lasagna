@@ -24,7 +24,6 @@ import {MultiselectComponent} from '../../ui/form/multiselect.component';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
 import {FadeInComponent} from '../../ui/fade-in.component';
-import {Ingredient} from '../../../service/models/Ingredient';
 import {Recipe} from '../../../service/models/Recipe';
 
 @Component({
@@ -72,17 +71,9 @@ export class CalculateRecipeComponent
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
-      const outcomeAmount = data['result']?.recipe?.outcome_amount;
-      const ingredientsAmount = data['result']?.recipe?.ingredients?.reduce((acc: number, item: Ingredient) => {
-        if (item.unit !== 'gram') return acc;
 
-        return acc + (+item.amount || 0);
-      }, 0);
-      const totalAmount = outcomeAmount
-        ? outcomeAmount
-        : ingredientsAmount;
-      this.outcome_amount.set(totalAmount);
-      this.showedOutcome.set(totalAmount);
+      this.outcome_amount.set(this.result()?.calculation?.totalWeight || 0);
+      this.showedOutcome.set(this.result()?.calculation?.totalWeight || 0);
       this.loadRecipeTaxTemplate();
     });
   }
@@ -93,7 +84,7 @@ export class CalculateRecipeComponent
   showedOutcome = signal(0);
   totalTaxes = signal(0);
   notInGrams = computed(() => {
-    return this.result()?.recipe?.outcome_unit && this.result()?.recipe?.outcome_unit !== 'gram'
+    return this.result()?.calculation?.recipe?.outcome_unit && this.result()?.calculation?.recipe?.outcome_unit !== 'gram'
   });
   taxesComponent = viewChild(TaxesAndFeesListComponent);
   taxRows = signal<TaxTemplateRow[]>([]);
@@ -130,7 +121,7 @@ export class CalculateRecipeComponent
   }
 
   loadRecipeTemplate() {
-    return this._formTemplateService.getTemplateByName('tax', this._taxTemplateName(this.result()?.recipe!))
+    return this._formTemplateService.getTemplateByName('tax', this._taxTemplateName(this.result()?.calculation?.recipe!))
   }
 
   loadRecipeTaxTemplate() {
@@ -156,7 +147,7 @@ export class CalculateRecipeComponent
       this.taxRows.set(defaultTxTemplates);
     }
 
-    const name = this._taxTemplateName(this.result()?.recipe!);
+    const name = this._taxTemplateName(this.result()?.calculation?.recipe!);
 
     this.saveTaxTemplate(name, this.taxesComponent()?.taxesForm.value.rows ?? []);
     this.linkTaxTemplate(name);
@@ -181,7 +172,7 @@ export class CalculateRecipeComponent
 
   loadTaxTemplate() {
     const name = this.taxTemplateToApply()?.name;
-    if (!name || name === this.result()?.recipe?.taxTemplateName) {
+    if (!name || name === this.result()?.calculation?.recipe?.taxTemplateName) {
       return
     }
     const template = this._formTemplateService.getTemplateByName('tax', name);
@@ -212,7 +203,7 @@ export class CalculateRecipeComponent
   }
 
   onTaxesChanged = (value: TaxTemplateRow[]) => {
-    this.saveTaxTemplate(this._taxTemplateName(this.result()?.recipe!), value);
+    this.saveTaxTemplate(this._taxTemplateName(this.result()?.calculation?.recipe!), value);
   }
 
   private _taxTemplateName(

@@ -33,9 +33,10 @@ import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
     FadeInComponent,
     ExpandDirective,
     ButtonComponent,
+    ShrinkDirective,
     UploadComponent,
     TimeAgoPipe
-]
+  ]
 })
 export class SettingsComponent
   implements AfterViewInit {
