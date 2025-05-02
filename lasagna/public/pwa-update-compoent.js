@@ -148,6 +148,10 @@ if ('serviceWorker' in navigator) {
     }
     currentWorker = controller;
     console.log('Current worker:', currentWorker);
+
+    currentWorker.postMessage('CHECK_FOR_UPDATES', {
+      nonce: Math.random(),
+    })
   };
   navigator.serviceWorker.addEventListener('controllerchange', updateController);
   updateController();
@@ -159,5 +163,4 @@ if ('serviceWorker' in navigator) {
     })
   };
   navigator.serviceWorker.addEventListener('message', messageListener);
-
 }
