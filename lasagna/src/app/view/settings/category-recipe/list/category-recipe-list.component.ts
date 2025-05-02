@@ -10,7 +10,6 @@ import {CategoryRecipesRepository} from '@service/repositories/category-recipes-
 import {NotificationsService} from '@service/services/notifications.service';
 import {FadeInComponent} from '@view/ui/fade-in.component';
 import {CategoryRecipe} from '@service/models/CategoryRecipe';
-import {CategoryRecipeDTO} from '@service/shemes/CategoryRecipe.scheme';
 
 
 @Component({

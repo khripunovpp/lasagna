@@ -67,7 +67,7 @@ export class CalculateRecipeService {
       let totalWeight = 0;
 
 
-      const recipe = await this._recipeRepository.getOneVerbose(recipeUUID);
+      const recipe = await this._recipeRepository.getOne(recipeUUID, true);
       const calculation = new RecipeCalculation(recipe);
 
       console.log({

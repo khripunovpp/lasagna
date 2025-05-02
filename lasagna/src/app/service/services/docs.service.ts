@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, firstValueFrom} from 'rxjs';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../const/stores';
+import {Stores} from '../db/const/stores';
 
 export interface DocFile {
   type: 'file';

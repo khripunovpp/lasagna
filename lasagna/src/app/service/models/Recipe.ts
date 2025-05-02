@@ -1,9 +1,9 @@
 import {Ingredient} from './Ingredient';
-import {RecipeDTO} from '../shemes/Recipe.scheme';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {Unit} from '../types/Unit.types';
 import {CategoryRecipe} from '@service/models/CategoryRecipe';
 import {parseFloatingNumber} from '@helpers/number.helper';
-import {CategoryRecipeDTO} from '@service/shemes/CategoryRecipe.scheme';
+import {CategoryRecipeDTO} from '@service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '@service/models/Tag';
 
 

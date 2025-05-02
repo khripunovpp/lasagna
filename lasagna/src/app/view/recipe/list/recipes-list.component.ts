@@ -10,7 +10,7 @@ import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '@service/services/notifications.service';
-import {Stores} from '@service/const/stores';
+import {Stores} from '@service/db/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
@@ -24,9 +24,9 @@ import {DraftForm} from '@service/services/draft-forms.service';
 import {DatePipe, JsonPipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
-import {RecipeDTO, RecipeScheme} from '@service/shemes/Recipe.scheme';
+import {RecipeDTO, RecipeScheme} from '@service/db/shemes/Recipe.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
-import {ProductDTO} from '@service/shemes/Product.scheme';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
 
 

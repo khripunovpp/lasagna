@@ -1,6 +1,6 @@
 import {Recipe} from '@service/models/Recipe';
 import {CategoryRecipe} from '@service/models/CategoryRecipe';
-import {CategoryRecipeDTO} from '@service/shemes/CategoryRecipe.scheme';
+import {CategoryRecipeDTO} from '@service/db/shemes/CategoryRecipe.scheme';
 
 export const recipeToFormValue = (recipe: Recipe) => {
   return {

@@ -26,7 +26,7 @@ import {Recipe} from '@service/models/Recipe';
 import {Ingredient} from '@service/models/Ingredient';
 import {JsonPipe} from '@angular/common';
 import {recipeToFormValue} from '@helpers/recipe.helpers';
-import {RecipeDTO} from '@service/shemes/Recipe.scheme';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 @Component({
   selector: 'lg-add-recipe-form',

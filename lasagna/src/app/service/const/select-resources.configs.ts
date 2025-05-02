@@ -1,4 +1,4 @@
-import {Stores} from './stores';
+import {Stores} from '../db/const/stores';
 
 export interface SelectResourcesConfig {
   name: string

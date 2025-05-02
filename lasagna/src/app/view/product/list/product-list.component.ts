@@ -10,7 +10,7 @@ import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {CsvReaderService} from '@service/services/csv-reader.service';
 import {TransferDataService} from '@service/services/transfer-data.service';
-import {Stores} from '@service/const/stores';
+import {Stores} from '@service/db/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {RouterLink} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -25,7 +25,7 @@ import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {DraftForm} from '@service/services/draft-forms.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Product} from '@service/models/Product';
-import {ProductDTO, ProductScheme} from '@service/shemes/Product.scheme';
+import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {PullDirective} from '@view/directives/pull.directive';
 

@@ -1,6 +1,6 @@
 import {Injectable, signal} from '@angular/core';
 import {FlexsearchIndexService} from '../db/flexsearch-index.service';
-import {Stores} from '../const/stores';
+import {Stores} from '../db/const/stores';
 import {ProductsRepository} from '../repositories/products.repository';
 import {RecipesRepository} from '../repositories/recipes.repository';
 import {CategoryProductsRepository} from '../repositories/category-products-repository.service';

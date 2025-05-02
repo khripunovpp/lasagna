@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CsvReaderService} from './csv-reader.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../const/stores';
+import {Stores} from '../db/const/stores';
 
 export interface BuckupData {
   store: string

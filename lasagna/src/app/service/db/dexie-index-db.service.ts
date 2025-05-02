@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
-import {Stores} from '../const/stores';
+import {Stores} from './const/stores';
 import {migrations} from './migrations';
 import {generateUuid} from '../../helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
 import {BuckupData} from '@service/services/transfer-data.service';
+import {relationsMap} from '@service/db/const/relations-maps';
 
 @Injectable({
   providedIn: 'root'
@@ -149,6 +150,40 @@ export class DexieIndexDbService extends Dexie {
     return (this[storeKey] as Table<any>).get(uuid);
   }
 
+  async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<T | undefined> {
+    // @ts-ignore
+    const table = (this[storeKey] as Table<any>)
+    const item = await table.get(uuid);
+    if (!item) {
+      return Promise.resolve(undefined);
+    }
+
+    const itemFields = Object.keys(item);
+
+    for (const field of itemFields) {
+      if (Array.isArray(item[field])) {
+        for (const itemField of item[field]) {
+          const itemFieldKeys = Object.keys(itemField);
+          for (const itemFieldKey of itemFieldKeys) {
+            const relation = await this._parseRelationAndGet(itemFieldKey, itemField[itemFieldKey]);
+
+            if (relation) {
+              itemField[itemFieldKey] = relation[0];
+            }
+          }
+        }
+      } else {
+        const relation = await this._parseRelationAndGet(field, item[field]);
+
+        if (relation) {
+          item[field] = relation[0];
+        }
+      }
+    }
+
+    return item;
+  }
+
   async getAll<T = any>(storeKey: Stores): Promise<T[]> {
     // @ts-ignore
     const table = (this[storeKey] as Table<any>)
@@ -222,5 +257,29 @@ export class DexieIndexDbService extends Dexie {
         throw new Error(`Store ${store} not found in backup data`);
       }
     }
+  }
+
+  private async _parseRelationAndGet(
+    field: string,
+    searchValue: string,
+  ) {
+    if (!searchValue) return;
+    const relation = relationsMap[field];
+    if (!relation) return;
+    const {tableName, key} = this._parseRelations(relation);
+    if (!tableName || !key) return;
+
+    return this.getStore(tableName as Stores)
+      .where(key)
+      .equals(searchValue)
+      .toArray()
+  }
+
+  private _parseRelations(string: string) {
+    const [tableName, key] = string.split('.');
+    return {
+      tableName,
+      key,
+    };
   }
 }
