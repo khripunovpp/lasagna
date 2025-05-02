@@ -103,24 +103,39 @@ const updateDialog = dialog();
 document.body.appendChild(updateDialog);
 
 // banner.style.display = 'flex';
-if ('serviceWorker' in navigator && 'Notification' in window) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.getRegistration().then(reg => {
-      console.log('Service worker registration:', reg);
-      if (!reg || !reg.waiting) return;
 
-      banner.style.display = 'flex';
 
-      const updateAppButton = dialog.querySelector('#update-app');
+// 🔥 Прямая логика обновления PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.ready.then(registration => {
+    // Периодически обновляем воркер вручную
+    setInterval(() => registration.update(), 60_000);
 
-      updateAppButton.addEventListener('click', () => {
-        reg.waiting.postMessage({type: 'SKIP_WAITING'});
-        window.location.reload();
+    registration.addEventListener('updatefound', () => {
+      const newWorker = registration.installing;
+
+      newWorker?.addEventListener('statechange', () => {
+        if (
+          newWorker.state === 'installed' &&
+          navigator.serviceWorker.controller // текущий есть => новая версия ждёт
+        ) {
+          // Показать баннер
+          banner.style.display = 'flex';
+
+          const updateAppButton = updateDialog.querySelector('#update-app');
+          updateAppButton.addEventListener('click', () => {
+            if (registration.waiting) {
+              registration.waiting.postMessage({type: 'SKIP_WAITING'});
+            }
+          });
+        }
       });
     });
+  });
 
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Service worker updated.');
-    });
+  // Перезагрузка при активации новой версии
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    console.log('Service worker updated.');
+    window.location.reload();
   });
 }
