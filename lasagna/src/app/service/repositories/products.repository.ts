@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {CategoryProductsRepository} from './category-products-repository.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../const/stores';
+import {Stores} from '../db/const/stores';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
 import {DraftFormsService} from '../services/draft-forms.service';
 import {TagsRepositoryService} from './tags-repository.service';
 import {Product} from '../models/Product';
-import {ProductDTO} from '../shemes/Product.scheme';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Tag} from '@service/models/Tag';
 
 @Injectable({

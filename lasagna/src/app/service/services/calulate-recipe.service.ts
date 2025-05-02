@@ -59,7 +59,7 @@ export class CalculateRecipeService {
     return new Promise<Calculation>(async (resolve, reject) => {
       const table: CalculationTableParams[] = [];
 
-      const recipe = await this._recipeRepository.getOneVerbose(recipeUUID);
+      const recipe = await this._recipeRepository.getOne(recipeUUID, true);
       const calculation = new RecipeCalculation(recipe);
 
       calculation.ingredients.forEach(ingredient => {

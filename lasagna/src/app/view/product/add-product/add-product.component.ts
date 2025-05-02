@@ -14,7 +14,7 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {DatePipe, DecimalPipe, JsonPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
-import {ProductDTO} from '@service/shemes/Product.scheme';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 
 @Component({

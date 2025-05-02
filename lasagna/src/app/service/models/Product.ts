@@ -1,6 +1,6 @@
 import {Tag} from './Tag';
 import {CategoryProduct} from './CategoryProduct';
-import {ProductDTO} from '../shemes/Product.scheme';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Unit} from '../types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
 
