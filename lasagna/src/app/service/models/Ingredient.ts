@@ -1,8 +1,8 @@
 import {Unit} from '@service/types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
+import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Product} from '@service/models/Product';
 import {Recipe} from '@service/models/Recipe';
-import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
 export class Ingredient {
@@ -32,29 +32,44 @@ export class Ingredient {
   amount: number;
   unit: Unit;
 
-  get totalAmount() {
-    return parseFloatingNumber(this.amount);
+  get uuid() {
+    return this.product_id?.uuid || this.recipe_id?.uuid;
   }
 
-  get totalAmountGram() {
+  get generalName() {
+    return this.product_id?.name || this.recipe_id?.name || this.name || 'Unknown ingredient';
+  }
+
+  get totalWeightGram() {
     if (this.unit !== 'gram') {
       return 0
     }
-    return this.totalAmount;
+    return parseFloatingNumber(this.amount);
   }
 
   get pricePerUnit() {
-    if (this.product_id) {
-      return this.product_id.pricePerUnit;
+    if (this.product_id && this.product_id.unit !== 'gram') {
+      return this.product_id?.pricePerUnit;
     }
-    return 0;
+
+    return this.totalPrice / this.totalWeightGram;
   }
 
   get totalPrice() {
+    let total = 0;
     if (this.product_id) {
-      return this.product_id.pricePerUnit * this.totalAmount;
+      if (this.product_id.unit !== 'gram') {
+        total += this.product_id.pricePerUnit * this.amount;
+      } else {
+        total += this.product_id.pricePerUnit * this.totalWeightGram;
+      }
     }
-    return 0;
+
+    if (this.recipe_id) {
+      total += this.recipe_id.totalPrice;
+    }
+
+    return total;
   }
 
   get blanked() {

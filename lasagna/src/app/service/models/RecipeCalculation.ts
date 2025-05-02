@@ -9,17 +9,35 @@ export class RecipeCalculation {
 
   result?: CalculationTableParams[]
 
-  get totalAmount(): number {
+  get totalPrice(): number {
     if (!this.recipe) {
       return 0;
     }
 
     return this.recipe.ingredients.reduce((acc, ingredient) => {
-      return acc + ingredient.totalAmountGram;
+      return acc + ingredient.totalPrice;
     }, 0);
   }
 
+  get ingredients() {
+    return this.recipe?.ingredients || [];
+  }
+
+  get pricePerUnit(): number {
+    if (!this.recipe) {
+      return 0;
+    }
+
+    return this.totalPrice / this.totalWeight;
+  }
+
   get totalWeight(): number {
-    return 0;
+    if (!this.recipe) {
+      return 0;
+    }
+
+    return this.recipe.ingredients.reduce((acc, ingredient) => {
+      return acc + ingredient.totalWeightGram;
+    }, 0);
   }
 }

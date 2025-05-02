@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
+import {Stores} from '../db/const/stores';
 import {CategoryProduct} from '../models/CategoryProduct';
-import {Stores} from '@service/db/const/stores';
+import {CategoryProductDTO} from '@service/db/shemes/CategoryProduct.scheme';
 
 @Injectable({
   providedIn: 'root'

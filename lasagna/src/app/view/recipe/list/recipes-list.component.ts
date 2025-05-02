@@ -21,7 +21,7 @@ import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {DraftForm} from '@service/services/draft-forms.service';
-
+import {DatePipe, DecimalPipe, JsonPipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
 import {RecipeDTO, RecipeScheme} from '@service/db/shemes/Recipe.scheme';
@@ -167,8 +167,10 @@ import {PullDirective} from '@view/directives/pull.directive';
     SelectionToolsComponent,
     TimeAgoPipe,
     ExpandDirective,
-    PullDirective
-],
+    JsonPipe,
+    PullDirective,
+    DecimalPipe
+  ],
   styles: [
     `:host {
       display: block;
