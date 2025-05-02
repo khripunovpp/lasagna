@@ -1,6 +1,4 @@
 import {AfterViewInit, Component, inject} from '@angular/core';
-
-
 import {CardComponent} from '../ui/card/card.component';
 import {ContainerComponent} from '../ui/layout/container/container.component';
 import {GapRowComponent} from '../ui/layout/gap-row.component';
@@ -10,7 +8,6 @@ import {GapColumnComponent} from '../ui/layout/gap-column.component';
 import {FadeInComponent} from "../ui/fade-in.component";
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {ButtonComponent} from '@view/ui/layout/button.component';
-
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {UploadComponent} from '@view/ui/form/upload.component';
 import {NotificationsService} from '@service/services/notifications.service';
@@ -33,9 +30,9 @@ import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
     FadeInComponent,
     ExpandDirective,
     ButtonComponent,
+    TimeAgoPipe,
     UploadComponent,
-    TimeAgoPipe
-]
+  ]
 })
 export class SettingsComponent
   implements AfterViewInit {

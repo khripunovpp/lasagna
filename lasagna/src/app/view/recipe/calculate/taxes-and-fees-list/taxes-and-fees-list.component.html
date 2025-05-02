@@ -18,8 +18,8 @@
 
                 <lg-control [label]="'Description'">
                   <lg-textarea [rows]="3"
-                    formControlName="description"
-                    [placeholder]="'Description'"
+                               formControlName="description"
+                               [placeholder]="'Description'"
                   ></lg-textarea>
                 </lg-control>
 
@@ -41,7 +41,7 @@
 
                 <lg-control [label]="'Amount'">
                   <lg-number-input
-                    [disabled]="true"
+                    [disable]="true"
                     formControlName="amount"
                     [placeholder]="'Amount'"
                   ></lg-number-input>
@@ -64,7 +64,7 @@
   </lg-card-list>
 
   <lg-button (click)="addTxRow()"
-              [style]="'success'"
+             [style]="'success'"
              lgSelfCenter
              lgShrink>
     Add row
@@ -76,7 +76,7 @@
                 [relaxed]="true">
       Total taxes and fees
 
-      <b>{{ totalTaxes() }}</b>
+      <b>{{ totalTaxes() | number: '1.2-5' }}</b>
     </lg-gap-row>
   </lg-title>
 
@@ -86,7 +86,7 @@
                 [relaxed]="true">
       Total
 
-      <b>{{ totalTaxes() + total() }}</b>
+      <b>{{ (totalTaxes() + total())| number: '1.2-2' }}</b>
     </lg-gap-row>
   </lg-title>
 </lg-gap-column>

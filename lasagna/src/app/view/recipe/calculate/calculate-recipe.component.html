@@ -3,18 +3,18 @@
     <lg-gap-column>
       <lg-gap-row [center]="true" [mobileMode]="true">
         <lg-title>
-          {{ result()?.recipe?.name }} cost calculation
+          {{ result()?.calculation?.recipe?.name }} cost calculation
         </lg-title>
 
         <lg-button [flat]="true"
-                   [link]="'/recipes/edit/' + result()?.recipe?.uuid"
+                   [link]="'/recipes/edit/' + result()?.calculation?.recipe?.uuid"
                    [size]="'small'"
                    [style]="'primary'">
           Edit
         </lg-button>
       </lg-gap-row>
 
-      @if (result()?.total) {
+      @if (result()?.calculation?.totalPrice) {
         <lg-gap-row [center]="true" style="--control-bg: white">
           @if (notInGrams()) {
 
@@ -30,18 +30,17 @@
                                    (onInputChange)="onOutcomeChange($event)"
                                    lgParseMath
                                    [placeholder]="'Amount'"></lg-number-input>
-                  <!--              {{ result()?.recipe?.outcome_amount }}-->
                 </div>
 
                 <b>
-                  {{ result()?.recipe?.outcome_unit }}
+                  {{ result()?.calculation?.recipe?.outcome_unit }}
                 </b>
               </lg-gap-row>
 
               <lg-gap-row [size]="'small'" [mobileMode]="true">
                 <div>
                   one <b>
-                  {{ result()?.recipe?.outcome_unit }}
+                  {{ result()?.calculation?.recipe?.outcome_unit }}
                 </b>
                 </div>
 
@@ -100,24 +99,24 @@
 
       <ng-template #rawAmount>
         @if (notInGrams()) {
-          {{ (result()?.total || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
+          {{ (result()?.calculation?.totalPrice || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
         } @else {
-          {{ result()?.total | number: '1.2-2' }}
+          {{ result()?.calculation?.totalPrice | number: '1.2-2' }}
         }
       </ng-template>
 
       <ng-template #totalAmount>
         @if (notInGrams()) {
-          {{ ((result()?.total || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
+          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
         } @else {
-          {{ (result()?.total || 1) + totalTaxes() | number: '1.2-2' }}
+          {{ (result()?.calculation?.totalPrice || 1) + totalTaxes() | number: '1.2-2' }}
         }
       </ng-template>
+
       <ng-template #perGramAmount>
         @if (notInGrams()) {
-
         } @else {
-          {{ ((result()?.total || 1) + totalTaxes()) / outcome_amount() | number: '1.2-2' }}
+          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / outcome_amount() | number: '1.2-5' }}
         }
       </ng-template>
 
@@ -133,6 +132,7 @@
               <col span="1" style="width: 7%;">
             </colgroup>
             <thead>
+
             <tr>
               <th>#</th>
               <th>Name</th>
@@ -142,30 +142,34 @@
               <th>Total</th>
             </tr>
             </thead>
+
             <tbody>
-              @for (row of result()?.result;track $index;let i = $index) {
+              @for (row of result()?.table;track $index;let i = $index) {
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
-                  <td>
-                <span [ngClass]="'indent-' + row.indent">
-                  @if (row.type !== 'total') {
 
-                    <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit/' : '/products/edit/', row.uuid]">
-                  {{ row.name }}
-                </a>
-                  } @else {
-                    {{ row.name }}
-                  }
-              </span>
+                  <td>
+                    <div [ngClass]="'indent-' + row.indent">
+                      @if (row.type !== 'total') {
+                        <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit/' : '/products/edit/', row.uuid]">
+                          {{ row.name }}
+                        </a>
+                      } @else {
+                        {{ row.name }}
+                      }
+                    </div>
                   </td>
-                  <td>{{ row.amount }}</td>
+
+                  <td>{{ row.amount | number: '1.0-2' }}</td>
+
                   <td>{{ row.unit }}</td>
-                  <td>{{ row.price_per_gram }}</td>
-                  <td>{{ row.total }}</td>
+
+                  <td>{{ row.price_per_gram | number: '1.2-5' }}</td>
+
+                  <td>{{ row.total | number: '1.2-5' }}</td>
                 </tr>
               }
             </tbody>
-
           </table>
         } @else {
           <div>Loading...</div>
@@ -218,7 +222,7 @@
       <lg-taxes-and-fees-list (taxesChanged)="onTaxesChanged($event)"
                               (totalTaxesChanged)="onTotalTaxesChanged($event)"
                               [rows]="taxRows()"
-                              [total]="result()?.total ?? 0"></lg-taxes-and-fees-list>
+                              [total]="result()?.calculation?.totalPrice ?? 0"></lg-taxes-and-fees-list>
     </lg-gap-column>
   </lg-container>
 </lg-fade-in>
