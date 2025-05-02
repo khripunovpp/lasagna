@@ -19,7 +19,7 @@ import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 import {TagsControlComponent} from '../../ui/form/tags-control.component';
 import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
-import {JsonPipe} from '@angular/common';
+
 import {debounceTime} from 'rxjs';
 
 @Component({
@@ -40,9 +40,8 @@ import {debounceTime} from 'rxjs';
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    TagsControlComponent,
-    JsonPipe
-  ],
+    TagsControlComponent
+],
   styles: [
     `
       lg-eggs-widget {

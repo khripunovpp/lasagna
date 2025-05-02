@@ -2,7 +2,7 @@ import {Component, signal} from '@angular/core';
 import { RecipesRepository} from '../../../service/repositories/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {RouterLink} from '@angular/router';
-import {DatePipe} from '@angular/common';
+
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '../../../service/models/Recipe';
@@ -47,12 +47,11 @@ import {PullDirective} from '@view/directives/pull.directive';
   imports: [
     GapColumnComponent,
     RouterLink,
-    DatePipe,
     TitleComponent,
     TimeAgoPipe,
     GapRowComponent,
     PullDirective
-  ]
+]
 })
 export class LastEditedRecipesComponent {
   constructor(

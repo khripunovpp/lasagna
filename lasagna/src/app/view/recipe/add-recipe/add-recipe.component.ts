@@ -13,7 +13,7 @@ import {DraftForm} from '@service/services/draft-forms.service';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {DatePipe} from '@angular/common';
+
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
 
@@ -29,9 +29,8 @@ import {Recipe} from '@service/models/Recipe';
     GapRowComponent,
     FadeInComponent,
     ShrinkDirective,
-    DatePipe,
     TimeAgoPipe
-  ],
+],
   template: `
 
       <lg-fade-in>

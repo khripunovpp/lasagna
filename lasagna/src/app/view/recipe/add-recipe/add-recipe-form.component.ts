@@ -24,7 +24,7 @@ import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 import {Recipe} from '@service/models/Recipe';
 import {Ingredient} from '@service/models/Ingredient';
-import {JsonPipe} from '@angular/common';
+
 import {recipeToFormValue} from '@helpers/recipe.helpers';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 
@@ -48,9 +48,8 @@ import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
     ButtonsGroupComponent,
     ChipsListComponent,
     AutocompleteComponent,
-    FormsModule,
-    JsonPipe
-  ],
+    FormsModule
+],
   providers: [
     {
       provide: SelectResourcesService,
