@@ -5,6 +5,8 @@ import {FadeInComponent} from '@view/ui/fade-in.component';
 import {PwaInstallComponent} from '@view/ui/pwa-install.component';
 import {GlobalSearchComponent} from '@view/ui/global-search.component';
 import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {LocalisationService} from '@service/services/localisation.service';
 
 
 @Component({
@@ -16,6 +18,7 @@ import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.compone
     PwaInstallComponent,
     GlobalSearchComponent,
     LastBackupInformerComponent,
+    TranslateModule,
   ],
   templateUrl: './app.component.html',
   standalone: true,
@@ -23,5 +26,10 @@ import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.compone
   providers: []
 })
 export class AppComponent {
+  constructor(
+    private localisationService: LocalisationService,
+  ) {
+  }
+
   title = 'lasagna';
 }
