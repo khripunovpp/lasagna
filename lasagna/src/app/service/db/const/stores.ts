@@ -10,4 +10,5 @@ export enum Stores {
   INDICES = 'indicesStore',
   DOCUMENTATION = 'documentation',
   TAGS = 'tags',
+  TAXES = 'taxes',
 }
