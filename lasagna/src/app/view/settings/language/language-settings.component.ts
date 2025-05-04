@@ -7,6 +7,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {CheckboxComponent} from '@view/ui/form/chckbox.component';
 import {FormsModule} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
+import {RadioComponent} from '@view/ui/form/radio.component';
 
 
 @Component({
@@ -20,7 +21,7 @@ import {JsonPipe} from '@angular/common';
                   <lg-gap-column [size]="'small'">
                       @for (lang of languages();track lang.code;let i= $index) {
                           <lg-gap-row [center]="true" [mobileMode]="true" [size]="'small'">
-                              <lg-checkbox [markOnHover]="true"
+                              <lg-radio [markOnHover]="true"
                                            [radio]="true"
                                            [name]="'lang'"
                                            [value]="lang.code"
@@ -29,7 +30,7 @@ import {JsonPipe} from '@angular/common';
                                            [size]="'small'"
                                            [noMark]="true">
                                   {{ lang.name }}
-                              </lg-checkbox>
+                              </lg-radio>
                           </lg-gap-row>
                       }
                   </lg-gap-column>
@@ -45,7 +46,8 @@ import {JsonPipe} from '@angular/common';
     GapColumnComponent,
     CheckboxComponent,
     FormsModule,
-    JsonPipe
+    JsonPipe,
+    RadioComponent
   ]
 })
 export class LanguageSettingsComponent {

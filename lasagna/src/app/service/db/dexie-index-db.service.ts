@@ -264,12 +264,8 @@ export class DexieIndexDbService extends Dexie {
     // @ts-ignore
     await (this[storeKey] as Table<any>).bulkPut(values.map(value => ({
       ...value,
-      uuid: autoUUID ? this.generateUuid() : value.uuid,
+      uuid: autoUUID ? this.generateUuid() : (value.uuid || this.generateUuid()),
     })));
-    //
-    // values.forEach(value => {
-    //   this.flexsearchIndexService.add(value.uuid, value);
-    // });
   }
 
   async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {

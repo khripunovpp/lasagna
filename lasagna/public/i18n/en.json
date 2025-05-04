@@ -1,3 +1,5 @@
 {
-	"main.title": "Hey"
+	"main.title": "Hey",
+	"taxes.link-label": "Set taxes",
+	"taxes.settings-title": "Allowed taxes"
 }
