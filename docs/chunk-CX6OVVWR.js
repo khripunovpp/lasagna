@@ -1,0 +1,1 @@
+import{db as e,pb as r}from"./chunk-PNZYYIKS.js";var o=class t{constructor(){}whiteSpace="nowrap";static \u0275fac=function(i){return new(i||t)};static \u0275dir=e({type:t,selectors:[["","lgNoWrap",""]],hostVars:2,hostBindings:function(i,c){i&2&&r("white-space",c.whiteSpace)}})};export{o as a};
