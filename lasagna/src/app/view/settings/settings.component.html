@@ -24,33 +24,7 @@
 
     <lg-title [level]="3">Backup</lg-title>
 
-    <lg-gap-column>
-      <lg-gap-row [mobileMode]="true" [center]="true">
-        <lg-button (click)="onBackup()"
-                   [style]="'success'">
-          Make backup
-        </lg-button>
-
-        @if (transferDataService.currenBackupDate) {
-          Last backup: {{ transferDataService.currenBackupDate | timeAgo }}
-        }
-      </lg-gap-row>
-
-
-      <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
-        <lg-card style="--card-bg:#e78888">
-          <lg-gap-column [position]="'center'">
-           <span class="text-center text-inverse">
-             Be aware! <br>
-             This will override all your data!
-           </span>
-            <lg-button [style]="'danger'">
-              Restore backup
-            </lg-button>
-          </lg-gap-column>
-        </lg-card>
-      </lg-upload>
-    </lg-gap-column>
+    <lg-backup-settings></lg-backup-settings>
   </lg-container>
 </lg-fade-in>
 

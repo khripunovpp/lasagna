@@ -1,5 +1,5 @@
 import {Component, computed, model, Signal} from '@angular/core';
-import {LocalisationService} from '../../../service/services/localisation.service';
+import {LocalisationService} from '@service/services/localisation.service';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {CardComponent} from '@view/ui/card/card.component';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
@@ -7,6 +7,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {CheckboxComponent} from '@view/ui/form/chckbox.component';
 import {FormsModule} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
+
 
 @Component({
   selector: 'lg-language-settings',
