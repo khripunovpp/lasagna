@@ -124,9 +124,9 @@ export class CardListComponent {
   });
 
   onChanges(
-    value: boolean,
+    value: boolean|string,
     index: number
   ) {
-    this.onSelected.emit([value, this.items.toArray()?.[index]?.uuid() ?? '']);
+    this.onSelected.emit([!!value, this.items.toArray()?.[index]?.uuid() ?? '']);
   }
 }

@@ -7,6 +7,7 @@ import {FadeInComponent} from '../ui/fade-in.component';
 import {LastEditedRecipesComponent} from './last-edited-recipes/last-edited-recipes.component';
 import {LastEditedProductsComponent} from './last-edited-products/last-edited-products.component';
 import {GapRowComponent} from '../ui/layout/gap-row.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -21,7 +22,8 @@ import {GapRowComponent} from '../ui/layout/gap-row.component';
     FadeInComponent,
     LastEditedRecipesComponent,
     LastEditedProductsComponent,
-    GapRowComponent
+    GapRowComponent,
+    TranslatePipe
   ]
 })
 export class ApplicationComponent {

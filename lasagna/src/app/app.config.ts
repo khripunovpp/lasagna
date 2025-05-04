@@ -11,14 +11,18 @@ import {provideRouter, Router} from '@angular/router';
 import {routes} from './app.routes';
 import {HammerModule, provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
-import {CategoryProductsRepository} from './service/repositories/category-products-repository.service';
 import {provideServiceWorker} from '@angular/service-worker';
-import {provideHttpClient} from '@angular/common/http';
-import {CategoryRecipesRepository} from './service/repositories/category-recipes-repository.service';
+import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import 'hammerjs';
-import {DocsService} from './service/services/docs.service';
+import {DocsService} from '@service/services/docs.service';
 import * as Sentry from '@sentry/angular';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {CategoryProductsRepository, CategoryRecipesRepository} from '@service/repositories';
+
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -84,5 +88,13 @@ export const appConfig: ApplicationConfig = {
       provide: Sentry.TraceService,
       deps: [Router],
     },
+
+    importProvidersFrom([TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
+    })])
   ]
 };
