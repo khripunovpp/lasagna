@@ -12,6 +12,7 @@ import {UploadComponent} from '@view/ui/form/upload.component';
 import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
 import {LanguageSettingsComponent} from '@view/settings/language/language-settings.component';
 import {BackupSettingsComponent} from '@view/settings/backup/backup-settings.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-settings',
@@ -33,6 +34,7 @@ import {BackupSettingsComponent} from '@view/settings/backup/backup-settings.com
     UploadComponent,
     LanguageSettingsComponent,
     BackupSettingsComponent,
+    TranslatePipe,
   ]
 })
 export class SettingsComponent {

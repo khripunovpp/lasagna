@@ -157,6 +157,16 @@ export const routes: Routes = [{
               ]
             }
           ]
+        },
+        {
+          path: 'taxes',
+          children: [
+            {
+              path: '',
+              loadComponent: () => import('./view/settings/taxes/taxes-settings.component')
+                .then(m => m.TaxesSettingsComponent)
+            },
+          ],
         }
       ]
     },

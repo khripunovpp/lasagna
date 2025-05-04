@@ -1,24 +1,26 @@
 import {Component, forwardRef, HostListener, input, output, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NgClass} from '@angular/common';
+import {JsonPipe, NgClass} from '@angular/common';
 
 @Component({
-  selector: 'lg-checkbox',
+  selector: 'lg-radio',
   standalone: true,
   template: `
-      <label [attr.for]="name()+'-'+value"
+      <label [attr.for]="name()+'-'+value()"
              [ngClass]="size()"
-             class="lg-checkbox"
+             class="lg-radio"
              tabindex="0">
           <input (ngModelChange)="onChangeCheckbox($event)"
-                 [attr.id]="name()+'-'+value"
+                 [attr.id]="name()+'-'+value()"
                  [attr.name]="name()"
-                 [ngModel]="value"
-                 class="checkbox"
-                 type="checkbox"/>
-          <span [class.lg-checkbox__hoverOnly]="markOnHover()"
-                class="lg-checkbox__mark">
-              <span class="lg-checkbox__mark-inner">
+                 [attr.value]="radio() ? value() : modelValue"
+                 [checked]="modelValue"
+                 [ngModel]="modelValue"
+                 [type]="radio() ? 'radio' : 'checkbox'"
+                 class="checkbox">
+          <span [class.lg-radio__hoverOnly]="markOnHover()"
+                class="lg-radio__mark">
+              <span class="lg-radio__mark-inner">
                   @if (!noMark()) {
                       @if (customMark()) {
                           <span [innerHTML]="customMark()"></span>
@@ -38,17 +40,17 @@ import {NgClass} from '@angular/common';
   `,
   styles: [
     `
-      .lg-checkbox {
+      .lg-radio {
         display: flex;
         border-radius: 12px;
         gap: 8px;
       }
 
-      .lg-checkbox:focus-within {
+      .lg-radio:focus-within {
         outline-color: var(--active-color);
       }
 
-      .lg-checkbox__mark {
+      .lg-radio__mark {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -62,22 +64,22 @@ import {NgClass} from '@angular/common';
         border: 1px solid transparent;
       }
 
-      .lg-checkbox__hoverOnly {
+      .lg-radio__hoverOnly {
         background-color: transparent;
         border-color: var(--text-color);
       }
 
-      .lg-checkbox__hoverOnly .lg-checkbox__mark-inner {
+      .lg-radio__hoverOnly .lg-radio__mark-inner {
         opacity: 0;
         transition: all 0.2s ease-in-out;
       }
 
       @media (hover: hover) {
-        .lg-checkbox__mark:hover {
+        .lg-radio__mark:hover {
           opacity: 1;
         }
 
-        .lg-checkbox__hoverOnly:hover .lg-checkbox__mark-inner {
+        .lg-radio__hoverOnly:hover .lg-radio__mark-inner {
           opacity: 1;
         }
       }
@@ -86,23 +88,23 @@ import {NgClass} from '@angular/common';
         display: none;
       }
 
-      .checkbox:checked + .lg-checkbox__mark {
+      .checkbox:checked + .lg-radio__mark {
         background-color: var(--control-bg-selected);
         opacity: 1;
         font-weight: 700;
       }
 
-      .checkbox:checked + .lg-checkbox__hoverOnly {
+      .checkbox:checked + .lg-radio__hoverOnly {
 
         border-color: var(--control-bg-selected);
       }
 
-      .checkbox:checked + .lg-checkbox__hoverOnly .lg-checkbox__mark-inner {
+      .checkbox:checked + .lg-radio__hoverOnly .lg-radio__mark-inner {
         opacity: 1;
 
       }
 
-      .lg-checkbox.small .lg-checkbox__mark {
+      .lg-radio.small .lg-radio__mark {
         width: 16px;
         height: 16px;
         border-radius: 6px;
@@ -113,38 +115,42 @@ import {NgClass} from '@angular/common';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
+      useExisting: forwardRef(() => RadioComponent),
       multi: true,
     }
   ],
   imports: [
     FormsModule,
-    NgClass
+    NgClass,
+    JsonPipe
   ]
 })
-export class CheckboxComponent
+export class RadioComponent
   implements ControlValueAccessor {
   constructor() {
   }
 
-  value: boolean = false;
+  modelValue: boolean | string = false;
+  customMark = input<string>('');
   name = input<string>('');
-   size = input<
+  value = input<string>('');
+  // value = input<string>('');
+  size = input<
     'small' | 'default' | 'large'
   >('default');
   markOnHover = input<boolean>(false);
+  radio = input<boolean>(false);
   noMark = input<boolean>(false);
-  customMark = input<string>('');
+  onCheckboxChanged = output<boolean | string>();
+
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
   onKeydown(event: KeyboardEvent) {
     event.preventDefault();
-    this.onChangeCheckbox(!this.value);
+    this.onChangeCheckbox(!this.modelValue);
   }
 
-  onCheckboxChanged = output<boolean>();
-
-  onChange: (value: boolean) => void = () => {
+  onChange: (value: boolean | string) => void = () => {
   };
 
   onTouched: () => void = () => {
@@ -169,9 +175,13 @@ export class CheckboxComponent
   }
 
 
-  private _change(value: boolean) {
-    this.value = value;
-    this.onChange(this.value);
-    this.onCheckboxChanged.emit(this.value);
+  private _change(value: boolean | string) {
+    if (typeof value === 'boolean') {
+      this.modelValue = value;
+    } else {
+      this.modelValue = ['true', 'false'].includes(value) ? value === 'true' : value;
+    }
+    this.onChange(this.modelValue);
+    this.onCheckboxChanged.emit(this.modelValue);
   }
 }

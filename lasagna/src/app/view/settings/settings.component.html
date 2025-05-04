@@ -22,6 +22,12 @@
 
     <lg-language-settings></lg-language-settings>
 
+    <lg-title [level]="3">{{ 'taxes.settings-title'|translate }}</lg-title>
+
+    <a lgExpand routerLink="/settings/taxes" routerLinkActive="active">
+      <lg-card [center]="true">{{ 'taxes.link-label'|translate }}</lg-card>
+    </a>
+
     <lg-title [level]="3">Backup</lg-title>
 
     <lg-backup-settings></lg-backup-settings>

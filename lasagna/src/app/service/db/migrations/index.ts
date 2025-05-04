@@ -207,4 +207,17 @@ export const migrations: {
       [Stores.TAGS]: '++name',
     },
   },
+  {
+    version: 12,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+    },
+  },
 ]

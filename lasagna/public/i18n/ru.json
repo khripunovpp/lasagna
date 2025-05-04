@@ -1,3 +1,5 @@
 {
-	"main.title": "Привет"
+	"main.title": "Привет",
+	"taxes.link-label": "Выбрать доступные налоги",
+	"taxes.settings-title": "Налоги"
 }

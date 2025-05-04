@@ -41,7 +41,20 @@ export class TaxesRepository {
     });
   }
 
-  getProducts() {
-    return this._indexDbService.getAll<TaxDTO>(Stores.TAXES);
+  getAll() {
+    return this._indexDbService.getAll<TaxDTO>(Stores.TAXES)
+      .then((taxes: TaxDTO[]) => taxes.map((tax) => Tax.fromRaw(tax)))
+  }
+
+  addMany(
+    taxes: Tax[]
+  ) {
+    return this._indexDbService.balkAdd(Stores.TAXES, taxes.map((tax) => tax.toDTO()), false);
+  }
+
+  deleteOne(
+    uuid: string
+  ) {
+    return this._indexDbService.remove(Stores.TAXES, uuid);
   }
 }

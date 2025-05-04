@@ -31,6 +31,57 @@
 										<language>en-US</language>
 										<approved>false</approved>
 									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+						</children>
+					</folder_node>
+					<folder_node>
+						<name>taxes</name>
+						<children>
+							<concept_node>
+								<name>link-label</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>settings-title</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
 								</translations>
 							</concept_node>
 						</children>
@@ -45,6 +96,12 @@
 		<language>
 			<code>en-US</code>
 		</language>
+		<language>
+			<code>pt-PT</code>
+		</language>
+		<language>
+			<code>ru-RU</code>
+		</language>
 	</languages>
 	<translation_packages>
 		<translation_package>
@@ -53,6 +110,14 @@
 				<translation_url>
 					<path>public/i18n/en.json</path>
 					<language>en-US</language>
+				</translation_url>
+				<translation_url>
+					<path>public/i18n/pt.json</path>
+					<language>pt-PT</language>
+				</translation_url>
+				<translation_url>
+					<path>public/i18n/ru.json</path>
+					<language>ru-RU</language>
 				</translation_url>
 			</translation_urls>
 		</translation_package>
