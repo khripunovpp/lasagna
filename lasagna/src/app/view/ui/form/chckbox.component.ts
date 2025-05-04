@@ -1,25 +1,38 @@
 import {Component, forwardRef, HostListener, input, output, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {JsonPipe, NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-checkbox',
   standalone: true,
   template: `
-      <label class="lg-checkbox" tabindex="0">
+      <label [attr.for]="name()+'-'+value()"
+             [ngClass]="size()"
+             class="lg-checkbox"
+             tabindex="0">
           <input (ngModelChange)="onChangeCheckbox($event)"
-                 [ngModel]="value"
-                 class="checkbox"
-                 type="checkbox"/>
-          <span class="lg-checkbox__mark">
-              @if (customMark()) {
-                  {{ customMark() }}
-              } @else {
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                       viewBox="0 0 24 24">
+                 [attr.id]="name()+'-'+value()"
+                 [attr.name]="name()"
+                 [attr.value]="value()"
+                 [checked]="modelValue"
+                 [ngModel]="modelValue"
+                 [type]="radio() ? 'radio' : 'checkbox'"
+                 class="checkbox">
+          <span [class.lg-checkbox__hoverOnly]="markOnHover()"
+                class="lg-checkbox__mark">
+              <span class="lg-checkbox__mark-inner">
+                  @if (!noMark()) {
+                      @if (customMark()) {
+                          <span [innerHTML]="customMark()"></span>
+                      } @else {
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                               viewBox="0 0 24 24">
                       <path fill="currentColor"
                             d="M9.5 16.5l-4.25-4.25 1.4-1.4L9.5 13.7l7.35-7.35 1.4 1.4z"/>
                   </svg>
-              }
+                      }
+                  }
+              </span>
           </span>
 
           <ng-content></ng-content>
@@ -30,6 +43,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
       .lg-checkbox {
         display: flex;
         border-radius: 12px;
+        gap: 8px;
       }
 
       .lg-checkbox:focus-within {
@@ -47,10 +61,25 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         opacity: 0.2;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
+        border: 1px solid transparent;
+      }
+
+      .lg-checkbox__hoverOnly {
+        background-color: transparent;
+        border-color: var(--text-color);
+      }
+
+      .lg-checkbox__hoverOnly .lg-checkbox__mark-inner {
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
       }
 
       @media (hover: hover) {
         .lg-checkbox__mark:hover {
+          opacity: 1;
+        }
+
+        .lg-checkbox__hoverOnly:hover .lg-checkbox__mark-inner {
           opacity: 1;
         }
       }
@@ -64,6 +93,22 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         opacity: 1;
         font-weight: 700;
       }
+
+      .checkbox:checked + .lg-checkbox__hoverOnly {
+
+        border-color: var(--control-bg-selected);
+      }
+
+      .checkbox:checked + .lg-checkbox__hoverOnly .lg-checkbox__mark-inner {
+        opacity: 1;
+
+      }
+
+      .lg-checkbox.small .lg-checkbox__mark {
+        width: 16px;
+        height: 16px;
+        border-radius: 6px;
+      }
     `
   ],
   encapsulation: ViewEncapsulation.None,
@@ -75,7 +120,9 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     }
   ],
   imports: [
-    FormsModule
+    FormsModule,
+    NgClass,
+    JsonPipe
   ]
 })
 export class CheckboxComponent
@@ -83,16 +130,25 @@ export class CheckboxComponent
   constructor() {
   }
 
-  value: boolean = false;
+  modelValue: boolean = false;
   customMark = input<string>('');
+  name = input<string>('');
+  value = input<string>('');
+  // value = input<string>('');
+  size = input<
+    'small' | 'default' | 'large'
+  >('default');
+  markOnHover = input<boolean>(false);
+  radio = input<boolean>(false);
+  noMark = input<boolean>(false);
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
   onKeydown(event: KeyboardEvent) {
     event.preventDefault();
-    this.onChangeCheckbox(!this.value);
+    this.onChangeCheckbox(!this.modelValue);
   }
 
-  onCheckboxChanged = output<boolean>();
+  onCheckboxChanged = output<boolean|string>();
 
   onChange: (value: boolean) => void = () => {
   };
@@ -120,8 +176,8 @@ export class CheckboxComponent
 
 
   private _change(value: boolean) {
-    this.value = value;
-    this.onChange(this.value);
-    this.onCheckboxChanged.emit(this.value);
+    this.modelValue = value;
+    this.onChange(this.modelValue);
+    this.onCheckboxChanged.emit(this.modelValue);
   }
 }

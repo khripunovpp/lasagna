@@ -13,6 +13,7 @@ import {UploadComponent} from '@view/ui/form/upload.component';
 import {NotificationsService} from '@service/services/notifications.service';
 import {injectQueryParams} from '@helpers/route.helpers';
 import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
+import {LanguageSettingsComponent} from '@view/settings/actions/language-settings.component';
 
 @Component({
   selector: 'lg-settings',
@@ -32,6 +33,7 @@ import {TimeAgoPipe} from '@view/pipes/time-ago.pipe';
     ButtonComponent,
     TimeAgoPipe,
     UploadComponent,
+    LanguageSettingsComponent,
   ]
 })
 export class SettingsComponent
