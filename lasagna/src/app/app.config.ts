@@ -7,7 +7,7 @@ import {
   provideAppInitializer,
   provideZoneChangeDetection
 } from '@angular/core';
-import {provideRouter, Router} from '@angular/router';
+import {provideRouter, Router, withInMemoryScrolling} from '@angular/router';
 import {routes} from './app.routes';
 import {HammerModule, provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
@@ -27,7 +27,12 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled', // enable position restoration
+      })
+    ),
     provideClientHydration(withEventReplay()),
     provideHotToastConfig(),
     provideHttpClient(),
