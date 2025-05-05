@@ -1,4 +1,4 @@
-import {Component, contentChild, contentChildren, input, model, output, viewChild, ViewChild} from '@angular/core';
+import {Component, contentChild, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
@@ -14,6 +14,7 @@ import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '@service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
 import {PortalComponent} from '../layout/portal.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-import',
@@ -28,14 +29,15 @@ import {PortalComponent} from '../layout/portal.component';
     FormsModule,
     NgClass,
     NgTemplateOutlet,
-    PortalComponent
+    PortalComponent,
+    TranslatePipe
   ],
   template: `
       <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
           <lg-button [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-              Import
+              {{ 'import-label'|translate }}
           </lg-button>
       </lg-upload>
 
@@ -57,13 +59,13 @@ import {PortalComponent} from '../layout/portal.component';
                                               <input [(ngModel)]="rowsToUpdate[row.name]"
                                                      [disabled]="rowsToSkip[row.name]"
                                                      type="checkbox">
-                                              Update
+                                              {{ 'update-label'|translate }}
                                           } @else {
                                               <input [(ngModel)]="rowsToAdd[row.name]"
                                                      [disabled]="rowsToSkip[row.name]"
                                                      checked
                                                      type="checkbox">
-                                              Add
+                                              {{ 'add-label'|translate }}
                                           }
 
                                           @if (rowTemplate()) {
@@ -82,7 +84,7 @@ import {PortalComponent} from '../layout/portal.component';
                                               <input [(ngModel)]="rowsToSkip[row.name]"
                                                      [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
                                                      type="checkbox">
-                                              <span>{{ rowsToSkip[row.name] ? 'Skip' : 'Duplicates' }}</span>
+                                              <span>{{ (rowsToSkip[row.name] ? 'skip-label' : 'duplicates-label') | translate }}</span>
                                               @if (rowTemplate()) {
                                                   <ng-container
                                                           *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
@@ -99,25 +101,29 @@ import {PortalComponent} from '../layout/portal.component';
                       <input (change)="onSkipAllDuplicates()"
                              [(ngModel)]="skipAllDuplicates"
                              type="checkbox">
-                      <label>Skip all duplicates</label>
+                      <label>
+                          {{ 'skip-duplicates-label'|translate }}
+                      </label>
                   </lg-gap-row>
 
                   <lg-gap-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
                       <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
                              type="checkbox">
-                      <label>Replace all with new</label>
+                      <label>
+                          {{ 'replace-duplicates-label'|translate }}
+                      </label>
                   </lg-gap-row>
 
                   <lg-gap-row [center]="true">
                       <lg-button (click)="onClose()"
                                  [size]="'small'"
                                  [style]="'danger'">
-                          Close
+                          {{ 'close-label'|translate }}
                       </lg-button>
                       <lg-button (click)="onConfirm()"
                                  [size]="'small'"
                                  [style]="'success'">
-                          Confirm
+                          {{ 'confirm-label'|translate }}
                       </lg-button>
                   </lg-gap-row>
               </lg-gap-column>

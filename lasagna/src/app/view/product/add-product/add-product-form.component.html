@@ -1,6 +1,6 @@
 <form [formGroup]="form">
   <lg-gap-column>
-    <lg-control label="Name">
+    <lg-control label="{{ 'product.form.name.label'|translate }}">
       <lg-autocomplete #nameField
                        [key]="'name'"
                        [resource]="'products-names'"
@@ -8,7 +8,7 @@
     </lg-control>
 
     <lg-gap-column>
-      <lg-control label="Category">
+      <lg-control label="{{ 'product.form.category_id.label'|translate }}">
         <lg-multiselect #categorySelect
                         [resource]="'categories'"
                         formControlName="category_id"></lg-multiselect>
@@ -20,14 +20,14 @@
     </lg-gap-column>
 
     <lg-gap-row [bottom]="true" [mobileMode]="true">
-      <lg-control label="Amount" lgExpand>
+      <lg-control label="{{ 'product.form.amount.label'|translate }}" lgExpand>
         <lg-number-input (onInputChange)="priceInput.focus()"
-                         [placeholder]="'In '+ form.value.unit "
+                         [placeholder]="'product.form.amount.placeholder'|translate:{unit:form.value.unit}"
                          formControlName="amount"
                          lgParseMath>
           <div ngProjectAs="after">
             <lg-tooltip [position]="'left'">
-              Widgets
+              +
 
               <div ngProjectAs="content">
                 <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
@@ -42,15 +42,15 @@
       </lg-buttons-group>
     </lg-gap-row>
 
-    <lg-control label="Price">
+    <lg-control label="{{ 'product.form.price.label'|translate }}">
       <lg-number-input #priceInput
-                       [placeholder]="'For the entire product in your currency'"
+                       [placeholder]="'product.form.price.placeholder'|translate"
                        formControlName="price"
                        lgParseMath></lg-number-input>
     </lg-control>
 
     <lg-gap-column>
-      <lg-control label="Source">
+      <lg-control label="{{ 'product.form.source.label'|translate }}">
         <lg-autocomplete #sourceInput
                          (onSelected)="sourceChips.clearSelected()"
                          [noLoad]="true"
@@ -63,7 +63,7 @@
       </div>
     </lg-gap-column>
 
-    <lg-control label="Tags">
+    <lg-control label="{{ 'product.form.tags.label'|translate }}">
       <lg-tags-control [multi]="true"
                        [resource]="'tags'"
                        formControlName="tags"></lg-tags-control>

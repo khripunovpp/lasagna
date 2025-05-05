@@ -28,6 +28,7 @@ import {RecipeDTO, RecipeScheme} from '@service/db/shemes/Recipe.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -85,7 +86,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                   </a>
 
                                   <small class="text-muted text-cursive">
-                                      edited at: {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
+                                      {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"
@@ -123,14 +124,14 @@ import {PullDirective} from '@view/directives/pull.directive';
                                   </lg-button>
 
                                   <small class="text-muted text-cursive" lgPull>
-                                      edited at: {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                                      {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"
                                              [size]="'tiny'"
                                              [icon]="true"
                                              (click)="deleteRecipe(recipe)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                      <mat-icon aria-hidden="false"
                                                 fontIcon="close"></mat-icon>
                                   </lg-button>
                               </lg-gap-row>
@@ -140,7 +141,7 @@ import {PullDirective} from '@view/directives/pull.directive';
               } @empty {
                   <lg-gap-row [center]="true">
                       <lg-title [level]="5">
-                          No recipes found
+                          {{ 'no-recipes'|translate }}
                       </lg-title>
                   </lg-gap-row>
               }
@@ -167,8 +168,9 @@ import {PullDirective} from '@view/directives/pull.directive';
     SelectionToolsComponent,
     TimeAgoPipe,
     ExpandDirective,
-    PullDirective
-],
+    PullDirective,
+    TranslatePipe
+  ],
   styles: [
     `:host {
       display: block;

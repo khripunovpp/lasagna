@@ -16,6 +16,7 @@ import {DecimalPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-recipe',
@@ -30,30 +31,33 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
     ButtonComponent,
     ShrinkDirective,
     TimeAgoPipe,
-    DecimalPipe
-],
+    DecimalPipe,
+    TranslatePipe
+  ],
   template: `
       <lg-fade-in>
           <lg-container>
               <lg-gap-row [center]="true">
                   @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>
-                          Edit
+                          {{ 'edit-label'|translate }}
                           <span class="text-active">
                               {{ product()?.name }}
                           </span>
                       </lg-title>
                   } @else {
-                      <lg-title>Add Product</lg-title>
+                      <lg-title>
+                          {{ 'product.form.title'|translate }}
+                      </lg-title>
                   }
                   @if (draftRef()) {
-                      (saved as draft)
+                      {{ 'saved-draft-label'|translate }}
                   }
               </lg-gap-row>
 
               <div>
                   @if (product()?.updatedAt) {
-                      (last edited {{ product()?.updatedAt | timeAgo }})
+                      ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})
                   }
 
                   @if (product()?.pricePerUnit) {
@@ -67,24 +71,36 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 
               <lg-gap-row [mobileMode]="true" [relaxed]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                      <lg-button lgShrink (click)="onEditProduct()">
-                          Edit Product
+                      <lg-button [disabled]="!formComponent()?.form?.dirty"
+                                 lgShrink
+                                 (click)="onEditProduct()">
+                          @if (formComponent()?.form?.dirty) {
+                              {{ 'product.form.save-btn.edit.active'|translate }}
+                          } @else {
+                              {{ 'product.form.save-btn.edit.disabled'|translate }}
+                          }
                       </lg-button>
                   } @else {
-                      <lg-button lgShrink (click)="onAddProduct()">
-                          Add Product
+                      <lg-button lgShrink
+                                 [disabled]="!formComponent()?.form?.dirty"
+                                 (click)="onAddProduct()">
+                          @if (formComponent()?.form?.dirty) {
+                              {{ 'product.form.save-btn.add.active'|translate }}
+                          } @else {
+                              {{ 'product.form.save-btn.add.disabled'|translate }}
+                          }
                       </lg-button>
                   }
 
                   @if (isDraftRoute()) {
                       <lg-button lgShrink [style]="'danger'"
                                  (click)="onRemoveDraft()">
-                          Delete this draft
+                          {{ 'product.form.delete-draft-btn'|translate }}
                       </lg-button>
                   } @else if (product()?.uuid) {
                       <lg-button lgShrink [style]="'danger'"
                                  (click)="onDeleteProduct()">
-                          Delete Product
+                          {{ 'product.form.delete-btn'|translate }}
                       </lg-button>
                   }
               </lg-gap-row>

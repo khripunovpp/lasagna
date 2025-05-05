@@ -3,6 +3,7 @@ import {ButtonComponent} from '../layout/button.component';
 import {GapRowComponent} from '../layout/gap-row.component';
 import {GapColumnComponent} from '../layout/gap-column.component';
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-selection-tools',
@@ -15,28 +16,28 @@ import {SelectionZoneService} from '../../../service/services/selection-zone.ser
                              [flat]="true"
                              [size]="'small'"
                              [style]="'success'">
-                      Hide selection
+                      {{ 'hide-selection-label'|translate }}
                   </lg-button>
 
                   <lg-button (click)="selectionZoneService.onAllSelection()"
                              [flat]="true"
                              [size]="'small'"
                              [style]="'danger'">
-                      Select all
+                      {{ 'select-all-label'|translate }}
                   </lg-button>
 
                   <lg-button (click)="selectionZoneService.onDeselectAll()"
                              [flat]="true"
                              [size]="'small'"
                              [style]="'danger'">
-                      Deselect all
+                      {{ 'deselect-all-label'|translate }}
                   </lg-button>
               } @else {
                   <lg-button (click)="selectionZoneService.onSelection()"
                              [flat]="true"
                              [size]="'small'"
                              [style]="'success'">
-                      Select many
+                      {{ 'select-many-label'|translate }}
                   </lg-button>
               }
           </lg-gap-row>
@@ -47,7 +48,8 @@ import {SelectionZoneService} from '../../../service/services/selection-zone.ser
   imports: [
     ButtonComponent,
     GapRowComponent,
-    GapColumnComponent
+    GapColumnComponent,
+    TranslatePipe
   ],
 })
 export class SelectionToolsComponent {
