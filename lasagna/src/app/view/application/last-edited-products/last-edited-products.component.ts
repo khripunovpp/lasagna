@@ -8,12 +8,13 @@ import {ProductsRepository} from '../../../service/repositories/products.reposit
 import {Product} from '../../../service/models/Product';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {PullDirective} from '@view/directives/pull.directive';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-last-edited-products',
   template: `
       <lg-gap-column>
-          <lg-title [level]="4">Last Edited Products</lg-title>
+          <lg-title [level]="4">{{ 'main.last-products'|translate }}</lg-title>
 
           <div class="last-edited-recipes">
               <lg-gap-column [size]="'medium'">
@@ -29,7 +30,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                       </lg-gap-row>
                   } @empty {
                       <div class="last-edited-recipe-name">
-                          No products found
+                          {{ 'no-products'|translate }}
                       </div>
                   }
               </lg-gap-column>
@@ -52,8 +53,9 @@ import {PullDirective} from '@view/directives/pull.directive';
     TitleComponent,
     TimeAgoPipe,
     GapRowComponent,
-    PullDirective
-]
+    PullDirective,
+    TranslatePipe
+  ]
 })
 export class LastEditedProductsComponent {
   constructor(

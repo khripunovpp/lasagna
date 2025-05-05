@@ -28,6 +28,7 @@ import {Product} from '@service/models/Product';
 import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {PullDirective} from '@view/directives/pull.directive';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-product-list',
@@ -49,7 +50,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
-              Export
+              {{ 'export-label'|translate }}
           </lg-button>
 
           <lg-import (onDone)="loadProducts()"
@@ -60,14 +61,13 @@ import {PullDirective} from '@view/directives/pull.directive';
                       <span>{{ row.name }}</span>
                       <span>{{ row.amount }}gr for {{ row.price }}</span>
                       @if (row.source) {
-                          <span>from {{ row.source }}</span>
+                          <span>{{ 'from-location'|translate }} {{ row.source }}</span>
                       }
                   } @else {
                       <span>{{ row?.name }}</span>
-                      <span>{{ row?.amount }} gr
-                                              for {{ row?.price }}</span>
+                      <span>{{ row?.amount }} gr for {{ row?.price }}</span>
                       @if (row?.source) {
-                          <span>from {{ row?.source }}</span>
+                          <span>{{ 'from-location'|translate }} {{ row?.source }}</span>
                       }
                   }
               </ng-template>
@@ -77,7 +77,7 @@ import {PullDirective} from '@view/directives/pull.directive';
       <lg-fade-in>
           <lg-container>
               <lg-title>
-                  Products
+                  {{ 'products.list-title'|translate }}
               </lg-title>
 
               @if (draft()?.length) {
@@ -87,15 +87,15 @@ import {PullDirective} from '@view/directives/pull.directive';
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
                                       @if (item?.meta?.['uuid']) {
-                                          Unsaved existing product:
+                                          {{ 'draft.list-prefix.existing'|translate }}
                                       } @else {
-                                          Draft product:
+                                          {{ 'draft.list-prefix.new'|translate }}
                                       }
                                       {{ item?.data?.name || 'Unknown' }}
                                   </a>
 
                                   <small class="text-muted text-cursive" lgPull>
-                                      edited at: {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
+                                      {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                                   </small>
 
                                   <lg-button [style]="'danger'"
@@ -113,7 +113,7 @@ import {PullDirective} from '@view/directives/pull.directive';
 
               @for (category of products();track $index;let i = $index) {
                   <lg-title [level]="3">
-                      {{ category?.category || 'Uncategorized' }}
+                      {{ category?.category || ('without-category-label'|translate) }}
                   </lg-title>
 
                   <lg-card-list [mode]="selectionZoneService.selectionMode()"
@@ -137,7 +137,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                           </lg-gap-row>
 
                                           <small class="text-muted text-cursive">
-                                              edited at: {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
+                                              {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
                                           </small>
                                       </lg-gap-row>
                                   </div>
@@ -146,7 +146,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                                              [size]="'tiny'"
                                              [icon]="true"
                                              (click)="deleteProduct(product)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                      <mat-icon aria-hidden="false"
                                                 fontIcon="close"></mat-icon>
                                   </lg-button>
                               </lg-gap-row>
@@ -156,7 +156,7 @@ import {PullDirective} from '@view/directives/pull.directive';
               } @empty {
                   <lg-gap-row [center]="true">
                       <lg-title [level]="5">
-                          No products found
+                          {{ 'no-products'|translate }}
                       </lg-title>
                   </lg-gap-row>
               }
@@ -181,8 +181,9 @@ import {PullDirective} from '@view/directives/pull.directive';
     SelectionToolsComponent,
     TimeAgoPipe,
     ExpandDirective,
-    PullDirective
-],
+    PullDirective,
+    TranslatePipe
+  ],
   providers: [
     SelectionZoneService,
   ],

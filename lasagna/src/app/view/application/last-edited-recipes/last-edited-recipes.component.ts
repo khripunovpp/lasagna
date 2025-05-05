@@ -8,12 +8,13 @@ import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '../../../service/models/Recipe';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {PullDirective} from '@view/directives/pull.directive';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-last-edited-recipes',
   template: `
       <lg-gap-column>
-          <lg-title [level]="4">Last Edited Recipes</lg-title>
+          <lg-title [level]="4">{{ 'main.last-recipes'|translate }}</lg-title>
 
           <lg-gap-column [size]="'medium'">
               @for (item of recipes();track item.recipe.uuid) {
@@ -28,7 +29,7 @@ import {PullDirective} from '@view/directives/pull.directive';
                   </lg-gap-row>
               } @empty {
                   <div class="last-edited-recipe-name">
-                      No recipes found
+                      {{ 'no-recipes'|translate }}
                   </div>
               }
           </lg-gap-column>
@@ -50,8 +51,9 @@ import {PullDirective} from '@view/directives/pull.directive';
     TitleComponent,
     TimeAgoPipe,
     GapRowComponent,
-    PullDirective
-]
+    PullDirective,
+    TranslatePipe
+  ]
 })
 export class LastEditedRecipesComponent {
   constructor(

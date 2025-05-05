@@ -21,6 +21,7 @@ import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
 
 import {debounceTime} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -40,8 +41,9 @@ import {debounceTime} from 'rxjs';
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    TagsControlComponent
-],
+    TagsControlComponent,
+    TranslatePipe
+  ],
   styles: [
     `
       lg-eggs-widget {

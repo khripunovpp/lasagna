@@ -12,6 +12,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {CheckboxComponent} from '@view/ui/form/chckbox.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {UploadComponent} from '@view/ui/form/upload.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -21,11 +22,11 @@ import {UploadComponent} from '@view/ui/form/upload.component';
           <lg-gap-row [center]="true" [mobileMode]="true">
               <lg-button (click)="onBackup()"
                          [style]="'success'">
-                  Make backup
+                  {{ 'backup.make-btn'|translate }}
               </lg-button>
 
               @if (transferDataService.currenBackupDate) {
-                  Last backup: {{ transferDataService.currenBackupDate | timeAgo }}
+                  {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
               }
           </lg-gap-row>
 
@@ -34,12 +35,11 @@ import {UploadComponent} from '@view/ui/form/upload.component';
               <lg-card style="--card-bg:#e78888">
                   <lg-gap-column [position]="'center'">
                       <div class="text-center text-inverse">
-                          Be aware! <br>
-                          This will override all your data!
+                          {{ 'backup.restore-informer'|translate }}
                       </div>
 
                       <lg-button [style]="'danger'">
-                          Restore backup
+                          {{ 'backup.restore-btn'|translate }}
                       </lg-button>
                   </lg-gap-column>
               </lg-card>
@@ -57,7 +57,8 @@ import {UploadComponent} from '@view/ui/form/upload.component';
     JsonPipe,
     TimeAgoPipe,
     ButtonComponent,
-    UploadComponent
+    UploadComponent,
+    TranslatePipe
   ]
 })
 export class BackupSettingsComponent
