@@ -19,6 +19,7 @@
 	"from-location": "de",
 	"hide-selection-label": "Ocultar seleção",
 	"import-label": "Importar",
+	"just-now": "agora",
 	"language.settings-title": "Localização",
 	"main.last-products": "Últimos produtos editados",
 	"main.last-recipes": "Últimas receitas editadas",
@@ -49,5 +50,6 @@
 	"skip-duplicates-label": "Ignorar todas as duplicatas",
 	"taxes.link-label": "Definir impostos",
 	"taxes.settings-title": "Impostos permitidos",
+	"unknown": "desconhecido",
 	"update-label": "Atualizar"
 }
