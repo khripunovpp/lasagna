@@ -51,7 +51,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
-              Export
+              {{ 'export-label'|translate }}
           </lg-button>
 
           <lg-import (onDone)="loadRecipes()"
@@ -67,7 +67,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           <lg-container>
               <lg-gap-row [center]="true">
                   <lg-title>
-                      Recipes
+                     {{ 'recipes.list-title'|translate }}
                   </lg-title>
               </lg-gap-row>
 
@@ -78,9 +78,9 @@ import {TranslatePipe} from '@ngx-translate/core';
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
                                       @if (item?.meta?.['uuid']) {
-                                          Unsaved existing recipe:
+                                          {{ 'draft.list-prefix.existing'|translate }}
                                       } @else {
-                                          Draft recipe:
+                                         {{ 'draft.list-prefix.new'|translate }}
                                       }
                                       {{ item?.data?.name ?? '' }}
                                   </a>
@@ -104,7 +104,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
               @for (category of recipes();track category?.category) {
                   <lg-title [level]="3">
-                      {{ category?.category || 'Uncategorized' }}
+                      {{ category?.category || ('without-category-label'|translate) }}
                   </lg-title>
 
                   <lg-card-list [mode]="selectionZoneService.selectionMode()"
@@ -120,7 +120,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                                              [size]="'small'"
                                              [link]="'/recipes/calculate/' + recipe.uuid"
                                              [flat]="true">
-                                      Calculate
+                                      {{ 'recipes.calculate-btn'|translate }}
                                   </lg-button>
 
                                   <small class="text-muted text-cursive" lgPull>

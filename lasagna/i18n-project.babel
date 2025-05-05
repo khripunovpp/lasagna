@@ -572,6 +572,25 @@
 							</translation>
 						</translations>
 					</concept_node>
+					<concept_node>
+						<name>no-results</name>
+						<description/>
+						<comment/>
+						<translations>
+							<translation>
+								<language>en-US</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>pt-PT</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>ru-RU</language>
+								<approved>false</approved>
+							</translation>
+						</translations>
+					</concept_node>
 					<folder_node>
 						<name>product</name>
 						<children>
@@ -934,6 +953,87 @@
 									</translation>
 								</translations>
 							</concept_node>
+							<concept_node>
+								<name>menu-label</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+						</children>
+					</folder_node>
+					<folder_node>
+						<name>recipes</name>
+						<children>
+							<concept_node>
+								<name>calculate-btn</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>list-title</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>menu-label</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
 						</children>
 					</folder_node>
 					<concept_node>
@@ -974,6 +1074,126 @@
 							</translation>
 						</translations>
 					</concept_node>
+					<folder_node>
+						<name>search</name>
+						<children>
+							<concept_node>
+								<name>placeholder</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-PT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<folder_node>
+								<name>product</name>
+								<children>
+									<concept_node>
+										<name>title</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>pt-PT</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>ru-RU</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
+								<name>product-categories</name>
+								<children>
+									<concept_node>
+										<name>title</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>pt-PT</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>ru-RU</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
+								<name>recipe-categories</name>
+								<children>
+									<concept_node>
+										<name>title</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>pt-PT</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>ru-RU</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
+								<name>recipes</name>
+								<children>
+									<concept_node>
+										<name>title</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>pt-PT</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>ru-RU</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+						</children>
+					</folder_node>
 					<concept_node>
 						<name>select-all-label</name>
 						<description/>
@@ -1119,6 +1339,25 @@
 					</concept_node>
 					<concept_node>
 						<name>update-label</name>
+						<description/>
+						<comment/>
+						<translations>
+							<translation>
+								<language>en-US</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>pt-PT</language>
+								<approved>false</approved>
+							</translation>
+							<translation>
+								<language>ru-RU</language>
+								<approved>false</approved>
+							</translation>
+						</translations>
+					</concept_node>
+					<concept_node>
+						<name>without-category-label</name>
 						<description/>
 						<comment/>
 						<translations>

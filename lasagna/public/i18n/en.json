@@ -26,6 +26,7 @@
 	"main.title": "Hey",
 	"no-products": "No products found",
 	"no-recipes": "No recipes found",
+	"no-results": "No results found",
 	"product.form.amount.label": "Amount",
 	"product.form.amount.placeholder": "In {{ unit }}",
 	"product.form.category_id.label": "Category",
@@ -42,8 +43,17 @@
 	"product.form.tags.label": "Tags",
 	"product.form.title": "Add new product",
 	"products.list-title": "Products",
+	"products.menu-label": "Products",
+	"recipes.calculate-btn": "Calculate",
+	"recipes.list-title": "Recipes",
+	"recipes.menu-label": "Recipes",
 	"replace-duplicates-label": "Replace all with new",
 	"saved-draft-label": "saved as draft",
+	"search.placeholder": "Search anything...",
+	"search.product.title": "Products",
+	"search.product-categories.title": "Products categories",
+	"search.recipe-categories.title": "Recipes categories",
+	"search.recipes.title": "Recipes",
 	"select-all-label": "Select all",
 	"select-many-label": "Select many",
 	"settings.title": "Settings",
@@ -51,5 +61,6 @@
 	"taxes.link-label": "Set taxes",
 	"taxes.settings-title": "Allowed taxes",
 	"unknown": "unknown",
-	"update-label": "Update"
+	"update-label": "Update",
+	"without-category-label": "Uncategorized"
 }
