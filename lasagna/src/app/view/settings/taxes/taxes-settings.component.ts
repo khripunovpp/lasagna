@@ -1,15 +1,15 @@
 import {Component, computed, effect, signal} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
-import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {TitleComponent} from '@view/ui/layout/title/title.component';
-import {CardComponent} from '@view/ui/card/card.component';
+
+
+
+
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
-import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
+
 import {CheckboxComponent} from '@view/ui/form/chckbox.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
-import {UploadComponent} from '@view/ui/form/upload.component';
-import {TaxesAndFeesListComponent} from '@view/recipe/calculate/taxes-and-fees-list/taxes-and-fees-list.component';
+
+
 import {ContainerComponent} from '@view/ui/layout/container/container.component';
 import {CardListComponent} from '@view/ui/card/card-list.component';
 import {CardListItemDirective} from '@view/ui/card/card-list-item.directive';
@@ -114,17 +114,10 @@ import {taxDTOFromFormValue} from '@helpers/taxes.helper';
   `,
   styles: [``],
   imports: [
-    TitleComponent,
-    CardComponent,
     GapRowComponent,
-    GapColumnComponent,
     CheckboxComponent,
     FormsModule,
-    JsonPipe,
-    TimeAgoPipe,
     ButtonComponent,
-    UploadComponent,
-    TaxesAndFeesListComponent,
     ContainerComponent,
     CardListComponent,
     CardListItemDirective,
@@ -138,7 +131,7 @@ import {taxDTOFromFormValue} from '@helpers/taxes.helper';
     ShrinkDirective,
     TextareaComponent,
     WidthDirective
-  ]
+]
 })
 export class TaxesSettingsComponent {
   constructor(
