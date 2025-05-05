@@ -1,9 +1,11 @@
-import {Component, signal, viewChildren} from '@angular/core';
+import {Component, Signal, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from './button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location} from '@angular/common';
-import {GlobalSearchService} from '../../../service/services/global-search.service';
+import {GlobalSearchService, LocalisationService} from '@service/services';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-header',
@@ -38,7 +40,7 @@ import {GlobalSearchService} from '../../../service/services/global-search.servi
                          [routerLinkActive]="['route-active']"
                          [routerLinkActiveOptions]="{ exact: false }"
                          class="lg-header__link">
-                          {{ item.label }}
+                          {{ item.label | translate }}
                       </a>
                   }
               </div>
@@ -171,26 +173,29 @@ import {GlobalSearchService} from '../../../service/services/global-search.servi
   imports: [
     RouterLink,
     RouterLinkActive,
-    MatIcon
+    MatIcon,
+    TranslatePipe
   ]
 })
 export class HeaderComponent {
   constructor(
     public location: Location,
     public globalSearchService: GlobalSearchService,
+    private _localizationService: LocalisationService,
   ) {
+    this.items = signal([
+      {
+        label: _('recipes.menu-label'),
+        link: '/recipes',
+      },
+      {
+        label: _('products.menu-label'),
+        link: '/products',
+      }
+    ]);
   }
 
-  items = signal([
-    {
-      label: 'Recipes',
-      link: '/recipes',
-    },
-    {
-      label: 'Products',
-      link: '/products',
-    }
-  ]);
+  items: Signal<{ label: string, link: string }[]>
   activeIndex = signal(0);
   links = viewChildren(ButtonComponent)
 

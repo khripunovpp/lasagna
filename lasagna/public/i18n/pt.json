@@ -26,6 +26,7 @@
 	"main.title": "Oi",
 	"no-products": "Nenhum produto encontrado",
 	"no-recipes": "Nenhuma receita encontrada",
+	"no-results": "Nenhum resultado encontrado",
 	"product.form.amount.label": "Montante",
 	"product.form.amount.placeholder": "Em {{ unit }}",
 	"product.form.category_id.label": "Categoria",
@@ -42,8 +43,17 @@
 	"product.form.tags.label": "Etiquetas",
 	"product.form.title": "Adicionar novo produto",
 	"products.list-title": "Produtos",
+	"products.menu-label": "Produtos",
+	"recipes.calculate-btn": "Calcular",
+	"recipes.list-title": "Receitas",
+	"recipes.menu-label": "Receitas",
 	"replace-duplicates-label": "Substitua tudo por novo",
 	"saved-draft-label": "guardado como rascunho",
+	"search.placeholder": "Procurar tudo...",
+	"search.product.title": "Produtos",
+	"search.product-categories.title": "Categorias de produtos",
+	"search.recipe-categories.title": "Categorias de receitas",
+	"search.recipes.title": "Receitas",
 	"select-all-label": "Selecionar tudo",
 	"select-many-label": "Selecione muitos",
 	"settings.title": "Configurações",
@@ -51,5 +61,6 @@
 	"taxes.link-label": "Definir impostos",
 	"taxes.settings-title": "Impostos permitidos",
 	"unknown": "desconhecido",
-	"update-label": "Atualizar"
+	"update-label": "Atualizar",
+	"without-category-label": "Sem categoria"
 }

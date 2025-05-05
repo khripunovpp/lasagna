@@ -9,6 +9,7 @@ import {FadeInComponent} from './fade-in.component';
 import {FocusTrapDirective} from './focus-trap.directive';
 import {groupBy} from '@helpers/grouping.helper';
 import {TitleComponent} from './layout/title/title.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-global-search',
@@ -21,7 +22,7 @@ import {TitleComponent} from './layout/title/title.component';
               <div class="lg-global-search__inner">
                   <lg-fade-in>
                       <div class="lg-global-search__search" style="--control-bg:rgba(255,255,255,0.7)">
-                          <lg-input [placeholder]="'Search...'"
+                          <lg-input [placeholder]="'search.placeholder'|translate"
                                     [autoFocus]="true"
                                     [formControl]="search"></lg-input>
                       </div>
@@ -29,7 +30,7 @@ import {TitleComponent} from './layout/title/title.component';
                       @if (results$|async;as results) {
                           @if (results.length === 0 && search.dirty) {
                               <div class="lg-global-search__no-results">
-                                  No results found
+                                  {{ 'no-results'|translate }}
                               </div>
                           } @else {
                               <div class="lg-global-search__results">
@@ -37,7 +38,7 @@ import {TitleComponent} from './layout/title/title.component';
                                       @if (item.context === 'product') {
                                           <lg-fade-in>
                                               <div class="lg-global-search__results-caption">
-                                                  <lg-title [level]="5">Products</lg-title>
+                                                  <lg-title [level]="5">{{ 'search.product.title'|translate }}</lg-title>
                                               </div>
 
                                               <div class="lg-global-search__results__list">
@@ -55,7 +56,7 @@ import {TitleComponent} from './layout/title/title.component';
                                       @if (item.context === 'recipe') {
                                           <lg-fade-in>
                                               <div class="lg-global-search__results-caption">
-                                                  <lg-title [level]="5">Recipes</lg-title>
+                                                  <lg-title [level]="5">{{ 'search.recipes.title'|translate }}</lg-title>
                                               </div>
 
                                               <div class="lg-global-search__results__list">
@@ -73,7 +74,7 @@ import {TitleComponent} from './layout/title/title.component';
                                       @if (item.context === 'category_product') {
                                           <lg-fade-in>
                                               <div class="lg-global-search__results-caption">
-                                                  <lg-title [level]="5">Products Categories</lg-title>
+                                                  <lg-title [level]="5">{{ 'search.product-categories.title'|translate }}</lg-title>
                                               </div>
 
                                               @for (res of item.result;track res) {
@@ -89,7 +90,7 @@ import {TitleComponent} from './layout/title/title.component';
                                       @if (item.context === 'category_recipe') {
                                           <lg-fade-in>
                                               <div class="lg-global-search__results-caption">
-                                                  <lg-title [level]="5">Recipes Categories</lg-title>
+                                                  <lg-title [level]="5">{{ 'search.recipe-categories.title'|translate }}</lg-title>
                                               </div>
 
                                               @for (res of item.result;track res) {
@@ -184,7 +185,8 @@ import {TitleComponent} from './layout/title/title.component';
     FadeInComponent,
     ReactiveFormsModule,
     FocusTrapDirective,
-    TitleComponent
+    TitleComponent,
+    TranslatePipe
   ]
 })
 export class GlobalSearchComponent {

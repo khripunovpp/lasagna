@@ -26,6 +26,7 @@
 	"main.title": "Привет",
 	"no-products": "Продуктов не найдено",
 	"no-recipes": "Рецепты не найдены",
+	"no-results": "Результатов не найдено",
 	"product.form.amount.label": "Количество",
 	"product.form.amount.placeholder": "В {{ unit }}",
 	"product.form.category_id.label": "Категория",
@@ -42,8 +43,17 @@
 	"product.form.tags.label": "Теги",
 	"product.form.title": "Добавить новый продукт",
 	"products.list-title": "Продукты",
+	"products.menu-label": "Продукты",
+	"recipes.calculate-btn": "Рассчитать",
+	"recipes.list-title": "Рецепты",
+	"recipes.menu-label": "Рецепты",
 	"replace-duplicates-label": "Заменить все на новое",
 	"saved-draft-label": "сохранено как черновик",
+	"search.placeholder": "Найди все...",
+	"search.product.title": "Продукты",
+	"search.product-categories.title": "Категории продуктов",
+	"search.recipe-categories.title": "Категории рецептов",
+	"search.recipes.title": "Рецепты",
 	"select-all-label": "Выбрать все",
 	"select-many-label": "Выбрать много",
 	"settings.title": "Настройки",
@@ -51,5 +61,6 @@
 	"taxes.link-label": "Выбрать доступные налоги",
 	"taxes.settings-title": "Налоги",
 	"unknown": "неизвестно",
-	"update-label": "Обновить"
+	"update-label": "Обновить",
+	"without-category-label": "Без категории"
 }
