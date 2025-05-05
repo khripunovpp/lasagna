@@ -13,6 +13,8 @@ import {ExpandDirective} from '@view/directives/expand.directive';
 import {LanguageSettingsComponent} from '@view/settings/language/language-settings.component';
 import {BackupSettingsComponent} from '@view/settings/backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {TabDirective} from '@view/ui/tabs/tab.directive';
+import {TabsComponent} from '@view/ui/tabs/tabs.component';
 
 @Component({
   selector: 'lg-settings',
@@ -30,8 +32,10 @@ import {TranslatePipe} from '@ngx-translate/core';
     ExpandDirective,
     LanguageSettingsComponent,
     BackupSettingsComponent,
-    TranslatePipe
-]
+    TranslatePipe,
+    TabDirective,
+    TabsComponent
+  ]
 })
 export class SettingsComponent {
   constructor() {
