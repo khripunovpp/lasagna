@@ -1,6 +1,6 @@
 import {Component, forwardRef, HostListener, input, output, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {JsonPipe, NgClass} from '@angular/common';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-radio',
@@ -121,9 +121,8 @@ import {JsonPipe, NgClass} from '@angular/common';
   ],
   imports: [
     FormsModule,
-    NgClass,
-    JsonPipe
-  ]
+    NgClass
+]
 })
 export class RadioComponent
   implements ControlValueAccessor {
