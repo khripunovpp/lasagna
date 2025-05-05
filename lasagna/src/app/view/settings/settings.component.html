@@ -2,35 +2,34 @@
   <lg-container>
     <lg-title>{{ 'settings.title'|translate }}</lg-title>
 
-    <lg-title [level]="3">{{ 'categories.settings-title'|translate }}</lg-title>
+    <lg-tabs>
+      <ng-template label="{{ 'language.settings-title'|translate }}" lgTab>
+        <lg-language-settings></lg-language-settings>
+      </ng-template>
 
-    <lg-gap-row [mobileMode]="true" [top]="true">
-      <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
-        <lg-card [center]="true">
-          {{ 'categories.products.link-label'|translate }}
-        </lg-card>
-      </a>
+      <ng-template label="{{ 'categories.settings-title'|translate }}" lgTab>
+        <lg-gap-row [mobileMode]="true" [top]="true">
+          <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
+            {{ 'categories.products.link-label'|translate }}
+          </a>
 
-      <a lgExpand routerLink="/settings/categories/recipes" routerLinkActive="active">
-        <lg-card [center]="true">
-          {{ 'categories.recipes.link-label'|translate }}
-        </lg-card>
-      </a>
-    </lg-gap-row>
+          <a lgExpand routerLink="/settings/categories/recipes" routerLinkActive="active">
+            {{ 'categories.recipes.link-label'|translate }}
+          </a>
+        </lg-gap-row>
+      </ng-template>
 
-    <lg-title [level]="3">{{ 'language.settings-title'|translate }}</lg-title>
+      <ng-template label="{{ 'taxes.settings-title'|translate }}" lgTab>
+        <a lgExpand routerLink="/settings/taxes" routerLinkActive="active">
+          {{ 'taxes.link-label'|translate }}
+        </a>
+      </ng-template>
 
-    <lg-language-settings></lg-language-settings>
+      <ng-template label="{{ 'backup.settings-title'|translate }}" lgTab>
+        <lg-backup-settings></lg-backup-settings>
+      </ng-template>
+    </lg-tabs>
 
-    <lg-title [level]="3">{{ 'taxes.settings-title'|translate }}</lg-title>
-
-    <a lgExpand routerLink="/settings/taxes" routerLinkActive="active">
-      <lg-card [center]="true">{{ 'taxes.link-label'|translate }}</lg-card>
-    </a>
-
-    <lg-title [level]="3">{{ 'backup.settings-title'|translate }}</lg-title>
-
-    <lg-backup-settings></lg-backup-settings>
   </lg-container>
 </lg-fade-in>
 

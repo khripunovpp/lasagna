@@ -15,27 +15,25 @@ import {RadioComponent} from '@view/ui/form/radio.component';
   standalone: true,
   template: `
       <section class="language-settings">
-          <lg-card>
-              <lg-gap-column [size]="'medium'">
+          <lg-gap-column [size]="'medium'">
 
-                  <lg-gap-column [size]="'small'">
-                      @for (lang of languages();track lang.code;let i= $index) {
-                          <lg-gap-row [center]="true" [mobileMode]="true" [size]="'small'">
-                              <lg-radio [markOnHover]="true"
-                                           [radio]="true"
-                                           [name]="'lang'"
-                                           [value]="lang.code"
-                                           [ngModel]="selectedLangModel()[i]"
-                                           (change)="changeLang(lang.code)"
-                                           [size]="'small'"
-                                           [noMark]="true">
-                                  {{ lang.name }}
-                              </lg-radio>
-                          </lg-gap-row>
-                      }
-                  </lg-gap-column>
+              <lg-gap-column [size]="'small'">
+                  @for (lang of languages();track lang.code;let i= $index) {
+                      <lg-gap-row [center]="true" [mobileMode]="true" [size]="'small'">
+                          <lg-radio [markOnHover]="true"
+                                    [radio]="true"
+                                    [name]="'lang'"
+                                    [value]="lang.code"
+                                    [ngModel]="selectedLangModel()[i]"
+                                    (change)="changeLang(lang.code)"
+                                    [size]="'small'"
+                                    [noMark]="true">
+                              {{ lang.name }}
+                          </lg-radio>
+                      </lg-gap-row>
+                  }
               </lg-gap-column>
-          </lg-card>
+          </lg-gap-column>
       </section>
   `,
   styles: [``],
