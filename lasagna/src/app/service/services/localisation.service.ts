@@ -17,10 +17,18 @@ export class LocalisationService {
     this.changeLang(lang);
   }
 
+  getTranslate(key: string): string {
+    return this.translate.instant(key);
+  }
+
   private readonly _lang = signal(this._defaultLang);
 
   get lang() {
     return this._lang;
+  }
+
+  get currentLang(): string {
+    return this.translate.currentLang;
   }
 
   get languages(): string[] {

@@ -19,6 +19,7 @@
 	"from-location": "из",
 	"hide-selection-label": "Скрыть выбор",
 	"import-label": "Импортировать",
+	"just-now": "только что",
 	"language.settings-title": "Язык",
 	"main.last-products": "Последние измененые продукты",
 	"main.last-recipes": "Последние измененные рецепты",
@@ -49,5 +50,6 @@
 	"skip-duplicates-label": "Пропустить все дубликаты",
 	"taxes.link-label": "Выбрать доступные налоги",
 	"taxes.settings-title": "Налоги",
+	"unknown": "неизвестно",
 	"update-label": "Обновить"
 }

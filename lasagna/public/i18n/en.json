@@ -19,6 +19,7 @@
 	"from-location": "from",
 	"hide-selection-label": "Hide selection",
 	"import-label": "Import",
+	"just-now": "just now",
 	"language.settings-title": "Localization",
 	"main.last-products": "Last edited products",
 	"main.last-recipes": "Last edited recipes",
@@ -49,5 +50,6 @@
 	"skip-duplicates-label": "Skip all duplicates",
 	"taxes.link-label": "Set taxes",
 	"taxes.settings-title": "Allowed taxes",
+	"unknown": "unknown",
 	"update-label": "Update"
 }
