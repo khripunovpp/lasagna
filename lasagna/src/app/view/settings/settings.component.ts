@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CardComponent} from '../ui/card/card.component';
+
 import {ContainerComponent} from '../ui/layout/container/container.component';
 import {GapRowComponent} from '../ui/layout/gap-row.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
@@ -22,7 +22,6 @@ import {TabsComponent} from '@view/ui/tabs/tabs.component';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   imports: [
-    CardComponent,
     ContainerComponent,
     GapRowComponent,
     TitleComponent,
@@ -35,7 +34,7 @@ import {TabsComponent} from '@view/ui/tabs/tabs.component';
     TranslatePipe,
     TabDirective,
     TabsComponent
-  ]
+]
 })
 export class SettingsComponent {
   constructor() {
