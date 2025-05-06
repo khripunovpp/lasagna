@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1746570579282,
+  "timestamp": 1746570928989,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -166,7 +166,7 @@
     "https://khripunovpp.github.io/lasagna/main-PRS464L4.js": "aad9f3ba98f6010dacad972a4c70b210ae440484",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8fb62517a3e27c1ff3530bdc36ad55a93166cb12",
     "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
-    "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js": "3c1187bccb0c8491d3849426a1a588556ef06cee",
+    "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js": "53427190db4d66dab4821296791976c95eebd8b9",
     "https://khripunovpp.github.io/lasagna/styles-XXSI5QBI.css": "f547bfaf845d1ee3cfdbd0f8a11babad561a5ebd"
   },
   "navigationUrls": [

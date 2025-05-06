@@ -147,7 +147,6 @@ if ('serviceWorker' in navigator) {
       return;
     }
     currentWorker = controller;
-    console.log('Current worker:', currentWorker);
 
     currentWorker.postMessage({
       action: 'CHECK_FOR_UPDATES',
@@ -164,12 +163,15 @@ if ('serviceWorker' in navigator) {
     const versionDetected = event?.data?.type === "VERSION_DETECTED";
     if (!versionDetected) return;
     banner.style.display = 'flex';
-    console.log({
-      event,
-    })
 
     const updateAppButton = updateDialog.querySelector('#update-app');
     updateAppButton.addEventListener('click', () => {
+      if (currentWorker) {
+        currentWorker.postMessage({
+          action: 'ACTIVATE_UPDATE',
+          nonce: Math.random(),
+        });
+      }
       window.location.reload();
     });
   };
