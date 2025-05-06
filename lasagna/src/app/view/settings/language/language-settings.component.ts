@@ -1,7 +1,7 @@
 import {Component, computed, model, Signal} from '@angular/core';
 import {LocalisationService} from '@service/services/localisation.service';
 
-import {CardComponent} from '@view/ui/card/card.component';
+
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
@@ -38,7 +38,6 @@ import {RadioComponent} from '@view/ui/form/radio.component';
   `,
   styles: [``],
   imports: [
-    CardComponent,
     GapRowComponent,
     GapColumnComponent,
     FormsModule,
