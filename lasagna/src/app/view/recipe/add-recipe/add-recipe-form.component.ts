@@ -28,6 +28,7 @@ import {Ingredient} from '@service/models/Ingredient';
 import {recipeToFormValue} from '@helpers/recipe.helpers';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -51,6 +52,7 @@ import {MatIcon} from '@angular/material/icon';
     AutocompleteComponent,
     FormsModule,
     MatIcon,
+    TranslatePipe,
   ],
   providers: [
     {
