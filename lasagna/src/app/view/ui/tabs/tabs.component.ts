@@ -1,8 +1,18 @@
-import {AfterContentInit, Component, ContentChildren, QueryList, signal, ViewEncapsulation,} from '@angular/core';
-import {NgTemplateOutlet} from '@angular/common';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  effect, inject,
+  QueryList,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
+import {JsonPipe, NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {CardComponent} from '@view/ui/card/card.component';
+import {injectQueryParams} from '@helpers/route.helpers';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'lg-tabs',
@@ -10,7 +20,8 @@ import {CardComponent} from '@view/ui/card/card.component';
   imports: [
     NgTemplateOutlet,
     GapColumnComponent,
-    CardComponent
+    CardComponent,
+    JsonPipe
   ],
   template: `
       <lg-card>
@@ -102,9 +113,20 @@ import {CardComponent} from '@view/ui/card/card.component';
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabDirective) tabTemplates!: QueryList<TabDirective>;
 
+  readonly router = inject(Router);
   readonly tabs = signal<TabDirective[]>([]);
   readonly activated = signal<boolean[]>([]);
   readonly selectedIndex = signal(0);
+  readonly tabQuery = injectQueryParams('tab');
+  readonly tabQueryEffect = effect(() => {
+    const tab = this.tabQuery();
+    if (tab) {
+      const index = this.tabs().findIndex(t => t.alias?.toLowerCase()?.includes(tab.toString().toLowerCase() ?? ''));
+      if (index !== -1) {
+        this.selectTab(index);
+      }
+    }
+  });
 
   ngAfterContentInit() {
     const allTabs = this.tabTemplates.toArray();
@@ -116,6 +138,10 @@ export class TabsComponent implements AfterContentInit {
     this.selectedIndex.set(index);
     this.activated.update((old) => {
       return old.map((_, i) => i === index);
-    })
+    });
+    this.router.navigate([], {
+      queryParams: {tab: this.tabs()[index].alias},
+      queryParamsHandling: 'merge',
+    });
   }
 }
