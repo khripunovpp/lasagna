@@ -57,7 +57,7 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '@help
     GapRowComponent,
     ExpandDirective,
     NoWrapDirective
-],
+  ],
   styles: [
     `
     `
@@ -73,8 +73,6 @@ export class AddCategoryFormComponent
   implements OnInit {
   constructor(
     public _categoryRepository: CategoryProductsRepository,
-    @Inject(SelectResourcesService) public _selectResourcesService: SelectResourcesService,
-    private _router: Router,
     private _notificationsService: NotificationsService,
   ) {
   }
@@ -90,11 +88,17 @@ export class AddCategoryFormComponent
       return;
     }
     this._categoryRepository.getOne(this.uuid()).then(category => {
-      this.form.reset(categoryProductToFormValue(category));
-      this.category.set(category);
-      this.form.markAsPristine();
+      this.reset(category);
     });
   });
+
+  reset(
+    category: CategoryProduct,
+  ) {
+    this.form.reset(categoryProductToFormValue(category));
+    this.category.set(category);
+    this.form.markAsPristine();
+  }
 
   ngOnInit() {
     this.form.valueChanges.subscribe(values => {
@@ -107,7 +111,9 @@ export class AddCategoryFormComponent
       return Promise.resolve();
     }
     return this._categoryRepository.addOne(this.category()!).then(() => {
-      this.form.reset({});
+      this.form.reset({
+        name: '',
+      });
       this._notificationsService.success('Category added');
       this.form.markAsPristine();
     });

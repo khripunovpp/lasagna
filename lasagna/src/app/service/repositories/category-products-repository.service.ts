@@ -25,7 +25,7 @@ export class CategoryProductsRepository {
     uuid: string,
   ) {
     return this._indexDbService
-      .getOne<CategoryProduct>(Stores.PRODUCTS_CATEGORIES, uuid)
+      .getOne<CategoryProductDTO>(Stores.PRODUCTS_CATEGORIES, uuid)
       .then(category => {
         return CategoryProduct.fromRaw(category);
       });

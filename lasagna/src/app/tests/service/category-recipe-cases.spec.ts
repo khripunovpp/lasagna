@@ -1,10 +1,10 @@
 import {TestBed} from '@angular/core/testing';
 import {DexieIndexDbService} from '../../service/db/dexie-index-db.service';
-import {TranslateModule} from '@ngx-translate/core';
-import {DB_NAME} from '../../service/tokens/db-name.token';
 import {Stores} from '../../service/db/const/stores';
 import {CategoryRecipesRepository} from '../../service/repositories';
 import {CategoryRecipe} from '../../service/models/CategoryRecipe';
+import {defaultProviders} from '../default-providers';
+import {defaultImports} from '../default-imports';
 
 describe('Categories recipes cases', () => {
   let repository: CategoryRecipesRepository;
@@ -18,11 +18,12 @@ describe('Categories recipes cases', () => {
 
   beforeAll(async () => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [
+        ...defaultImports,
+      ],
       providers: [
+        ...defaultProviders,
         CategoryRecipesRepository,
-        DexieIndexDbService,
-        {provide: DB_NAME, useValue: 'TestDB'},
       ]
     });
 
