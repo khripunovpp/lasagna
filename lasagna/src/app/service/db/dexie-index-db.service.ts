@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
 import {Stores} from './const/stores';
 import {migrations} from './migrations';
@@ -6,15 +6,17 @@ import {generateUuid} from '@helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
 import {BuckupData} from '@service/services/transfer-data.service';
 import {relationsMap} from '@service/db/const/relations-maps';
+import {DB_NAME} from '@service/tokens/db-name.token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DexieIndexDbService extends Dexie {
   constructor(
-    private flexsearchIndexService: FlexsearchIndexService
+    private flexsearchIndexService: FlexsearchIndexService,
+    @Inject(DB_NAME) dbName: string
   ) {
-    super('lasagna-db');
+    super(dbName);
 
     const seen = new Set();
     for (const migration of migrations) {

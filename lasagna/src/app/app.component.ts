@@ -8,7 +8,6 @@ import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.compone
 import {TranslateModule} from '@ngx-translate/core';
 import {LocalisationService} from '@service/services/localisation.service';
 
-
 @Component({
   selector: 'app-root',
   imports: [
