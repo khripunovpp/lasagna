@@ -108,7 +108,9 @@ export class AddCategoryRecipeFormComponent
       return Promise.resolve();
     }
     return this._categoryRepository.addCategory(this.category()!).then(() => {
-      this.form.reset({});
+      this.form.reset({
+        name: '',
+      });
       this._notificationsService.success('Category added');
       this.form.markAsPristine();
     });
