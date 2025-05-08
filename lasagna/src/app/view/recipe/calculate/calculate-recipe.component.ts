@@ -10,6 +10,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {FormsModule} from '@angular/forms';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {ChartData, ChartEvent, ChartType} from 'chart.js';
 
 
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
@@ -25,6 +26,11 @@ import {SelectResourcesService} from '../../../service/services/select-resources
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {Recipe} from '../../../service/models/Recipe';
+import {BaseChartDirective} from 'ng2-charts';
+import {CardComponent} from '@view/ui/card/card.component';
+import {WidthDirective} from '@view/directives/width.directive';
+import {SelfCenterDirective} from '@view/directives/self-center.directive';
+import {ExpandDirective} from '@view/directives/expand.directive';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -46,7 +52,12 @@ import {Recipe} from '../../../service/models/Recipe';
     NgTemplateOutlet,
     ViewShowComponent,
     MultiselectComponent,
-    FadeInComponent
+    FadeInComponent,
+    BaseChartDirective,
+    CardComponent,
+    WidthDirective,
+    SelfCenterDirective,
+    ExpandDirective
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -71,14 +82,42 @@ export class CalculateRecipeComponent
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
+      console.log(this.result());
       this.outcome_amount.set(this.result()?.calculation?.outcomeAmount || 0);
       this.showedOutcome.set(this.result()?.calculation?.outcomeAmount || 0);
       this.loadRecipeTaxTemplate();
     });
   }
 
+  public doughnutChartLabels: string[] = [
+    'Download Sales',
+    'In-Store Sales',
+    'Mail-Order Sales',
+  ];
+  public doughnutChartType: ChartType = 'pie';
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
+  doughnutChartData = computed(() => {
+    const result = this.result();
+    const labels = result?.calculation?.ingredients?.map((item) => item.generalName) || [];
+    const data = result?.calculation?.ingredients?.map((item) => item.totalPrice) || [];
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Cost',
+          data: data,
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }
+      ],
+    } as ChartData
+  });
   outcome_amount = model(0);
   showedOutcome = signal(0);
   totalTaxes = signal(0);
@@ -90,6 +129,27 @@ export class CalculateRecipeComponent
   taxTemplateToApply = model<BaseTemplate<TaxTemplateRow>>();
   canApplyTemplates = signal(true);
   canSaveDefaultTemplate = signal(true);
+
+  // events
+  public chartClicked({
+                        event,
+                        active,
+                      }: {
+    event: ChartEvent;
+    active: object[];
+  }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({
+                        event,
+                        active,
+                      }: {
+    event: ChartEvent;
+    active: object[];
+  }): void {
+    console.log(event, active);
+  }
 
   onTaxTemplateChange(
     value: any

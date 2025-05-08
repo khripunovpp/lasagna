@@ -8,13 +8,13 @@ export class WidthDirective {
   constructor() {
   }
 
-  lgWidth = input(0);
+  lgWidth = input<number | string>('0');
 
-  @HostBinding('style.max-width.px') get maxWidth() {
+  @HostBinding('style.max-width') get maxWidth() {
     return this.lgWidth();
   }
 
   @HostBinding('style.flex') get flex() {
-    return `1 0 ${this.lgWidth()}px`
+    return `1 0 ${this.lgWidth()}`;
   };
 }

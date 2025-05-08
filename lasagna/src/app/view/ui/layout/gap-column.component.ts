@@ -1,4 +1,4 @@
-import {Component, computed, input} from '@angular/core';
+import {Component, computed, Input, input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -7,6 +7,8 @@ import {NgClass} from '@angular/common';
   template: `
       <div [ngClass]="size()"
            [style.align-items]="alignItems()"
+            [class.fill]="fill"
+            [class.expand-mobile]="expandMobile"
            class="gap-column">
           <ng-content></ng-content>
       </div>
@@ -18,6 +20,9 @@ import {NgClass} from '@angular/common';
     `:host {
 
       flex: 1;
+       @media (max-width: 768px) {
+         width: 100%;
+      }
     }
 
     .gap-column {
@@ -37,6 +42,16 @@ import {NgClass} from '@angular/common';
     .gap-column.tiny {
       gap: 4px;
     }
+
+    .gap-column.fill {
+      justify-content: space-between;
+      height: 100%;
+    }
+    .gap-column.expand-mobile {
+      @media (max-width: 768px) {
+
+      }
+    }
     `
   ]
 })
@@ -44,6 +59,8 @@ export class GapColumnComponent {
   constructor() {
   }
 
+  @Input() fill: boolean = false;
+  @Input() expandMobile: boolean = false;
   size = input<
     'default' |
     'small' |
