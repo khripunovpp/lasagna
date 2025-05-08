@@ -1,15 +1,20 @@
-import {Component, input} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-card',
   standalone: true,
   template: `
-      <div [class.flat]="flat()"
-           [class.center]="center()"
+      <div [class.center]="center"
+           [class.flat]="flat"
+           [ngClass]="size"
            class="card">
           <ng-content></ng-content>
       </div>
   `,
+  imports: [
+    NgClass
+  ],
   styles: [
     `
       :host {
@@ -35,6 +40,11 @@ import {Component, input} from '@angular/core';
         justify-content: center;
         align-items: center;
       }
+
+      .card.small {
+        padding: 16px;
+        border-radius: 16px;
+      }
     `
   ]
 })
@@ -42,6 +52,7 @@ export class CardComponent {
   constructor() {
   }
 
-  flat = input(false);
-  center = input(false);
+  @Input() flat: boolean = false;
+  @Input() center: boolean = false;
+  @Input() size: 'small' | 'default' | 'large' = 'default';
 }

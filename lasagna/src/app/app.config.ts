@@ -21,6 +21,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CategoryProductsRepository, CategoryRecipesRepository} from '@service/repositories';
 import {DB_NAME} from '@service/tokens/db-name.token';
+import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -106,5 +107,6 @@ export const appConfig: ApplicationConfig = {
       provide: DB_NAME,
       useValue: 'lasagna-db',
     },
+    provideCharts(withDefaultRegisterables())
   ]
 };

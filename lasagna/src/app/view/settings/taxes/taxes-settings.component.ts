@@ -63,7 +63,7 @@ import {taxDTOFromFormValue} from '@helpers/taxes.helper';
                                                   formControlName="percentage"></lg-checkbox>
                                       </lg-control>
 
-                                      <lg-control [label]="'Value'" [lgWidth]="200">
+                                      <lg-control [label]="'Value'" [lgWidth]="'200px'">
                                           <lg-number-input
                                                   lgParseMath
                                                   (onInputChange)="onTaxValueChange(i)"
