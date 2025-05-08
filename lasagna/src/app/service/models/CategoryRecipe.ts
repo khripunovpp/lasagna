@@ -27,6 +27,14 @@ export class CategoryRecipe {
     return new CategoryRecipe('');
   }
 
+  setName(name: string) {
+    this._name = String(name).trim();
+  }
+
+  copy() {
+    return new CategoryRecipe(this.name, this.uuid);
+  }
+
   toDTO() {
     return {
       name: this.name,
