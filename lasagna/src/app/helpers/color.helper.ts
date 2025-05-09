@@ -8,9 +8,9 @@ export const stringToColor = (str: string): string => {
   let hash = 0;
 
   const boundarieByChannel = [
-    [130, 255],
-    [0, 180],
-    [130, 255]
+    [150, 255],
+    [30, 255],
+    [50, 255]
   ];
 
   // Хешируем строку

@@ -193,6 +193,12 @@ export const routes: Routes = [{
     },
 
     {
+      path: 'dev',
+      loadComponent: () => import('./view/dev/color-palette.component')
+        .then(m => m.ColorPaletteComponent),
+    },
+
+    {
       path: '**',
       loadComponent: () => import('./view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),
