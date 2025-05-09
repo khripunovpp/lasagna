@@ -1,7 +1,11 @@
+import {estimateColor, isColorString} from '@helpers/color.helper';
+import {CategoryProductDTO} from '@service/db/shemes/CategoryProduct.scheme';
+
 export class CategoryProduct {
   constructor(
     private _name: string,
     private _uuid?: string,
+    private _color?: string | undefined,
   ) {
   }
 
@@ -13,8 +17,11 @@ export class CategoryProduct {
     return this._uuid ? String(this._uuid).trim() : undefined;
   }
 
-  setName(name: string) {
-    this._name = String(name).trim();
+  get ownColor() {
+    if (isColorString(this._color || '')) {
+      return this._color!;
+    }
+    return estimateColor(this.name);
   }
 
   static fromRaw(dto: any) {
@@ -24,28 +31,36 @@ export class CategoryProduct {
     return new CategoryProduct(
       dto?.name || dto,
       dto?.uuid || undefined,
+      dto?.color || undefined,
     );
-  }
-  copy() {
-    return new CategoryProduct(this.name, this.uuid);
   }
 
   static empty() {
     return new CategoryProduct('');
   }
 
-  toDTO() {
+  setName(name: string) {
+    this._name = String(name).trim();
+  }
+
+  copy() {
+    return new CategoryProduct(this.name, this.uuid);
+  }
+
+  toDTO(): CategoryProductDTO {
     return {
       name: this.name,
       uuid: this.uuid,
+      color: this.ownColor,
     };
   }
 
   update(
     dto: any,
   ) {
-    this._name = dto.name || this.name;
-    this._uuid = dto.uuid || this.uuid;
+    this._name = dto?.name || this.name;
+    this._uuid = dto?.uuid || this.uuid;
+    this._color = dto?.color || this.ownColor;
     return this;
   }
 

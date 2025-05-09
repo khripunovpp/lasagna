@@ -25,6 +25,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '@view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '@view/ui/layout/button.component';
+import {CategoryProduct} from '@service/models/CategoryProduct';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -99,7 +100,11 @@ export class AddProductFormComponent
     },
   ];
   product = input<Product | null>(null);
-  topCategories = signal<any[]>([]);
+  topCategories = signal<{
+    label: string
+    value: string
+    color: string
+  }[]>([]);
   topSources = signal<any[]>([]);
   nameField = viewChild<AutocompleteComponent>('nameField');
 
@@ -174,7 +179,8 @@ export class AddProductFormComponent
     this._productsRepository.getTopCategories().then(categories => {
       this.topCategories.set(categories.map(category => ({
         label: category.name,
-        value: category.uuid,
+        value: category.uuid ?? '',
+        color: category.ownColor,
       })));
     });
 

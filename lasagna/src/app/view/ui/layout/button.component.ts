@@ -76,6 +76,8 @@ export type ButtonStyle = 'default' |
         align-items: center;
         text-decoration: none;
         justify-content: center;
+        transition: all 0.4s;
+        transition-timing-function: var(--bounce-bezier);
       }
 
       .button.disabled {
@@ -86,6 +88,16 @@ export type ButtonStyle = 'default' |
 
       .button:focus {
         outline-color: var(--active-color);
+      }
+
+      .button:active {
+        transform: scale(0.95);
+      }
+
+      @media (hover: hover) {
+        .button:hover {
+        transform: scale(0.95);
+        }
       }
 
       .button.no-radius {
