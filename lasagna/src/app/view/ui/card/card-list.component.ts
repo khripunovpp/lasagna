@@ -89,7 +89,6 @@ export class CardListComponent {
   constructor() {
   }
 
-  @Input() style: 'default' | 'separated' = 'default';
   mode = input<'default' | 'selection'>('default');
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
