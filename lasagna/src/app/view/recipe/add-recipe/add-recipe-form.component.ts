@@ -214,10 +214,12 @@ export class AddRecipeFormComponent
 
   addIngredient() {
     this.ingredients.push(this._getIngredientGroup());
+    this.form.markAsDirty();
   }
 
   deleteIngredient(index: number) {
     this.ingredients.removeAt(index);
+    this.form.markAsDirty();
   }
 
   onIngredientSelected(
