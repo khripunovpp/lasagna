@@ -1,11 +1,17 @@
 import {removeAllNonLetters} from '@helpers/strings.helper';
 
 export const randomRGB = () => {
-  return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+  return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)},1)`;
 }
 
 export const stringToColor = (str: string): string => {
   let hash = 0;
+
+  const boundarieByChannel = [
+    [130, 255],
+    [0, 180],
+    [130, 255]
+  ];
 
   // Хешируем строку
   for (let i = 0; i < str.length; i++) {
@@ -13,16 +19,12 @@ export const stringToColor = (str: string): string => {
     hash = hash & hash;
   }
 
-  // Гарантируем минимальную яркость (например, не ниже 80)
-  const min = 150;
-  const max = 230;
-
   let color = '#';
   for (let i = 0; i < 3; i++) {
     let value = (hash >> (i * 8)) & 0xFF;
 
     // Масштабируем значение в допустимый диапазон
-    value = Math.floor((value / 255) * (max - min) + min);
+    value = Math.floor((value / 255) * (boundarieByChannel[i][1] - boundarieByChannel[i][0]) + boundarieByChannel[i][0]);
     color += value.toString(16).padStart(2, '0');
   }
 

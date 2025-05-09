@@ -13,10 +13,12 @@ import {TranslatePipe} from '@ngx-translate/core';
   template: `
       <header class="lg-header">
           <div class="lg-header__left">
-              <button (click)="location.back()"
-                      class="lg-header__icon lg-header__icon--left">
-                  <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
-              </button>
+              @if (window.history.state && window.history.length > 1) {
+                  <button (click)="location.back()"
+                          class="lg-header__icon lg-header__icon--left">
+                      <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
+                  </button>
+              }
           </div>
 
           <div class="lg-header__leftToMiddle">
@@ -203,4 +205,6 @@ export class HeaderComponent {
     this.activeIndex.set(index);
   }
 
+  protected readonly window = window;
+  protected readonly document = document;
 }

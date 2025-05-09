@@ -1,5 +1,5 @@
 import {Component, computed, Injector, model, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
@@ -32,6 +32,7 @@ import {WidthDirective} from '@view/directives/width.directive';
 import {SelfCenterDirective} from '@view/directives/self-center.directive';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {randomRGB} from '@helpers/color.helper';
+import {Ingredient} from '@service/models/Ingredient';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -77,32 +78,20 @@ export class CalculateRecipeComponent
     private _aRoute: ActivatedRoute,
     private _calculateRecipeService: CalculateRecipeService,
     private _formTemplateService: FormTemplateService,
-    private _injector: Injector
+    private _injector: Injector,
+    private _router: Router,
   ) {
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
-      console.log(this.result());
       this.outcome_amount.set(this.result()?.calculation?.outcomeAmount || 0);
       this.showedOutcome.set(this.result()?.calculation?.outcomeAmount || 0);
       this.loadRecipeTaxTemplate();
     });
   }
 
-  public doughnutChartLabels: string[] = [
-    'Download Sales',
-    'In-Store Sales',
-    'Mail-Order Sales',
-  ];
   public doughnutChartType: ChartType = 'pie';
-  public doughnutChartOptions: ChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
   doughnutChartData = computed(() => {
@@ -113,14 +102,14 @@ export class CalculateRecipeComponent
       weight,
       labels,
       colors,
-    } =  result?.calculation?.ingredients?.reduce((acc, item) => {
+    } = result?.calculation?.ingredients?.reduce((acc, item: Ingredient) => {
       acc.prices.push(item.totalPrice);
       acc.weight.push(item.totalWeightGram);
       acc.labels.push(item.generalName);
-      acc.colors.push(item.product_id?.ownColor ?? randomRGB());
+      acc.colors.push(item.product_id?.ownColor ?? item.recipe_id?.ownColor ?? randomRGB());
       return acc;
-    },{
-      prices:[],
+    }, {
+      prices: [],
       weight: [],
       labels: [],
       colors: [],
@@ -136,7 +125,6 @@ export class CalculateRecipeComponent
       colors: [],
     };
 
-
     return {
       prices: {
         labels: labels,
@@ -145,6 +133,7 @@ export class CalculateRecipeComponent
             label: 'Cost',
             data: prices,
             backgroundColor: colors,
+            hoverBackgroundColor: colors,
             borderWidth: 0,
           }
         ],
@@ -156,12 +145,34 @@ export class CalculateRecipeComponent
             label: 'Amount',
             data: weight,
             backgroundColor: colors,
+            hoverBackgroundColor: colors,
             borderWidth: 0,
           }
         ],
       } as ChartData,
+      ingredients: result?.calculation?.ingredients || [],
     }
   });
+  public doughnutChartOptions: ChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    onClick: (event, elements, chart) => {
+      const tooltip = chart.tooltip;
+
+      if (tooltip && tooltip.getActiveElements().length) {
+        const tooltipElement = tooltip.getActiveElements()[0];
+        const ingredient = this.doughnutChartData().ingredients[tooltipElement.index];
+        const recipe = ingredient.recipe_id;
+        const product = ingredient.product_id;
+        const tree = this._router.createUrlTree(product ? ['/products/edit', product.uuid] : recipe ? ['/recipes/edit', recipe.uuid] : []);
+        const url = this._router.serializeUrl(tree);
+        window.open(url, '_blank');
+      }
+    }
+  };
   outcome_amount = model(0);
   showedOutcome = signal(0);
   totalTaxes = signal(0);
