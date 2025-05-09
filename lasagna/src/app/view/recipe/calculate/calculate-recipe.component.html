@@ -16,7 +16,7 @@
 
 
       @if (result()?.calculation?.totalPrice) {
-        <lg-gap-row [center]="true" [mobileMode]="true" style="max-width: 800px" lgExpand lgSelfCenter>
+        <lg-gap-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
           <lg-gap-column [position]="'stretch'">
             <lg-card size="small">
               <lg-gap-row [size]="'small'" [relaxed]="true">
@@ -81,13 +81,30 @@
             </lg-card>
           </lg-gap-column>
 
-          <lg-card lgWidth="300px" size="small">
+          <lg-card lgWidth="270px" size="small">
             <lg-gap-column [size]="'small'" >
               <lg-title [level]="5">
                 Price breakdown
               </lg-title>
 
-              <canvas [data]="doughnutChartData()" [type]="doughnutChartType" baseChart>
+              <canvas [data]="doughnutChartData().prices"
+                      [options]="doughnutChartOptions"
+                      [type]="doughnutChartType"
+                      baseChart>
+              </canvas>
+            </lg-gap-column>
+          </lg-card>
+
+          <lg-card lgWidth="270px" size="small">
+            <lg-gap-column [size]="'small'" >
+              <lg-title [level]="5">
+                Weight breakdown
+              </lg-title>
+
+              <canvas [data]="doughnutChartData().weight"
+                      [options]="doughnutChartOptions"
+                      [type]="doughnutChartType"
+                      baseChart>
               </canvas>
             </lg-gap-column>
           </lg-card>

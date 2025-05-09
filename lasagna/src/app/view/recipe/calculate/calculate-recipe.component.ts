@@ -10,7 +10,7 @@ import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {FormsModule} from '@angular/forms';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {ChartData, ChartEvent, ChartType} from 'chart.js';
+import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
 
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
@@ -96,6 +96,13 @@ export class CalculateRecipeComponent
     'Mail-Order Sales',
   ];
   public doughnutChartType: ChartType = 'pie';
+  public doughnutChartOptions: ChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
   doughnutChartData = computed(() => {
@@ -105,16 +112,29 @@ export class CalculateRecipeComponent
     const colors = result?.calculation?.ingredients?.map((item) => item.product_id?.ownColor ?? randomRGB()) || [];
 
     return {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Cost',
-          data: data,
-          backgroundColor: colors,
-          hoverOffset: 4
-        }
-      ],
-    } as ChartData
+      prices: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Cost',
+            data: data,
+            backgroundColor: colors,
+            hoverOffset: 4
+          }
+        ],
+      } as ChartData,
+      weight: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Amount',
+            data: result?.calculation?.ingredients?.map((item) => item.totalWeightGram) || [],
+            backgroundColor: colors,
+            hoverOffset: 4,
+          }
+        ],
+      } as ChartData,
+    }
   });
   outcome_amount = model(0);
   showedOutcome = signal(0);
