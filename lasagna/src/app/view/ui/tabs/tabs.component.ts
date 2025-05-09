@@ -63,8 +63,8 @@ import {Router} from '@angular/router';
       gap: 1rem;
       margin: -25px;
       padding: 25px;
-      background-color: #f8f9fa;
-      border-bottom: 2px solid #e9ecef;
+      background-color: #eed2f0;
+      border-bottom: 2px solid #ecc9ee;
       overflow-x: auto;
       white-space: nowrap;
       scroll-behavior: smooth;
@@ -73,8 +73,8 @@ import {Router} from '@angular/router';
     }
 
     .tabs__labels button {
-      background: none;
-      border: 2px solid #a26dc7;
+      background: #fff;
+      border: none;
       border-radius: 12px;
       padding: 0.5rem 1rem;
       cursor: pointer;

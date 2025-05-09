@@ -1,4 +1,4 @@
-import {Component, ContentChildren, effect, input, output, QueryList, ViewEncapsulation} from '@angular/core';
+import {Component, ContentChildren, effect, Input, input, output, QueryList, ViewEncapsulation} from '@angular/core';
 import {CardComponent} from './card.component';
 import {CardListItemDirective} from './card-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
@@ -16,26 +16,24 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
     ReactiveFormsModule,
   ],
   template: `
-      <lg-card [flat]="true">
-          <section [formGroup]="selected" class="lg-card-list">
-              <section class="lg-card-list__inner" formArrayName="items">
-                  @for (item of items;track $index;let i = $index, even = $even) {
-                      <div class="lg-card-list__item"
-                           [class.colored]="!even">
-                          @if (mode() === 'selection') {
-                              <lg-checkbox [formControlName]="i"
-                                           (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
-                          }
-                          <div class="lg-card-list__item__inner">
-                              <ng-container [ngTemplateOutlet]="item.template"></ng-container>
-                          </div>
+      <section [formGroup]="selected" class="lg-card-list">
+          <section class="lg-card-list__inner" formArrayName="items">
+              @for (item of items;track $index;let i = $index, even = $even) {
+                  <div class="lg-card-list__item"
+                       [class.colored]="!even">
+                      @if (mode() === 'selection') {
+                          <lg-checkbox [formControlName]="i"
+                                       (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
+                      }
+                      <div class="lg-card-list__item__inner">
+                          <ng-container [ngTemplateOutlet]="item.template"></ng-container>
                       </div>
-                  } @empty {
-                      <div style="padding:16px 24px;">No items found</div>
-                  }
-              </section>
+                  </div>
+              } @empty {
+                  <div style="padding:16px 24px;">No items found</div>
+              }
           </section>
-      </lg-card>
+      </section>
   `,
   styles: [
     `
@@ -61,6 +59,7 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
+        gap: 16px;
       }
 
       .lg-card-list__item {
@@ -68,6 +67,8 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
         align-items: center;
         padding: 16px;
         gap: 8px;
+        background-color: #eed2f0;
+        border-radius: 32px;
       }
 
       .lg-card-list__item__inner {
@@ -76,7 +77,7 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
       }
 
       .lg-card-list__item.colored {
-        background-color: #f6f6f6
+        //background-color: #f6f6f6
       }
 
     `
@@ -88,6 +89,7 @@ export class CardListComponent {
   constructor() {
   }
 
+  @Input() style: 'default' | 'separated' = 'default';
   mode = input<'default' | 'selection'>('default');
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
@@ -124,7 +126,7 @@ export class CardListComponent {
   });
 
   onChanges(
-    value: boolean|string,
+    value: boolean | string,
     index: number
   ) {
     this.onSelected.emit([!!value, this.items.toArray()?.[index]?.uuid() ?? '']);
