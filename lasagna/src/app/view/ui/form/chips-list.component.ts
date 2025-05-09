@@ -1,5 +1,6 @@
-import {Component, forwardRef, input, Input} from '@angular/core';
+import {Component, forwardRef, HostBinding, input, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-chips-list',
@@ -8,6 +9,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       <div class="chips-list">
           @for (item of items;track item.label;let last = $last) {
               <span class="chip"
+                    [style.--chip-color]="item.color"
                     (click)="onSelect(item)"
                     [class.selected]="item.value === value"
                     [attr.data-last]="last ? true : null">
@@ -25,17 +27,23 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       }
 
       .chip {
-        background-color: #007bff;
+        background-color: var(--chip-color);
         color: #fff;
         padding: 4px 8px;
         border-radius: 16px;
         font-size: 0.875rem;
         display: inline-block;
         cursor: pointer;
+        transition: all 0.2s;
+        transition-timing-function: cubic-bezier(.47, 1.64, .41, .8);
       }
 
       .chip.selected {
-        background-color: #0d59ab;
+        opacity: 0.5;
+      }
+
+      .chip:hover {
+        transform: scale(1.1);
       }
     `,
   ],
@@ -46,6 +54,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       multi: true,
     }
   ],
+  imports: [
+    JsonPipe
+  ]
 })
 
 export class ChipsListComponent
@@ -53,10 +64,12 @@ export class ChipsListComponent
   constructor() {
   }
 
+  @HostBinding('style.--chip-color') chipColor = '#007bff';
   control = input<ControlValueAccessor>()
   @Input() items: {
     label: string
     value: string
+    color?: string
   }[] = [];
   onChangeFn?: (value: any) => {};
   value: any;

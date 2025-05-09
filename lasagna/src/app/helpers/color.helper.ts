@@ -7,11 +7,22 @@ export const randomRGB = () => {
 export const stringToColor = (str: string): string => {
   let hash = 0;
 
-  const boundarieByChannel = [
-    [150, 255],
-    [30, 255],
-    [50, 255]
+  const boundariesByChannelA = [
+    [100, 130],
+    [100, 255],
+    [100, 190]
   ];
+
+  const boundariesByChannelB = [
+    [0, 255],
+    [90, 255],
+    [60, 255]
+  ];
+
+  // Выбираем границы для каждого канала в зависимости от длины строки
+  const boundariesByChannel = str.length % 2 === 0
+  && str.charCodeAt(0) % 2 === 0 ? boundariesByChannelA
+    : boundariesByChannelB;
 
   // Хешируем строку
   for (let i = 0; i < str.length; i++) {
@@ -24,7 +35,7 @@ export const stringToColor = (str: string): string => {
     let value = (hash >> (i * 8)) & 0xFF;
 
     // Масштабируем значение в допустимый диапазон
-    value = Math.floor((value / 255) * (boundarieByChannel[i][1] - boundarieByChannel[i][0]) + boundarieByChannel[i][0]);
+    value = Math.floor((value / 255) * (boundariesByChannel[i][1] - boundariesByChannel[i][0]) + boundariesByChannel[i][0]);
     color += value.toString(16).padStart(2, '0');
   }
 
