@@ -14,8 +14,8 @@ export const stringToColor = (str: string): string => {
   }
 
   // Гарантируем минимальную яркость (например, не ниже 80)
-  const min = 80;
-  const max = 255;
+  const min = 150;
+  const max = 230;
 
   let color = '#';
   for (let i = 0; i < 3; i++) {

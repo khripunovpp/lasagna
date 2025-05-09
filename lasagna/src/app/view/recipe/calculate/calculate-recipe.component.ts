@@ -107,9 +107,35 @@ export class CalculateRecipeComponent
   result = signal<Calculation | null>(null);
   doughnutChartData = computed(() => {
     const result = this.result();
-    const labels = result?.calculation?.ingredients?.map((item) => item.generalName) || [];
-    const data = result?.calculation?.ingredients?.map((item) => item.totalPrice) || [];
-    const colors = result?.calculation?.ingredients?.map((item) => item.product_id?.ownColor ?? randomRGB()) || [];
+
+    const {
+      prices,
+      weight,
+      labels,
+      colors,
+    } =  result?.calculation?.ingredients?.reduce((acc, item) => {
+      acc.prices.push(item.totalPrice);
+      acc.weight.push(item.totalWeightGram);
+      acc.labels.push(item.generalName);
+      acc.colors.push(item.product_id?.ownColor ?? randomRGB());
+      return acc;
+    },{
+      prices:[],
+      weight: [],
+      labels: [],
+      colors: [],
+    } as {
+      prices: number[],
+      weight: number[],
+      labels: string[],
+      colors: string[],
+    }) || {
+      prices: [],
+      weight: [],
+      labels: [],
+      colors: [],
+    };
+
 
     return {
       prices: {
@@ -117,9 +143,9 @@ export class CalculateRecipeComponent
         datasets: [
           {
             label: 'Cost',
-            data: data,
+            data: prices,
             backgroundColor: colors,
-            hoverOffset: 4
+            borderWidth: 0,
           }
         ],
       } as ChartData,
@@ -128,9 +154,9 @@ export class CalculateRecipeComponent
         datasets: [
           {
             label: 'Amount',
-            data: result?.calculation?.ingredients?.map((item) => item.totalWeightGram) || [],
+            data: weight,
             backgroundColor: colors,
-            hoverOffset: 4,
+            borderWidth: 0,
           }
         ],
       } as ChartData,
