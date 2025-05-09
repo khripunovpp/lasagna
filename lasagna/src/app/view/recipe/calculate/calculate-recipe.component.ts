@@ -31,6 +31,7 @@ import {CardComponent} from '@view/ui/card/card.component';
 import {WidthDirective} from '@view/directives/width.directive';
 import {SelfCenterDirective} from '@view/directives/self-center.directive';
 import {ExpandDirective} from '@view/directives/expand.directive';
+import {randomRGB} from '@helpers/color.helper';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -101,6 +102,7 @@ export class CalculateRecipeComponent
     const result = this.result();
     const labels = result?.calculation?.ingredients?.map((item) => item.generalName) || [];
     const data = result?.calculation?.ingredients?.map((item) => item.totalPrice) || [];
+    const colors = result?.calculation?.ingredients?.map((item) => item.product_id?.ownColor ?? randomRGB()) || [];
 
     return {
       labels: labels,
@@ -108,11 +110,7 @@ export class CalculateRecipeComponent
         {
           label: 'Cost',
           data: data,
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
+          backgroundColor: colors,
           hoverOffset: 4
         }
       ],

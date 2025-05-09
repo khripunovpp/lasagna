@@ -3,6 +3,7 @@ import {CategoryProduct} from './CategoryProduct';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {Unit} from '../types/Unit.types';
 import {parseFloatingNumber} from '@helpers/number.helper';
+import {estimateColor, isColorString} from '@helpers/color.helper';
 
 export class Product {
   constructor(
@@ -17,6 +18,7 @@ export class Product {
       uuid?: string | undefined
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
+      color?: string | undefined
     }
   ) {
     this.name = props.name;
@@ -31,6 +33,7 @@ export class Product {
     this.uuid = props.uuid;
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
+    this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
   }
 
   name: string;
@@ -43,6 +46,14 @@ export class Product {
   uuid?: string | undefined;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
+  color?: string | undefined;
+
+  get ownColor() {
+    if (isColorString(this.color || '')) {
+      return this.color;
+    }
+    return estimateColor(this.name);
+  }
 
   get pricePerUnit() {
     if (parseFloatingNumber(this.price) === 0
@@ -68,6 +79,7 @@ export class Product {
       uuid: dto?.uuid,
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
+      color: dto?.color,
     });
   }
 
@@ -80,6 +92,10 @@ export class Product {
       source: undefined,
       category_id: '',
       tags: [],
+      uuid: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+      color: undefined,
     });
   }
 
@@ -96,6 +112,7 @@ export class Product {
     this.uuid = dto.uuid || this.uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
+    this.color = dto?.color ? estimateColor(dto.color) : this.color;
     return this as Product;
   }
 
@@ -111,6 +128,7 @@ export class Product {
       uuid: this.uuid,
       createdAt: this.createdAt ?? Date.now(),
       updatedAt: this.updatedAt ?? Date.now(),
+      color: this.color || estimateColor(this.name),
     };
   }
 }

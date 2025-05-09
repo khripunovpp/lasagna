@@ -41,7 +41,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                   @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>
                           {{ 'edit-label'|translate }}
-                          <span class="text-active">
+                          <span [style.color]="product()?.ownColor">
                               {{ product()?.name }}
                           </span>
                       </lg-title>
