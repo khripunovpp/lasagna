@@ -1,4 +1,4 @@
-import {Component, input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, input, ViewEncapsulation} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -11,6 +11,7 @@ import {NgClass} from '@angular/common';
            [class.gap-row__mobile]="mobileMode()"
            [class.gap-row__relaxed]="relaxed()"
            [class.gap-row__top]="top()"
+            [class.gap-row__equal]="equal"
            [ngClass]="size()"
            class="gap-row">
           <ng-content></ng-content>
@@ -58,6 +59,10 @@ import {NgClass} from '@angular/common';
 
     }
 
+    .gap-row__equal > * {
+      flex: 1;
+    }
+
     .gap-row__relaxed {
       justify-content: space-between;
     }
@@ -90,6 +95,7 @@ export class GapRowComponent {
   constructor() {
   }
 
+  @Input() equal = false;
   center = input<boolean>(false);
   bottom = input<boolean>(false);
   top = input<boolean>(false);
