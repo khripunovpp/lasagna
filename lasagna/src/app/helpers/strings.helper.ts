@@ -1,5 +1,4 @@
-// allow letters oin all cases numbers - : ( ) spaces
-export const removeAllSpecialChars = (str: string) => {
-  const formattedString = String(str ?? '').trim();
-  return formattedString.replace(/[^a-zA-Z0-9-:() ]/g, '');
+// remove except letters in all cases numbers - : ( ) spaces
+export const removeAllNonLetters = (str: string) => {
+  return str.replace(/[^a-zA-Zа-яА-ЯёЁ0-9\s-:()]/g, '');
 }
