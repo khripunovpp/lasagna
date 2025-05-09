@@ -17,7 +17,8 @@ import {
 } from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-
+import {JsonPipe, NgStyle} from '@angular/common';
+import {Tag} from '@service/models/Tag';
 
 
 export interface TagsItem {
@@ -31,8 +32,8 @@ export interface TagsItem {
       <div class="tags-control">
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
-                     [addTag]="true"
-                     [bindValue]="'name'"
+                     [addTag]="addTagFn"
+                     [appendTo]="'body'"
                      [compareWith]="compareWith"
                      [items]="loadedList()"
                      [multiple]="multi()"
@@ -46,7 +47,8 @@ export interface TagsItem {
               </ng-template>
               <ng-template let-clear="clear" let-items="items" ng-multi-label-tmp>
                   @for (item of items;track $any(item)?.name ?? $any(item)?.label ?? item) {
-                      <div class="ng-value">
+                      <div class="ng-value"
+                           [ngStyle]="{background: $any(item)?.color ? $any(item)?.color : null}">
                           <span class="ng-value-label">
                               {{ $any(item)?.name ?? $any(item)?.label ?? item }}
                           </span>
@@ -63,8 +65,10 @@ export interface TagsItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    NgMultiLabelTemplateDirective
-],
+    NgMultiLabelTemplateDirective,
+    JsonPipe,
+    NgStyle
+  ],
   styles: [
     `
       lg-tags-control {
@@ -135,6 +139,10 @@ export class TagsControlComponent
   value?: unknown = null
   selectComponent = viewChild(NgSelectComponent);
 
+  addTagFn(name: string) {
+    return Tag.fromRaw(name);
+  };
+
   onChange: (value: unknown) => void = () => {
   };
 
@@ -158,7 +166,11 @@ export class TagsControlComponent
   }
 
   change(value: unknown) {
-    this.value = value;
+    if (Array.isArray(value)) {
+      this.value = value.map((item) => Tag.fromRaw(item).toDTO());
+    } else {
+      this.value = Tag.fromRaw(value).toDTO();
+    }
     this.onChange(this.value);
   }
 
