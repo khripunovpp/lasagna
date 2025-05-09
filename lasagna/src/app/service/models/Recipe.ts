@@ -5,6 +5,7 @@ import {CategoryRecipe} from '@service/models/CategoryRecipe';
 import {parseFloatingNumber} from '@helpers/number.helper';
 import {CategoryRecipeDTO} from '@service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '@service/models/Tag';
+import {estimateColor, isColorString} from '@helpers/color.helper';
 
 
 export class Recipe {
@@ -21,6 +22,7 @@ export class Recipe {
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
       tags?: string[] | undefined
+      color?: string | undefined
     }
   ) {
     this.name = String(props.name ?? '').trim();
@@ -42,6 +44,7 @@ export class Recipe {
     });
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
+    this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
   }
 
   name: string;
@@ -55,12 +58,20 @@ export class Recipe {
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
   tags?: Tag[];
+  color?: string | undefined;
 
   get valid() {
     return this.name
       && this.ingredients.length > 0
       && this.outcome_amount > 0
       && this.category_id
+  }
+
+  get ownColor() {
+    if (isColorString(this.color || '')) {
+      return this.color;
+    }
+    return estimateColor(this.name);
   }
 
   get totalPrice() {
@@ -103,6 +114,7 @@ export class Recipe {
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
       tags: dto?.tags,
+      color: dto?.color,
     });
   }
 
@@ -118,6 +130,8 @@ export class Recipe {
       category_id: null,
       createdAt: undefined,
       updatedAt: undefined,
+      tags: [],
+      color: undefined,
     });
   }
 
@@ -152,6 +166,7 @@ export class Recipe {
       tags: this.tags?.map((tag) => {
         return tag.toString();
       }),
+      color: this.color || estimateColor(this.name),
     };
   }
 
@@ -173,5 +188,7 @@ export class Recipe {
     this.tags = dto?.tags ? dto.tags.map((tag: any) => {
       return Tag.fromRaw(tag);
     }) : this.tags;
+    this.color = dto?.color || this.color;
+    return this;
   }
 }
