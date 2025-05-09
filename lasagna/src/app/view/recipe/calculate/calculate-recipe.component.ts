@@ -160,17 +160,28 @@ export class CalculateRecipeComponent
       },
     },
     onClick: (event, elements, chart) => {
-      const tooltip = chart.tooltip;
-
-      if (tooltip && tooltip.getActiveElements().length) {
-        const tooltipElement = tooltip.getActiveElements()[0];
-        const ingredient = this.doughnutChartData().ingredients[tooltipElement.index];
-        const recipe = ingredient.recipe_id;
-        const product = ingredient.product_id;
-        const tree = this._router.createUrlTree(product ? ['/products/edit', product.uuid] : recipe ? ['/recipes/edit', recipe.uuid] : []);
-        const url = this._router.serializeUrl(tree);
-        window.open(url, '_blank');
-      }
+      // const tooltip = chart.tooltip;
+      //
+      // if (!tooltip || !tooltip.getActiveElements().length) return;
+      //
+      // const {x, y, width, height} = tooltip;
+      // const mouseX = event.x;
+      // const mouseY = event.y;
+      //
+      // // Проверка, попадает ли курсор в тултип
+      // const isInTooltipArea = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+      //
+      // if (isInTooltipArea) {
+      //   const tooltipElement = tooltip.getActiveElements()[0];
+      //   const ingredient = this.doughnutChartData().ingredients[tooltipElement.index];
+      //   const recipe = ingredient.recipe_id;
+      //   const product = ingredient.product_id;
+      //   const tree = this._router.createUrlTree(
+      //     product ? ['/products/edit', product.uuid] : recipe ? ['/recipes/edit', recipe.uuid] : []
+      //   );
+      //   const url = this._router.serializeUrl(tree);
+      //   window.open(url, '_blank');
+      // }
     }
   };
   outcome_amount = model(0);
