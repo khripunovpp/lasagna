@@ -22,6 +22,9 @@ import {productToFormValue} from '@helpers/product.helpers';
 
 import {debounceTime} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
+import {CardComponent} from '@view/ui/card/card.component';
+import {MatIcon} from '@angular/material/icon';
+import {ButtonComponent} from '@view/ui/layout/button.component';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -42,7 +45,10 @@ import {TranslatePipe} from '@ngx-translate/core';
     ChipsListComponent,
     AutocompleteComponent,
     TagsControlComponent,
-    TranslatePipe
+    TranslatePipe,
+    CardComponent,
+    MatIcon,
+    ButtonComponent,
   ],
   styles: [
     `

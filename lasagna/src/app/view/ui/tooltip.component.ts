@@ -1,4 +1,15 @@
-import {Component, ElementRef, HostListener, input, output, signal, viewChild} from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  output,
+  Renderer2,
+  signal,
+  viewChild, ViewEncapsulation
+} from '@angular/core';
 import {NgClass} from '@angular/common';
 import {PortalComponent} from './layout/portal.component';
 
@@ -15,12 +26,12 @@ import {PortalComponent} from './layout/portal.component';
                   <ng-content></ng-content>
               </div>
               @if (displayed()) {
-                  <div class="tooltip__content" #element
-                       [style.left.px]="coordinates().x"
-                       [style.top.px]="coordinates().y">
+                  <div class="tooltip__content" #element>
                       <ng-content select="content"></ng-content>
                   </div>
-                  <lg-portal [appendTarget]="'body'" [targetElement]="element" [wrapClass]="'tooltip'">
+                  <lg-portal [appendTarget]="'body'"
+                             [targetElement]="element"
+                             [wrapClass]="'tooltip tooltip--ejected'">
                   </lg-portal>
               }
 
@@ -30,22 +41,39 @@ import {PortalComponent} from './layout/portal.component';
   imports: [
     NgClass,
     PortalComponent
-],
+  ],
   styles: [
     `
       .tooltip {
-        position: relative;
         display: inline-block;
+      }
+
+      .tooltip--ejected {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        .tooltip__content {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: fixed;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: calc(var(--header-height) + 12px + 16px + 16px);
+        }
       }
 
       .tooltip__anchor {
         position: relative;
-
       }
 
       .tooltip__content {
         position: absolute;
-
         background-color: #ffffff;
         border-radius: 16px;
         padding: 16px;
@@ -91,13 +119,15 @@ import {PortalComponent} from './layout/portal.component';
         overflow-y: auto;
       }
     `
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class TooltipComponent {
   constructor() {
   }
 
+  renderer = inject(Renderer2);
   gap = input<number>(16);
   displayed = signal<boolean>(false);
   full = input<boolean>(false);
@@ -107,6 +137,13 @@ export class TooltipComponent {
   element = viewChild<ElementRef>('element');
   onClose = output<void>();
   coordinates = signal<{ x: number, y: number }>({x: 0, y: 0});
+  coordinatesEffect = effect(() => {
+
+    // [style.--tooltip-x]="coordinates().x"
+    // [style.--tooltip-y]="coordinates().y"
+
+    this.renderer.setProperty(document.body, 'style', `--tooltip-x: ${this.coordinates().x}px;--tooltip-y: ${this.coordinates().y}px;`);
+  });
 
   toggle(
     event?: MouseEvent,
@@ -119,11 +156,13 @@ export class TooltipComponent {
     if (event) {
       event.stopPropagation();
       const [x, y] = [event.clientX, event.clientY];
+
+      console.log('x', x, 'y', y);
       setTimeout(() => {
         const tooltip = this.element()?.nativeElement;
-        const tooltipRect = tooltip.getBoundingClientRect();
-        const tooltipWidth = tooltipRect.width;
-        const tooltipHeight = tooltipRect.height;
+        const tooltipRect = tooltip?.getBoundingClientRect();
+        const tooltipWidth = tooltipRect?.width;
+        const tooltipHeight = tooltipRect?.height;
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
         const offset = 16;
@@ -167,5 +206,12 @@ export class TooltipComponent {
       this.displayed.set(false);
       this.onClose.emit();
     }
+  }
+
+  // hide on scroll
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event) {
+    this.displayed.set(false);
+    this.onClose.emit();
   }
 }

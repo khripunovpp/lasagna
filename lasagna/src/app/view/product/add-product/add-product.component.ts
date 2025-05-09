@@ -63,9 +63,9 @@ import {TranslatePipe} from '@ngx-translate/core';
                   }
               </div>
 
-              <lg-card>
-                  <lg-add-product-form [product]="product()"></lg-add-product-form>
-              </lg-card>
+
+              <lg-add-product-form [product]="product()"></lg-add-product-form>
+
 
               <lg-gap-row [mobileMode]="true" [relaxed]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {

@@ -1,72 +1,86 @@
 <form [formGroup]="form">
   <lg-gap-column>
-    <lg-control label="{{ 'product.form.name.label'|translate }}">
-      <lg-autocomplete #nameField
-                       [key]="'name'"
-                       [resource]="'products-names'"
-                       formControlName="name"></lg-autocomplete>
-    </lg-control>
+    <lg-card>
+      <lg-gap-column>
+        <lg-control label="{{ 'product.form.name.label'|translate }}">
+          <lg-autocomplete #nameField
+                           [key]="'name'"
+                           [resource]="'products-names'"
+                           formControlName="name"></lg-autocomplete>
+        </lg-control>
 
-    <lg-gap-column>
-      <lg-control label="{{ 'product.form.category_id.label'|translate }}">
-        <lg-multiselect #categorySelect
-                        [resource]="'categories'"
-                        formControlName="category_id"></lg-multiselect>
-      </lg-control>
+        <lg-gap-row [bottom]="true" [mobileMode]="true">
+          <lg-control label="{{ 'product.form.amount.label'|translate }}" lgExpand>
+            <lg-number-input (onInputChange)="priceInput.focus()"
+                             [placeholder]="'product.form.amount.placeholder'|translate:{unit:form.value.unit}"
+                             formControlName="amount"
+                             lgParseMath>
+              <div ngProjectAs="after">
+                <lg-tooltip [position]="'left'">
+                  <lg-button [flat]="true"
+                             [icon]="true"
+                             [style]="'success'">
+                    <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+                  </lg-button>
 
-      @if (topCategories().length) {
-        <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
-      }
-    </lg-gap-column>
-
-    <lg-gap-row [bottom]="true" [mobileMode]="true">
-      <lg-control label="{{ 'product.form.amount.label'|translate }}" lgExpand>
-        <lg-number-input (onInputChange)="priceInput.focus()"
-                         [placeholder]="'product.form.amount.placeholder'|translate:{unit:form.value.unit}"
-                         formControlName="amount"
-                         lgParseMath>
-          <div ngProjectAs="after">
-            <lg-tooltip [position]="'left'">
-              +
-
-              <div ngProjectAs="content">
-                <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+                  <div ngProjectAs="content">
+                    <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+                  </div>
+                </lg-tooltip>
               </div>
-            </lg-tooltip>
+            </lg-number-input>
+          </lg-control>
+
+          <lg-buttons-group [items]="buttons"
+                            formControlName="unit">
+          </lg-buttons-group>
+        </lg-gap-row>
+
+        <lg-control label="{{ 'product.form.price.label'|translate }}">
+          <lg-number-input #priceInput
+                           [placeholder]="'product.form.price.placeholder'|translate"
+                           formControlName="price"
+                           lgParseMath></lg-number-input>
+        </lg-control>
+
+        <lg-gap-column>
+          <lg-control label="{{ 'product.form.source.label'|translate }}">
+            <lg-autocomplete #sourceInput
+                             (onSelected)="sourceChips.clearSelected()"
+                             [noLoad]="true"
+                             [resource]="'sources'"
+                             formControlName="source"></lg-autocomplete>
+          </lg-control>
+
+          <div [hidden]="!topSources().length">
+            <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
           </div>
-        </lg-number-input>
+        </lg-gap-column>
+      </lg-gap-column>
+
+    </lg-card>
+
+    <lg-gap-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: #ffffff">
+
+      <lg-control label="{{ 'product.form.tags.label'|translate }}">
+        <lg-tags-control [multi]="true"
+                         [resource]="'tags'"
+                         formControlName="tags"></lg-tags-control>
       </lg-control>
 
-      <lg-buttons-group [items]="buttons"
-                        formControlName="unit">
-      </lg-buttons-group>
+
+      <lg-gap-column>
+        <lg-control label="{{ 'product.form.category_id.label'|translate }}">
+          <lg-multiselect #categorySelect
+                          [resource]="'categories'"
+                          formControlName="category_id"></lg-multiselect>
+        </lg-control>
+
+        @if (topCategories().length) {
+          <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+        }
+      </lg-gap-column>
     </lg-gap-row>
 
-    <lg-control label="{{ 'product.form.price.label'|translate }}">
-      <lg-number-input #priceInput
-                       [placeholder]="'product.form.price.placeholder'|translate"
-                       formControlName="price"
-                       lgParseMath></lg-number-input>
-    </lg-control>
-
-    <lg-gap-column>
-      <lg-control label="{{ 'product.form.source.label'|translate }}">
-        <lg-autocomplete #sourceInput
-                         (onSelected)="sourceChips.clearSelected()"
-                         [noLoad]="true"
-                         [resource]="'sources'"
-                         formControlName="source"></lg-autocomplete>
-      </lg-control>
-
-      <div [hidden]="!topSources().length">
-        <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-      </div>
-    </lg-gap-column>
-
-    <lg-control label="{{ 'product.form.tags.label'|translate }}">
-      <lg-tags-control [multi]="true"
-                       [resource]="'tags'"
-                       formControlName="tags"></lg-tags-control>
-    </lg-control>
   </lg-gap-column>
 </form>
