@@ -27,7 +27,7 @@ export class Recipe {
     this.description = String(props.description ?? '').trim();
     this.ingredients = props.ingredients.map((ingredient) => {
       return Ingredient.fromRaw(ingredient);
-    });
+    }).filter((ingredient) => !ingredient.empty);
     this.outcome_amount = parseFloat(String(props.outcome_amount ?? ''));
     this.outcome_unit = (String(props.outcome_unit ?? '') || 'gram') as Unit;
     this.uuid = String(props.uuid ?? '').trim() || undefined;

@@ -60,10 +60,10 @@ export class CalculateRecipeService {
       const table: CalculationTableParams[] = [];
 
       const recipe = await this._recipeRepository.getOne(recipeUUID, true);
-      console.log(recipe)
       const calculation = new RecipeCalculation(recipe);
 
       calculation.ingredients.forEach(ingredient => {
+        if (ingredient.blanked) return;
         table.push(this._makeRow({
           name: ingredient.generalName,
           price_per_gram: ingredient.pricePerUnit,

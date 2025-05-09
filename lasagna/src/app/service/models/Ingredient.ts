@@ -84,6 +84,13 @@ export class Ingredient {
     return !this.amount;
   }
 
+  get empty() {
+    return !this.name
+      && !this.amount
+      && !this.product_id
+      && !this.recipe_id;
+  }
+
   get typeSelected() {
     return !!this.product_id
       || !!this.recipe_id
