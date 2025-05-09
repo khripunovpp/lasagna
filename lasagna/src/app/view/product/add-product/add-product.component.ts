@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, effect, OnInit, Renderer2, signal, viewChild} from '@angular/core';
 import {CardComponent} from '../../ui/card/card.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
@@ -41,9 +41,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                   @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-title>
                           {{ 'edit-label'|translate }}
-                          <span [style.color]="product()?.ownColor">
-                              {{ product()?.name }}
-                          </span>
+                          {{ product()?.name }}
                       </lg-title>
                   } @else {
                       <lg-title>
@@ -119,6 +117,7 @@ export class AddProductComponent
     private _aRoute: ActivatedRoute,
     private _productsRepository: ProductsRepository,
     private _notificationsService: NotificationsService,
+    private _renderer: Renderer2,
   ) {
   }
 
@@ -130,6 +129,17 @@ export class AddProductComponent
     return this.draftRef()!.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
+  productEffect = effect(() => {
+    if (this.product()) {
+      this._renderer.setProperty(document.body, 'style', `--background-color: ${this.product()!.ownColor}`);
+    } else {
+      this._renderer.removeAttribute(document.body, 'style');
+    }
+  });
+
+  ngOnDestroy() {
+    this._renderer.removeAttribute(document.body, 'style');
+  }
 
   ngOnInit() {
     combineLatest([
@@ -251,7 +261,7 @@ export class AddProductComponent
     if (!uuid) {
       return;
     }
-    this._productsRepository.getOne(uuid).then(product => {
+    this._productsRepository.getOne(uuid, true).then(product => {
       if (!product) {
         return;
       }

@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {CategoryProductsRepository} from './category-products-repository.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
-import {UsingHistoryService} from '../services/using-history.service';
+import {DraftFormsService, UsingHistoryService} from '@service/services';
 import {Subject} from 'rxjs';
-import {DraftFormsService} from '../services/draft-forms.service';
 import {TagsRepositoryService} from './tags-repository.service';
 import {Product} from '../models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
@@ -67,6 +66,7 @@ export class ProductsRepository {
 
   async getOne(
     uuid: Product | string | undefined,
+    verbose: boolean = false,
   ) {
     return new Promise<Product | undefined>(async (resolve, reject) => {
       uuid = typeof uuid === 'string' ? uuid : (uuid as Product).uuid;
@@ -74,9 +74,15 @@ export class ProductsRepository {
         resolve(undefined);
         return;
       }
-      await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: ProductDTO) => {
-        resolve(Product.fromRaw(result));
-      });
+      if (verbose) {
+        await this._indexDbService.getOneWithRelations(Stores.PRODUCTS, uuid).then((result) => {
+          resolve(Product.fromRaw(result.data));
+        });
+      } else {
+        await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: ProductDTO) => {
+          resolve(Product.fromRaw(result));
+        });
+      }
     });
   }
 

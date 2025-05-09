@@ -11,17 +11,32 @@
   --placeholder: var(--text-color);
   --header-height: 51px;
   --card-bg: #fff;
+  --background-color: #5cdc5c;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: Inter, "Helvetica Neue", sans-serif;
-  background-color: #eef5ef;
   height: 100%;
   font-size: 16px;
   color: var(--text-color);
   letter-spacing: 0.2px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    user-select: none;
+    pointer-events: none;
+    background-color: var(--background-color);
+    opacity: 0.1;
+  }
 }
 
 .text-inverse {
