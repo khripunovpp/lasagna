@@ -1,4 +1,4 @@
-import {removeAllSpecialChars} from '@helpers/strings.helper';
+import {removeAllNonLetters} from '@helpers/strings.helper';
 
 export const randomRGB = () => {
   return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
@@ -40,7 +40,7 @@ export const isColorString = (str: string) => {
 export const estimateColor = (
   name: string
 ) => {
-  const clearedName = removeAllSpecialChars(name);
+  const clearedName = removeAllNonLetters(name);
   if (clearedName.length > 0) {
     return stringToColor(clearedName);
   }
