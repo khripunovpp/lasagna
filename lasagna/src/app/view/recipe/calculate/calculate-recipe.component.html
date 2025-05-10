@@ -90,6 +90,8 @@
               <canvas [data]="doughnutChartData().prices"
                       [options]="doughnutChartOptions"
                       [type]="doughnutChartType"
+                      (chartHover)="onChartHover('price', $event.event, $event.active)"
+                      #priceChart
                       baseChart>
               </canvas>
             </lg-gap-column>
@@ -103,7 +105,9 @@
 
               <canvas [data]="doughnutChartData().weight"
                       [options]="doughnutChartOptions"
+                      (chartHover)="onChartHover('weight', $event.event, $event.active)"
                       [type]="doughnutChartType"
+                      #weightChart
                       baseChart>
               </canvas>
             </lg-gap-column>

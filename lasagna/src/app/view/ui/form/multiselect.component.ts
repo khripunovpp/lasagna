@@ -75,6 +75,10 @@ export interface MultiselectItem {
               font-size: inherit;
             }
           }
+
+          .ng-value {
+            white-space: normal !important;
+          }
         }
 
         .ng-dropdown-panel {
