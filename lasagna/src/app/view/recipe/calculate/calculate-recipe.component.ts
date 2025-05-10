@@ -1,4 +1,14 @@
-import {Component, computed, Injector, model, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  computed,
+  Injector,
+  model,
+  OnInit,
+  signal,
+  ViewChild,
+  viewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
@@ -91,6 +101,11 @@ export class CalculateRecipeComponent
     });
   }
 
+  ngAfterViewInit() {
+    (window as any)['chartPrices'] = this.chartPrices;
+     (window as any)['chartWeight'] = this.chartWeight;
+  }
+
   public doughnutChartType: ChartType = 'pie';
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
@@ -133,7 +148,7 @@ export class CalculateRecipeComponent
             label: 'Cost',
             data: prices,
             backgroundColor: colors,
-            hoverBackgroundColor: colors,
+            // hoverBackgroundColor: colors,
             borderWidth: 0,
           }
         ],
@@ -145,7 +160,7 @@ export class CalculateRecipeComponent
             label: 'Amount',
             data: weight,
             backgroundColor: colors,
-            hoverBackgroundColor: colors,
+            // hoverBackgroundColor: colors,
             borderWidth: 0,
           }
         ],
@@ -153,6 +168,18 @@ export class CalculateRecipeComponent
       ingredients: result?.calculation?.ingredients || [],
     }
   });
+  onChartHover(sourceChart: 'price' | 'weight', event: ChartEvent, activeElements: any[]) {
+  if (!activeElements?.length) return;
+
+  const targetChart = sourceChart === 'price' ? this.chartWeight : this.chartPrices;
+  const index = activeElements[0].index;
+    console.log(targetChart?.chart,index,sourceChart)
+  // targetChart?.chart?.setActiveElements([
+  //   { index, datasetIndex: 0 },
+  // ]);
+
+  targetChart?.chart?.update();
+}
   public doughnutChartOptions: ChartOptions = {
     plugins: {
       legend: {
@@ -184,6 +211,8 @@ export class CalculateRecipeComponent
       // }
     }
   };
+  @ViewChild('priceChart', {read: BaseChartDirective}) chartPrices: BaseChartDirective | undefined;
+  @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
   outcome_amount = model(0);
   showedOutcome = signal(0);
   totalTaxes = signal(0);
