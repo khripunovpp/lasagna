@@ -1,4 +1,4 @@
-import {Component, HostBinding, input, output, viewChild, viewChildren, ViewEncapsulation} from '@angular/core';
+import {Component, input, output, viewChild, ViewEncapsulation} from '@angular/core';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
@@ -9,7 +9,13 @@ export type ButtonStyle = 'default' |
   'danger' |
   'warning' |
   'transcluent' |
-  'info'
+  'info';
+
+export type ButtonSizes =
+  'default' |
+  'medium' |
+  'small' |
+  'tiny';
 
 @Component({
   selector: 'lg-button',
@@ -96,32 +102,32 @@ export type ButtonStyle = 'default' |
 
       @media (hover: hover) {
         .button:hover {
-        transform: scale(0.95);
+          transform: scale(0.95);
         }
       }
 
       .button.no-radius {
-        border-radius: 0;
+        border-radius: 0 !important;
       }
 
       .button.no-top-radius {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
       }
 
       .button.no-bottom-radius {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
       }
 
       .button.no-right-radius {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
       }
 
       .button.no-left-radius {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
       }
 
       .button.active {
@@ -250,14 +256,10 @@ export type ButtonStyle = 'default' |
 export class ButtonComponent {
   constructor() {
   }
+
   onClick = output<any>();
   style = input<ButtonStyle>('default');
-  size = input<
-    'default' |
-    'medium' |
-    'small' |
-    'tiny'
-  >('default');
+  size = input<ButtonSizes>('default');
   icon = input<boolean>(false);
   flat = input<boolean>(false);
   link = input<string>('');

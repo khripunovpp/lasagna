@@ -17,6 +17,7 @@ import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -32,40 +33,41 @@ import {TranslatePipe} from '@ngx-translate/core';
     ShrinkDirective,
     TimeAgoPipe,
     DecimalPipe,
-    TranslatePipe
+    TranslatePipe,
+    GapColumnComponent
   ],
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true">
-                  @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                      <lg-title>
-                          {{ 'edit-label'|translate }}
-                          {{ product()?.name }}
-                      </lg-title>
-                  } @else {
-                      <lg-title>
-                          {{ 'product.form.title'|translate }}
-                      </lg-title>
-                  }
+              <lg-gap-column>
+                  <lg-gap-row [center]="true" [mobileMode]="true">
+                      @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+                          <lg-title>
+                              {{ 'edit-label'|translate }}
+                              {{ product()?.name }}
+                          </lg-title>
+                      } @else {
+                          <lg-title>
+                              {{ 'product.form.title'|translate }}
+                          </lg-title>
+                      }
+
+                      @if (product()?.pricePerUnit) {
+                          ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
+                      }
+                  </lg-gap-row>
+
                   @if (draftRef()) {
-                      {{ 'saved-draft-label'|translate }}
+                      <span>{{ 'saved-draft-label'|translate }}</span>
                   }
-              </lg-gap-row>
 
-              <div>
                   @if (product()?.updatedAt) {
-                      ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})
+                      <span> ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})</span>
                   }
 
-                  @if (product()?.pricePerUnit) {
-                      ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
-                  }
-              </div>
-
+              </lg-gap-column>
 
               <lg-add-product-form [product]="product()"></lg-add-product-form>
-
 
               <lg-gap-row [mobileMode]="true" [relaxed]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {

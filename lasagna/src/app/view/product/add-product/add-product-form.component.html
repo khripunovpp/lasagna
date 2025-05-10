@@ -2,15 +2,33 @@
   <lg-gap-column>
     <lg-card>
       <lg-gap-column>
-        <lg-control label="{{ 'product.form.name.label'|translate }}">
-          <lg-autocomplete #nameField
-                           [key]="'name'"
-                           [resource]="'products-names'"
-                           formControlName="name"></lg-autocomplete>
-        </lg-control>
+        <lg-gap-row [mobileMode]="true">
+          <lg-control lgExpand>
+            <lg-autocomplete #nameField
+                             [key]="'name'"
+                             [placeholder]="'product.form.name.placeholder'|translate"
+                             [resource]="'products-names'"
+                             formControlName="name"></lg-autocomplete>
+          </lg-control>
 
-        <lg-gap-row [bottom]="true" [mobileMode]="true">
-          <lg-control label="{{ 'product.form.amount.label'|translate }}" lgExpand>
+          <lg-gap-column lgWidth="40%">
+            <lg-control>
+              <lg-autocomplete #sourceInput
+                               (onSelected)="sourceChips.clearSelected()"
+                               [noLoad]="true"
+                               [placeholder]="'product.form.source.placeholder'|translate"
+                               [resource]="'sources'"
+                               formControlName="source"></lg-autocomplete>
+            </lg-control>
+
+            <div [hidden]="!topSources().length">
+              <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+            </div>
+          </lg-gap-column>
+        </lg-gap-row>
+
+        <lg-gap-row [center]="true" [mobileMode]="true">
+          <lg-control lgExpand>
             <lg-number-input (onInputChange)="priceInput.focus()"
                              [placeholder]="'product.form.amount.placeholder'|translate:{unit:form.value.unit}"
                              formControlName="amount"
@@ -31,38 +49,25 @@
             </lg-number-input>
           </lg-control>
 
-          <lg-buttons-group [items]="buttons"
+          <lg-buttons-group [flat]="true"
+                            [items]="buttons"
                             formControlName="unit">
           </lg-buttons-group>
-        </lg-gap-row>
 
-        <lg-control label="{{ 'product.form.price.label'|translate }}">
-          <lg-number-input #priceInput
-                           [placeholder]="'product.form.price.placeholder'|translate"
-                           formControlName="price"
-                           lgParseMath></lg-number-input>
-        </lg-control>
-
-        <lg-gap-column>
-          <lg-control label="{{ 'product.form.source.label'|translate }}">
-            <lg-autocomplete #sourceInput
-                             (onSelected)="sourceChips.clearSelected()"
-                             [noLoad]="true"
-                             [resource]="'sources'"
-                             formControlName="source"></lg-autocomplete>
+          <lg-control lgWidth="40%">
+            <lg-number-input #priceInput
+                             [placeholder]="'product.form.price.placeholder'|translate"
+                             formControlName="price"
+                             lgParseMath></lg-number-input>
           </lg-control>
-
-          <div [hidden]="!topSources().length">
-            <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-          </div>
-        </lg-gap-column>
+        </lg-gap-row>
       </lg-gap-column>
 
     </lg-card>
 
     <lg-gap-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: #ffffff">
 
-      <lg-control label="{{ 'product.form.tags.label'|translate }}">
+      <lg-control label="{{ 'product.form.tags.label'|translate }}" lgExpand>
         <lg-tags-control [multi]="true"
                          [resource]="'tags'"
                          formControlName="tags"></lg-tags-control>

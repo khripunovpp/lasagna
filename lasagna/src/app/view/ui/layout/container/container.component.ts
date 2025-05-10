@@ -27,6 +27,12 @@ import {Component} from '@angular/core';
         max-width: 1920px;
         gap: 32px;
       }
+
+      @media (max-width: 600px) {
+        .container {
+          gap: 16px;
+        }
+      }
     `
   ]
 })

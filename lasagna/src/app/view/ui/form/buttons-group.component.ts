@@ -1,15 +1,5 @@
-import {
-  Component,
-  effect,
-  ElementRef,
-  forwardRef,
-  input,
-  output,
-  signal,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
-import {ButtonComponent, ButtonStyle} from '../layout/button.component';
+import {Component, effect, forwardRef, Input, input, signal, ViewEncapsulation} from '@angular/core';
+import {ButtonComponent, ButtonSizes, ButtonStyle} from '../layout/button.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 export interface ButtonGroupItem {
@@ -17,20 +7,26 @@ export interface ButtonGroupItem {
   value: string
   onClick: () => void
   style?: ButtonStyle
+  size?: ButtonSizes
 }
 
 @Component({
   selector: 'lg-buttons-group',
   standalone: true,
   template: `
-      <div class="buttons-group">
+      <div [class.buttons-group--flat]="flat"
+           class="buttons-group">
           @for (item of items();track item.value;let last = $last, first = $first, index = $index) {
               <lg-button (click)="onClickItem(item,index)"
                          [active]="activeIndex() == index"
+                         [flat]="flat"
                          [style]="item.style || 'default'"
+                         [size]="item.size || 'default'"
                          [noLeftRadius]="last"
                          [noRightRadius]="first"
-                         [noRadius]="!first && !last">
+                         class="buttons-group__item"
+                         [noRadius]="!first && !last"
+                         [class.buttons-group__item--active]="activeIndex() == index">
                   {{ item.label }}
               </lg-button>
           }
@@ -49,6 +45,10 @@ export interface ButtonGroupItem {
       .buttons-group lg-button button {
         width: 100%;
       }
+      .buttons-group--flat {
+        gap: 16px;
+        width: 100%;
+      }
     `
   ],
   imports: [
@@ -64,21 +64,22 @@ export interface ButtonGroupItem {
     }
   ]
 })
-export class ButtonsGroupComponent implements
-  ControlValueAccessor {
+export class ButtonsGroupComponent implements ControlValueAccessor {
+  @Input() flat = false;
   items = input<ButtonGroupItem[]>();
   activeIndex = signal<number>(0);
-  onClickItem(item: ButtonGroupItem,index: number) {
-    this.activeIndex.set(index);
-    this.writeValue(item.value);
-    item.onClick();
-  }
-
   value = signal<string>('');
   effect = effect(() => {
     const activeIndex = this.items()?.findIndex(item => item.value === this.value()) ?? -1;
     this.activeIndex.set(activeIndex === -1 ? 0 : activeIndex);
   });
+
+  onClickItem(item: ButtonGroupItem, index: number) {
+    this.activeIndex.set(index);
+    this.writeValue(item.value);
+    item.onClick();
+  }
+
   onChange: (value: string) => void = () => {
   };
   onTouched: () => void = () => {

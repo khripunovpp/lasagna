@@ -25,7 +25,8 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '@view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '@view/ui/layout/button.component';
-import {CategoryProduct} from '@service/models/CategoryProduct';
+import {WidthDirective} from '@view/directives/width.directive';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-add-product-form',
@@ -50,6 +51,8 @@ import {CategoryProduct} from '@service/models/CategoryProduct';
     CardComponent,
     MatIcon,
     ButtonComponent,
+    WidthDirective,
+    JsonPipe,
   ],
   styles: [
     `
@@ -83,17 +86,19 @@ export class AddProductFormComponent
   });
   buttons: ButtonGroupItem[] = [
     {
-      label: 'Grams',
+      label: 'gr',
       value: 'gram',
-      style: 'secondary',
+      style: 'info',
+      size: 'small',
       onClick: () => {
         console.log('Grams');
       },
     },
     {
-      label: 'Pieces',
+      label: 'pc',
       value: 'piece',
-      style: 'secondary',
+      style: 'info',
+      size: 'small',
       onClick: () => {
         console.log('Piece');
       }
