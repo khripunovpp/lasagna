@@ -1,6 +1,7 @@
 import {
   Component,
   forwardRef,
+  Input,
   input,
   OnInit,
   Optional,
@@ -40,6 +41,7 @@ export interface autocompleteItem {
                      [items]="loadedList()"
                      [multiple]="multi()"
                      [ngModel]="value"
+                     [placeholder]="placeholder"
                      [searchFn]="searchFn"
                      bindLabel="name"
                      notFoundText="Start typing to search">
@@ -140,7 +142,7 @@ export class AutocompleteComponent
   ) {
   }
 
-
+  @Input() placeholder = '';
   noLoad = input<boolean>(false);
   resource = input<string>('');
   key = input<string>('');

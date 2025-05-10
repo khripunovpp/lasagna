@@ -7,8 +7,8 @@ import {NgClass} from '@angular/common';
   template: `
       <div [ngClass]="size()"
            [style.align-items]="alignItems()"
-            [class.fill]="fill"
-            [class.expand-mobile]="expandMobile"
+           [class.fill]="fill"
+           [class.expand-mobile]="expandMobile"
            class="gap-column">
           <ng-content></ng-content>
       </div>
@@ -20,8 +20,8 @@ import {NgClass} from '@angular/common';
     `:host {
 
       flex: 1;
-       @media (max-width: 768px) {
-         width: 100%;
+      @media (max-width: 768px) {
+        width: 100%;
       }
     }
 
@@ -47,9 +47,24 @@ import {NgClass} from '@angular/common';
       justify-content: space-between;
       height: 100%;
     }
-    .gap-column.expand-mobile {
-      @media (max-width: 768px) {
 
+    @media (max-width: 600px) {
+      .gap-column {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .gap-column.small {
+        gap: 4px;
+      }
+
+      .gap-column.medium {
+        gap: 8px;
+      }
+
+      .gap-column.tiny {
+        gap: 2px;
       }
     }
     `
@@ -70,7 +85,7 @@ export class GapColumnComponent {
   position = input<
     'start' |
     'center' |
-    'end'|
+    'end' |
     'stretch'
   >('stretch');
   alignItems = computed(() => {
