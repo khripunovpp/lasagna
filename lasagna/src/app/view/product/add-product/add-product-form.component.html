@@ -69,6 +69,7 @@
 
       <lg-control label="{{ 'product.form.tags.label'|translate }}" lgExpand>
         <lg-tags-control [multi]="true"
+                         [placeholder]="'product.form.tags.placeholder'|translate"
                          [resource]="'tags'"
                          formControlName="tags"></lg-tags-control>
       </lg-control>
@@ -77,6 +78,7 @@
       <lg-gap-column>
         <lg-control label="{{ 'product.form.category_id.label'|translate }}">
           <lg-multiselect #categorySelect
+                          [placeholder]="'product.form.category_id.placeholder'|translate"
                           [resource]="'categories'"
                           formControlName="category_id"></lg-multiselect>
         </lg-control>
