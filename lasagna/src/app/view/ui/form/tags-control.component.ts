@@ -1,6 +1,6 @@
 import {
   Component,
-  forwardRef,
+  forwardRef, Input,
   input,
   OnInit,
   Optional,
@@ -38,6 +38,7 @@ export interface TagsItem {
                      [items]="loadedList()"
                      [multiple]="multi()"
                      [ngModel]="value"
+                     [placeholder]="placeholder"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
                   {{ $any(item)?.name ?? $any(item)?.label ?? item }}
@@ -131,6 +132,7 @@ export class TagsControlComponent
   ) {
   }
 
+  @Input() placeholder: string = '';
   resource = input<string>('');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);

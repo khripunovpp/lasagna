@@ -20,7 +20,7 @@ import {TagsControlComponent} from '../../ui/form/tags-control.component';
 import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
 
-import {debounceTime} from 'rxjs';
+import {debounceTime, tap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '@view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
@@ -117,6 +117,7 @@ export class AddProductFormComponent
     if (!this.product() || this.form.dirty) {
       return;
     }
+    console.log('Product effect', this.product());
     this.form.reset(productToFormValue(this.product()!));
     this.form.markAsPristine();
   });
@@ -146,6 +147,7 @@ export class AddProductFormComponent
   ngOnInit() {
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
+      tap((v) => console.log('Form value changed',v)),
       debounceTime(100),
     ).subscribe(values => {
       if (!this.form.dirty) {
@@ -158,7 +160,8 @@ export class AddProductFormComponent
   resetForm(
     value?: Product
   ) {
-    this.form.reset(value ? value?.toDTO() as any : this._defFormValue);
+    console.log('Reset form', value);
+    this.form.reset(value ? productToFormValue(value) : this._defFormValue);
     this.form.markAsPristine();
     this._loadUsingHistory();
   }

@@ -1,6 +1,7 @@
 import {
   Component,
   forwardRef,
+  Input,
   input,
   OnInit,
   Optional,
@@ -12,7 +13,6 @@ import {
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-
 
 
 export interface MultiselectItem {
@@ -27,9 +27,10 @@ export interface MultiselectItem {
           <ng-select (change)="onChangeSelect($event)"
                      (ngModelChange)="onChangeInput($event)"
                      [compareWith]="compareWith"
-                     [multiple]="multi()"
                      [items]="loadedList()"
+                     [multiple]="multi()"
                      [ngModel]="value"
+                     [placeholder]="placeholder"
                      [searchFn]="searchFn">
               <ng-template let-item="item" ng-label-tmp>
                   {{ item?.name ?? item?.value ?? item }}
@@ -45,7 +46,7 @@ export interface MultiselectItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective
-],
+  ],
   styles: [
     `
       lg-multiselect {
@@ -112,6 +113,7 @@ export class MultiselectComponent
   ) {
   }
 
+  @Input() placeholder: string = '';
   resource = input<string>('');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);
