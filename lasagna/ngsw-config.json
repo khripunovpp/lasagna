@@ -12,7 +12,9 @@
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/docs/**/*.*",
+          "/i18n/**/*.*"
         ]
       }
     },
