@@ -1,1 +1,0 @@
-var t=o=>({name:o.name,amount:o.amount,unit:o.unit,price:o.price,source:o.source,category_id:o.category_id?.toUUID()||null,tags:o.tags?.map(r=>r.toString())||[]}),e=o=>({name:o.name}),a=o=>({name:o.name});export{t as a,e as b,a as c};
