@@ -1,7 +1,6 @@
 @import "@ng-select/ng-select/themes/default.theme.css";
 
 :root {
-
   --text-color: #0d1340;
   --text-color-inverse: #f5f5f5;
   --focus-shadow: 0 0 0 2px var(--active-color);
@@ -14,6 +13,46 @@
   --background-color: #f9c3ff;
   --secondary-color: #5e6282;
   --bounce-bezier: cubic-bezier(.47, 1.64, .41, .8);
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/material-icons.woff2') format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter18pt-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter24pt-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
 }
 
 body {
