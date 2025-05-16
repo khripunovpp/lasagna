@@ -7,7 +7,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import {JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {CardComponent} from '@view/ui/card/card.component';
@@ -20,9 +20,8 @@ import {Router} from '@angular/router';
   imports: [
     NgTemplateOutlet,
     GapColumnComponent,
-    CardComponent,
-    JsonPipe
-  ],
+    CardComponent
+],
   template: `
       <lg-card>
           <div class="tabs">

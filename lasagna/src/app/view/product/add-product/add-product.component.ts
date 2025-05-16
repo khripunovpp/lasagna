@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, computed, effect, OnInit, Renderer2, signal, viewChild} from '@angular/core';
-import {CardComponent} from '../../ui/card/card.component';
+
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -24,7 +24,6 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
   standalone: true,
   imports: [
     ContainerComponent,
-    CardComponent,
     TitleComponent,
     AddProductFormComponent,
     GapRowComponent,
@@ -35,7 +34,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
     DecimalPipe,
     TranslatePipe,
     GapColumnComponent
-  ],
+],
   template: `
       <lg-fade-in>
           <lg-container>

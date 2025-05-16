@@ -10,7 +10,7 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {CardComponent} from './card.component';
+
 import {CardListItemDirective} from './card-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
 import {CheckboxComponent} from '../form/chckbox.component';
@@ -26,12 +26,11 @@ export interface CardListSelectionEvent {
   selector: 'lg-card-list',
   standalone: true,
   imports: [
-    CardComponent,
     NgTemplateOutlet,
     CheckboxComponent,
     FormsModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule
+],
   template: `
       <section [formGroup]="selected" class="lg-card-list">
           <section class="lg-card-list__inner" formArrayName="items">

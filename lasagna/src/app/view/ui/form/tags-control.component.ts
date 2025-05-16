@@ -17,7 +17,7 @@ import {
 } from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {JsonPipe, NgStyle} from '@angular/common';
+import {NgStyle} from '@angular/common';
 import {Tag} from '@service/models/Tag';
 
 
@@ -67,9 +67,8 @@ export interface TagsItem {
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
     NgMultiLabelTemplateDirective,
-    JsonPipe,
     NgStyle
-  ],
+],
   styles: [
     `
       lg-tags-control {
