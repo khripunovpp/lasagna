@@ -1,4 +1,4 @@
-import {Component, contentChild, input, model, output, viewChild, ViewChild} from '@angular/core';
+import {Component, contentChild, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
@@ -37,7 +37,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           <lg-button [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-              {{ 'import-label'|translate }}
+              {{ label|translate }}
           </lg-button>
       </lg-upload>
 
@@ -177,6 +177,7 @@ export class ImportComponent {
   ) {
   }
 
+  @Input() label: string = 'import-label';
   rowsToAdd: Record<number, any> = {};
   rowsToUpdate: Record<number, any> = {};
   rowsToSkip: Record<number, any> = {};

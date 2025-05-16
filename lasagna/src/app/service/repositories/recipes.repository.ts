@@ -129,7 +129,7 @@ export class RecipesRepository {
   getDraftRecipe(uuid?: string) {
     const draft = this._draftFormsService.getDraftForms<RecipeDTO>('draft_recipes');
     if (uuid && draft?.[uuid]) {
-      return [draft?.[uuid]];
+      return [draft![uuid]];
     }
     return draft
       ? Object.values(draft)

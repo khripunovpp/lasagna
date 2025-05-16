@@ -1,4 +1,4 @@
-import {Component, forwardRef, HostListener, input, output, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, HostListener, Input, input, output, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NgClass} from '@angular/common';
 
@@ -13,7 +13,7 @@ import {NgClass} from '@angular/common';
           <input (ngModelChange)="onChangeCheckbox($event)"
                  [attr.id]="name()+'-'+value"
                  [attr.name]="name()"
-                 [ngModel]="value"
+                 [ngModel]="modelValue"
                  class="checkbox"
                  type="checkbox"/>
           <span [class.lg-checkbox__hoverOnly]="markOnHover()"
@@ -127,22 +127,23 @@ export class CheckboxComponent
   constructor() {
   }
 
-  value: boolean = false;
+  @Input() value: string | number = '';
+  modelValue: boolean = false;
   name = input<string>('');
-   size = input<
+  size = input<
     'small' | 'default' | 'large'
   >('default');
   markOnHover = input<boolean>(false);
   noMark = input<boolean>(false);
   customMark = input<string>('');
+  onCheckboxChanged = output<boolean>();
+
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
   onKeydown(event: KeyboardEvent) {
     event.preventDefault();
-    this.onChangeCheckbox(!this.value);
+    this.onChangeCheckbox(!this.modelValue);
   }
-
-  onCheckboxChanged = output<boolean>();
 
   onChange: (value: boolean) => void = () => {
   };
@@ -170,8 +171,8 @@ export class CheckboxComponent
 
 
   private _change(value: boolean) {
-    this.value = value;
-    this.onChange(this.value);
-    this.onCheckboxChanged.emit(this.value);
+    this.modelValue = value;
+    this.onChange(this.modelValue);
+    this.onCheckboxChanged.emit(this.modelValue);
   }
 }

@@ -45,16 +45,17 @@ import {TranslatePipe} from '@ngx-translate/core';
               </lg-button>
           </ng-template>
 
-          <lg-selection-tools></lg-selection-tools>
+          <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>
 
-          <lg-button (click)="exportRecipes(selectionZoneService.selected())"
+          <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
-              {{ 'export-label'|translate }}
+              {{ 'export-label'|translate }} recipes
           </lg-button>
 
           <lg-import (onDone)="loadRecipes()"
+                     [label]="('import-label'|translate) + ' products'"
                      [schema]="RecipeScheme"
                      [storeName]="Stores.RECIPES">
               <ng-template let-flow="flow" let-row lgImportRowTpl>
@@ -67,20 +68,23 @@ import {TranslatePipe} from '@ngx-translate/core';
           <lg-container>
               <lg-gap-row [center]="true">
                   <lg-title>
-                     {{ 'recipes.list-title'|translate }}
+                      {{ 'recipes.list-title'|translate }}
                   </lg-title>
               </lg-gap-row>
 
               @if (draft()?.length) {
-                  <lg-card-list style="--card-bg: #bee5ff">
-                      @for (item of draft();track item?.createdAt) {
-                          <ng-template lgCardListItem>
+                  <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                                (onSelected)="selectionZoneService.putSelected($event)"
+                                [selectAll]="selectionZoneService.selectAll()['draft']"
+                                [deselectAll]="selectionZoneService.deselectAll()['draft']" style="--card-bg: #bee5ff">
+                      @for (item of draft();track item.uuid) {
+                          <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
                                       @if (item?.meta?.['uuid']) {
                                           {{ 'draft.list-prefix.existing'|translate }}
                                       } @else {
-                                         {{ 'draft.list-prefix.new'|translate }}
+                                          {{ 'draft.list-prefix.new'|translate }}
                                       }
                                       {{ item?.data?.name ?? '' }}
                                   </a>
@@ -109,10 +113,10 @@ import {TranslatePipe} from '@ngx-translate/core';
 
                   <lg-card-list [mode]="selectionZoneService.selectionMode()"
                                 (onSelected)="selectionZoneService.putSelected($event)"
-                                [selectAll]="selectionZoneService.selectAll()"
-                                [deselectAll]="selectionZoneService.deselectAll()">
+                                [selectAll]="selectionZoneService.selectAll()['recipe']"
+                                [deselectAll]="selectionZoneService.deselectAll()['recipe']">
                       @for (recipe of category.recipes;track $index;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="recipe.uuid">
+                          <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
@@ -187,7 +191,7 @@ export class RecipesListComponent {
   ) {
   }
 
-  draft = signal<Array<DraftForm<RecipeDTO> | undefined>>([]);
+  draft = signal<Array<DraftForm<RecipeDTO>>>([]);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
 
@@ -218,7 +222,7 @@ export class RecipesListComponent {
     selected: Set<string>,
   ) {
     this._transferDataService.exportTable(Stores.RECIPES, 'json', {
-      selected: Array.from(selected),
+      selected: Array.from(selected || []),
     });
   }
 
