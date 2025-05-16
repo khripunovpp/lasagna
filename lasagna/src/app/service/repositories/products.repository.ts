@@ -157,7 +157,7 @@ export class ProductsRepository {
   getDraftProducts(uuid?: string) {
     const draft = this._draftFormsService.getDraftForms<ProductDTO>('draft_products');
     if (uuid && draft?.[uuid]) {
-      return [draft?.[uuid]];
+      return [draft![uuid]];
     }
     return draft
       ? Object.values(draft)

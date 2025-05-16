@@ -1,4 +1,7 @@
 import {Injectable, signal} from '@angular/core';
+import {CardListSelectionEvent} from '@view/ui/card/card-list.component';
+
+export type SelectionType = CardListSelectionEvent['type']
 
 @Injectable()
 export class SelectionZoneService {
@@ -7,34 +10,56 @@ export class SelectionZoneService {
   }
 
   selectionMode = signal<'default' | 'selection'>('default');
-  selectAll = signal<boolean>(false);
-  deselectAll = signal<boolean>(false);
-  selected = signal<Set<string>>(new Set());
+  selectAll = signal<Record<SelectionType, boolean>>({});
+  deselectAll = signal<Record<SelectionType, boolean>>({});
+  selected = signal<Record<SelectionType, Set<string>>>({});
 
   onSelection() {
     this.selectionMode.set(this.selectionMode() === 'default' ? 'selection' : 'default');
-    this.selected.set(new Set());
+    this.selected.set({});
   }
 
-  onAllSelection() {
-    this.selectAll.set(true);
-    this.deselectAll.set(false);
+  onAllSelection(
+    type: SelectionType[]
+  ) {
+    for (const t of type) {
+      this._toggleAll(true, t);
+    }
   }
 
-  onDeselectAll() {
-    this.selectAll.set(false);
-    this.deselectAll.set(true);
+  onDeselectAll(
+    type: SelectionType[]
+  ) {
+    for (const t of type) {
+      this._toggleAll(false, t);
+    }
   }
 
-  putSelected(selected: [boolean, string]) {
-    const [checked, uuid] = selected;
+  putSelected(selected: CardListSelectionEvent) {
     this.selected.update(value => {
-      if (checked) {
-        value.add(uuid);
+      debugger
+      const selectedSet = value[selected.type] ?? new Set<string>();
+      if (selected.selected) {
+        selectedSet.add(selected.uuid);
       } else {
-        value.delete(uuid);
+        selectedSet.delete(selected.uuid);
       }
+      value[selected.type] = selectedSet;
       return value;
-    })
+    });
+  }
+
+  private _toggleAll(
+    state: boolean,
+    type: SelectionType
+  ) {
+    this.selectAll.update(value => {
+      value[type] = state;
+      return value;
+    });
+    this.deselectAll.update(value => {
+      value[type] = !state;
+      return value;
+    });
   }
 }

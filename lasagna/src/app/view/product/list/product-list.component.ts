@@ -5,7 +5,7 @@ import {ProductsRepository} from '@service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, JsonPipe} from '@angular/common';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {CsvReaderService} from '@service/services/csv-reader.service';
@@ -44,16 +44,17 @@ import {TranslatePipe} from '@ngx-translate/core';
               </lg-button>
           </ng-template>
 
-          <lg-selection-tools></lg-selection-tools>
+          <lg-selection-tools [selectionTypes]="['draft','product']"></lg-selection-tools>
 
-          <lg-button (click)="exportProducts(selectionZoneService.selected())"
+          <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
-              {{ 'export-label'|translate }}
+              {{ 'export-label'|translate }} products
           </lg-button>
 
           <lg-import (onDone)="loadProducts()"
+                     [label]="('import-label'|translate) + ' products'"
                      [schema]="ProductDbInputScheme"
                      [storeName]="Stores.PRODUCTS">
               <ng-template let-flow="flow" let-row lgImportRowTpl>
@@ -81,9 +82,12 @@ import {TranslatePipe} from '@ngx-translate/core';
               </lg-title>
 
               @if (draft()?.length) {
-                  <lg-card-list style="--card-bg: #bee5ff">
-                      @for (item of draft();track item?.createdAt) {
-                          <ng-template lgCardListItem>
+                  <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                                (onSelected)="selectionZoneService.putSelected($event)"
+                                [selectAll]="selectionZoneService.selectAll()['draft']"
+                                [deselectAll]="selectionZoneService.deselectAll()['draft']" style="--card-bg: #bee5ff">
+                      @for (item of draft();track item.uuid) {
+                          <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
                               <lg-gap-row [center]="true">
                                   <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
                                       @if (item?.meta?.['uuid']) {
@@ -118,10 +122,10 @@ import {TranslatePipe} from '@ngx-translate/core';
 
                   <lg-card-list [mode]="selectionZoneService.selectionMode()"
                                 (onSelected)="selectionZoneService.putSelected($event)"
-                                [selectAll]="selectionZoneService.selectAll()"
-                                [deselectAll]="selectionZoneService.deselectAll()">
-                      @for (product of category.products;track $index;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="product.uuid">
+                                [selectAll]="selectionZoneService.selectAll()['product']"
+                                [deselectAll]="selectionZoneService.deselectAll()['product']">
+                      @for (product of category.products;track product?.uuid;let i = $index) {
+                          <ng-template lgCardListItem [uuid]="product.uuid" type="product">
                               <lg-gap-row [center]="true">
                                   <div class="expand">
                                       <lg-gap-row [center]="true">
@@ -182,7 +186,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     TimeAgoPipe,
     ExpandDirective,
     PullDirective,
-    TranslatePipe
+    TranslatePipe,
+    JsonPipe
   ],
   providers: [
     SelectionZoneService,
@@ -206,10 +211,10 @@ export class ProductListComponent
   }
 
   products: Signal<{
-    category: string;
-    products: Product[];
+    category: string
+    products: Product[]
   }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
-  draft = signal<(DraftForm<ProductDTO> | undefined)[]>([]);
+  draft = signal<(DraftForm<ProductDTO>)[]>([]);
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
 
@@ -217,7 +222,7 @@ export class ProductListComponent
     selected: Set<string>,
   ) {
     this._transferDataService.exportTable(Stores.PRODUCTS, 'json', {
-      selected: Array.from(selected),
+      selected: Array.from(selected ?? []),
     });
   }
 
