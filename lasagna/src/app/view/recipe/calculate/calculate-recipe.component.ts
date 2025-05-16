@@ -17,9 +17,9 @@ import {TableCardComponent} from '../../ui/card/table-card.component';
 import {DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {NumberInputComponent} from '../../ui/form/number-input.component';
+
 import {FormsModule} from '@angular/forms';
-import {ParseMathDirective} from '../../directives/parse-math.directive';
+
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
 
@@ -39,7 +39,7 @@ import {Recipe} from '../../../service/models/Recipe';
 import {BaseChartDirective} from 'ng2-charts';
 import {CardComponent} from '@view/ui/card/card.component';
 import {WidthDirective} from '@view/directives/width.directive';
-import {SelfCenterDirective} from '@view/directives/self-center.directive';
+
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {randomRGB} from '@helpers/color.helper';
 import {Ingredient} from '@service/models/Ingredient';
@@ -55,9 +55,7 @@ import {Ingredient} from '@service/models/Ingredient';
     ButtonComponent,
     GapRowComponent,
     DecimalPipe,
-    NumberInputComponent,
     FormsModule,
-    ParseMathDirective,
     RouterLink,
     GapColumnComponent,
     TaxesAndFeesListComponent,
@@ -68,9 +66,8 @@ import {Ingredient} from '@service/models/Ingredient';
     BaseChartDirective,
     CardComponent,
     WidthDirective,
-    SelfCenterDirective,
     ExpandDirective
-  ],
+],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {

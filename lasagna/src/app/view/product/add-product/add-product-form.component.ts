@@ -26,7 +26,7 @@ import {CardComponent} from '@view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {WidthDirective} from '@view/directives/width.directive';
-import {JsonPipe} from '@angular/common';
+
 
 @Component({
   selector: 'lg-add-product-form',
@@ -51,9 +51,8 @@ import {JsonPipe} from '@angular/common';
     CardComponent,
     MatIcon,
     ButtonComponent,
-    WidthDirective,
-    JsonPipe,
-  ],
+    WidthDirective
+],
   styles: [
     `
       lg-eggs-widget {

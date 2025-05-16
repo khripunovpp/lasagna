@@ -1,6 +1,6 @@
 import {Component, forwardRef, HostBinding, input, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
+
 
 @Component({
   selector: 'lg-chips-list',
@@ -54,9 +54,7 @@ import {JsonPipe} from '@angular/common';
       multi: true,
     }
   ],
-  imports: [
-    JsonPipe
-  ]
+  imports: []
 })
 
 export class ChipsListComponent
