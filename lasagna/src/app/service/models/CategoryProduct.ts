@@ -10,11 +10,11 @@ export class CategoryProduct {
   }
 
   get name() {
-    return String(this._name).trim();
+    return String(this._name ?? '').trim();
   }
 
   get uuid() {
-    return this._uuid ? String(this._uuid).trim() : undefined;
+    return this._uuid ? String(this._uuid ?? '').trim() : undefined;
   }
 
   get ownColor() {
@@ -40,7 +40,7 @@ export class CategoryProduct {
   }
 
   setName(name: string) {
-    this._name = String(name).trim();
+    this._name = String(name ?? '').trim();
   }
 
   copy() {
@@ -65,7 +65,7 @@ export class CategoryProduct {
   }
 
   toString() {
-    return String(this.name);
+    return String(this.name ?? '').trim();
   }
 
   toUUID() {

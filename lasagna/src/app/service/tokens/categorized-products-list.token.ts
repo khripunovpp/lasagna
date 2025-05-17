@@ -24,7 +24,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
             const categoryName = await categoryRepository.getOne(category);
 
             list.push({
-              category: categoryName?.name,
+              category: categoryName?.toString(),
               products: products,
             });
           }

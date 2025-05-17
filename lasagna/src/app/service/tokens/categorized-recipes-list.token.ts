@@ -25,7 +25,7 @@ export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<any>>('Cat
             const recipes = grouped[category];
             const categoryName = await categoryRepository.getOne(category);
             list.push({
-              category: categoryName?.name,
+              category: categoryName?.toString(),
               recipes: recipes.map((recipe) => Recipe.fromRaw(recipe)),
             });
           }
