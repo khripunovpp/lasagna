@@ -172,7 +172,9 @@ if ('serviceWorker' in navigator) {
           nonce: Math.random(),
         });
       }
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     });
   };
   navigator.serviceWorker.addEventListener('message', messageListener);
