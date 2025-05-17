@@ -78,7 +78,7 @@ function createUpdateBanner() {
 
 const reloadTimeout = 5000;
 const reloadTimeoutInSeconds = reloadTimeout / 1000;
-let secondsLeft = reloadTimeout;
+let secondsLeft = reloadTimeoutInSeconds;
 
 function dialog() {
   const dialog = document.createElement('dialog');
