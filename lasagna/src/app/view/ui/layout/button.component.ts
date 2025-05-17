@@ -155,6 +155,10 @@ export type ButtonSizes =
 
         &.flat {
           color: var(--active-color);
+
+          &::before {
+            display: none;
+          }
         }
       }
 
