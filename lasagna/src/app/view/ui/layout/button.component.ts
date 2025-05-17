@@ -31,6 +31,7 @@ export type ButtonSizes =
              [class.no-radius]="noRadius()"
              [class.no-right-radius]="noRightRadius()"
              [class.no-top-radius]="noTopRadius()"
+             [class.no-scale]="noScale()"
              [ngClass]="style() + ' ' + size()"
              [routerLink]="link() ? link() : null"
              [routerLinkActive]="['route-active']"
@@ -48,6 +49,7 @@ export type ButtonSizes =
                   [class.no-radius]="noRadius()"
                   [class.no-right-radius]="noRightRadius()"
                   [class.no-top-radius]="noTopRadius()"
+                  [class.no-scale]="noScale()"
                   [ngClass]="style() + ' ' + size()"
                   class="button"
                   type="button">
@@ -56,7 +58,9 @@ export type ButtonSizes =
       }
 
       <ng-template #content>
-          <ng-content></ng-content>
+         <span class="button__content">
+              <ng-content></ng-content>
+         </span>
       </ng-template>
   `,
   encapsulation: ViewEncapsulation.None,
@@ -84,6 +88,12 @@ export type ButtonSizes =
         justify-content: center;
         transition: all 0.4s;
         transition-timing-function: var(--bounce-bezier);
+        position: relative;
+      }
+
+      .button__content {
+        position: relative;
+        z-index: 1;
       }
 
       .button.disabled {
@@ -96,12 +106,12 @@ export type ButtonSizes =
         outline-color: var(--active-color);
       }
 
-      .button:active {
+      .button:active:not(.no-scale) {
         transform: scale(0.95);
       }
 
       @media (hover: hover) {
-        .button:hover {
+        .button:hover:not(.no-scale) {
           transform: scale(0.95);
         }
       }
@@ -131,7 +141,17 @@ export type ButtonSizes =
       }
 
       .button.active {
-        filter: brightness(0.95);
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.3);
+          border-radius: inherit;
+        }
 
         &.flat {
           color: var(--active-color);
@@ -271,4 +291,5 @@ export class ButtonComponent {
   active = input<boolean>(false);
   disabled = input<boolean>(false);
   routerLinkActive = viewChild(RouterLinkActive);
+  noScale = input<boolean>(false);
 }

@@ -20,6 +20,7 @@ export interface ButtonGroupItem {
               <lg-button (click)="onClickItem(item,index)"
                          [active]="activeIndex() == index"
                          [flat]="flat"
+                         [noScale]="true"
                          [style]="item.style || 'default'"
                          [size]="item.size || 'default'"
                          [noLeftRadius]="last"

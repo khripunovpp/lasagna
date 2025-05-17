@@ -2,30 +2,13 @@
   <lg-gap-column>
     <lg-card>
       <lg-gap-column>
-        <lg-gap-row [mobileMode]="true">
-          <lg-control lgExpand>
-            <lg-autocomplete #nameField
-                             [key]="'name'"
-                             [placeholder]="'product.form.name.placeholder'|translate"
-                             [resource]="'products-names'"
-                             formControlName="name"></lg-autocomplete>
-          </lg-control>
-
-          <lg-gap-column lgWidth="40%">
-            <lg-control>
-              <lg-autocomplete #sourceInput
-                               (onSelected)="sourceChips.clearSelected()"
-                               [noLoad]="true"
-                               [placeholder]="'product.form.source.placeholder'|translate"
-                               [resource]="'sources'"
-                               formControlName="source"></lg-autocomplete>
-            </lg-control>
-
-            <div [hidden]="!topSources().length">
-              <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-            </div>
-          </lg-gap-column>
-        </lg-gap-row>
+        <lg-control>
+          <lg-autocomplete #nameField
+                           [key]="'name'"
+                           [placeholder]="'product.form.name.placeholder'|translate"
+                           [resource]="'products-names'"
+                           formControlName="name"></lg-autocomplete>
+        </lg-control>
 
         <lg-gap-row [center]="true" [mobileMode]="true">
           <lg-control lgExpand>
@@ -49,8 +32,7 @@
             </lg-number-input>
           </lg-control>
 
-          <lg-buttons-group [flat]="true"
-                            [items]="buttons"
+          <lg-buttons-group [items]="buttons"
                             formControlName="unit">
           </lg-buttons-group>
 
@@ -67,16 +49,31 @@
 
     <lg-gap-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: #ffffff">
 
-      <lg-control label="{{ 'product.form.tags.label'|translate }}" lgExpand>
-        <lg-tags-control [multi]="true"
-                         [placeholder]="'product.form.tags.placeholder'|translate"
-                         [resource]="'tags'"
-                         formControlName="tags"></lg-tags-control>
-      </lg-control>
+      <!--      <lg-control label="{{ 'product.form.tags.label'|translate }}" lgExpand>-->
+      <!--        <lg-tags-control [multi]="true"-->
+      <!--                         [placeholder]="'product.form.tags.placeholder'|translate"-->
+      <!--                         [resource]="'tags'"-->
+      <!--                         formControlName="tags"></lg-tags-control>-->
+      <!--      </lg-control>-->
+
+      <lg-gap-column>
+        <lg-control>
+          <lg-autocomplete #sourceInput
+                           (onSelected)="sourceChips.clearSelected()"
+                           [noLoad]="true"
+                           [placeholder]="'product.form.source.placeholder'|translate"
+                           [resource]="'sources'"
+                           formControlName="source"></lg-autocomplete>
+        </lg-control>
+
+        <div [hidden]="!topSources().length">
+          <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+        </div>
+      </lg-gap-column>
 
 
       <lg-gap-column>
-        <lg-control label="{{ 'product.form.category_id.label'|translate }}">
+        <lg-control>
           <lg-multiselect #categorySelect
                           [placeholder]="'product.form.category_id.placeholder'|translate"
                           [resource]="'categories'"
