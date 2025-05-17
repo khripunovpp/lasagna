@@ -29,6 +29,7 @@ import {ExpandDirective} from '@view/directives/expand.directive';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ExpanderComponent} from '@view/ui/expander.component';
 
 
 @Component({
@@ -72,39 +73,43 @@ import {TranslatePipe} from '@ngx-translate/core';
                   </lg-title>
               </lg-gap-row>
 
-              @if (draft()?.length) {
-                  <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                                (onSelected)="selectionZoneService.putSelected($event)"
-                                [selectAll]="selectionZoneService.selectAll()['draft']"
-                                [deselectAll]="selectionZoneService.deselectAll()['draft']" style="--card-bg: #bee5ff">
-                      @for (item of draft();track item.uuid) {
-                          <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-                              <lg-gap-row [center]="true">
-                                  <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
-                                      @if (item?.meta?.['uuid']) {
-                                          {{ 'draft.list-prefix.existing'|translate }}
-                                      } @else {
-                                          {{ 'draft.list-prefix.new'|translate }}
-                                      }
-                                      {{ item?.data?.name ?? '' }}
-                                  </a>
+              <lg-expander [closeLabel]="'drafts-close-label'|translate"
+                           [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
+                  @if (draft()?.length) {
+                      <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                                    (onSelected)="selectionZoneService.putSelected($event)"
+                                    [selectAll]="selectionZoneService.selectAll()['draft']"
+                                    [deselectAll]="selectionZoneService.deselectAll()['draft']"
+                                    style="--card-bg: #bee5ff">
+                          @for (item of draft();track item.uuid) {
+                              <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
+                                  <lg-gap-row [center]="true">
+                                      <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
+                                          @if (item?.meta?.['uuid']) {
+                                              {{ 'draft.list-prefix.existing'|translate }}
+                                          } @else {
+                                              {{ 'draft.list-prefix.new'|translate }}
+                                          }
+                                          {{ item?.data?.name ?? '' }}
+                                      </a>
 
-                                  <small class="text-muted text-cursive">
-                                      {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
-                                  </small>
+                                      <small class="text-muted text-cursive">
+                                          {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
+                                      </small>
 
-                                  <lg-button [style]="'danger'"
-                                             [size]="'tiny'"
-                                             [icon]="true"
-                                             (click)="deleteDraft($any(item))">
-                                      <mat-icon aria-hidden="false"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              }
+                                      <lg-button [style]="'danger'"
+                                                 [size]="'tiny'"
+                                                 [icon]="true"
+                                                 (click)="deleteDraft($any(item))">
+                                          <mat-icon aria-hidden="false"
+                                                    fontIcon="close"></mat-icon>
+                                      </lg-button>
+                                  </lg-gap-row>
+                              </ng-template>
+                          }
+                      </lg-card-list>
+                  }
+              </lg-expander>
 
               @for (category of recipes();track category?.category) {
                   <lg-title [level]="3">
@@ -173,7 +178,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     TimeAgoPipe,
     ExpandDirective,
     PullDirective,
-    TranslatePipe
+    TranslatePipe,
+    ExpanderComponent
   ],
   styles: [
     `:host {

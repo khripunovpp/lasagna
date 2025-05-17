@@ -43,3 +43,6 @@ Thumbs.db
 
 # Sentry Config File
 .sentryclirc
+
+/public/i18n/*.po
+/public/i18n/*.mo
