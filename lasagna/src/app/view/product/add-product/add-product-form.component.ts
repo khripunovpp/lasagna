@@ -80,7 +80,7 @@ export class AddProductFormComponent
     price: new FormControl<number | null>(null, Validators.required),
     unit: new FormControl('gram'),
     source: new FormControl<string | null>(null),
-    category_id: new FormControl<any>(null, Validators.required),
+    category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
   });
   buttons: ButtonGroupItem[] = [
