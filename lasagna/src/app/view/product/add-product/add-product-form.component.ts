@@ -52,7 +52,7 @@ import {WidthDirective} from '@view/directives/width.directive';
     MatIcon,
     ButtonComponent,
     WidthDirective
-],
+  ],
   styles: [
     `
       lg-eggs-widget {
@@ -87,8 +87,7 @@ export class AddProductFormComponent
     {
       label: 'gr',
       value: 'gram',
-      style: 'info',
-      size: 'small',
+      style: 'secondary',
       onClick: () => {
         console.log('Grams');
       },
@@ -96,8 +95,7 @@ export class AddProductFormComponent
     {
       label: 'pc',
       value: 'piece',
-      style: 'info',
-      size: 'small',
+      style: 'secondary',
       onClick: () => {
         console.log('Piece');
       }
@@ -146,7 +144,7 @@ export class AddProductFormComponent
   ngOnInit() {
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
-      tap((v) => console.log('Form value changed',v)),
+      tap((v) => console.log('Form value changed', v)),
       debounceTime(100),
     ).subscribe(values => {
       if (!this.form.dirty) {

@@ -5,17 +5,19 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
   standalone: true,
   template: `
       <div class="control">
-          <label class="control__label">
-              <ng-content select="beforeLabelTpl"></ng-content>
+          @if (label()) {
+              <label class="control__label">
+                  <ng-content select="beforeLabelTpl"></ng-content>
 
-              <span class="control__label-string"><ng-content select="labelTpl"></ng-content>
-                  {{ label() }}</span>
-              <ng-content select="afterLabelTpl"></ng-content>
+                  <span class="control__label-string"><ng-content select="labelTpl"></ng-content>
+                      {{ label() }}</span>
+                  <ng-content select="afterLabelTpl"></ng-content>
 
-              <div class="control__label-end">
-                  <ng-content select="endLabelTpl"></ng-content>
-              </div>
-          </label>
+                  <div class="control__label-end">
+                      <ng-content select="endLabelTpl"></ng-content>
+                  </div>
+              </label>
+          }
           <div class="control__content">
               <ng-content></ng-content>
           </div>
