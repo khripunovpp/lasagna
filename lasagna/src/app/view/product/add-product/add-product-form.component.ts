@@ -88,17 +88,11 @@ export class AddProductFormComponent
       label: 'gr',
       value: 'gram',
       style: 'secondary',
-      onClick: () => {
-        console.log('Grams');
-      },
     },
     {
       label: 'pc',
       value: 'piece',
       style: 'secondary',
-      onClick: () => {
-        console.log('Piece');
-      }
     },
   ];
   product = input<Product | null>(null);

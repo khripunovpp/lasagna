@@ -96,20 +96,14 @@ export class AddRecipeFormComponent
   recipeFieldState = signal<Record<number, boolean>>({});
   buttons: ButtonGroupItem[] = [
     {
-      label: 'Grams',
+      label: 'gr',
       value: 'gram',
       style: 'secondary',
-      onClick: () => {
-        console.log('Grams');
-      },
     },
     {
-      label: 'Pieces',
+      label: 'pc',
       value: 'piece',
       style: 'secondary',
-      onClick: () => {
-        console.log('Piece');
-      }
     },
   ];
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
