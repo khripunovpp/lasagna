@@ -5,7 +5,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 export interface ButtonGroupItem {
   label: string
   value: string
-  onClick: () => void
+  onClick?: () => void
   style?: ButtonStyle
   size?: ButtonSizes
 }
@@ -78,7 +78,7 @@ export class ButtonsGroupComponent implements ControlValueAccessor {
   onClickItem(item: ButtonGroupItem, index: number) {
     this.activeIndex.set(index);
     this.writeValue(item.value);
-    item.onClick();
+    item.onClick?.();
   }
 
   onChange: (value: string) => void = () => {
