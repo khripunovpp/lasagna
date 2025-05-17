@@ -40,19 +40,24 @@
 }
 
 @font-face {
-    font-family: 'Inter';
-    src: url('assets/fonts/Inter18pt-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Inter';
+  src: url('assets/fonts/Inter18pt-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Inter';
-    src: url('assets/fonts/Inter24pt-Bold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Inter';
+  src: url('assets/fonts/Inter24pt-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
