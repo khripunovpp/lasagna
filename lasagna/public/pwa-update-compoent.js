@@ -75,6 +75,11 @@ function createUpdateBanner() {
   return banner;
 }
 
+
+const reloadTimeout = 5000;
+const reloadTimeoutInSeconds = reloadTimeout / 1000;
+let secondsLeft = reloadTimeout;
+
 function dialog() {
   const dialog = document.createElement('dialog');
   dialog.innerHTML = `
@@ -82,6 +87,8 @@ function dialog() {
     <p>We recommend to save a backup of your data before updating.</p>
     <button id="save-backup">Save Backup</button>
     <button id="update-app">Update App without Backup</button>
+
+    <p id="update-timeout-label" style="display: none">Will be updated in <span id="seconds-left">${reloadTimeoutInSeconds}</span> seconds</p>
   `;
   document.body.appendChild(dialog);
 
@@ -103,43 +110,11 @@ banner.appendChild(updateButton);
 const updateDialog = dialog();
 document.body.appendChild(updateDialog);
 
-// banner.style.display = 'flex';
 
+const secondLeftContainer = updateDialog.querySelector('#seconds-left');
+const updateTimeoutLabel = updateDialog.querySelector('#update-timeout-label');
 
-// 🔥 Прямая логика обновления PWA
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.ready.then(registration => {
-    // Периодически обновляем воркер вручную
-    setInterval(() => registration.update(), 60_000);
-
-    registration.addEventListener('updatefound', () => {
-      const newWorker = registration.installing;
-
-      newWorker?.addEventListener('statechange', () => {
-        if (
-          newWorker.state === 'installed' &&
-          navigator.serviceWorker.controller // текущий есть => новая версия ждёт
-        ) {
-          // Показать баннер
-          banner.style.display = 'flex';
-
-          const updateAppButton = updateDialog.querySelector('#update-app');
-          updateAppButton.addEventListener('click', () => {
-            if (registration.waiting) {
-              registration.waiting.postMessage({type: 'SKIP_WAITING'});
-            }
-          });
-        }
-      });
-    });
-  });
-
-  // Перезагрузка при активации новой версии
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    console.log('Service worker updated.');
-    window.location.reload();
-  });
-
   let currentWorker = null;
 
   const updateController = () => {
@@ -154,11 +129,6 @@ if ('serviceWorker' in navigator) {
       nonce: Math.random(),
     })
   };
-  navigator.serviceWorker.addEventListener('controllerchange', updateController);
-  updateController();
-
-  setInterval(() => updateController(), 60_000);
-
 
   const messageListener = (event) => {
     const versionDetected = event?.data?.type === "VERSION_DETECTED";
@@ -173,10 +143,27 @@ if ('serviceWorker' in navigator) {
           nonce: Math.random(),
         });
       }
+
+      updateTimeoutLabel.style.display = 'block';
+
+      const interval = setInterval(() => {
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          return;
+        }
+        secondLeftContainer.innerText = String(secondsLeft - 1);
+        secondsLeft -= 1;
+      }, 1000);
+
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, reloadTimeout);
     });
   };
+
+  navigator.serviceWorker.addEventListener('controllerchange', updateController);
+  updateController();
+  setInterval(() => updateController(), 60_000);
+
   navigator.serviceWorker.addEventListener('message', messageListener);
 }
