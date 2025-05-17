@@ -38,7 +38,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-column>
+              <lg-gap-column size="medium">
                   <lg-gap-row [center]="true" [mobileMode]="true">
                       @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                           <lg-title>

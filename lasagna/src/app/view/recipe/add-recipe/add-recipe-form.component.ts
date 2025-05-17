@@ -29,6 +29,7 @@ import {recipeToFormValue} from '@helpers/recipe.helpers';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
+import {WidthDirective} from '@view/directives/width.directive';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -53,6 +54,7 @@ import {TranslatePipe} from "@ngx-translate/core";
     FormsModule,
     MatIcon,
     TranslatePipe,
+    WidthDirective,
   ],
   providers: [
     {

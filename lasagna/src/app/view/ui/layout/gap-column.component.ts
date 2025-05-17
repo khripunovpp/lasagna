@@ -1,14 +1,14 @@
-import {Component, computed, Input, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'lg-gap-column',
   standalone: true,
   template: `
-      <div [ngClass]="size()"
-           [style.align-items]="alignItems()"
+      <div [class.expand-mobile]="expandMobile"
            [class.fill]="fill"
-           [class.expand-mobile]="expandMobile"
+           [ngClass]="size"
+           [style.align-items]="alignItems"
            class="gap-column">
           <ng-content></ng-content>
       </div>
@@ -68,7 +68,8 @@ import {NgClass} from '@angular/common';
       }
     }
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GapColumnComponent {
   constructor() {
@@ -76,20 +77,20 @@ export class GapColumnComponent {
 
   @Input() fill: boolean = false;
   @Input() expandMobile: boolean = false;
-  size = input<
-    'default' |
+  @Input() size: 'default' |
     'small' |
     'medium' |
     'tiny'
-  >('default');
-  position = input<
+    = 'default';
+  @Input() position:
     'start' |
     'center' |
     'end' |
     'stretch'
-  >('stretch');
-  alignItems = computed(() => {
-    const position = this.position();
+    = 'stretch';
+
+  get alignItems() {
+    const position = this.position;
     if (position === 'start') {
       return 'flex-start';
     } else if (position === 'center') {
@@ -99,5 +100,5 @@ export class GapColumnComponent {
     } else {
       return 'stretch';
     }
-  });
+  }
 }

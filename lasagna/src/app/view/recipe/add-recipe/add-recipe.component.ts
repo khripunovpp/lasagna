@@ -39,7 +39,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
       <lg-fade-in>
           <lg-container>
-              <lg-gap-column>
+              <lg-gap-column size="medium">
                   @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
                       <lg-gap-row [mobileMode]="true" [center]="true">
                           <lg-title>
