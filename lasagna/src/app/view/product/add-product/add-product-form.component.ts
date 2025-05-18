@@ -16,7 +16,6 @@ import {ExpandDirective} from '../../directives/expand.directive';
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '@service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
-import {TagsControlComponent} from '../../ui/form/tags-control.component';
 import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
 
@@ -46,7 +45,6 @@ import {WidthDirective} from '@view/directives/width.directive';
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
-    TagsControlComponent,
     TranslatePipe,
     CardComponent,
     MatIcon,
@@ -169,8 +167,9 @@ export class AddProductFormComponent
     this._selectResourcesService.load().then(resources => {
     });
 
-
-    // this.nameField()!.focus();
+    if (!this.product()?.uuid) {
+      this.nameField()!.focus();
+    }
     this.form.markAsPristine()
   }
 

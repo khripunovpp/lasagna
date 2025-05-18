@@ -37,7 +37,6 @@ export class SelectionZoneService {
 
   putSelected(selected: CardListSelectionEvent) {
     this.selected.update(value => {
-      debugger
       const selectedSet = value[selected.type] ?? new Set<string>();
       if (selected.selected) {
         selectedSet.add(selected.uuid);

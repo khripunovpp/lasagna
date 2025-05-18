@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  computed,
   ErrorHandler,
   importProvidersFrom,
   inject,
@@ -25,6 +26,8 @@ import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {SettingsService} from '@view/settings/settings.service';
 import {USER_LANGUAGE} from '@service/tokens/user-language.token';
 import {USER_CURRENCY} from '@service/tokens/user-currency.token';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {of, tap} from 'rxjs';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -119,15 +122,17 @@ export const appConfig: ApplicationConfig = {
     {
       provide: USER_LANGUAGE,
       useFactory: (settingsService: SettingsService) => {
-        return settingsService.settingsModel?.getSetting('lang')?.data || 'en';
+        return computed(() => {
+          return settingsService.settingsSignal()?.getSetting('lang')?.data || 'en';
+        })
       },
       deps: [SettingsService]
     },
     {
       provide: USER_CURRENCY,
       useFactory: (settingsService: SettingsService) => {
-        debugger
-        return settingsService.settingsModel?.getSetting('currency')?.data || 'USD';
+        const signalCurrency = settingsService.settingsSignal
+        return settingsService.settingsSignal;
       },
       deps: [SettingsService]
     }

@@ -82,6 +82,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
 
           <lg-card-list [mode]="selectionZoneService.selectionMode()"
                         (onSelected)="selectionZoneService.putSelected($event)"
+                        (onDeleteOne)="deleteRecipe($event)"
                         [selectAll]="selectionZoneService.selectAll()['recipe']"
                         [deselectAll]="selectionZoneService.deselectAll()['recipe']">
             @for (recipe of category.recipes; track $index; let i = $index) {
@@ -99,14 +100,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                   <small class="text-muted text-cursive" lgPull>
                     {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
                   </small>
-
-                  <lg-button [style]="'danger'"
-                             [size]="'tiny'"
-                             [icon]="true"
-                             (click)="deleteRecipe(recipe)">
-                    <mat-icon aria-hidden="false"
-                              fontIcon="close"></mat-icon>
-                  </lg-button>
                 </lg-gap-row>
               </ng-template>
             }
@@ -171,12 +164,17 @@ export class RecipesListComponent {
   }
 
   deleteRecipe(
-    recipe: Recipe,
+    event?: {
+      uuid: string
+      type: string
+    }
   ) {
-    if (!recipe.uuid) return Promise.resolve();
-    return this._recipesRepository.deleteOne(recipe.uuid).then(() => {
-      this.loadRecipes();
+    if (!event?.uuid) {
+      return;
+    }
+    this._recipesRepository.deleteOne(event!.uuid).then(() => {
       this._notificationsService.success('Recipe deleted');
+      this.loadRecipes();
     });
   }
 

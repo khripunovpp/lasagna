@@ -30,7 +30,7 @@
     <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
       <lg-gap-column [position]="'start'">
         <lg-gap-column formArrayName="ingredients" lgExpand>
-          @for (control of ingredients.controls;track (control.value.amount + i);let i = $index) {
+          @for (control of ingredients.controls;track (control.value.amount + i + 1);let i = $index) {
             <ng-container [formGroupName]="i">
               <lg-controls-row [mobileMode]="true">
                 @if (textFieldState()[i]) {

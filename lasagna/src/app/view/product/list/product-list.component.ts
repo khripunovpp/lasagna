@@ -80,6 +80,7 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
 
           <lg-card-list [mode]="selectionZoneService.selectionMode()"
                         (onSelected)="selectionZoneService.putSelected($event)"
+                        (onDeleteOne)="deleteProduct($event)"
                         [selectAll]="selectionZoneService.selectAll()['product']"
                         [deselectAll]="selectionZoneService.deselectAll()['product']">
             @for (product of category.products; track product?.uuid; let i = $index) {
@@ -103,14 +104,6 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
                       </small>
                     </lg-gap-row>
                   </div>
-
-                  <lg-button [style]="'danger'"
-                             [size]="'tiny'"
-                             [icon]="true"
-                             (click)="deleteProduct(product)">
-                    <mat-icon aria-hidden="false"
-                              fontIcon="close"></mat-icon>
-                  </lg-button>
                 </lg-gap-row>
               </ng-template>
             }
@@ -185,12 +178,15 @@ export class ProductListComponent
   }
 
   deleteProduct(
-    recipe: Product,
+    event?: {
+      uuid: string
+      type: string
+    }
   ) {
-    if (!recipe.uuid) {
+    if (!event?.uuid) {
       return;
     }
-    this._productsRepository.deleteProduct(recipe.uuid).then(() => {
+    this._productsRepository.deleteProduct(event!.uuid).then(() => {
       this._notificationsService.success('Product deleted');
       this.loadProducts();
     });

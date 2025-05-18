@@ -112,6 +112,7 @@ export class ProductsRepository {
   }
 
   deleteProduct(uuid: string) {
+    debugger
     return this._indexDbService.remove(Stores.PRODUCTS, uuid);
   }
 
@@ -134,7 +135,6 @@ export class ProductsRepository {
   }
 
   saveDraftProduct(product: Product, uuid?: string) {
-    debugger
     return this._draftFormsService.setDraftForm(
       'draft_products',
       product.toDTO(),

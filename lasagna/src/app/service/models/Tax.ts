@@ -27,7 +27,6 @@ export class Tax {
   uuid?: string;
 
   static fromRaw(dto: any) {
-    debugger
     return new Tax({
       name: dto?.name || '',
       amount: dto?.amount || 0,

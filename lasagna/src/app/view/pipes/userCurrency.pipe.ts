@@ -11,6 +11,8 @@ export class UserCurrencyPipe {
   userCurrency = inject(USER_CURRENCY);
 
   transform(value?: string | number, digitInfo: string = '1.0-0') {
-    return this.currencyPipe.transform(value, this.userCurrency || 'USD', 'symbol-narrow', digitInfo);
+    const currency: string = this.userCurrency()?.getSetting<string>('currency')?.data || 'USD';
+    return this.currencyPipe.transform(value, currency, 'symbol-narrow', digitInfo);
+
   }
 }
