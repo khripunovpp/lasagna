@@ -1,142 +1,73 @@
-import {Component, contentChild, signal} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
+import {AfterViewInit, Component, ElementRef, HostBinding, inject, Renderer2, viewChild} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {QuickActionsTplDirective} from './controls-bar-quick-actions-tpl.directive';
-import {NgTemplateOutlet} from '@angular/common';
-import {ButtonComponent} from '../layout/button.component';
 
 @Component({
   selector: 'lg-controls-bar',
   template: `
-      <div @fromLeft
-           [class.opened]="opened()"
-           class="lg-controls-bar">
-          <div class="lg-controls-bar__inner">
-              <lg-button (click)="toggle()"
-                         (keydown.enter)="toggle()"
-                         (swipeleft)="toggle()" (swiperight)="toggle()"
-                         [icon]="true"
-                         [style]="'transcluent'"
-                         class="lg-controls-bar__caret">
-                  <mat-icon aria-hidden="false" fontIcon="design_services"></mat-icon>
-              </lg-button>
-
-              @if (quickActionsTpl()) {
-                  <div class="lg-controls-bar__quickActions">
-                      <ng-container *ngTemplateOutlet="quickActionsTpl()?.templateRef!"></ng-container>
-                  </div>
-              }
-
-              <div class="lg-controls-bar__content">
-                  <ng-content></ng-content>
-              </div>
-          </div>
+    <div @fromLeft
+         (@fromLeft.done)="setHeight()"
+         #bar
+         class="lg-controls-bar">
+      <div class="lg-controls-bar__content">
+        <ng-content></ng-content>
       </div>
+    </div>
   `,
   styles: [
     `
       .lg-controls-bar {
         position: fixed;
-        right: 0;
-        top: var(--app-content-top-padding);
+        z-index: 5;
+        right: 50%;
+        bottom: var(--controls-bar-shift, 0);
+        transform: translateX(50%);
         display: flex;
         gap: 8px;
-        border-radius: 4px;
-
-      }
-
-      .lg-controls-bar__inner {
-        display: flex;
-        transform: translateX(calc(100% - 16px));
-        position: relative;
-        transition: transform 0.3s ease-in-out;
-        border-radius: 0 0 15px 15px;
-        padding: 0 16px;
-      }
-
-      .lg-controls-bar.opened .lg-controls-bar__inner {
-        transform: translateX(0);
-      }
-
-      .lg-controls-bar__caret {
-        position: absolute;
-        right: 100%;
-        top: 0;
-        border-radius: 50%;
-        display: flex;
+        border-radius: 100px;
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 12px;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        scroll-snap-align: center;
-        color: #fff;
-        transition: opacity 0.3s ease-in-out;
-        scroll-snap-type: both mandatory;
-        overscroll-behavior-x: contain;
-
-        @media (hover: hover) {
-          &:hover {
-            //background-color: rgba(#a26dc7, 1);
-          }
-        }
-      }
-
-      .lg-controls-bar__quickActions {
-        position: absolute;
-        right: 100%;
-        top: 66px;
-      }
-
-      .lg-controls-bar.opened {
-
-        .lg-controls-bar__caret {
-          //background-color: rgba(#a26dc7, 0.8);
-          transform: rotate(180deg);
-        }
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
       .lg-controls-bar__content {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        border-radius: 16px;
-        padding: 16px;
-        min-width: 200px;
+        align-items: center;
+        position: relative;
+        gap: 12px;
+      }
 
-        backdrop-filter: blur(3px);
-        background-color: rgba(255, 255, 255, 0.7);
-
-
-        @media (max-width: 768px) {
-          min-width: 100px;
-        }
+      .lg-controls-bar.opened {
 
       }
     `,
   ],
   standalone: true,
-  imports: [
-    MatIcon,
-    NgTemplateOutlet,
-    ButtonComponent,
-  ],
+  imports: [],
   animations: [
     trigger('fromLeft', [
       transition(':enter', [
-        style({transform: 'translateX(100%)'}),
-        animate('0.3s ease-in-out', style({transform: 'translateX(0)'})),
+        style({transform: 'translate3d(50%, 100%, 0)'}),
+        animate('0.3s ease-in-out', style({transform: 'translate3d(50%, 0, 0)'}))
       ]),
     ])
   ]
 })
-export class ControlsBarComponent {
-  opened = signal(false);
-  quickActionsTpl = contentChild(QuickActionsTplDirective);
+export class ControlsBarComponent
+  implements AfterViewInit {
+  elementRef = viewChild<ElementRef<HTMLDivElement>>('bar');
+  renderer = inject(Renderer2);
+  @HostBinding('style.--controls-bar-shift') bottomPosition = '10px';
 
-  toggle() {
-    this.opened.update((prev) => !prev);
+
+  ngAfterViewInit() {
   }
 
-  ngOnInit() {
+  setHeight() {
+    const height = this.elementRef()?.nativeElement?.offsetHeight;
+    const shift = parseInt(this.bottomPosition) + (height || 0);
+    this.renderer.setAttribute(document.body, 'style', `--controls-bar-space:${shift || 0}px`);
   }
 }

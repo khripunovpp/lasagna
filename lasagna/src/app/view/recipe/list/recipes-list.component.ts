@@ -33,16 +33,14 @@ import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.co
   standalone: true,
   template: `
     <lg-controls-bar>
-      <ng-template lgQuickActionsTpl>
-        <lg-button [icon]="true"
-                   [link]="'/recipes/add'"
-                   [size]="'medium'"
-                   [style]="'success'">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        </lg-button>
-      </ng-template>
+      <lg-button [icon]="true"
+                 [link]="'/recipes/add'"
+                 [size]="'medium'"
+                 [style]="'success'">
+        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+      </lg-button>
 
-      <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>
+<!--      <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>-->
 
       <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
                  [flat]="true"

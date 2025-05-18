@@ -35,142 +35,140 @@ import {ExpanderComponent} from '@view/ui/expander.component';
   selector: 'lg-product-list',
   standalone: true,
   template: `
-      <lg-controls-bar>
-          <ng-template lgQuickActionsTpl>
-              <lg-button [icon]="true"
-                         [link]="'/products/add'"
-                         [size]="'medium'"
-                         [style]="'success'">
-                  <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-              </lg-button>
-          </ng-template>
+    <lg-controls-bar>
+      <lg-button [icon]="true"
+                 [link]="'/products/add'"
+                 [size]="'medium'"
+                 [style]="'success'">
+        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+      </lg-button>
 
-          <lg-selection-tools [selectionTypes]="['draft','product']"></lg-selection-tools>
+      <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
 
-          <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-              {{ 'export-label'|translate }} products
-          </lg-button>
+      <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
+                 [flat]="true"
+                 [size]="'small'"
+                 [style]="'info'">
+        {{ 'export-label'|translate }} products
+      </lg-button>
 
-          <lg-import (onDone)="loadProducts()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="ProductDbInputScheme"
-                     [storeName]="Stores.PRODUCTS">
-              <ng-template let-flow="flow" let-row lgImportRowTpl>
-                  @if (flow === 'new') {
-                      <span>{{ row.name }}</span>
-                      <span>{{ row.amount }}gr for {{ row.price }}</span>
-                      @if (row.source) {
-                          <span>{{ 'from-location'|translate }} {{ row.source }}</span>
-                      }
-                  } @else {
-                      <span>{{ row?.name }}</span>
-                      <span>{{ row?.amount }} gr for {{ row?.price }}</span>
-                      @if (row?.source) {
-                          <span>{{ 'from-location'|translate }} {{ row?.source }}</span>
-                      }
-                  }
-              </ng-template>
-          </lg-import>
-      </lg-controls-bar>
+      <lg-import (onDone)="loadProducts()"
+                 [label]="('import-label'|translate) + ' products'"
+                 [schema]="ProductDbInputScheme"
+                 [storeName]="Stores.PRODUCTS">
+        <ng-template let-flow="flow" let-row lgImportRowTpl>
+          @if (flow === 'new') {
+            <span>{{ row.name }}</span>
+            <span>{{ row.amount }}gr for {{ row.price }}</span>
+            @if (row.source) {
+              <span>{{ 'from-location'|translate }} {{ row.source }}</span>
+            }
+          } @else {
+            <span>{{ row?.name }}</span>
+            <span>{{ row?.amount }} gr for {{ row?.price }}</span>
+            @if (row?.source) {
+              <span>{{ 'from-location'|translate }} {{ row?.source }}</span>
+            }
+          }
+        </ng-template>
+      </lg-import>
+    </lg-controls-bar>
 
-      <lg-fade-in>
-          <lg-container>
-              <lg-title>
-                  {{ 'products.list-title'|translate }}
-              </lg-title>
-              @if (draft()?.length) {
-                  <lg-expander [closeLabel]="'drafts-close-label'|translate"
-                               [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
+    <lg-fade-in>
+      <lg-container>
+        <lg-title>
+          {{ 'products.list-title'|translate }}
+        </lg-title>
+        @if (draft()?.length) {
+          <lg-expander [closeLabel]="'drafts-close-label'|translate"
+                       [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
 
-                      <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                                    (onSelected)="selectionZoneService.putSelected($event)"
-                                    [selectAll]="selectionZoneService.selectAll()['draft']"
-                                    [deselectAll]="selectionZoneService.deselectAll()['draft']"
-                                    style="--card-bg: #bee5ff">
-                          @for (item of draft();track item.uuid) {
-                              <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-                                  <lg-gap-row [center]="true">
-                                      <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
-                                          @if (item?.meta?.['uuid']) {
-                                              {{ 'draft.list-prefix.existing'|translate }}
-                                          } @else {
-                                              {{ 'draft.list-prefix.new'|translate }}
-                                          }
-                                          {{ item?.data?.name || 'Unknown' }}
-                                      </a>
-
-                                      <small class="text-muted text-cursive" lgPull>
-                                          {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
-                                      </small>
-
-                                      <lg-button [style]="'danger'"
-                                                 [size]="'tiny'"
-                                                 [icon]="true"
-                                                 (click)="deleteDraft($any(item))">
-                                          <mat-icon aria-hidden="false"
-                                                    fontIcon="close"></mat-icon>
-                                      </lg-button>
-                                  </lg-gap-row>
-                              </ng-template>
-                          }
-                      </lg-card-list>
-                  </lg-expander>
-              }
-
-              @for (category of products();track $index;let i = $index) {
-                  <lg-title [level]="3">
-                      {{ category?.category || ('without-category-label'|translate) }}
-                  </lg-title>
-
-                  <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                                (onSelected)="selectionZoneService.putSelected($event)"
-                                [selectAll]="selectionZoneService.selectAll()['product']"
-                                [deselectAll]="selectionZoneService.deselectAll()['product']">
-                      @for (product of category.products;track product?.uuid;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="product.uuid" type="product">
-                              <lg-gap-row [center]="true">
-                                  <div class="expand">
-                                      <lg-gap-row [center]="true">
-                                          <lg-gap-row [center]="true" lgExpand>
-                                              <a [routerLink]="'/products/edit/' + product.uuid">
-                                                  {{ product.name }} {{ product.source ? '- ' + product.source : '' }}
-                                              </a>
-
-                                              <div>
-                                                  {{ $any(product).pricePerUnit | number: '1.2-5' }}
-                                                  {{ $any(product).perUnitLabel }}
-                                              </div>
-                                          </lg-gap-row>
-
-                                          <small class="text-muted text-cursive">
-                                              {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
-                                          </small>
-                                      </lg-gap-row>
-                                  </div>
-
-                                  <lg-button [style]="'danger'"
-                                             [size]="'tiny'"
-                                             [icon]="true"
-                                             (click)="deleteProduct(product)">
-                                      <mat-icon aria-hidden="false"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              } @empty {
+            <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                          (onSelected)="selectionZoneService.putSelected($event)"
+                          [selectAll]="selectionZoneService.selectAll()['draft']"
+                          [deselectAll]="selectionZoneService.deselectAll()['draft']"
+                          style="--card-bg: #bee5ff">
+              @for (item of draft(); track item.uuid) {
+                <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
                   <lg-gap-row [center]="true">
-                      <lg-title [level]="5">
-                          {{ 'no-products'|translate }}
-                      </lg-title>
+                    <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
+                      @if (item?.meta?.['uuid']) {
+                        {{ 'draft.list-prefix.existing'|translate }}
+                      } @else {
+                        {{ 'draft.list-prefix.new'|translate }}
+                      }
+                      {{ item?.data?.name || 'Unknown' }}
+                    </a>
+
+                    <small class="text-muted text-cursive" lgPull>
+                      {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
+                    </small>
+
+                    <lg-button [style]="'danger'"
+                               [size]="'tiny'"
+                               [icon]="true"
+                               (click)="deleteDraft($any(item))">
+                      <mat-icon aria-hidden="false"
+                                fontIcon="close"></mat-icon>
+                    </lg-button>
                   </lg-gap-row>
+                </ng-template>
               }
-          </lg-container>
-      </lg-fade-in>
+            </lg-card-list>
+          </lg-expander>
+        }
+
+        @for (category of products(); track $index; let i = $index) {
+          <lg-title [level]="3">
+            {{ category?.category || ('without-category-label'|translate) }}
+          </lg-title>
+
+          <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                        (onSelected)="selectionZoneService.putSelected($event)"
+                        [selectAll]="selectionZoneService.selectAll()['product']"
+                        [deselectAll]="selectionZoneService.deselectAll()['product']">
+            @for (product of category.products; track product?.uuid; let i = $index) {
+              <ng-template lgCardListItem [uuid]="product.uuid" type="product">
+                <lg-gap-row [center]="true">
+                  <div class="expand">
+                    <lg-gap-row [center]="true">
+                      <lg-gap-row [center]="true" lgExpand>
+                        <a [routerLink]="'/products/edit/' + product.uuid">
+                          {{ product.name }} {{ product.source ? '- ' + product.source : '' }}
+                        </a>
+
+                        <div>
+                          {{ $any(product).pricePerUnit | number: '1.2-5' }}
+                          {{ $any(product).perUnitLabel }}
+                        </div>
+                      </lg-gap-row>
+
+                      <small class="text-muted text-cursive">
+                        {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
+                      </small>
+                    </lg-gap-row>
+                  </div>
+
+                  <lg-button [style]="'danger'"
+                             [size]="'tiny'"
+                             [icon]="true"
+                             (click)="deleteProduct(product)">
+                    <mat-icon aria-hidden="false"
+                              fontIcon="close"></mat-icon>
+                  </lg-button>
+                </lg-gap-row>
+              </ng-template>
+            }
+          </lg-card-list>
+        } @empty {
+          <lg-gap-row [center]="true">
+            <lg-title [level]="5">
+              {{ 'no-products'|translate }}
+            </lg-title>
+          </lg-gap-row>
+        }
+      </lg-container>
+    </lg-fade-in>
   `,
   imports: [
     GapRowComponent,
