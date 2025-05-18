@@ -16,7 +16,18 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "esnext",
-    "module": "esnext"
+    "module": "esnext",
+    "paths": {
+      "@view/*": [
+        "./src/app/view/*"
+      ],
+      "@service/*": [
+        "./src/app/service/*"
+      ],
+      "@helpers/*": [
+        "./src/app/helpers/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -32,7 +32,6 @@ export class DraftFormsService {
   }
 
 
-
   setDraftForm = <T extends Record<string, any>>(
     store: string,
     data: DraftFormData<T>,
@@ -90,13 +89,22 @@ export class DraftFormsService {
     localStorage.setItem(store, JSON.stringify(valueToStore));
   }
 
-  removeDraftForm = (store: string, key?: string) => {
+  removeDraftForm = async (
+    store: string,
+    key?: string | string[]
+  ) => {
     const draftForm = this.getDraftForms(store);
     if (!draftForm) {
       return;
     }
     if (key) {
-      delete draftForm[key];
+      if (Array.isArray(key)) {
+        key.forEach((k) => {
+          delete draftForm[k];
+        });
+      } else if (draftForm[key]) {
+        delete draftForm[key];
+      }
     } else {
       localStorage.removeItem(store);
       return;
