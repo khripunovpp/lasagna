@@ -12,12 +12,13 @@ import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {DecimalPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
+import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
 
 @Component({
   selector: 'app-add-recipe',
@@ -31,10 +32,10 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
     ButtonComponent,
     ShrinkDirective,
     TimeAgoPipe,
-    DecimalPipe,
     TranslatePipe,
-    GapColumnComponent
-],
+    GapColumnComponent,
+    UserCurrencyPipe
+  ],
   template: `
     <lg-fade-in>
       <lg-container>
@@ -52,7 +53,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
             }
 
             @if (product()?.pricePerUnit) {
-              ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
+              ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
             }
           </lg-gap-row>
 
@@ -109,6 +110,9 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
   styles: [
     `
     `
+  ],
+  providers: [
+    CurrencyPipe,
   ]
 })
 export class AddProductComponent

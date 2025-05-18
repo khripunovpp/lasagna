@@ -6,7 +6,7 @@ import {PwaInstallComponent} from '@view/ui/pwa-install.component';
 import {GlobalSearchComponent} from '@view/ui/global-search.component';
 import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {LocalisationService} from '@service/services/localisation.service';
+import {LanguageService} from '@service/services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,6 @@ import {LocalisationService} from '@service/services/localisation.service';
 })
 export class AppComponent {
   constructor(
-    private localisationService: LocalisationService,
   ) {
   }
 

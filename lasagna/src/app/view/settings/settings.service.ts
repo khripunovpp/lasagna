@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SettingsRepositoryService} from '@service/repositories/settings-repository.service';
-import {LocalisationService} from '@service/services';
+import {LanguageService} from '@service/services';
 import {Settings} from '@service/models/Settings';
 
 @Injectable({
@@ -9,6 +9,7 @@ import {Settings} from '@service/models/Settings';
 export class SettingsService {
   constructor(
     private _settingsRepository: SettingsRepositoryService,
+    private _localisationService: LanguageService,
   ) {
   }
 
@@ -27,5 +28,26 @@ export class SettingsService {
     } else {
       return Promise.resolve()
     }
+  }
+
+  changeLang(lang: string) {
+    this._localisationService.changeLang(lang);
+    this.settingsModel?.addSetting('lang', lang);
+    this.saveSettings();
+  }
+
+  changeCurrency(currency: string) {
+    this.settingsModel?.addSetting('currency', currency);
+    this.saveSettings();
+  }
+
+  get lang() {
+    return this._localisationService.lang;
+  }
+
+  get languages(
+    ): string[] {
+    return this._localisationService.languages;
+
   }
 }

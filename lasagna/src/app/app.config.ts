@@ -23,6 +23,8 @@ import {CategoryProductsRepository, CategoryRecipesRepository} from '@service/re
 import {DB_NAME} from '@service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {SettingsService} from '@view/settings/settings.service';
+import {USER_LANGUAGE} from '@service/tokens/user-language.token';
+import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -51,7 +53,9 @@ export const appConfig: ApplicationConfig = {
         categoryRepository.preloadCategories(),
         recipeCategoryRepository.preloadCategories(),
         docsService.init(),
-        settingsService.loadSettings(),
+        settingsService.loadSettings().then((settings) => {
+          settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
+        }),
       ])
     }),
     provideServiceWorker('ngsw-worker.js', {
@@ -111,6 +115,21 @@ export const appConfig: ApplicationConfig = {
       provide: DB_NAME,
       useValue: 'lasagna-db',
     },
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
+    {
+      provide: USER_LANGUAGE,
+      useFactory: (settingsService: SettingsService) => {
+        return settingsService.settingsModel?.getSetting('lang')?.data || 'en';
+      },
+      deps: [SettingsService]
+    },
+    {
+      provide: USER_CURRENCY,
+      useFactory: (settingsService: SettingsService) => {
+        debugger
+        return settingsService.settingsModel?.getSetting('currency')?.data || 'USD';
+      },
+      deps: [SettingsService]
+    }
   ]
 };

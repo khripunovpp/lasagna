@@ -5,7 +5,7 @@ import {ProductsRepository} from '@service/repositories/products.repository';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {DecimalPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
 import {TransferDataService} from '@service/services/transfer-data.service';
@@ -27,6 +27,7 @@ import {ExpandDirective} from '@view/directives/expand.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.compoent';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
+import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
 
 @Component({
   selector: 'lg-product-list',
@@ -92,7 +93,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                         </a>
 
                         <div>
-                          {{ $any(product).pricePerUnit | number: '1.2-5' }}
+                          {{ $any(product).pricePerUnit | userCurrency:'1.0-5' }}
                           {{ $any(product).perUnitLabel }}
                         </div>
                       </lg-gap-row>
@@ -130,7 +131,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     MatIcon,
     ContainerComponent,
     TitleComponent,
-    DecimalPipe,
     CardListComponent,
     CardListItemDirective,
     ImportComponent,
@@ -144,10 +144,12 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     TranslatePipe,
     DraftProductsListCompoent,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective
+    InlineSeparatedGroupDirective,
+    UserCurrencyPipe
   ],
   providers: [
     SelectionZoneService,
+    CurrencyPipe,
   ],
   styles: [
     `:host {
@@ -172,6 +174,7 @@ export class ProductListComponent
   }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
+  protected readonly ProductScheme = ProductScheme;
 
   exportProducts(
     selected: Set<string>,
@@ -200,6 +203,4 @@ export class ProductListComponent
   loadProducts() {
     this._productsRepository.loadAll();
   }
-
-  protected readonly ProductScheme = ProductScheme;
 }

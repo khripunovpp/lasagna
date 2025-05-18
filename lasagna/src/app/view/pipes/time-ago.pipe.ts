@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {differenceInSeconds, formatDistanceToNow} from 'date-fns';
-import {LocalisationService} from '@service/services';
+import {LanguageService} from '@service/services';
 import {enUS, pt, ru} from 'date-fns/locale';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
@@ -19,7 +19,7 @@ const localesMap: Record<string, any> = {
 export class TimeAgoPipe
   implements PipeTransform {
   constructor(
-    private _localisationService: LocalisationService
+    private _localisationService: LanguageService
   ) {
   }
 

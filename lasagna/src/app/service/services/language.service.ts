@@ -1,27 +1,20 @@
 import {Injectable, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {SettingsService} from '@view/settings/settings.service';
 
 const allowedLanguages = ['pt', 'ru', 'en'];
 
 @Injectable({
   providedIn: 'root'
 })
-export class LocalisationService {
+export class LanguageService {
   constructor(
     private translate: TranslateService,
-    private _settingsService: SettingsService,
   ) {
     this.translate.addLangs(allowedLanguages);
     this.translate.setDefaultLang('en');
 
-    const setting = this._settingsService.settingsModel?.getSetting<string>('lang');
-    const lang = setting?.data || this._defaultLang;
+    const lang = this._defaultLang;
     this.changeLang(lang);
-  }
-
-  getTranslate(key: string): string {
-    return this.translate.instant(key);
   }
 
   private readonly _lang = signal(this._defaultLang);
@@ -42,11 +35,13 @@ export class LocalisationService {
     return this.translate?.getBrowserLang() || "en"
   }
 
+  getTranslate(key: string): string {
+    return this.translate.instant(key);
+  }
+
   changeLang(lang: string): void {
     if (!this.languages.includes(lang)) return;
     this.translate.use(lang);
-    this._settingsService.settingsModel?.addSetting('lang', lang);
-    this._settingsService.saveSettings();
     this._lang.set(lang);
   }
 }

@@ -14,7 +14,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
 import {TableCardComponent} from '../../ui/card/table-card.component';
-import {DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
+import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 
@@ -43,6 +43,7 @@ import {WidthDirective} from '@view/directives/width.directive';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {randomRGB} from '@helpers/color.helper';
 import {Ingredient} from '@service/models/Ingredient';
+import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -66,8 +67,10 @@ import {Ingredient} from '@service/models/Ingredient';
     BaseChartDirective,
     CardComponent,
     WidthDirective,
-    ExpandDirective
-],
+    ExpandDirective,
+    CurrencyPipe,
+    UserCurrencyPipe
+  ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {
@@ -77,6 +80,7 @@ import {Ingredient} from '@service/models/Ingredient';
   encapsulation: ViewEncapsulation.None,
   providers: [
     SelectResourcesService,
+    CurrencyPipe,
   ]
 })
 export class CalculateRecipeComponent
