@@ -37,6 +37,7 @@ export class InlineSeparatedGroupDirective {
         display: flex;
         gap: 8px;
         align-items: center;
+        white-space: nowrap;
       }
 
       .inline-separated-group__separator {

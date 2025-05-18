@@ -26,6 +26,7 @@ import {RecipeScheme} from '@service/db/shemes/Recipe.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.component';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 
 
 @Component({
@@ -40,23 +41,26 @@ import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.co
         <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
       </lg-button>
 
-<!--      <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>-->
-
-      <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
-                 [flat]="true"
-                 [size]="'small'"
-                 [style]="'info'">
-        {{ 'export-label'|translate }} recipes
-      </lg-button>
-
-      <lg-import (onDone)="loadRecipes()"
-                 [label]="('import-label'|translate) + ' products'"
-                 [schema]="RecipeScheme"
-                 [storeName]="Stores.RECIPES">
-        <ng-template let-flow="flow" let-row lgImportRowTpl>
-          <span>{{ row?.name }}</span>
+      <lg-inline-separated-group>
+        <ng-template lgInlineSeparatedGroup>
+          <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'info'">
+            {{ 'export-label'|translate }} recipes
+          </lg-button>
         </ng-template>
-      </lg-import>
+        <ng-template lgInlineSeparatedGroup>
+          <lg-import (onDone)="loadRecipes()"
+                     [label]="('import-label'|translate) + ' products'"
+                     [schema]="RecipeScheme"
+                     [storeName]="Stores.RECIPES">
+            <ng-template let-flow="flow" let-row lgImportRowTpl>
+              <span>{{ row?.name }}</span>
+            </ng-template>
+          </lg-import>
+        </ng-template>
+      </lg-inline-separated-group>
     </lg-controls-bar>
 
     <lg-fade-in>
@@ -68,6 +72,9 @@ import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.co
         </lg-gap-row>
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
+
+
+        <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
 
         @for (category of recipes(); track category?.category) {
           <lg-title [level]="3">
@@ -136,7 +143,9 @@ import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.co
     TimeAgoPipe,
     PullDirective,
     TranslatePipe,
-    DraftRecipesListComponent
+    DraftRecipesListComponent,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective
   ],
   styles: [
     `:host {
