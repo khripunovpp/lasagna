@@ -103,9 +103,7 @@ export class CategoryListComponent
   }
 
   loadCategory() {
-    debugger
     this.categoryRepository.getAll().then((categories) => {
-      debugger
       const sorted = categories.toSorted((a: CategoryProduct, b: CategoryProduct) => a.name.localeCompare(b.name));
       this.categories.set(sorted);
     });

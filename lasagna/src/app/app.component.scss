@@ -4,5 +4,5 @@
 .app-content {
   --app-content-top-padding: calc(var(--header-height) + 44px);
   padding-top: var(--app-content-top-padding);
-  padding-bottom: calc(var(--controls-bar-space) + 32px)
+  padding-bottom: calc(32px + var(--controls-bar-space, 0px))
 }

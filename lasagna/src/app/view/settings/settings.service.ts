@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {SettingsRepositoryService} from '@service/repositories/settings-repository.service';
 import {LanguageService} from '@service/services';
 import {Settings} from '@service/models/Settings';
@@ -14,16 +14,29 @@ export class SettingsService {
   }
 
   settingsModel?: Settings;
+  settingsSignal = signal<Settings | undefined>(undefined);
+
+  get lang() {
+    return this._localisationService.lang;
+  }
+
+  get languages(): string[] {
+    return this._localisationService.languages;
+
+  }
 
   loadSettings() {
     return this._settingsRepository.getAll().then((settings) => {
       this.settingsModel = settings;
+      this.settingsSignal.set(settings);
       return settings;
     });
   }
 
   saveSettings() {
     if (this.settingsModel) {
+      debugger
+      this.settingsSignal.set(this.settingsModel);
       return this._settingsRepository.updateSettings(this.settingsModel);
     } else {
       return Promise.resolve()
@@ -41,13 +54,4 @@ export class SettingsService {
     this.saveSettings();
   }
 
-  get lang() {
-    return this._localisationService.lang;
-  }
-
-  get languages(
-    ): string[] {
-    return this._localisationService.languages;
-
-  }
 }

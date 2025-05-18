@@ -4,6 +4,8 @@ import {CardListItemDirective} from './card-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
 import {CheckboxComponent} from '../form/chckbox.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ButtonComponent} from '@view/ui/layout/button.component';
+import {MatIcon} from '@angular/material/icon';
 
 export interface CardListSelectionEvent {
   selected: boolean
@@ -18,7 +20,9 @@ export interface CardListSelectionEvent {
     NgTemplateOutlet,
     CheckboxComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ButtonComponent,
+    MatIcon,
   ],
   template: `
     <section [formGroup]="selected" class="lg-card-list">
@@ -28,12 +32,22 @@ export interface CardListSelectionEvent {
                [class.colored]="!even">
             @if (mode() === 'selection') {
               <lg-checkbox [formControlName]="i"
+                           [size]="'medium'"
                            [value]="buildValueString(i, item)"
                            (onCheckboxChanged)=" onChanges($event,i)"></lg-checkbox>
             }
             <div class="lg-card-list__item__inner">
               <ng-container [ngTemplateOutlet]="item.template"></ng-container>
             </div>
+            @if (mode() === 'selection') {
+              <lg-button [style]="'danger'"
+                         [size]="'tiny'"
+                         [icon]="true"
+                         (click)="onDeleteOne.emit({uuid: item.uuid!, type: item.type})">
+                <mat-icon aria-hidden="false"
+                          fontIcon="close"></mat-icon>
+              </lg-button>
+            }
           </div>
         } @empty {
           <div style="padding:16px 24px;">No items found</div>
@@ -50,7 +64,6 @@ export interface CardListSelectionEvent {
 
 
       .lg-card-list {
-        overflow-x: auto;
       }
 
       .lg-checkbox {
@@ -61,25 +74,31 @@ export interface CardListSelectionEvent {
       .lg-card-list__inner {
         display: flex;
         flex-direction: column;
-        min-width: fit-content;
         width: 100%;
         overflow: hidden;
-        white-space: nowrap;
         gap: 16px;
       }
 
       .lg-card-list__item {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .lg-card-list__item__inner {
+        flex: 1;
+        overflow-x: auto;
         display: flex;
         align-items: center;
         padding: 16px;
         gap: 8px;
         background-color: #eed2f0;
         border-radius: 32px;
-      }
+        white-space: nowrap;
 
-      .lg-card-list__item__inner {
-        flex: 1;
-        padding: 0 8px;
+        & > * {
+          flex: 1;
+        }
       }
 
       .lg-card-list__item.colored {
@@ -99,6 +118,9 @@ export class CardListComponent {
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
   onSelected = output<CardListSelectionEvent>();
+  onDeleteOne = output<{
+    uuid: string, type: string
+  }>();
   @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
   selected = new FormGroup({
     items: new FormArray([])

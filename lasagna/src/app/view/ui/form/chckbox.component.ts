@@ -60,6 +60,11 @@ import {NgClass} from '@angular/common';
         cursor: pointer;
         transition: all 0.2s ease-in-out;
         border: 1px solid transparent;
+        &-inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
 
       .lg-checkbox__hoverOnly {
@@ -107,6 +112,12 @@ import {NgClass} from '@angular/common';
         height: 16px;
         border-radius: 6px;
       }
+
+      .lg-checkbox.medium .lg-checkbox__mark {
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+      }
     `
   ],
   encapsulation: ViewEncapsulation.None,
@@ -131,7 +142,7 @@ export class CheckboxComponent
   modelValue: boolean = false;
   name = input<string>('');
   size = input<
-    'small' | 'default' | 'large'
+    'small' | 'default' | 'large' | 'medium'
   >('default');
   markOnHover = input<boolean>(false);
   noMark = input<boolean>(false);

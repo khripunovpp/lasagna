@@ -209,7 +209,9 @@ export class AddRecipeFormComponent
 
     });
 
-    this.nameField()!.focus();
+    if (!this.recipe()?.uuid) {
+      this.nameField()!.focus();
+    }
   }
 
   addIngredient() {

@@ -5,22 +5,22 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
   selector: 'lg-input',
   standalone: true,
   template: `
-      <div class="lg-input"
-           [class.contrast]="theme() === 'contrast'">
-          <input #input
-                 (change)="onInputChanged.emit(value)"
-                 (input)="onChangeInput($event)"
-                  (keydown.enter)="onEnter.emit()"
-                 [placeholder]="placeholder()"
-                 [value]="value"
-                 class="input"
-                 type="text">
+    <div class="lg-input"
+         [class.contrast]="theme() === 'contrast'">
+      <input #input
+             (change)="onInputChanged.emit(value)"
+             (input)="onChangeInput($event)"
+             (keydown.enter)="onEnter.emit(value)"
+             [placeholder]="placeholder()"
+             [value]="value"
+             class="input"
+             type="text">
 
-          <div class="lg-input__after"
-               [style.display]="noAfter() ? 'none' : 'flex'">
-              <ng-content select="after"></ng-content>
-          </div>
+      <div class="lg-input__after"
+           [style.display]="noAfter() ? 'none' : 'flex'">
+        <ng-content select="after"></ng-content>
       </div>
+    </div>
   `,
   styles: [
     `
@@ -85,7 +85,7 @@ export class InputComponent
   placeholder = input('Enter text here');
   autoFocus = input(false);
   onInputChanged = output<string>();
-  onEnter = output<void>();
+  onEnter = output<string>();
   theme = input<
     'default' | 'contrast'
   >('default');

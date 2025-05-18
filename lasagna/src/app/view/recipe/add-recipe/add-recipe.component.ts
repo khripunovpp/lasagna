@@ -234,7 +234,7 @@ export class AddRecipeComponent
         this._removeDraft();
       }
 
-      if (this.isDraftRoute()) {
+      if (this.draftRef() || this.recipe()?.uuid) {
         this._router.navigate(['recipes']);
       }
       return newUUID;
@@ -254,7 +254,7 @@ export class AddRecipeComponent
         this._removeDraft();
       }
 
-      if (this.isDraftRoute()) {
+      if (this.draftRef() || this.recipe()?.uuid) {
         this._router.navigate(['recipes', 'edit', recipeUUID]);
       }
     });

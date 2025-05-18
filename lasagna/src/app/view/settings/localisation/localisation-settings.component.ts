@@ -1,5 +1,4 @@
-import {Component, computed, Inject, model, Signal} from '@angular/core';
-import {LanguageService} from '@service/services/language.service';
+import {Component, computed, inject, model, Signal} from '@angular/core';
 
 
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
@@ -45,7 +44,7 @@ import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 
       <lg-title [level]="6">
         Currency
-        (in  <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)
+        (in <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)
       </lg-title>
 
       <lg-input [(ngModel)]="currency"
@@ -66,7 +65,6 @@ import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 export class LocalisationSettingsComponent {
   constructor(
     private _settingsService: SettingsService,
-    @Inject(USER_CURRENCY) private _userCurrency: string,
   ) {
     this.selectedLang = this._settingsService.lang;
 
@@ -74,7 +72,7 @@ export class LocalisationSettingsComponent {
       return this._settingsService.languages.map((value => this.selectedLang() === value));
     });
 
-    this.currency.set(_userCurrency);
+    this.currency.set(this._settingsService.settingsSignal()?.getSetting<string>('currency')?.data || 'USD');
   }
 
   currency = model('EUR');
@@ -85,7 +83,6 @@ export class LocalisationSettingsComponent {
   };
   selectedLang: Signal<string>;
   selectedLangModel = model<boolean[]>([]);
-
   languages = computed(() => {
     return this._settingsService.languages
       .map((lang: string) => ({
@@ -93,6 +90,7 @@ export class LocalisationSettingsComponent {
         name: this.langsMap[lang] || lang,
       }));
   });
+  private _userCurrency = inject(USER_CURRENCY);
 
   changeLang(lang: string): void {
     this._settingsService.changeLang(lang);

@@ -1,3 +1,3 @@
-import {InjectionToken} from '@angular/core';
+import {InjectionToken, Signal} from '@angular/core';
 
-export const USER_LANGUAGE = new InjectionToken('UserLanguage');
+export const USER_LANGUAGE = new InjectionToken<Signal<string>>('UserLanguage');
