@@ -11,4 +11,5 @@ export enum Stores {
   DOCUMENTATION = 'documentation',
   TAGS = 'tags',
   TAXES = 'taxes',
+  SETTINGS = 'settings',
 }

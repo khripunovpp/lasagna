@@ -181,11 +181,7 @@ export class AddProductComponent
           this.draftOrProductUUID() ?? ''));
 
         if (!this.isDraftRoute()) {
-          this._router.navigate(['products/draft/' + this.draftRef()!.uuid], {
-            // Меняем URL, но остаёмся на текущем компоненте
-            skipLocationChange: false, // адрес в строке обновится
-            replaceUrl: true // если хочешь заменить текущую запись в истории
-          });
+          window.history.replaceState({}, '', this._router.createUrlTree(['products/draft/' + this.draftRef()!.uuid]).toString());
         }
       }
     });
