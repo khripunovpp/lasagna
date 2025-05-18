@@ -73,6 +73,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
         </lg-inline-separated-group>
 
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                      (onDeleteOne)="deleteDraft($event?.uuid)"
                       (onSelected)="selectionZoneService.putSelected($event)"
                       [selectAll]="selectionZoneService.selectAll()['draft']"
                       [deselectAll]="selectionZoneService.deselectAll()['draft']"
@@ -92,14 +93,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                 <small class="text-muted text-cursive">
                   {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                 </small>
-
-                <lg-button [style]="'danger'"
-                           [size]="'tiny'"
-                           [icon]="true"
-                           (click)="deleteDraft($any(item))">
-                  <mat-icon aria-hidden="false"
-                            fontIcon="close"></mat-icon>
-                </lg-button>
               </lg-gap-row>
             </ng-template>
           }
@@ -152,11 +145,14 @@ export class DraftRecipesListComponent
   }
 
   deleteDraft(
-    draft: DraftForm<ProductDTO>,
+    draftUUID?: string
   ) {
-    this._recipesRepository.removeDraftRecipe(draft.uuid);
+    if (!draftUUID) {
+      return;
+    }
+    this._recipesRepository.removeDraftRecipe(draftUUID);
     this.drafts.update((drafts) => {
-      return drafts.filter((item) => item?.uuid !== draft.uuid);
+      return drafts.filter((item) => item?.uuid !== draftUUID);
     });
   }
 }
