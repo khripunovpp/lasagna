@@ -37,78 +37,78 @@ import {TranslatePipe} from '@ngx-translate/core';
   ],
   template: `
 
-      <lg-fade-in>
-          <lg-container>
-              <lg-gap-column size="medium">
-                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-gap-row [mobileMode]="true" [center]="true">
-                          <lg-title>
-                              {{ 'edit-label'|translate }}
-                              <span class="text-active">{{ recipe()?.name }}</span>
-                          </lg-title>
+    <lg-fade-in>
+      <lg-container>
+        <lg-gap-column size="medium">
+          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+            <lg-gap-row [mobileMode]="true" [center]="true">
+              <lg-title>
+                {{ 'edit-label'|translate }}
+                <span class="text-active">{{ recipe()?.name }}</span>
+              </lg-title>
 
-                          <lg-button [flat]="true"
-                                     [link]="'/recipes/calculate/' + recipe()?.uuid"
-                                     [size]="'small'"
-                                     [style]="'primary'">
-                              {{ 'recipe.calculate-btn'|translate }}
-                          </lg-button>
-                      </lg-gap-row>
+              <lg-button [flat]="true"
+                         [link]="'/recipes/calculate/' + recipe()?.uuid"
+                         [size]="'small'"
+                         [style]="'primary'">
+                {{ 'recipe.calculate-btn'|translate }}
+              </lg-button>
+            </lg-gap-row>
 
-                      @if (recipe()?.updatedAt) {
-                          ({{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }})
-                      }
-                  } @else {
-                      <lg-title>
-                          {{ 'recipe.form.title'|translate }}
-                      </lg-title>
-                  }
-                  @if (draftRef()) {
-                      {{ 'saved-draft-label'|translate }}
-                  }
-              </lg-gap-column>
+            @if (recipe()?.updatedAt) {
+              ({{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }})
+            }
+          } @else {
+            <lg-title>
+              {{ 'recipe.form.title'|translate }}
+            </lg-title>
+          }
+          @if (draftRef()) {
+            {{ 'saved-draft-label'|translate }}
+          }
+        </lg-gap-column>
 
-              <lg-card>
-                  <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
-              </lg-card>
+        <lg-card>
+          <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
+        </lg-card>
 
-              <lg-gap-row [mobileMode]="true" [relaxed]="true">
-                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty"
-                                 lgShrink
-                                 (click)="onEditRecipe()">
-                          @if (formComponent()?.form?.dirty) {
-                              {{ 'recipe.form.save-btn.edit.active'|translate }}
-                          } @else {
-                              {{ 'recipe.form.save-btn.edit.disabled'|translate }}
-                          }
-                      </lg-button>
-                  } @else {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty"
-                                 lgShrink
-                                 (click)="onAddRecipe()">
-                          @if (formComponent()?.form?.dirty) {
-                              {{ 'recipe.form.save-btn.add.active'|translate }}
-                          } @else {
-                              {{ 'recipe.form.save-btn.add.disabled'|translate }}
-                          }
-                      </lg-button>
-                  }
+        <lg-gap-row [mobileMode]="true" [relaxed]="true">
+          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onEditRecipe()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'recipe.form.save-btn.edit.active'|translate }}
+              } @else {
+                {{ 'recipe.form.save-btn.edit.disabled'|translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onAddRecipe()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'recipe.form.save-btn.add.active'|translate }}
+              } @else {
+                {{ 'recipe.form.save-btn.add.disabled'|translate }}
+              }
+            </lg-button>
+          }
 
-                  @if (isDraftRoute()) {
-                      <lg-button lgShrink [style]="'danger'"
-                                 (click)="onRemoveDraft()">
-                          {{ 'recipe.form.delete-draft-btn'|translate }}
-                      </lg-button>
-                  } @else if (recipe()?.uuid) {
-                      <lg-button lgShrink [style]="'danger'"
-                                 (click)="onDeleteRecipe()">
-                          {{ 'recipe.form.delete-btn'|translate }}
-                      </lg-button>
-                  }
-              </lg-gap-row>
-          </lg-container>
-      </lg-fade-in>
+          @if (isDraftRoute()) {
+            <lg-button lgShrink [style]="'danger'"
+                       (click)="onRemoveDraft()">
+              {{ 'recipe.form.delete-draft-btn'|translate }}
+            </lg-button>
+          } @else if (recipe()?.uuid) {
+            <lg-button lgShrink [style]="'danger'"
+                       (click)="onDeleteRecipe()">
+              {{ 'recipe.form.delete-btn'|translate }}
+            </lg-button>
+          }
+        </lg-gap-row>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `

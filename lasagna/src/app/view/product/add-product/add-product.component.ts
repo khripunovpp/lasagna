@@ -36,75 +36,75 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
     GapColumnComponent
 ],
   template: `
-      <lg-fade-in>
-          <lg-container>
-              <lg-gap-column size="medium">
-                  <lg-gap-row [center]="true" [mobileMode]="true">
-                      @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                          <lg-title>
-                              {{ 'edit-label'|translate }}
-                              {{ product()?.name }}
-                          </lg-title>
-                      } @else {
-                          <lg-title>
-                              {{ 'product.form.title'|translate }}
-                          </lg-title>
-                      }
+    <lg-fade-in>
+      <lg-container>
+        <lg-gap-column size="medium">
+          <lg-gap-row [center]="true" [mobileMode]="true">
+            @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+              <lg-title>
+                {{ 'edit-label'|translate }}
+                {{ product()?.name }}
+              </lg-title>
+            } @else {
+              <lg-title>
+                {{ 'product.form.title'|translate }}
+              </lg-title>
+            }
 
-                      @if (product()?.pricePerUnit) {
-                          ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
-                      }
-                  </lg-gap-row>
+            @if (product()?.pricePerUnit) {
+              ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | number: '1.2-5' }})
+            }
+          </lg-gap-row>
 
-                  @if (draftRef()) {
-                      <span>{{ 'saved-draft-label'|translate }}</span>
-                  }
+          @if (draftRef()) {
+            <span>{{ 'saved-draft-label'|translate }}</span>
+          }
 
-                  @if (product()?.updatedAt) {
-                      <span> ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})</span>
-                  }
+          @if (product()?.updatedAt) {
+            <span> ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})</span>
+          }
 
-              </lg-gap-column>
+        </lg-gap-column>
 
-              <lg-add-product-form [product]="product()"></lg-add-product-form>
+        <lg-add-product-form [product]="product()"></lg-add-product-form>
 
-              <lg-gap-row [mobileMode]="true" [relaxed]="true">
-                  @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty"
-                                 lgShrink
-                                 (click)="onEditProduct()">
-                          @if (formComponent()?.form?.dirty) {
-                              {{ 'product.form.save-btn.edit.active'|translate }}
-                          } @else {
-                              {{ 'product.form.save-btn.edit.disabled'|translate }}
-                          }
-                      </lg-button>
-                  } @else {
-                      <lg-button lgShrink
-                                 [disabled]="!formComponent()?.form?.dirty"
-                                 (click)="onAddProduct()">
-                          @if (formComponent()?.form?.dirty) {
-                              {{ 'product.form.save-btn.add.active'|translate }}
-                          } @else {
-                              {{ 'product.form.save-btn.add.disabled'|translate }}
-                          }
-                      </lg-button>
-                  }
+        <lg-gap-row [mobileMode]="true" [relaxed]="true">
+          @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onEditProduct()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.edit.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.edit.disabled'|translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button lgShrink
+                       [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       (click)="onAddProduct()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.add.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.add.disabled'|translate }}
+              }
+            </lg-button>
+          }
 
-                  @if (isDraftRoute()) {
-                      <lg-button lgShrink [style]="'danger'"
-                                 (click)="onRemoveDraft()">
-                          {{ 'product.form.delete-draft-btn'|translate }}
-                      </lg-button>
-                  } @else if (product()?.uuid) {
-                      <lg-button lgShrink [style]="'danger'"
-                                 (click)="onDeleteProduct()">
-                          {{ 'product.form.delete-btn'|translate }}
-                      </lg-button>
-                  }
-              </lg-gap-row>
-          </lg-container>
-      </lg-fade-in>
+          @if (isDraftRoute()) {
+            <lg-button lgShrink [style]="'danger'"
+                       (click)="onRemoveDraft()">
+              {{ 'product.form.delete-draft-btn'|translate }}
+            </lg-button>
+          } @else if (product()?.uuid) {
+            <lg-button lgShrink [style]="'danger'"
+                       (click)="onDeleteProduct()">
+              {{ 'product.form.delete-btn'|translate }}
+            </lg-button>
+          }
+        </lg-gap-row>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `
