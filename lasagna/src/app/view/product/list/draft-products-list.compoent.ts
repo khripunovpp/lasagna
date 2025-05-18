@@ -10,12 +10,13 @@ import {ExpandDirective} from '@view/directives/expand.directive';
 import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ExpanderComponent} from '@view/ui/expander.component';
-import {DraftForm, SelectionZoneService} from '@service/services';
+import {DraftForm, NotificationsService, SelectionZoneService} from '@service/services';
 import {ProductsRepository} from '@service/repositories';
 import {Product} from '@service/models/Product';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {CATEGORIZED_PRODUCTS_LIST} from '@service/tokens/categorized-products-list.token';
 import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-draft-products-list',
@@ -24,6 +25,38 @@ import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
     @if (drafts()?.length) {
       <lg-expander [closeLabel]="'drafts-close-label'|translate"
                    [openLabel]="'drafts-label'|translate:{length:drafts()?.length}">
+
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="selectionZoneService.onSelection()"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'success'">
+              {{ 'select-many-label'|translate }}
+            </lg-button>
+          </ng-template>
+
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button [flat]="true"
+                       [size]="'small'"
+                       [style]="'danger'"
+                       (click)="deleteAllDrafts()">
+              Delete all
+            </lg-button>
+          </ng-template>
+
+          @if (selectionZoneService.selected(); as selected) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button [flat]="true"
+                         [disabled]="!selected['draft']?.size"
+                         [size]="'small'"
+                         [style]="'danger'"
+                         (click)="deletedSelectedDrafts()">
+                Delete selected
+              </lg-button>
+            </ng-template>
+          }
+        </lg-inline-separated-group>
 
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
                       (onSelected)="selectionZoneService.putSelected($event)"
@@ -71,22 +104,22 @@ import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
     ExpandDirective,
     PullDirective,
     TranslatePipe,
-    ExpanderComponent
+    ExpanderComponent,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective
   ],
   providers: [
     SelectionZoneService,
   ],
   styles: [
-    `:host {
-      display: block;
-    }
-    `
+    ``
   ]
 })
 export class DraftProductsListCompoent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
+    private _notificationsService: NotificationsService,
     public selectionZoneService: SelectionZoneService,
   ) {
   }
@@ -110,6 +143,26 @@ export class DraftProductsListCompoent
       return drafts.filter((item) => item?.uuid !== draft.uuid);
     });
   }
+
+
+  deleteAllDrafts() {
+    this._productsRepository.removeDraftMany(this.drafts().map((item) => item.uuid)).then(() => {
+      this.drafts.set([]);
+      this._notificationsService.success('Drafts deleted');
+    })
+  }
+
+  deletedSelectedDrafts() {
+    const selected = this.selectionZoneService.selected()['draft'];
+    if (!selected) return;
+    this._productsRepository.removeDraftMany(Array.from(selected)).then(() => {
+      this.drafts.update((drafts) => {
+        return drafts.filter((item) => !selected.has(item.uuid));
+      });
+      this._notificationsService.success('Drafts deleted');
+    })
+  }
+
 
   ngOnInit() {
     const draft = this._productsRepository.getDraftProducts();

@@ -73,7 +73,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-
         <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
 
         @for (category of recipes(); track category?.category) {
