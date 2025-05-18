@@ -143,16 +143,20 @@ export class AddRecipeFormComponent
       ingredients: [],
     });
 
-    recipe.ingredients.forEach((ingredient: Ingredient, index: number) => {
-      this.ingredients.push(this._getIngredientGroup(ingredient));
+    if (recipe.ingredients.length) {
+      recipe.ingredients.forEach((ingredient: Ingredient, index: number) => {
+        this.ingredients.push(this._getIngredientGroup(ingredient));
 
-      if (ingredient.recipe_id) {
-        this.openRecipeField(index);
-      }
-      if (ingredient.name) {
-        this.openTextField(index);
-      }
-    })
+        if (ingredient.recipe_id) {
+          this.openRecipeField(index);
+        }
+        if (ingredient.name) {
+          this.openTextField(index);
+        }
+      })
+    } else {
+      this.ingredients.push(this._getIngredientGroup());
+    }
 
     this.form.updateValueAndValidity();
     this.form.markAsPristine();
