@@ -134,6 +134,7 @@ export class ProductsRepository {
   }
 
   saveDraftProduct(product: Product, uuid?: string) {
+    debugger
     return this._draftFormsService.setDraftForm(
       'draft_products',
       product.toDTO(),
