@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, Signal, signal} from '@angular/core';
+import {Component, inject, OnInit, Signal} from '@angular/core';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ProductsRepository} from '@service/repositories/products.repository';
@@ -8,7 +8,6 @@ import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
 import {CardListComponent} from '../../ui/card/card-list.component';
 import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-import {CsvReaderService} from '@service/services/csv-reader.service';
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {Stores} from '@service/db/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
@@ -19,17 +18,14 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_PRODUCTS_LIST} from '@service/tokens/categorized-products-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
-import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
-import {DraftForm} from '@service/services/draft-forms.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Product} from '@service/models/Product';
-import {ProductDTO, ProductScheme} from '@service/db/shemes/Product.scheme';
+import {ProductScheme} from '@service/db/shemes/Product.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
-import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ExpanderComponent} from '@view/ui/expander.component';
+import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.compoent';
 
 @Component({
   selector: 'lg-product-list',
@@ -79,44 +75,8 @@ import {ExpanderComponent} from '@view/ui/expander.component';
         <lg-title>
           {{ 'products.list-title'|translate }}
         </lg-title>
-        @if (draft()?.length) {
-          <lg-expander [closeLabel]="'drafts-close-label'|translate"
-                       [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
 
-            <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                          (onSelected)="selectionZoneService.putSelected($event)"
-                          [selectAll]="selectionZoneService.selectAll()['draft']"
-                          [deselectAll]="selectionZoneService.deselectAll()['draft']"
-                          style="--card-bg: #bee5ff">
-              @for (item of draft(); track item.uuid) {
-                <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-                  <lg-gap-row [center]="true">
-                    <a [routerLink]="'/products/draft/' + item?.uuid" lgExpand>
-                      @if (item?.meta?.['uuid']) {
-                        {{ 'draft.list-prefix.existing'|translate }}
-                      } @else {
-                        {{ 'draft.list-prefix.new'|translate }}
-                      }
-                      {{ item?.data?.name || 'Unknown' }}
-                    </a>
-
-                    <small class="text-muted text-cursive" lgPull>
-                      {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
-                    </small>
-
-                    <lg-button [style]="'danger'"
-                               [size]="'tiny'"
-                               [icon]="true"
-                               (click)="deleteDraft($any(item))">
-                      <mat-icon aria-hidden="false"
-                                fontIcon="close"></mat-icon>
-                    </lg-button>
-                  </lg-gap-row>
-                </ng-template>
-              }
-            </lg-card-list>
-          </lg-expander>
-        }
+        <lg-draft-products-list></lg-draft-products-list>
 
         @for (category of products(); track $index; let i = $index) {
           <lg-title [level]="3">
@@ -184,13 +144,11 @@ import {ExpanderComponent} from '@view/ui/expander.component';
     ImportRowTplDirective,
     FadeInComponent,
     ControlsBarComponent,
-    QuickActionsTplDirective,
     SelectionToolsComponent,
     TimeAgoPipe,
     ExpandDirective,
-    PullDirective,
     TranslatePipe,
-    ExpanderComponent
+    DraftProductsListCompoent
   ],
   providers: [
     SelectionZoneService,
@@ -206,7 +164,6 @@ export class ProductListComponent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
-    private _csvReaderService: CsvReaderService,
     private _transferDataService: TransferDataService,
     private _notificationsService: NotificationsService,
     public selectionZoneService: SelectionZoneService,
@@ -217,7 +174,6 @@ export class ProductListComponent
     category: string
     products: Product[]
   }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
-  draft = signal<(DraftForm<ProductDTO>)[]>([]);
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
 
@@ -241,21 +197,8 @@ export class ProductListComponent
     });
   }
 
-  deleteDraft(
-    draft: DraftForm<ProductDTO>,
-  ) {
-    this._productsRepository.removeDraftProduct(draft.uuid);
-    this.draft.update((drafts) => {
-      return drafts.filter((item) => item?.uuid !== draft.uuid);
-    });
-  }
-
   ngOnInit() {
     this.loadProducts();
-    const draft = this._productsRepository.getDraftProducts();
-    if (draft) {
-      this.draft.set(draft);
-    }
   }
 
   loadProducts() {
