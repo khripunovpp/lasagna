@@ -168,6 +168,11 @@ export class ProductsRepository {
     this._draftFormsService.removeDraftForm('draft_products', key);
   }
 
+  removeDraftMany(uuids: string[]) {
+    return this._draftFormsService.removeDraftForm('draft_products', uuids);
+  }
+
+
   private _saveCategory(uuid: string) {
     this._usingHistoryService.count('products_categories', uuid);
   }

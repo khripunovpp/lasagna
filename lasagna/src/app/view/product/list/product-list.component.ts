@@ -26,6 +26,7 @@ import {ProductScheme} from '@service/db/shemes/Product.scheme';
 import {ExpandDirective} from '@view/directives/expand.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.compoent';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-product-list',
@@ -39,35 +40,26 @@ import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.
         <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
       </lg-button>
 
-      <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
-
-      <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
-                 [flat]="true"
-                 [size]="'small'"
-                 [style]="'info'">
-        {{ 'export-label'|translate }} products
-      </lg-button>
-
-      <lg-import (onDone)="loadProducts()"
-                 [label]="('import-label'|translate) + ' products'"
-                 [schema]="ProductDbInputScheme"
-                 [storeName]="Stores.PRODUCTS">
-        <ng-template let-flow="flow" let-row lgImportRowTpl>
-          @if (flow === 'new') {
-            <span>{{ row.name }}</span>
-            <span>{{ row.amount }}gr for {{ row.price }}</span>
-            @if (row.source) {
-              <span>{{ 'from-location'|translate }} {{ row.source }}</span>
-            }
-          } @else {
-            <span>{{ row?.name }}</span>
-            <span>{{ row?.amount }} gr for {{ row?.price }}</span>
-            @if (row?.source) {
-              <span>{{ 'from-location'|translate }} {{ row?.source }}</span>
-            }
-          }
+      <lg-inline-separated-group>
+        <ng-template lgInlineSeparatedGroup>
+          <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'info'">
+            {{ 'export-label'|translate }} products
+          </lg-button>
         </ng-template>
-      </lg-import>
+        <ng-template lgInlineSeparatedGroup>
+          <lg-import (onDone)="loadProducts()"
+                     [label]="('import-label'|translate) + ' products'"
+                     [schema]="ProductScheme"
+                     [storeName]="Stores.PRODUCTS">
+            <ng-template let-flow="flow" let-row lgImportRowTpl>
+              <span>{{ row?.name }}</span>
+            </ng-template>
+          </lg-import>
+        </ng-template>
+      </lg-inline-separated-group>
     </lg-controls-bar>
 
     <lg-fade-in>
@@ -77,6 +69,8 @@ import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.
         </lg-title>
 
         <lg-draft-products-list></lg-draft-products-list>
+
+        <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
 
         @for (category of products(); track $index; let i = $index) {
           <lg-title [level]="3">
@@ -148,7 +142,9 @@ import {DraftProductsListCompoent} from '@view/product/list/draft-products-list.
     TimeAgoPipe,
     ExpandDirective,
     TranslatePipe,
-    DraftProductsListCompoent
+    DraftProductsListCompoent,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective
   ],
   providers: [
     SelectionZoneService,
@@ -205,4 +201,5 @@ export class ProductListComponent
     this._productsRepository.loadAll();
   }
 
+  protected readonly ProductScheme = ProductScheme;
 }
