@@ -3,7 +3,7 @@ import {ButtonComponent} from './button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location} from '@angular/common';
-import {GlobalSearchService, LocalisationService} from '@service/services';
+import {GlobalSearchService, LanguageService} from '@service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
 
@@ -183,7 +183,7 @@ export class HeaderComponent {
   constructor(
     public location: Location,
     public globalSearchService: GlobalSearchService,
-    private _localizationService: LocalisationService,
+    private _localizationService: LanguageService,
   ) {
     this.items = signal([
       {

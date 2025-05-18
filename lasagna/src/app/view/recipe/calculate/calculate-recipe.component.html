@@ -26,7 +26,7 @@
                 </div>
 
                 <b>
-                  {{ outcome_amount() }}
+                  {{ (outcome_amount() || result()?.calculation?.totalWeight || 0) | number: '1.0-2' }}
                   {{ result()?.calculation?.recipe?.outcome_unit }}
                 </b>
               </lg-gap-row>
@@ -63,26 +63,29 @@
                 </div>
 
                 <b>
-                  {{ result()?.calculation?.totalPrice | number: '1.2-2' }}
+                  {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
                 </b>
               </lg-gap-row>
             </lg-card>
 
-            <lg-card size="small">
-              <lg-gap-row [size]="'small'" [relaxed]="true">
-                <div>
-                  Total price with taxes
-                </div>
+            @if (totalTaxes()) {
 
-                <b>
-                  {{ ((result()?.calculation?.totalPrice || 0) + totalTaxes()) | number: '1.2-2' }}
-                </b>
-              </lg-gap-row>
-            </lg-card>
+              <lg-card size="small">
+                <lg-gap-row [size]="'small'" [relaxed]="true">
+                  <div>
+                    Total price with taxes
+                  </div>
+
+                  <b>
+                    {{ ((result()?.calculation?.totalPrice || 0) + totalTaxes()) | userCurrency: '1.2-2' }}
+                  </b>
+                </lg-gap-row>
+              </lg-card>
+            }
           </lg-gap-column>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-gap-column [size]="'small'" >
+            <lg-gap-column [size]="'small'">
               <lg-title [level]="5">
                 Price breakdown
               </lg-title>
@@ -98,7 +101,7 @@
           </lg-card>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-gap-column [size]="'small'" >
+            <lg-gap-column [size]="'small'">
               <lg-title [level]="5">
                 Weight breakdown
               </lg-title>
@@ -117,32 +120,32 @@
 
       <ng-template #taxAmount>
         @if (notInGrams()) {
-          {{ totalTaxes() / showedOutcome() | number: '1.2-2' }}
+          {{ totalTaxes() / showedOutcome() | userCurrency: '1.2-2' }}
         } @else {
-          {{ totalTaxes() | number: '1.2-2' }}
+          {{ totalTaxes() | userCurrency: '1.2-2' }}
         }
       </ng-template>
 
       <ng-template #rawAmount>
         @if (notInGrams()) {
-          {{ (result()?.calculation?.totalPrice || 1) / (showedOutcome() || 1) | number: '1.2-2' }}
+          {{ (result()?.calculation?.totalPrice || 1) / (showedOutcome() || 1) | userCurrency: '1.2-2' }}
         } @else {
-          {{ result()?.calculation?.totalPrice | number: '1.2-2' }}
+          {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
         }
       </ng-template>
 
       <ng-template #totalAmount>
         @if (notInGrams()) {
-          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (showedOutcome() || 1) | number: '1.2-2' }}
+          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (showedOutcome() || 1) |  userCurrency: '1.2-2' }}
         } @else {
-          {{ (result()?.calculation?.totalPrice || 1) + totalTaxes() | number: '1.2-2' }}
+          {{ (result()?.calculation?.totalPrice || 1) + totalTaxes() | userCurrency: '1.2-2' }}
         }
       </ng-template>
 
       <ng-template #perGramAmount>
         @if (notInGrams()) {
         } @else {
-          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / outcome_amount() | number: '1.2-5' }}
+          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (outcome_amount() || result()?.calculation?.totalWeight || 0) | userCurrency:'1.2-5' }}
         }
       </ng-template>
 
@@ -170,7 +173,7 @@
             </thead>
 
             <tbody>
-              @for (row of result()?.table;track $index;let i = $index) {
+              @for (row of result()?.table; track $index; let i = $index) {
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
 
@@ -190,9 +193,9 @@
 
                   <td>{{ row.unit }}</td>
 
-                  <td>{{ row.price_per_gram | number: '1.2-5' }}</td>
+                  <td>{{ row.price_per_gram | userCurrency: '1.2-5' }}</td>
 
-                  <td>{{ row.total | number: '1.2-5' }}</td>
+                  <td>{{ row.total | userCurrency: '1.0-2' }}</td>
                 </tr>
               }
             </tbody>
@@ -202,53 +205,53 @@
         }
       </lg-table-card>
 
-      <lg-gap-row [center]="true" [mobileMode]="true">
-        <lg-title>
-          Taxes and fees
-        </lg-title>
+      <!--      <lg-gap-row [center]="true" [mobileMode]="true">-->
+      <!--        <lg-title>-->
+      <!--          Taxes and fees-->
+      <!--        </lg-title>-->
 
-        @if (canSaveDefaultTemplate()) {
-          <lg-button (click)="saveDefaultTaxTemplate()"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'primary'">
-            Save as default template
-          </lg-button>
-        }
+      <!--        @if (canSaveDefaultTemplate()) {-->
+      <!--          <lg-button (click)="saveDefaultTaxTemplate()"-->
+      <!--                     [flat]="true"-->
+      <!--                     [size]="'small'"-->
+      <!--                     [style]="'primary'">-->
+      <!--            Save as default template-->
+      <!--          </lg-button>-->
+      <!--        }-->
 
-        @if (canApplyTemplates()) {
-          <lg-gap-row [center]="true">
-            @if (!taxTemplateForm.showed()) {
-              <lg-button (click)="taxTemplateForm.show()"
-                         [flat]="true"
-                         [size]="'small'"
-                         [style]="'warning'">
-                Apply template
-              </lg-button>
-            }
+      <!--        @if (canApplyTemplates()) {-->
+      <!--          <lg-gap-row [center]="true">-->
+      <!--            @if (!taxTemplateForm.showed()) {-->
+      <!--              <lg-button (click)="taxTemplateForm.show()"-->
+      <!--                         [flat]="true"-->
+      <!--                         [size]="'small'"-->
+      <!--                         [style]="'warning'">-->
+      <!--                Apply template-->
+      <!--              </lg-button>-->
+      <!--            }-->
 
-            <lg-view-show #taxTemplateForm>
-              <lg-gap-row [center]="true" [size]="'small'">
-                <lg-multiselect [(ngModel)]="taxTemplateToApply"
-                                [autoLoad]="true"
-                                [resource]="'taxTemplates'"></lg-multiselect>
+      <!--            <lg-view-show #taxTemplateForm>-->
+      <!--              <lg-gap-row [center]="true" [size]="'small'">-->
+      <!--                <lg-multiselect [(ngModel)]="taxTemplateToApply"-->
+      <!--                                [autoLoad]="true"-->
+      <!--                                [resource]="'taxTemplates'"></lg-multiselect>-->
 
-                <lg-button (click)="loadTaxTemplate()"
-                           [flat]="true"
-                           [size]="'small'"
-                           [style]="'primary'">
-                  Apply
-                </lg-button>
-              </lg-gap-row>
-            </lg-view-show>
-          </lg-gap-row>
-        }
-      </lg-gap-row>
+      <!--                <lg-button (click)="loadTaxTemplate()"-->
+      <!--                           [flat]="true"-->
+      <!--                           [size]="'small'"-->
+      <!--                           [style]="'primary'">-->
+      <!--                  Apply-->
+      <!--                </lg-button>-->
+      <!--              </lg-gap-row>-->
+      <!--            </lg-view-show>-->
+      <!--          </lg-gap-row>-->
+      <!--        }-->
+      <!--      </lg-gap-row>-->
 
-      <lg-taxes-and-fees-list (taxesChanged)="onTaxesChanged($event)"
-                              (totalTaxesChanged)="onTotalTaxesChanged($event)"
-                              [rows]="taxRows()"
-                              [total]="result()?.calculation?.totalPrice ?? 0"></lg-taxes-and-fees-list>
+      <!--      <lg-taxes-and-fees-list (taxesChanged)="onTaxesChanged($event)"-->
+      <!--                              (totalTaxesChanged)="onTotalTaxesChanged($event)"-->
+      <!--                              [rows]="taxRows()"-->
+      <!--                              [total]="result()?.calculation?.totalPrice ?? 0"></lg-taxes-and-fees-list>-->
     </lg-gap-column>
   </lg-container>
 </lg-fade-in>

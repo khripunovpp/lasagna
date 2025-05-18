@@ -3,7 +3,7 @@ import {ContainerComponent} from '../../ui/layout/container/container.component'
 import {CardComponent} from '../../ui/card/card.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
@@ -12,11 +12,11 @@ import {NotificationsService} from '@service/services/notifications.service';
 import {DraftForm} from '@service/services/draft-forms.service';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../directives/shrink.directive';
-
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {errorHandler} from '@helpers/error.helper';
 
 @Component({
   selector: 'app-add-recipe',
@@ -32,13 +32,17 @@ import {TranslatePipe} from '@ngx-translate/core';
     ShrinkDirective,
     TimeAgoPipe,
     GapColumnComponent,
-    TranslatePipe
+    TranslatePipe,
+    RouterLink
   ],
   template: `
 
     <lg-fade-in>
       <lg-container>
         <lg-gap-column size="medium">
+          @if (addedRecipeInformerUUID(); as uuid) {
+            <p>You just added new recipe. <a routerLink="/recipes/edit/{{ uuid }}">Want to have a look?</a></p>
+          }
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-gap-row [mobileMode]="true" [center]="true">
               <lg-title>
@@ -133,6 +137,7 @@ export class AddRecipeComponent
   });
   isDraftRoute = signal(false);
   draftRecipeModel?: Recipe;
+  addedRecipeInformerUUID = signal<null|string>(null);
 
   ngOnInit() {
     combineLatest([
@@ -182,12 +187,17 @@ export class AddRecipeComponent
     });
   }
 
-  onAddRecipe() {
-    if (!this.formComponent()?.validateForm()
-      || !this.recipe()) {
-      return;
+  async onAddRecipe() {
+    try {
+      if (!this.formComponent()?.validateForm()
+        || !this.recipe()) {
+        return;
+      }
+      const newUUID = await this._addRecipe(this.recipe()!);
+      this.addedRecipeInformerUUID.set(newUUID);
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
     }
-    this._addRecipe(this.recipe()!);
   }
 
   onEditRecipe() {
@@ -215,7 +225,7 @@ export class AddRecipeComponent
   }
 
   private _addRecipe(recipe: Recipe) {
-    this._recipesRepository.addRecipe(recipe).then(() => {
+    return this._recipesRepository.addRecipe(recipe).then((newUUID) => {
       this.formComponent()?.resetForm();
       this._notificationsService.success('Recipe added');
       this.recipe.set(undefined);
@@ -227,6 +237,7 @@ export class AddRecipeComponent
       if (this.isDraftRoute()) {
         this._router.navigate(['recipes']);
       }
+      return newUUID;
     });
   }
 

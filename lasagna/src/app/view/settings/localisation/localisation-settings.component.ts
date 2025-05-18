@@ -1,5 +1,5 @@
-import {Component, computed, model, Signal} from '@angular/core';
-import {LocalisationService} from '@service/services/localisation.service';
+import {Component, computed, Inject, model, Signal} from '@angular/core';
+import {LanguageService} from '@service/services/language.service';
 
 
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import {RadioComponent} from '@view/ui/form/radio.component';
 import {InputComponent} from '@view/ui/form/input.component';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
+import {SettingsService} from '@view/settings/settings.service';
+import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 
 
 @Component({
@@ -41,9 +43,14 @@ import {TitleComponent} from '@view/ui/layout/title/title.component';
         </lg-gap-column>
       </section>
 
-      <lg-title [level]="6">Currency</lg-title>
+      <lg-title [level]="6">
+        Currency
+        (in  <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)
+      </lg-title>
 
-      <lg-input [(ngModel)]="currency"></lg-input>
+      <lg-input [(ngModel)]="currency"
+                (ngModelChange)="changeCurrency($event)"
+      ></lg-input>
     </lg-gap-column>
   `,
   styles: [``],
@@ -56,15 +63,18 @@ import {TitleComponent} from '@view/ui/layout/title/title.component';
     TitleComponent
   ]
 })
-export class LanguageSettingsComponent {
+export class LocalisationSettingsComponent {
   constructor(
-    private _localisationService: LocalisationService,
+    private _settingsService: SettingsService,
+    @Inject(USER_CURRENCY) private _userCurrency: string,
   ) {
-    this.selectedLang = this._localisationService.lang;
+    this.selectedLang = this._settingsService.lang;
 
     this.selectedLangModel.update(oldValue => {
-      return this._localisationService.languages.map((value => this.selectedLang() === value));
-    })
+      return this._settingsService.languages.map((value => this.selectedLang() === value));
+    });
+
+    this.currency.set(_userCurrency);
   }
 
   currency = model('EUR');
@@ -77,7 +87,7 @@ export class LanguageSettingsComponent {
   selectedLangModel = model<boolean[]>([]);
 
   languages = computed(() => {
-    return this._localisationService.languages
+    return this._settingsService.languages
       .map((lang: string) => ({
         code: lang,
         name: this.langsMap[lang] || lang,
@@ -85,6 +95,10 @@ export class LanguageSettingsComponent {
   });
 
   changeLang(lang: string): void {
-    this._localisationService.changeLang(lang);
+    this._settingsService.changeLang(lang);
+  }
+
+  changeCurrency(currency: string): void {
+    this._settingsService.changeCurrency(String(currency).toUpperCase());
   }
 }
