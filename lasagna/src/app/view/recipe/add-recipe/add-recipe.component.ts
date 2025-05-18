@@ -211,7 +211,7 @@ export class AddRecipeComponent
     if (!this.recipe()?.uuid) {
       return;
     }
-    this._recipesRepository.deleteRecipe(this.recipe()!.uuid!).then(() => {
+    this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
       this._notificationsService.success('Recipe deleted');
       this._router.navigate(['recipes']);
     });

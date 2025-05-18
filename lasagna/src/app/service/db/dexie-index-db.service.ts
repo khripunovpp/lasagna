@@ -251,6 +251,16 @@ export class DexieIndexDbService extends Dexie {
     await this.saveIndex(storeKey);
   }
 
+  async removeMany(storeKey: Stores, uuids: string[]): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkDelete(uuids);
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    await this.flexsearchIndexService.removeFromIndex(storeKey, uuids);
+    await this.saveIndex(storeKey);
+  }
+
   async clear(storeKey: Stores): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).clear();

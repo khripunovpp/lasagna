@@ -140,8 +140,16 @@ export class RecipesRepository {
     this._draftFormsService.removeDraftForm('draft_recipes', key);
   }
 
-  deleteRecipe(uuid: string) {
+  removeDraftMany(uuids: string[]) {
+    return this._draftFormsService.removeDraftForm('draft_recipes', uuids);
+  }
+
+  deleteOne(uuid: string) {
     return this._indexDbService.remove(Stores.RECIPES, uuid);
+  }
+
+  deleteMany(uuids: string[]) {
+    return this._indexDbService.removeMany(Stores.RECIPES, uuids);
   }
 
   getTopCategories() {

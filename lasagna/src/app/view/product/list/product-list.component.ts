@@ -81,10 +81,10 @@ import {ExpanderComponent} from '@view/ui/expander.component';
               <lg-title>
                   {{ 'products.list-title'|translate }}
               </lg-title>
+              @if (draft()?.length) {
+                  <lg-expander [closeLabel]="'drafts-close-label'|translate"
+                               [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
 
-              <lg-expander [closeLabel]="'drafts-close-label'|translate"
-                           [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
-                  @if (draft()?.length) {
                       <lg-card-list [mode]="selectionZoneService.selectionMode()"
                                     (onSelected)="selectionZoneService.putSelected($event)"
                                     [selectAll]="selectionZoneService.selectAll()['draft']"
@@ -117,9 +117,8 @@ import {ExpanderComponent} from '@view/ui/expander.component';
                               </ng-template>
                           }
                       </lg-card-list>
-                  }
-
-              </lg-expander>
+                  </lg-expander>
+              }
 
               @for (category of products();track $index;let i = $index) {
                   <lg-title [level]="3">

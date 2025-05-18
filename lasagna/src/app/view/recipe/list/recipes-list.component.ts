@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {RecipesRepository} from '@service/repositories/recipes.repository';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -20,142 +20,102 @@ import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component
 import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
-import {DraftForm} from '@service/services/draft-forms.service';
-import {DatePipe} from '@angular/common';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
-import {RecipeDTO, RecipeScheme} from '@service/db/shemes/Recipe.scheme';
-import {ExpandDirective} from '@view/directives/expand.directive';
-import {ProductDTO} from '@service/db/shemes/Product.scheme';
+import {RecipeScheme} from '@service/db/shemes/Recipe.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ExpanderComponent} from '@view/ui/expander.component';
+import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.component';
 
 
 @Component({
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
-      <lg-controls-bar>
-          <ng-template lgQuickActionsTpl>
-              <lg-button [icon]="true"
-                         [link]="'/recipes/add'"
-                         [size]="'medium'"
-                         [style]="'success'">
-                  <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-              </lg-button>
-          </ng-template>
+    <lg-controls-bar>
+      <ng-template lgQuickActionsTpl>
+        <lg-button [icon]="true"
+                   [link]="'/recipes/add'"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+      </ng-template>
 
-          <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>
+      <lg-selection-tools [selectionTypes]="['draft','recipe']"></lg-selection-tools>
 
-          <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-              {{ 'export-label'|translate }} recipes
-          </lg-button>
+      <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
+                 [flat]="true"
+                 [size]="'small'"
+                 [style]="'info'">
+        {{ 'export-label'|translate }} recipes
+      </lg-button>
 
-          <lg-import (onDone)="loadRecipes()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="RecipeScheme"
-                     [storeName]="Stores.RECIPES">
-              <ng-template let-flow="flow" let-row lgImportRowTpl>
-                  <span>{{ row?.name }}</span>
+      <lg-import (onDone)="loadRecipes()"
+                 [label]="('import-label'|translate) + ' products'"
+                 [schema]="RecipeScheme"
+                 [storeName]="Stores.RECIPES">
+        <ng-template let-flow="flow" let-row lgImportRowTpl>
+          <span>{{ row?.name }}</span>
+        </ng-template>
+      </lg-import>
+    </lg-controls-bar>
+
+    <lg-fade-in>
+      <lg-container>
+        <lg-gap-row [center]="true">
+          <lg-title>
+            {{ 'recipes.list-title'|translate }}
+          </lg-title>
+        </lg-gap-row>
+
+        <lg-draft-recipes-list></lg-draft-recipes-list>
+
+        @for (category of recipes(); track category?.category) {
+          <lg-title [level]="3">
+            {{ category?.category || ('without-category-label'|translate) }}
+          </lg-title>
+
+          <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                        (onSelected)="selectionZoneService.putSelected($event)"
+                        [selectAll]="selectionZoneService.selectAll()['recipe']"
+                        [deselectAll]="selectionZoneService.deselectAll()['recipe']">
+            @for (recipe of category.recipes; track $index; let i = $index) {
+              <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">
+                <lg-gap-row [center]="true">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+
+                  <lg-button [style]="'primary'"
+                             [size]="'small'"
+                             [link]="'/recipes/calculate/' + recipe.uuid"
+                             [flat]="true">
+                    {{ 'recipes.calculate-btn'|translate }}
+                  </lg-button>
+
+                  <small class="text-muted text-cursive" lgPull>
+                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                  </small>
+
+                  <lg-button [style]="'danger'"
+                             [size]="'tiny'"
+                             [icon]="true"
+                             (click)="deleteRecipe(recipe)">
+                    <mat-icon aria-hidden="false"
+                              fontIcon="close"></mat-icon>
+                  </lg-button>
+                </lg-gap-row>
               </ng-template>
-          </lg-import>
-      </lg-controls-bar>
-
-      <lg-fade-in>
-          <lg-container>
-              <lg-gap-row [center]="true">
-                  <lg-title>
-                      {{ 'recipes.list-title'|translate }}
-                  </lg-title>
-              </lg-gap-row>
-
-              <lg-expander [closeLabel]="'drafts-close-label'|translate"
-                           [openLabel]="'drafts-label'|translate:{length:draft()?.length}">
-                  @if (draft()?.length) {
-                      <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                                    (onSelected)="selectionZoneService.putSelected($event)"
-                                    [selectAll]="selectionZoneService.selectAll()['draft']"
-                                    [deselectAll]="selectionZoneService.deselectAll()['draft']"
-                                    style="--card-bg: #bee5ff">
-                          @for (item of draft();track item.uuid) {
-                              <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-                                  <lg-gap-row [center]="true">
-                                      <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
-                                          @if (item?.meta?.['uuid']) {
-                                              {{ 'draft.list-prefix.existing'|translate }}
-                                          } @else {
-                                              {{ 'draft.list-prefix.new'|translate }}
-                                          }
-                                          {{ item?.data?.name ?? '' }}
-                                      </a>
-
-                                      <small class="text-muted text-cursive">
-                                          {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
-                                      </small>
-
-                                      <lg-button [style]="'danger'"
-                                                 [size]="'tiny'"
-                                                 [icon]="true"
-                                                 (click)="deleteDraft($any(item))">
-                                          <mat-icon aria-hidden="false"
-                                                    fontIcon="close"></mat-icon>
-                                      </lg-button>
-                                  </lg-gap-row>
-                              </ng-template>
-                          }
-                      </lg-card-list>
-                  }
-              </lg-expander>
-
-              @for (category of recipes();track category?.category) {
-                  <lg-title [level]="3">
-                      {{ category?.category || ('without-category-label'|translate) }}
-                  </lg-title>
-
-                  <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                                (onSelected)="selectionZoneService.putSelected($event)"
-                                [selectAll]="selectionZoneService.selectAll()['recipe']"
-                                [deselectAll]="selectionZoneService.deselectAll()['recipe']">
-                      @for (recipe of category.recipes;track $index;let i = $index) {
-                          <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">
-                              <lg-gap-row [center]="true">
-                                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
-
-                                  <lg-button [style]="'primary'"
-                                             [size]="'small'"
-                                             [link]="'/recipes/calculate/' + recipe.uuid"
-                                             [flat]="true">
-                                      {{ 'recipes.calculate-btn'|translate }}
-                                  </lg-button>
-
-                                  <small class="text-muted text-cursive" lgPull>
-                                      {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                                  </small>
-
-                                  <lg-button [style]="'danger'"
-                                             [size]="'tiny'"
-                                             [icon]="true"
-                                             (click)="deleteRecipe(recipe)">
-                                      <mat-icon aria-hidden="false"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-gap-row>
-                          </ng-template>
-                      }
-                  </lg-card-list>
-              } @empty {
-                  <lg-gap-row [center]="true">
-                      <lg-title [level]="5">
-                          {{ 'no-recipes'|translate }}
-                      </lg-title>
-                  </lg-gap-row>
-              }
-          </lg-container>
-      </lg-fade-in>
+            }
+          </lg-card-list>
+        } @empty {
+          <lg-gap-row [center]="true">
+            <lg-title [level]="5">
+              {{ 'no-recipes'|translate }}
+            </lg-title>
+          </lg-gap-row>
+        }
+      </lg-container>
+    </lg-fade-in>
   `,
   providers: [
     SelectionZoneService,
@@ -176,10 +136,9 @@ import {ExpanderComponent} from '@view/ui/expander.component';
     QuickActionsTplDirective,
     SelectionToolsComponent,
     TimeAgoPipe,
-    ExpandDirective,
     PullDirective,
     TranslatePipe,
-    ExpanderComponent
+    DraftRecipesListComponent
   ],
   styles: [
     `:host {
@@ -197,24 +156,19 @@ export class RecipesListComponent {
   ) {
   }
 
-  draft = signal<Array<DraftForm<RecipeDTO>>>([]);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
+  protected readonly RecipeScheme = RecipeScheme;
 
   ngOnInit() {
     this.loadRecipes();
-
-    const draft = this._recipesRepository.getDraftRecipe();
-    if (draft) {
-      this.draft.set(draft);
-    }
   }
 
   deleteRecipe(
     recipe: Recipe,
   ) {
     if (!recipe.uuid) return Promise.resolve();
-    return this._recipesRepository.deleteRecipe(recipe.uuid).then(() => {
+    return this._recipesRepository.deleteOne(recipe.uuid).then(() => {
       this.loadRecipes();
       this._notificationsService.success('Recipe deleted');
     });
@@ -231,16 +185,4 @@ export class RecipesListComponent {
       selected: Array.from(selected || []),
     });
   }
-
-
-  deleteDraft(
-    draft: DraftForm<ProductDTO>,
-  ) {
-    this._recipesRepository.removeDraftRecipe(draft.uuid);
-    this.draft.update((drafts) => {
-      return drafts.filter((item) => item?.uuid !== draft.uuid);
-    });
-  }
-
-  protected readonly RecipeScheme = RecipeScheme;
 }

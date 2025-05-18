@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  QueryList,
-  SimpleChanges,
-  ViewEncapsulation
-} from '@angular/core';
+import {Component, ContentChildren, effect, input, output, QueryList, ViewEncapsulation} from '@angular/core';
 
 import {CardListItemDirective} from './card-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
@@ -30,27 +19,27 @@ export interface CardListSelectionEvent {
     CheckboxComponent,
     FormsModule,
     ReactiveFormsModule
-],
+  ],
   template: `
-      <section [formGroup]="selected" class="lg-card-list">
-          <section class="lg-card-list__inner" formArrayName="items">
-              @for (item of items;track item?.uuid;let i = $index, even = $even) {
-                  <div class="lg-card-list__item"
-                       [class.colored]="!even">
-                      @if (mode === 'selection') {
-                          <lg-checkbox [formControlName]="i"
-                                       [value]="buildValueString(i, item)"
-                                       (onCheckboxChanged)=" onChanges($event,i)"></lg-checkbox>
-                      }
-                      <div class="lg-card-list__item__inner">
-                          <ng-container [ngTemplateOutlet]="item.template"></ng-container>
-                      </div>
-                  </div>
-              } @empty {
-                  <div style="padding:16px 24px;">No items found</div>
-              }
-          </section>
+    <section [formGroup]="selected" class="lg-card-list">
+      <section class="lg-card-list__inner" formArrayName="items">
+        @for (item of items; track item?.uuid; let i = $index, even = $even) {
+          <div class="lg-card-list__item"
+               [class.colored]="!even">
+            @if (mode() === 'selection') {
+              <lg-checkbox [formControlName]="i"
+                           [value]="buildValueString(i, item)"
+                           (onCheckboxChanged)=" onChanges($event,i)"></lg-checkbox>
+            }
+            <div class="lg-card-list__item__inner">
+              <ng-container [ngTemplateOutlet]="item.template"></ng-container>
+            </div>
+          </div>
+        } @empty {
+          <div style="padding:16px 24px;">No items found</div>
+        }
       </section>
+    </section>
   `,
   styles: [
     `
@@ -100,36 +89,47 @@ export interface CardListSelectionEvent {
     `
   ],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardListComponent
-  implements OnChanges {
+export class CardListComponent {
 
   constructor() {
   }
 
-  @Input() mode: 'default' | 'selection' = 'default';
-  @Input() selectAll = false;
-  @Input() deselectAll = false;
-  @Output() onSelected = new EventEmitter<CardListSelectionEvent>();
+  mode = input<'default' | 'selection'>('default');
+  selectAll = input<boolean>(false);
+  deselectAll = input<boolean>(false);
+  onSelected = output<CardListSelectionEvent>();
   @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
   selected = new FormGroup({
     items: new FormArray([])
   });
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectAll']) {
-      this.effectSelectAll();
+  effectMode = effect(() => {
+    const items = (this.selected.get('items') as FormArray);
+    if (this.mode() === 'selection') {
+      items.clear();
+      items.reset();
+      this.items?.forEach((item, index) => {
+        items.push(new FormControl(false));
+      });
     }
-
-    if (changes['deselectAll']) {
-      this.effectDeselectAll();
+  });
+  effectSelectAll = effect(() => {
+    const items = (this.selected.get('items') as FormArray);
+    if (this.selectAll()) {
+      items?.controls.forEach((item) => {
+        item.setValue(true);
+      });
     }
-
-    if (changes['mode']) {
-      this.effectMode();
+  });
+  effectDeselectAll = effect(() => {
+    const items = (this.selected.get('items') as FormArray);
+    if (this.deselectAll()) {
+      items?.controls.forEach((item) => {
+        item.setValue(false);
+      });
     }
-  }
+  });
 
   buildValueString(
     index: number,
@@ -137,33 +137,6 @@ export class CardListComponent
   ) {
     return String(`${item?.type}-${index}-${item?.uuid}`);
   }
-
-  effectMode = () => {
-    const items = (this.selected.get('items') as FormArray);
-    if (this.mode === 'selection') {
-      items.clear();
-      items.reset();
-      this.items?.forEach((item, index) => {
-        items.push(new FormControl(false));
-      });
-    }
-  };
-  effectSelectAll = () => {
-    const items = (this.selected.get('items') as FormArray);
-    if (this.selectAll) {
-      items?.controls.forEach((item) => {
-        item.setValue(true);
-      });
-    }
-  };
-  effectDeselectAll = () => {
-    const items = (this.selected.get('items') as FormArray);
-    if (this.deselectAll) {
-      items?.controls.forEach((item) => {
-        item.setValue(false);
-      });
-    }
-  };
 
   onChanges(
     value: boolean | string,
