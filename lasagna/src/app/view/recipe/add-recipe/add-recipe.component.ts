@@ -170,7 +170,7 @@ export class AddRecipeComponent
           this.recipe()!,
           this.draftRef()!.meta?.['uuid']
         );
-      } else {
+      } else if (this.recipe()) {
         this.draftRef.set(this._recipesRepository.saveDraftRecipe(
           this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));

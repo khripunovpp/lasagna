@@ -9,7 +9,6 @@ import {FadeInComponent} from "../ui/fade-in.component";
 import {ExpandDirective} from '@view/directives/expand.directive';
 
 
-
 import {LanguageSettingsComponent} from '@view/settings/language/language-settings.component';
 import {BackupSettingsComponent} from '@view/settings/backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -34,7 +33,7 @@ import {TabsComponent} from '@view/ui/tabs/tabs.component';
     TranslatePipe,
     TabDirective,
     TabsComponent
-]
+  ]
 })
 export class SettingsComponent {
   constructor() {

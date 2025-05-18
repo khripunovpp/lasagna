@@ -22,6 +22,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CategoryProductsRepository, CategoryRecipesRepository} from '@service/repositories';
 import {DB_NAME} from '@service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
+import {SettingsService} from '@view/settings/settings.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -44,10 +45,13 @@ export const appConfig: ApplicationConfig = {
       const categoryRepository = inject(CategoryProductsRepository);
       const recipeCategoryRepository = inject(CategoryRecipesRepository);
       const docsService = inject(DocsService);
+      const settingsService = inject(SettingsService);
+
       return Promise.all([
         categoryRepository.preloadCategories(),
         recipeCategoryRepository.preloadCategories(),
         docsService.init(),
+        settingsService.loadSettings(),
       ])
     }),
     provideServiceWorker('ngsw-worker.js', {
