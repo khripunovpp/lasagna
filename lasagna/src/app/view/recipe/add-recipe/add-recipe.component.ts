@@ -12,7 +12,6 @@ import {NotificationsService} from '@service/services/notifications.service';
 import {DraftForm} from '@service/services/draft-forms.service';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../directives/shrink.directive';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '@service/models/Recipe';
@@ -123,11 +122,6 @@ export class AddRecipeComponent
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
   ) {
-    this._aRoute.data.pipe(
-      takeUntilDestroyed(),
-    ).subscribe((data) => {
-      this.recipe.set(data['recipe'] || null);
-    });
   }
 
   draftOrRecipeUUID = signal<string | undefined>(undefined);
@@ -170,7 +164,6 @@ export class AddRecipeComponent
       if (!this.formComponent()!.form.dirty) {
         return
       }
-
       if (this.draftRef()?.uuid) {
         this._recipesRepository.updateDraftRecipe(
           this.draftRef()!.uuid,
@@ -181,6 +174,14 @@ export class AddRecipeComponent
         this.draftRef.set(this._recipesRepository.saveDraftRecipe(
           this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));
+
+        if (!this.isDraftRoute()) {
+          this._router.navigate(['recipes/draft/' + this.draftRef()!.uuid], {
+            // Меняем URL, но остаёмся на текущем компоненте
+            skipLocationChange: false, // адрес в строке обновится
+            replaceUrl: true // если хочешь заменить текущую запись в истории
+          });
+        }
       }
     });
   }

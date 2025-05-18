@@ -37,6 +37,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
         align-items: center;
         position: relative;
         gap: 12px;
+        white-space: nowrap;
       }
 
       .lg-controls-bar.opened {
