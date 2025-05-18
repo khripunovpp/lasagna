@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
-import {Tag} from '@service/models/Tag';
-import {TagDTO} from '@service/db/shemes/Tag.scheme';
+import {Settings} from '@service/models/Settings';
+import {SettingsDTO} from '@service/db/shemes/Settings.scheme';
 
 @Injectable({
   providedIn: 'root'
@@ -13,31 +13,24 @@ export class SettingsRepositoryService {
   ) {
   }
 
-  addOne(tag: Tag) {
-    return this._indexDbService.addData<TagDTO>(Stores.TAGS, tag.toDTO(), tag.name);
+  async updateSettings(settings: Settings) {
+    await this._indexDbService.clear(Stores.SETTINGS);
+    return this._indexDbService.balkAdd(Stores.SETTINGS, settings.toDTO().settings);
   }
 
-  async getOne(
-    uuid: string,
-  ) {
-    return this._indexDbService.getOne<TagDTO>(Stores.TAGS, uuid);
+  getOne(key: string) {
+    return this._indexDbService.search(Stores.SETTINGS, 'key', key).then((settings) => {
+      if (settings) {
+        return settings[0] as SettingsDTO['settings']
+      } else {
+        return null;
+      }
+    })
   }
 
   getAll() {
-    return this._indexDbService.getAll<TagDTO>(Stores.TAGS);
-  }
-
-  getMany(
-    uuids: string[],
-  ) {
-    return this._indexDbService.getMany<TagDTO>(Stores.TAGS, uuids);
-  }
-
-  editOne(uuid: string, tag: Tag) {
-    return this._indexDbService.replaceData<TagDTO>(Stores.TAGS, uuid, tag.toDTO());
-  }
-
-  deleteOne(uuid: string) {
-    return this._indexDbService.remove(Stores.TAGS, uuid);
+    return this._indexDbService.getAll(Stores.SETTINGS).then((settings) => {
+      return Settings.fromRaw(settings);
+    })
   }
 }

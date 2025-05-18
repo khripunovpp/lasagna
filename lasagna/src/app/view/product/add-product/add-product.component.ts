@@ -175,7 +175,7 @@ export class AddProductComponent
           this.product()!,
           this.draftRef()!.meta?.['uuid']
         );
-      } else {
+      } else if (this.product()) {
         this.draftRef.set(this._productsRepository.saveDraftProduct(
           this.product()!,
           this.draftOrProductUUID() ?? ''));

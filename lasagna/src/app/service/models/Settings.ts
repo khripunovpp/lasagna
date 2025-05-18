@@ -18,10 +18,25 @@ export class Settings {
     return new Settings();
   }
 
-  addSetting<T>(key: string, data: T) {
-    if (this.settings.has(key)) {
-      throw new Error(`Setting with key ${key} already exists`);
+  static fromRaw(dto: any) {
+    if (dto instanceof Settings) {
+      return dto;
     }
+
+    const settings = new Settings();
+    if (Array.isArray(dto)) {
+      dto.forEach((setting: SettingGroup<unknown>) => {
+        settings.addSetting(setting.key, setting.data);
+      });
+    } else {
+      Object.entries(dto).forEach(([key, data]) => {
+        settings.addSetting(key, data);
+      });
+    }
+    return settings;
+  }
+
+  addSetting<T>(key: string, data: T) {
     this.settings.set(key, {key, data});
   }
 
@@ -34,18 +49,12 @@ export class Settings {
   }
 
   removeSetting(key: string) {
-    if (!this.settings.has(key)) {
-      throw new Error(`Setting with key ${key} does not exist`);
-    }
     this.settings.delete(key);
   }
 
   toDTO() {
     return {
-      settings: Array.from(this.settings.entries()).map(([key, data]) => ({
-        key,
-        data,
-      })),
+      settings: Array.from(this.settings.values())
     };
   }
 
