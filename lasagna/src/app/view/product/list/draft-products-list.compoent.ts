@@ -60,6 +60,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
 
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
                       (onSelected)="selectionZoneService.putSelected($event)"
+                      (onDeleteOne)="deleteDraft($event?.uuid)"
                       [selectAll]="selectionZoneService.selectAll()['draft']"
                       [deselectAll]="selectionZoneService.deselectAll()['draft']"
                       style="--card-bg: #bee5ff">
@@ -78,14 +79,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                 <small class="text-muted text-cursive" lgPull>
                   {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                 </small>
-
-                <lg-button [style]="'danger'"
-                           [size]="'tiny'"
-                           [icon]="true"
-                           (click)="deleteDraft($any(item))">
-                  <mat-icon aria-hidden="false"
-                            fontIcon="close"></mat-icon>
-                </lg-button>
               </lg-gap-row>
             </ng-template>
           }
@@ -136,11 +129,14 @@ export class DraftProductsListCompoent
   }
 
   deleteDraft(
-    draft: DraftForm<ProductDTO>,
+    draftUUID?: string
   ) {
-    this._productsRepository.removeDraftProduct(draft.uuid);
+    if (!draftUUID) {
+      return;
+    }
+    this._productsRepository.removeDraftProduct(draftUUID);
     this.drafts.update((drafts) => {
-      return drafts.filter((item) => item?.uuid !== draft.uuid);
+      return drafts.filter((item) => item?.uuid !== draftUUID);
     });
   }
 
