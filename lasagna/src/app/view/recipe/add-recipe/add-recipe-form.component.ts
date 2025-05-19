@@ -16,7 +16,6 @@ import {ControlsRowComponent} from '../../ui/form/controls-row.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {NotificationsService} from '@service/services/notifications.service';
-import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {TooltipComponent} from '../../ui/tooltip.component';
 import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
 import {injectParams} from '@helpers/route.helpers';
@@ -30,6 +29,8 @@ import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
 import {WidthDirective} from '@view/directives/width.directive';
+import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
+import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -48,13 +49,14 @@ import {WidthDirective} from '@view/directives/width.directive';
     ControlsRowComponent,
     ExpandDirective,
     ParseMathDirective,
-    ButtonsGroupComponent,
     ChipsListComponent,
     AutocompleteComponent,
     FormsModule,
     MatIcon,
     TranslatePipe,
     WidthDirective,
+    UnitSwitcherComponent,
+    GapRowComponent,
   ],
   providers: [
     {
@@ -96,18 +98,6 @@ export class AddRecipeFormComponent
   })
   textFieldState = signal<Record<number, boolean>>({});
   recipeFieldState = signal<Record<number, boolean>>({});
-  buttons: ButtonGroupItem[] = [
-    {
-      label: 'gr',
-      value: 'gram',
-      style: 'secondary',
-    },
-    {
-      label: 'pc',
-      value: 'piece',
-      style: 'secondary',
-    },
-  ];
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');

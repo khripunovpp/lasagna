@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  effect,
+  inject,
+  input,
+  OnInit,
+  signal,
+  viewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ControlComponent} from '../../ui/form/control.component';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
@@ -11,20 +21,22 @@ import {TooltipComponent} from '../../ui/tooltip.component';
 import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ChipsListComponent} from '../../ui/form/chips-list.component';
 import {NotificationsService} from '@service/services/notifications.service';
 import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
 import {Product} from '@service/models/Product';
 import {productToFormValue} from '@helpers/product.helpers';
-
 import {debounceTime, tap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '@view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {WidthDirective} from '@view/directives/width.directive';
+import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
+import {USER_CURRENCY} from '@service/tokens/user-currency.token';
+import {SETTINGS} from '@service/tokens/settings.token';
+import {CurrencySymbolPipe} from '@view/pipes/currency-symbol.pipe';
 
 
 @Component({
@@ -41,7 +53,6 @@ import {WidthDirective} from '@view/directives/width.directive';
     AmountWidgetsComponent,
     ParseMathDirective,
     GapRowComponent,
-    ButtonsGroupComponent,
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,
@@ -49,7 +60,9 @@ import {WidthDirective} from '@view/directives/width.directive';
     CardComponent,
     MatIcon,
     ButtonComponent,
-    WidthDirective
+    WidthDirective,
+    UnitSwitcherComponent,
+    CurrencySymbolPipe
   ],
   styles: [
     `
@@ -81,18 +94,7 @@ export class AddProductFormComponent
     category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
   });
-  buttons: ButtonGroupItem[] = [
-    {
-      label: 'gr',
-      value: 'gram',
-      style: 'secondary',
-    },
-    {
-      label: 'pc',
-      value: 'piece',
-      style: 'secondary',
-    },
-  ];
+  userSettings = inject(SETTINGS)
   product = input<Product | null>(null);
   topCategories = signal<{
     label: string

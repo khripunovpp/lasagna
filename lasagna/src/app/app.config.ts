@@ -29,6 +29,7 @@ import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {of, tap} from 'rxjs';
 import {UserService} from '@service/services/user.service';
+import {SETTINGS} from '@service/tokens/settings.token';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -135,10 +136,11 @@ export const appConfig: ApplicationConfig = {
       deps: [SettingsService]
     },
     {
-      provide: USER_CURRENCY,
+      provide: SETTINGS,
       useFactory: (settingsService: SettingsService) => {
-        const signalCurrency = settingsService.settingsSignal
-        return settingsService.settingsSignal;
+        return computed(()=>{
+          return settingsService.settingsSignal()?.getSettingsMap()
+        })
       },
       deps: [SettingsService]
     }

@@ -13,7 +13,7 @@
                    formControlName="description"></lg-textarea>
     </lg-control>
 
-    <lg-controls-row [mobileMode]="true" lgExpand>
+    <lg-controls-row lgExpand>
       <lg-control label="{{ 'recipe.form.outcome_amount.label'|translate }}" lgExpand>
         <lg-number-input #amount
                          [placeholder]="'recipe.form.outcome_amount.placeholder'|translate"
@@ -21,16 +21,14 @@
                          lgParseMath></lg-number-input>
       </lg-control>
 
-      <lg-buttons-group [items]="buttons"
-                        formControlName="outcome_unit"
-                       lgWidth="130px">
-      </lg-buttons-group>
+      <lg-unit-switcher formControlName="outcome_unit">
+      </lg-unit-switcher>
     </lg-controls-row>
 
     <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
       <lg-gap-column [position]="'start'">
-        <lg-gap-column formArrayName="ingredients" lgExpand>
-          @for (control of ingredients.controls;track (control.value.amount + i + 1);let i = $index) {
+        <lg-gap-column formArrayName="ingredients" lgExpand [size]="'medium'">
+          @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index, last = $last) {
             <ng-container [formGroupName]="i">
               <lg-controls-row [mobileMode]="true">
                 @if (textFieldState()[i]) {
@@ -91,18 +89,18 @@
                   </lg-gap-column>
                 }
 
-                <lg-control label="{{ 'recipe.form.ingredients.amount.label'|translate }}">
-                  <lg-number-input #amount
-                                   lgParseMath
-                                   (onKeydown)="addLast()"
-                                   [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:(form.value.ingredients?.[i]?.unit || 'gram')}"
-                                   formControlName="amount"></lg-number-input>
-                </lg-control>
+                <lg-gap-row [size]="'small'" [bottom]="true">
+                  <lg-control lgExpand label="{{ 'recipe.form.ingredients.amount.label'|translate }}">
+                    <lg-number-input #amount
+                                     lgParseMath
+                                     (onKeydown)="addLast()"
+                                     [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:(form.value.ingredients?.[i]?.unit || 'gram')}"
+                                     formControlName="amount"></lg-number-input>
+                  </lg-control>
 
-                <lg-buttons-group [items]="buttons"
-                                  lgWidth="130px"
-                                  formControlName="unit">
-                </lg-buttons-group>
+                  <lg-unit-switcher formControlName="unit">
+                  </lg-unit-switcher>
+                </lg-gap-row>
 
                 <ng-container ngProjectAs="rowActions">
                   <lg-button [style]="'danger'"
@@ -114,6 +112,9 @@
                 </ng-container>
 
               </lg-controls-row>
+              @if (!last) {
+                <hr size="2" lgExpand color="#fafafa" />
+              }
             </ng-container>
           }
         </lg-gap-column>
