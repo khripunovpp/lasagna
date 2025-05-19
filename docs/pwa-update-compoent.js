@@ -67,6 +67,7 @@ function createUpdateBanner() {
   banner.id = 'pwa-update-banner';
   banner.style.display = 'none';
   banner.style.position = 'fixed';
+  banner.style.zIndex = '8';
   banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
   banner.style.bottom = '0';
   banner.style.left = '0';
