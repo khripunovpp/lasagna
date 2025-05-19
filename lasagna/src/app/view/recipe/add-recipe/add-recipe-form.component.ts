@@ -30,7 +30,7 @@ import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
 
 import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
-import {GapRowComponent} from '@view/ui/layout/gap-row.component';
+
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -54,8 +54,7 @@ import {GapRowComponent} from '@view/ui/layout/gap-row.component';
     FormsModule,
     MatIcon,
     TranslatePipe,
-    UnitSwitcherComponent,
-    GapRowComponent
+    UnitSwitcherComponent
 ],
   providers: [
     {
