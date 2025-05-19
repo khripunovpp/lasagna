@@ -71,9 +71,7 @@ import {errorHandler} from '@helpers/error.helper';
           }
         </lg-gap-column>
 
-        <lg-card>
-          <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
-        </lg-card>
+        <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
 
         <lg-gap-row [mobileMode]="true" [relaxed]="true">
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
