@@ -17,7 +17,7 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
-import {QuickActionsTplDirective} from '../../ui/controls-bar/controls-bar-quick-actions-tpl.directive';
+
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
@@ -130,7 +130,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     ImportRowTplDirective,
     FadeInComponent,
     ControlsBarComponent,
-    QuickActionsTplDirective,
     SelectionToolsComponent,
     TimeAgoPipe,
     PullDirective,
@@ -138,7 +137,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     DraftRecipesListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
-  ],
+],
   styles: [
     `:host {
       display: block;

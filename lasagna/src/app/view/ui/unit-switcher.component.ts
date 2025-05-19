@@ -1,5 +1,5 @@
 import {Component, effect, forwardRef, input, Input, signal, ViewEncapsulation} from '@angular/core';
-import {ButtonComponent, ButtonSizes, ButtonStyle} from '@view/ui/layout/button.component';
+import {ButtonSizes, ButtonStyle} from '@view/ui/layout/button.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 export interface UnitGroupItem {
@@ -58,9 +58,7 @@ export interface UnitGroupItem {
 
     `
   ],
-  imports: [
-    ButtonComponent
-  ],
+  imports: [],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {

@@ -27,11 +27,11 @@ import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 
 import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
 import {BaseTemplate, FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
-import {ViewShowComponent} from '../../ui/layout/view-show.component';
+
 
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../helpers/route.helpers';
-import {MultiselectComponent} from '../../ui/form/multiselect.component';
+
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
 import {FadeInComponent} from '../../ui/fade-in.component';
@@ -59,18 +59,14 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
     FormsModule,
     RouterLink,
     GapColumnComponent,
-    TaxesAndFeesListComponent,
     NgTemplateOutlet,
-    ViewShowComponent,
-    MultiselectComponent,
     FadeInComponent,
     BaseChartDirective,
     CardComponent,
     WidthDirective,
     ExpandDirective,
-    CurrencyPipe,
     UserCurrencyPipe
-  ],
+],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {

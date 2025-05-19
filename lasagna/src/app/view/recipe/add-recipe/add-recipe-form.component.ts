@@ -28,7 +28,7 @@ import {recipeToFormValue} from '@helpers/recipe.helpers';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
-import {WidthDirective} from '@view/directives/width.directive';
+
 import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 
@@ -54,10 +54,9 @@ import {GapRowComponent} from '@view/ui/layout/gap-row.component';
     FormsModule,
     MatIcon,
     TranslatePipe,
-    WidthDirective,
     UnitSwitcherComponent,
-    GapRowComponent,
-  ],
+    GapRowComponent
+],
   providers: [
     {
       provide: SelectResourcesService,
