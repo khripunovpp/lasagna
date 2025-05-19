@@ -1,7 +1,7 @@
 import {Component, Input, Optional} from '@angular/core';
 import {ButtonComponent} from '../layout/button.component';
-import {GapRowComponent} from '../layout/gap-row.component';
-import {GapColumnComponent} from '../layout/gap-column.component';
+
+
 import {SelectionZoneService} from '../../../service/services/selection-zone.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
@@ -57,12 +57,10 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
   `,
   imports: [
     ButtonComponent,
-    GapRowComponent,
-    GapColumnComponent,
     TranslatePipe,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
-  ],
+],
 })
 export class SelectionToolsComponent {
   constructor(

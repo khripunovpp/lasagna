@@ -1,7 +1,7 @@
 import {Component, HostBinding, inject, OnInit, signal, Signal} from '@angular/core';
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
-import {MatIcon} from '@angular/material/icon';
+
 import {CardListComponent} from '@view/ui/card/card-list.component';
 import {CardListItemDirective} from '@view/ui/card/card-list-item.directive';
 import {RouterLink} from '@angular/router';
@@ -89,7 +89,6 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
   imports: [
     GapRowComponent,
     ButtonComponent,
-    MatIcon,
     CardListComponent,
     CardListItemDirective,
     RouterLink,
@@ -100,7 +99,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     ExpanderComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
-  ],
+],
   providers: [
     SelectionZoneService,
   ],

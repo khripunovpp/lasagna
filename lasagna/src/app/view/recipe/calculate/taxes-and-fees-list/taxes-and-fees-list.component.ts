@@ -16,11 +16,11 @@ import {SelfCenterDirective} from '../../../directives/self-center.directive';
 import {GapColumnComponent} from '../../../ui/layout/gap-column.component';
 import {ParseMathDirective} from '../../../directives/parse-math.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {TitleComponent} from '../../../ui/layout/title/title.component';
+
 import {TaxTemplateRow} from '../../../../service/services/form-templates.service';
 import {TextareaComponent} from '../../../ui/form/textarea.component';
 import {defaultTxTemplates} from '../../../../service/const/default-tx-templates';
-import {DecimalPipe} from '@angular/common';
+
 
 export interface TaxRow {
   name: string;
@@ -50,10 +50,8 @@ export interface TaxRow {
     ShrinkDirective,
     GapColumnComponent,
     ParseMathDirective,
-    TitleComponent,
-    TextareaComponent,
-    DecimalPipe
-  ],
+    TextareaComponent
+],
 })
 export class TaxesAndFeesListComponent {
   constructor() {
