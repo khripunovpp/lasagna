@@ -16,13 +16,13 @@ export interface UnitGroupItem {
   template: `
     <div class="unit-switcher">
       @for (item of items(); track item.value; let last = $last, first = $first, index = $index) {
-        <span (click)="onClickItem(item,index)"
+        <button (click)="onClickItem(item,index)"
               [style]="item.style || 'default'"
               [class.active]="activeIndex() == index"
               class="unit-switcher__item"
               [class.unit-switcher__item--active]="activeIndex() == index">
           {{ item.label }}
-        </span>@if (!last) {
+        </button>@if (!last) {
           <span class="unit-switcher__item-separator">/</span>
         }
       }
@@ -46,9 +46,15 @@ export interface UnitGroupItem {
         justify-content: center;
         cursor: pointer;
         padding: var(--unit-switcher-gap);
+        appearance: none;
+        border: none;
+        background: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: 0.8rem;
 
         &.active {
-          color: red;
+          color: var(--active-color);
 
           .unit-switcher__item-separator {
             color: var(--text-color);

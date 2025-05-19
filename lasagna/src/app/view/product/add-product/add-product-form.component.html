@@ -18,23 +18,26 @@
                                formControlName="amount"
                                lgParseMath>
                 <div ngProjectAs="after">
-                  <lg-tooltip [position]="'left'">
-                    <lg-button [flat]="true"
-                               [icon]="true"
-                               [style]="'success'">
-                      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-                    </lg-button>
+                  <lg-gap-row [center]="true" [size]="'small'">
+                    <lg-tooltip [position]="'left'">
+                      <lg-button [flat]="true"
+                                 [icon]="true"
+                                 [style]="'success'">
+                        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+                      </lg-button>
 
-                    <div ngProjectAs="content">
-                      <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
-                    </div>
-                  </lg-tooltip>
+                      <div ngProjectAs="content">
+                        <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+                      </div>
+                    </lg-tooltip>
+                    <lg-unit-switcher formControlName="unit">
+                    </lg-unit-switcher>
+                  </lg-gap-row>
                 </div>
               </lg-number-input>
             </lg-control>
 
-            <lg-unit-switcher formControlName="unit">
-            </lg-unit-switcher>
+
           </lg-gap-row>
 
 
