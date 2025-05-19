@@ -43,13 +43,19 @@ import {PortalComponent} from './layout/portal.component';
     PortalComponent
   ],
   styles: [
+
     `
+      lg-tooltip {
+        flex: 1;
+        display: flex;
+      }
       .tooltip {
         display: inline-block;
       }
 
       .tooltip--ejected {
         position: fixed;
+        z-index: 6;
         top: 0;
         left: 0;
         right: 0;

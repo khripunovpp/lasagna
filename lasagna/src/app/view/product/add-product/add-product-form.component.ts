@@ -37,6 +37,7 @@ import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
 import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 import {SETTINGS} from '@service/tokens/settings.token';
 import {CurrencySymbolPipe} from '@view/pipes/currency-symbol.pipe';
+import {smaller} from 'mathjs';
 
 
 @Component({
@@ -192,4 +193,5 @@ export class AddProductFormComponent
     });
   }
 
+  protected readonly smaller = smaller;
 }

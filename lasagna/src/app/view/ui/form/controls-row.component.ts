@@ -43,7 +43,6 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
       .controls-row__actions {
         flex: 0;
         white-space: nowrap;
-        align-self: center;
       }
 
       .controls-row__controls > *,
