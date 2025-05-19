@@ -17,7 +17,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '@helpers/error.helper';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
-import {PullDirective} from '@view/directives/pull.directive';
+
 
 @Component({
   selector: 'app-add-recipe',
@@ -35,9 +35,8 @@ import {PullDirective} from '@view/directives/pull.directive';
     TranslatePipe,
     RouterLink,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective,
-    PullDirective
-  ],
+    InlineSeparatedGroupDirective
+],
   template: `
 
     <lg-fade-in>

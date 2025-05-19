@@ -12,7 +12,7 @@ import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {CurrencyPipe, JsonPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
@@ -37,9 +37,8 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     GapColumnComponent,
     UserCurrencyPipe,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective,
-    JsonPipe
-  ],
+    InlineSeparatedGroupDirective
+],
   template: `
     <lg-fade-in>
       <lg-container>
