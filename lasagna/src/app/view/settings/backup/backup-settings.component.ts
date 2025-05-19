@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-
-import {injectQueryParams} from '@helpers/route.helpers';
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {NotificationsService} from '@service/services/notifications.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
@@ -13,38 +11,39 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {UploadComponent} from '@view/ui/form/upload.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {injectQueryParams} from '@helpers/route.helpers';
 
 @Component({
   selector: 'lg-backup-settings',
   standalone: true,
   template: `
-      <lg-gap-column>
-          <lg-gap-row [center]="true" [mobileMode]="true">
-              <lg-button (click)="onBackup()"
-                         [style]="'success'">
-                  {{ 'backup.make-btn'|translate }}
-              </lg-button>
+    <lg-gap-column>
+      <lg-gap-row [center]="true" [mobileMode]="true">
+        <lg-button (click)="onBackup()"
+                   [style]="'success'">
+          {{ 'backup.make-btn'|translate }}
+        </lg-button>
 
-              @if (transferDataService.currenBackupDate) {
-                  {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
-              }
-          </lg-gap-row>
+        @if (transferDataService.currenBackupDate) {
+          {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
+        }
+      </lg-gap-row>
 
 
-          <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
-              <lg-card style="--card-bg:#e78888">
-                  <lg-gap-column [position]="'center'">
-                      <div class="text-center text-inverse">
-                          {{ 'backup.restore-informer'|translate }}
-                      </div>
+      <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
+        <lg-card style="--card-bg:#e78888">
+          <lg-gap-column [position]="'center'">
+            <div class="text-center text-inverse">
+              {{ 'backup.restore-informer'|translate }}
+            </div>
 
-                      <lg-button [style]="'danger'">
-                          {{ 'backup.restore-btn'|translate }}
-                      </lg-button>
-                  </lg-gap-column>
-              </lg-card>
-          </lg-upload>
-      </lg-gap-column>
+            <lg-button [style]="'danger'">
+              {{ 'backup.restore-btn'|translate }}
+            </lg-button>
+          </lg-gap-column>
+        </lg-card>
+      </lg-upload>
+    </lg-gap-column>
   `,
   styles: [``],
   imports: [
@@ -56,10 +55,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     ButtonComponent,
     UploadComponent,
     TranslatePipe
-]
+  ]
 })
-export class BackupSettingsComponent
-  implements AfterViewInit {
+export class BackupSettingsComponent {
   constructor() {
   }
 

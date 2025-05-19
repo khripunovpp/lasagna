@@ -20,16 +20,18 @@ import {DocsService} from '@service/services/docs.service';
 import * as Sentry from '@sentry/angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CategoryProductsRepository, CategoryRecipesRepository} from '@service/repositories';
+import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from '@service/repositories';
 import {DB_NAME} from '@service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {SettingsService} from '@view/settings/settings.service';
 import {USER_LANGUAGE} from '@service/tokens/user-language.token';
-import {USER_CURRENCY} from '@service/tokens/user-currency.token';
-import {toObservable} from '@angular/core/rxjs-interop';
-import {of, tap} from 'rxjs';
 import {UserService} from '@service/services/user.service';
 import {SETTINGS} from '@service/tokens/settings.token';
+import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
+import {from, map, mergeMap, shareReplay, switchMap} from 'rxjs';
+import {Recipe} from '@service/models/Recipe';
+import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
+import {groupBy} from '@helpers/grouping.helper';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -55,7 +57,7 @@ export const appConfig: ApplicationConfig = {
       const settingsService = inject(SettingsService);
       const userService = inject(UserService);
 
-      if (userService.isUserFirstTime){
+      if (userService.isUserFirstTime) {
         userService.setUserFirstTime(false);
       }
 
@@ -90,20 +92,6 @@ export const appConfig: ApplicationConfig = {
 
         return {
           handleError(error: any): void {
-            const eventId = Sentry.captureException(error);
-
-            // Кастомизированное окно
-            Sentry.showReportDialog({
-              eventId,
-              title: 'Ой, произошла ошибка!',
-              subtitle: 'Пожалуйста, расскажите нам, как это случилось.',
-              labelName: 'Имя',
-              labelEmail: 'Электронная почта',
-              labelComments: 'Что вы делали?',
-              labelSubmit: 'Отправить',
-              successMessage: 'Спасибо за помощь!',
-            });
-
             sentryHandler.handleError(error); // передаём дальше
           }
         };
@@ -138,11 +126,52 @@ export const appConfig: ApplicationConfig = {
     {
       provide: SETTINGS,
       useFactory: (settingsService: SettingsService) => {
-        return computed(()=>{
+        return computed(() => {
           return settingsService.settingsSignal()?.getSettingsMap()
         })
       },
       deps: [SettingsService]
+    },
+    {
+      provide: CATEGORIZED_RECIPES_LIST,
+      useFactory: () => {
+        const recipesRepository = inject(RecipesRepository);
+        const categoryRepository = inject(CategoryRecipesRepository);
+        const recipes = from(recipesRepository.loadRecipes()).pipe(
+          switchMap(() => recipesRepository.recipes$),
+          map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
+        );
+
+        return recipes.pipe(
+          map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
+          map((recipes: RecipeDTO[]) => groupBy(recipes, 'category_id')),
+          mergeMap(async (grouped: Record<string, RecipeDTO[]>) => {
+              const list = [];
+
+              for (const category in grouped) {
+                const recipes = grouped[category];
+                const categoryName = await categoryRepository.getOne(category);
+                list.push({
+                  category: categoryName?.toString(),
+                  recipes: recipes.map((recipe) => Recipe.fromRaw(recipe)),
+                });
+              }
+
+              if (!list.length) return [];
+
+              const [first, ...sortedList] = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
+
+              // без категории всегда внизу
+              if (first?.category) {
+                return [first].concat(sortedList);
+              }
+
+              return sortedList.concat([first]);
+            }
+          ),
+          shareReplay(1),
+        );
+      },
     }
   ]
 };

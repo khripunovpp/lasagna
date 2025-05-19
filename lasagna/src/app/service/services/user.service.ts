@@ -7,9 +7,26 @@ export class UserService {
   constructor() {
   }
 
-  isUserFirstTime = !localStorage.getItem('isUserFirstTime');
+  isUserFirstTime = !this.isUserFirstTimeValue;
+
+  get isUserFirstTimeValue() {
+    return localStorage.getItem('isUserFirstTime')
+  }
+
+  get isUserFirstDate() {
+    try {
+      const date = this.isUserFirstTimeValue;
+      if (date) {
+        return new Date(parseInt(date));
+      }
+      return undefined;
+    } catch (e) {
+      console.error('Error parsing date from localStorage:', e);
+      return undefined;
+    }
+  }
 
   setUserFirstTime(value: boolean) {
-    localStorage.setItem('isUserFirstTime', JSON.stringify(value));
+    localStorage.setItem('isUserFirstTime', Date.now().toString());
   }
 }

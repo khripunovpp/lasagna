@@ -102,6 +102,11 @@ export class DexieIndexDbService extends Dexie {
     return null;
   }
 
+  async getLength(storeKey: Stores): Promise<number> {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).count();
+  }
+
   async addData<T = any>(storeKey: Stores, value: T, customUUID?: string): Promise<string> {
     try {
       const uuid = customUUID || this.generateUuid();

@@ -35,7 +35,6 @@ export class SettingsService {
 
   saveSettings() {
     if (this.settingsModel) {
-      debugger
       this.settingsSignal.set(this.settingsModel);
       return this._settingsRepository.updateSettings(this.settingsModel);
     } else {
