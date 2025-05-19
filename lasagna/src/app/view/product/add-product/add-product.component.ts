@@ -12,13 +12,14 @@ import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, JsonPipe} from '@angular/common';
 import {Product} from '@service/models/Product';
 import {ProductDTO} from '@service/db/shemes/Product.scheme';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'app-add-recipe',
@@ -34,7 +35,10 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
     TimeAgoPipe,
     TranslatePipe,
     GapColumnComponent,
-    UserCurrencyPipe
+    UserCurrencyPipe,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective,
+    JsonPipe
   ],
   template: `
     <lg-fade-in>
@@ -57,12 +61,34 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
             }
           </lg-gap-row>
 
-          @if (draftRef()) {
-            <span>{{ 'saved-draft-label'|translate }}</span>
-          }
+          <lg-inline-separated-group>
+            @if (draftRef() && formComponent()?.form?.dirty) {
+              <ng-template lgInlineSeparatedGroup>
+                <span>{{ 'saved-draft-label'|translate }}</span>
+              </ng-template>
+            }
+
+            <ng-template lgInlineSeparatedGroup>
+              @if (isDraftRoute()) {
+                <lg-button lgShrink [style]="'danger'"
+                           [flat]="true"
+                           (click)="onRemoveDraft()">
+                  {{ 'product.form.delete-draft-btn'|translate }}
+                </lg-button>
+              } @else if (product()?.uuid) {
+                <lg-button lgShrink [style]="'danger'"
+                           [flat]="true"
+                           (click)="onDeleteProduct()">
+                  {{ 'product.form.delete-btn'|translate }}
+                </lg-button>
+              }
+            </ng-template>
+          </lg-inline-separated-group>
 
           @if (product()?.updatedAt) {
-            <span> ({{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }})</span>
+            <small class="text-muted text-cursive">
+              {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
+            </small>
           }
 
         </lg-gap-column>
@@ -92,17 +118,6 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
             </lg-button>
           }
 
-          @if (isDraftRoute()) {
-            <lg-button lgShrink [style]="'danger'"
-                       (click)="onRemoveDraft()">
-              {{ 'product.form.delete-draft-btn'|translate }}
-            </lg-button>
-          } @else if (product()?.uuid) {
-            <lg-button lgShrink [style]="'danger'"
-                       (click)="onDeleteProduct()">
-              {{ 'product.form.delete-btn'|translate }}
-            </lg-button>
-          }
         </lg-gap-row>
       </lg-container>
     </lg-fade-in>

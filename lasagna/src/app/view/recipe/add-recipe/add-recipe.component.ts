@@ -16,6 +16,8 @@ import {Recipe} from '@service/models/Recipe';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '@helpers/error.helper';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
+import {PullDirective} from '@view/directives/pull.directive';
 
 @Component({
   selector: 'app-add-recipe',
@@ -31,7 +33,10 @@ import {errorHandler} from '@helpers/error.helper';
     TimeAgoPipe,
     GapColumnComponent,
     TranslatePipe,
-    RouterLink
+    RouterLink,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective,
+    PullDirective
   ],
   template: `
 
@@ -47,25 +52,52 @@ import {errorHandler} from '@helpers/error.helper';
                 {{ 'edit-label'|translate }}
                 <span class="text-active">{{ recipe()?.name }}</span>
               </lg-title>
-
-              <lg-button [flat]="true"
-                         [link]="'/recipes/calculate/' + recipe()?.uuid"
-                         [size]="'small'"
-                         [style]="'primary'">
-                {{ 'recipe.calculate-btn'|translate }}
-              </lg-button>
             </lg-gap-row>
 
+            <lg-inline-separated-group>
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button [flat]="true"
+                           [link]="'/recipes/calculate/' + recipe()?.uuid"
+                           [size]="'small'"
+                           [style]="'primary'">
+                  {{ 'recipe.calculate-btn'|translate }}
+                </lg-button>
+              </ng-template>
+
+              @if (draftRef() && formComponent()?.form?.dirty) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-fade-in>
+                    {{ 'saved-draft-label'|translate }}
+                  </lg-fade-in>
+                </ng-template>
+              }
+
+              <ng-template lgInlineSeparatedGroup>
+                @if (isDraftRoute()) {
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onRemoveDraft()">
+                    {{ 'recipe.form.delete-draft-btn'|translate }}
+                  </lg-button>
+                } @else if (recipe()?.uuid) {
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onDeleteRecipe()">
+                    {{ 'recipe.form.delete-btn'|translate }}
+                  </lg-button>
+                }
+              </ng-template>
+            </lg-inline-separated-group>
+
             @if (recipe()?.updatedAt) {
-              ({{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }})
+              <small class="text-muted text-cursive">
+                {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
+              </small>
             }
           } @else {
             <lg-title>
               {{ 'recipe.form.title'|translate }}
             </lg-title>
-          }
-          @if (draftRef()) {
-            {{ 'saved-draft-label'|translate }}
           }
         </lg-gap-column>
 
@@ -94,17 +126,7 @@ import {errorHandler} from '@helpers/error.helper';
             </lg-button>
           }
 
-          @if (isDraftRoute()) {
-            <lg-button lgShrink [style]="'danger'"
-                       (click)="onRemoveDraft()">
-              {{ 'recipe.form.delete-draft-btn'|translate }}
-            </lg-button>
-          } @else if (recipe()?.uuid) {
-            <lg-button lgShrink [style]="'danger'"
-                       (click)="onDeleteRecipe()">
-              {{ 'recipe.form.delete-btn'|translate }}
-            </lg-button>
-          }
+
         </lg-gap-row>
       </lg-container>
     </lg-fade-in>
