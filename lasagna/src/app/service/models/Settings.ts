@@ -48,6 +48,13 @@ export class Settings {
     return Array.from(this.settings.values());
   }
 
+  getSettingsMap(): Record<string, any> {
+    return this.getAllSettings().reduce((acc, setting) => {
+      acc[setting.key] = setting.data
+      return acc;
+    }, {} as Record<string, any>);
+  }
+
   removeSetting(key: string) {
     this.settings.delete(key);
   }

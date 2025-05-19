@@ -1,4 +1,4 @@
-import {Component, computed, inject, model, Signal} from '@angular/core';
+import {Component, computed, model, Signal} from '@angular/core';
 
 
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
@@ -10,7 +10,6 @@ import {RadioComponent} from '@view/ui/form/radio.component';
 import {InputComponent} from '@view/ui/form/input.component';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {SettingsService} from '@view/settings/settings.service';
-import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 
 
 @Component({
@@ -90,7 +89,6 @@ export class LocalisationSettingsComponent {
         name: this.langsMap[lang] || lang,
       }));
   });
-  private _userCurrency = inject(USER_CURRENCY);
 
   changeLang(lang: string): void {
     this._settingsService.changeLang(lang);

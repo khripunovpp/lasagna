@@ -55,7 +55,6 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
       @media (max-width: 600px) {
 
         .controls-row__mobile {
-          flex-direction: column;
           align-items: stretch;
 
           & .controls-row__controls {
