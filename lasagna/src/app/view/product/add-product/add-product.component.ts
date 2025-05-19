@@ -223,7 +223,7 @@ export class AddProductComponent
   }
 
   private _addProduct(product: Product) {
-    this._productsRepository.addOne(product).then(() => {
+    this._productsRepository.addOne(product).then((newUUID) => {
 
       this.formComponent()?.resetForm();
       this._notificationsService.success('Product added');
@@ -233,9 +233,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      if (this.isDraftRoute()) {
-        this._router.navigate(['products']);
-      }
+      this._router.navigate(['products', 'edit', newUUID]);
     });
   }
 
@@ -252,9 +250,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      if (this.isDraftRoute()) {
-        this._router.navigate(['products', 'edit', productUUID]);
-      }
+      this._router.navigate(['products', 'edit', productUUID]);
     });
   }
 

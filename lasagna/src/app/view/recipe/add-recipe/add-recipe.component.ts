@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
-
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -33,7 +32,7 @@ import {errorHandler} from '@helpers/error.helper';
     GapColumnComponent,
     TranslatePipe,
     RouterLink
-],
+  ],
   template: `
 
     <lg-fade-in>
@@ -134,7 +133,7 @@ export class AddRecipeComponent
   });
   isDraftRoute = signal(false);
   draftRecipeModel?: Recipe;
-  addedRecipeInformerUUID = signal<null|string>(null);
+  addedRecipeInformerUUID = signal<null | string>(null);
 
   ngOnInit() {
     combineLatest([
@@ -197,13 +196,16 @@ export class AddRecipeComponent
     }
   }
 
-  onEditRecipe() {
-    if (!this.formComponent()?.validateForm()
-      || !this.formComponent()?.form.dirty
-      || !this.recipe()) {
-      return;
+  async onEditRecipe() {
+    try {
+      if (!this.formComponent()?.validateForm()
+        || !this.recipe()) {
+        return;
+      }
+      await this._editRecipe(this.recipe()!);
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
     }
-    this._editRecipe(this.recipe()!);
   }
 
   onRemoveDraft() {
@@ -231,19 +233,17 @@ export class AddRecipeComponent
         this._removeDraft();
       }
 
-      if (this.draftRef() || this.recipe()?.uuid) {
-        this._router.navigate(['recipes']);
-      }
+      this._router.navigate(['recipes', 'edit', newUUID]);
       return newUUID;
     });
   }
 
   private _editRecipe(recipe: Recipe) {
     if (!this.draftOrRecipeUUID()) {
-      return;
+      return Promise.resolve();
     }
     let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
-    this._recipesRepository.editRecipe(recipeUUID as string, recipe).then(() => {
+    return this._recipesRepository.editRecipe(recipeUUID as string, recipe).then(() => {
       this.formComponent()?.resetForm(recipe);
       this._notificationsService.success('Recipe edited');
 
@@ -251,9 +251,7 @@ export class AddRecipeComponent
         this._removeDraft();
       }
 
-      if (this.draftRef() || this.recipe()?.uuid) {
-        this._router.navigate(['recipes', 'edit', recipeUUID]);
-      }
+      this._router.navigate(['recipes', 'edit', recipeUUID]);
     });
   }
 
