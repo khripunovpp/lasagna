@@ -28,6 +28,7 @@ import {USER_LANGUAGE} from '@service/tokens/user-language.token';
 import {USER_CURRENCY} from '@service/tokens/user-currency.token';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {of, tap} from 'rxjs';
+import {UserService} from '@service/services/user.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -51,6 +52,11 @@ export const appConfig: ApplicationConfig = {
       const recipeCategoryRepository = inject(CategoryRecipesRepository);
       const docsService = inject(DocsService);
       const settingsService = inject(SettingsService);
+      const userService = inject(UserService);
+
+      if (userService.isUserFirstTime){
+        userService.setUserFirstTime(false);
+      }
 
       return Promise.all([
         categoryRepository.preloadCategories(),
