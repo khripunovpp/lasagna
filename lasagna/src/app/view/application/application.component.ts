@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ContainerComponent} from '../ui/layout/container/container.component';
 
 import {CardComponent} from '../ui/card/card.component';
@@ -8,6 +8,9 @@ import {LastEditedRecipesComponent} from './last-edited-recipes/last-edited-reci
 import {LastEditedProductsComponent} from './last-edited-products/last-edited-products.component';
 import {GapRowComponent} from '../ui/layout/gap-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ProductsRepository, RecipesRepository} from '@service/repositories';
+import {AsyncPipe} from '@angular/common';
+import {ButtonComponent} from '@view/ui/layout/button.component';
 
 
 @Component({
@@ -23,9 +26,14 @@ import {TranslatePipe} from '@ngx-translate/core';
     LastEditedRecipesComponent,
     LastEditedProductsComponent,
     GapRowComponent,
-    TranslatePipe
+    TranslatePipe,
+    AsyncPipe,
+    ButtonComponent
   ]
 })
 export class ApplicationComponent {
   title = 'lasagna';
+
+  recipes = inject(RecipesRepository).length;
+  products = inject(ProductsRepository).length;
 }

@@ -35,6 +35,11 @@ export class ProductsRepository {
     });
   }
 
+  get length() {
+    return this._indexDbService.getLength(Stores.PRODUCTS);
+  }
+
+
   async addOne(
     product: Product,
   ) {
@@ -112,7 +117,6 @@ export class ProductsRepository {
   }
 
   deleteProduct(uuid: string) {
-    debugger
     return this._indexDbService.remove(Stores.PRODUCTS, uuid);
   }
 

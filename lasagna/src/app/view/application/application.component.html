@@ -4,11 +4,23 @@
 
     <lg-gap-row [mobileMode]="true" [top]="true">
       <lg-card>
-        <lg-last-edited-recipes></lg-last-edited-recipes>
+        @if (recipes|async) {
+          <lg-last-edited-recipes></lg-last-edited-recipes>
+        } @else {
+          <lg-button link="/recipes/add">
+            {{ 'main.recipes.button' | translate }}
+          </lg-button>
+        }
       </lg-card>
 
       <lg-card>
-        <lg-last-edited-products></lg-last-edited-products>
+        @if (products|async) {
+          <lg-last-edited-products></lg-last-edited-products>
+        } @else {
+          <lg-button link="/products/add" [style]="'success'">
+            {{ 'main.products.button' | translate }}
+          </lg-button>
+        }
       </lg-card>
     </lg-gap-row>
   </lg-container>
