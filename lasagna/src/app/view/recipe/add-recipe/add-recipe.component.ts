@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {CardComponent} from '../../ui/card/card.component';
+
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -23,7 +23,6 @@ import {errorHandler} from '@helpers/error.helper';
   standalone: true,
   imports: [
     ContainerComponent,
-    CardComponent,
     TitleComponent,
     AddRecipeFormComponent,
     ButtonComponent,
@@ -34,7 +33,7 @@ import {errorHandler} from '@helpers/error.helper';
     GapColumnComponent,
     TranslatePipe,
     RouterLink
-  ],
+],
   template: `
 
     <lg-fade-in>
