@@ -30,6 +30,7 @@ import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
 
 import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
+import {CardComponent} from '@view/ui/card/card.component';
 
 
 @Component({
@@ -54,8 +55,9 @@ import {UnitSwitcherComponent} from '@view/ui/unit-switcher.component';
     FormsModule,
     MatIcon,
     TranslatePipe,
-    UnitSwitcherComponent
-],
+    UnitSwitcherComponent,
+    CardComponent
+  ],
   providers: [
     {
       provide: SelectResourcesService,
