@@ -31,7 +31,8 @@ import {NgClass} from '@angular/common';
     }
 
     .gap-row__center {
-      align-items: center
+      align-items: center;
+      justify-content: center;
     }
 
     .gap-row__bottom {

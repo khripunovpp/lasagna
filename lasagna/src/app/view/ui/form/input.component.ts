@@ -13,6 +13,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
              (keydown.enter)="onEnter.emit(value)"
              [placeholder]="placeholder()"
              [value]="value"
+             [disabled]="disable()"
              class="input"
              type="text">
 
@@ -84,6 +85,7 @@ export class InputComponent
   value: string = '';
   placeholder = input('Enter text here');
   autoFocus = input(false);
+  disable = input(false);
   onInputChanged = output<string>();
   onEnter = output<string>();
   theme = input<
