@@ -20,7 +20,7 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
             In recipe you have
             <lg-input formControlName="amount"
                       [placeholder]="'Amount'">
-              <div ngProjectAs="after" style="padding: 0 16px;white-space: nowrap">
+              <div ngProjectAs="after">
                 grams of
               </div>
             </lg-input>

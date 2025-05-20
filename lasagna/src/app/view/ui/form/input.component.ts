@@ -42,6 +42,9 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         display: flex;
         align-items: center;
         gap: 16px;
+        padding: 0 16px;
+        white-space: nowrap;
+        flex: 0 0 auto;
       }
 
       .input {
@@ -52,6 +55,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
         font-family: inherit;
         font-size: inherit;
         background-color: transparent;
+        width: 100%;
       }
 
       .input::placeholder {
