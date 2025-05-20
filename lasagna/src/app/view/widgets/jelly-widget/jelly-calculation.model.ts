@@ -42,7 +42,10 @@ export class JellyCalculationModel {
   }
 
   convertToWater(type: JellyBaseType, jellyAmount: number): number {
-    if (this.type === 'mass' && type === 'mass') {
+    if (this.type === 'mass' && type === 'mass'
+      || this.type === 'leaf'
+      || type === 'leaf'
+    ) {
       return 0
     }
     if (this.type === 'mass') {
