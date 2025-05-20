@@ -31,7 +31,7 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
           <lg-gap-column formGroupName="to">
             @let fromType = form.value?.from?.type;
             @let toType = form.value?.to?.type;
-            <lg-gap-row class="text-center" [center]="true">
+            <lg-gap-row class="text-center" [strictCenter]="true">
               <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
                 <div>
                   You need
