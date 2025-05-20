@@ -7,6 +7,7 @@ import {NgClass} from '@angular/common';
   template: `
       <div [class.gap-row__bottom]="bottom()"
            [class.gap-row__center]="center()"
+            [class.gap-row__strict-center]="strictCenter()"
            [class.gap-row__fit]="fit()"
            [class.gap-row__mobile]="mobileMode()"
            [class.gap-row__relaxed]="relaxed()"
@@ -31,6 +32,10 @@ import {NgClass} from '@angular/common';
     }
 
     .gap-row__center {
+      align-items: center;
+    }
+
+    .gap-row__strict-center {
       align-items: center;
       justify-content: center;
     }
@@ -98,6 +103,7 @@ export class GapRowComponent {
 
   @Input() equal = false;
   center = input<boolean>(false);
+  strictCenter = input<boolean>(false);
   bottom = input<boolean>(false);
   top = input<boolean>(false);
   fit = input<boolean>(false);

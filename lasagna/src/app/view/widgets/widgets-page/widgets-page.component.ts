@@ -5,14 +5,14 @@ import {EggsWidgetComponent} from '../eggs-widget/eggs-widget.component';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CardComponent} from '../../ui/card/card.component';
+
 
 import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
-import {LocalisationSettingsComponent} from '@view/settings/localisation/localisation-settings.component';
+
 import {TabDirective} from '@view/ui/tabs/tab.directive';
 import {TabsComponent} from '@view/ui/tabs/tabs.component';
-import {TranslatePipe} from '@ngx-translate/core';
+
 import {JellyWidgetComponent} from '@view/widgets/jelly-widget/jelly-widget.component';
 
 @Component({
@@ -48,15 +48,12 @@ import {JellyWidgetComponent} from '@view/widgets/jelly-widget/jelly-widget.comp
     ContainerComponent,
     GapRowComponent,
     TitleComponent,
-    CardComponent,
     BarcodeSeekerWidgetComponent,
     FadeInComponent,
-    LocalisationSettingsComponent,
     TabDirective,
     TabsComponent,
-    TranslatePipe,
     JellyWidgetComponent
-  ]
+]
 })
 export class WidgetsPageComponent {
 }
