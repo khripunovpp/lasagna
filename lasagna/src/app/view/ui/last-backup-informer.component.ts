@@ -63,7 +63,6 @@ export class LastBackupInformerComponent {
     ? new Date(this.storedBackupDate()!) :
     undefined);
   showButton = computed(() => {
-    debugger
     const sinceDate = this.userService.isUserFirstDate;
     if (!sinceDate){
       return false

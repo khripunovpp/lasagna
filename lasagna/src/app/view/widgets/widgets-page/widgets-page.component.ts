@@ -9,30 +9,39 @@ import {CardComponent} from '../../ui/card/card.component';
 
 import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
 import {FadeInComponent} from '../../ui/fade-in.component';
+import {LocalisationSettingsComponent} from '@view/settings/localisation/localisation-settings.component';
+import {TabDirective} from '@view/ui/tabs/tab.directive';
+import {TabsComponent} from '@view/ui/tabs/tabs.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {JellyWidgetComponent} from '@view/widgets/jelly-widget/jelly-widget.component';
 
 @Component({
   selector: 'lg-widgets-page',
   standalone: true,
   template: `
-      <lg-fade-in>
-          <lg-container>
-              <lg-gap-row [center]="true">
-                  <lg-title>
-                      Widgets
-                  </lg-title>
-              </lg-gap-row>
+    <lg-fade-in>
+      <lg-container>
+        <lg-gap-row [center]="true">
+          <lg-title>
+            Widgets
+          </lg-title>
+        </lg-gap-row>
 
-              <lg-card>
-                  <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
-              </lg-card>
-              <lg-card>
-                  <lg-eggs-widget></lg-eggs-widget>
-              </lg-card>
-              <!--          <lg-card>-->
-              <!--              <lg-jelly-widget></lg-jelly-widget>-->
-              <!--          </lg-card>-->
-          </lg-container>
-      </lg-fade-in>
+        <lg-tabs>
+          <ng-template label="Jelly calculator" alias="jelly-calculator" lgTab>
+             <lg-jelly-widget></lg-jelly-widget>
+          </ng-template>
+
+          <ng-template label="Eggs calculator" alias="eggs-calculator" lgTab>
+             <lg-eggs-widget></lg-eggs-widget>
+          </ng-template>
+
+          <ng-template label="Barcode Seeker" alias="barcode-seeker" lgTab>
+              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
+          </ng-template>
+        </lg-tabs>
+      </lg-container>
+    </lg-fade-in>
   `,
   imports: [
     EggsWidgetComponent,
@@ -41,7 +50,12 @@ import {FadeInComponent} from '../../ui/fade-in.component';
     TitleComponent,
     CardComponent,
     BarcodeSeekerWidgetComponent,
-    FadeInComponent
+    FadeInComponent,
+    LocalisationSettingsComponent,
+    TabDirective,
+    TabsComponent,
+    TranslatePipe,
+    JellyWidgetComponent
   ]
 })
 export class WidgetsPageComponent {
