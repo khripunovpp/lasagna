@@ -1,4 +1,4 @@
-import {Component, computed, input, output, resource, signal} from '@angular/core';
+import {AfterViewInit, Component, computed, input, OnDestroy, output, resource, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
@@ -43,7 +43,8 @@ import {Product} from '../../../service/models/Product';
     `],
   providers: [],
 })
-export class BarcodeSeekerWidgetComponent {
+export class BarcodeSeekerWidgetComponent
+  implements OnDestroy, AfterViewInit {
   constructor(
     private _openFoodFactsService: OpenFoodFactsService,
     private _arcodeReaderService: BarcodeReaderService,
@@ -187,5 +188,9 @@ export class BarcodeSeekerWidgetComponent {
       this.showScanner.set(true);
       await this.startCamera();
     }
+  }
+
+  ngOnDestroy() {
+    this.stopCamera();
   }
 }

@@ -41,7 +41,7 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
                   <div>{{ result() | number: '1.0-2' }}</div>
                   @switch (toType) {
                     @case ("powder") {
-                      🧂
+                      🍚
                     }
                     @case ("leaf") {
                       🍃
