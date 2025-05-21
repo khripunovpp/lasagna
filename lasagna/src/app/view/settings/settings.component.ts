@@ -14,6 +14,7 @@ import {BackupSettingsComponent} from '@view/settings/backup/backup-settings.com
 import {TranslatePipe} from '@ngx-translate/core';
 import {TabDirective} from '@view/ui/tabs/tab.directive';
 import {TabsComponent} from '@view/ui/tabs/tabs.component';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-settings',
@@ -32,7 +33,9 @@ import {TabsComponent} from '@view/ui/tabs/tabs.component';
     BackupSettingsComponent,
     TranslatePipe,
     TabDirective,
-    TabsComponent
+    TabsComponent,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective
   ]
 })
 export class SettingsComponent {
