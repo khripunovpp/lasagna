@@ -1,6 +1,5 @@
 export type JellyBaseType = 'powder' | 'leaf' | 'mass';
 
-// пары для конвертациия
 export const convertPairs: Partial<Record<JellyBaseType, Partial<Record<JellyBaseType, (amount: number) => number>>>> = {
   powder: {
     mass: (amount: number) => {
@@ -30,15 +29,25 @@ export const waterCalculationToMass = (waterAmount: number) => {
   return waterAmount * 5 / 6;
 }
 
+export const bloomRatio = (fromBloom: number, toBloom: number) => {
+  return fromBloom / toBloom;
+}
+
 export class JellyCalculationModel {
   constructor(
     public type: JellyBaseType,
+    public bloom: number = 1,
   ) {
   }
 
-  convertToBase(type: JellyBaseType, amount: number): number {
+  convertToBase(
+    type: JellyBaseType,
+    amount: number,
+    bloomTo: number = 1,
+  ): number {
+    const ratio = bloomRatio(this.bloom, bloomTo);
     const handlers = convertPairs[this.type];
-    return handlers?.[type]?.(amount) || amount;
+    return (handlers?.[type]?.(amount) || amount) * ratio;
   }
 
   convertToWater(type: JellyBaseType, jellyAmount: number): number {

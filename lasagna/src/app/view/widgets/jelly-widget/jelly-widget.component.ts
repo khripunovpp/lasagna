@@ -1,4 +1,4 @@
-import {Component, signal, ViewEncapsulation} from '@angular/core';
+import {Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {InputComponent} from '@view/ui/form/input.component';
@@ -7,6 +7,8 @@ import {ButtonGroupItem, ButtonsGroupComponent} from '@view/ui/form/buttons-grou
 import {JellyCalculationModel} from '@view/widgets/jelly-widget/jelly-calculation.model';
 import {DecimalPipe} from '@angular/common';
 import {ShrinkDirective} from '@view/directives/shrink.directive';
+import {RangeComponent} from '@view/ui/form/range.component';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -24,6 +26,15 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
                 grams of
               </div>
             </lg-input>
+
+            <lg-range
+              [min]="120"
+              [max]="220"
+              [step]="10"
+              formControlName="bloom"
+              [tickInterval]="20"
+            ></lg-range>
+
             <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
           </lg-gap-column>
 
@@ -98,6 +109,14 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
               }
             </lg-gap-row>
 
+            <lg-range
+              [min]="120"
+              [max]="220"
+              [step]="10"
+              formControlName="bloom"
+              [tickInterval]="20"
+            ></lg-range>
+
             <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
           </lg-gap-column>
         </lg-gap-row>
@@ -112,7 +131,8 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
     GapRowComponent,
     ButtonsGroupComponent,
     DecimalPipe,
-    ShrinkDirective
+    ShrinkDirective,
+    RangeComponent
   ],
   styles: [`
     :host {
@@ -177,31 +197,35 @@ import {ShrinkDirective} from '@view/directives/shrink.directive';
 })
 export class JellyWidgetComponent {
 
-  result = signal<number>(0);
-  waterNeeded = signal<number>(0);
-
   constructor() {
-    this.form.valueChanges.subscribe((value) => {
+    this.form.valueChanges.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe((value) => {
       const amount = parseInt(String(value?.from?.amount));
       if (isNaN(amount)) {
         return;
       }
-      const model = new JellyCalculationModel(value?.from?.type as any);
-      const convertedAmount = model.convertToBase(value?.to?.type as any, amount);
-      const waterNeeded = model.convertToWater(value?.to?.type as any,convertedAmount);
+      const model = new JellyCalculationModel(value?.from?.type as any, value?.from?.bloom as any);
+      const convertedAmount = model.convertToBase(value?.to?.type as any, amount, value?.to?.bloom as any);
+      const waterNeeded = model.convertToWater(value?.to?.type as any, convertedAmount);
 
       this.result.set(convertedAmount);
       this.waterNeeded.set(waterNeeded);
     });
   }
 
+  result = signal<number>(0);
+  waterNeeded = signal<number>(0);
+  destroyRef = inject(DestroyRef);
   form = new FormGroup({
     from: new FormGroup({
       type: new FormControl('mass'),
       amount: new FormControl(null),
+      bloom: new FormControl(140),
     }),
     to: new FormGroup({
       type: new FormControl('powder'),
+      bloom: new FormControl(200),
     }),
   })
 
