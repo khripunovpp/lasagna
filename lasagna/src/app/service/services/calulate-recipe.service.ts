@@ -4,6 +4,7 @@ import {Recipe} from '../models/Recipe';
 import {Unit} from '../types/Unit.types';
 import {RecipeCalculation} from '@service/models/RecipeCalculation';
 import {parseFloatingNumber} from '@helpers/number.helper';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 export interface Calculation {
   calculation: RecipeCalculation
@@ -115,7 +116,7 @@ export class CalculateRecipeService {
     totalWeight: number,
   ): CalculationTableParams {
     return {
-      name: 'Total (without taxes and fees)',
+      name: _('recipe.calculation.table.total-row'),
       amount: totalWeight,
       unit: 'gram',
       price_per_gram: parseFloatingNumber(total / totalWeight),
