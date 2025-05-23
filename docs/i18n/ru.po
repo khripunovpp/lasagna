@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-05-17T13:00:54.404Z\n"
-"PO-Revision-Date: 2025-05-18 19:14+0100\n"
+"POT-Creation-Date: 2025-05-23T22:24:03.850Z\n"
+"PO-Revision-Date: 2025-05-23 23:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -47,6 +47,12 @@ msgstr "Закрыть"
 msgid "confirm-label"
 msgstr "Подтвердить"
 
+msgid "delete-all-label"
+msgstr "Удалить все"
+
+msgid "delete-selected-label"
+msgstr "Удалить выделенное"
+
 msgid "deselect-all-label"
 msgstr "Убрать выделение со всего"
 
@@ -86,11 +92,23 @@ msgstr "только что"
 msgid "language.settings-title"
 msgstr "Язык"
 
+msgid "language.settings.currency-title"
+msgstr "Валюта"
+
+msgid "language.settings.language-title"
+msgstr "Язык"
+
 msgid "main.last-products"
 msgstr "Последние измененые продукты"
 
 msgid "main.last-recipes"
 msgstr "Последние измененные рецепты"
+
+msgid "main.products.button"
+msgstr "Добавь свой твой первый продукт"
+
+msgid "main.recipes.button"
+msgstr "Добавь твой первый рецепт"
 
 msgid "main.title"
 msgstr "Привет"
@@ -164,6 +182,45 @@ msgstr "Продукты"
 msgid "recipe.calculate-btn"
 msgstr "Рассчитать"
 
+msgid "recipe.calculation.one-unit.label"
+msgstr "За один"
+
+msgid "recipe.calculation.outcome.label"
+msgstr "Расчет для "
+
+msgid "recipe.calculation.price-chart"
+msgstr "Разбиение по цене"
+
+msgid "recipe.calculation.table.amount.title"
+msgstr "Количество"
+
+msgid "recipe.calculation.table.name.title"
+msgstr "Название"
+
+msgid "recipe.calculation.table.price.title"
+msgstr "Цена"
+
+msgid "recipe.calculation.table.total-row"
+msgstr "Общая стоимость (без надбавок)"
+
+msgid "recipe.calculation.table.total.title"
+msgstr "Стоимость"
+
+msgid "recipe.calculation.table.unit.title"
+msgstr "Единица измерения"
+
+msgid "recipe.calculation.title.after-text"
+msgstr "- расчет стоимости"
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr "Общая стоимость с налогами"
+
+msgid "recipe.calculation.total-price.label"
+msgstr "Общая стоимость"
+
+msgid "recipe.calculation.weight-chart"
+msgstr "Разбиение по весу"
+
 msgid "recipe.form.delete-btn"
 msgstr "Удалить этот продукт"
 
@@ -199,6 +256,9 @@ msgstr "Как текст"
 
 msgid "recipe.form.name.label"
 msgstr "Имя"
+
+msgid "recipe.form.name.placeholder"
+msgstr "Название твоего рецепта"
 
 msgid "recipe.form.save-btn.add.active"
 msgstr "Добавить этот рецепт"

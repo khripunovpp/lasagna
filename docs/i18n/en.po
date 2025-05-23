@@ -1,13 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"mime-version: 1.0\n"
+"POT-Creation-Date: 2025-05-23T22:24:04.614Z\n"
+"PO-Revision-Date: 2025-05-23 23:24+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-17T13:00:54.876Z\n"
-"PO-Revision-Date: 2025-05-17T13:00:54.877Z\n"
-"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"mime-version: 1.0\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid "add-label"
 msgstr "Add"
@@ -42,6 +46,12 @@ msgstr "Close"
 msgid "confirm-label"
 msgstr "Confirm"
 
+msgid "delete-all-label"
+msgstr "Delete all"
+
+msgid "delete-selected-label"
+msgstr "Delete selected"
+
 msgid "deselect-all-label"
 msgstr "Deselect all"
 
@@ -52,10 +62,10 @@ msgid "draft.list-prefix.new"
 msgstr "Draft"
 
 msgid "drafts-close-label"
-msgstr ""
+msgstr "You have {{ length }} unsaved changes. Click to see them"
 
 msgid "drafts-label"
-msgstr ""
+msgstr "Close"
 
 msgid "edit-label"
 msgstr "Edit"
@@ -81,11 +91,23 @@ msgstr "just now"
 msgid "language.settings-title"
 msgstr "Localization"
 
+msgid "language.settings.currency-title"
+msgstr "Currency"
+
+msgid "language.settings.language-title"
+msgstr "Language"
+
 msgid "main.last-products"
 msgstr "Last edited products"
 
 msgid "main.last-recipes"
 msgstr "Last edited recipes"
+
+msgid "main.products.button"
+msgstr "Add your first product"
+
+msgid "main.recipes.button"
+msgstr "Add your first Recipe"
 
 msgid "main.title"
 msgstr "Hey"
@@ -159,6 +181,45 @@ msgstr "Products"
 msgid "recipe.calculate-btn"
 msgstr "Calcualate"
 
+msgid "recipe.calculation.one-unit.label"
+msgstr "One"
+
+msgid "recipe.calculation.outcome.label"
+msgstr "Calculation outcome"
+
+msgid "recipe.calculation.price-chart"
+msgstr "Price breakdown"
+
+msgid "recipe.calculation.table.amount.title"
+msgstr "Amount"
+
+msgid "recipe.calculation.table.name.title"
+msgstr "Name"
+
+msgid "recipe.calculation.table.price.title"
+msgstr "Price per unit"
+
+msgid "recipe.calculation.table.total-row"
+msgstr "Total (without taxes and fees)"
+
+msgid "recipe.calculation.table.total.title"
+msgstr "Total Price"
+
+msgid "recipe.calculation.table.unit.title"
+msgstr "Unit"
+
+msgid "recipe.calculation.title.after-text"
+msgstr "cost calculation"
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr "Total cost with taxes"
+
+msgid "recipe.calculation.total-price.label"
+msgstr "Total cost"
+
+msgid "recipe.calculation.weight-chart"
+msgstr "Weight breakdown"
+
 msgid "recipe.form.delete-btn"
 msgstr "Remove this product"
 
@@ -194,6 +255,9 @@ msgstr "As text"
 
 msgid "recipe.form.name.label"
 msgstr "Name"
+
+msgid "recipe.form.name.placeholder"
+msgstr "Type your recipe name "
 
 msgid "recipe.form.save-btn.add.active"
 msgstr "Add this recipe"

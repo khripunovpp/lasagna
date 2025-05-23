@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"POT-Creation-Date: 2025-05-17T13:00:54.638Z\n"
-"PO-Revision-Date: 2025-05-17T13:00:54.641Z\n"
+"POT-Creation-Date: 2025-05-23T22:24:04.172Z\n"
+"PO-Revision-Date: 2025-05-23T22:24:04.172Z\n"
 "Language: pt\n"
 
 msgid "add-label"
@@ -41,6 +41,12 @@ msgstr "Fechе"
 
 msgid "confirm-label"
 msgstr "Confirmar"
+
+msgid "delete-all-label"
+msgstr ""
+
+msgid "delete-selected-label"
+msgstr ""
 
 msgid "deselect-all-label"
 msgstr "Desmarcar tudo"
@@ -81,11 +87,23 @@ msgstr "agora"
 msgid "language.settings-title"
 msgstr "Localização"
 
+msgid "language.settings.currency-title"
+msgstr ""
+
+msgid "language.settings.language-title"
+msgstr ""
+
 msgid "main.last-products"
 msgstr "Últimos produtos editados"
 
 msgid "main.last-recipes"
 msgstr "Últimas receitas editadas"
+
+msgid "main.products.button"
+msgstr ""
+
+msgid "main.recipes.button"
+msgstr ""
 
 msgid "main.title"
 msgstr "Oi"
@@ -159,6 +177,45 @@ msgstr "Produtos"
 msgid "recipe.calculate-btn"
 msgstr "Calcular"
 
+msgid "recipe.calculation.one-unit.label"
+msgstr ""
+
+msgid "recipe.calculation.outcome.label"
+msgstr ""
+
+msgid "recipe.calculation.price-chart"
+msgstr ""
+
+msgid "recipe.calculation.table.amount.title"
+msgstr ""
+
+msgid "recipe.calculation.table.name.title"
+msgstr ""
+
+msgid "recipe.calculation.table.price.title"
+msgstr ""
+
+msgid "recipe.calculation.table.total-row"
+msgstr ""
+
+msgid "recipe.calculation.table.total.title"
+msgstr ""
+
+msgid "recipe.calculation.table.unit.title"
+msgstr ""
+
+msgid "recipe.calculation.title.after-text"
+msgstr ""
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr ""
+
+msgid "recipe.calculation.total-price.label"
+msgstr ""
+
+msgid "recipe.calculation.weight-chart"
+msgstr ""
+
 msgid "recipe.form.delete-btn"
 msgstr "Remover este produto"
 
@@ -194,6 +251,9 @@ msgstr "Como texto"
 
 msgid "recipe.form.name.label"
 msgstr "Nome"
+
+msgid "recipe.form.name.placeholder"
+msgstr ""
 
 msgid "recipe.form.save-btn.add.active"
 msgstr "Adicione esta receita"
