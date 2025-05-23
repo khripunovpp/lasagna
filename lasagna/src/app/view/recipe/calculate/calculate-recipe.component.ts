@@ -44,6 +44,7 @@ import {ExpandDirective} from '@view/directives/expand.directive';
 import {randomRGB} from '@helpers/color.helper';
 import {Ingredient} from '@service/models/Ingredient';
 import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -65,8 +66,9 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
     CardComponent,
     WidthDirective,
     ExpandDirective,
-    UserCurrencyPipe
-],
+    UserCurrencyPipe,
+    TranslatePipe
+  ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
     lg-number-input .lg-number-input {

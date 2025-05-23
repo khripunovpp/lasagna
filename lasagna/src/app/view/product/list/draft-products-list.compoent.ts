@@ -41,7 +41,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                        [size]="'small'"
                        [style]="'danger'"
                        (click)="deleteAllDrafts()">
-              Delete all
+              {{ 'delete-all-label' | translate }}
             </lg-button>
           </ng-template>
 
@@ -52,7 +52,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
                          [size]="'small'"
                          [style]="'danger'"
                          (click)="deletedSelectedDrafts()">
-                Delete selected
+                {{ 'delete-selected-label' | translate }}
               </lg-button>
             </ng-template>
           }

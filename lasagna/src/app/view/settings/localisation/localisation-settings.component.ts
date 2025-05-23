@@ -10,6 +10,7 @@ import {RadioComponent} from '@view/ui/form/radio.component';
 import {InputComponent} from '@view/ui/form/input.component';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {SettingsService} from '@view/settings/settings.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,7 @@ import {SettingsService} from '@view/settings/settings.service';
   standalone: true,
   template: `
     <lg-gap-column size="medium">
-      <lg-title [level]="6">Language</lg-title>
+      <lg-title [level]="6">{{ 'language.settings.language-title'|translate }}</lg-title>
 
       <section class="language-settings">
         <lg-gap-column [size]="'medium'">
@@ -42,8 +43,8 @@ import {SettingsService} from '@view/settings/settings.service';
       </section>
 
       <lg-title [level]="6">
-        Currency
-        (in <a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a> format)
+        {{ 'language.settings.currency-title'|translate }}
+        (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
       </lg-title>
 
       <lg-input [(ngModel)]="currency"
@@ -58,7 +59,8 @@ import {SettingsService} from '@view/settings/settings.service';
     FormsModule,
     RadioComponent,
     InputComponent,
-    TitleComponent
+    TitleComponent,
+    TranslatePipe
   ]
 })
 export class LocalisationSettingsComponent {
