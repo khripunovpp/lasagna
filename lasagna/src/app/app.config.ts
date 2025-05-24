@@ -31,7 +31,10 @@ import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list
 import {from, map, mergeMap, shareReplay, switchMap} from 'rxjs';
 import {Recipe} from '@service/models/Recipe';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
-import {groupBy} from '@helpers/grouping.helper';
+import {GroupSortService} from '@service/services/grouping-sorting.service';
+import {CategoryRecipeSortStrategy, RecipeCreatedAtMonthSortStrategy} from '@service/groupings/recipes.grouping';
+import {SortResult} from '@service/types/sorting.types';
+import {injectQueryParams} from '@helpers/route.helpers';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -135,7 +138,9 @@ export const appConfig: ApplicationConfig = {
     {
       provide: CATEGORIZED_RECIPES_LIST,
       useFactory: () => {
+        const groupSortService = inject(GroupSortService);
         const recipesRepository = inject(RecipesRepository);
+        const groupingParam = injectQueryParams('groupBy');
         const categoryRepository = inject(CategoryRecipesRepository);
         const recipes = from(recipesRepository.loadRecipes()).pipe(
           switchMap(() => recipesRepository.recipes$),
@@ -143,17 +148,23 @@ export const appConfig: ApplicationConfig = {
         );
 
         return recipes.pipe(
-          map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
-          map((recipes: RecipeDTO[]) => groupBy(recipes, 'category_id')),
-          mergeMap(async (grouped: Record<string, RecipeDTO[]>) => {
+          // map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
+          map((recipes: RecipeDTO[]) => {
+            const grouping = groupingParam();
+            const strategy = grouping === 'category' ? new CategoryRecipeSortStrategy() : new RecipeCreatedAtMonthSortStrategy();
+            return groupSortService.sort<RecipeDTO>(recipes, strategy);
+          }),
+          mergeMap(async (grouped: SortResult<RecipeDTO>) => {
               const list = [];
+              console.log(grouped)
 
-              for (const category in grouped) {
-                const recipes = grouped[category];
-                const categoryName = await categoryRepository.getOne(category);
+              for (const category of grouped.groups) {
+                console.log(category);
+                // const categoryName = await categoryRepository.getOne(category.field);
                 list.push({
-                  category: categoryName?.toString(),
-                  recipes: recipes.map((recipe) => Recipe.fromRaw(recipe)),
+                  category: category.field,
+                  recipes: category.items
+                    .map((recipe) => Recipe.fromRaw(recipe)),
                 });
               }
 

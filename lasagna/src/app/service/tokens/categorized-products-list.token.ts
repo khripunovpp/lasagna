@@ -1,7 +1,7 @@
 import {inject, InjectionToken} from '@angular/core';
 import {from, map, mergeMap, Observable, switchMap} from 'rxjs';
 import {groupBy} from '../../helpers/grouping.helper';
-import { ProductsRepository} from '../repositories/products.repository';
+import {ProductsRepository} from '../repositories/products.repository';
 import {CategoryProductsRepository} from '../repositories/category-products-repository.service';
 import {Product} from '../models/Product';
 

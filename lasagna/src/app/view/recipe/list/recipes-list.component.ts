@@ -17,16 +17,16 @@ import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
 import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
-
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
 import {SelectionZoneService} from '@service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {Recipe} from '@service/models/Recipe';
 import {RecipeScheme} from '@service/db/shemes/Recipe.scheme';
 import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.component';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
+import {injectQueryParams} from '@helpers/route.helpers';
+import {GroupingSortingComponent} from '@view/ui/grouping-sorting/grouping-sorting.component';
 
 
 @Component({
@@ -73,11 +73,13 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
+        <lg-grouping-sorting></lg-grouping-sorting>
+
         <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
 
         @for (category of recipes(); track category?.category) {
           <lg-title [level]="3">
-            {{ category?.category || ('without-category-label'|translate) }}
+            {{ (category?.category) || ('without-category-label'|translate) }}
           </lg-title>
 
           <lg-card-list [mode]="selectionZoneService.selectionMode()"
@@ -136,8 +138,9 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
     TranslatePipe,
     DraftRecipesListComponent,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective
-],
+    InlineSeparatedGroupDirective,
+    GroupingSortingComponent
+  ],
   styles: [
     `:host {
       display: block;
@@ -152,8 +155,17 @@ export class RecipesListComponent {
     private _transferDataService: TransferDataService,
     public selectionZoneService: SelectionZoneService,
   ) {
+    this._recipesRepository.recipes$.subscribe({
+      next: (recipes) => {
+        console.log('recipes loaded', recipes);
+      },
+      error: (err) => {
+      }
+    })
   }
 
+
+  groupingParam = injectQueryParams('groupBy');
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
