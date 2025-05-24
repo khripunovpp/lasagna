@@ -8,7 +8,8 @@ export class GroupSortService {
   sort<T>(
     items: T[],
     strategy: SortStrategy<T>,
-    direction: 'asc' | 'desc' = 'asc'
+    direction: 'asc' | 'desc' = 'asc',
+    field: string = 'name'
   ): SortResult<T> {
     const groupsMap = new Map<string, T[]>();
 
@@ -22,20 +23,18 @@ export class GroupSortService {
 
     const result: SortResultGroup<T>[] = [];
 
-    for (const [field, groupItems] of groupsMap.entries()) {
+    for (const [name, groupItems] of groupsMap.entries()) {
       let sortedItems: T[] = groupItems;
       if (strategy.sort) {
-        sortedItems = groupItems.toSorted((a, b) => strategy.sort?.(a, b, direction) ?? 0);
+        sortedItems = groupItems.toSorted((a, b) => {
+          return strategy.sort?.(a, b, direction, field) || 0;
+        });
       }
-      result.push({field, items: sortedItems});
+      result.push({field: name, items: sortedItems});
     }
 
     return new SortResult(result.toSorted((a, b) => {
-      if (direction === 'asc') {
-        return a.field.localeCompare(b.field);
-      } else {
-        return b.field.localeCompare(a.field);
-      }
+      return a.field.localeCompare(b.field);
     }));
   }
 }
