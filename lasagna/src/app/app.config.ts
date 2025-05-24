@@ -28,12 +28,11 @@ import {USER_LANGUAGE} from '@service/tokens/user-language.token';
 import {UserService} from '@service/services/user.service';
 import {SETTINGS} from '@service/tokens/settings.token';
 import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
-import {from, map, mergeMap, shareReplay, switchMap} from 'rxjs';
+import {from, map, shareReplay, switchMap} from 'rxjs';
 import {Recipe} from '@service/models/Recipe';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {GroupSortService} from '@service/services/grouping-sorting.service';
 import {CategoryRecipeSortStrategy, RecipeCreatedAtMonthSortStrategy} from '@service/groupings/recipes.grouping';
-import {SortResult} from '@service/types/sorting.types';
 import {injectQueryParams} from '@helpers/route.helpers';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -141,6 +140,8 @@ export const appConfig: ApplicationConfig = {
         const groupSortService = inject(GroupSortService);
         const recipesRepository = inject(RecipesRepository);
         const groupingParam = injectQueryParams('groupBy');
+        const sortDirection = injectQueryParams<string|null>('sortDirection');
+        const sortField = injectQueryParams('sortField');
         const categoryRepository = inject(CategoryRecipesRepository);
         const recipes = from(recipesRepository.loadRecipes()).pipe(
           switchMap(() => recipesRepository.recipes$),
@@ -152,7 +153,7 @@ export const appConfig: ApplicationConfig = {
           map((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
             const strategy = grouping === 'createdAt' ? new RecipeCreatedAtMonthSortStrategy() : new CategoryRecipeSortStrategy();
-            return groupSortService.sort<RecipeDTO>(recipes, strategy);
+            return groupSortService.sort<RecipeDTO>(recipes, strategy, (sortDirection() as any) ?? 'asc');
           }),
           shareReplay(1),
         );

@@ -5,6 +5,7 @@ import {DropdownComponent} from '@view/ui/dropdown/dropdown.component';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 import {GroupingSortingContainerComponent} from '@view/ui/grouping-sorting/grouping-sorting.directive';
 import {ActivatedRoute, Router} from '@angular/router';
+import {injectQueryParams} from '@helpers/route.helpers';
 
 @Component({
   selector: 'lg-grouping-sorting',
@@ -19,7 +20,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     <lg-gap-row>
       <lg-dropdown>
         <lg-button lgDropdownAnchor [size]="'small'">
-          Group by
+          Group by: {{ sorting().group }}
         </lg-button>
 
         <lg-gap-column [size]="'small'">
@@ -39,49 +40,49 @@ import {ActivatedRoute, Router} from '@angular/router';
         </lg-gap-column>
       </lg-dropdown>
 
-<!--      <lg-dropdown>-->
-<!--        <lg-button [size]="'small'" lgDropdownAnchor>-->
-<!--          Sort by-->
-<!--        </lg-button>-->
+      <!--      <lg-dropdown>-->
+      <!--        <lg-button [size]="'small'" lgDropdownAnchor>-->
+      <!--          Sort by-->
+      <!--        </lg-button>-->
 
-<!--        <lg-gap-column [size]="'small'">-->
-<!--          <lg-button [size]="'small'"-->
-<!--                     (click)="onSortChange({field: 'name'})"-->
-<!--                     [style]="'warning'"-->
-<!--                     [flat]="true">-->
-<!--            Name-->
-<!--          </lg-button>-->
+      <!--        <lg-gap-column [size]="'small'">-->
+      <!--          <lg-button [size]="'small'"-->
+      <!--                     (click)="onSortChange({field: 'name'})"-->
+      <!--                     [style]="'warning'"-->
+      <!--                     [flat]="true">-->
+      <!--            Name-->
+      <!--          </lg-button>-->
 
-<!--          <lg-button [size]="'small'"-->
-<!--                     (click)="onSortChange({field: 'createdAt'})"-->
-<!--                     [style]="'warning'"-->
-<!--                     [flat]="true">-->
-<!--            Date-->
-<!--          </lg-button>-->
-<!--        </lg-gap-column>-->
-<!--      </lg-dropdown>-->
+      <!--          <lg-button [size]="'small'"-->
+      <!--                     (click)="onSortChange({field: 'createdAt'})"-->
+      <!--                     [style]="'warning'"-->
+      <!--                     [flat]="true">-->
+      <!--            Date-->
+      <!--          </lg-button>-->
+      <!--        </lg-gap-column>-->
+      <!--      </lg-dropdown>-->
 
-<!--      <lg-dropdown>-->
-<!--        <lg-button [size]="'small'" lgDropdownAnchor>-->
-<!--          Sort direction-->
-<!--        </lg-button>-->
+      <lg-dropdown>
+        <lg-button [size]="'small'" lgDropdownAnchor>
+          Sort direction: {{ sorting().direction }}
+        </lg-button>
 
-<!--        <lg-gap-column [size]="'small'">-->
-<!--          <lg-button [size]="'small'"-->
-<!--                     (click)="onSortChange({direction: 'asc'})"-->
-<!--                     [style]="'warning'"-->
-<!--                     [flat]="true">-->
-<!--            Ascending-->
-<!--          </lg-button>-->
+        <lg-gap-column [size]="'small'">
+          <lg-button [size]="'small'"
+                     (click)="onSortChange({direction: 'asc'})"
+                     [style]="'warning'"
+                     [flat]="true">
+            Ascending
+          </lg-button>
 
-<!--          <lg-button [size]="'small'"-->
-<!--                     (click)="onSortChange({direction: 'desc'})"-->
-<!--                     [style]="'warning'"-->
-<!--                     [flat]="true">-->
-<!--            Descending-->
-<!--          </lg-button>-->
-<!--        </lg-gap-column>-->
-<!--      </lg-dropdown>-->
+          <lg-button [size]="'small'"
+                     (click)="onSortChange({direction: 'desc'})"
+                     [style]="'warning'"
+                     [flat]="true">
+            Descending
+          </lg-button>
+        </lg-gap-column>
+      </lg-dropdown>
     </lg-gap-row>
   `
 })
@@ -93,18 +94,38 @@ export class GroupingSortingComponent {
   aRouter = inject(ActivatedRoute);
   @ContentChild(GroupingSortingContainerComponent) context!: GroupingSortingContainerComponent;
 
-  @Output() sortChange = new EventEmitter<{ field: string, direction: 'asc' | 'desc' }>();
+  @Output() sortChange = new EventEmitter<{ field: string, direction: 'asc' | 'desc' | string }>();
   @Output() groupChange = new EventEmitter<string>();
 
+  groupingParam = injectQueryParams('groupBy');
+  sortDirection = injectQueryParams<string | null>('sortDirection');
+  sortField = injectQueryParams('sortField');
+
+  defaultDirection = 'asc';
   sorting = signal<{
     field: string,
-    direction: 'asc' | 'desc',
+    direction: 'asc' | 'desc' | string,
     group?: string
-  }>({field: 'name', direction: 'asc', group: 'category'});
+  }>({field: 'name', direction: this.defaultDirection, group: 'category'});
   sortingEffect = effect(() => {
     const sort = this.sorting();
     this.sortChange.emit(sort);
   });
+
+  ngOnInit() {
+    const params = this.aRouter.snapshot.queryParams;
+    const groupBy = this.groupingParam();
+    const sortDirection = this.sortDirection();
+    const sortField = this.sortField();
+
+    this.sorting.set({
+      field: sortField?.toString() || 'name',
+      direction: sortDirection
+        ? sortDirection === 'asc' ? 'asc' : 'desc'
+        : this.defaultDirection,
+      group: groupBy?.toString() || 'category'
+    });
+  }
 
   onSortChange(
     props: {
@@ -113,12 +134,19 @@ export class GroupingSortingComponent {
       group?: string
     }
   ) {
+    debugger
+    console.log('Sorting changed', props, this.sorting());
+    this.sorting.set({
+      field: props.field || this.sorting().field,
+      direction: props.direction || this.sorting().direction,
+      group: props.group || this.sorting().group
+    });
     this.sortChange.emit(this.sorting());
 
     this.router.navigate([], {
       queryParams: {
-        sortField: this.sorting().field,
-        sortDirection: this.sorting().direction,
+        sortField: props.field || this.sorting().field,
+        sortDirection: props.direction || this.sorting().direction,
         groupBy: props.group || this.sorting().group
       },
       relativeTo: this.aRouter

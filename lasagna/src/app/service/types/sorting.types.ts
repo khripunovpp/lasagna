@@ -1,5 +1,6 @@
 export interface SortStrategy<T> {
   groupBy(item: T): string
+  sort?(a: T, b: T,direction: 'asc' | 'desc'): number
 }
 
 export interface SortResultGroup<T> {
