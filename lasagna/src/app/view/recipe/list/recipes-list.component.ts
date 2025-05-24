@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, Signal} from '@angular/core';
 import {RecipesRepository} from '@service/repositories/recipes.repository';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -14,7 +14,6 @@ import {Stores} from '@service/db/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
 import {TransferDataService} from '@service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../ui/import/import-row-tpl.directive';
-import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
 import {FadeInComponent} from '../../ui/fade-in.component';
 import {ControlsBarComponent} from '../../ui/controls-bar/controls-bar.component';
 import {SelectionToolsComponent} from '../../ui/form/selection-tools.component';
@@ -27,6 +26,11 @@ import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.co
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
 import {injectQueryParams} from '@helpers/route.helpers';
 import {GroupingSortingComponent} from '@view/ui/grouping-sorting/grouping-sorting.component';
+import {GroupingTailsComponent} from '@view/ui/grouping-tails/grouping-tails.component';
+import {Recipe} from '@service/models/Recipe';
+import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
+import {GroupingTailDirective} from '@view/ui/grouping-tails/grouping-tail.directive';
+import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
 
 @Component({
@@ -77,42 +81,63 @@ import {GroupingSortingComponent} from '@view/ui/grouping-sorting/grouping-sorti
 
         <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
 
-        @for (category of recipes(); track category?.category) {
-          <lg-title [level]="3">
-            {{ (category?.category) || ('without-category-label'|translate) }}
-          </lg-title>
+        <lg-grouping-tails [sortResult]="recipes()">
+          <ng-template lgGroupingTail let-recipe>
+            <lg-gap-column>
+              <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
-          <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                        (onSelected)="selectionZoneService.putSelected($event)"
-                        (onDeleteOne)="deleteRecipe($event)"
-                        [selectAll]="selectionZoneService.selectAll()['recipe']"
-                        [deselectAll]="selectionZoneService.deselectAll()['recipe']">
-            @for (recipe of category.recipes; track $index; let i = $index) {
-              <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">
-                <lg-gap-row [center]="true">
-                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+              <lg-gap-row>
+                <lg-button [style]="'primary'"
+                           [size]="'small'"
+                           [link]="'/recipes/calculate/' + recipe.uuid"
+                           [flat]="true">
+                  {{ 'recipes.calculate-btn'|translate }}
+                </lg-button>
 
-                  <lg-button [style]="'primary'"
-                             [size]="'small'"
-                             [link]="'/recipes/calculate/' + recipe.uuid"
-                             [flat]="true">
-                    {{ 'recipes.calculate-btn'|translate }}
-                  </lg-button>
+                <small class="text-muted text-cursive" lgPull>
+                  {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                </small>
+              </lg-gap-row>
+            </lg-gap-column>
+          </ng-template>
+        </lg-grouping-tails>
 
-                  <small class="text-muted text-cursive" lgPull>
-                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                  </small>
-                </lg-gap-row>
-              </ng-template>
-            }
-          </lg-card-list>
-        } @empty {
-          <lg-gap-row [center]="true">
-            <lg-title [level]="5">
-              {{ 'no-recipes'|translate }}
-            </lg-title>
-          </lg-gap-row>
-        }
+        <!--        @for (category of recipes(); track category?.category) {-->
+        <!--          <lg-title [level]="3">-->
+        <!--            {{ (category?.category) || ('without-category-label'|translate) }}-->
+        <!--          </lg-title>-->
+
+        <!--          <lg-card-list [mode]="selectionZoneService.selectionMode()"-->
+        <!--                        (onSelected)="selectionZoneService.putSelected($event)"-->
+        <!--                        (onDeleteOne)="deleteRecipe($event)"-->
+        <!--                        [selectAll]="selectionZoneService.selectAll()['recipe']"-->
+        <!--                        [deselectAll]="selectionZoneService.deselectAll()['recipe']">-->
+        <!--            @for (recipe of category.recipes; track $index; let i = $index) {-->
+        <!--              <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">-->
+        <!--                <lg-gap-row [center]="true">-->
+        <!--                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>-->
+
+        <!--                  <lg-button [style]="'primary'"-->
+        <!--                             [size]="'small'"-->
+        <!--                             [link]="'/recipes/calculate/' + recipe.uuid"-->
+        <!--                             [flat]="true">-->
+        <!--                    {{ 'recipes.calculate-btn'|translate }}-->
+        <!--                  </lg-button>-->
+
+        <!--                  <small class="text-muted text-cursive" lgPull>-->
+        <!--                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}-->
+        <!--                  </small>-->
+        <!--                </lg-gap-row>-->
+        <!--              </ng-template>-->
+        <!--            }-->
+        <!--          </lg-card-list>-->
+        <!--        } @empty {-->
+        <!--          <lg-gap-row [center]="true">-->
+        <!--            <lg-title [level]="5">-->
+        <!--              {{ 'no-recipes'|translate }}-->
+        <!--            </lg-title>-->
+        <!--          </lg-gap-row>-->
+        <!--        }-->
       </lg-container>
     </lg-fade-in>
   `,
@@ -139,7 +164,10 @@ import {GroupingSortingComponent} from '@view/ui/grouping-sorting/grouping-sorti
     DraftRecipesListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    GroupingSortingComponent
+    GroupingSortingComponent,
+    GroupingTailsComponent,
+    GroupingTailDirective,
+    GapColumnComponent
   ],
   styles: [
     `:host {
