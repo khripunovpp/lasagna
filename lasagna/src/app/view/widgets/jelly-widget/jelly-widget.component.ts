@@ -9,6 +9,7 @@ import {DecimalPipe} from '@angular/common';
 import {ShrinkDirective} from '@view/directives/shrink.directive';
 import {RangeComponent} from '@view/ui/form/range.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NumberInputComponent} from '@view/ui/form/number-input.component';
 
 
 @Component({
@@ -20,12 +21,12 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         <lg-gap-row [bottom]="true" [mobileMode]="true">
           <lg-gap-column formGroupName="from">
             In recipe you have
-            <lg-input formControlName="amount"
+            <lg-number-input formControlName="amount"
                       [placeholder]="'Amount'">
               <div ngProjectAs="after">
                 grams of
               </div>
-            </lg-input>
+            </lg-number-input>
 
             <lg-range
               [min]="120"
@@ -132,7 +133,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ButtonsGroupComponent,
     DecimalPipe,
     ShrinkDirective,
-    RangeComponent
+    RangeComponent,
+    NumberInputComponent
   ],
   styles: [`
     :host {
@@ -201,7 +203,7 @@ export class JellyWidgetComponent {
     this.form.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef),
     ).subscribe((value) => {
-      const amount = parseInt(String(value?.from?.amount));
+      const amount = parseFloat(String(value?.from?.amount));
       if (isNaN(amount)) {
         return;
       }
@@ -225,7 +227,7 @@ export class JellyWidgetComponent {
     }),
     to: new FormGroup({
       type: new FormControl('powder'),
-      bloom: new FormControl(200),
+      bloom: new FormControl(140),
     }),
   })
 
