@@ -1,8 +1,10 @@
-import {Component, ContentChild, Input, QueryList} from '@angular/core';
+import {Component, ContentChild, EventEmitter, Input, Optional, Output, QueryList} from '@angular/core';
 import {SortResult} from '@service/types/sorting.types';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {GroupingTailDirective} from '@view/ui/grouping-tails/grouping-tail.directive';
 import {NgTemplateOutlet} from '@angular/common';
+import {SelectableSectionComponent} from '@view/ui/selectable-section.component';
+import {SelectionZoneService} from '@service/services';
 
 @Component({
   selector: 'lg-grouping-tails',
@@ -20,9 +22,13 @@ import {NgTemplateOutlet} from '@angular/common';
           <div class="grouping-tails__content">
             @for (tail of group?.items; track tail) {
               <div class="grouping-tails__item">
-                <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
-                              [ngTemplateOutletContext]="{ $implicit: tail }">
-                </ng-container>
+                <lg-selectable-section [mode]="selectionZoneService?.selectionMode() ?? 'default'">
+                  <div class="grouping-tails__item-inner">
+                    <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
+                                  [ngTemplateOutletContext]="{ $implicit: tail }">
+                    </ng-container>
+                  </div>
+                </lg-selectable-section>
               </div>
             }
           </div>
@@ -32,7 +38,8 @@ import {NgTemplateOutlet} from '@angular/common';
   `,
   imports: [
     TitleComponent,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    SelectableSectionComponent
   ],
   styles: [`
     .grouping-tails {
@@ -57,6 +64,15 @@ import {NgTemplateOutlet} from '@angular/common';
     }
 
     .grouping-tails__item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .grouping-tails__item-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
       padding: 16px;
       border-radius: 32px;
       background-color: var(--accent-sahde-color);
@@ -64,10 +80,14 @@ import {NgTemplateOutlet} from '@angular/common';
   `]
 })
 export class GroupingTailsComponent {
-  constructor() {
+  constructor(
+    @Optional() public selectionZoneService: SelectionZoneService,
+  ) {
   }
 
   @Input() sortResult!: SortResult<any> | undefined;
 
-  @ContentChild(GroupingTailDirective) groupingTailDirective!:GroupingTailDirective
+  @ContentChild(GroupingTailDirective) groupingTailDirective!:GroupingTailDirective;
+
+  @Output() deleteRecipe = new EventEmitter<any>();
 }
