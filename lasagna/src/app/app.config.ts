@@ -151,7 +151,7 @@ export const appConfig: ApplicationConfig = {
           // map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
           map((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
-            const strategy = grouping === 'category' ? new CategoryRecipeSortStrategy() : new RecipeCreatedAtMonthSortStrategy();
+            const strategy = grouping === 'createdAt' ? new RecipeCreatedAtMonthSortStrategy() : new CategoryRecipeSortStrategy();
             return groupSortService.sort<RecipeDTO>(recipes, strategy);
           }),
           mergeMap(async (grouped: SortResult<RecipeDTO>) => {
