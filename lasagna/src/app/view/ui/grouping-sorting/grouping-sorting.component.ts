@@ -40,27 +40,27 @@ import {injectQueryParams} from '@helpers/route.helpers';
         </lg-gap-column>
       </lg-dropdown>
 
-      <!--      <lg-dropdown>-->
-      <!--        <lg-button [size]="'small'" lgDropdownAnchor>-->
-      <!--          Sort by-->
-      <!--        </lg-button>-->
+      <lg-dropdown>
+        <lg-button [size]="'small'" lgDropdownAnchor>
+          Sort by: {{ sorting().field }}
+        </lg-button>
 
-      <!--        <lg-gap-column [size]="'small'">-->
-      <!--          <lg-button [size]="'small'"-->
-      <!--                     (click)="onSortChange({field: 'name'})"-->
-      <!--                     [style]="'warning'"-->
-      <!--                     [flat]="true">-->
-      <!--            Name-->
-      <!--          </lg-button>-->
+        <lg-gap-column [size]="'small'">
+          <lg-button [size]="'small'"
+                     (click)="onSortChange({field: 'name'})"
+                     [style]="'warning'"
+                     [flat]="true">
+            Name
+          </lg-button>
 
-      <!--          <lg-button [size]="'small'"-->
-      <!--                     (click)="onSortChange({field: 'createdAt'})"-->
-      <!--                     [style]="'warning'"-->
-      <!--                     [flat]="true">-->
-      <!--            Date-->
-      <!--          </lg-button>-->
-      <!--        </lg-gap-column>-->
-      <!--      </lg-dropdown>-->
+          <lg-button [size]="'small'"
+                     (click)="onSortChange({field: 'createdAt'})"
+                     [style]="'warning'"
+                     [flat]="true">
+            Date
+          </lg-button>
+        </lg-gap-column>
+      </lg-dropdown>
 
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>

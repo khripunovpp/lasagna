@@ -153,7 +153,12 @@ export const appConfig: ApplicationConfig = {
           map((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
             const strategy = grouping === 'createdAt' ? new RecipeCreatedAtMonthSortStrategy() : new CategoryRecipeSortStrategy();
-            return groupSortService.sort<RecipeDTO>(recipes, strategy, (sortDirection() as any) ?? 'asc');
+            return groupSortService.sort<RecipeDTO>(
+              recipes,
+              strategy,
+              (sortDirection() as any) ?? 'asc',
+              (sortField() as any) ?? 'name'
+            );
           }),
           shareReplay(1),
         );
