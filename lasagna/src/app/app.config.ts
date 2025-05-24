@@ -154,32 +154,6 @@ export const appConfig: ApplicationConfig = {
             const strategy = grouping === 'createdAt' ? new RecipeCreatedAtMonthSortStrategy() : new CategoryRecipeSortStrategy();
             return groupSortService.sort<RecipeDTO>(recipes, strategy);
           }),
-          mergeMap(async (grouped: SortResult<RecipeDTO>) => {
-              const list = [];
-              console.log(grouped)
-
-              for (const category of grouped.groups) {
-                console.log(category);
-                // const categoryName = await categoryRepository.getOne(category.field);
-                list.push({
-                  category: category.field,
-                  recipes: category.items
-                    .map((recipe) => Recipe.fromRaw(recipe)),
-                });
-              }
-
-              if (!list.length) return [];
-
-              const [first, ...sortedList] = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
-
-              // без категории всегда внизу
-              if (first?.category) {
-                return [first].concat(sortedList);
-              }
-
-              return sortedList.concat([first]);
-            }
-          ),
           shareReplay(1),
         );
       },

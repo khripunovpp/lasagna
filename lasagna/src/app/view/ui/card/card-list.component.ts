@@ -92,7 +92,7 @@ export interface CardListSelectionEvent {
         align-items: center;
         padding: 16px;
         gap: 8px;
-        background-color: #eed2f0;
+        background-color: var(--accent-sahde-color);
         border-radius: 32px;
         white-space: nowrap;
 
