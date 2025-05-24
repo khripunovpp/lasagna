@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, Renderer2} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Renderer2,
+  SimpleChanges
+} from '@angular/core';
 
 @Component({
   selector: 'lg-portal',
@@ -14,7 +23,8 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, Renderer2} from 
     `
   ]
 })
-export class PortalComponent implements AfterViewInit, OnDestroy {
+export class PortalComponent
+  implements AfterViewInit, OnDestroy,OnChanges {
   constructor(
       private renderer: Renderer2,
       private _elementRef: ElementRef,
@@ -33,6 +43,19 @@ export class PortalComponent implements AfterViewInit, OnDestroy {
     return this.appendTarget === 'body'
         ? document.body
         : this.appendTarget;
+  }
+
+  ngOnChanges(
+    changes:SimpleChanges
+  ){
+    if (changes['wrapClass'] && this.portalContainer) {
+      if (this.wrapClass) {
+        const classes = this.wrapClass.split(' ');
+        classes.forEach(c => this.renderer.addClass(this.portalContainer, c));
+      } else {
+        this.portalContainer.className = '';
+      }
+    }
   }
 
   ngAfterViewInit() {
