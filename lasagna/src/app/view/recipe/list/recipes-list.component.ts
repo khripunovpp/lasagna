@@ -192,8 +192,6 @@ export class RecipesListComponent {
     })
   }
 
-
-  groupingParam = injectQueryParams('groupBy');
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;

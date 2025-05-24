@@ -1,10 +1,19 @@
 import {SortStrategy} from '@service/types/sorting.types';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
+import {BaseGrouping} from '@service/groupings/base-grouping';
 
 export class CategoryRecipeSortStrategy
-  implements SortStrategy<RecipeDTO> {
-  groupBy(item: RecipeDTO): string {
+  extends BaseGrouping<RecipeDTO> {
+  override groupBy(item: RecipeDTO): string {
     return item.category_id ?? 'uncategorized';
+  }
+
+  override sort(a: RecipeDTO, b: RecipeDTO, direction: 'asc' | 'desc'): number {
+    if (direction === 'asc') {
+      return a.name.localeCompare(b.name);
+    } else {
+      return b.name.localeCompare(a.name);
+    }
   }
 }
 
