@@ -214,13 +214,13 @@ export class RecipesListComponent {
   }
 
   loadRecipes() {
-    this._recipesRepository.loadRecipes();
+    return this._recipesRepository.loadRecipes();
   }
 
   exportRecipes(
     selected: Set<string>,
   ) {
-    this._transferDataService.exportTable(Stores.RECIPES, 'json', {
+    return this._transferDataService.exportTable(Stores.RECIPES, 'json', {
       selected: Array.from(selected || []),
     });
   }
