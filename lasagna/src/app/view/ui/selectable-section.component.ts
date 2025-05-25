@@ -1,29 +1,31 @@
-import {Component, ContentChildren, effect, input, output, QueryList} from '@angular/core';
+import {Component, ContentChildren, effect, input, Optional, output, QueryList, SkipSelf} from '@angular/core';
 import {CardListItemDirective} from '@view/ui/card/card-list-item.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CheckboxComponent} from '@view/ui/form/chckbox.component';
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
+import {SelectionZoneService} from '@service/services';
+import {generateUuid} from '@helpers/attribute.helper';
 
 @Component({
   selector: 'lg-selectable-section',
   standalone: true,
   template: `
     <section class="lg-selectable-section">
-      @if (mode() === 'selection') {
+      @if (selectionZoneService.selectionMode() === 'selection') {
         <lg-checkbox [size]="'medium'"
                      [formControl]="selected"
-                     [value]="selectionValue()"
-                     (onCheckboxChanged)=" onChanges(selectionValue())"></lg-checkbox>
+                     [value]="key()"
+                     (onCheckboxChanged)="onChanges($event)"></lg-checkbox>
       }
       <div class="lg-selectable-section__inner">
         <ng-content></ng-content>
       </div>
-      @if (mode() === 'selection') {
+      @if (selectionZoneService.selectionMode() === 'selection') {
         <lg-button [style]="'danger'"
                    [size]="'tiny'"
                    [icon]="true"
-                   (click)="onDeleteOne.emit(selectionValue())">
+                   (click)="selectionZoneService.putDelete(key())">
           <mat-icon aria-hidden="false"
                     fontIcon="close"></mat-icon>
         </lg-button>
@@ -57,30 +59,33 @@ import {MatIcon} from '@angular/material/icon';
   ]
 })
 export class SelectableSectionComponent {
+  constructor(
+    @Optional() @SkipSelf() public selectionZoneService: SelectionZoneService
+  ) {
+  }
 
-  mode = input<'default' | 'selection'>('default');
-  selectionValue = input<string>('');
-  onSelected = output<string>();
-  onDeleteOne = output<string>();
+  key = input<string>(generateUuid());
   @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
   selected = new FormControl()
 
   effectMode = effect(() => {
-    if (this.mode() === 'selection') {
+    console.log('Selection mode changed', this.selectionZoneService.selectionMode());
+    if (this.selectionZoneService.selectionMode()) {
       this.selected.reset();
     }
   });
 
-  buildValueString(
-    index: number,
-    item: CardListItemDirective,
-  ) {
-    return String(`${item?.type}-${index}-${item?.uuid}`);
-  }
+  effectSelectAll = effect(() => {
+    if (this.selectionZoneService.selectAll()) {
+      this.selected.setValue(true);
+    } else if (this.selectionZoneService.deselectAll()) {
+      this.selected.setValue(false);
+    }
+  })
 
   onChanges(
-    value: string,
+    event: boolean | string | null | undefined
   ) {
-    this.onSelected.emit(value as string);
+    this.selectionZoneService.putSelected([!!event, this.key()]);
   }
 }

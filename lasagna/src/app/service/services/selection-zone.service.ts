@@ -1,7 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {CardListSelectionEvent} from '@view/ui/card/card-list.component';
-
-export type SelectionType = CardListSelectionEvent['type']
+import {ReplaySubject, shareReplay} from 'rxjs';
 
 @Injectable()
 export class SelectionZoneService {
@@ -10,55 +8,57 @@ export class SelectionZoneService {
   }
 
   selectionMode = signal<'default' | 'selection'>('default');
-  selectAll = signal<Record<SelectionType, boolean>>({});
-  deselectAll = signal<Record<SelectionType, boolean>>({});
-  selected = signal<Record<SelectionType, Set<string>>>({});
+  selectAll = signal<boolean>(false);
+  deselectAll = signal<boolean>(false);
+  selected = signal<Set<string>>(new Set());
+  deleteAll = signal<boolean>(false);
+  deleteSelected = signal<boolean>(false);
+  private _deleteSubject = new ReplaySubject<string>();
+
+  get onDelete() {
+    return this._deleteSubject.asObservable().pipe(
+      shareReplay(1),
+    );
+  }
 
   onSelection() {
     this.selectionMode.set(this.selectionMode() === 'default' ? 'selection' : 'default');
-    this.selected.set({});
+    this.selected.set(new Set());
   }
 
-  onAllSelection(
-    type: SelectionType[]
-  ) {
-    for (const t of type) {
-      this._toggleAll(true, t);
-    }
+  onAllSelection() {
+    this.selectAll.set(true);
+    this.deselectAll.set(false);
   }
 
-  onDeselectAll(
-    type: SelectionType[]
-  ) {
-    for (const t of type) {
-      this._toggleAll(false, t);
-    }
+  onDeselectAll() {
+    this.selectAll.set(false);
+    this.deselectAll.set(true);
   }
 
-  putSelected(selected: CardListSelectionEvent) {
+  onDeleteAll() {
+    this.deleteAll.set(true);
+    this.deleteSelected.set(false);
+  }
+
+  onDeleteSelected() {
+    this.deleteAll.set(false);
+    this.deleteSelected.set(true);
+  }
+
+  putSelected(selected: [boolean, string]) {
+    const [checked, uuid] = selected;
     this.selected.update(value => {
-      const selectedSet = value[selected.type] ?? new Set<string>();
-      if (selected.selected) {
-        selectedSet.add(selected.uuid);
+      if (checked) {
+        value.add(uuid);
       } else {
-        selectedSet.delete(selected.uuid);
+        value.delete(uuid);
       }
-      value[selected.type] = selectedSet;
       return value;
-    });
+    })
   }
 
-  private _toggleAll(
-    state: boolean,
-    type: SelectionType
-  ) {
-    this.selectAll.update(value => {
-      value[type] = state;
-      return value;
-    });
-    this.deselectAll.update(value => {
-      value[type] = !state;
-      return value;
-    });
+  putDelete(key: string) {
+    this._deleteSubject.next(key);
   }
 }

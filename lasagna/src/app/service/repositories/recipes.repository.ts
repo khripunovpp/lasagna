@@ -51,7 +51,6 @@ export class RecipesRepository {
   }
 
   loadRecipes() {
-    debugger
     return this._indexDbService.getAll(Stores.RECIPES).then(resp => {
       const recipes = resp.map(recipe => Recipe.fromRaw(recipe));
       this._stream$.next(recipes);

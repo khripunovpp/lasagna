@@ -1,4 +1,4 @@
-import {Component, inject, Signal} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
 import {RecipesRepository} from '@service/repositories/recipes.repository';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
@@ -6,9 +6,7 @@ import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../ui/layout/container/container.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CardListComponent} from '../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
-import {toSignal} from '@angular/core/rxjs-interop';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '@service/services/notifications.service';
 import {Stores} from '@service/db/const/stores';
 import {ImportComponent} from '../../ui/import/import.component';
@@ -24,10 +22,8 @@ import {PullDirective} from '@view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from '@view/recipe/list/draft-recipes-list.component';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@view/ui/inline-separated-group.component';
-import {injectQueryParams} from '@helpers/route.helpers';
 import {GroupingSortingComponent} from '@view/ui/grouping-sorting/grouping-sorting.component';
 import {GroupingTailsComponent} from '@view/ui/grouping-tails/grouping-tails.component';
-import {Recipe} from '@service/models/Recipe';
 import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
 import {GroupingTailDirective} from '@view/ui/grouping-tails/grouping-tail.directive';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
@@ -47,7 +43,7 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
       <lg-inline-separated-group>
         <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportRecipes(selectionZoneService.selected()['recipe'])"
+          <lg-button (click)="exportRecipes(selectionZoneService.selected())"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
@@ -77,9 +73,11 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        <lg-grouping-sorting></lg-grouping-sorting>
+        <lg-gap-column [size]="'medium'">
+          <lg-grouping-sorting></lg-grouping-sorting>
 
-        <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
+          <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
+        </lg-gap-column>
 
         <lg-grouping-tails [sortResult]="recipes()">
           <ng-template lgGroupingTail let-recipe>
@@ -151,8 +149,6 @@ import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
     MatIcon,
     ContainerComponent,
     TitleComponent,
-    CardListComponent,
-    CardListItemDirective,
     ImportComponent,
     ImportRowTplDirective,
     FadeInComponent,
@@ -190,8 +186,15 @@ export class RecipesListComponent {
       error: (err) => {
       }
     })
+
+    this.selectionZoneService.onDelete.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(key => {
+      this.deleteRecipe(key);
+    });
   }
 
+  destroyRef = inject(DestroyRef);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
@@ -200,16 +203,11 @@ export class RecipesListComponent {
     this.loadRecipes();
   }
 
-  deleteRecipe(
-    event?: {
-      uuid: string
-      type: string
-    }
-  ) {
-    if (!event?.uuid) {
+  deleteRecipe(uuid: string | undefined) {
+    if (!uuid) {
       return;
     }
-    this._recipesRepository.deleteOne(event!.uuid).then(() => {
+    this._recipesRepository.deleteOne(uuid).then(() => {
       this._notificationsService.success('Recipe deleted');
       this.loadRecipes();
     });

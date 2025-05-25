@@ -1,4 +1,4 @@
-import {Component, ContentChild, EventEmitter, Input, Optional, Output, QueryList} from '@angular/core';
+import {Component, ContentChild, EventEmitter, Input, Optional, Output} from '@angular/core';
 import {SortResult} from '@service/types/sorting.types';
 import {TitleComponent} from '@view/ui/layout/title/title.component';
 import {GroupingTailDirective} from '@view/ui/grouping-tails/grouping-tail.directive';
@@ -22,7 +22,7 @@ import {SelectionZoneService} from '@service/services';
           <div class="grouping-tails__content">
             @for (tail of group?.items; track tail) {
               <div class="grouping-tails__item">
-                <lg-selectable-section [mode]="selectionZoneService?.selectionMode() ?? 'default'">
+                <lg-selectable-section [key]="tail.uuid">
                   <div class="grouping-tails__item-inner">
                     <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
                                   [ngTemplateOutletContext]="{ $implicit: tail }">
@@ -87,7 +87,5 @@ export class GroupingTailsComponent {
 
   @Input() sortResult!: SortResult<any> | undefined;
 
-  @ContentChild(GroupingTailDirective) groupingTailDirective!:GroupingTailDirective;
-
-  @Output() deleteRecipe = new EventEmitter<any>();
+  @ContentChild(GroupingTailDirective) groupingTailDirective!: GroupingTailDirective;
 }

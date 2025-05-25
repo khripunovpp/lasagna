@@ -61,7 +61,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
           @if (selectionZoneService.selected(); as selected) {
             <ng-template lgInlineSeparatedGroup>
               <lg-button [flat]="true"
-                         [disabled]="!selected['draft']?.size"
+                         [disabled]="!selected?.size"
                          [size]="'small'"
                          [style]="'danger'"
                          (click)="deletedSelectedDrafts()">
@@ -74,8 +74,8 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
                       (onDeleteOne)="deleteDraft($event?.uuid)"
                       (onSelected)="selectionZoneService.putSelected($event)"
-                      [selectAll]="selectionZoneService.selectAll()['draft']"
-                      [deselectAll]="selectionZoneService.deselectAll()['draft']"
+                      [selectAll]="selectionZoneService.selectAll()"
+                      [deselectAll]="selectionZoneService.deselectAll()"
                       style="--card-bg: #bee5ff">
           @for (item of drafts(); track item.uuid) {
             <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
@@ -133,7 +133,7 @@ export class DraftRecipesListComponent
   }
 
   deletedSelectedDrafts() {
-    const selected = this.selectionZoneService.selected()['draft'];
+    const selected = this.selectionZoneService.selected();
     if (!selected) return;
     this._recipesRepository.removeDraftMany(Array.from(selected)).then(() => {
       this.drafts.update((drafts) => {
