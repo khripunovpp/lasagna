@@ -1,7 +1,7 @@
 import {Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {GapColumnComponent} from '@view/ui/layout/gap-column.component';
-import {InputComponent} from '@view/ui/form/input.component';
+
 import {GapRowComponent} from '@view/ui/layout/gap-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '@view/ui/form/buttons-group.component';
 import {JellyCalculationModel} from '@view/widgets/jelly-widget/jelly-calculation.model';
@@ -128,14 +128,13 @@ import {NumberInputComponent} from '@view/ui/form/number-input.component';
     FormsModule,
     ReactiveFormsModule,
     GapColumnComponent,
-    InputComponent,
     GapRowComponent,
     ButtonsGroupComponent,
     DecimalPipe,
     ShrinkDirective,
     RangeComponent,
     NumberInputComponent
-  ],
+],
   styles: [`
     :host {
 

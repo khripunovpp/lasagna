@@ -1,0 +1,1 @@
+import{gb as e,sb as r}from"./chunk-MWDKUV2C.js";var o=class t{constructor(){}whiteSpace="nowrap";static \u0275fac=function(i){return new(i||t)};static \u0275dir=e({type:t,selectors:[["","lgNoWrap",""]],hostVars:2,hostBindings:function(i,c){i&2&&r("white-space",c.whiteSpace)}})};export{o as a};
