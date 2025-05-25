@@ -7,12 +7,6 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
 import {ButtonComponent} from '@view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
 
-export interface CardListSelectionEvent {
-  selected: boolean
-  uuid: string
-  type: string
-}
-
 @Component({
   selector: 'lg-card-list',
   standalone: true,
@@ -27,14 +21,14 @@ export interface CardListSelectionEvent {
   template: `
     <section [formGroup]="selected" class="lg-card-list">
       <section class="lg-card-list__inner" formArrayName="items">
-        @for (item of items; track item?.uuid; let i = $index, even = $even) {
+        @for (item of items; track (item?.uuid ?? '') + $index; let i = $index, even = $even) {
           <div class="lg-card-list__item"
                [class.colored]="!even">
             @if (mode() === 'selection') {
               <lg-checkbox [formControlName]="i"
                            [size]="'medium'"
                            [value]="buildValueString(i, item)"
-                           (onCheckboxChanged)=" onChanges($event,i)"></lg-checkbox>
+                           (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
             }
             <div class="lg-card-list__item__inner">
               <ng-container [ngTemplateOutlet]="item.template"></ng-container>
@@ -117,7 +111,7 @@ export class CardListComponent {
   mode = input<'default' | 'selection'>('default');
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
-  onSelected = output<CardListSelectionEvent>();
+  onSelected = output<[boolean, string]>();
   onDeleteOne = output<{
     uuid: string, type: string
   }>();
@@ -165,10 +159,6 @@ export class CardListComponent {
     index: number
   ) {
     const item = this.items.toArray()?.[index];
-    this.onSelected.emit({
-      selected: !!value,
-      uuid: item?.uuid ?? '',
-      type: item?.type ?? ''
-    });
+    this.onSelected.emit([value as boolean, item?.uuid || '']);
   }
 }

@@ -43,7 +43,7 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
 
       <lg-inline-separated-group>
         <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportProducts(selectionZoneService.selected()['product'])"
+          <lg-button (click)="exportProducts(selectionZoneService.selected())"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'info'">
@@ -81,9 +81,9 @@ import {UserCurrencyPipe} from '@view/pipes/userCurrency.pipe';
           <lg-card-list [mode]="selectionZoneService.selectionMode()"
                         (onSelected)="selectionZoneService.putSelected($event)"
                         (onDeleteOne)="deleteProduct($event)"
-                        [selectAll]="selectionZoneService.selectAll()['product']"
-                        [deselectAll]="selectionZoneService.deselectAll()['product']">
-            @for (product of category.products; track product?.uuid; let i = $index) {
+                        [selectAll]="selectionZoneService.selectAll()"
+                        [deselectAll]="selectionZoneService.deselectAll()">
+            @for (product of category.products; track (product.uuid ?? '')+$index; let i = $index) {
               <ng-template lgCardListItem [uuid]="product.uuid" type="product">
                 <lg-gap-row [center]="true">
                   <div class="expand">

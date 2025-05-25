@@ -25,24 +25,46 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
         </ng-template>
 
         <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="selectionZoneService.onAllSelection(selectionTypes)"
+          <lg-button (click)="selectionZoneService.onAllSelection()"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'danger'">
+                     [style]="'warning'">
             {{ 'select-all-label'|translate }}
           </lg-button>
         </ng-template>
 
-        <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="selectionZoneService.onDeselectAll(selectionTypes)"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'danger'">
-            {{ 'deselect-all-label'|translate }}
-          </lg-button>
-        </ng-template>
-      } @else {
+        @if (selectionZoneService.selected(); as selected) {
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="selectionZoneService.onDeselectAll()"
+                       [flat]="true"
+                       [disabled]="!selected?.size"
+                       [size]="'small'"
+                       [style]="'warning'">
+              {{ 'deselect-all-label'|translate }}
+            </lg-button>
+          </ng-template>
 
+
+        <!--        <ng-template lgInlineSeparatedGroup>-->
+          <!--          <lg-button [flat]="true"-->
+          <!--                     [size]="'small'"-->
+          <!--                     [style]="'danger'"-->
+          <!--                     (click)="selectionZoneService.onDeleteAll()">-->
+          <!--            {{ 'delete-all-label' | translate }}-->
+          <!--          </lg-button>-->
+          <!--        </ng-template>-->
+
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button [flat]="true"
+                       [disabled]="!selected?.size"
+                       [size]="'small'"
+                       [style]="'danger'"
+                       (click)="selectionZoneService.onDeleteSelected()">
+              {{ 'delete-selected-label' | translate }}
+            </lg-button>
+          </ng-template>
+        }
+      } @else {
         <ng-template lgInlineSeparatedGroup>
           <lg-button (click)="selectionZoneService.onSelection()"
                      [flat]="true"
