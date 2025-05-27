@@ -86,7 +86,7 @@ import {MatIcon} from '@angular/material/icon';
         align-items: center;
         padding: 16px;
         gap: 8px;
-        background-color: var(--accent-sahde-color);
+        background-color: #ffffff;
         border-radius: 32px;
         white-space: nowrap;
 

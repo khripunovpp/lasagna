@@ -148,7 +148,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
 
     .lg-header__link.route-active {
-      background-color: #a26dc7;
+      background-color: var(--accent-color);
       color: #fff;
     }
 
@@ -171,7 +171,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
 
     .lg-header__icon.route-active {
-      background-color: #a26dc7;
+      background-color: var(--accent-color);
       color: #fff;
     }
   `],

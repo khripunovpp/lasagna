@@ -75,7 +75,7 @@ import {SelectionZoneService} from '@service/services';
       gap: 16px;
       padding: 16px;
       border-radius: 32px;
-      background-color: var(--accent-sahde-color);
+      background-color: #fff;
     }
   `]
 })
