@@ -48,8 +48,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-gap-row [mobileMode]="true" [center]="true">
               <lg-title>
-                {{ 'edit-label'|translate }}
-                <span class="text-active">{{ recipe()?.name }}</span>
+               <span class="text-active">{{ recipe()?.name }}</span>
               </lg-title>
             </lg-gap-row>
 

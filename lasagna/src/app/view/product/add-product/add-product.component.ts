@@ -46,8 +46,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '@vie
           <lg-gap-row [center]="true" [mobileMode]="true">
             @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
               <lg-title>
-                {{ 'edit-label'|translate }}
-                {{ product()?.name }}
+               {{ product()?.name }}
               </lg-title>
             } @else {
               <lg-title>
