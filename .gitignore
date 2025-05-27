@@ -1,2 +1,7 @@
 node_modules
 .idea
+api-chef/.strapi
+api-chef/.tmp
+api-chef/dist
+api-chef/.env
+api-chef/.strapi-updater.json
