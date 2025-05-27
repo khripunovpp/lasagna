@@ -92,7 +92,7 @@ import {Router} from '@angular/router';
     }
 
     .tabs__labels button.active {
-      background-color: #a26dc7;
+      background-color: var(--accent-color);
       color: #fff;
     }
 
