@@ -24,7 +24,7 @@ import {Component} from '@angular/core';
         flex-direction: column;
         margin: 0 auto;
         width: 100%;
-        max-width: 1920px;
+        max-width: var(--container-width);
         gap: 32px;
       }
 
