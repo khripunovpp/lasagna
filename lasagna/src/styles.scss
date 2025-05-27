@@ -1,39 +1,26 @@
 @import "@ng-select/ng-select/themes/default.theme.css";
 
 :root {
-  --text-color: #0d1340;
   --text-color-inverse: #f5f5f5;
-  --focus-shadow: 0 0 0 2px var(--active-color);
 
-  --active-color: #fd4c88;
-  --accent-color: #a26dc7;
   --accent-sahde-color: #eed2f0;
   --control-bg: #fafafa;
   --control-bg-selected: #c4e2ea;
   --placeholder: #7a7c89;
   --header-height: 51px;
   --card-bg: #fff;
-  --background-color: #f9c3ff;
   --secondary-color: #5e6282;
   --bounce-bezier: cubic-bezier(.47, 1.64, .41, .8);
 
-  --container-width: 920px;
-}
+  --accent-color: #abc270;
+  --button-default-bg: #fec868;
+  --background-color: #abc270;
+  --active-color: #fda769;
 
-.palette-1 {
-  --text-color: #051d15;
-  --text-color-inverse: #f5f5f5;
   --focus-shadow: 0 0 0 2px var(--active-color);
+  --text-color: #473C33;
 
-  --active-color: #c51c1c;
-  --accent-color: #317985;
-  --accent-sahde-color: #f6feff;
-  --control-bg: #fafafa;
-  --control-bg-selected: #c4e2ea;
-  --placeholder: #7a7c89;
-  --header-height: 51px;
-  --card-bg: #fff;
-  --background-color: #317985;
+  --container-width: 920px;
 }
 
 /* fallback */
@@ -102,7 +89,7 @@ body {
     user-select: none;
     pointer-events: none;
     background-color: var(--background-color);
-    opacity: 0.2;
+    opacity: var(--background-color-opactity,0.2);
   }
 }
 
