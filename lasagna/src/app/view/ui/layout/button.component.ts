@@ -163,7 +163,7 @@ export type ButtonSizes =
       }
 
       .button.default {
-        background-color: #fab6b6;
+        background-color: var(--button-default-bg);
       }
 
       .button.primary {
