@@ -37,6 +37,13 @@ import {injectQueryParams} from '@helpers/route.helpers';
                      [flat]="true">
             Date
           </lg-button>
+
+          <lg-button [size]="'small'"
+                     [style]="'warning'"
+                     (click)="onSortChange({group: 'alphabetical'})"
+                     [flat]="true">
+            Alphabetical
+          </lg-button>
         </lg-gap-column>
       </lg-dropdown>
 

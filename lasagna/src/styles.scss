@@ -1,6 +1,8 @@
 @import "@ng-select/ng-select/themes/default.theme.css";
 
 :root {
+  --text-font: 'Raleway', "Helvetica Neue", sans-serif;
+  --text-font-weight: 500;
   --text-color-inverse: #f5f5f5;
 
   --accent-sahde-color: #eed2f0;
@@ -71,7 +73,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: Inter, "Helvetica Neue", sans-serif;
+  font-family: var(--text-font);
+  font-weight: var(--text-font-weight, 400);
   height: 100%;
   font-size: 16px;
   color: var(--text-color);
@@ -89,7 +92,7 @@ body {
     user-select: none;
     pointer-events: none;
     background-color: var(--background-color);
-    opacity: var(--background-color-opactity,0.2);
+    opacity: var(--background-color-opactity, 0.2);
   }
 }
 

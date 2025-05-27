@@ -32,7 +32,11 @@ import {from, map, shareReplay, switchMap} from 'rxjs';
 import {Recipe} from '@service/models/Recipe';
 import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
 import {GroupSortService} from '@service/services/grouping-sorting.service';
-import {CategoryRecipeSortStrategy, RecipeCreatedAtMonthSortStrategy} from '@service/groupings/recipes.grouping';
+import {
+  CategoryRecipeSortStrategy,
+  RecipeAlphabeticalSortStrategy,
+  RecipeCreatedAtMonthSortStrategy
+} from '@service/groupings/recipes.grouping';
 import {injectQueryParams} from '@helpers/route.helpers';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -147,12 +151,17 @@ export const appConfig: ApplicationConfig = {
           switchMap(() => recipesRepository.recipes$),
           map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
         );
+        const groupingMap:Record<string, any> = {
+          'createdAt': RecipeCreatedAtMonthSortStrategy,
+          'category': CategoryRecipeSortStrategy,
+          'alphabetical': RecipeAlphabeticalSortStrategy,
+        }
 
         return recipes.pipe(
           // map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
           map((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
-            const strategy = grouping === 'createdAt' ? new RecipeCreatedAtMonthSortStrategy() : new CategoryRecipeSortStrategy();
+            const strategy = new (groupingMap[grouping as string] ?? CategoryRecipeSortStrategy)();
             return groupSortService.sort<RecipeDTO>(
               recipes,
               strategy,
