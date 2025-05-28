@@ -1,0 +1,40 @@
+<lg-fade-in>
+  <lg-container>
+    <lg-title>{{ 'settings.title'|translate }}</lg-title>
+
+    <lg-tabs>
+      <ng-template alias="language" label="{{ 'language.settings-title'|translate }}" lgTab>
+        <lg-language-settings></lg-language-settings>
+      </ng-template>
+
+      <ng-template alias="categoires" label="{{ 'categories.settings-title'|translate }}" lgTab>
+        <lg-gap-row [mobileMode]="true" [top]="true">
+          <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
+            {{ 'categories.products.link-label'|translate }}
+          </a>
+
+          <a lgExpand routerLink="/settings/categories/recipes" routerLinkActive="active">
+            {{ 'categories.recipes.link-label'|translate }}
+          </a>
+        </lg-gap-row>
+      </ng-template>
+
+      <ng-template alias="invoice" label="Invoice settings" lgTab>
+        <lg-invoices-settings></lg-invoices-settings>
+      </ng-template>
+
+      <ng-template alias="credentials" label="Credentials" lgTab>
+        <lg-credentials-settings></lg-credentials-settings>
+      </ng-template>
+
+      <ng-template alias="taxes" label="Taxes" lgTab>
+        <lg-taxes-settings></lg-taxes-settings>
+      </ng-template>
+
+      <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
+        <lg-backup-settings></lg-backup-settings>
+      </ng-template>
+    </lg-tabs>
+  </lg-container>
+</lg-fade-in>
+

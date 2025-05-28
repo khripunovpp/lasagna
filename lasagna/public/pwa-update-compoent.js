@@ -60,7 +60,6 @@ function downloadBackup(data) {
   a.href = url;
   a.click();
   URL.revokeObjectURL(url);
-  console.log('Backup downloaded successfully');
 }
 
 function createUpdateBanner() {

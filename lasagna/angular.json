@@ -23,7 +23,6 @@
             },
             "index": "src/index.html",
             "polyfills": [
-              "zone.js"
             ],
             "preserveSymlinks": true,
             "tsConfig": "tsconfig.app.json",
@@ -85,8 +84,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",

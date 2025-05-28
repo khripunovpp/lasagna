@@ -1,10 +1,13 @@
 import {Routes} from '@angular/router';
-
-import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
-import {recipeCalculationResolver,} from './service/resolvers/recipe-calculation.resolver';
-import {recipeCalculationTemplateResolver} from './service/resolvers/recipe-tax-template.resolver';
-import {recipeDraftResolver} from './service/resolvers/recipe-draft.resolver';
-import {productDraftResolver} from './service/resolvers/product-draft.resolver';
+import {recipeEditResolver} from './shared/service/resolvers/recipe-edit.resolver';
+import {recipeCalculationResolver,} from './shared/service/resolvers/recipe-calculation.resolver';
+import {recipeCalculationTemplateResolver} from './shared/service/resolvers/recipe-tax-template.resolver';
+import {recipeDraftResolver} from './shared/service/resolvers/recipe-draft.resolver';
+import {productDraftResolver} from './shared/service/resolvers/product-draft.resolver';
+import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';
+import {InvoiceBuilderService} from '@invoices/view/invoice-builder.service';
+import {LOGGER_CONTEXT} from './features/logger/logger-context.provider';
+import {LoggerService} from './features/logger/logger.service';
 
 export const routes: Routes = [{
   path: '',
@@ -16,7 +19,7 @@ export const routes: Routes = [{
     },
     {
       path: 'home',
-      loadComponent: () => import('./view/application/application.component')
+      loadComponent: () => import('./shared/view/application/application.component')
         .then(m => m.ApplicationComponent)
     },
     {
@@ -24,17 +27,17 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./view/recipe/list/recipes-list.component')
+          loadComponent: () => import('./shared/view/recipe/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
         },
         {
           path: 'add',
-          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
         },
         {
           path: 'edit/:uuid',
-          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver,
@@ -45,7 +48,7 @@ export const routes: Routes = [{
         },
         {
           path: 'draft/:uuid',
-          loadComponent: () => import('./view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver,
@@ -56,7 +59,7 @@ export const routes: Routes = [{
         },
         {
           path: 'calculate/:uuid',
-          loadComponent: () => import('./view/recipe/calculate/calculate-recipe.component')
+          loadComponent: () => import('./shared/view/recipe/calculate/calculate-recipe.component')
             .then(m => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
@@ -71,17 +74,17 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./view/product/list/product-list.component')
+          loadComponent: () => import('./shared/view/product/list/product-list.component')
             .then(m => m.ProductListComponent),
         },
         {
           path: 'add',
-          loadComponent: () => import('./view/product/add-product/add-product.component')
+          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
             .then(m => m.AddProductComponent),
         },
         {
           path: 'edit/:uuid',
-          loadComponent: () => import('./view/product/add-product/add-product.component')
+          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
             .then(m => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver,
@@ -92,7 +95,7 @@ export const routes: Routes = [{
         },
         {
           path: 'draft/:uuid',
-          loadComponent: () => import('./view/product/add-product/add-product.component')
+          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
             .then(m => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver,
@@ -105,11 +108,46 @@ export const routes: Routes = [{
     },
 
     {
+      path: 'invoices',
+      providers: [
+        LoggerService,
+        {
+          provide: LOGGER_CONTEXT,
+          useValue: {
+            label: 'Invoices',
+            color: '#e67e22',
+          },
+        },
+      ],
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./features/invoices/view/list/invoices-list.component')
+            .then(m => m.InvoicesListComponent),
+        },
+        {
+          path: 'edit/:uuid',
+          loadComponent: () => import('./features/invoices/view/add-invoice/add-invoice.component')
+            .then(m => m.AddInvoiceComponent),
+          providers: [
+            InvoiceBuilderService
+          ],
+          resolve: {
+            invoice: invoiceEditResolver,
+          },
+          data: {
+            editRoute: true,
+          }
+        },
+      ]
+    },
+
+    {
       path: 'settings',
       children: [
         {
           path: '',
-          loadComponent: () => import('./view/settings/settings.component')
+          loadComponent: () => import('./features/settings/view/settings.component')
             .then(m => m.SettingsComponent),
         },
         {
@@ -120,17 +158,17 @@ export const routes: Routes = [{
               children: [
                 {
                   path: '',
-                  loadComponent: () => import('@view/settings/categories/category-product/list/category-list.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/list/category-list.component')
                     .then(m => m.CategoryListComponent),
                 },
                 {
                   path: 'add',
-                  loadComponent: () => import('@view/settings/categories/category-product/add-category/add-category.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 },
                 {
                   path: 'edit/:uuid',
-                  loadComponent: () => import('@view/settings/categories/category-product/add-category/add-category.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 }
               ]
@@ -140,18 +178,18 @@ export const routes: Routes = [{
               children: [
                 {
                   path: '',
-                  loadComponent: () => import('@view/settings/categories/category-recipe/list/category-recipe-list.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/list/category-recipe-list.component')
                     .then(m => m.CategoryRecipeListComponent),
                 },
                 {
                   path: 'add',
-                  loadComponent: () => import('@view/settings/categories/category-recipe/add-category/add-category-recipe.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
                     .then(m => m.AddCategoryRecipeComponent)
 
                 },
                 {
                   path: 'edit/:uuid',
-                  loadComponent: () => import('@view/settings/categories/category-recipe/add-category/add-category-recipe.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
                     .then(m => m.AddCategoryRecipeComponent)
                 }
               ]
@@ -163,7 +201,7 @@ export const routes: Routes = [{
           children: [
             {
               path: '',
-              loadComponent: () => import('./view/settings/taxes/taxes-settings.component')
+              loadComponent: () => import('./features/settings/view/finance-settings/taxes/taxes-settings.component')
                 .then(m => m.TaxesSettingsComponent)
             },
           ],
@@ -174,19 +212,19 @@ export const routes: Routes = [{
 
     {
       path: 'widgets',
-      loadComponent: () => import('./view/widgets/widgets-page/widgets-page.component')
+      loadComponent: () => import('./shared/view/widgets/widgets-page/widgets-page.component')
         .then(m => m.WidgetsPageComponent)
     },
 
     {
       path: 'docs',
-      loadComponent: () => import('./view/documentation/documentation-tree.component')
+      loadComponent: () => import('./shared/view/documentation/documentation-tree.component')
         .then(m => m.DocumentationTreeComponent),
       children: [
         {
           path: '**',
 
-          loadComponent: () => import('./view/documentation/article.component')
+          loadComponent: () => import('./shared/view/documentation/article.component')
             .then(m => m.ArticleComponent),
         }
       ]
@@ -194,13 +232,13 @@ export const routes: Routes = [{
 
     {
       path: 'dev',
-      loadComponent: () => import('./view/dev/color-palette.component')
+      loadComponent: () => import('./shared/view/dev/color-palette.component')
         .then(m => m.ColorPaletteComponent),
     },
 
     {
       path: '**',
-      loadComponent: () => import('./view/ui/error-page-404.component')
+      loadComponent: () => import('./shared/view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),
     }
   ]
