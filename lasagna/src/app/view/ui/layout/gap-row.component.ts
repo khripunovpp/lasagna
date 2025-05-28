@@ -5,18 +5,20 @@ import {NgClass} from '@angular/common';
   selector: 'lg-gap-row',
   standalone: true,
   template: `
-      <div [class.gap-row__bottom]="bottom()"
-           [class.gap-row__center]="center()"
-            [class.gap-row__strict-center]="strictCenter()"
-           [class.gap-row__fit]="fit()"
-           [class.gap-row__mobile]="mobileMode()"
-           [class.gap-row__relaxed]="relaxed()"
-           [class.gap-row__top]="top()"
-            [class.gap-row__equal]="equal"
-           [ngClass]="size()"
-           class="gap-row">
-          <ng-content></ng-content>
-      </div>
+    <div [class.gap-row__bottom]="bottom()"
+         [class.gap-row__center]="center()"
+         [class.gap-row__right]="right()"
+         [class.gap-row__left]="left()"
+         [class.gap-row__strict-center]="strictCenter()"
+         [class.gap-row__fit]="fit()"
+         [class.gap-row__mobile]="mobileMode()"
+         [class.gap-row__relaxed]="relaxed()"
+         [class.gap-row__top]="top()"
+         [class.gap-row__equal]="equal"
+         [ngClass]="size()"
+         class="gap-row">
+      <ng-content></ng-content>
+    </div>
   `,
   imports: [
     NgClass
@@ -46,6 +48,14 @@ import {NgClass} from '@angular/common';
 
     .gap-row__top {
       align-items: flex-start;
+    }
+
+    .gap-row__right {
+      justify-content: flex-end;
+    }
+
+    .gap-row__left {
+      justify-content: flex-start;
     }
 
     .gap-row.small {
@@ -103,6 +113,8 @@ export class GapRowComponent {
 
   @Input() equal = false;
   center = input<boolean>(false);
+  right = input<boolean>(false);
+  left = input<boolean>(false);
   strictCenter = input<boolean>(false);
   bottom = input<boolean>(false);
   top = input<boolean>(false);

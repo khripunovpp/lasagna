@@ -1,0 +1,116 @@
+<form [formGroup]="form" style="--control-bg: #fff">
+  <lg-gap-column>
+    <lg-autocomplete #nameField
+                     [key]="'name'"
+                     [appendTo]="'body'"
+                     [placeholder]="'product.form.name.placeholder'|translate"
+                     [resource]="'products-names'"
+                     formControlName="name"></lg-autocomplete>
+
+    <lg-gap-row [right]="true">
+      <lg-input lgWidth="15%"
+                formControlName="prefix"
+                placeholder="Prefix"></lg-input>
+      <lg-input lgWidth="30%"
+                formControlName="invoice_number"
+                placeholder="Number"></lg-input>
+    </lg-gap-row>
+
+    <lg-gap-row [relaxed]="true">
+      <lg-textarea placeholder="From"
+                   formControlName="credential_from"></lg-textarea>
+      <lg-textarea placeholder="To"
+                   formControlName="credential_to"></lg-textarea>
+
+      <lg-gap-column lgWidth="30%">
+        <lg-input placeholder="Date issued"
+                  formControlName="date_issued"></lg-input>
+        <lg-input placeholder="Due date"
+                  formControlName="date_due"></lg-input>
+      </lg-gap-column>
+    </lg-gap-row>
+
+    <lg-gap-column [position]="'start'">
+      <lg-gap-column formArrayName="rows" lgExpand [size]="'medium'">
+        @for (control of rows.controls; track (control.value.amount + i + 1); let i = $index,
+          last = $last) {
+          <ng-container [formGroupName]="i">
+            <lg-controls-row [mobileMode]="true" [equal]="true">
+              <ng-container formGroupName="payload">
+                <lg-invoice-item-selector formControlName="activeTab">
+                  <lg-multiselect [resource]="'recipes'"
+                                  [appendTo]="'body'"
+                                  [placeholder]="'Find recipe'"
+                                  formControlName="recipe_id"
+                                  ngProjectAs="recipes"
+                                  [autoLoad]="true"></lg-multiselect>
+
+                  <lg-multiselect [resource]="'products'"
+                                  [appendTo]="'body'"
+                                  formControlName="product_id"
+                                  [placeholder]="'Find product'"
+                                  ngProjectAs="products"
+                                  [autoLoad]="true">
+                  </lg-multiselect>
+
+                  <lg-input ngProjectAs="freeStyle"
+                            formControlName="free_name"
+                            [placeholder]="'Just type name'"></lg-input>
+                </lg-invoice-item-selector>
+              </ng-container>
+
+              <lg-number-input #amount
+                               lgParseMath
+                               [placeholder]="'Amount'"
+                               formControlName="amount">
+                <div ngProjectAs="after">
+                  <lg-unit-switcher formControlName="unit">
+                  </lg-unit-switcher>
+                </div>
+              </lg-number-input>
+
+              <lg-number-input lgParseMath
+                               formControlName="amount"
+                               [placeholder]="'Price'">
+                <div ngProjectAs="after">
+                  <span>{{ userSettings()['currency']|currencySymbol }}</span>
+                </div>
+              </lg-number-input>
+
+              <ng-container ngProjectAs="rowActions">
+                <lg-button [style]="'danger'"
+                           [size]="'tiny'"
+                           [icon]="true"
+                           (click)="deleteGood(i)">
+                  <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
+                </lg-button>
+              </ng-container>
+            </lg-controls-row>
+            @if (!last) {
+              <hr size="2" lgExpand color="#fafafa"/>
+            }
+          </ng-container>
+        }
+      </lg-gap-column>
+
+      <lg-button (click)="addGood()"
+                 [size]="'small'"
+                 [style]="'success'">
+        {{ 'recipe.form.ingredients.add-btn'|translate }}
+      </lg-button>
+    </lg-gap-column>
+
+    <lg-gap-row [relaxed]="true">
+      <lg-textarea placeholder="Notes"
+                   formControlName="notes"
+                   [rows]="2"></lg-textarea>
+      <lg-textarea placeholder="Terms"
+                   formControlName="terms"
+                   [rows]="2"></lg-textarea>
+      <lg-gap-column lgWidth="30%">
+        Total amount {{ invoice()?.totalPrice }}
+      </lg-gap-column>
+    </lg-gap-row>
+
+  </lg-gap-column>
+</form>

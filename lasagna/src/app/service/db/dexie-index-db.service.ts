@@ -50,6 +50,7 @@ export class DexieIndexDbService extends Dexie {
       this.initIndex(Stores.TAXES),
       this.initIndex(Stores.DOCUMENTATION),
       this.initIndex(Stores.SETTINGS),
+      this.initIndex(Stores.INVOICES),
     ]).then(() => {
 
     });
@@ -185,7 +186,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async parse(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
-    const entries = Object.entries(obj);
+    const entries = Object.entries(obj ?? {});
     for (const [key, value] of entries) {
       if (Array.isArray(value)) {
         for (const subItem of obj[key]) {
@@ -214,7 +215,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   apply(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
-    const entries = Object.entries(obj);
+    const entries = Object.entries(obj ?? {});
     for (const [key, value] of entries) {
       if (Array.isArray(value)) {
         for (const subItem of obj[key]) {

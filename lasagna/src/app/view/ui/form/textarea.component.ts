@@ -86,7 +86,7 @@ export class TextareaComponent
   }
 
   changeValue(value: string): void {
-    this.value = value;
+    this.value = String(value || '').trim();
     this.onChange(this.value);
   }
 

@@ -196,7 +196,11 @@ export class HeaderComponent {
       {
         label: _('products.menu-label'),
         link: '/products',
-      }
+      },
+      {
+        label: 'Invoices',
+        link: '/invoices',
+      },
     ]);
   }
 

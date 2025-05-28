@@ -30,32 +30,33 @@ export interface autocompleteItem {
   selector: 'lg-autocomplete',
   standalone: true,
   template: `
-      <div class="autocomplete">
-          <ng-select (blur)="onBlur()"
-                     (change)="onChangeSelect($event)"
-                     (search)="onSearch($event)"
-                     [addTag]="true"
-                     [bindValue]="key()"
-                     [compareWith]="compareWith"
-                     [editableSearchTerm]="true"
-                     [items]="loadedList()"
-                     [multiple]="multi()"
-                     [ngModel]="value"
-                     [placeholder]="placeholder"
-                     [searchFn]="searchFn"
-                     bindLabel="name"
-                     notFoundText="Start typing to search">
-              <ng-template let-item="item" ng-label-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
-              </ng-template>
-              <ng-template let-item="item" ng-option-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
-              </ng-template>
-              <ng-template let-searchTerm="searchTerm" ng-tag-tmp>
-                  {{ searchTerm }}
-              </ng-template>
-          </ng-select>
-      </div>
+    <div class="autocomplete">
+      <ng-select (blur)="onBlur()"
+                 (change)="onChangeSelect($event)"
+                 (search)="onSearch($event)"
+                 [addTag]="true"
+                 [bindValue]="key()"
+                 [appendTo]="appendTo()"
+                 [compareWith]="compareWith"
+                 [editableSearchTerm]="true"
+                 [items]="loadedList()"
+                 [multiple]="multi()"
+                 [ngModel]="value"
+                 [placeholder]="placeholder"
+                 [searchFn]="searchFn"
+                 bindLabel="name"
+                 notFoundText="Start typing to search">
+        <ng-template let-item="item" ng-label-tmp>
+          {{ item?.name ?? item?.value ?? item }}
+        </ng-template>
+        <ng-template let-item="item" ng-option-tmp>
+          {{ item?.name ?? item?.value ?? item }}
+        </ng-template>
+        <ng-template let-searchTerm="searchTerm" ng-tag-tmp>
+          {{ searchTerm }}
+        </ng-template>
+      </ng-select>
+    </div>
   `,
   imports: [
     NgSelectComponent,
@@ -146,6 +147,7 @@ export class AutocompleteComponent
   noLoad = input<boolean>(false);
   resource = input<string>('');
   key = input<string>('');
+  appendTo = input<string>('');
   strict = input<boolean>(false);
   multi = input<boolean>(false);
   loadedList = signal([]);

@@ -5,6 +5,7 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
   standalone: true,
   template: `
       <div class="controls-row"
+            [class.controls-row__equal]="equal()"
             [class.controls-row__mobile]="mobileMode()">
           <div class="controls-row__controls">
               <ng-content></ng-content>
@@ -50,6 +51,11 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
         flex: 1;
       }
 
+      .controls-row__equal .controls-row__controls > *,
+      .controls-row__equal .controls-row__actions > * {
+        flex: 1;
+      }
+
 
       @media (max-width: 600px) {
 
@@ -75,4 +81,5 @@ export class ControlsRowComponent {
   constructor() {
   }
   mobileMode = input(false);
+  equal = input(false);
 }

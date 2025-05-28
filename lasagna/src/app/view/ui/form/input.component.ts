@@ -138,7 +138,7 @@ export class InputComponent
   }
 
   private _change(value: string) {
-    this.value = value;
+    this.value = String(value || '').trim();
     this.onChange(this.value);
   }
 }

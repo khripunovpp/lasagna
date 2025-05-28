@@ -102,6 +102,15 @@ export class Recipe {
   }
 
   static fromRaw(dto: any) {
+    if (typeof dto === 'string') {
+      return new Recipe({
+        name: dto,
+        description: '',
+        ingredients: [],
+        outcome_amount: 0,
+        outcome_unit: 'gram',
+      });
+    }
     return new Recipe({
       name: dto?.name || '',
       description: dto?.description || '',

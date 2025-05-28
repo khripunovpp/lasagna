@@ -11,10 +11,10 @@ export class Product {
       name: string
       amount: number | string
       price: number
-      unit: string
-      source: string | undefined
-      category_id: string
-      tags: string[] | undefined
+      unit?: string
+      source?: string | undefined
+      category_id?: string
+      tags?: string[] | undefined
       uuid?: string | undefined
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
@@ -68,6 +68,13 @@ export class Product {
   }
 
   static fromRaw(dto: any) {
+    if (typeof dto === 'string') {
+      return new Product({
+        name: dto,
+        amount: 0,
+        price: 0,
+      });
+    }
     return new Product({
       name: dto?.name || '',
       amount: Number(dto?.amount) || 0,

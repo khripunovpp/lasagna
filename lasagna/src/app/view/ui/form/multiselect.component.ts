@@ -23,23 +23,24 @@ export interface MultiselectItem {
   selector: 'lg-multiselect',
   standalone: true,
   template: `
-      <div class="multiselect">
-          <ng-select (change)="onChangeSelect($event)"
-                     (ngModelChange)="onChangeInput($event)"
-                     [compareWith]="compareWith"
-                     [items]="loadedList()"
-                     [multiple]="multi()"
-                     [ngModel]="value"
-                     [placeholder]="placeholder"
-                     [searchFn]="searchFn">
-              <ng-template let-item="item" ng-label-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
-              </ng-template>
-              <ng-template let-item="item" ng-option-tmp>
-                  {{ item?.name ?? item?.value ?? item }}
-              </ng-template>
-          </ng-select>
-      </div>
+    <div class="multiselect">
+      <ng-select (change)="onChangeSelect($event)"
+                 (ngModelChange)="onChangeInput($event)"
+                 [compareWith]="compareWith"
+                 [items]="loadedList()"
+                 [appendTo]="appendTo()"
+                 [multiple]="multi()"
+                 [ngModel]="value"
+                 [placeholder]="placeholder"
+                 [searchFn]="searchFn">
+        <ng-template let-item="item" ng-label-tmp>
+          {{ item?.name ?? item?.value ?? item }}
+        </ng-template>
+        <ng-template let-item="item" ng-option-tmp>
+          {{ item?.name ?? item?.value ?? item }}
+        </ng-template>
+      </ng-select>
+    </div>
   `,
   imports: [
     NgSelectComponent,
@@ -57,6 +58,12 @@ export interface MultiselectItem {
 
       .multiselect {
         flex: 1;
+
+        .ng-select.ng-select-focused .ng-select-container {
+          outline: none;
+          box-shadow: var(--focus-shadow);
+          border-radius: 12px;
+        }
 
         .ng-select.ng-select-single .ng-select-container {
           height: 51px;
@@ -78,7 +85,8 @@ export interface MultiselectItem {
           }
 
           .ng-value {
-            white-space: normal !important;
+            //white-space: normal !important;
+            //width: calc(100% - 20px);
           }
         }
 
@@ -115,6 +123,7 @@ export class MultiselectComponent
 
   @Input() placeholder: string = '';
   resource = input<string>('');
+  appendTo = input<string>('');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);
   loadedList = signal([]);

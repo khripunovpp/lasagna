@@ -1,10 +1,9 @@
 import {Routes} from '@angular/router';
-
-import {recipeEditResolver} from './service/resolvers/recipe-edit.resolver';
-import {recipeCalculationResolver,} from './service/resolvers/recipe-calculation.resolver';
-import {recipeCalculationTemplateResolver} from './service/resolvers/recipe-tax-template.resolver';
-import {recipeDraftResolver} from './service/resolvers/recipe-draft.resolver';
-import {productDraftResolver} from './service/resolvers/product-draft.resolver';
+import {recipeEditResolver} from '@service/resolvers/recipe-edit.resolver';
+import {recipeCalculationResolver,} from '@service/resolvers/recipe-calculation.resolver';
+import {recipeCalculationTemplateResolver} from '@service/resolvers/recipe-tax-template.resolver';
+import {recipeDraftResolver} from '@service/resolvers/recipe-draft.resolver';
+import {productDraftResolver} from '@service/resolvers/product-draft.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -99,6 +98,31 @@ export const routes: Routes = [{
           },
           data: {
             draftRoute: true,
+          }
+        },
+      ]
+    },
+
+    {
+      path: 'invoices',
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./view/invoices/list/invoices-list.component')
+            .then(m => m.InvoicesListComponent),
+        },
+        {
+          path: 'add',
+          loadComponent: () => import('./view/invoices/add-invoice/add-invoice.component')
+            .then(m => m.AddInvoiceComponent),
+        },
+        {
+          path: 'edit/:uuid',
+          loadComponent: () => import('./view/invoices/add-invoice/add-invoice.component')
+            .then(m => m.AddInvoiceComponent),
+          resolve: {},
+          data: {
+            editRoute: true,
           }
         },
       ]
