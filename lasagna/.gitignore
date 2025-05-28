@@ -46,3 +46,4 @@ Thumbs.db
 
 /public/i18n/*.po
 /public/i18n/*.mo
+.DS_Store

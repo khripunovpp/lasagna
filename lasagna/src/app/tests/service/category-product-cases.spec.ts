@@ -1,10 +1,10 @@
 import {TestBed} from '@angular/core/testing';
-import {CategoryProductsRepository} from '../../service/repositories';
-import {DexieIndexDbService} from '../../service/db/dexie-index-db.service';
-import {CategoryProduct} from '../../service/models/CategoryProduct';
+import {CategoryProductsRepository} from '../../shared/service/repositories';
+import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.service';
+import {CategoryProduct} from '../../features/settings/service/models/CategoryProduct';
 import {TranslateModule} from '@ngx-translate/core';
-import {DB_NAME} from '../../service/tokens/db-name.token';
-import {Stores} from '../../service/db/const/stores';
+import {DB_NAME} from '../../shared/service/tokens/db-name.token';
+import {Stores} from '../../shared/service/db/const/stores';
 
 describe('Categories products cases', () => {
   let repository: CategoryProductsRepository;
