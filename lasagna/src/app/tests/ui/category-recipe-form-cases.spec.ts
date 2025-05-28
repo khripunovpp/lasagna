@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ButtonComponent} from '../../view/ui/layout/button.component';
-import {InputComponent} from '../../view/ui/form/input.component';
-import {ControlComponent} from '../../view/ui/form/control.component';
-import {GapRowComponent} from '../../view/ui/layout/gap-row.component';
-import {ExpandDirective} from '../../view/directives/expand.directive';
-import {NoWrapDirective} from '../../view/directives/no-wrap.directive';
+import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
+import {InputComponent} from '../../shared/view/ui/form/input.component';
+import {ControlComponent} from '../../shared/view/ui/form/control.component';
+import {GapRowComponent} from '../../shared/view/ui/layout/gap-row.component';
+import {ExpandDirective} from '../../shared/view/directives/expand.directive';
+import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';
 import {ComponentRef} from '@angular/core';
 import {defaultImports} from '../default-imports';
 import {defaultProviders} from '../default-providers';
-import {NotificationsService} from '../../service/services';
+import {NotificationsService} from '../../shared/service/services';
 import {
   AddCategoryRecipeFormComponent
-} from '../../view/settings/categories/category-recipe/add-category/add-category-recipe-form.component';
-import {CategoryRecipesRepository} from '../../service/repositories';
-import {CategoryRecipe} from '../../service/models/CategoryRecipe';
+} from '../../shared/view/settings/categories/category-recipe/add-category/add-category-recipe-form.component';
+import {CategoryRecipesRepository} from '../../shared/service/repositories';
+import {CategoryRecipe} from '../../features/settings/service/models/CategoryRecipe';
 
 describe('AddCategoryRecipeFormComponent', () => {
   let component: AddCategoryRecipeFormComponent;

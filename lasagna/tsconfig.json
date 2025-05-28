@@ -18,8 +18,8 @@
     "target": "esnext",
     "module": "esnext",
     "paths": {
-      "@view/*": [
-        "./src/app/view/*"
+      "@invoices/*": [
+        "./src/app/features/invoices/*"
       ],
       "@service/*": [
         "./src/app/service/*"

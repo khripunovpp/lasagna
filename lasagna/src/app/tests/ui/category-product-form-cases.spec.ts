@@ -2,19 +2,19 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   AddCategoryFormComponent
-} from '../../view/settings/categories/category-product/add-category/add-category-form.component';
-import {CategoryProductsRepository} from '../../service/repositories';
-import {ButtonComponent} from '../../view/ui/layout/button.component';
-import {InputComponent} from '../../view/ui/form/input.component';
-import {ControlComponent} from '../../view/ui/form/control.component';
-import {GapRowComponent} from '../../view/ui/layout/gap-row.component';
-import {ExpandDirective} from '../../view/directives/expand.directive';
-import {NoWrapDirective} from '../../view/directives/no-wrap.directive';
+} from '../../shared/view/settings/categories/category-product/add-category/add-category-form.component';
+import {CategoryProductsRepository} from '../../shared/service/repositories';
+import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
+import {InputComponent} from '../../shared/view/ui/form/input.component';
+import {ControlComponent} from '../../shared/view/ui/form/control.component';
+import {GapRowComponent} from '../../shared/view/ui/layout/gap-row.component';
+import {ExpandDirective} from '../../shared/view/directives/expand.directive';
+import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';
 import {ComponentRef} from '@angular/core';
 import {defaultImports} from '../default-imports';
 import {defaultProviders} from '../default-providers';
-import {CategoryProduct} from '../../service/models/CategoryProduct';
-import {NotificationsService} from '../../service/services';
+import {CategoryProduct} from '../../features/settings/service/models/CategoryProduct';
+import {NotificationsService} from '../../shared/service/services';
 
 describe('AddCategoryFormComponent', () => {
   let component: AddCategoryFormComponent;
