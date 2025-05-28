@@ -1,0 +1,137 @@
+<form [formGroup]="form" style="--control-bg: #fff">
+  <lg-gap-column>
+    <lg-input #nameField
+              [placeholder]="'Just free style optional name. It\'s visible only for you'"
+              formControlName="name"></lg-input>
+
+    <lg-gap-row [right]="true">
+      <lg-input lgWidth="15%"
+                formControlName="prefix"
+                placeholder="Prefix"></lg-input>
+      <lg-input lgWidth="30%"
+                formControlName="invoice_number"
+                placeholder="Number"></lg-input>
+    </lg-gap-row>
+
+    <lg-gap-row [relaxed]="true">
+      <lg-textarea placeholder="From"
+                   formControlName="credential_from"></lg-textarea>
+      <lg-textarea placeholder="To"
+                   formControlName="credential_to"></lg-textarea>
+
+      <lg-gap-column lgWidth="30%">
+        <lg-date-picker formControlName="date_issued"></lg-date-picker>
+        <lg-date-picker formControlName="date_due"></lg-date-picker>
+      </lg-gap-column>
+    </lg-gap-row>
+
+    <hr size="2" lgExpand color="#fafafa"/>
+
+    <lg-gap-column [position]="'start'" [size]="'medium'">
+      <lg-gap-row [mobileMode]="true"
+                  [size]="'medium'"
+                  [styles]="{'--lg-gap-row-pad-right': '36px'}"
+                  [equal]="true"
+                  lgExpand>
+        <div lgWidth="40%">Item</div>
+        <div lgWidth="30%">Amount</div>
+        <div lgWidth="15%">Price per unit</div>
+        <div lgWidth="15%">Total</div>
+      </lg-gap-row>
+
+
+      <lg-gap-column formArrayName="rows" lgExpand [size]="'medium'">
+        @for (control of rows.controls;
+          track (control.value.amount + i + 1);
+          let i = $index, last = $last) {
+          <ng-container [formGroupName]="i">
+<!--            <pre>{{invoiceBuilderService.invoice()?.rows?.[i]|json}}</pre>-->
+            @let item = invoiceBuilderService.invoice()?.rows?.[i];
+            <lg-controls-row [mobileMode]="true" [equal]="true">
+              <lg-invoice-item-selector lgWidth="40%"
+                                        formControlName="activeTab">
+                <lg-multiselect [resource]="'recipes'"
+                                [appendTo]="'body'"
+                                [placeholder]="'Find recipe'"
+                                formControlName="recipe_id"
+                                ngProjectAs="recipes"
+                                [autoLoad]="true"></lg-multiselect>
+
+                <lg-multiselect [resource]="'products'"
+                                [appendTo]="'body'"
+                                formControlName="product_id"
+                                [placeholder]="'Find product'"
+                                ngProjectAs="products"
+                                [autoLoad]="true">
+                </lg-multiselect>
+
+                <lg-input ngProjectAs="freeStyle"
+                          formControlName="free_name"
+                          [placeholder]="'Just type name'"></lg-input>
+              </lg-invoice-item-selector>
+
+              <lg-number-input #amount
+                               lgParseMath
+                               lgWidth="30%"
+                               [placeholder]="'0'"
+                               formControlName="amount">
+                <div ngProjectAs="after">
+                  <lg-unit-switcher formControlName="unit">
+                  </lg-unit-switcher>
+                </div>
+              </lg-number-input>
+
+              <lg-readonly-control [placeholder]="'0'"
+                                   [value]="item?.pricePerUnit| userCurrency: '1.2-4'"
+                                   lgWidth="15%">
+              </lg-readonly-control>
+
+              <lg-readonly-control [placeholder]="'0'"
+                                   [value]="item?.totalPrice| userCurrency: '1.2-4'"
+                                   lgWidth="15%">
+              </lg-readonly-control>
+
+              <ng-container ngProjectAs="rowActions">
+                <lg-button [style]="'danger'"
+                           [size]="'tiny'"
+                           [icon]="true"
+                           (click)="deleteGood(i)">
+                  <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
+                </lg-button>
+              </ng-container>
+            </lg-controls-row>
+
+            @if (!last) {
+              <hr size="2" lgExpand color="#fafafa"/>
+            }
+          </ng-container>
+        }
+      </lg-gap-column>
+
+      <lg-button (click)="addGood()"
+                 [size]="'small'"
+                 [style]="'success'">
+        Add item
+        <mat-icon aria-hidden="false"
+                  [inline]="true"
+                  fontIcon="add"></mat-icon>
+      </lg-button>
+    </lg-gap-column>
+
+    <hr size="2" lgExpand color="#fafafa"/>
+
+    <lg-gap-row [relaxed]="true">
+      <lg-textarea placeholder="Notes"
+                   formControlName="notes"
+                   [rows]="2"></lg-textarea>
+
+      <lg-textarea placeholder="Terms"
+                   formControlName="terms"
+                   [rows]="2"></lg-textarea>
+
+      <lg-gap-column lgWidth="30%">
+        Total amount {{ invoiceBuilderService.invoice()?.total | userCurrency: '1.2-4' }}
+      </lg-gap-column>
+    </lg-gap-row>
+  </lg-gap-column>
+</form>

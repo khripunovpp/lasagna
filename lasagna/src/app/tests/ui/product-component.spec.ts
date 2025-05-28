@@ -1,10 +1,10 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {AddProductComponent} from '../../view/product/add-product/add-product.component';
-import {ProductsRepository} from '../../service/repositories';
+import {AddProductComponent} from '../../shared/view/product/add-product/add-product.component';
+import {ProductsRepository} from '../../shared/service/repositories';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationsService} from '../../service/services';
+import {NotificationsService} from '../../shared/service/services';
 import {of} from 'rxjs';
-import {Product} from '../../service/models/Product';
+import {Product} from '../../shared/service/models/Product';
 import {defaultProviders} from '../default-providers';
 import {defaultImports} from '../default-imports';
 

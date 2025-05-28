@@ -1,0 +1,181 @@
+import {AfterViewInit, Component, effect, inject, OnInit, viewChild, ViewEncapsulation} from '@angular/core';
+import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
+import {NotificationsService} from '../../../../shared/service/services/notifications.service';
+import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
+import {debounceTime} from 'rxjs';
+import {SETTINGS} from '../../../../shared/service/tokens/settings.token';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {ControlsRowComponent} from '../../../../shared/view/ui/form/controls-row.component';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
+import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
+import {MatIcon} from '@angular/material/icon';
+import {InputComponent} from '../../../../shared/view/ui/form/input.component';
+import {InvoiceItemSelectorComponent} from './invoice-item-selector.component';
+import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
+import {GapRowComponent} from "../../../../shared/view/ui/layout/gap-row.component";
+import {WidthDirective} from "../../../../shared/view/directives/width.directive";
+import {TextareaComponent} from "../../../../shared/view/ui/form/textarea.component";
+import {ReadonlyControlComponent} from '../../../../shared/view/ui/form/readonly-control.component';
+import {DatePickerComponent} from '../../../../shared/view/ui/form/date-picker.component';
+import {Invoice} from '../../service/Inovice/Invoice';
+import {InvoiceBuilderService} from '../invoice-builder.service';
+import {InvoiceItemBase} from '../../service/InvoiceItem/InvoiceItemBase.abstract';
+import {
+  fromFormToDTO,
+  fromInvoiceToFormValue,
+  invoiceFormShape,
+  makeInvoiceItemFormGroup
+} from '../../helpers/invoices-forms.helper';
+import {JsonPipe} from '@angular/common';
+import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+
+@Component({
+  selector: 'lg-add-invoice-form',
+  standalone: true,
+  templateUrl: './add-invoice-form.component.html',
+  imports: [
+    ReactiveFormsModule,
+    GapColumnComponent,
+    ButtonComponent,
+    ControlsRowComponent,
+    ExpandDirective,
+    MatIcon,
+    NumberInputComponent,
+    ParseMathDirective,
+    UnitSwitcherComponent,
+    InputComponent,
+    InvoiceItemSelectorComponent,
+    MultiselectComponent,
+    GapRowComponent,
+    WidthDirective,
+    TextareaComponent,
+    ReadonlyControlComponent,
+    DatePickerComponent,
+    JsonPipe,
+    UserCurrencyPipe,
+
+  ],
+  styles: [
+    `
+    `
+  ],
+  encapsulation: ViewEncapsulation.None,
+})
+export class AddInvoiceFormComponent
+  implements OnInit,
+    AfterViewInit {
+  constructor(
+    public selectResourcesService: SelectResourcesService,
+    public invoiceBuilderService: InvoiceBuilderService,
+    private _notificationsService: NotificationsService,
+  ) {
+  }
+
+  form = new FormGroup(invoiceFormShape);
+  userSettings = inject(SETTINGS);
+  nameField = viewChild<AutocompleteComponent>('nameField');
+  // private invoiceEffect = effect(() => {
+  //   console.log('Invoice effect triggered', this.invoiceBuilderService.invoice());
+  //   this.fillForm(this.invoiceBuilderService.invoice()!);
+  // });
+
+  get rows() {
+    return this.form.get('rows') as FormArray;
+  }
+
+  private get _defFormValue() {
+    return {
+      name: null,
+      rows: [],
+    };
+  }
+
+  private get _formValid() {
+    return this.form.valid;
+  }
+
+  ngOnInit() {
+    this.fillForm(this.invoiceBuilderService.invoice());
+
+    this.form.valueChanges.pipe(
+      debounceTime(100),
+    ).subscribe(values => {
+      if (!this.form.dirty) {
+        return
+      }
+      this.invoiceBuilderService.patchInvoice(fromFormToDTO(this.form.getRawValue()) as any);
+    });
+  }
+
+  resetForm(
+    value?: Invoice
+  ) {
+    this.form.reset(value ? fromInvoiceToFormValue(value) : this._defFormValue);
+    this.rows.clear();
+    this.form.markAsPristine();
+  }
+
+  validateForm() {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      return false;
+    }
+    return true
+  }
+
+  ngAfterViewInit() {
+    this.selectResourcesService.load().then(resources => {
+    });
+
+    if (!this.invoiceBuilderService.invoice()?.uuid) {
+      this.nameField()!.focus();
+    }
+
+    console.log('ngAfterViewInit',this.invoiceBuilderService.invoice());
+  }
+
+  addGood() {
+    this.rows.push(this._getInvoiceItemFromGroup());
+    this.invoiceBuilderService.addRow();
+    this.form.markAsDirty();
+  }
+
+  deleteGood(index: number) {
+    this.rows.removeAt(index);
+    this.invoiceBuilderService.removeRow(index);
+    this.form.markAsDirty();
+  }
+
+  fillForm(
+    invoice?: Invoice
+  ) {
+    this.form.reset({});
+    this.rows.clear();
+
+    if (invoice) {
+      this.form.reset(fromInvoiceToFormValue(invoice));
+
+      if (invoice.rows.length) {
+        invoice.rows.forEach((good: InvoiceItemBase) => {
+          this.rows.push(this._getInvoiceItemFromGroup(good));
+        })
+      } else {
+        this.rows.push(this._getInvoiceItemFromGroup());
+      }
+    }
+
+    this.form.updateValueAndValidity();
+    this.form.markAsPristine();
+  }
+
+
+  private _getInvoiceItemFromGroup(
+    item?: Invoice['rows'][number]
+  ) {
+    return makeInvoiceItemFormGroup(item);
+  }
+}
