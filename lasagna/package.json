@@ -13,11 +13,9 @@
     "po:import:ru": "i18next-conv -l ru -s public/i18n/ru.json -t public/i18n/ru.po",
     "po:import:pt": "i18next-conv -l pt -s public/i18n/pt.json -t public/i18n/pt.po",
     "po:import:en": "i18next-conv -l en -s public/i18n/en.json -t public/i18n/en.po",
-
     "po:export:ru": "i18next-conv -l ru -s public/i18n/ru.po -t public/i18n/ru.json",
     "po:export:pt": "i18next-conv -l pt -s public/i18n/pt.po -t public/i18n/pt.json",
     "po:export:en": "i18next-conv -l en -s public/i18n/en.po -t public/i18n/en.json",
-
     "po:import": "npm run po:import:ru && npm run po:import:pt && npm run po:import:en",
     "po:export": "npm run po:export:ru && npm run po:export:pt && npm run po:export:en",
     "extract": "ngx-translate-extract --input ./src --output ./public/i18n/{en,pt,ru}.json --format json --sort"
@@ -53,6 +51,8 @@
     "hammerjs": "2.0.8",
     "hotkeys-js": "3.13.9",
     "i18next-conv": "^15.1.1",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "mathjs": "14.4.0",
     "ng2-charts": "8.0.0",
     "rxjs": "7.8.0",
