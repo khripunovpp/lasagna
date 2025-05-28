@@ -5,3 +5,4 @@ api-chef/.tmp
 api-chef/dist
 api-chef/.env
 api-chef/.strapi-updater.json
+.DS_Store

@@ -1,5 +1,0 @@
-export * from "./category-products-repository.service"
-export * from "./category-recipes-repository.service"
-export * from "./products.repository"
-export * from "./recipes.repository"
-export * from "./tags-repository.service"

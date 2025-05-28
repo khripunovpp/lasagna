@@ -1,4 +1,6 @@
+@use '@angular/material' as mat;
 @import "@ng-select/ng-select/themes/default.theme.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 :root {
   --text-font: 'Rubik', "Helvetica Neue", system-ui, Arial, sans-serif;
@@ -22,7 +24,7 @@
   --focus-shadow: 0 0 0 2px var(--active-color);
   --text-color: #473C33;
 
-  --container-width: 920px;
+  --container-width: 1180px;
 }
 
 /* fallback */
@@ -63,6 +65,10 @@
   font-weight: bold;
   font-style: normal;
   font-display: swap;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {

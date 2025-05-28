@@ -6,52 +6,56 @@ import {
   inject,
   isDevMode,
   provideAppInitializer,
-  provideZoneChangeDetection
+  provideZonelessChangeDetection
 } from '@angular/core';
 import {provideRouter, Router, withInMemoryScrolling} from '@angular/router';
 import {routes} from './app.routes';
-import {HammerModule, provideClientHydration, withEventReplay} from '@angular/platform-browser';
+import {HammerModule} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
 import {provideServiceWorker} from '@angular/service-worker';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import 'hammerjs';
-import {DocsService} from '@service/services/docs.service';
+import {DocsService} from './shared/service/services';
 import * as Sentry from '@sentry/angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from '@service/repositories';
-import {DB_NAME} from '@service/tokens/db-name.token';
+import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
+import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
-import {SettingsService} from '@view/settings/settings.service';
-import {USER_LANGUAGE} from '@service/tokens/user-language.token';
-import {UserService} from '@service/services/user.service';
-import {SETTINGS} from '@service/tokens/settings.token';
-import {CATEGORIZED_RECIPES_LIST} from '@service/tokens/categorized-recipes-list.token';
+import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
+import {UserService} from './features/settings/service/services/user.service';
+import {SETTINGS} from './features/settings/service/providers/settings.token';
+import {CATEGORIZED_RECIPES_LIST} from './shared/service/tokens/categorized-recipes-list.token';
 import {from, map, shareReplay, switchMap} from 'rxjs';
-import {Recipe} from '@service/models/Recipe';
-import {RecipeDTO} from '@service/db/shemes/Recipe.scheme';
-import {GroupSortService} from '@service/services/grouping-sorting.service';
+import {Recipe} from './shared/service/models/Recipe';
+import {RecipeDTO} from './shared/service/db/shemes/Recipe.scheme';
+import {GroupSortService} from './shared/service/services/grouping-sorting.service';
 import {
   CategoryRecipeSortStrategy,
   RecipeAlphabeticalSortStrategy,
   RecipeCreatedAtMonthSortStrategy
-} from '@service/groupings/recipes.grouping';
-import {injectQueryParams} from '@helpers/route.helpers';
+} from './shared/service/groupings/recipes.grouping';
+import {injectQueryParams} from './shared/helpers';
+import {logoBase64} from './shared/view/const/logoBase64';
+import {generateRandomInvoicePrefix} from './shared/helpers/pdf-generators/prefix-generator';
+import {LoggerService} from './features/logger/logger.service';
+import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import {SettingsService} from './features/settings/service/services/settings.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(
       routes,
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled', // enable position restoration
       })
     ),
-    provideClientHydration(withEventReplay()),
+
     provideHotToastConfig(),
     provideHttpClient(),
     provideAnimationsAsync(),
@@ -73,6 +77,14 @@ export const appConfig: ApplicationConfig = {
         docsService.init(),
         settingsService.loadSettings().then((settings) => {
           settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
+          if (localStorage.getItem('logoBase64') === null) {
+            localStorage.setItem('logoBase64', logoBase64);
+          }
+
+          if (!settingsService.getInvoicePrefix()) {
+            settingsService.setInvoicePrefix(generateRandomInvoicePrefix());
+          }
+
         }),
       ])
     }),
@@ -144,14 +156,14 @@ export const appConfig: ApplicationConfig = {
         const groupSortService = inject(GroupSortService);
         const recipesRepository = inject(RecipesRepository);
         const groupingParam = injectQueryParams('groupBy');
-        const sortDirection = injectQueryParams<string|null>('sortDirection');
+        const sortDirection = injectQueryParams<string | null>('sortDirection');
         const sortField = injectQueryParams('sortField');
         const categoryRepository = inject(CategoryRecipesRepository);
         const recipes = from(recipesRepository.loadRecipes()).pipe(
           switchMap(() => recipesRepository.recipes$),
           map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
         );
-        const groupingMap:Record<string, any> = {
+        const groupingMap: Record<string, any> = {
           'createdAt': RecipeCreatedAtMonthSortStrategy,
           'category': CategoryRecipeSortStrategy,
           'alphabetical': RecipeAlphabeticalSortStrategy,
@@ -172,6 +184,30 @@ export const appConfig: ApplicationConfig = {
           shareReplay(1),
         );
       },
-    }
+    },
+
+    LoggerService,
+
+    {
+      provide: DISABLE_LOGGER,
+      useFactory: () => {
+        return window.location.search.includes('dl')
+      },
+      deps: []
+    },
+    provideZonelessChangeDetection(),
+    {
+      provide: MAT_DATE_LOCALE,
+      useFactory: () => {
+        const userLanguage = inject(USER_LANGUAGE);
+        const langToLocaleMap: Record<string, string> = {
+          'en': 'en-US',
+          'ru': 'ru-RU',
+          'pt': 'pt-PT',
+        }
+        return langToLocaleMap[userLanguage()] || 'en-US';
+      }
+    },
+    provideNativeDateAdapter(),
   ]
 };
