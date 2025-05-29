@@ -6,6 +6,7 @@ import {PwaInstallComponent} from '@view/ui/pwa-install.component';
 import {GlobalSearchComponent} from '@view/ui/global-search.component';
 import {LastBackupInformerComponent} from '@view/ui/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {FontTesterComponent} from '@view/ui/font-tester.component';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import {TranslateModule} from '@ngx-translate/core';
     GlobalSearchComponent,
     LastBackupInformerComponent,
     TranslateModule,
+    FontTesterComponent,
 
   ],
   templateUrl: './app.component.html',

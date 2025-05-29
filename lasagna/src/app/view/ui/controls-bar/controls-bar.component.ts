@@ -69,6 +69,8 @@ export class ControlsBarComponent
   setHeight() {
     const height = this.elementRef()?.nativeElement?.offsetHeight;
     const shift = parseInt(this.bottomPosition) + (height || 0);
-    this.renderer.setAttribute(document.body, 'style', `--controls-bar-space:${shift || 0}px`);
+
+    const copyStyleAttribute = document.body.getAttribute('style') || '';
+    this.renderer.setAttribute(document.body, 'style', `--controls-bar-space:${shift || 0}px; ${copyStyleAttribute}`);
   }
 }

@@ -11,6 +11,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ProductsRepository, RecipesRepository} from '@service/repositories';
 import {AsyncPipe} from '@angular/common';
 import {ButtonComponent} from '@view/ui/layout/button.component';
+import {FontTesterComponent} from '@view/ui/font-tester.component';
 
 
 @Component({
@@ -28,7 +29,8 @@ import {ButtonComponent} from '@view/ui/layout/button.component';
     GapRowComponent,
     TranslatePipe,
     AsyncPipe,
-    ButtonComponent
+    ButtonComponent,
+    FontTesterComponent
   ]
 })
 export class ApplicationComponent {
