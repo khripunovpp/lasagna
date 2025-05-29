@@ -1,10 +1,11 @@
 function createUpdateButton() {
   const button = document.createElement('button');
   button.innerText = 'New version available! Click to update.';
-  button.style.backgroundColor = '#007bff';
-  button.style.color = 'white';
+  button.style.backgroundColor = 'var(--active-color)';
+  button.style.color = 'var(--text-color)';
   button.style.border = 'none';
   button.style.padding = '10px 20px';
+  button.style.paddingBottom = 'env(safe-area-inset-bottom)';
   button.style.cursor = 'pointer';
   button.style.width = '100%';
   button.addEventListener('click', () => {
@@ -68,7 +69,6 @@ function createUpdateBanner() {
   banner.style.display = 'none';
   banner.style.position = 'fixed';
   banner.style.zIndex = '8';
-  banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
   banner.style.bottom = '0';
   banner.style.left = '0';
   banner.style.width = '100%';
