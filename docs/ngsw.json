@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1748534309702,
+  "timestamp": 1748543599844,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -97,7 +97,7 @@
         "https://khripunovpp.github.io/lasagna/manifest.webmanifest",
         "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js",
         "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js",
-        "https://khripunovpp.github.io/lasagna/styles-IJJ34RYB.css"
+        "https://khripunovpp.github.io/lasagna/styles-HT4UGG2R.css"
       ],
       "patterns": []
     },
@@ -202,7 +202,7 @@
     "https://khripunovpp.github.io/lasagna/i18n/ru.mo": "21237d126bac9a77aa87c3c50b803e19a4b15add",
     "https://khripunovpp.github.io/lasagna/i18n/ru.po": "22637426af481fd0ef6702fe2d724290e22a32b1",
     "https://khripunovpp.github.io/lasagna/img/egg.svg": "4d9a85d4b3f9001fa1563ba67e928f3724a6e083",
-    "https://khripunovpp.github.io/lasagna/index.html": "629b64ad799ca508f66a0f7f84aaa6da595b51ac",
+    "https://khripunovpp.github.io/lasagna/index.html": "f2d89cc2d552102615f62615257f916e7025cb0a",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
     "https://khripunovpp.github.io/lasagna/main-QWELK2EC.js": "6c84b75c22566f8c16ec6c5c07a6dfbc6f3e3f0b",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8cd1c28d280a08d7ff10306717f454a84204da42",
@@ -211,7 +211,7 @@
     "https://khripunovpp.github.io/lasagna/media/material-icons-CN2J7AYH.woff2": "aaae93b146d97737fabe87a6bc741113e6899ad3",
     "https://khripunovpp.github.io/lasagna/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
     "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js": "49328e475b4f82877e9fb03249dabb8c1bfe5dbf",
-    "https://khripunovpp.github.io/lasagna/styles-IJJ34RYB.css": "c3946600509441fb6ea062fe4cf9316adebcc440"
+    "https://khripunovpp.github.io/lasagna/styles-HT4UGG2R.css": "8cf97c57938a98887d2a91ec9c88d64f78e4157d"
   },
   "navigationUrls": [
     {
