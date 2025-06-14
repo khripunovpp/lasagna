@@ -160,23 +160,27 @@ export class InvoiceBuilderService {
     return removedItem;
   }
 
-  /**
-   * Устанавливает полезную нагрузку (payload) для позиции в счете-фактуре по индексу.
-   * @param index Индекс позиции в счете-фактуре.
-   * @param payload Полезная нагрузка, которую нужно установить.
-   */
-  setPayload(
+  setProductPayload(
     index: number,
-    payload: Product | Recipe
-  ): Invoice | undefined {
-    debugger
-    if (!this._invoice()) return undefined;
-    const newInvoice = this._invoice()!.clone();
-    const targetItem = newInvoice.rows[index];
-    if (!targetItem) return undefined;
-    targetItem.setPayload(payload);
-    this._invoice.set(newInvoice);
-    return this._invoice();
+    payload: Product
+  ): InvoiceItemBase | undefined {
+    this._setPayload(index, payload);
+    return this._invoice()?.getRow(index);
+  }
+
+  async setRecipePayload(
+    index: number,
+    recipe: Recipe
+  ): Promise<InvoiceItemBase | undefined> {
+
+    const dbRecipe = await this._recipesRepository.getOne(recipe.uuid, true);
+    if (!dbRecipe) {
+      this._builderLogger.error(`Recipe with UUID ${recipe.uuid} not found in database.`);
+      return undefined;
+    }
+
+    this._setPayload(index, dbRecipe);
+    return this._invoice()?.getRow(index);
   }
 
   /**
@@ -197,6 +201,25 @@ export class InvoiceBuilderService {
     if (!newItem) return undefined;
 
     newInvoice.rows[index] = newItem;
+    this._invoice.set(newInvoice);
+    return this._invoice();
+  }
+
+  /**
+   * Устанавливает полезную нагрузку (payload) для позиции в счете-фактуре по индексу.
+   * @param index Индекс позиции в счете-фактуре.
+   * @param payload Полезная нагрузка, которую нужно установить.
+   */
+  private _setPayload(
+    index: number,
+    payload: Product | Recipe
+  ): Invoice | undefined {
+    debugger
+    if (!this._invoice()) return undefined;
+    const newInvoice = this._invoice()!.clone();
+    const targetItem = newInvoice.rows[index];
+    if (!targetItem) return undefined;
+    targetItem.setPayload(payload);
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -241,6 +264,7 @@ export class InvoiceBuilderService {
         const storedIndex = payload[InvoiceItemType.Product]!.get(product.uuid);
         if (storedIndex === undefined) return;
         this._putPayload(storedIndex, invoice, product);
+
       }
     });
   }

@@ -42,6 +42,14 @@ export class Invoice {
     return this.rows.reduce((sum, item) => sum + item.totalPrice, 0);
   }
 
+  get taxTotal(): number {
+    return 0; // Placeholder for tax calculation logic
+  }
+
+  get totalWithTax(): number {
+    return this.total + this.taxTotal;
+  }
+
   static fromRaw(
     raw: any,
     factory: InvoiceItemFactory
@@ -94,20 +102,20 @@ export class Invoice {
     const existingItemsMap = this._getItemsMap();
 
     rows.forEach((currentRow: InvoiceItemDTO) => {
-      debugger
       const key = this._getRowKey(currentRow);
       const targetIndex = existingItemsMap[key];
+
       if (targetIndex != null) {
-        debugger
         const targetItem = this.rows[targetIndex];
         if (!targetItem) {
           return;
         }
+
         targetItem.setAmount(currentRow.amount || targetItem.amount || 0);
         targetItem.setUnit(currentRow.unit || targetItem.unit || 'gram');
       } else if (currentRow.product_id || currentRow.recipe_id) {
-        debugger
         const newItem = factory.fromDTO(currentRow);
+
         if (newItem) {
           this.addItem(newItem);
         }
@@ -134,6 +142,15 @@ export class Invoice {
     this.rows.splice(index, 1);
     this.markUpdated();
     return itemToRemove;
+  }
+
+  getRow(
+    index: number
+  ): InvoiceItemBase {
+    if (index < 0 || index >= this.rows.length) {
+      throw new Error('Index out of bounds');
+    }
+    return this.rows[index];
   }
 
   setItemAmount(

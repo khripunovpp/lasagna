@@ -19,10 +19,8 @@
         </lg-gap-row>
       </ng-template>
 
-      <ng-template label="{{ 'taxes.settings-title'|translate }}" alias="taxes" lgTab>
-        <a lgExpand routerLink="/settings/taxes" routerLinkActive="active">
-          {{ 'taxes.link-label'|translate }}
-        </a>
+      <ng-template label="Finance settings" alias="finance" lgTab>
+        <lg-finance-settings></lg-finance-settings>
       </ng-template>
 
       <ng-template label="{{ 'backup.settings-title'|translate }}" alias="backup" lgTab>

@@ -1,1 +1,1 @@
-export type Unit = 'gram' | 'portion' | 'piece';
+export type Unit = 'gram' | 'piece';

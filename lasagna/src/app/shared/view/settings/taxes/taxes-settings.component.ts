@@ -28,16 +28,18 @@ import {NotificationsService} from '../../../service/services';
 import {errorHandler} from '../../../helpers/error.helper';
 import {WidthDirective} from '../../directives/width.directive';
 import {taxDTOFromFormValue} from '../../../helpers/taxes.helper';
+import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 
 @Component({
-  selector: 'lg-backup-settings',
+  selector: 'lg-taxes-settings',
   standalone: true,
   template: `
-      <lg-container>
+      <lg-gap-column>
           <lg-card-list [formGroup]="taxesForm">
               <ng-container formArrayName="rows">
-                  @for (taxControl of taxesForm.controls.rows.controls;track (taxControl.value.name + taxControl.value.value);let i = $index, odd = $odd) {
+                  @for (taxRow of taxes(); track (taxRow.name + taxRow.uuid);let i = $index, odd = $odd) {
                       <ng-template lgCardListItem>
+                          @let tacControl = taxesForm.controls.rows.controls[i];
                           <section class="taxes" [formGroupName]="i">
                               <div class="taxes__row"
                                    [class.taxes__row--odd]="odd">
@@ -109,8 +111,7 @@ import {taxDTOFromFormValue} from '../../../helpers/taxes.helper';
                   Add tax
               </lg-button>
           </lg-gap-row>
-
-      </lg-container>
+      </lg-gap-column>
   `,
   styles: [``],
   imports: [
@@ -130,8 +131,9 @@ import {taxDTOFromFormValue} from '../../../helpers/taxes.helper';
     SelfCenterDirective,
     ShrinkDirective,
     TextareaComponent,
-    WidthDirective
-]
+    WidthDirective,
+    GapColumnComponent
+  ]
 })
 export class TaxesSettingsComponent {
   constructor(

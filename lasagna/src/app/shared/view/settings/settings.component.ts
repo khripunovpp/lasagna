@@ -14,6 +14,7 @@ import {BackupSettingsComponent} from './backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {TabDirective} from '../ui/tabs/tab.directive';
 import {TabsComponent} from '../ui/tabs/tabs.component';
+import {FinanceSettingsComponent} from './finance-settings/finance-settings.component';
 
 
 @Component({
@@ -33,8 +34,9 @@ import {TabsComponent} from '../ui/tabs/tabs.component';
     BackupSettingsComponent,
     TranslatePipe,
     TabDirective,
-    TabsComponent
-]
+    TabsComponent,
+    FinanceSettingsComponent
+  ]
 })
 export class SettingsComponent {
   constructor() {

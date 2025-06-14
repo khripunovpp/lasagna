@@ -3,7 +3,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MAT_DATE_FORMATS, provideNativeDateAdapter} from '@angular/material/core';
+import {MAT_DATE_FORMATS, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 import {CUSTOM_DATE_FORMATS} from '../../../helpers/date-formats.helper';
 
 @Component({
@@ -35,8 +35,7 @@ import {CUSTOM_DATE_FORMATS} from '../../../helpers/date-formats.helper';
       useExisting: forwardRef(() => DatePickerComponent),
       multi: true
     },
-   provideNativeDateAdapter(),
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }
+
   ],
   styles: [`
     .lg-date-picker {

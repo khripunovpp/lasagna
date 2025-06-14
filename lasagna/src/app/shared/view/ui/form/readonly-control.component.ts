@@ -5,23 +5,27 @@ import {FormsModule} from '@angular/forms';
   selector: 'lg-readonly-control',
   standalone: true,
   template: `
-    <div class="lg-readonly-control">
-      <input #input
-             [placeholder]="placeholder()"
-             [value]="value"
-             class="input"
-             type="text">
+      <div class="lg-readonly-control">
+          <input #input
+                 [disabled]="true"
+                 [placeholder]="placeholder()"
+                 [readonly]="true"
+                 [value]="value"
+                 class="input"
+                 type="text">
 
-      <div class="lg-readonly-control__after"
-           [style.display]="noAfter() ? 'none' : 'flex'">
-        <ng-content select="after"></ng-content>
+          <div [style.display]="noAfter() ? 'none' : 'flex'"
+               class="lg-readonly-control__after">
+              <ng-content select="after"></ng-content>
+          </div>
       </div>
-    </div>
   `,
   styles: [
     `
       :host {
         display: flex;
+        user-select: none;
+        pointer-events: none;
       }
 
       .lg-readonly-control {

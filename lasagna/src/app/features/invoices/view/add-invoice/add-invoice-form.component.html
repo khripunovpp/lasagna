@@ -5,19 +5,19 @@
               formControlName="name"></lg-input>
 
     <lg-gap-row [right]="true">
-      <lg-input lgWidth="15%"
-                formControlName="prefix"
+      <lg-input formControlName="prefix"
+                lgWidth="15%"
                 placeholder="Prefix"></lg-input>
-      <lg-input lgWidth="30%"
-                formControlName="invoice_number"
+      <lg-input formControlName="invoice_number"
+                lgWidth="30%"
                 placeholder="Number"></lg-input>
     </lg-gap-row>
 
     <lg-gap-row [relaxed]="true">
-      <lg-textarea placeholder="From"
-                   formControlName="credential_from"></lg-textarea>
-      <lg-textarea placeholder="To"
-                   formControlName="credential_to"></lg-textarea>
+      <lg-textarea formControlName="credential_from"
+                   placeholder="From"></lg-textarea>
+      <lg-textarea formControlName="credential_to"
+                   placeholder="To"></lg-textarea>
 
       <lg-gap-column lgWidth="30%">
         <lg-date-picker formControlName="date_issued"></lg-date-picker>
@@ -25,13 +25,13 @@
       </lg-gap-column>
     </lg-gap-row>
 
-    <hr size="2" lgExpand color="#fafafa"/>
+    <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-gap-column [position]="'start'" [size]="'medium'">
-      <lg-gap-row [mobileMode]="true"
+      <lg-gap-row [equal]="true"
+                  [mobileMode]="true"
                   [size]="'medium'"
                   [styles]="{'--lg-gap-row-pad-right': '36px'}"
-                  [equal]="true"
                   lgExpand>
         <div lgWidth="40%">Item</div>
         <div lgWidth="30%">Amount</div>
@@ -40,10 +40,8 @@
       </lg-gap-row>
 
 
-      <lg-gap-column formArrayName="rows" lgExpand [size]="'medium'">
-        @for (control of rows.controls;
-          track (control.value.amount + i + 1);
-          let i = $index, last = $last) {
+      <lg-gap-column [size]="'medium'" formArrayName="rows" lgExpand>
+        @for (control of rows.controls;track (control.value.amount + i + 1);let i = $index, last = $last) {
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
             <lg-controls-row [mobileMode]="true" [equal]="true">
@@ -77,10 +75,10 @@
                                lgWidth="30%"
                                [placeholder]="'0'"
                                formControlName="amount">
-<!--                <div ngProjectAs="after">-->
-<!--                  <lg-unit-switcher formControlName="unit">-->
-<!--                  </lg-unit-switcher>-->
-<!--                </div>-->
+                <div ngProjectAs="after">
+                  <lg-unit-switcher formControlName="unit">
+                  </lg-unit-switcher>
+                </div>
               </lg-number-input>
 
               <lg-readonly-control [placeholder]="'0'"
@@ -114,26 +112,45 @@
                  [size]="'small'"
                  [style]="'success'">
         Add item
-        <mat-icon aria-hidden="false"
-                  [inline]="true"
+        <mat-icon [inline]="true"
+                  aria-hidden="false"
                   fontIcon="add"></mat-icon>
       </lg-button>
     </lg-gap-column>
 
-    <hr size="2" lgExpand color="#fafafa"/>
+    <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-gap-row [relaxed]="true">
-      <lg-textarea placeholder="Notes"
+      <lg-textarea [rows]="2"
                    formControlName="notes"
-                   [rows]="2"></lg-textarea>
+                   placeholder="Notes"></lg-textarea>
 
-      <lg-textarea placeholder="Terms"
+      <lg-textarea [rows]="2"
                    formControlName="terms"
-                   [rows]="2"></lg-textarea>
-
-      <lg-gap-column lgWidth="30%">
-        Total amount {{ invoiceBuilderService.invoice()?.total | userCurrency: '1.2-4' }}
-      </lg-gap-column>
+                   placeholder="Terms"></lg-textarea>
     </lg-gap-row>
+
+    <lg-gap-column position="end" size="small">
+      <lg-gap-row [relaxed]="true">
+        Subtotal
+        <b class="text-right text-bold" lgWidth="200px">
+          {{ invoiceBuilderService.invoice()?.total | userCurrency: '1.2-4' }}
+        </b>
+      </lg-gap-row>
+
+      <lg-gap-row [relaxed]="true">
+        Tax
+        <b class="text-right text-bold" lgWidth="200px">
+          {{ invoiceBuilderService.invoice()?.taxTotal | userCurrency: '1.2-4' }}
+        </b>
+      </lg-gap-row>
+
+      <lg-gap-row [relaxed]="true">
+        <b class="text-right text-bold">Total</b>
+        <b class="text-right text-bold" lgWidth="200px">
+          {{ invoiceBuilderService.invoice()?.totalWithTax | userCurrency: '1.2-4' }}
+        </b>
+      </lg-gap-row>
+    </lg-gap-column>
   </lg-gap-column>
 </form>

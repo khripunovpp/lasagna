@@ -42,6 +42,7 @@ import {logoBase64} from './shared/view/const/logoBase64';
 import {generateRandomInvoicePrefix} from './shared/helpers/pdf-generators/prefix-generator';
 import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -193,5 +194,18 @@ export const appConfig: ApplicationConfig = {
       deps: []
     },
     provideZonelessChangeDetection(),
+    {
+      provide: MAT_DATE_LOCALE,
+      useFactory: () => {
+        const userLanguage = inject(USER_LANGUAGE);
+        const langToLocaleMap: Record<string, string> = {
+          'en': 'en-US',
+          'ru': 'ru-RU',
+          'pt': 'pt-PT',
+        }
+        return langToLocaleMap[userLanguage()] || 'en-US';
+      }
+    },
+    provideNativeDateAdapter(),
   ]
 };

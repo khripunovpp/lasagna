@@ -49,7 +49,7 @@ export const makeInvoiceItemFormGroup = (
   }
 
   return new FormGroup({
-    amount: new FormControl(item?.amount?.toString() ?? null, Validators.required),
+    amount: new FormControl(item?.amount || null, Validators.required),
     unit: new FormControl(item?.unit ?? 'gram', Validators.required),
     activeTab: new FormControl(item?.type || 'recipe'),
     recipe_id: new FormControl(recipeId),

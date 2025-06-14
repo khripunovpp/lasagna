@@ -18,7 +18,7 @@ export class RecipeInvoiceItem
   readonly type = InvoiceItemType.Recipe;
 
   get totalPrice(): number {
-    return this.recipe.pricePerUnit * this.amount;
+    return this.pricePerUnit * this.amount;
   }
 
   get weightGram(): number {
@@ -29,7 +29,16 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnit(): number {
-    return this.recipe.pricePerUnit;
+    if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
+      return 0;
+    }
+    if (this.unit === 'gram' && this.recipe.outcome_unit === 'piece') {
+      return this.recipe.totalPrice / this.recipe.totalIngredientsWeight
+    }
+    if (this.unit === this.recipe.outcome_unit || !this.recipe.outcome_unit) {
+      return this.recipe.pricePerUnit;
+    }
+    return 0;
   }
 
   get compareKey(): string {
@@ -58,17 +67,6 @@ export class RecipeInvoiceItem
     };
   }
 
-  patchFromDTO(
-    dto: Partial<InvoiceItemDTO>
-  ): void {
-    if (dto.amount) {
-      this.amount = parseFloatingNumber(dto.amount);
-    }
-    if (dto.unit) {
-      this.unit = dto.unit;
-    }
-  }
-
   setAmount(amount: number): void {
     this.amount = parseFloatingNumber(amount);
   }
@@ -80,6 +78,7 @@ export class RecipeInvoiceItem
   setPayload(payload: unknown): void {
     if (payload instanceof Recipe) {
       this.recipe = payload;
+      this.setUnit(this.recipe.outcome_unit || 'gram');
     } else {
       throw new Error('Invalid payload type for RecipeInvoiceItem');
     }

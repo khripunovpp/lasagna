@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject, OnInit, viewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, viewChild, viewChildren, ViewEncapsulation} from '@angular/core';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
@@ -36,6 +36,7 @@ import {Product} from '../../../../shared/service/models/Product';
 import {Recipe} from '../../../../shared/service/models/Recipe';
 import {InvoiceItemType} from '@invoices/service/InvoiceItem/InvoiceItem.types';
 import {LoggerService} from '../../../logger/logger.service';
+import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -61,6 +62,7 @@ import {LoggerService} from '../../../logger/logger.service';
     DatePickerComponent,
     JsonPipe,
     UserCurrencyPipe,
+    TitleComponent,
 
   ],
   styles: [
@@ -83,10 +85,7 @@ export class AddInvoiceFormComponent
   form = new FormGroup(invoiceFormShape);
   userSettings = inject(SETTINGS);
   nameField = viewChild<AutocompleteComponent>('nameField');
-  // private invoiceEffect = effect(() => {
-  //   console.log('Invoice effect triggered', this.invoiceBuilderService.invoice());
-  //   this.fillForm(this.invoiceBuilderService.invoice()!);
-  // });
+  amountField = viewChildren<NumberInputComponent>('amount');
 
   get rows() {
     return this.form.get('rows') as FormArray;
@@ -114,6 +113,7 @@ export class AddInvoiceFormComponent
       }
       this._logger.log('Form value changed', values);
       this.invoiceBuilderService.patchInvoice(fromFormToDTO(this.form.getRawValue()) as any);
+      console.log(this.invoiceBuilderService.invoice());
     });
   }
 
@@ -143,7 +143,7 @@ export class AddInvoiceFormComponent
   }
 
   addGood() {
-    const newRow = this.invoiceBuilderService.addRow();
+    const newRow = this.invoiceBuilderService.addRow(this._getLastRowType());
     this.rows.push(this._getInvoiceItemFromGroup(newRow));
     this.form.markAsDirty();
   }
@@ -181,14 +181,23 @@ export class AddInvoiceFormComponent
     recipe: any,
     index: number
   ) {
-    this.invoiceBuilderService.setPayload(index, Recipe.fromRaw(recipe));
+    this.invoiceBuilderService.setRecipePayload(index, Recipe.fromRaw(recipe)).then((row) => {
+      this.amountField()?.at(index)?.focus();
+      this.rows.at(index).patchValue({
+        unit: row?.unit || 'gram',
+      });
+    });
   }
 
   onProductSelected(
     product: any,
     index: number
   ) {
-    this.invoiceBuilderService.setPayload(index, Product.fromRaw(product));
+    const row = this.invoiceBuilderService.setProductPayload(index, Product.fromRaw(product));
+    this.amountField()?.at(index)?.focus();
+      this.rows.at(index).patchValue({
+        unit: row?.unit || 'gram',
+      });
   }
 
   onItemChanged(
@@ -196,7 +205,10 @@ export class AddInvoiceFormComponent
     index: number
   ) {
     this.invoiceBuilderService.changeRowType(index, type);
-    this.form.markAsDirty();
+    this.rows.at(index).patchValue({
+      recipe_id: null,
+      product_id: null,
+    })
   }
 
   private _getLastRowType(): InvoiceItemType {

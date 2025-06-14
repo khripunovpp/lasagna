@@ -18,7 +18,7 @@ export class ProductInvoiceItem
   readonly type = InvoiceItemType.Product;
 
   get totalPrice(): number {
-    return this.product.pricePerUnit * this.amount;
+    return this.pricePerUnit * this.amount;
   }
 
   get weightGram(): number {
@@ -29,6 +29,14 @@ export class ProductInvoiceItem
   }
 
   get pricePerUnit(): number {
+    if (this.unit === 'piece' && this.product.unit !== 'piece') {
+      return 0;
+    }
+
+    if (this.unit === 'gram' && this.product.unit === 'piece') {
+      return 0;
+    }
+
     return this.product.pricePerUnit;
   }
 
@@ -58,17 +66,6 @@ export class ProductInvoiceItem
     };
   }
 
-  patchFromDTO(
-    dto: Partial<InvoiceItemDTO>
-  ): void {
-    if (dto.amount) {
-      this.amount = parseFloatingNumber(dto.amount);
-    }
-    if (dto.unit) {
-      this.unit = dto.unit;
-    }
-  }
-
   setAmount(amount: number): void {
     this.amount = parseFloatingNumber(amount);
   }
@@ -80,6 +77,7 @@ export class ProductInvoiceItem
   setPayload(payload: unknown): void {
     if (payload instanceof Product) {
       this.product = payload;
+      this.setUnit(payload.unit || 'gram');
     } else {
       throw new Error('Invalid payload type for ProductInvoiceItem');
     }

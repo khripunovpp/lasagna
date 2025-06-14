@@ -2,10 +2,9 @@ import {Ingredient} from './Ingredient';
 import {RecipeDTO} from '../db/shemes/Recipe.scheme';
 import {Unit} from '../types/Unit.types';
 import {CategoryRecipe} from './CategoryRecipe';
-import {parseFloatingNumber} from '../../helpers/number.helper';
+import {estimateColor, isColorString, parseFloatingNumber} from '../../helpers';
 import {CategoryRecipeDTO} from '../db/shemes/CategoryRecipe.scheme';
 import {Tag} from './Tag';
-import {estimateColor, isColorString} from '../../helpers/color.helper';
 
 
 export class Recipe {
@@ -85,15 +84,25 @@ export class Recipe {
   }
 
   get pricePerUnit() {
+    if (this.ingredients.length === 0) {
+      return 0;
+    }
     if (this.outcome_unit && this.outcome_unit !== 'gram') {
       return this.totalPrice / this.outcome_amount;
+    }
+    return this.pricePerGram;
+  }
+
+  get pricePerGram() {
+    if (this.ingredients.length === 0) {
+      return 0;
     }
     return this.totalPrice / this.totalIngredientsWeight;
   }
 
-  get totalIngredientsWeight() {
+  get totalIngredientsWeight(): number {
     return this.ingredients.reduce((acc, ingredient) => {
-      return acc + (ingredient.amount * ((ingredient.unit === 'gram') ? 1 : 0));
+      return acc + ingredient.totalWeightGram;
     }, 0);
   }
 
@@ -161,8 +170,6 @@ export class Recipe {
   }
 
   toDTO(): RecipeDTO {
-
-    console.log('toDTO recipe uuid', this.uuid);
     return {
       name: this.name,
       description: this.description,
@@ -192,7 +199,6 @@ export class Recipe {
     this.outcome_amount = dto?.outcome_amount || this.outcome_amount;
     this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
     this.uuid = dto?.uuid || this.uuid;
-    console.log('Update recipe uuid', this.uuid);
     this.taxTemplateName = dto?.taxTemplateName || this.taxTemplateName;
     this.category_id = CategoryRecipe.fromRaw(dto?.category_id) || this.category_id;
     this.createdAt = dto?.createdAt || this.createdAt;
