@@ -88,8 +88,6 @@ export class InvoicesRepository {
     const invoiceDTOs = await this._indexDbService.getAll<InvoiceDTO>(Stores.INVOICES);
     const invoicesInstances = invoiceDTOs.map(dto => Invoice.fromRaw(dto, factory));
 
-    console.log({invoicesInstances})
-
     this._stream$.next(invoicesInstances);
 
     return invoicesInstances;

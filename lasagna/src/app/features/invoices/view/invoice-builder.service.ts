@@ -1,13 +1,14 @@
-import {Injectable, signal, Signal} from '@angular/core';
+import {inject, Injectable, signal, Signal} from '@angular/core';
 import {Invoice} from '../service/Inovice/Invoice';
 import {InvoiceItemFactory} from '../service/InvoiceItem/InvoiceItem.factory';
 import {InvoiceDTO} from '../service/Inovice/Invoice.scheme';
 import {InvoiceItemBase} from '../service/InvoiceItem/InvoiceItemBase.abstract';
 import {InvoiceItemType} from '../service/InvoiceItem/InvoiceItem.types';
 import {InvoicesRepository} from '../service/Invoices.repository';
-import {ProductsRepository} from '../../../shared/service/repositories';
+import {ProductsRepository, RecipesRepository} from '../../../shared/service/repositories';
 import {Product} from '../../../shared/service/models/Product';
 import {Recipe} from '../../../shared/service/models/Recipe';
+import {LoggerService} from '../../logger/logger.service';
 
 
 type PayloadMap = Partial<Record<InvoiceItemType, Map<string, number>>>;
@@ -25,14 +26,20 @@ export class InvoiceBuilderService {
   constructor(
     private _invoicesRepository: InvoicesRepository,
     private _productsRepository: ProductsRepository,
+    private _recipesRepository: RecipesRepository,
   ) {
   }
 
+  private _builderLogger = inject(LoggerService).withContext({
+    label: 'InvoiceBuilderService',
+    color: '#8e44ad',
+  });
+  // TODO кеш должен быть в сервисе работы с базой данных, а не в билдере счета-фактуры
   /**
    * Кеш загруженных продуктовых позиций или рецептов.
    * @private
    */
-  private _cachedPayloads: Partial<Record<InvoiceItemType, Map<string, unknown>>> = {
+  private _cache: Partial<Record<InvoiceItemType, Map<string, unknown>>> = {
     [InvoiceItemType.Product]: new Map(),
     [InvoiceItemType.Recipe]: new Map(),
   };
@@ -40,8 +47,8 @@ export class InvoiceBuilderService {
    * Фабрика для создания позиций счета-фактуры.
    */
   factory = new InvoiceItemFactory(
-    this._cachedPayloads.product as Map<string, Product>,
-    this._cachedPayloads.recipe as Map<string, Recipe>
+    this._cache.product as Map<string, Product>,
+    this._cache.recipe as Map<string, Recipe>
   );
 
   /**
@@ -70,10 +77,10 @@ export class InvoiceBuilderService {
       return undefined;
     }
     const payload = this._collectPayloadMap(invoice.rows);
-    console.log({payload})
 
+    await this._loadRecipePayloads(invoice, payload);
     await this._loadProductPayloads(invoice, payload);
-    console.log('loadInvoice', {result: invoice, cached: this._cachedPayloads});
+    this._builderLogger.log(`Loaded invoice with UUID: ${uuid}`, invoice);
 
     this._invoice.set(invoice);
     return invoice;
@@ -109,12 +116,14 @@ export class InvoiceBuilderService {
       return {
         amount: row.amount ? parseFloat(row.amount) : 0,
         unit: row.unit || 'gram',
-        type: (row.activeTab || InvoiceItemType.Product) as InvoiceItemType,
+        type: (row.type || InvoiceItemType.Product) as InvoiceItemType,
         product_id: row.product_id,
+        recipe_id: row.recipe_id,
       };
     });
     newInvoice.patch(commonInvoiceDTO);
     newInvoice.patchRows(rowsDTO, this.factory);
+    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {formValue, newInvoice});
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -123,20 +132,18 @@ export class InvoiceBuilderService {
    * Добавляет новую строку в счет-фактуру.
    */
   addRow(
-    item?: InvoiceItemBase
-  ): Invoice | undefined {
-    debugger
+    type?: InvoiceItemType,
+  ): InvoiceItemBase | undefined {
     if (!this._invoice()) return undefined;
-    const newItem = item ?? this.factory.fromDTO({
-      amount: 0,
-      type: InvoiceItemType.Product
+    const newItem = this.factory.fromDTO({
+      type: type,
     });
     if (!newItem) return undefined;
     const newInvoice = this._invoice()!.clone();
     newInvoice.addItem(newItem);
     this._invoice.set(newInvoice);
 
-    return this._invoice();
+    return newItem;
   }
 
   /**
@@ -173,6 +180,28 @@ export class InvoiceBuilderService {
   }
 
   /**
+   * Изменяет тип строки в счете-фактуре по индексу сбрасвая все данные текущей строки.
+   * @param index
+   * @param type
+   */
+  changeRowType(
+    index: number,
+    type: InvoiceItemType
+  ): Invoice | undefined {
+    if (!this._invoice()) return undefined;
+    const newInvoice = this._invoice()!.clone();
+    const targetItem = newInvoice.rows[index];
+    if (!targetItem) return undefined;
+
+    const newItem = this.factory.fromDTO({type});
+    if (!newItem) return undefined;
+
+    newInvoice.rows[index] = newItem;
+    this._invoice.set(newInvoice);
+    return this._invoice();
+  }
+
+  /**
    * Загружает продуктовые позиции и рецепты по их UUID из кеша или репозитория.
    * @param invoice
    * @param payload
@@ -184,31 +213,77 @@ export class InvoiceBuilderService {
   ) {
     const itemsToLoad = Array.from(payload[InvoiceItemType.Product]?.keys() ?? []);
     if (!itemsToLoad.length) return;
-    const cached = this._cachedPayloads[InvoiceItemType.Product];
+    const cached = this._cache[InvoiceItemType.Product];
     const notCached: string[] = []
 
     itemsToLoad.forEach(uuid => {
       if (!cached?.has(uuid)) {
+        this._builderLogger.warn(`Product with UUID ${uuid} not found in cache. Loading from repository...`);
         notCached.push(uuid);
       } else {
         const storedIndex = payload[InvoiceItemType.Product]!.get(uuid);
         if (storedIndex === undefined) return;
+        this._builderLogger.warn(`Product with UUID ${uuid} found in cache. Using cached data.`);
         this._putPayload(storedIndex, invoice, cached!.get(uuid) as Product);
       }
     });
 
     if (!notCached.length) return;
 
+    this._builderLogger.log(`Loading products from repository: ${notCached.join(', ')}`);
     const products = await this._productsRepository.getMany(notCached);
 
     products.forEach(product => {
       if (!product.uuid) return;
-      this._cachedPayloads.product?.set(product.uuid, product);
+      this._cache.product?.set(product.uuid, product);
 
       if (payload[InvoiceItemType.Product]?.has(product.uuid)) {
         const storedIndex = payload[InvoiceItemType.Product]!.get(product.uuid);
         if (storedIndex === undefined) return;
         this._putPayload(storedIndex, invoice, product);
+      }
+    });
+  }
+
+  /**
+   * Загружает рецепты по их UUID из кеша или репозитория.
+   * Рецепты могу содержать в себе как продукты, так и другие рецепты
+   * @param invoice
+   * @param payload
+   * @private
+   */
+  private async _loadRecipePayloads(
+    invoice: Invoice,
+    payload: PayloadMap,
+  ) {
+    // first need to collect all recipes UUIDs and sub-recipe UUIDs
+    const itemsToLoad = Array.from(payload[InvoiceItemType.Recipe]?.keys() ?? []);
+    if (!itemsToLoad.length) return;
+    const cached = this._cache[InvoiceItemType.Recipe] as Map<string, Recipe>;
+    const notCached: string[] = []
+
+    itemsToLoad.forEach(uuid => {
+      if (!cached?.has(uuid)) {
+        notCached.push(uuid);
+      } else {
+        const storedIndex = payload[InvoiceItemType.Recipe]!.get(uuid);
+        if (storedIndex === undefined) return;
+        this._putPayload(storedIndex, invoice, cached!.get(uuid)!);
+      }
+    });
+
+    if (!notCached.length) return;
+
+    const recipes = await this._recipesRepository.getMany(notCached, true);
+
+    recipes.forEach(recipe => {
+      if (!recipe.uuid) return;
+      this._cache.recipe?.set(recipe.uuid, recipe);
+
+      if (payload[InvoiceItemType.Recipe]?.has(recipe.uuid)) {
+        const storedIndex = payload[InvoiceItemType.Recipe]!.get(recipe.uuid);
+        if (storedIndex === undefined) return;
+        this._putPayload(storedIndex, invoice, recipe);
       }
     });
   }
@@ -227,6 +302,7 @@ export class InvoiceBuilderService {
     const targetItem = invoice?.rows[index!];
     if (targetItem) {
       targetItem.setPayload(payload);
+      this._builderLogger.log(`Payload set for item "${targetItem.type}" with UUID ${targetItem.payloadUUID}:`, payload);
     }
   }
 

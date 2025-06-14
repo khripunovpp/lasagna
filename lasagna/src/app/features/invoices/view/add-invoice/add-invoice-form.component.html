@@ -48,11 +48,13 @@
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
             <lg-controls-row [mobileMode]="true" [equal]="true">
               <lg-invoice-item-selector lgWidth="40%"
+                                        (onChanged)="onItemChanged($event, i)"
                                         formControlName="activeTab">
                 <lg-multiselect [resource]="'recipes'"
                                 [appendTo]="'body'"
                                 [placeholder]="'Find recipe'"
                                 formControlName="recipe_id"
+                                (onSelected)="onRecipeSelected($event, i)"
                                 ngProjectAs="recipes"
                                 [autoLoad]="true"></lg-multiselect>
 

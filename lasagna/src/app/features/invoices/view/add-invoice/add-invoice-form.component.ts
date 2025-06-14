@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, effect, inject, OnInit, viewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, viewChild, ViewEncapsulation} from '@angular/core';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
@@ -33,6 +33,9 @@ import {
 import {JsonPipe} from '@angular/common';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {Product} from '../../../../shared/service/models/Product';
+import {Recipe} from '../../../../shared/service/models/Recipe';
+import {InvoiceItemType} from '@invoices/service/InvoiceItem/InvoiceItem.types';
+import {LoggerService} from '../../../logger/logger.service';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -73,6 +76,7 @@ export class AddInvoiceFormComponent
     public selectResourcesService: SelectResourcesService,
     public invoiceBuilderService: InvoiceBuilderService,
     private _notificationsService: NotificationsService,
+    private _logger: LoggerService,
   ) {
   }
 
@@ -108,6 +112,7 @@ export class AddInvoiceFormComponent
       if (!this.form.dirty) {
         return
       }
+      this._logger.log('Form value changed', values);
       this.invoiceBuilderService.patchInvoice(fromFormToDTO(this.form.getRawValue()) as any);
     });
   }
@@ -135,13 +140,11 @@ export class AddInvoiceFormComponent
     if (!this.invoiceBuilderService.invoice()?.uuid) {
       this.nameField()!.focus();
     }
-
-    console.log('ngAfterViewInit',this.invoiceBuilderService.invoice());
   }
 
   addGood() {
-    this.rows.push(this._getInvoiceItemFromGroup());
-    this.invoiceBuilderService.addRow();
+    const newRow = this.invoiceBuilderService.addRow();
+    this.rows.push(this._getInvoiceItemFromGroup(newRow));
     this.form.markAsDirty();
   }
 
@@ -171,21 +174,37 @@ export class AddInvoiceFormComponent
 
     this.form.updateValueAndValidity();
     this.form.markAsPristine();
+    this._logger.log('Invoice form filled', this.form.value);
   }
-  //
-  // onRecipeSelected(
-  //   recipe: any,
-  //   index: number
-  // ) {
-  //   console.log('recipe selected', recipe, index);
-  // }
+
+  onRecipeSelected(
+    recipe: any,
+    index: number
+  ) {
+    this.invoiceBuilderService.setPayload(index, Recipe.fromRaw(recipe));
+  }
 
   onProductSelected(
     product: any,
     index: number
   ) {
-    console.log('product selected', product, index);
     this.invoiceBuilderService.setPayload(index, Product.fromRaw(product));
+  }
+
+  onItemChanged(
+    type: InvoiceItemType,
+    index: number
+  ) {
+    this.invoiceBuilderService.changeRowType(index, type);
+    this.form.markAsDirty();
+  }
+
+  private _getLastRowType(): InvoiceItemType {
+    const lastRow = this.rows.at(this.rows.length - 1);
+    if (lastRow && lastRow.value) {
+      return lastRow.value.activeTab as InvoiceItemType;
+    }
+    return InvoiceItemType.Recipe;
   }
 
   private _getInvoiceItemFromGroup(

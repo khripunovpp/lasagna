@@ -94,9 +94,11 @@ export class Invoice {
     const existingItemsMap = this._getItemsMap();
 
     rows.forEach((currentRow: InvoiceItemDTO) => {
-      const key = makeCompareKey.forProductDTO(currentRow);
+      debugger
+      const key = this._getRowKey(currentRow);
       const targetIndex = existingItemsMap[key];
       if (targetIndex != null) {
+        debugger
         const targetItem = this.rows[targetIndex];
         if (!targetItem) {
           return;
@@ -104,6 +106,7 @@ export class Invoice {
         targetItem.setAmount(currentRow.amount || targetItem.amount || 0);
         targetItem.setUnit(currentRow.unit || targetItem.unit || 'gram');
       } else if (currentRow.product_id || currentRow.recipe_id) {
+        debugger
         const newItem = factory.fromDTO(currentRow);
         if (newItem) {
           this.addItem(newItem);
@@ -165,6 +168,17 @@ export class Invoice {
 
   clearEmpty() {
     this.rows = this.rows.filter((item) => !item.itemEmpty);
+  }
+
+  private _getRowKey(
+    item: InvoiceItemDTO
+  ): string {
+    if (item.type === 'product') {
+      return makeCompareKey.forProductDTO(item);
+    } else if (item.type === 'recipe') {
+      return makeCompareKey.forRecipeDTO(item);
+    }
+    return 'unknown-' + item.type;
   }
 
   private _getItemsMap() {

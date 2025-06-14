@@ -31,6 +31,10 @@ export class RecipesRepository {
     return this._stream$.asObservable();
   }
 
+  get length() {
+    return this._indexDbService.getLength(Stores.RECIPES);
+  }
+
   async addRecipe(
     recipe: Recipe
   ) {
@@ -58,10 +62,6 @@ export class RecipesRepository {
     });
   }
 
-  get length() {
-    return this._indexDbService.getLength(Stores.RECIPES);
-  }
-
   getRecipes() {
     return this._indexDbService.getAll(Stores.RECIPES)
       .then(res => res.map(recipe => Recipe.fromRaw(recipe))
@@ -86,6 +86,21 @@ export class RecipesRepository {
         await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
           resolve(Recipe.fromRaw(result));
         });
+      }
+    });
+  }
+
+  getMany(
+    uuids: string[],
+    verbose: boolean = false,
+  ) {
+    return new Promise<Recipe[]>(async (resolve, reject) => {
+      if (verbose) {
+        const recipes = await this._indexDbService.getManyWithRelations(Stores.RECIPES, uuids);
+        resolve(recipes.data.map(recipe => Recipe.fromRaw(recipe)));
+      } else {
+        const recipes = await this._indexDbService.getMany<RecipeDTO>(Stores.RECIPES, uuids);
+        resolve(recipes.map(recipe => Recipe.fromRaw(recipe)));
       }
     });
   }

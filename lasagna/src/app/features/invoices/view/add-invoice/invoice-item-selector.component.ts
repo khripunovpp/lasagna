@@ -1,4 +1,4 @@
-import {Component, effect, forwardRef, Input, signal, ViewEncapsulation} from '@angular/core';
+import {Component, effect, forwardRef, Input, output, signal, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {InvoiceItemType} from '../../service/InvoiceItem/InvoiceItem.types';
 
@@ -147,10 +147,10 @@ export class InvoiceItemSelectorComponent
     slug: InvoiceItemType
     title: string
   }[]>([
-    // {
-    //   slug: InvoiceItemType.Recipe,
-    //   title: 'Recipe',
-    // },
+    {
+      slug: InvoiceItemType.Recipe,
+      title: 'Recipe',
+    },
     {
       slug: InvoiceItemType.Product,
       title: 'Product',
@@ -162,6 +162,7 @@ export class InvoiceItemSelectorComponent
   ]);
   activeIndex = signal<number>(0);
   value = signal<string>('');
+  onChanged = output<InvoiceItemType>();
   effect = effect(() => {
     const activeIndex = this.items()?.findIndex(item => item.slug === this.value()) ?? -1;
     this.activeIndex.set(activeIndex === -1 ? 0 : activeIndex);
@@ -170,6 +171,7 @@ export class InvoiceItemSelectorComponent
   onClickItem(item: any, index: number) {
     this.activeIndex.set(index);
     this.writeValue(item.slug);
+    this.onChanged.emit(item.slug);
     item.onClick?.();
   }
 

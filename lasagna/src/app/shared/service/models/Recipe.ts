@@ -45,8 +45,6 @@ export class Recipe {
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
     this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
-
-    console.log('contructor recipe uuid', props.uuid,this.uuid,props.uuid || '');
   }
 
   name: string;
@@ -104,8 +102,6 @@ export class Recipe {
   }
 
   static fromRaw(dto: any) {
-    debugger
-    console.log('fromRaw recipe uuid', dto?.uuid);
     if (typeof dto === 'string') {
       return new Recipe({
         name: dto,

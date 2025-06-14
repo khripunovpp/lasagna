@@ -1,0 +1,95 @@
+import {InvoiceItemBase} from './InvoiceItemBase.abstract';
+import {InvoiceItemType} from './InvoiceItem.types';
+import {InvoiceItemDTO} from './InvoiceItem.scheme';
+import {parseFloatingNumber} from '../../../../shared/helpers';
+import {makeCompareKey} from '../../helpers/invoices-forms.helper';
+import {Recipe} from '../../../../shared/service/models/Recipe';
+
+export class RecipeInvoiceItem
+  extends InvoiceItemBase {
+  constructor(
+    public recipe: Recipe,
+    public amount: number = 0,
+    public unit: string = 'gram',
+  ) {
+    super();
+  }
+
+  readonly type = InvoiceItemType.Recipe;
+
+  get totalPrice(): number {
+    return this.recipe.pricePerUnit * this.amount;
+  }
+
+  get weightGram(): number {
+    if (this.unit === 'gram' && this.recipe.outcome_unit === 'gram') {
+      return this.amount;
+    }
+    return 0
+  }
+
+  get pricePerUnit(): number {
+    return this.recipe.pricePerUnit;
+  }
+
+  get compareKey(): string {
+    return makeCompareKey.forRecipeModel(this);
+  }
+
+  get itemEmpty(): boolean {
+    return this.amount <= 0 || !this.recipe.uuid;
+  }
+
+  get payloadUUID(): string | undefined {
+    return this.recipe.uuid;
+  }
+
+  get rowName(): string {
+    return this.recipe.name || 'Unnamed recipe';
+  }
+
+  toDTO(): InvoiceItemDTO {
+    return {
+      type: this.type,
+      amount: parseFloatingNumber(this.amount),
+      unit: this.unit || 'gram',
+      recipe_id: this.recipe.uuid || null,
+      product_id: null,
+    };
+  }
+
+  patchFromDTO(
+    dto: Partial<InvoiceItemDTO>
+  ): void {
+    if (dto.amount) {
+      this.amount = parseFloatingNumber(dto.amount);
+    }
+    if (dto.unit) {
+      this.unit = dto.unit;
+    }
+  }
+
+  setAmount(amount: number): void {
+    this.amount = parseFloatingNumber(amount);
+  }
+
+  setUnit(unit: string): void {
+    this.unit = unit || 'gram';
+  }
+
+  setPayload(payload: unknown): void {
+    if (payload instanceof Recipe) {
+      this.recipe = payload;
+    } else {
+      throw new Error('Invalid payload type for RecipeInvoiceItem');
+    }
+  }
+
+  clone(): RecipeInvoiceItem {
+    return new RecipeInvoiceItem(
+      this.recipe,
+      this.amount,
+      this.unit
+    );
+  }
+}

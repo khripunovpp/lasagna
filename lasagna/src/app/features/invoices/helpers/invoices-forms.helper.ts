@@ -5,6 +5,7 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Invoice} from '../service/Inovice/Invoice';
 import {InvoiceItemBase} from '../service/InvoiceItem/InvoiceItemBase.abstract';
 import {ProductInvoiceItem} from '../service/InvoiceItem/ProductInvoiceItem.model';
+import {RecipeInvoiceItem} from '@invoices/service/InvoiceItem/RecipeInvoiceItem.model';
 
 export const invoiceItemFormShape = {
   amount: new FormControl<string | null>(null, Validators.required),
@@ -39,15 +40,19 @@ export const makeInvoiceItemFormGroup = (
   item?: InvoiceItemBase
 ): FormGroup => {
   let productId = null;
+  let recipeId = null;
   if (item && item instanceof ProductInvoiceItem && item.product?.uuid) {
     productId = {uuid: item.product.uuid};
+  }
+  if (item && item instanceof RecipeInvoiceItem && item.recipe?.uuid) {
+    recipeId = {uuid: item.recipe.uuid};
   }
 
   return new FormGroup({
     amount: new FormControl(item?.amount?.toString() ?? null, Validators.required),
     unit: new FormControl(item?.unit ?? 'gram', Validators.required),
     activeTab: new FormControl(item?.type || 'recipe'),
-    recipe_id: new FormControl(null),
+    recipe_id: new FormControl(recipeId),
     product_id: new FormControl(productId),
     free_name: new FormControl(null),
     free_price: new FormControl(null),
@@ -87,8 +92,12 @@ export const fromInvoiceToFormValue = (
     name: invoice.name,
     rows: invoice.rows.map(item => {
       let productId = null;
+      let recipeId = null;
       if (invoiceItemIsProduct(item) && item.product?.uuid) {
         productId = {uuid: item.product.uuid};
+      }
+      if (invoiceItemIsRecipe(item) && item.recipe?.uuid) {
+        recipeId = {uuid: item.recipe.uuid};
       }
 
       return {
@@ -96,7 +105,7 @@ export const fromInvoiceToFormValue = (
         unit: item.unit || 'gram',
         activeTab: item.type as 'recipe' | 'product' | 'custom',
         product_id: productId,
-        recipe_id: null,
+        recipe_id: recipeId,
         free_name: null,
         free_price: null,
       }
@@ -115,6 +124,9 @@ export const fromInvoiceToFormValue = (
 export const invoiceItemIsProduct = (item: InvoiceItemBase): item is ProductInvoiceItem => {
   return item.type === 'product';
 }
+export const invoiceItemIsRecipe = (item: InvoiceItemBase): item is RecipeInvoiceItem => {
+  return item.type === 'recipe';
+}
 
 export const makeCompareKey = {
   forProductModel: (item: ProductInvoiceItem): string => {
@@ -122,5 +134,11 @@ export const makeCompareKey = {
   },
   forProductDTO: (item: InvoiceItemDTO): string => {
     return `product-${item.product_id}`;
-  }
+  },
+  forRecipeModel: (item: RecipeInvoiceItem): string => {
+    return `recipe-${item.recipe?.uuid}`;
+  },
+  forRecipeDTO: (item: InvoiceItemDTO): string => {
+    return `recipe-${item.recipe_id}`;
+  },
 }

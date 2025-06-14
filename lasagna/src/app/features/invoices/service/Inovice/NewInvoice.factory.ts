@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 import {generateInvoiceNumber, generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
-import {generateUuid} from '../../../../shared/helpers/attribute.helper';
+import {generateUuid} from '../../../../shared/helpers';
 import {Invoice} from './Invoice';
 
 export const INVOICE_FACTORY = new InjectionToken('INVOICE_FACTORY', {
@@ -19,7 +19,6 @@ export const INVOICE_FACTORY = new InjectionToken('INVOICE_FACTORY', {
         createdAt: Date.now(),
         updatedAt: Date.now()
       });
-      console.log('Creating new invoice with prefix:', inv.prefix, savePrefix);
       inv.invoice_number = generateInvoiceNumber(inv);
       return inv;
     }

@@ -132,7 +132,7 @@ export class AddInvoiceComponent
   }
 
   ngOnInit() {
-    this._loggerService.log('ngOnInit')
+
   }
 
   ngAfterViewInit() {

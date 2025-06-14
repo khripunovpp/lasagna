@@ -261,6 +261,24 @@ export class DexieIndexDbService extends Dexie {
     return result;
   }
 
+  async getManyWithRelations<T = any>(storeKey: Stores, uuids: string[]): Promise<{
+    data: T[],
+    relations: Record<string, Record<string, any>>,
+  }> {
+     // @ts-ignore
+    const table = (this[storeKey] as Table<any>);
+    const items = await table.where('uuid').anyOf(uuids).toArray();
+    const relations: Record<string, Record<string, any>> = {};
+    for (const item of items) {
+      const rel = await this.parse(item, relations);
+      this.apply(item, rel);
+    }
+    return {
+      data: items,
+      relations,
+    };
+  }
+
   async remove(storeKey: Stores, uuid: string): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).delete(uuid);
