@@ -16,7 +16,6 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
 import {BarcodeReaderService} from '../../../service/services/barcode-reader.service';
 import {ProductsRepository} from '../../../service/repositories/products.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
-import {ThisReceiver} from '@angular/compiler';
 import {Product} from '../../../service/models/Product';
 
 
@@ -36,7 +35,7 @@ import {Product} from '../../../service/models/Product';
     NumberInputComponent,
     ControlComponent,
     ShrinkDirective
-],
+  ],
 
   styles: [
     `
@@ -71,15 +70,15 @@ export class BarcodeSeekerWidgetComponent
   showProductForm = signal(false);
 
   userResource = resource({
-    request: () => ({id: this.barcode()}),
-    loader: ({request, abortSignal}): Promise<any> => {
-      if (this.lockRequest || !request.id) {
+    params: () => ({id: this.barcode()}),
+    loader: ({params, abortSignal}): Promise<any> => {
+      if (this.lockRequest || !params.id) {
         return Promise.resolve(null);
       }
 
-      this._notificationService.info('Barcode detected: ' + request.id);
+      this._notificationService.info('Barcode detected: ' + params.id);
       this.lockRequest = true;
-      return this._openFoodFactsService.getProductByBarcode(request.id).then(res => {
+      return this._openFoodFactsService.getProductByBarcode(params.id).then(res => {
         this.showProductForm.set(true);
         return res;
       });
@@ -110,7 +109,7 @@ export class BarcodeSeekerWidgetComponent
     this.startCamera();
   }
 
-  clear(){
+  clear() {
     this.barcode.set('');
     this.product = {
       name: '',

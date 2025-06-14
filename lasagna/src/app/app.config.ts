@@ -6,7 +6,7 @@ import {
   inject,
   isDevMode,
   provideAppInitializer,
-  provideZoneChangeDetection
+  provideZonelessChangeDetection
 } from '@angular/core';
 import {provideRouter, Router, withInMemoryScrolling} from '@angular/router';
 import {routes} from './app.routes';
@@ -48,7 +48,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -192,6 +191,7 @@ export const appConfig: ApplicationConfig = {
         return window.location.search.includes('dl')
       },
       deps: []
-    }
+    },
+    provideZonelessChangeDetection(),
   ]
 };
