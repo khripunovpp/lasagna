@@ -3,8 +3,8 @@ import {FlexsearchIndexService} from '../db/flexsearch-index.service';
 import {Stores} from '../db/const/stores';
 import {ProductsRepository} from '../repositories/products.repository';
 import {RecipesRepository} from '../repositories/recipes.repository';
-import {CategoryProductsRepository} from '../repositories/category-products-repository.service';
-import {CategoryRecipesRepository} from '../repositories/category-recipes-repository.service';
+import {CategoryProductsRepository} from '../../../features/settings/service/repositories/category-products.repository';
+import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
 
 export enum SearchResultContext {
   PRODUCT = 'product',

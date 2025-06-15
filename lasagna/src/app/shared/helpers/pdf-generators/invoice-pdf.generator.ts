@@ -3,7 +3,15 @@ import autoTable from 'jspdf-autotable';
 import {Invoice} from '@invoices/service/Inovice/Invoice';
 import {RubikFont} from '../../../../assets/fonts/Rubik-Regular-normal';
 
-export function generateInvoicePdf(invoice: Invoice, logoBase64?: string) {
+export function generateInvoicePdf(
+  invoice: Invoice,
+  settings: {
+    logo?: string
+    rowsPrecision?: number
+    totalPrecision?: number
+    currency?: string
+  }
+) {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   doc.addFileToVFS('Rubik-Regular-normal.ttf', RubikFont);
@@ -18,8 +26,8 @@ export function generateInvoicePdf(invoice: Invoice, logoBase64?: string) {
   let currentY = 10;
 
   // SECTION 0 — Logo
-  if (logoBase64) {
-    doc.addImage(logoBase64, 'PNG', leftColX, currentY, logoSize, logoSize);
+  if (settings.logo) {
+    doc.addImage(settings.logo, 'PNG', leftColX, currentY, logoSize, logoSize);
   }
 
   currentY += logoSize + 5; // отступ после логотипа
@@ -40,6 +48,7 @@ export function generateInvoicePdf(invoice: Invoice, logoBase64?: string) {
 
   // SECTION 2 — Table
   const tableStartY = currentY + lineSpacing * 8;
+  let tableEndY = tableStartY;
   if (invoice.rows.length > 0) {
     autoTable(doc, {
       startY: tableStartY,
@@ -48,7 +57,7 @@ export function generateInvoicePdf(invoice: Invoice, logoBase64?: string) {
         row.rowName,
         row.amount.toString(),
         row.unit,
-        row.totalPrice.toFixed(2)
+        (row.totalPrice.toFixed(settings.rowsPrecision || 2)) + (settings.currency || 'USD')
       ]),
       styles: {
         font: 'Rubik-Regular',
@@ -59,24 +68,26 @@ export function generateInvoicePdf(invoice: Invoice, logoBase64?: string) {
         fillColor: [220, 220, 220]
       },
     });
+    tableEndY = (doc as any).lastAutoTable.finalY + 10;
   }
 
   // SECTION 3 — Footer
-  const afterTableY = (doc as any).lastAutoTable.finalY + 10;
   const footerRightColX = rightColX;
+
+  doc.text('Notes:', leftColX, tableEndY);
+  doc.text(invoice.notes || '-', leftColX, tableEndY + lineSpacing);
+  doc.text('Terms:', leftColX, tableEndY + lineSpacing * 2);
+  doc.text(invoice.terms || '-', leftColX, tableEndY + lineSpacing * 3);
+
+  const subtotal = invoice.total.toFixed(settings.totalPrecision || 2);
   const taxRate = 0.2;
-
-  doc.text('Notes:', leftColX, afterTableY);
-  doc.text(invoice.notes || '-', leftColX, afterTableY + lineSpacing);
-
-  const subtotal = invoice.total;
   // const totalWithTax = subtotal * (1 + taxRate);
   const totalWithTax = subtotal;
 
-  doc.text('Subtotal:', footerRightColX, afterTableY);
-  doc.text(String(subtotal), footerRightColX + 30, afterTableY);
-  doc.text('Total (with Tax):', footerRightColX, afterTableY + lineSpacing);
-  doc.text(String(totalWithTax), footerRightColX + 30, afterTableY + lineSpacing);
+  doc.text('Subtotal:', footerRightColX, tableEndY);
+  doc.text(String(subtotal) + (settings.currency || 'USD'), footerRightColX + 30, tableEndY);
+  doc.text('Total (with Tax):', footerRightColX, tableEndY + lineSpacing);
+  doc.text(String(totalWithTax) + (settings.currency || 'USD'), footerRightColX + 30, tableEndY + lineSpacing);
 
-  doc.save(`invoice-${invoice.invoice_number || 'unnamed'}.pdf`);
+  doc.save(`invoice-${invoice.pdfNumber || 'unnamed'}.pdf`);
 }

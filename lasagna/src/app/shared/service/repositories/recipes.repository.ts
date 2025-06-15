@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
-import {CategoryRecipesRepository} from './category-recipes-repository.service';
+import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
 import {UsingHistoryService} from '../services/using-history.service';
 import {Subject} from 'rxjs';
 import {DraftForm, DraftFormsService} from '../services/draft-forms.service';
-import {TagsRepositoryService} from './tags-repository.service';
+import {TagsRepository} from '../../../features/settings/service/repositories/tags.repository';
 import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../db/shemes/Recipe.scheme';
-import {Tag} from '../models/Tag';
+import {Tag} from '../../../features/settings/service/models/Tag';
 import {ProductsRepository} from './products.repository';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class RecipesRepository {
     private _usingHistoryService: UsingHistoryService,
     private _categoryRepository: CategoryRecipesRepository,
     private _draftFormsService: DraftFormsService,
-    private _tagsRepository: TagsRepositoryService,
+    private _tagsRepository: TagsRepository,
     private _productsRepository: ProductsRepository,
   ) {
   }

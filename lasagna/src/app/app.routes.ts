@@ -147,7 +147,7 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./shared/view/settings/settings.component')
+          loadComponent: () => import('./features/settings/view/settings.component')
             .then(m => m.SettingsComponent),
         },
         {
@@ -158,17 +158,17 @@ export const routes: Routes = [{
               children: [
                 {
                   path: '',
-                  loadComponent: () => import('./shared/view/settings/categories/category-product/list/category-list.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/list/category-list.component')
                     .then(m => m.CategoryListComponent),
                 },
                 {
                   path: 'add',
-                  loadComponent: () => import('./shared/view/settings/categories/category-product/add-category/add-category.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 },
                 {
                   path: 'edit/:uuid',
-                  loadComponent: () => import('./shared/view/settings/categories/category-product/add-category/add-category.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
                     .then(m => m.AddCategoryComponent)
                 }
               ]
@@ -178,18 +178,18 @@ export const routes: Routes = [{
               children: [
                 {
                   path: '',
-                  loadComponent: () => import('./shared/view/settings/categories/category-recipe/list/category-recipe-list.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/list/category-recipe-list.component')
                     .then(m => m.CategoryRecipeListComponent),
                 },
                 {
                   path: 'add',
-                  loadComponent: () => import('./shared/view/settings/categories/category-recipe/add-category/add-category-recipe.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
                     .then(m => m.AddCategoryRecipeComponent)
 
                 },
                 {
                   path: 'edit/:uuid',
-                  loadComponent: () => import('./shared/view/settings/categories/category-recipe/add-category/add-category-recipe.component')
+                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
                     .then(m => m.AddCategoryRecipeComponent)
                 }
               ]
@@ -201,7 +201,7 @@ export const routes: Routes = [{
           children: [
             {
               path: '',
-              loadComponent: () => import('./shared/view/settings/taxes/taxes-settings.component')
+              loadComponent: () => import('./features/settings/view/finance-settings/taxes/taxes-settings.component')
                 .then(m => m.TaxesSettingsComponent)
             },
           ],

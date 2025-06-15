@@ -1,5 +1,5 @@
 import {Recipe} from '../service/models/Recipe';
-import {CategoryRecipe} from '../service/models/CategoryRecipe';
+import {CategoryRecipe} from '../../features/settings/service/models/CategoryRecipe';
 import {CategoryRecipeDTO} from '../service/db/shemes/CategoryRecipe.scheme';
 
 export const recipeToFormValue = (recipe: Recipe) => {

@@ -2,7 +2,7 @@ import {Component, computed, HostBinding, HostListener, inject, signal} from '@a
 import {TimeAgoPipe} from '../pipes/time-ago.pipe';
 import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {UserService} from '../../service/services/user.service';
+import {UserService} from '../../../features/settings/service/services/user.service';
 
 @Component({
   selector: 'lg-last-backup-informer',

@@ -14,7 +14,7 @@ import {
   AddCategoryRecipeFormComponent
 } from '../../shared/view/settings/categories/category-recipe/add-category/add-category-recipe-form.component';
 import {CategoryRecipesRepository} from '../../shared/service/repositories';
-import {CategoryRecipe} from '../../shared/service/models/CategoryRecipe';
+import {CategoryRecipe} from '../../features/settings/service/models/CategoryRecipe';
 
 describe('AddCategoryRecipeFormComponent', () => {
   let component: AddCategoryRecipeFormComponent;

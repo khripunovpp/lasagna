@@ -23,10 +23,9 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
 import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
-import {SettingsService} from './shared/view/settings/settings.service';
-import {USER_LANGUAGE} from './shared/service/tokens/user-language.token';
-import {UserService} from './shared/service/services/user.service';
-import {SETTINGS} from './shared/service/tokens/settings.token';
+import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
+import {UserService} from './features/settings/service/services/user.service';
+import {SETTINGS} from './features/settings/service/providers/settings.token';
 import {CATEGORIZED_RECIPES_LIST} from './shared/service/tokens/categorized-recipes-list.token';
 import {from, map, shareReplay, switchMap} from 'rxjs';
 import {Recipe} from './shared/service/models/Recipe';
@@ -43,6 +42,7 @@ import {generateRandomInvoicePrefix} from './shared/helpers/pdf-generators/prefi
 import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import {SettingsService} from './features/settings/service/services/settings.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -66,12 +66,6 @@ export const appConfig: ApplicationConfig = {
       const docsService = inject(DocsService);
       const settingsService = inject(SettingsService);
       const userService = inject(UserService);
-      if (localStorage.getItem('logoBase64') === null) {
-        localStorage.setItem('logoBase64', logoBase64);
-      }
-      if (localStorage.getItem('invoicesPrefix') === null) {
-        localStorage.setItem('invoicesPrefix', generateRandomInvoicePrefix());
-      }
 
       if (userService.isUserFirstTime) {
         userService.setUserFirstTime(false);
@@ -83,6 +77,14 @@ export const appConfig: ApplicationConfig = {
         docsService.init(),
         settingsService.loadSettings().then((settings) => {
           settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
+          if (localStorage.getItem('logoBase64') === null) {
+            localStorage.setItem('logoBase64', logoBase64);
+          }
+
+          if (!settingsService.getInvoicePrefix()) {
+            settingsService.setInvoicePrefix(generateRandomInvoicePrefix());
+          }
+
         }),
       ])
     }),

@@ -1,8 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {differenceInSeconds, formatDistanceToNow} from 'date-fns';
-import {LanguageService} from '../../service/services';
 import {enUS, pt, ru} from 'date-fns/locale';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {LanguageService} from '../../../features/settings/service/services/language.service';
 
 
 const localesMap: Record<string, any> = {

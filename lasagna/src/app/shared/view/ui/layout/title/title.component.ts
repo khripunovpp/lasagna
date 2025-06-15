@@ -5,7 +5,8 @@ import {NgClass} from '@angular/common';
   selector: 'lg-title',
   standalone: true,
   template: `
-      <p [ngClass]="'title--' + level()"
+      <p [class.title--flat]="flat()"
+         [ngClass]="'title--' + level()"
          class="title"
          role="heading">
           <ng-content></ng-content>
@@ -41,9 +42,14 @@ import {NgClass} from '@angular/common';
       .title--6 {
         font-size: 1em;
       }
+
+      .title--flat {
+        font-weight: normal;
+      }
     `
   ]
 })
 export class TitleComponent {
  level = input(1);
+ flat = input(false);
 }

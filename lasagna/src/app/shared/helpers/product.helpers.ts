@@ -1,5 +1,5 @@
 import {Product} from '../service/models/Product';
-import {CategoryProduct} from '../service/models/CategoryProduct';
+import {CategoryProduct} from '../../features/settings/service/models/CategoryProduct';
 import {CategoryProductDTO} from '../service/db/shemes/CategoryProduct.scheme';
 
 export const productToFormValue = (product?: Product) => {

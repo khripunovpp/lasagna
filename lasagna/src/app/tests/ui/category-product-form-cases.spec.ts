@@ -13,7 +13,7 @@ import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';
 import {ComponentRef} from '@angular/core';
 import {defaultImports} from '../default-imports';
 import {defaultProviders} from '../default-providers';
-import {CategoryProduct} from '../../shared/service/models/CategoryProduct';
+import {CategoryProduct} from '../../features/settings/service/models/CategoryProduct';
 import {NotificationsService} from '../../shared/service/services';
 
 describe('AddCategoryFormComponent', () => {

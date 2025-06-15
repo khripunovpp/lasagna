@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../shared/service/repositories';
-import {CategoryRecipe} from '../../shared/service/models/CategoryRecipe';
+import {CategoryRecipe} from '../../features/settings/service/models/CategoryRecipe';
 import {defaultProviders} from '../default-providers';
 import {defaultImports} from '../default-imports';
 

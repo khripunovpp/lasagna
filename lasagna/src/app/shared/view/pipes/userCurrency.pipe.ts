@@ -1,7 +1,7 @@
 import {CurrencyPipe} from '@angular/common';
 import {inject, Pipe} from '@angular/core';
-import {USER_CURRENCY} from '../../service/tokens/user-currency.token';
-import {SETTINGS} from '../../service/tokens/settings.token';
+import {USER_CURRENCY} from '../../../features/settings/service/providers/user-currency.token';
+import {SETTINGS} from '../../../features/settings/service/providers/settings.token';
 
 @Pipe({
   name: 'userCurrency',

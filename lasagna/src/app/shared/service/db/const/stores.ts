@@ -13,4 +13,5 @@ export enum Stores {
   TAXES = 'taxes',
   SETTINGS = 'settings',
   INVOICES = 'invoices',
+  CREDENTIALS = 'credentials',
 }

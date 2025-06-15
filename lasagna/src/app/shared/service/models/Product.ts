@@ -1,5 +1,5 @@
-import {Tag} from './Tag';
-import {CategoryProduct} from './CategoryProduct';
+import {Tag} from '../../../features/settings/service/models/Tag';
+import {CategoryProduct} from '../../../features/settings/service/models/CategoryProduct';
 import {ProductDTO} from '../db/shemes/Product.scheme';
 import {Unit} from '../types/Unit.types';
 import {parseFloatingNumber} from '../../helpers/number.helper';

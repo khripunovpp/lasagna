@@ -57,6 +57,7 @@ export class DexieIndexDbService extends Dexie {
       this.initIndex(Stores.DOCUMENTATION),
       this.initIndex(Stores.SETTINGS),
       this.initIndex(Stores.INVOICES),
+      this.initIndex(Stores.CREDENTIALS),
     ]).then(() => {
     });
   }

@@ -5,4 +5,5 @@ export const relationsMap: Partial<Record<string, string>> = {
   recipe_id: `${Stores.RECIPES}.uuid`,
   tags: `${Stores.TAGS}.uuid`,
   invoice_id: `${Stores.INVOICES}.uuid`,
+  credential_id: `${Stores.CREDENTIALS}.uuid`,
 }

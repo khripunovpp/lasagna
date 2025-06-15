@@ -34,8 +34,8 @@ import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '../../ui/layout/button.component';
 import {WidthDirective} from '../../directives/width.directive';
 import {UnitSwitcherComponent} from '../../ui/unit-switcher.component';
-import {USER_CURRENCY} from '../../../service/tokens/user-currency.token';
-import {SETTINGS} from '../../../service/tokens/settings.token';
+import {USER_CURRENCY} from '../../../../features/settings/service/providers/user-currency.token';
+import {SETTINGS} from '../../../../features/settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../pipes/currency-symbol.pipe';
 import {smaller} from 'mathjs';
 

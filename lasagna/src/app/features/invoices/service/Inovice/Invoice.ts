@@ -35,7 +35,7 @@ export class Invoice {
   public updatedAt: number = Date.now();
 
   get pdfNumber(): string {
-    return `${this.prefix}${this.invoice_number}`;
+    return `${this.prefix}/${this.invoice_number}`;
   }
 
   get total(): number {

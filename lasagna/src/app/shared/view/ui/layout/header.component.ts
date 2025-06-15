@@ -3,9 +3,10 @@ import {ButtonComponent} from './button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location} from '@angular/common';
-import {GlobalSearchService, LanguageService} from '../../../service/services';
+import {GlobalSearchService} from '../../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
+import {LanguageService} from '../../../../features/settings/service/services/language.service';
 
 @Component({
   selector: 'lg-header',
@@ -207,11 +208,10 @@ export class HeaderComponent {
   items: Signal<{ label: string, link: string }[]>
   activeIndex = signal(0);
   links = viewChildren(ButtonComponent)
+  protected readonly window = window;
+  protected readonly document = document;
 
   setActive(index: number) {
     this.activeIndex.set(index);
   }
-
-  protected readonly window = window;
-  protected readonly document = document;
 }

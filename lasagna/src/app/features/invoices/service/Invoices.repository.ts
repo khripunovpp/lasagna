@@ -9,6 +9,7 @@ import {ProductsRepository, RecipesRepository} from '../../../shared/service/rep
 import {Invoice} from './Inovice/Invoice';
 import {InvoiceItemFactory} from './InvoiceItem/InvoiceItem.factory';
 import {InvoiceDTO} from './Inovice/Invoice.scheme';
+import {SettingsService} from '../../settings/service/services/settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class InvoicesRepository {
     private _pdfGenerator: PdfGeneratorService,
     private _productsRepository: ProductsRepository,
     private _recipesRepository: RecipesRepository,
+    private _settingsService: SettingsService,
   ) {
   }
 
@@ -51,17 +53,7 @@ export class InvoicesRepository {
   }
 
   getDefaultPrefix() {
-    try {
-      const prefix = localStorage.getItem('invoicesPrefix');
-      if (prefix) {
-        return prefix;
-      } else {
-        return generateRandomInvoicePrefix();
-      }
-    } catch (e) {
-      console.error('Error getting default prefix:', e);
-      return generateRandomInvoicePrefix();
-    }
+   return this._settingsService.getInvoicePrefix() || generateRandomInvoicePrefix();
   }
 
   // generateInvoiceNumber(invoice: InvoiceNewModel): string {

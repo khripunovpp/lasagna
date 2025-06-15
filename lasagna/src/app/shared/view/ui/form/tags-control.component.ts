@@ -18,7 +18,7 @@ import {
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {NgStyle} from '@angular/common';
-import {Tag} from '../../../service/models/Tag';
+import {Tag} from '../../../../features/settings/service/models/Tag';
 
 
 export interface TagsItem {

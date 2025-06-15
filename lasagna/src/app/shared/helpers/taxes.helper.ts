@@ -1,5 +1,5 @@
-import {Tax} from '../service/models/Tax';
-import {TaxDTO} from '../service/db/shemes/Tax.scheme';
+import {Tax} from '../../features/settings/service/models/Tax';
+import {TaxDTO} from '../../features/settings/service/schemes/Tax.scheme';
 
 export const taxToFormValue = (tax: Tax) => {
   return {
