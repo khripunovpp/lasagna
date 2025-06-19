@@ -19,12 +19,15 @@ export class WidthDirective {
   }
 
   @HostBinding('style.max-width') get maxWidth() {
+     if (mediaMobMax()) {
+      return '100%';
+    }
     return 'calc(var(--lg-width, 100%) - var(--gap, 0px))';
   }
 
   @HostBinding('style.flex') get flex() {
     if (mediaMobMax()) {
-      return '1 0 100%';
+      return 'auto';
     }
     return `1 0 ${this.lgWidth}`;
   };
