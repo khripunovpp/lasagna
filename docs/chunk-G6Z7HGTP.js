@@ -1,0 +1,1 @@
+import{ec as n,mb as t}from"./chunk-NHWKWTII.js";var r=class e{constructor(){}selfAlign="center";static \u0275fac=function(i){return new(i||e)};static \u0275dir=t({type:e,selectors:[["","lgSelfCenter",""]],hostVars:2,hostBindings:function(i,o){i&2&&n("align-self",o.selfAlign)}})};export{r as a};

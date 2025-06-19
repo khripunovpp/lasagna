@@ -2,11 +2,11 @@ import {AfterViewInit, Component, DestroyRef, inject, signal} from '@angular/cor
 import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 import {TitleComponent} from '../../../../../shared/view/ui/layout/title/title.component';
-import {TranslatePipe} from '@ngx-translate/core';
+
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
 import {SettingsService} from '../../../service/services/settings.service';
-import {JsonPipe} from '@angular/common';
+
 import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
 import {FileInputComponent} from '../../../../../shared/view/ui/form/file-input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -85,10 +85,8 @@ import {debounceTime} from 'rxjs';
     GapColumnComponent,
     InputComponent,
     TitleComponent,
-    TranslatePipe,
     ReactiveFormsModule,
     GapRowComponent,
-    JsonPipe,
     NumberInputComponent,
     FileInputComponent
   ]

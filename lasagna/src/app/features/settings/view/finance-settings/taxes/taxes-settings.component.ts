@@ -1,10 +1,10 @@
 import {Component, computed, effect, signal} from '@angular/core';
 import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
-import {CardListComponent} from '../../../../../shared/view/ui/card/card-list.component';
+
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CardListItemDirective} from '../../../../../shared/view/ui/card/card-list-item.directive';
+
 import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
-import {ControlComponent} from '../../../../../shared/view/ui/form/control.component';
+
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
 import {CheckboxComponent} from '../../../../../shared/view/ui/form/chckbox.component';
@@ -12,7 +12,7 @@ import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-in
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
-import {ContainerComponent} from '../../../../../shared/view/ui/layout/container/container.component';
+
 import {MatIcon} from '@angular/material/icon';
 import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
 import {WidthDirective} from '../../../../../shared/view/directives/width.directive';
@@ -101,10 +101,6 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
     CheckboxComponent,
     FormsModule,
     ButtonComponent,
-    ContainerComponent,
-    CardListComponent,
-    CardListItemDirective,
-    ControlComponent,
     InputComponent,
     MatIcon,
     NumberInputComponent,
@@ -116,11 +112,8 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
     WidthDirective,
     GapColumnComponent,
     GapColumnComponent,
-    CardListComponent,
     ReactiveFormsModule,
-    CardListItemDirective,
     GapRowComponent,
-    ControlComponent,
     InputComponent,
     TextareaComponent,
     CheckboxComponent,

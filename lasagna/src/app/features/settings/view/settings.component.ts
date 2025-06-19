@@ -10,7 +10,7 @@ import {BackupSettingsComponent} from './backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {TabDirective} from '../../../shared/view/ui/tabs/tab.directive';
 import {TabsComponent} from '../../../shared/view/ui/tabs/tabs.component';
-import {JsonPipe} from '@angular/common';
+
 import {SettingsService} from '../service/services/settings.service';
 import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/invoices-settings.component";
 import {CredentialSettingsComponent} from './finance-settings/credentials/credential-settings.component';
@@ -35,7 +35,6 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
     TranslatePipe,
     TabDirective,
     TabsComponent,
-    JsonPipe,
     InvoicesSettingsComponent,
     CredentialSettingsComponent,
     TaxesSettingsComponent

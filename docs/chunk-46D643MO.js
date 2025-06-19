@@ -1,0 +1,1 @@
+import{ec as e,mb as r}from"./chunk-NHWKWTII.js";var n=class t{constructor(){}marginLeft="auto";static \u0275fac=function(i){return new(i||t)};static \u0275dir=r({type:t,selectors:[["","lgPull",""]],hostVars:2,hostBindings:function(i,s){i&2&&e("margin-left",s.marginLeft)}})};export{n as a};

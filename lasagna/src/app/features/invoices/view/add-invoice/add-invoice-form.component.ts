@@ -29,20 +29,17 @@ import {
   invoiceFormShape,
   makeInvoiceItemFormGroup
 } from '../../helpers/invoices-forms.helper';
-import {JsonPipe} from '@angular/common';
+
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {Product} from '../../../../shared/service/models/Product';
 import {Recipe} from '../../../../shared/service/models/Recipe';
 import {InvoiceItemType} from '@invoices/service/InvoiceItem/InvoiceItem.types';
 import {LoggerService} from '../../../logger/logger.service';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
-import {
-  InlineSeparatedGroupComponent,
-  InlineSeparatedGroupDirective
-} from "../../../../shared/view/ui/inline-separated-group.component";
-import {ShrinkDirective} from "../../../../shared/view/directives/shrink.directive";
+
+
+
 import {CredentialsType} from '../../../settings/service/types/credentials.types';
-import {CredentialsDialogComponent} from '@invoices/view/add-invoice/credentials-dialog.component';
+
 import {Credential} from '../../../settings/service/models/Credential';
 import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-field.component';
 
@@ -68,13 +65,7 @@ import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-fi
     TextareaComponent,
     ReadonlyControlComponent,
     DatePickerComponent,
-    JsonPipe,
     UserCurrencyPipe,
-    TitleComponent,
-    InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective,
-    ShrinkDirective,
-    CredentialsDialogComponent,
     CredentialFieldComponent,
 
   ],

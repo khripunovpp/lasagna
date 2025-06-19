@@ -5,7 +5,7 @@ import {CredentialsRepository} from '../../../settings/service/repositories/cred
 import {NotificationsService} from '../../../../shared/service/services';
 import {Credential} from '../../../settings/service/models/Credential';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 
 @Component({
@@ -26,7 +26,6 @@ import {ButtonComponent} from '../../../../shared/view/ui/layout/button.componen
   imports: [
     DialogComponent,
     GapColumnComponent,
-    GapRowComponent,
     ButtonComponent
   ]
 })

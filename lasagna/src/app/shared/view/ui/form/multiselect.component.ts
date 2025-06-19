@@ -13,7 +13,7 @@ import {
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {JsonPipe} from '@angular/common';
+
 
 
 export interface MultiselectItem {
@@ -48,8 +48,7 @@ export interface MultiselectItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    JsonPipe
-  ],
+    ],
   styles: [
     `
       lg-multiselect {
