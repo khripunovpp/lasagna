@@ -1,7 +1,7 @@
 export class CategoryRecipe {
   constructor(
     private _name: string,
-    private _uuid?: string,
+    private _uuid?: string
   ) {
   }
 
