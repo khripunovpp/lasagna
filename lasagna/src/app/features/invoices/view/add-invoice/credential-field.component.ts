@@ -1,9 +1,9 @@
 import {Component, forwardRef, input, output} from '@angular/core';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+
 import {CredentialsType} from '../../../settings/service/types/credentials.types';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {CredentialsDialogComponent} from '@invoices/view/add-invoice/credentials-dialog.component';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -104,10 +104,8 @@ import {Credential} from '../../../settings/service/models/Credential';
   `],
   standalone: true,
   imports: [
-    GapRowComponent,
     ButtonComponent,
     CredentialsDialogComponent,
-    GapColumnComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     ReactiveFormsModule,

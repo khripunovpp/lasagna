@@ -11,7 +11,7 @@ import {
 import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {GapColumnComponent} from '../layout/gap-column.component';
-import {CardComponent} from '../card/card.component';
+
 import {injectQueryParams} from '../../../helpers/route.helpers';
 import {Router} from '@angular/router';
 
@@ -21,8 +21,7 @@ import {Router} from '@angular/router';
   imports: [
     NgTemplateOutlet,
     GapColumnComponent,
-    CardComponent
-  ],
+    ],
   template: `
       <div [attr.aria-label]="'Tabs'"
            [attr.role]="'tablist'"
