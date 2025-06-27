@@ -9,26 +9,13 @@ import {Tag} from '../../../settings/service/models/Tag';
 
 export class Recipe {
   constructor(
-    props: {
-      name: string
-      description: string
-      ingredients: any[]
-      outcome_amount: number | string
-      outcome_unit: string
-      uuid?: string | undefined
-      taxTemplateName?: string | undefined
-      category_id?: string | null | Partial<CategoryRecipeDTO>
-      createdAt?: number | string | undefined
-      updatedAt?: number | string | undefined
-      tags?: string[] | undefined
-      color?: string | undefined
-    }
+    props:Partial<RecipeDTO>
   ) {
     this.name = String(props.name ?? '').trim();
     this.description = String(props.description ?? '').trim();
-    this.ingredients = props.ingredients.map((ingredient) => {
+    this.ingredients = props.ingredients?.map((ingredient) => {
       return Ingredient.fromRaw(ingredient);
-    }).filter((ingredient) => !ingredient.empty);
+    }).filter((ingredient) => !ingredient.empty) || [];
     this.outcome_amount = parseFloat(String(props.outcome_amount ?? ''));
     this.outcome_unit = (String(props.outcome_unit ?? '') || 'gram') as Unit;
     this.uuid = String(props.uuid ?? '').trim() || undefined;
@@ -44,6 +31,11 @@ export class Recipe {
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
     this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
+    this.perUnitPriceModifier = props.perUnitPriceModifier ? {
+      action: props.perUnitPriceModifier.action as any,
+      value: parseFloatingNumber(props.perUnitPriceModifier.value) || 0,
+      unit: props.perUnitPriceModifier.unit as any
+    } : undefined;
   }
 
   name: string;
@@ -58,6 +50,11 @@ export class Recipe {
   updatedAt?: number | undefined;
   tags?: Tag[];
   color?: string | undefined;
+  perUnitPriceModifier?: {
+    action: 'add' | 'subtract' | 'round'
+    value: number
+    unit: 'currency' | 'percent'
+  };
 
   get valid() {
     return this.name
@@ -127,6 +124,7 @@ export class Recipe {
         outcome_unit: 'gram',
       });
     }
+    console.log('Recipe.fromRaw', dto);
     return new Recipe({
       name: dto?.name || '',
       description: dto?.description || '',
@@ -140,6 +138,11 @@ export class Recipe {
       updatedAt: dto?.updatedAt,
       tags: dto?.tags,
       color: dto?.color,
+      perUnitPriceModifier: dto?.perUnitPriceModifier ? {
+        action: dto.perUnitPriceModifier.action,
+        value: parseFloatingNumber(dto.perUnitPriceModifier.value) || 0,
+        unit: dto.perUnitPriceModifier.unit,
+      } : undefined,
     });
   }
 
@@ -176,6 +179,10 @@ export class Recipe {
     this.ingredients = this.ingredients.filter((ingredient) => !ingredient.blanked);
   }
 
+  clone() {
+    return new Recipe(this.toDTO());
+  }
+
   toDTO(): RecipeDTO {
     return {
       name: this.name,
@@ -192,6 +199,11 @@ export class Recipe {
         return tag.toString();
       }),
       color: this.color || estimateColor(this.name),
+      perUnitPriceModifier: this.perUnitPriceModifier ? {
+        action: this.perUnitPriceModifier.action,
+        value: parseFloatingNumber(this.perUnitPriceModifier.value) || 0,
+        unit: this.perUnitPriceModifier.unit,
+      } : undefined,
     };
   }
 
@@ -214,6 +226,11 @@ export class Recipe {
       return Tag.fromRaw(tag);
     }) : this.tags;
     this.color = dto?.color || this.color;
+    this.perUnitPriceModifier = dto?.perUnitPriceModifier ? {
+      action: dto.perUnitPriceModifier.action,
+      value: parseFloatingNumber(dto.perUnitPriceModifier.value) || 0,
+      unit: dto.perUnitPriceModifier.unit,
+    } : this.perUnitPriceModifier;
     return this;
   }
 }

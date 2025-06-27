@@ -5,6 +5,7 @@ import {Unit} from '../../../shared/service/types/Unit.types';
 import {RecipeCalculation} from './models/RecipeCalculation';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {RecipeDTO} from './Recipe.scheme';
 
 export interface Calculation {
   calculation: RecipeCalculation
@@ -52,6 +53,15 @@ export class CalculateRecipeService {
     });
   }
 
+  async updateRecipe(
+    recipe: Recipe,
+    updates: Partial<RecipeDTO>
+  ) {
+    if (!recipe?.uuid) return;
+    const cloned = recipe.clone();
+    cloned.update(updates);
+    await this._recipeRepository.editRecipe(cloned.uuid!, cloned);
+  }
 
   calculateRecipe(
     recipeUUID: string,
