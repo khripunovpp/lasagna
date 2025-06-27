@@ -124,7 +124,7 @@ export class Recipe {
         outcome_unit: 'gram',
       });
     }
-    
+
     return new Recipe({
       name: dto?.name || '',
       description: dto?.description || '',

@@ -4,6 +4,7 @@ import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Product} from '../../../products/service/Product';
 import {Recipe} from './Recipe';
 import {RecipeDTO} from '../Recipe.scheme';
+import {deepClone} from '../../../../shared/helpers/objects.helper';
 
 export class Ingredient {
   constructor(
@@ -147,5 +148,15 @@ export class Ingredient {
     this.recipe_id = dto?.recipe_id || this.recipe_id;
     this.unit = dto?.unit || this.unit;
     return this;
+  }
+
+  clone() {
+    return deepClone(this);
+  }
+
+  setAmount(amount: number) {
+    this.update({
+      amount: parseFloatingNumber(amount),
+    });
   }
 }
