@@ -10,119 +10,121 @@ import {ShrinkDirective} from '../../directives/shrink.directive';
 import {RangeComponent} from '../../ui/form/range.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
+import {ParseMathDirective} from '../../directives/parse-math.directive';
 
 
 @Component({
   selector: 'lg-jelly-widget',
   standalone: true,
   template: `
-    <lg-gap-column>
-      <form [formGroup]="form">
-        <lg-gap-row [bottom]="true" [mobileMode]="true">
-          <lg-gap-column formGroupName="from">
-            In recipe you have
-            <lg-number-input formControlName="amount"
-                      [placeholder]="'Amount'">
-              <div ngProjectAs="after">
-                grams of
-              </div>
-            </lg-number-input>
+      <lg-gap-column>
+          <form [formGroup]="form">
+              <lg-gap-row [bottom]="true" [mobileMode]="true">
+                  <lg-gap-column formGroupName="from">
+                      In recipe you have
+                      <lg-number-input formControlName="amount"
+                                       lgParseMath
+                                       [placeholder]="'Amount'">
+                          <div ngProjectAs="after">
+                              grams of
+                          </div>
+                      </lg-number-input>
 
-            <lg-range
-              [min]="120"
-              [max]="220"
-              [step]="10"
-              formControlName="bloom"
-              [tickInterval]="20"
-            ></lg-range>
+                      <lg-range
+                              [min]="120"
+                              [max]="220"
+                              [step]="10"
+                              formControlName="bloom"
+                              [tickInterval]="20"
+                      ></lg-range>
 
-            <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
-          </lg-gap-column>
+                      <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
+                  </lg-gap-column>
 
 
-          <lg-gap-column formGroupName="to">
-            @let fromType = form.value?.from?.type;
-            @let toType = form.value?.to?.type;
-            <lg-gap-row class="text-center" [strictCenter]="true">
-              <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
-                <div>
-                  You need
-                </div>
+                  <lg-gap-column formGroupName="to">
+                      @let fromType = form.value?.from?.type;
+                      @let toType = form.value?.to?.type;
+                      <lg-gap-row class="text-center" [strictCenter]="true">
+                          <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
+                              <div>
+                                  You need
+                              </div>
 
-                <lg-gap-row [size]="'small'" style="font-size: 2rem">
-                  <div>{{ result() | number: '1.0-2' }}</div>
-                  @switch (toType) {
-                    @case ("powder") {
-                      🍚
-                    }
-                    @case ("leaf") {
-                      🍃
-                    }
-                    @case ("mass") {
-                      🧫
-                    }
-                  }
-                </lg-gap-row>
+                              <lg-gap-row [size]="'small'" style="font-size: 2rem">
+                                  <div>{{ result() | number: '1.0-2' }}</div>
+                                  @switch (toType) {
+                                      @case ("powder") {
+                                          🍚
+                                      }
+                                      @case ("leaf") {
+                                          🍃
+                                      }
+                                      @case ("mass") {
+                                          🧫
+                                      }
+                                  }
+                              </lg-gap-row>
 
-                <div>
-                  grams of
-                </div>
-              </lg-gap-column>
-              @if (waterNeeded()) {
-                <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
-                  <div>
-                    @switch (toType) {
-                      @case ("mass") {
-                        <div>
-                          With
-                        </div>
-                      }
-                    }
+                              <div>
+                                  grams of
+                              </div>
+                          </lg-gap-column>
+                          @if (waterNeeded()) {
+                              <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
+                                  <div>
+                                      @switch (toType) {
+                                          @case ("mass") {
+                                              <div>
+                                                  With
+                                              </div>
+                                          }
+                                      }
 
-                    @switch (toType) {
-                      @case ("powder") {
-                        <div>
-                          And
-                        </div>
-                      }
-                      @case ("leaf") {
-                        <div>
-                          And
-                        </div>
-                      }
-                    }
-                  </div>
+                                      @switch (toType) {
+                                          @case ("powder") {
+                                              <div>
+                                                  And
+                                              </div>
+                                          }
+                                          @case ("leaf") {
+                                              <div>
+                                                  And
+                                              </div>
+                                          }
+                                      }
+                                  </div>
 
-                  <lg-gap-row [size]="'small'" style="font-size: 2rem">
-                    <div>{{ waterNeeded() | number: '1.0-2' }}</div>
-                    💧
-                  </lg-gap-row>
+                                  <lg-gap-row [size]="'small'" style="font-size: 2rem">
+                                      <div>{{ waterNeeded() | number: '1.0-2' }}</div>
+                                      💧
+                                  </lg-gap-row>
 
-                  <div>
-                    ml of water
-                    @switch (toType) {
-                      @case ("mass") {
-                        <br>included
-                      }
-                    }
-                  </div>
-                </lg-gap-column>
-              }
-            </lg-gap-row>
+                                  <div>
+                                      ml of water
+                                      @switch (toType) {
+                                          @case ("mass") {
+                                              <br>included
+                                          }
+                                      }
+                                  </div>
+                              </lg-gap-column>
+                          }
+                      </lg-gap-row>
 
-            <lg-range
-              [min]="120"
-              [max]="220"
-              [step]="10"
-              formControlName="bloom"
-              [tickInterval]="20"
-            ></lg-range>
+                      <lg-range
+                              [min]="120"
+                              [max]="220"
+                              [step]="10"
+                              formControlName="bloom"
+                              [tickInterval]="20"
+                      ></lg-range>
 
-            <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
-          </lg-gap-column>
-        </lg-gap-row>
-      </form>
-    </lg-gap-column>
+                      <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
+                  </lg-gap-column>
+              </lg-gap-row>
+          </form>
+      </lg-gap-column>
   `,
   imports: [
     FormsModule,
@@ -133,8 +135,9 @@ import {NumberInputComponent} from '../../ui/form/number-input.component';
     DecimalPipe,
     ShrinkDirective,
     RangeComponent,
-    NumberInputComponent
-],
+    NumberInputComponent,
+    ParseMathDirective
+  ],
   styles: [`
     :host {
 

@@ -3,10 +3,9 @@ export const removeAllNonLetters = (str: string) => {
   return str.replace(/[^a-zA-Zа-яА-ЯёЁ0-9\s-:()]/g, '');
 }
 
-export const removeAllToFloat = (str: string) => {
-  return String(str || '').replace(/[^0-9.,+-\/*]/g, '')
+export const removeAllNonMathSymbols = (str: string) => {
+  return String(str || '').replace(/[^0-9%.,+-\/*]/g, '')
     .replace(',', '.')
-    .replace(/(\..*)\./g, '$1')
     .replace(/(\.\d{3})\d+/g, '$1');
 }
 
