@@ -14,19 +14,19 @@ export interface UnitGroupItem {
   selector: 'lg-unit-switcher',
   standalone: true,
   template: `
-    <div class="unit-switcher">
-      @for (item of items(); track item.value; let last = $last, first = $first, index = $index) {
-        <button (click)="onClickItem(item,index)"
-              [style]="item.style || 'default'"
-              [class.active]="activeIndex() == index"
-              class="unit-switcher__item"
-              [class.unit-switcher__item--active]="activeIndex() == index">
-          {{ item.label }}
-        </button>@if (!last) {
-          <span class="unit-switcher__item-separator">/</span>
-        }
-      }
-    </div>
+      <div class="unit-switcher">
+          @for (item of items();track item.value;let last = $last, first = $first, index = $index) {
+              <button (click)="onClickItem(item,index)"
+                      [style]="item.style || 'default'"
+                      [class.active]="activeIndex() == index"
+                      class="unit-switcher__item"
+                      [class.unit-switcher__item--active]="activeIndex() == index">
+                  {{ item.label }}
+              </button>@if (!last) {
+                  <span class="unit-switcher__item-separator">/</span>
+              }
+          }
+      </div>
   `,
   styles: [
     `

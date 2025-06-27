@@ -1,27 +1,46 @@
-import {Component, ElementRef, forwardRef, input, output, signal, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  contentChildren,
+  ElementRef,
+  forwardRef,
+  input,
+  output,
+  signal,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlExtraTemplateDirective} from './control-extra-template.directive';
+import {NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'lg-input',
   standalone: true,
   template: `
-    <div class="lg-input"
-         [class.contrast]="theme() === 'contrast'">
-      <input #input
-             (change)="onInputChanged.emit(value)"
-             (input)="onChangeInput($event)"
-             (keydown.enter)="onEnter.emit(value)"
-             [placeholder]="placeholder()"
-             [value]="value"
-             [disabled]="disable()"
-             class="input"
-             type="text">
+      <div [class.contrast]="theme() === 'contrast'"
+           class="lg-input">
+          @if (beforeExtraTpl()?.templateRef) {
+              <div class="lg-input__before">
+                  <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
+              </div>
+          }
+          <input #input
+                 (change)="onInputChanged.emit(value)"
+                 (input)="onChangeInput($event)"
+                 (keydown.enter)="onEnter.emit(value)"
+                 [disabled]="disable()"
+                 [placeholder]="placeholder()"
+                 [value]="value"
+                 class="input"
+                 type="text">
 
-      <div class="lg-input__after"
-           [style.display]="noAfter() ? 'none' : 'flex'">
-        <ng-content select="after"></ng-content>
+          @if (afterExtraTpl()?.templateRef) {
+              <div class="lg-input__after">
+                  <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+              </div>
+          }
       </div>
-    </div>
   `,
   styles: [
     `
@@ -39,6 +58,15 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
       }
 
       .lg-input__after {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+
+      .lg-input__before {
         display: flex;
         align-items: center;
         gap: 16px;
@@ -69,7 +97,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     `
   ],
   imports: [
-    FormsModule
+    FormsModule,
+    NgTemplateOutlet,
   ],
   providers: [
     {
@@ -81,7 +110,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 })
 
 export class InputComponent
-  implements ControlValueAccessor {
+  implements ControlValueAccessor, AfterViewInit {
   constructor() {
   }
 
@@ -96,7 +125,13 @@ export class InputComponent
     'default' | 'contrast'
   >('default');
   noAfter = signal(false);
-
+  extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
+  afterExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'after');
+  });
+  beforeExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'before');
+  });
   onChange: (value: string) => void = () => {
   };
 
@@ -127,11 +162,6 @@ export class InputComponent
 
 
   ngAfterViewInit() {
-    const after = this.input?.nativeElement.nextElementSibling;
-    if (after?.childElementCount === 0) {
-      this.noAfter.set(true);
-    }
-
     if (this.autoFocus()) {
       this.focus();
     }

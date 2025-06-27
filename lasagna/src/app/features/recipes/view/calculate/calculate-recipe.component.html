@@ -29,30 +29,70 @@
 
             </lg-card>
 
-            <lg-card size="small">
-              <lg-gap-row [size]="'small'" [relaxed]="true">
-                <div>
-                  {{ 'recipe.calculation.one-unit.label' | translate }} <b>
-                  {{ result()?.calculation?.recipe?.outcome_unit }}
-                </b>
-                </div>
+            <lg-gap-column [position]="'stretch'" size="small">
+              <lg-card size="small">
+                <lg-gap-row [size]="'small'" [relaxed]="true">
+                  <div>
+                    {{ 'recipe.calculation.one-unit.label' | translate }} <b>
+                    {{ result()?.calculation?.recipe?.outcome_unit }}
+                  </b>
+                  </div>
 
-                <b>
-                  @if (notInGrams()) {
-                    <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
-                  } @else {
-                    <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
+                  <b>
+                    @if (notInGrams()) {
+                      <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
+                    } @else {
+                      <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
+                    }
+                  </b>
+                </lg-gap-row>
+              </lg-card>
+
+              <lg-gap-row [formGroup]="recipePriceAdditionsForm"
+                          [size]="'small'"
+                          [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
+                <lg-input lgParseMath
+                          placeholder="extra price"
+                          formControlName="value">
+                  <ng-template lgExtraTpl place="before">
+                    <lg-unit-switcher formControlName="action"
+                                      [items]="additionalPriceAction">
+                    </lg-unit-switcher>
+                  </ng-template>
+
+                  @if (showPriceAdditionUnits()) {
+                    <ng-template lgExtraTpl place="after">
+                      <lg-unit-switcher formControlName="unit"
+                                        [items]="additionalPriceUnit">
+                      </lg-unit-switcher>
+                    </ng-template>
                   }
-                </b>
+
+                  @if (roundActionSelected()) {
+                    <ng-template lgExtraTpl place="after">
+                      <b>{{ userSettings()['currency']|currencySymbol }}
+                        /
+                        {{ result()?.calculation?.recipe?.outcome_unit }}
+                      </b>
+                    </ng-template>
+                  }
+                </lg-input>
               </lg-gap-row>
-            </lg-card>
+            </lg-gap-column>
 
             <lg-card size="small">
               <lg-gap-row [size]="'small'" [relaxed]="true">
                 <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
                 <b>
-                  {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
+                  {{ result()?.calculation?.totalPriceWithAdditions | userCurrency: '1.2-2' }}
+
+                  @if (result()?.calculation?.totalPriceDifference) {
+                    <span
+                      class="text-accent">
+                      (+{{ result()?.calculation?.totalPriceDifference |  userCurrency: '1.2-2' }})
+                    </span>
+                  }
                 </b>
               </lg-gap-row>
             </lg-card>
@@ -123,7 +163,20 @@
 
       <ng-template #totalAmount>
         @if (notInGrams()) {
-          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (showedOutcome() || 1) |  userCurrency: '1.2-2' }}
+          <span [class.text-small]="result()?.calculation?.totalPriceDifference">
+              {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
+           </span>
+          @if (result()?.calculation?.totalPriceDifference) {
+            <span class="text-active">
+              > {{ result()?.calculation?.pricePerUnitModified |  userCurrency: '1.2-2' }}
+            </span>
+
+            @if (roundActionSelected()) {
+              <span class="text-accent">
+              (+ {{ result()?.calculation?.pricePerUnitDifference |  userCurrency: '1.2-2' }})
+            </span>
+            }
+          }
           /
           {{ (result()?.calculation?.recipe?.weightForUnit || 1) |  number: '1.0-2' }} gram
         } @else {

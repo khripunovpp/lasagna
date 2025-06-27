@@ -1,4 +1,4 @@
-import {Directive, HostListener} from '@angular/core';
+import {Directive, HostListener, Optional} from '@angular/core';
 import {NgControl} from '@angular/forms';
 import {evaluate} from 'mathjs';
 
@@ -8,11 +8,11 @@ import {evaluate} from 'mathjs';
 })
 export class ParseMathDirective {
   constructor(
-    private _ngControl: NgControl,
+    @Optional() private _ngControl: NgControl,
   ) {
   }
 
   @HostListener('keydown.enter', ['$event']) onEnter(e: KeyboardEvent) {
-    this._ngControl.valueAccessor?.writeValue(evaluate(String(this._ngControl.value)));
+    this._ngControl?.valueAccessor?.writeValue(evaluate(String(this._ngControl?.value)));
   }
 }

@@ -32,6 +32,14 @@ export class RecipeCalculation {
     return this.totalPrice / this.totalWeight;
   }
 
+  get pricePerOutcomeUnit(): number {
+    if (!this.recipe || !this.recipe.outcome_amount) {
+      return 0;
+    }
+
+    return this.totalPrice / this.recipe.outcome_amount;
+  }
+
   get totalWeight(): number {
     if (!this.recipe) {
       return 0;
@@ -56,5 +64,51 @@ export class RecipeCalculation {
     }
 
     return this.recipe.outcome_unit || 'gram';
+  }
+
+  get totalPriceDifference(): number {
+    return Math.abs(this.totalPriceWithAdditions - this.totalPrice);
+  }
+
+  get pricePerUnitDifference(): number {
+    return Math.abs(this.pricePerUnitModified - this.pricePerOutcomeUnit);
+  }
+
+  get pricePerUnitModified(): number {
+    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
+      return this.pricePerOutcomeUnit;
+    }
+
+    let price = this.pricePerOutcomeUnit;
+    const value = parseFloatingNumber(this.recipe.perUnitPriceModifier.value);
+
+    switch (this.recipe.perUnitPriceModifier.action) {
+      case 'add': {
+        if (this.recipe.perUnitPriceModifier.unit === 'currency') {
+          price += value;
+        } else if (this.recipe.perUnitPriceModifier.unit === 'percent') {
+          price += (price * value) / 100;
+        }
+        break;
+      }
+      case 'subtract': {
+
+        break;
+      }
+      case 'round': {
+        price = value || price;
+        break;
+      }
+    }
+
+    return price;
+  }
+
+  get totalPriceWithAdditions() {
+    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
+      return this.totalPrice;
+    }
+
+    return this.pricePerUnitModified * this.outcomeAmount;
   }
 }

@@ -15,6 +15,11 @@ export const RecipeScheme = z.object({
   updatedAt: z.union([z.string(), z.number()]).optional(),
   tags: z.array(z.string()).optional(),
   color: z.string().optional(),
+  perUnitPriceModifier: z.object({
+    action: z.enum(['add', 'subtract', 'round']),
+    value: z.number().or(z.string()),
+    unit: z.enum(['currency', 'percent']),
+  }).optional(),
 });
 
 
