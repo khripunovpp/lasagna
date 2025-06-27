@@ -1,36 +1,36 @@
 import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {InputComponent} from '../../ui/form/input.component';
-import {ControlComponent} from '../../ui/form/control.component';
-import {ControlGroupComponent} from '../../ui/form/control-group.component';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {TextareaComponent} from '../../ui/form/textarea.component';
+import {InputComponent} from '../../../../shared/view/ui/form/input.component';
+import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
+import {ControlGroupComponent} from '../../../../shared/view/ui/form/control-group.component';
+import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
 import {debounceTime} from 'rxjs';
-import {RecipesRepository} from '../../../service/repositories/recipes.repository';
-import {MultiselectComponent} from '../../ui/form/multiselect.component';
-import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {RecipesRepository} from '../../service/recipes.repository';
+import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
+import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NumberInputComponent} from '../../ui/form/number-input.component';
-import {ControlsRowComponent} from '../../ui/form/controls-row.component';
-import {ExpandDirective} from '../../directives/expand.directive';
-import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {TooltipComponent} from '../../ui/tooltip.component';
-import {ProductWidgetsComponent} from '../../widgets/product-widgets.component';
-import {injectParams} from '../../../helpers/route.helpers';
-import {ChipsListComponent} from '../../ui/form/chips-list.component';
-import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
-import {Recipe} from '../../../service/models/Recipe';
-import {Ingredient} from '../../../service/models/Ingredient';
+import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+import {ControlsRowComponent} from '../../../../shared/view/ui/form/controls-row.component';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
+import {NotificationsService} from '../../../../shared/service/services/notifications.service';
+import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
+import {ProductWidgetsComponent} from '../../../../shared/view/widgets/product-widgets.component';
+import {injectParams} from '../../../../shared/helpers/route.helpers';
+import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
+import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
+import {Recipe} from '../../service/models/Recipe';
+import {Ingredient} from '../../service/models/Ingredient';
 
-import {recipeToFormValue} from '../../../helpers/recipe.helpers';
-import {RecipeDTO} from '../../../service/db/shemes/Recipe.scheme';
+import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
+import {RecipeDTO} from '../../service/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
 
-import {UnitSwitcherComponent} from '../../ui/unit-switcher.component';
-import {CardComponent} from '../../ui/card/card.component';
+import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
 
 @Component({

@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router, RouterStateSnapshot} from '@angular/router';
 import {inject} from '@angular/core';
-import {RecipesRepository} from '../repositories/recipes.repository';
+import {RecipesRepository} from '../recipes.repository';
 import {Recipe} from '../models/Recipe';
-import {DraftForm} from '../services/draft-forms.service';
+import {DraftForm} from '../../../../shared/service/services/draft-forms.service';
 
 export const recipeDraftResolver: ResolveFn<any> = async (
   route: ActivatedRouteSnapshot,

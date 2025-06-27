@@ -1,8 +1,8 @@
 import {Routes} from '@angular/router';
-import {recipeEditResolver} from './shared/service/resolvers/recipe-edit.resolver';
-import {recipeCalculationResolver,} from './shared/service/resolvers/recipe-calculation.resolver';
-import {recipeCalculationTemplateResolver} from './shared/service/resolvers/recipe-tax-template.resolver';
-import {recipeDraftResolver} from './shared/service/resolvers/recipe-draft.resolver';
+import {recipeEditResolver} from './features/recipes/service/resolvers/recipe-edit.resolver';
+import {recipeCalculationResolver,} from './features/recipes/service/resolvers/recipe-calculation.resolver';
+import {recipeCalculationTemplateResolver} from './features/recipes/service/resolvers/recipe-tax-template.resolver';
+import {recipeDraftResolver} from './features/recipes/service/resolvers/recipe-draft.resolver';
 import {productDraftResolver} from './features/products/service/product-draft.resolver';
 import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';
 import {InvoiceBuilderService} from '@invoices/view/invoice-builder.service';
@@ -27,17 +27,17 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./shared/view/recipe/list/recipes-list.component')
+          loadComponent: () => import('./features/recipes/view/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
         },
         {
           path: 'add',
-          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
         },
         {
           path: 'edit/:uuid',
-          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver,
@@ -48,7 +48,7 @@ export const routes: Routes = [{
         },
         {
           path: 'draft/:uuid',
-          loadComponent: () => import('./shared/view/recipe/add-recipe/add-recipe.component')
+          loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver,
@@ -59,7 +59,7 @@ export const routes: Routes = [{
         },
         {
           path: 'calculate/:uuid',
-          loadComponent: () => import('./shared/view/recipe/calculate/calculate-recipe.component')
+          loadComponent: () => import('./features/recipes/view/calculate/calculate-recipe.component')
             .then(m => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
@@ -19,7 +19,11 @@ import {ContainerComponent} from '../../../../shared/view/ui/layout/container/co
 import {TranslatePipe} from '@ngx-translate/core';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
+import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 
 @Component({
   selector: 'app-add-recipe',
@@ -146,6 +150,7 @@ export class AddProductComponent
     return this.draftRef()!.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
+  private _routerManager = inject(ROUTER_MANAGER);
 
   ngOnDestroy() {
   }
@@ -189,7 +194,7 @@ export class AddProductComponent
           this.draftOrProductUUID() ?? ''));
 
         if (!this.isDraftRoute()) {
-          window.history.replaceState({}, '', this._router.createUrlTree(['products/draft/' + this.draftRef()!.uuid]).toString());
+          this._routerManager.replace(['products/draft/' + this.draftRef()!.uuid]);
         }
       }
     });
@@ -213,7 +218,7 @@ export class AddProductComponent
 
   onRemoveDraft() {
     this._removeDraft();
-    this._router.navigate(['products']);
+    this._routerManager.navigate(['products']);
   }
 
   onDeleteProduct() {
@@ -222,7 +227,7 @@ export class AddProductComponent
     }
     this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
       this._notificationsService.success('Product deleted');
-      this._router.navigate(['products']);
+      this._routerManager.navigate(['products']);
     });
   }
 
@@ -237,7 +242,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      this._router.navigate(['products', 'edit', newUUID]);
+      this._routerManager.navigateWithReset(['products/edit/' + newUUID]);
     });
   }
 
@@ -254,7 +259,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      this._router.navigate(['products', 'edit', productUUID]);
+      this._routerManager.navigateWithReset(['products', 'edit', productUUID]);
     });
   }
 

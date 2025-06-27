@@ -1,4 +1,4 @@
-import {Recipe} from '../service/models/Recipe';
+import {Recipe} from '../../features/recipes/service/models/Recipe';
 import {CategoryRecipe} from '../../features/settings/service/models/CategoryRecipe';
 import {CategoryRecipeDTO} from '../service/db/shemes/CategoryRecipe.scheme';
 

@@ -2,7 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import {FlexsearchIndexService} from '../db/flexsearch-index.service';
 import {Stores} from '../db/const/stores';
 import {ProductsRepository} from '../../../features/products/service/products.repository';
-import {RecipesRepository} from '../repositories/recipes.repository';
+import {RecipesRepository} from '../../../features/recipes/service/recipes.repository';
 import {CategoryProductsRepository} from '../../../features/settings/service/repositories/category-products.repository';
 import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
 

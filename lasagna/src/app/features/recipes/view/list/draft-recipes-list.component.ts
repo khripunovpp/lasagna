@@ -1,20 +1,20 @@
 import {Component, HostBinding, OnInit, signal} from '@angular/core';
-import {RecipesRepository} from '../../../service/repositories';
-import {DraftForm, NotificationsService, SelectionZoneService} from '../../../service/services';
-import {RecipeDTO} from '../../../service/db/shemes/Recipe.scheme';
-import {ProductDTO} from '../../../../features/products/service/Product.scheme';
-import {Stores} from '../../../service/db/const/stores';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
+import {RecipesRepository} from '../../../../shared/service/repositories';
+import {DraftForm, NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
+import {RecipeDTO} from '../../service/Recipe.scheme';
+import {ProductDTO} from '../../../products/service/Product.scheme';
+import {Stores} from '../../../../shared/service/db/const/stores';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 
-import {CardListComponent} from '../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
+import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {RouterLink} from '@angular/router';
-import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {ExpandDirective} from '../../directives/expand.directive';
+import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ExpanderComponent} from '../../ui/expander.component';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../ui/inline-separated-group.component';
+import {ExpanderComponent} from '../../../../shared/view/ui/expander.component';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-draft-recipes-list',

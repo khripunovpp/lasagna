@@ -10,40 +10,40 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
-import {CalculateRecipeService, Calculation} from '../../../service/services/calulate-recipe.service';
-import {TableCardComponent} from '../../ui/card/table-card.component';
+import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
+import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe.service';
+import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
 import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
 
 import {FormsModule} from '@angular/forms';
 
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
 
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
 
 import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
-import {BaseTemplate, FormTemplateService, TaxTemplateRow} from '../../../service/services/form-templates.service';
+import {BaseTemplate, FormTemplateService, TaxTemplateRow} from '../../../../shared/service/services/form-templates.service';
 
 
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {injectParams} from '../../../helpers/route.helpers';
+import {injectParams} from '../../../../shared/helpers/route.helpers';
 
-import {SelectResourcesService} from '../../../service/services/select-resources.service';
-import {defaultTxTemplates} from '../../../service/const/default-tx-templates';
-import {FadeInComponent} from '../../ui/fade-in.component';
-import {Recipe} from '../../../service/models/Recipe';
+import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
+import {defaultTxTemplates} from '../../../../shared/service/const/default-tx-templates';
+import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
+import {Recipe} from '../../service/models/Recipe';
 import {BaseChartDirective} from 'ng2-charts';
-import {CardComponent} from '../../ui/card/card.component';
-import {WidthDirective} from '../../directives/width.directive';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
+import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 
-import {ExpandDirective} from '../../directives/expand.directive';
-import {randomRGB} from '../../../helpers/color.helper';
-import {Ingredient} from '../../../service/models/Ingredient';
-import {UserCurrencyPipe} from '../../pipes/userCurrency.pipe';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {randomRGB} from '../../../../shared/helpers/color.helper';
+import {Ingredient} from '../../service/models/Ingredient';
+import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({

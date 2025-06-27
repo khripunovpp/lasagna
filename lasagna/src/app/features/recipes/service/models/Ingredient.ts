@@ -1,9 +1,9 @@
-import {Unit} from '../types/Unit.types';
-import {parseFloatingNumber} from '../../helpers/number.helper';
-import {ProductDTO} from '../../../features/products/service/Product.scheme';
-import {Product} from '../../../features/products/service/Product';
+import {Unit} from '../../../../shared/service/types/Unit.types';
+import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
+import {ProductDTO} from '../../../products/service/Product.scheme';
+import {Product} from '../../../products/service/Product';
 import {Recipe} from './Recipe';
-import {RecipeDTO} from '../db/shemes/Recipe.scheme';
+import {RecipeDTO} from '../Recipe.scheme';
 
 export class Ingredient {
   constructor(

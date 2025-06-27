@@ -7,7 +7,7 @@ import {InvoiceItemType} from '../service/InvoiceItem/InvoiceItem.types';
 import {InvoicesRepository} from '../service/Invoices.repository';
 import {ProductsRepository, RecipesRepository} from '../../../shared/service/repositories';
 import {Product} from '../../products/service/Product';
-import {Recipe} from '../../../shared/service/models/Recipe';
+import {Recipe} from '../../recipes/service/models/Recipe';
 import {LoggerService} from '../../logger/logger.service';
 import {Credential} from '../../settings/service/models/Credential';
 

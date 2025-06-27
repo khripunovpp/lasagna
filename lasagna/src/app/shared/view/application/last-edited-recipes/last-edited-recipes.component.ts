@@ -1,11 +1,11 @@
 import {Component, signal} from '@angular/core';
-import { RecipesRepository} from '../../../service/repositories/recipes.repository';
+import { RecipesRepository} from '../../../../features/recipes/service/recipes.repository';
 import {GapColumnComponent} from '../../ui/layout/gap-column.component';
 import {RouterLink} from '@angular/router';
 
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {Recipe} from '../../../service/models/Recipe';
+import {Recipe} from '../../../../features/recipes/service/models/Recipe';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {PullDirective} from '../../directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
