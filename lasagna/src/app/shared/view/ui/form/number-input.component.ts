@@ -1,27 +1,28 @@
 import {Component, ElementRef, forwardRef, input, output, signal, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {removeAllToFloat} from '../../../helpers/strings.helper';
+import {removeAllNonMathSymbols} from '../../../helpers/strings.helper';
+import {ParseMathDirective} from '../../directives/parse-math.directive';
 
 @Component({
   selector: 'lg-number-input',
   standalone: true,
   template: `
-    <div [class.disabled]="disable()"
-         class="lg-number-input">
-      <input #input
-             (change)="onInputChange.emit(value)"
-             (input)="onChangeInput($event)"
-             (keydown)="onKeydown.emit()"
-             [disabled]="disable()"
-             [placeholder]="placeholder()"
-             [value]="value"
-             class="input"
-             type="tel">
-      <div [style.display]="noAfter() ? 'none' : 'flex'"
-           class="lg-number-input__after">
-        <ng-content select="after"></ng-content>
+      <div [class.disabled]="disable()"
+           class="lg-number-input">
+          <input #input
+                 (change)="onInputChange.emit(value)"
+                 (input)="onChangeInput($event)"
+                 (keydown)="onKeydown.emit()"
+                 [disabled]="disable()"
+                 [placeholder]="placeholder()"
+                 [value]="value"
+                 class="input"
+                 type="tel">
+          <div [style.display]="noAfter() ? 'none' : 'flex'"
+               class="lg-number-input__after">
+              <ng-content select="after"></ng-content>
+          </div>
       </div>
-    </div>
 
   `,
   styles: [
@@ -133,7 +134,7 @@ export class NumberInputComponent
   }
 
   private _change(value: string) {
-    this.value = value ? removeAllToFloat(value) : '';
+    this.value = value ? removeAllNonMathSymbols(value) : '';
     if (this.input?.nativeElement) {
       this.input.nativeElement.value = this.value;
     }
