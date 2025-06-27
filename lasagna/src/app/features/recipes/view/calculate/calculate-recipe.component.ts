@@ -109,13 +109,11 @@ export class CalculateRecipeComponent
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
-      this.outcome_amount.set(this.result()?.calculation?.outcomeAmount || 0);
-      this.showedOutcome.set(this.result()?.calculation?.outcomeAmount || 0);
 
       this.recipePriceAdditionsForm.patchValue({
-        action: this.result()?.calculation?.recipe?.perUnitPriceModifier?.action || 'add',
-        value: this.result()?.calculation?.recipe?.perUnitPriceModifier?.value || 0,
-        unit: this.result()?.calculation?.recipe?.perUnitPriceModifier?.unit || 'currency',
+        action: this.result()?.calculation?.perUnitPriceModifier?.action || 'add',
+        value: this.result()?.calculation?.perUnitPriceModifier?.value || 0,
+        unit: this.result()?.calculation?.perUnitPriceModifier?.unit || 'currency',
       } as any);
     });
   }
@@ -219,13 +217,10 @@ export class CalculateRecipeComponent
   };
   @ViewChild('priceChart', {read: BaseChartDirective}) chartPrices: BaseChartDirective | undefined;
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
-  outcome_amount = model(0);
-  showedOutcome = signal(0);
+  recalculateTotalsModel = model(0);
   notInGrams = computed(() => {
-    return this.result()?.calculation?.recipe?.outcome_unit && this.result()?.calculation?.recipe?.outcome_unit !== 'gram'
+    return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== 'gram'
   });
-  canApplyTemplates = signal(true);
-  canSaveDefaultTemplate = signal(true);
   recipePriceAdditionsForm = new FormGroup({
     action: new FormControl<'add' | 'round'>('add'),
     value: new FormControl<number | string>(0),
@@ -236,9 +231,25 @@ export class CalculateRecipeComponent
     return this.values()?.action === 'round';
   });
   showPriceAdditionUnits = computed(() => {
-    const action = this.result()?.calculation?.recipe?.perUnitPriceModifier?.action;
-    console.log({action})
+    const action = this.result()?.calculation?.perUnitPriceModifier?.action;
     return action === 'add' || !action;
+  });
+
+  totalScaleFactor = computed(() => {
+    if (!this.recalculateTotalsModel()) return 1;
+    return this.recalculateTotalsModel() / (this.result()?.calculation?.outcomeAmount || 1);
+  })
+
+  totalPrice = computed(() => {
+    return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
+  });
+
+  totalPriceDifference = computed(() => {
+    return (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
+  });
+
+  totalPriceWithAdditions = computed(() => {
+    return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
 
   ngOnInit() {
@@ -265,24 +276,17 @@ export class CalculateRecipeComponent
     targetChart?.chart?.update();
   }
 
-  onOutcomeChange = (value: any) => {
-    this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
-      this.result.set(result);
-      this.showedOutcome.set(value);
-    });
-  }
-
   async updatePriceAdditions(
-    recipe: any,
+    formValue: any,
   ) {
     try {
-      await this._calculateRecipeService.updateRecipe(this.result()?.calculation?.recipe!, {
+      await this._calculateRecipeService.updateRecipe({
         perUnitPriceModifier: {
-          action: recipe.action,
-          value: parseFloat(recipe.value) || 0,
-          unit: recipe.unit,
+          action: formValue.action,
+          value: parseFloat(formValue.value) || 0,
+          unit: formValue.unit,
         }
-      });
+      } as any);
 
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
       this.result.set(result);

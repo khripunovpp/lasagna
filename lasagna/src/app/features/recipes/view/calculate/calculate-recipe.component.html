@@ -3,11 +3,11 @@
     <lg-gap-column>
       <lg-gap-row [center]="true" [mobileMode]="true">
         <lg-title>
-          {{ result()?.calculation?.recipe?.name }} {{ 'recipe.calculation.title.after-text'  | translate }}
+          {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
         </lg-title>
 
         <lg-button [flat]="true"
-                   [link]="'/recipes/edit/' + result()?.calculation?.recipe?.uuid"
+                   [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
                    [size]="'small'"
                    [style]="'primary'">
           {{ 'edit-label' | translate }}
@@ -17,24 +17,26 @@
       @if (result()?.calculation?.totalPrice) {
         <lg-gap-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
           <lg-gap-column [position]="'stretch'">
+
             <lg-card size="small">
               <lg-gap-row [size]="'small'" [relaxed]="true">
                 <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
 
                 <b>
-                  {{ (outcome_amount() || result()?.calculation?.totalWeight || 0) | number: '1.0-2' }}
-                  {{ result()?.calculation?.recipe?.outcome_unit }}
+                  {{ result()?.calculation?.outcomeAmount | number: '1.0-2' }}
+                  {{ result()?.calculation?.outcomeUnit }}
                 </b>
               </lg-gap-row>
 
             </lg-card>
+
 
             <lg-gap-column [position]="'stretch'" size="small">
               <lg-card size="small">
                 <lg-gap-row [size]="'small'" [relaxed]="true">
                   <div>
                     {{ 'recipe.calculation.one-unit.label' | translate }} <b>
-                    {{ result()?.calculation?.recipe?.outcome_unit }}
+                    {{ result()?.calculation?.outcomeUnit }}
                   </b>
                   </div>
 
@@ -42,11 +44,12 @@
                     @if (notInGrams()) {
                       <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
                     } @else {
-                      <ng-container *ngTemplateOutlet="perGramAmount"></ng-container>
+                      {{ result()?.calculation?.pricePerUnit | userCurrency:'1.2-5' }}
                     }
                   </b>
                 </lg-gap-row>
               </lg-card>
+
 
               <lg-gap-row [formGroup]="recipePriceAdditionsForm"
                           [size]="'small'"
@@ -72,7 +75,7 @@
                     <ng-template lgExtraTpl place="after">
                       <b>{{ userSettings()['currency']|currencySymbol }}
                         /
-                        {{ result()?.calculation?.recipe?.outcome_unit }}
+                        {{ result()?.calculation?.outcomeUnit }}
                       </b>
                     </ng-template>
                   }
@@ -80,26 +83,46 @@
               </lg-gap-row>
             </lg-gap-column>
 
-            <lg-card size="small">
-              <lg-gap-row [size]="'small'" [relaxed]="true">
-                <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
+            <lg-gap-column [position]="'stretch'" size="small">
+              <lg-card size="small">
+                <lg-gap-row [size]="'small'" [relaxed]="true">
+                  <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
-                <b>
-                  {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
+                  <b>
+                    {{ totalPrice() | userCurrency: '1.2-2' }}
 
-                  @if (result()?.calculation?.totalPriceDifference) {
-
-                    <span class="text-active">
-                      > {{ result()?.calculation?.totalPriceWithAdditions |  userCurrency: '1.2-2' }}
+                    @if (totalPriceDifference()) {
+                      <span class="text-active">
+                      > {{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}
                     </span>
 
-                            <span class="text-accent">
-                      (+ {{ result()?.calculation?.totalPriceDifference |  userCurrency: '1.2-2' }})
+                      <span class="text-accent">
+                      (+ {{ totalPriceDifference() |  userCurrency: '1.2-2' }})
                     </span>
+                    }
+                  </b>
+                </lg-gap-row>
+              </lg-card>
+
+              <lg-gap-row [size]="'small'"
+                          [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
+                <lg-number-input lgParseMath
+                                 placeholder="amount"
+                                 [(ngModel)]="recalculateTotalsModel">
+                  <ng-template lgExtraTpl place="before">
+                    Recalculate for
+                  </ng-template>
+
+                  @if (roundActionSelected()) {
+                    <ng-template lgExtraTpl place="after">
+                      <b>
+                        {{ result()?.calculation?.outcomeUnit }}
+                      </b>
+                    </ng-template>
                   }
-                </b>
+                </lg-number-input>
               </lg-gap-row>
-            </lg-card>
+            </lg-gap-column>
           </lg-gap-column>
 
           <lg-card lgWidth="270px" size="small">
@@ -136,15 +159,6 @@
         </lg-gap-row>
       }
 
-
-      <ng-template #rawAmount>
-        @if (notInGrams()) {
-          {{ (result()?.calculation?.totalPrice || 1) / (showedOutcome() || 1) | userCurrency: '1.2-2' }}
-        } @else {
-          {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
-        }
-      </ng-template>
-
       <ng-template #totalAmount>
         @if (notInGrams()) {
           <span [class.text-small]="result()?.calculation?.totalPriceDifference">
@@ -160,16 +174,9 @@
             </span>
           }
           /
-          {{ (result()?.calculation?.recipe?.weightForUnit || 1) |  number: '1.0-2' }} gram
+          {{ result()?.calculation?.weightForUnit |  number: '1.0-2' }} gram
         } @else {
-          {{ (result()?.calculation?.totalPrice || 1) | userCurrency: '1.2-2' }}
-        }
-      </ng-template>
-
-      <ng-template #perGramAmount>
-        @if (notInGrams()) {
-        } @else {
-          {{ (result()?.calculation?.totalPrice || 1) / (outcome_amount() || result()?.calculation?.totalWeight || 0) | userCurrency:'1.2-5' }}
+          {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
         }
       </ng-template>
 

@@ -2,7 +2,7 @@ import {Recipe} from './Recipe';
 import {CalculationTableParams} from '../calulate-recipe.service';
 import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 
-export class RecipeCalculation {
+export class RecipeCost {
   constructor(
     public recipe?: Recipe,
   ) {
@@ -15,6 +15,13 @@ export class RecipeCalculation {
       return 0;
     }
 
+    return this.ingredientsTotalPrice;
+  }
+
+  get ingredientsTotalPrice(): number {
+    if (!this.recipe) {
+      return 0;
+    }
     return this.recipe.ingredients.reduce((acc, ingredient) => {
       return acc + ingredient.totalPrice;
     }, 0);
@@ -110,5 +117,33 @@ export class RecipeCalculation {
     }
 
     return this.pricePerUnitModified * this.outcomeAmount;
+  }
+
+  get recipeName(): string {
+    if (!this.recipe) {
+      return '';
+    }
+
+    return this.recipe.name || '';
+  }
+
+  get recipeUuid(): string {
+    if (!this.recipe) {
+      return '';
+    }
+
+    return this.recipe.uuid || '';
+  }
+
+  get perUnitPriceModifier() {
+    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
+      return null;
+    }
+
+    return this.recipe.perUnitPriceModifier;
+  }
+
+  get weightForUnit(): number {
+    return this.recipe?.weightForUnit || 0;
   }
 }

@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {RecipesRepository} from './recipes.repository';
 import {Recipe} from './models/Recipe';
 import {Unit} from '../../../shared/service/types/Unit.types';
-import {RecipeCalculation} from './models/RecipeCalculation';
+import {RecipeCost} from './models/RecipeCost';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {RecipeDTO} from './Recipe.scheme';
 
 export interface Calculation {
-  calculation: RecipeCalculation
+  calculation: RecipeCost
   table: CalculationTableParams[]
 }
 
@@ -54,48 +54,49 @@ export class CalculateRecipeService {
   }
 
   async updateRecipe(
-    recipe: Recipe,
     updates: Partial<RecipeDTO>
   ) {
-    debugger
-    if (!recipe?.uuid) return;
-    const cloned = recipe.clone();
+    if (!this.calculation?.calculation?.recipeUuid) return;
+    const cloned = this.calculation.calculation.recipe!.clone();
     cloned.update(updates);
     await this._recipeRepository.editRecipe(cloned.uuid!, cloned);
   }
 
-  calculateRecipe(
+  async calculateRecipe(
     recipeUUID: string,
-    forOutcome: number = 0,
   ) {
-    return new Promise<Calculation>(async (resolve, reject) => {
-      const table: CalculationTableParams[] = [];
+    const recipe = await this._recipeRepository.getOne(recipeUUID, true);
+    const calculation = new RecipeCost(recipe);
+    this.calculation = this._makeView(calculation);
 
-      const recipe = await this._recipeRepository.getOne(recipeUUID, true);
-      const calculation = new RecipeCalculation(recipe);
+    return this.calculation;
+  }
 
-      calculation.ingredients.forEach(ingredient => {
-        if (ingredient.blanked) return;
-        table.push(this._makeRow({
-          name: ingredient.generalName,
-          price_per_gram: ingredient.pricePerUnit,
-          amount: ingredient.amount,
-          total: ingredient.totalPrice,
-          unit: ingredient.unit,
-          uuid: ingredient.uuid || '',
-          indent: 0,
-          type: ingredient.recipe_id ? 'recipe-row' : undefined,
-        }))
-      });
+  private _makeView(
+    recipeCost: RecipeCost,
+  ) {
+    const table: CalculationTableParams[] = [];
 
-      table.push(this._makeTotal(calculation.totalPrice, calculation.totalWeight));
-
-      resolve({
-        calculation: calculation,
-        table: table,
-      });
-
+    recipeCost.ingredients.forEach(ingredient => {
+      if (ingredient.blanked) return;
+      table.push(this._makeRow({
+        name: ingredient.generalName,
+        price_per_gram: ingredient.pricePerUnit,
+        amount: ingredient.amount,
+        total: ingredient.totalPrice,
+        unit: ingredient.unit,
+        uuid: ingredient.uuid || '',
+        indent: 0,
+        type: ingredient.recipe_id ? 'recipe-row' : undefined,
+      }));
     });
+
+    table.push(this._makeTotal(recipeCost.totalPrice, recipeCost.totalWeight));
+
+    return {
+      calculation: recipeCost,
+      table: table,
+    };
   }
 
   private _makeRow(
