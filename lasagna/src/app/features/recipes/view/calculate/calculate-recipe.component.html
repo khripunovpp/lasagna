@@ -124,6 +124,8 @@
       <ng-template #totalAmount>
         @if (notInGrams()) {
           {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (showedOutcome() || 1) |  userCurrency: '1.2-2' }}
+          /
+          {{ (result()?.calculation?.recipe?.weightForUnit || 1) |  number: '1.0-2' }} gram
         } @else {
           {{ (result()?.calculation?.totalPrice || 1) + totalTaxes() | userCurrency: '1.2-2' }}
         }
@@ -160,7 +162,7 @@
             </thead>
 
             <tbody>
-              @for (row of result()?.table; track $index; let i = $index) {
+              @for (row of result()?.table;track $index;let i = $index) {
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
 
@@ -189,6 +191,7 @@
           </table>
         } @else {
         }
-      </lg-table-card> </lg-gap-column>
+      </lg-table-card>
+    </lg-gap-column>
   </lg-container>
 </lg-fade-in>

@@ -110,6 +110,13 @@ export class Recipe {
     return parseFloatingNumber(this.outcome_amount) > this.totalIngredientsWeight;
   }
 
+  get weightForUnit(): number {
+    if (!this.outcome_unit || this.outcome_unit === 'gram') {
+      return this.totalIngredientsWeight;
+    }
+    return this.totalIngredientsWeight / this.outcome_amount;
+  }
+
   static fromRaw(dto: any) {
     if (typeof dto === 'string') {
       return new Recipe({
