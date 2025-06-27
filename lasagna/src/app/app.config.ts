@@ -28,8 +28,8 @@ import {UserService} from './features/settings/service/services/user.service';
 import {SETTINGS} from './features/settings/service/providers/settings.token';
 import {CATEGORIZED_RECIPES_LIST} from './shared/service/tokens/categorized-recipes-list.token';
 import {from, map, shareReplay, switchMap} from 'rxjs';
-import {Recipe} from './shared/service/models/Recipe';
-import {RecipeDTO} from './shared/service/db/shemes/Recipe.scheme';
+import {Recipe} from './features/recipes/service/models/Recipe';
+import {RecipeDTO} from './features/recipes/service/Recipe.scheme';
 import {GroupSortService} from './shared/service/services/grouping-sorting.service';
 import {
   CategoryRecipeSortStrategy,
@@ -43,6 +43,7 @@ import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {SettingsService} from './features/settings/service/services/settings.service';
+import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -209,5 +210,6 @@ export const appConfig: ApplicationConfig = {
       }
     },
     provideNativeDateAdapter(),
+    ROUTER_MANAGER_PROVIDER,
   ]
 };

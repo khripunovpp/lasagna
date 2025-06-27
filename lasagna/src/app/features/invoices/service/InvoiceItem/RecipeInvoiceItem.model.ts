@@ -3,7 +3,7 @@ import {InvoiceItemType} from './InvoiceItem.types';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {parseFloatingNumber} from '../../../../shared/helpers';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
-import {Recipe} from '../../../../shared/service/models/Recipe';
+import {Recipe} from '../../../recipes/service/models/Recipe';
 
 export class RecipeInvoiceItem
   extends InvoiceItemBase {

@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from '@angular/router';
 import {inject} from '@angular/core';
-import {FormTemplateService} from '../services/form-templates.service';
-import {RecipesRepository} from '../repositories/recipes.repository';
+import {FormTemplateService} from '../../../../shared/service/services/form-templates.service';
+import {RecipesRepository} from '../recipes.repository';
 
 export const recipeCalculationTemplateResolver: ResolveFn<any> = async (
   route: ActivatedRouteSnapshot,

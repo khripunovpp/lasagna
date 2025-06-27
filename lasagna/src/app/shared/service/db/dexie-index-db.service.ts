@@ -89,6 +89,7 @@ export class DexieIndexDbService extends Dexie {
         return;
       } else {
         const data = await this.flexsearchIndexService.exportIndex(table);
+        this.logger.log(table, 'Saving index data:', {data});
         await this.replaceData(Stores.INDICES, table, {
           table,
           indexData: data,
@@ -323,6 +324,12 @@ export class DexieIndexDbService extends Dexie {
       ...value,
       uuid: autoUUID ? this.generateUuid() : (value.uuid || this.generateUuid()),
     })));
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    for (const value of values) {
+      await this.flexsearchIndexService.addToIndex(storeKey, value);
+    }
   }
 
   async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
@@ -342,7 +349,6 @@ export class DexieIndexDbService extends Dexie {
         // TODO validate schema
         await this.clear(store);
         await this.balkAdd(store, items.data, false);
-        await this.resetIndex(store);
       } else {
         throw new Error(`Store ${store} not found in backup data`);
       }

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {RecipesRepository} from '../repositories/recipes.repository';
-import {Recipe} from '../models/Recipe';
-import {Unit} from '../types/Unit.types';
-import {RecipeCalculation} from '../models/RecipeCalculation';
-import {parseFloatingNumber} from '../../helpers/number.helper';
+import {RecipesRepository} from './recipes.repository';
+import {Recipe} from './models/Recipe';
+import {Unit} from '../../../shared/service/types/Unit.types';
+import {RecipeCalculation} from './models/RecipeCalculation';
+import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 export interface Calculation {

@@ -83,6 +83,12 @@ export class FlexsearchIndexService {
     this.indices[table] = this.createIndex(['name']);
   }
 
+  async removeIndex(table: string) {
+    if (this.indices[table]) {
+      delete this.indices[table];
+    }
+  }
+
   private createIndex(fields: string[]) {
     return new Document({
       tokenize: 'forward',

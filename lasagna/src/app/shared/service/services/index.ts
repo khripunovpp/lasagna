@@ -1,5 +1,5 @@
 export * from './barcode-reader.service';
-export * from './calulate-recipe.service';
+export * from '../../../features/recipes/service/calulate-recipe.service';
 export * from './csv-reader.service';
 export * from './docs.service';
 export * from './draft-forms.service';

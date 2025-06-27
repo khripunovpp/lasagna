@@ -1,5 +1,5 @@
 import {Product} from '../../../products/service/Product';
-import {Recipe} from '../../../../shared/service/models/Recipe';
+import {Recipe} from '../../../recipes/service/models/Recipe';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {InvoiceItemBase} from './InvoiceItemBase.abstract';
 import {InvoiceItemType} from './InvoiceItem.types';

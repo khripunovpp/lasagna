@@ -1,6 +1,6 @@
 import {Recipe} from './Recipe';
-import {CalculationTableParams} from '../services/calulate-recipe.service';
-import {parseFloatingNumber} from '../../helpers/number.helper';
+import {CalculationTableParams} from '../calulate-recipe.service';
+import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 
 export class RecipeCalculation {
   constructor(

@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../db/const/stores';
-import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
-import {UsingHistoryService} from '../services/using-history.service';
+import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
+import {Stores} from '../../../shared/service/db/const/stores';
+import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
+import {UsingHistoryService} from '../../../shared/service/services/using-history.service';
 import {Subject} from 'rxjs';
-import {DraftForm, DraftFormsService} from '../services/draft-forms.service';
-import {TagsRepository} from '../../../features/settings/service/repositories/tags.repository';
-import {Recipe} from '../models/Recipe';
-import {RecipeDTO} from '../db/shemes/Recipe.scheme';
-import {Tag} from '../../../features/settings/service/models/Tag';
-import {ProductsRepository} from '../../../features/products/service/products.repository';
+import {DraftForm, DraftFormsService} from '../../../shared/service/services/draft-forms.service';
+import {TagsRepository} from '../../settings/service/repositories/tags.repository';
+import {Recipe} from './models/Recipe';
+import {RecipeDTO} from './Recipe.scheme';
+import {Tag} from '../../settings/service/models/Tag';
+import {ProductsRepository} from '../../products/service/products.repository';
 
 @Injectable({
   providedIn: 'root'

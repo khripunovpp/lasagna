@@ -1,25 +1,25 @@
 import {Component, effect, input, output, signal} from '@angular/core';
-import {CardListComponent} from '../../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../../ui/card/card-list-item.directive';
+import {CardListComponent} from '../../../../../shared/view/ui/card/card-list.component';
+import {CardListItemDirective} from '../../../../../shared/view/ui/card/card-list-item.directive';
 
-import {GapRowComponent} from '../../../ui/layout/gap-row.component';
+import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {ControlComponent} from '../../../ui/form/control.component';
-import {InputComponent} from '../../../ui/form/input.component';
-import {CheckboxComponent} from '../../../ui/form/chckbox.component';
+import {ControlComponent} from '../../../../../shared/view/ui/form/control.component';
+import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
+import {CheckboxComponent} from '../../../../../shared/view/ui/form/chckbox.component';
 
-import {NumberInputComponent} from '../../../ui/form/number-input.component';
-import {ButtonComponent} from '../../../ui/layout/button.component';
+import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
-import {ShrinkDirective} from '../../../directives/shrink.directive';
-import {SelfCenterDirective} from '../../../directives/self-center.directive';
-import {GapColumnComponent} from '../../../ui/layout/gap-column.component';
-import {ParseMathDirective} from '../../../directives/parse-math.directive';
+import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
+import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
+import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
+import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-import {TaxTemplateRow} from '../../../../service/services/form-templates.service';
-import {TextareaComponent} from '../../../ui/form/textarea.component';
-import {defaultTxTemplates} from '../../../../service/const/default-tx-templates';
+import {TaxTemplateRow} from '../../../../../shared/service/services/form-templates.service';
+import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
+import {defaultTxTemplates} from '../../../../../shared/service/const/default-tx-templates';
 
 
 export interface TaxRow {

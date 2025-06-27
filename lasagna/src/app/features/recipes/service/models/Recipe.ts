@@ -1,10 +1,10 @@
 import {Ingredient} from './Ingredient';
-import {RecipeDTO} from '../db/shemes/Recipe.scheme';
-import {Unit} from '../types/Unit.types';
-import {CategoryRecipe} from '../../../features/settings/service/models/CategoryRecipe';
-import {estimateColor, isColorString, parseFloatingNumber} from '../../helpers';
-import {CategoryRecipeDTO} from '../db/shemes/CategoryRecipe.scheme';
-import {Tag} from '../../../features/settings/service/models/Tag';
+import {RecipeDTO} from '../Recipe.scheme';
+import {Unit} from '../../../../shared/service/types/Unit.types';
+import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
+import {estimateColor, isColorString, parseFloatingNumber} from '../../../../shared/helpers';
+import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
+import {Tag} from '../../../settings/service/models/Tag';
 
 
 export class Recipe {
