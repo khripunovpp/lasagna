@@ -1,7 +1,19 @@
-import {Component, ElementRef, forwardRef, input, output, signal, ViewChild} from '@angular/core';
+import {
+  Component,
+  computed,
+  contentChildren,
+  ElementRef,
+  forwardRef,
+  input,
+  output,
+  signal,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {removeAllNonMathSymbols} from '../../../helpers/strings.helper';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {ControlExtraTemplateDirective} from './control-extra-template.directive';
+import {NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'lg-number-input',
@@ -9,6 +21,11 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
   template: `
       <div [class.disabled]="disable()"
            class="lg-number-input">
+           @if (beforeExtraTpl()?.templateRef) {
+              <div class="lg-number-input__before">
+                  <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
+              </div>
+          }
           <input #input
                  (change)="onInputChange.emit(value)"
                  (input)="onChangeInput($event)"
@@ -18,10 +35,12 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
                  [value]="value"
                  class="input"
                  type="tel">
-          <div [style.display]="noAfter() ? 'none' : 'flex'"
-               class="lg-number-input__after">
-              <ng-content select="after"></ng-content>
-          </div>
+          @if (afterExtraTpl()?.templateRef) {
+              <div class="lg-number-input__after">
+                  <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+              </div>
+          }
+
       </div>
 
   `,
@@ -38,6 +57,12 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
         align-items: center;
         gap: 16px;
         padding: 0 16px 0 0;
+      }
+      .lg-number-input__before {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 0 0 16px;
       }
 
       .lg-number-input {
@@ -74,7 +99,8 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
     `
   ],
   imports: [
-    FormsModule
+    FormsModule,
+    NgTemplateOutlet
   ],
   providers: [
     {
@@ -93,10 +119,15 @@ export class NumberInputComponent
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
   placeholder = input('Enter text here');
-  noAfter = signal(false);
   disable = input<boolean>(false);
   onKeydown = output();
-  onInputChange = output<string>();
+  onInputChange = output<string>(); extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
+  afterExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'after');
+  });
+  beforeExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'before');
+  });
 
   onChange: (value: string) => void = () => {
   };
@@ -127,10 +158,6 @@ export class NumberInputComponent
   }
 
   ngAfterViewInit() {
-    const after = this.input?.nativeElement.nextElementSibling;
-    if (after?.childElementCount === 0) {
-      this.noAfter.set(true);
-    }
   }
 
   private _change(value: string) {

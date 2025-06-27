@@ -8,7 +8,6 @@ import {
   Provider,
   signal,
   ViewChild,
-  viewChild,
   ViewEncapsulation
 } from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -26,22 +25,14 @@ import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
 
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
-
-import {TaxesAndFeesListComponent} from './taxes-and-fees-list/taxes-and-fees-list.component';
-import {
-  BaseTemplate,
-  FormTemplateService,
-  TaxTemplateRow
-} from '../../../../shared/service/services/form-templates.service';
+import {FormTemplateService} from '../../../../shared/service/services/form-templates.service';
 
 
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
 
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
-import {defaultTxTemplates} from '../../../../shared/service/const/default-tx-templates';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
-import {Recipe} from '../../service/models/Recipe';
 import {BaseChartDirective} from 'ng2-charts';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
@@ -60,6 +51,7 @@ import {errorHandler} from '../../../../shared/helpers';
 import {ControlExtraTemplateDirective} from '../../../../shared/view/ui/form/control-extra-template.directive';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
+import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -89,6 +81,7 @@ import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.
     ParseMathDirective,
     ControlExtraTemplateDirective,
     CurrencySymbolPipe,
+    NumberInputComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -118,7 +111,7 @@ export class CalculateRecipeComponent
       this.result.set(data['result']);
       this.outcome_amount.set(this.result()?.calculation?.outcomeAmount || 0);
       this.showedOutcome.set(this.result()?.calculation?.outcomeAmount || 0);
-      this.loadRecipeTaxTemplate();
+
       this.recipePriceAdditionsForm.patchValue({
         action: this.result()?.calculation?.recipe?.perUnitPriceModifier?.action || 'add',
         value: this.result()?.calculation?.recipe?.perUnitPriceModifier?.value || 0,
@@ -228,13 +221,9 @@ export class CalculateRecipeComponent
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
   outcome_amount = model(0);
   showedOutcome = signal(0);
-  totalTaxes = signal(0);
   notInGrams = computed(() => {
     return this.result()?.calculation?.recipe?.outcome_unit && this.result()?.calculation?.recipe?.outcome_unit !== 'gram'
   });
-  taxesComponent = viewChild(TaxesAndFeesListComponent);
-  taxRows = signal<TaxTemplateRow[]>([]);
-  taxTemplateToApply = model<BaseTemplate<TaxTemplateRow>>();
   canApplyTemplates = signal(true);
   canSaveDefaultTemplate = signal(true);
   recipePriceAdditionsForm = new FormGroup({
@@ -251,6 +240,9 @@ export class CalculateRecipeComponent
     console.log({action})
     return action === 'add' || !action;
   });
+
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
     (window as any)['chartPrices'] = this.chartPrices;
@@ -273,109 +265,10 @@ export class CalculateRecipeComponent
     targetChart?.chart?.update();
   }
 
-  onTaxTemplateChange(
-    value: any
-  ) {
-    this.linkTaxTemplate(value.name);
-  }
-
   onOutcomeChange = (value: any) => {
     this._calculateRecipeService.calculateRecipe(this.uuid(), value).then(result => {
       this.result.set(result);
       this.showedOutcome.set(value);
-    });
-  }
-
-  saveDefaultTaxTemplate() {
-    this._formTemplateService.saveTemplate('tax', {
-      name: 'Default Tax Template',
-      createdAt: new Date().toISOString(),
-      id: new Date().toISOString(),
-      data: this.taxesComponent()?.taxesForm.value.rows?.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })) || [],
-    });
-    this.canSaveDefaultTemplate.set(false);
-  }
-
-  loadRecipeTemplate() {
-    return this._formTemplateService.getTemplateByName('tax', this._taxTemplateName(this.result()?.calculation?.recipe!))
-  }
-
-  loadRecipeTaxTemplate() {
-    const recipeTpl = this.loadRecipeTemplate();
-    if (recipeTpl) {
-      this.taxRows.set(recipeTpl.data.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })));
-      return
-    }
-    const defTemplate = this._formTemplateService.getTemplateByName('tax', 'Default Tax Template');
-    if (defTemplate) {
-      this.taxRows.set(defTemplate.data.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })));
-    } else {
-      this.taxRows.set(defaultTxTemplates);
-    }
-
-    const name = this._taxTemplateName(this.result()?.calculation?.recipe!);
-
-    this.saveTaxTemplate(name, this.taxesComponent()?.taxesForm.value.rows ?? []);
-    this.linkTaxTemplate(name);
-  }
-
-  saveTaxTemplate(
-    name: string,
-    rows: TaxTemplateRow[]
-  ) {
-    this._formTemplateService.saveTemplate('tax', {
-      name: name,
-      createdAt: new Date().toISOString(),
-      id: new Date().toISOString(),
-      data: rows.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })) || [],
-    });
-  }
-
-  loadTaxTemplate() {
-    const name = this.taxTemplateToApply()?.name;
-    if (!name || name === this.result()?.calculation?.recipe?.taxTemplateName) {
-      return
-    }
-    const template = this._formTemplateService.getTemplateByName('tax', name);
-    if (template) {
-      this.taxRows.set(template.data.map((item: any) => ({
-        name: item.name,
-        description: item.description,
-        value: item.value,
-        percentage: item.percentage,
-      })));
-      this.onTaxTemplateChange(template);
-    }
-  }
-
-  ngOnInit() {
-  }
-
-  linkTaxTemplate(
-    name: string,
-  ) {
-    this._calculateRecipeService.linkTaxTemplate(this.uuid(), name).then(() => {
-      console.log('Tax template linked');
     });
   }
 
@@ -396,19 +289,5 @@ export class CalculateRecipeComponent
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }
-  }
-
-  onTotalTaxesChanged = (value: number) => {
-    this.totalTaxes.set(value);
-  }
-
-  onTaxesChanged = (value: TaxTemplateRow[]) => {
-    this.saveTaxTemplate(this._taxTemplateName(this.result()?.calculation?.recipe!), value);
-  }
-
-  private _taxTemplateName(
-    recipe: Recipe,
-  ): string {
-    return recipe.name + ' Tax Template';
   }
 }
