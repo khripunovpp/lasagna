@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router, RouterStateSnapshot} from '@angular/router';
 import {inject} from '@angular/core';
-import {ProductsRepository} from '../repositories/products.repository';
+import {ProductsRepository} from './products.repository';
 
 export const productDraftResolver: ResolveFn<any> = async (
   route: ActivatedRouteSnapshot,

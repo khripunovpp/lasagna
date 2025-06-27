@@ -1,22 +1,22 @@
 import {Component, HostBinding, inject, OnInit, signal, Signal} from '@angular/core';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 
-import {CardListComponent} from '../../ui/card/card-list.component';
-import {CardListItemDirective} from '../../ui/card/card-list-item.directive';
+import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
+import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {RouterLink} from '@angular/router';
-import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {ExpandDirective} from '../../directives/expand.directive';
-import {PullDirective} from '../../directives/pull.directive';
+import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ExpanderComponent} from '../../ui/expander.component';
-import {DraftForm, NotificationsService, SelectionZoneService} from '../../../service/services';
-import {ProductsRepository} from '../../../service/repositories';
-import {Product} from '../../../service/models/Product';
+import {ExpanderComponent} from '../../../../shared/view/ui/expander.component';
+import {DraftForm, NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
+import {ProductsRepository} from '../../../../shared/service/repositories';
+import {Product} from '../../service/Product';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {CATEGORIZED_PRODUCTS_LIST} from '../../../service/tokens/categorized-products-list.token';
-import {ProductDTO, ProductScheme} from '../../../service/db/shemes/Product.scheme';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../ui/inline-separated-group.component';
+import {CATEGORIZED_PRODUCTS_LIST} from '../../../../shared/service/tokens/categorized-products-list.token';
+import {ProductDTO, ProductScheme} from '../../service/Product.scheme';
+import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-draft-products-list',

@@ -1,6 +1,6 @@
 import {InvoiceItemBase} from './InvoiceItemBase.abstract';
 import {InvoiceItemType} from './InvoiceItem.types';
-import {Product} from '../../../../shared/service/models/Product';
+import {Product} from '../../../products/service/Product';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';

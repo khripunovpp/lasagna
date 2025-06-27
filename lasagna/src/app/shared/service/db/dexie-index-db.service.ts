@@ -305,6 +305,10 @@ export class DexieIndexDbService extends Dexie {
   async clear(storeKey: Stores): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).clear();
+    await this.resetIndex(storeKey);
+  }
+
+  async resetIndex(storeKey: Stores): Promise<void> {
     await this.flexsearchIndexService.clearIndex(storeKey);
     await this.saveIndex(storeKey);
   }
@@ -338,6 +342,7 @@ export class DexieIndexDbService extends Dexie {
         // TODO validate schema
         await this.clear(store);
         await this.balkAdd(store, items.data, false);
+        await this.resetIndex(store);
       } else {
         throw new Error(`Store ${store} not found in backup data`);
       }

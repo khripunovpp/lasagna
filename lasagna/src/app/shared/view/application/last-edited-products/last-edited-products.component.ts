@@ -4,8 +4,8 @@ import {RouterLink} from '@angular/router';
 
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
-import {ProductsRepository} from '../../../service/repositories/products.repository';
-import {Product} from '../../../service/models/Product';
+import {ProductsRepository} from '../../../../features/products/service/products.repository';
+import {Product} from '../../../../features/products/service/Product';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {PullDirective} from '../../directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';

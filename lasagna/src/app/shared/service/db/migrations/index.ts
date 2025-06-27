@@ -1,6 +1,6 @@
 import {Stores} from '../const/stores';
 import {Transaction} from 'dexie';
-import {ProductDTO} from '../shemes/Product.scheme';
+import {ProductDTO} from '../../../../features/products/service/Product.scheme';
 import {CategoryProductDTO} from '../shemes/CategoryProduct.scheme';
 
 export const migrations: {

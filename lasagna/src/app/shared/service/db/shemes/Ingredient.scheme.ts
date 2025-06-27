@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {ProductScheme} from './Product.scheme';
+import {ProductScheme} from '../../../../features/products/service/Product.scheme';
 import {RecipeScheme} from './Recipe.scheme';
 
 export const IngredientScheme = z.object({

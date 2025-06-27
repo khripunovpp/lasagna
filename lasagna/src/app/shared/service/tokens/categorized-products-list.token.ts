@@ -1,9 +1,9 @@
 import {inject, InjectionToken} from '@angular/core';
 import {from, map, mergeMap, Observable, switchMap} from 'rxjs';
 import {groupBy} from '../../helpers/grouping.helper';
-import {ProductsRepository} from '../repositories/products.repository';
+import {ProductsRepository} from '../../../features/products/service/products.repository';
 import {CategoryProductsRepository} from '../../../features/settings/service/repositories/category-products.repository';
-import {Product} from '../models/Product';
+import {Product} from '../../../features/products/service/Product';
 
 export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('CategorizedProductsList', {
   factory: () => {

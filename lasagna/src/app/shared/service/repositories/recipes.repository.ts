@@ -9,7 +9,7 @@ import {TagsRepository} from '../../../features/settings/service/repositories/ta
 import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../db/shemes/Recipe.scheme';
 import {Tag} from '../../../features/settings/service/models/Tag';
-import {ProductsRepository} from './products.repository';
+import {ProductsRepository} from '../../../features/products/service/products.repository';
 
 @Injectable({
   providedIn: 'root'

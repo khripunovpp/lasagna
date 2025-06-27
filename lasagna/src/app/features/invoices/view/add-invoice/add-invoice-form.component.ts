@@ -31,7 +31,7 @@ import {
 } from '../../helpers/invoices-forms.helper';
 
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {Product} from '../../../../shared/service/models/Product';
+import {Product} from '../../../products/service/Product';
 import {Recipe} from '../../../../shared/service/models/Recipe';
 import {InvoiceItemType} from '@invoices/service/InvoiceItem/InvoiceItem.types';
 import {LoggerService} from '../../../logger/logger.service';

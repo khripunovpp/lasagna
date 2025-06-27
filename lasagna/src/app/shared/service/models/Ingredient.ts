@@ -1,7 +1,7 @@
 import {Unit} from '../types/Unit.types';
 import {parseFloatingNumber} from '../../helpers/number.helper';
-import {ProductDTO} from '../db/shemes/Product.scheme';
-import {Product} from './Product';
+import {ProductDTO} from '../../../features/products/service/Product.scheme';
+import {Product} from '../../../features/products/service/Product';
 import {Recipe} from './Recipe';
 import {RecipeDTO} from '../db/shemes/Recipe.scheme';
 

@@ -3,7 +3,7 @@ import {recipeEditResolver} from './shared/service/resolvers/recipe-edit.resolve
 import {recipeCalculationResolver,} from './shared/service/resolvers/recipe-calculation.resolver';
 import {recipeCalculationTemplateResolver} from './shared/service/resolvers/recipe-tax-template.resolver';
 import {recipeDraftResolver} from './shared/service/resolvers/recipe-draft.resolver';
-import {productDraftResolver} from './shared/service/resolvers/product-draft.resolver';
+import {productDraftResolver} from './features/products/service/product-draft.resolver';
 import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';
 import {InvoiceBuilderService} from '@invoices/view/invoice-builder.service';
 import {LOGGER_CONTEXT} from './features/logger/logger-context.provider';
@@ -74,17 +74,17 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./shared/view/product/list/product-list.component')
+          loadComponent: () => import('./features/products/view/list/product-list.component')
             .then(m => m.ProductListComponent),
         },
         {
           path: 'add',
-          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
+          loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
         },
         {
           path: 'edit/:uuid',
-          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
+          loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver,
@@ -95,7 +95,7 @@ export const routes: Routes = [{
         },
         {
           path: 'draft/:uuid',
-          loadComponent: () => import('./shared/view/product/add-product/add-product.component')
+          loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver,
