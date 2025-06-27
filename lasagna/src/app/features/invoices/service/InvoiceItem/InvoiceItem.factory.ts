@@ -1,4 +1,4 @@
-import {Product} from '../../../../shared/service/models/Product';
+import {Product} from '../../../products/service/Product';
 import {Recipe} from '../../../../shared/service/models/Recipe';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {InvoiceItemBase} from './InvoiceItemBase.abstract';

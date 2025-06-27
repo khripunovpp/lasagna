@@ -3,11 +3,9 @@
     <lg-card>
       <lg-gap-column>
         <lg-control>
-          <lg-autocomplete #nameField
-                           [key]="'name'"
+          <lg-input #nameField
                            [placeholder]="'product.form.name.placeholder'|translate"
-                           [resource]="'products-names'"
-                           formControlName="name"></lg-autocomplete>
+                           formControlName="name"></lg-input>
         </lg-control>
 
         <lg-gap-row [center]="true" [mobileMode]="true">

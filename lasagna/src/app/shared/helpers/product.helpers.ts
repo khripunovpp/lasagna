@@ -1,4 +1,4 @@
-import {Product} from '../service/models/Product';
+import {Product} from '../../features/products/service/Product';
 import {CategoryProduct} from '../../features/settings/service/models/CategoryProduct';
 import {CategoryProductDTO} from '../service/db/shemes/CategoryProduct.scheme';
 

@@ -14,9 +14,9 @@ import {ControlComponent} from '../../ui/form/control.component';
 import {OpenFoodFactsService} from '../../../service/services/openfoodfacts.service';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {BarcodeReaderService} from '../../../service/services/barcode-reader.service';
-import {ProductsRepository} from '../../../service/repositories/products.repository';
+import {ProductsRepository} from '../../../../features/products/service/products.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
-import {Product} from '../../../service/models/Product';
+import {Product} from '../../../../features/products/service/Product';
 
 
 @Component({

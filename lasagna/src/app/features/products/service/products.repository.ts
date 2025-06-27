@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {CategoryProductsRepository} from '../../../features/settings/service/repositories/category-products.repository';
-import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {Stores} from '../db/const/stores';
-import {DraftFormsService, UsingHistoryService} from '../services';
+import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
+import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
+import {Stores} from '../../../shared/service/db/const/stores';
+import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
 import {Subject} from 'rxjs';
-import {TagsRepository} from '../../../features/settings/service/repositories/tags.repository';
-import {Product} from '../models/Product';
-import {ProductDTO} from '../db/shemes/Product.scheme';
-import {Tag} from '../../../features/settings/service/models/Tag';
+import {TagsRepository} from '../../settings/service/repositories/tags.repository';
+import {Product} from './Product';
+import {ProductDTO} from './Product.scheme';
+import {Tag} from '../../settings/service/models/Tag';
 
 @Injectable({
   providedIn: 'root'

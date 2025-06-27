@@ -1,9 +1,9 @@
-import {Tag} from '../../../features/settings/service/models/Tag';
-import {CategoryProduct} from '../../../features/settings/service/models/CategoryProduct';
-import {ProductDTO} from '../db/shemes/Product.scheme';
-import {Unit} from '../types/Unit.types';
-import {parseFloatingNumber} from '../../helpers/number.helper';
-import {estimateColor, isColorString} from '../../helpers/color.helper';
+import {Tag} from '../../settings/service/models/Tag';
+import {CategoryProduct} from '../../settings/service/models/CategoryProduct';
+import {ProductDTO} from './Product.scheme';
+import {Unit} from '../../../shared/service/types/Unit.types';
+import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
+import {estimateColor, isColorString} from '../../../shared/helpers/color.helper';
 
 export class Product {
   constructor(

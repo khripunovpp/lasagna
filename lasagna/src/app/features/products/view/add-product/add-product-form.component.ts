@@ -10,34 +10,37 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ControlComponent} from '../../ui/form/control.component';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
-import {ProductsRepository} from '../../../service/repositories/products.repository';
-import {SelectResourcesService} from '../../../service/services/select-resources.service';
+import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
+import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {ProductsRepository} from '../../service/products.repository';
+import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {Router} from '@angular/router';
-import {MultiselectComponent} from '../../ui/form/multiselect.component';
-import {NumberInputComponent} from '../../ui/form/number-input.component';
-import {TooltipComponent} from '../../ui/tooltip.component';
-import {AmountWidgetsComponent} from '../../widgets/amount-widgets.component';
-import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
-import {ExpandDirective} from '../../directives/expand.directive';
-import {ChipsListComponent} from '../../ui/form/chips-list.component';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {AutocompleteComponent} from '../../ui/form/autocomplete.component';
-import {Product} from '../../../service/models/Product';
-import {productToFormValue} from '../../../helpers/product.helpers';
+import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
+import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
+import {AmountWidgetsComponent} from '../../../../shared/view/widgets/amount-widgets.component';
+import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
+import {NotificationsService} from '../../../../shared/service/services/notifications.service';
+import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
+import {Product} from '../../service/Product';
+import {productToFormValue} from '../../../../shared/helpers/product.helpers';
 import {debounceTime, tap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
-import {CardComponent} from '../../ui/card/card.component';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
-import {ButtonComponent} from '../../ui/layout/button.component';
-import {WidthDirective} from '../../directives/width.directive';
-import {UnitSwitcherComponent} from '../../ui/unit-switcher.component';
-import {USER_CURRENCY} from '../../../../features/settings/service/providers/user-currency.token';
-import {SETTINGS} from '../../../../features/settings/service/providers/settings.token';
-import {CurrencySymbolPipe} from '../../pipes/currency-symbol.pipe';
+import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {WidthDirective} from '../../../../shared/view/directives/width.directive';
+import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
+import {USER_CURRENCY} from '../../../settings/service/providers/user-currency.token';
+import {SETTINGS} from '../../../settings/service/providers/settings.token';
+import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {smaller} from 'mathjs';
+import {JsonPipe} from '@angular/common';
+import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
+import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 
 
 @Component({
@@ -63,7 +66,10 @@ import {smaller} from 'mathjs';
     ButtonComponent,
     WidthDirective,
     UnitSwitcherComponent,
-    CurrencySymbolPipe
+    CurrencySymbolPipe,
+    JsonPipe,
+    TextareaComponent,
+    InputComponent
   ],
   styles: [
     `

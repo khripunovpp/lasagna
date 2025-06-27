@@ -1,5 +1,5 @@
 export * from "../../../features/settings/service/repositories/category-products.repository"
 export * from "../../../features/settings/service/repositories/category-recipes.repository"
-export * from "./products.repository"
+export * from "../../../features/products/service/products.repository"
 export * from "./recipes.repository"
 export * from "../../../features/settings/service/repositories/tags.repository"

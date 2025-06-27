@@ -20,6 +20,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
 import {MultiselectItem} from './multiselect.component';
+import {ControlComponent} from './control.component';
+import {JsonPipe} from '@angular/common';
 
 
 export interface autocompleteItem {
@@ -30,40 +32,42 @@ export interface autocompleteItem {
   selector: 'lg-autocomplete',
   standalone: true,
   template: `
-    <div class="autocomplete">
-      <ng-select (blur)="onBlur()"
-                 (change)="onChangeSelect($event)"
-                 (search)="onSearch($event)"
-                 [addTag]="true"
-                 [bindValue]="key()"
-                 [appendTo]="appendTo()"
-                 [compareWith]="compareWith"
-                 [editableSearchTerm]="true"
-                 [items]="loadedList()"
-                 [multiple]="multi()"
-                 [ngModel]="value"
-                 [placeholder]="placeholder"
-                 [searchFn]="searchFn"
-                 bindLabel="name"
-                 notFoundText="Start typing to search">
-        <ng-template let-item="item" ng-label-tmp>
-          {{ item?.name ?? item?.value ?? item }}
-        </ng-template>
-        <ng-template let-item="item" ng-option-tmp>
-          {{ item?.name ?? item?.value ?? item }}
-        </ng-template>
-        <ng-template let-searchTerm="searchTerm" ng-tag-tmp>
-          {{ searchTerm }}
-        </ng-template>
-      </ng-select>
-    </div>
+      <div class="autocomplete">
+          <ng-select (blur)="onBlur()"
+                     (change)="onChangeSelect($event)"
+                     (search)="onSearch($event)"
+                     [addTag]="true"
+                     [bindValue]="key()"
+                     [appendTo]="appendTo()"
+                     [compareWith]="compareWith"
+                     [editableSearchTerm]="true"
+                     [items]="loadedList()"
+                     [multiple]="multi()"
+                     [ngModel]="value"
+                     [placeholder]="placeholder"
+                     [searchFn]="searchFn"
+                     bindLabel="name"
+                     notFoundText="Start typing to search">
+              <ng-template let-item="item" ng-label-tmp>
+                  {{ item?.name ?? item?.value ?? item }}
+              </ng-template>
+              <ng-template let-item="item" ng-option-tmp>
+                  {{ item?.name ?? item?.value ?? item }}
+              </ng-template>
+              <ng-template let-searchTerm="searchTerm" ng-tag-tmp>
+                  {{ searchTerm }}
+              </ng-template>
+          </ng-select>
+      </div>
   `,
   imports: [
     NgSelectComponent,
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    NgTagTemplateDirective
+    NgTagTemplateDirective,
+    ControlComponent,
+    JsonPipe
   ],
   styles: [
     `
@@ -178,8 +182,6 @@ export class AutocompleteComponent
   compareWith = (a: autocompleteItem, b: autocompleteItem) => {
     const valA = a as any;
     const valB = b as any;
-
-    return true;
 
     if (!a || !b) {
       return false;

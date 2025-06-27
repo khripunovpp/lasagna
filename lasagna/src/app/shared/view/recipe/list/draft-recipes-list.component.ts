@@ -2,7 +2,7 @@ import {Component, HostBinding, OnInit, signal} from '@angular/core';
 import {RecipesRepository} from '../../../service/repositories';
 import {DraftForm, NotificationsService, SelectionZoneService} from '../../../service/services';
 import {RecipeDTO} from '../../../service/db/shemes/Recipe.scheme';
-import {ProductDTO} from '../../../service/db/shemes/Product.scheme';
+import {ProductDTO} from '../../../../features/products/service/Product.scheme';
 import {Stores} from '../../../service/db/const/stores';
 import {GapRowComponent} from '../../ui/layout/gap-row.component';
 import {ButtonComponent} from '../../ui/layout/button.component';

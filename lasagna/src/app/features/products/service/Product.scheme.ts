@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {UnitScheme} from './Unit.scheme';
+import {UnitScheme} from '../../../shared/service/db/shemes/Unit.scheme';
 
 export const ProductScheme = z.object({
   name: z.string(),
