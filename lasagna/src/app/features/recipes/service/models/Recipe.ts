@@ -124,7 +124,7 @@ export class Recipe {
         outcome_unit: 'gram',
       });
     }
-    console.log('Recipe.fromRaw', dto);
+    
     return new Recipe({
       name: dto?.name || '',
       description: dto?.description || '',
@@ -219,7 +219,11 @@ export class Recipe {
     this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
     this.uuid = dto?.uuid || this.uuid;
     this.taxTemplateName = dto?.taxTemplateName || this.taxTemplateName;
-    this.category_id = CategoryRecipe.fromRaw(dto?.category_id) || this.category_id;
+    this.category_id = dto?.category_id ? CategoryRecipe.fromRaw(
+      typeof dto.category_id === 'string' ? {
+        uuid: dto.category_id,
+      } : dto.category_id as CategoryRecipeDTO,
+    ) : this.category_id;
     this.createdAt = dto?.createdAt || this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
     this.tags = dto?.tags ? dto.tags.map((tag: any) => {

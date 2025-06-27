@@ -51,9 +51,9 @@
               <lg-gap-row [formGroup]="recipePriceAdditionsForm"
                           [size]="'small'"
                           [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
-                <lg-input lgParseMath
-                          placeholder="extra price"
-                          formControlName="value">
+                <lg-number-input lgParseMath
+                                 placeholder="extra price"
+                                 formControlName="value">
                   <ng-template lgExtraTpl place="before">
                     <lg-unit-switcher formControlName="action"
                                       [items]="additionalPriceAction">
@@ -76,7 +76,7 @@
                       </b>
                     </ng-template>
                   }
-                </lg-input>
+                </lg-number-input>
               </lg-gap-row>
             </lg-gap-column>
 
@@ -85,30 +85,21 @@
                 <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
                 <b>
-                  {{ result()?.calculation?.totalPriceWithAdditions | userCurrency: '1.2-2' }}
+                  {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
 
                   @if (result()?.calculation?.totalPriceDifference) {
-                    <span
-                      class="text-accent">
-                      (+{{ result()?.calculation?.totalPriceDifference |  userCurrency: '1.2-2' }})
+
+                    <span class="text-active">
+                      > {{ result()?.calculation?.totalPriceWithAdditions |  userCurrency: '1.2-2' }}
+                    </span>
+
+                            <span class="text-accent">
+                      (+ {{ result()?.calculation?.totalPriceDifference |  userCurrency: '1.2-2' }})
                     </span>
                   }
                 </b>
               </lg-gap-row>
             </lg-card>
-
-            @if (totalTaxes()) {
-
-              <lg-card size="small">
-                <lg-gap-row [size]="'small'" [relaxed]="true">
-                  <div>{{ 'recipe.calculation.total-price-taxes.label' | translate }}</div>
-
-                  <b>
-                    {{ ((result()?.calculation?.totalPrice || 0) + totalTaxes()) | userCurrency: '1.2-2' }}
-                  </b>
-                </lg-gap-row>
-              </lg-card>
-            }
           </lg-gap-column>
 
           <lg-card lgWidth="270px" size="small">
@@ -145,13 +136,6 @@
         </lg-gap-row>
       }
 
-      <ng-template #taxAmount>
-        @if (notInGrams()) {
-          {{ totalTaxes() / showedOutcome() | userCurrency: '1.2-2' }}
-        } @else {
-          {{ totalTaxes() | userCurrency: '1.2-2' }}
-        }
-      </ng-template>
 
       <ng-template #rawAmount>
         @if (notInGrams()) {
@@ -171,23 +155,21 @@
               > {{ result()?.calculation?.pricePerUnitModified |  userCurrency: '1.2-2' }}
             </span>
 
-            @if (roundActionSelected()) {
-              <span class="text-accent">
+            <span class="text-accent">
               (+ {{ result()?.calculation?.pricePerUnitDifference |  userCurrency: '1.2-2' }})
             </span>
-            }
           }
           /
           {{ (result()?.calculation?.recipe?.weightForUnit || 1) |  number: '1.0-2' }} gram
         } @else {
-          {{ (result()?.calculation?.totalPrice || 1) + totalTaxes() | userCurrency: '1.2-2' }}
+          {{ (result()?.calculation?.totalPrice || 1) | userCurrency: '1.2-2' }}
         }
       </ng-template>
 
       <ng-template #perGramAmount>
         @if (notInGrams()) {
         } @else {
-          {{ ((result()?.calculation?.totalPrice || 1) + totalTaxes()) / (outcome_amount() || result()?.calculation?.totalWeight || 0) | userCurrency:'1.2-5' }}
+          {{ (result()?.calculation?.totalPrice || 1) / (outcome_amount() || result()?.calculation?.totalWeight || 0) | userCurrency:'1.2-5' }}
         }
       </ng-template>
 
