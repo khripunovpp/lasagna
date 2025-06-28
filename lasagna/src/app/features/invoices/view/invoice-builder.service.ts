@@ -10,6 +10,7 @@ import {Product} from '../../products/service/Product';
 import {Recipe} from '../../recipes/service/models/Recipe';
 import {LoggerService} from '../../logger/logger.service';
 import {Credential} from '../../settings/service/models/Credential';
+import {CredentialsRepository} from '../../settings/service/repositories/credentials.repository';
 
 
 type PayloadMap = Partial<Record<InvoiceItemType, Map<string, number>>>;
@@ -28,6 +29,7 @@ export class InvoiceBuilderService {
     private _invoicesRepository: InvoicesRepository,
     private _productsRepository: ProductsRepository,
     private _recipesRepository: RecipesRepository,
+    private _credentialsRepository: CredentialsRepository,
   ) {
   }
 
@@ -81,6 +83,7 @@ export class InvoiceBuilderService {
 
     await this._loadRecipePayloads(invoice, payload);
     await this._loadProductPayloads(invoice, payload);
+    await this._loadOtherPayloads(invoice);
     this._builderLogger.log(`Loaded invoice with UUID: ${uuid}`, invoice);
 
     this._invoice.set(invoice);
@@ -99,21 +102,24 @@ export class InvoiceBuilderService {
    * @param formValue
    */
   patchInvoice(
-    formValue: InvoiceDTO,
+    formValue: unknown,
   ): Invoice | undefined {
+    const values = formValue as any;
     const newInvoice = this._invoice()!.clone();
     const commonInvoiceDTO: Partial<InvoiceDTO> = {
-      name: formValue.name ?? '',
-      credential_from_string: formValue.credential_from_string,
-      credential_to_string: formValue.credential_to_string,
-      date_issued: formValue.date_issued ? new Date(formValue.date_issued).getTime() : null,
-      date_due: formValue.date_due ? new Date(formValue.date_due).getTime() : null,
-      notes: formValue.notes || null,
-      terms: formValue.terms || null,
-      invoice_number: formValue.invoice_number || '',
-      prefix: formValue.prefix || '',
+      name: values.name ?? '',
+      credential_from_string: values.credential_from_string,
+      credential_to_string: values.credential_to_string,
+      date_issued: values.date_issued ? new Date(values.date_issued).getTime() : null,
+      date_due: values.date_due ? new Date(values.date_due).getTime() : null,
+      notes: values.notes || null,
+      terms: values.terms || null,
+      invoice_number: values.invoice_number || '',
+      prefix: values.prefix || '',
+      system_credential_id: values.system_credential_id?.id || null,
+      customer_credential_id: values.customer_credential_id?.id || null,
     };
-    const rowsDTO = formValue.rows.map(row => {
+    const rowsDTO = values.rows.map((row: any) => {
       return {
         amount: row.amount ? parseFloat(row.amount) : 0,
         unit: row.unit || 'gram',
@@ -124,7 +130,7 @@ export class InvoiceBuilderService {
     });
     newInvoice.patch(commonInvoiceDTO);
     newInvoice.patchRows(rowsDTO, this.factory);
-    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {formValue, newInvoice});
+    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {values, newInvoice});
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -212,10 +218,20 @@ export class InvoiceBuilderService {
    */
   setCredential(
     credential: Credential | undefined
-  ){
+  ) {
     if (!this._invoice() || !credential) return undefined;
     const newInvoice = this._invoice()!.clone();
     newInvoice.setCredential(credential);
+    this._invoice.set(newInvoice);
+    return this._invoice();
+  }
+
+  deleteCredential(
+    type: 'system' | 'customer'
+  ) {
+    if (!this._invoice()) return undefined;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.removeCredential(type);
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -281,6 +297,32 @@ export class InvoiceBuilderService {
 
       }
     });
+  }
+
+  private async _loadOtherPayloads(
+    invoice: Invoice,
+  ) {
+    const systemCredential = invoice.system_credential_id?.uuid;
+    const customerCredential = invoice.customer_credential_id?.uuid;
+
+    if (systemCredential) {
+      await this._credentialsRepository.getOne(systemCredential).then(credential => {
+        if (!credential) {
+          return;
+        }
+        invoice.setCredential(credential);
+      });
+
+    }
+
+    if (customerCredential) {
+      await this._credentialsRepository.getOne(customerCredential).then(credential => {
+        if (!credential) {
+          return;
+        }
+        invoice.setCredential(credential);
+      });
+    }
   }
 
   /**

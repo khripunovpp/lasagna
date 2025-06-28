@@ -51,7 +51,7 @@ import {Credential} from '../../../settings/service/models/Credential';
                   @if (displayedCredentialValue) {
                       <ng-template lgInlineSeparatedGroup>
                           <lg-button [flat]="true"
-                                     (click)="onCredentialSelected()"
+                                     (click)="onCredentialDeleted()"
                                      [style]="'danger'"
                                      lgShrink>
                               Delete
@@ -131,6 +131,7 @@ export class CredentialFieldComponent
   placeholder = input<string>('From');
   displayedCredentialValue = '';
   selected = output<Credential | undefined>();
+  deleted = output();
   protected readonly CredentialsType = CredentialsType;
 
   onCredentialSelected(
@@ -140,9 +141,18 @@ export class CredentialFieldComponent
     this.form.patchValue({
       id: credential,
     });
-    this.displayedCredentialValue = credential?.name || '';
     this._change(this.form.value);
     this.selected.emit(credential);
+  }
+
+  onCredentialDeleted() {
+    this.form.markAsDirty();
+    this.form.patchValue({
+      id: null,
+      free_style: null,
+    });
+    this._change(this.form.value);
+    this.deleted.emit();
   }
 
   onChange: (value: unknown) => void = () => {
@@ -155,6 +165,7 @@ export class CredentialFieldComponent
     value: unknown,
   ) {
     this._change(value);
+    console.log('writeValue', value);
   }
 
   registerOnChange(fn: any) {
@@ -170,5 +181,6 @@ export class CredentialFieldComponent
   ) {
     this.form.patchValue(value as any);
     this.onChange(this.form.value);
+    this.displayedCredentialValue = this.form.value.id?.name || '';
   }
 }

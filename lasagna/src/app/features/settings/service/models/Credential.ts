@@ -20,6 +20,11 @@ export class Credential {
   uuid?: string;
 
   static fromRaw(dto: any) {
+    if (typeof dto === 'string') {
+      return new Credential({
+        uuid: dto,
+      });
+    }
     return new Credential({
       type: dto?.type || CredentialsType.customer,
       name: dto?.name || '',

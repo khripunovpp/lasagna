@@ -197,6 +197,17 @@ export class Invoice {
     this.markUpdated();
   }
 
+  removeCredential(
+    type: 'system' | 'customer'
+  ) {
+    if (type === 'system') {
+      this.system_credential_id = undefined;
+    } else if (type === 'customer') {
+      this.customer_credential_id = undefined;
+    }
+    this.markUpdated();
+  }
+
   clone(): Invoice {
     const copy = new Invoice(this.toDTO());
     copy.createdAt = Date.now();
