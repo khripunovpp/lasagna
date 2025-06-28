@@ -15,12 +15,14 @@
 
     <lg-gap-row [mobileMode]="true" [relaxed]="true">
       <lg-credential-field (selected)="onCredentialSelected($event)"
+                           (deleted)="onCredentialDeleted('system')"
                            [type]="CredentialsType.system"
                            formControlName="credential_from"
                            lgExpand
                            placeholder="From"></lg-credential-field>
 
       <lg-credential-field (selected)="onCredentialSelected($event)"
+                           (deleted)="onCredentialDeleted('customer')"
                            [type]="CredentialsType.customer"
                            formControlName="credential_to"
                            lgExpand

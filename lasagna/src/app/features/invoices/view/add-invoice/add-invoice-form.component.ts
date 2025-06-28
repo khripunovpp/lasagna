@@ -224,6 +224,13 @@ export class AddInvoiceFormComponent
     this.invoiceBuilderService.setCredential(credential);
   }
 
+  onCredentialDeleted(
+    type: 'system' | 'customer'
+  ) {
+    this.form.markAsDirty();
+    this.invoiceBuilderService.deleteCredential(type);
+  }
+
   private _getLastRowType(): InvoiceItemType {
     const lastRow = this.rows.at(this.rows.length - 1);
     if (lastRow && lastRow.value) {
