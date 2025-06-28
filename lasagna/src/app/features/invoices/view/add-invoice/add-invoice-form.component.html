@@ -4,7 +4,7 @@
               [placeholder]="'Just free style optional name. It\'s visible only for you'"
               formControlName="name"></lg-input>
 
-    <lg-gap-row [right]="true" [mobileMode]="true">
+    <lg-gap-row [mobileMode]="true" [right]="true">
       <lg-input formControlName="prefix"
                 lgWidth="15%"
                 placeholder="Prefix"></lg-input>
@@ -13,15 +13,15 @@
                 placeholder="Number"></lg-input>
     </lg-gap-row>
 
-    <lg-gap-row [relaxed]="true" [mobileMode]="true">
-      <lg-credential-field [type]="CredentialsType.system"
+    <lg-gap-row [mobileMode]="true" [relaxed]="true">
+      <lg-credential-field (selected)="onCredentialSelected($event)"
+                           [type]="CredentialsType.system"
                            formControlName="credential_from"
                            lgExpand
-                           (selected)="onCredentialSelected($event)"
                            placeholder="From"></lg-credential-field>
 
-      <lg-credential-field [type]="CredentialsType.customer"
-                           (selected)="onCredentialSelected($event)"
+      <lg-credential-field (selected)="onCredentialSelected($event)"
+                           [type]="CredentialsType.customer"
                            formControlName="credential_to"
                            lgExpand
                            placeholder="To"></lg-credential-field>
@@ -82,10 +82,10 @@
                                lgWidth="30%"
                                [placeholder]="'0'"
                                formControlName="amount">
-                <div ngProjectAs="after">
+                <ng-template lgExtraTpl place="after">
                   <lg-unit-switcher formControlName="unit">
                   </lg-unit-switcher>
-                </div>
+                </ng-template>
               </lg-number-input>
 
               <lg-readonly-control [placeholder]="'0'"
@@ -127,15 +127,15 @@
 
     <hr color="#fafafa" lgExpand size="2"/>
 
-    <lg-gap-row [relaxed]="true" [mobileMode]="true">
+    <lg-gap-row [mobileMode]="true" [relaxed]="true">
       <lg-textarea [rows]="2"
-                   lgExpand
                    formControlName="notes"
+                   lgExpand
                    placeholder="Notes"></lg-textarea>
 
       <lg-textarea [rows]="2"
-                   lgExpand
                    formControlName="terms"
+                   lgExpand
                    placeholder="Terms"></lg-textarea>
     </lg-gap-row>
 

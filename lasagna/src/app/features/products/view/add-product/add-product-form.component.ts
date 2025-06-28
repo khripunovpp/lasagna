@@ -41,6 +41,7 @@ import {smaller} from 'mathjs';
 import {JsonPipe} from '@angular/common';
 import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
+import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 
 
 @Component({
@@ -69,7 +70,8 @@ import {InputComponent} from '../../../../shared/view/ui/form/input.component';
     CurrencySymbolPipe,
     JsonPipe,
     TextareaComponent,
-    InputComponent
+    InputComponent,
+    ControlExtraTemplateDirective
   ],
   styles: [
     `

@@ -11,6 +11,7 @@ import {RangeComponent} from '../../ui/form/range.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
+import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-template.directive';
 
 
 @Component({
@@ -25,9 +26,9 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
                       <lg-number-input formControlName="amount"
                                        lgParseMath
                                        [placeholder]="'Amount'">
-                          <div ngProjectAs="after">
+                          <ng-template lgExtraTpl place="after">
                               grams of
-                          </div>
+                          </ng-template>
                       </lg-number-input>
 
                       <lg-range
@@ -136,7 +137,8 @@ import {ParseMathDirective} from '../../directives/parse-math.directive';
     ShrinkDirective,
     RangeComponent,
     NumberInputComponent,
-    ParseMathDirective
+    ParseMathDirective,
+    ControlExtraTemplateDirective
   ],
   styles: [`
     :host {

@@ -133,8 +133,8 @@ export class Product {
       category_id: this.category_id.toUUID(),
       tags: this.tags?.map((tag) => tag.toString()),
       uuid: this.uuid,
-      createdAt: this.createdAt ?? Date.now(),
-      updatedAt: this.updatedAt ?? Date.now(),
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
       color: this.color || estimateColor(this.name),
     };
   }

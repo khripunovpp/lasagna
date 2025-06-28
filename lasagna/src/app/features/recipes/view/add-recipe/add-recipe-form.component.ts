@@ -31,6 +31,7 @@ import {TranslatePipe} from "@ngx-translate/core";
 
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
+import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 
 
 @Component({
@@ -56,7 +57,8 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
     MatIcon,
     TranslatePipe,
     UnitSwitcherComponent,
-    CardComponent
+    CardComponent,
+    ControlExtraTemplateDirective
   ],
   providers: [
     {
@@ -96,7 +98,6 @@ export class AddRecipeFormComponent
     }
     return null;
   })
-  textFieldState = signal<Record<number, boolean>>({});
   recipeFieldState = signal<Record<number, boolean>>({});
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
   productsWidget = viewChildren<ProductWidgetsComponent>('products');
@@ -139,9 +140,6 @@ export class AddRecipeFormComponent
 
         if (ingredient.recipe_id) {
           this.openRecipeField(index);
-        }
-        if (ingredient.name) {
-          this.openTextField(index);
         }
       })
     } else {
@@ -229,28 +227,6 @@ export class AddRecipeFormComponent
         [field]: null
       }), {}) : {[clearField]: null}),
       unit: value.product_id?.unit || value.recipe_id?.unit || 'gram'
-    });
-  }
-
-  openTextField(
-    index: number
-  ) {
-    this.textFieldState.update((value) => {
-      return {
-        ...value,
-        [index]: true,
-      }
-    });
-  }
-
-  closeTextField(
-    index: number
-  ) {
-    this.textFieldState.update((value) => {
-      return {
-        ...value,
-        [index]: false,
-      }
     });
   }
 

@@ -61,8 +61,10 @@ export class RecipeCost {
     if (!this.recipe) {
       return 0;
     }
-
-    return parseFloatingNumber(this.recipe.outcome_amount);
+    if (this.recipe.outcome_amount) {
+      return parseFloatingNumber(this.recipe.outcome_amount);
+    }
+    return this.totalWeight;
   }
 
   get outcomeUnit(): string {

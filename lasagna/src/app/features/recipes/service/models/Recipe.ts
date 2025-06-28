@@ -193,8 +193,8 @@ export class Recipe {
       uuid: this.uuid,
       taxTemplateName: this.taxTemplateName,
       category_id: this.category_id.toUUID(),
-      createdAt: this.createdAt || Date.now(),
-      updatedAt: this.updatedAt || Date.now(),
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
       tags: this.tags?.map((tag) => {
         return tag.toString();
       }),
