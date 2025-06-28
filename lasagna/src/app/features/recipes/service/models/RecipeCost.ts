@@ -74,11 +74,11 @@ export class RecipeCost {
   }
 
   get totalPriceDifference(): number {
-    return Math.abs(this.totalPriceWithAdditions - this.totalPrice);
+    return this.totalPriceWithAdditions - this.totalPrice;
   }
 
   get pricePerUnitDifference(): number {
-    return Math.abs(this.pricePerUnitModified - this.pricePerOutcomeUnit);
+    return this.pricePerUnitModified - this.pricePerOutcomeUnit;
   }
 
   get pricePerUnitModified(): number {

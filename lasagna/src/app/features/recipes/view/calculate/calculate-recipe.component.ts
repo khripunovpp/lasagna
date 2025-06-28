@@ -52,6 +52,7 @@ import {ControlExtraTemplateDirective} from '../../../../shared/view/ui/form/con
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+import {difference} from 'lodash';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -294,4 +295,6 @@ export class CalculateRecipeComponent
       this._notificationService.error(errorHandler(error));
     }
   }
+
+  protected readonly difference = difference;
 }
