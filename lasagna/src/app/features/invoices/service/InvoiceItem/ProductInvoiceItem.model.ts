@@ -40,6 +40,10 @@ export class ProductInvoiceItem
     return this.product.pricePerUnit;
   }
 
+  get pricePerUnitModified(){
+    return this.pricePerUnit
+  }
+
   get compareKey(): string {
     return makeCompareKey.forProductModel(this);
   }
