@@ -4,6 +4,7 @@ import {
   contentChildren,
   ElementRef,
   forwardRef,
+  HostBinding,
   input,
   output,
   signal,
@@ -11,7 +12,6 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {removeAllNonMathSymbols} from '../../../helpers/strings.helper';
-import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {ControlExtraTemplateDirective} from './control-extra-template.directive';
 import {NgTemplateOutlet} from '@angular/common';
 
@@ -21,13 +21,15 @@ import {NgTemplateOutlet} from '@angular/common';
   template: `
       <div [class.disabled]="disable()"
            class="lg-number-input">
-           @if (beforeExtraTpl()?.templateRef) {
+          @if (beforeExtraTpl()?.templateRef) {
               <div class="lg-number-input__before">
                   <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
               </div>
           }
           <input #input
+                 (blur)="focused.set(false)"
                  (change)="onInputChange.emit(value)"
+                 (focus)="focused.set(true)"
                  (input)="onChangeInput($event)"
                  (keydown)="onKeydown.emit()"
                  [disabled]="disable()"
@@ -49,6 +51,11 @@ import {NgTemplateOutlet} from '@angular/common';
       :host {
         display: flex;
         flex: 1;
+
+        &.focused {
+          box-shadow: var(--focus-shadow);
+          border-radius: 12px;
+        }
       }
 
 
@@ -58,6 +65,7 @@ import {NgTemplateOutlet} from '@angular/common';
         gap: 16px;
         padding: 0 16px 0 0;
       }
+
       .lg-number-input__before {
         display: flex;
         align-items: center;
@@ -94,7 +102,6 @@ import {NgTemplateOutlet} from '@angular/common';
 
       .input:focus {
         outline: none;
-        box-shadow: var(--focus-shadow);
       }
     `
   ],
@@ -118,16 +125,22 @@ export class NumberInputComponent
 
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
+  onInputChange = output<string>();
+  onKeydown = output();
   placeholder = input('Enter text here');
   disable = input<boolean>(false);
-  onKeydown = output();
-  onInputChange = output<string>(); extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
+  focused = signal<boolean>(false);
+  extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
   afterExtraTpl = computed(() => {
     return this.extraTpl().find(tpl => tpl.place() === 'after');
   });
   beforeExtraTpl = computed(() => {
     return this.extraTpl().find(tpl => tpl.place() === 'before');
   });
+
+  @HostBinding('class.focused') get focusedClass() {
+    return this.focused();
+  }
 
   onChange: (value: string) => void = () => {
   };
