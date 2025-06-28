@@ -5,6 +5,7 @@ import {
   contentChildren,
   ElementRef,
   forwardRef,
+  HostBinding,
   input,
   output,
   signal,
@@ -26,7 +27,9 @@ import {NgTemplateOutlet} from '@angular/common';
               </div>
           }
           <input #input
+                 (blur)="focused.set(false)"
                  (change)="onInputChanged.emit(value)"
+                 (focus)="focused.set(true)"
                  (input)="onChangeInput($event)"
                  (keydown.enter)="onEnter.emit(value)"
                  [disabled]="disable()"
@@ -47,6 +50,11 @@ import {NgTemplateOutlet} from '@angular/common';
       :host {
         display: flex;
         flex: 1;
+
+        &.focused {
+          box-shadow: var(--focus-shadow);
+          border-radius: 12px;
+        }
       }
 
       .lg-input {
@@ -92,7 +100,6 @@ import {NgTemplateOutlet} from '@angular/common';
 
       .input:focus {
         outline: none;
-        box-shadow: var(--focus-shadow);
       }
     `
   ],
@@ -116,6 +123,7 @@ export class InputComponent
 
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   value: string = '';
+  focused = signal<boolean>(false);
   placeholder = input('Enter text here');
   autoFocus = input(false);
   disable = input(false);
@@ -132,6 +140,11 @@ export class InputComponent
   beforeExtraTpl = computed(() => {
     return this.extraTpl().find(tpl => tpl.place() === 'before');
   });
+
+  @HostBinding('class.focused') get focusedClass() {
+    return this.focused();
+  }
+
   onChange: (value: string) => void = () => {
   };
 
