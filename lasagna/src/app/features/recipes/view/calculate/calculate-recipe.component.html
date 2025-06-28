@@ -92,12 +92,14 @@
                     {{ totalPrice() | userCurrency: '1.2-2' }}
 
                     @if (totalPriceDifference()) {
-                      <span class="text-active">
-                      > {{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}
+                      @let diff = totalPriceDifference();
+                      >
+                      <span class="text-underlined">
+                      {{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}
                     </span>
 
-                      <span class="text-accent">
-                      (+ {{ totalPriceDifference() |  userCurrency: '1.2-2' }})
+                     <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+                      ({{diff > 0 ? '+' : ''}} {{ diff |  userCurrency: '1.2-2' }})
                     </span>
                     }
                   </b>
@@ -161,16 +163,17 @@
 
       <ng-template #totalAmount>
         @if (notInGrams()) {
-          <span [class.text-small]="result()?.calculation?.totalPriceDifference">
-              {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
-           </span>
+          {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
+
           @if (result()?.calculation?.totalPriceDifference) {
-            <span class="text-active">
-              > {{ result()?.calculation?.pricePerUnitModified |  userCurrency: '1.2-2' }}
+            @let diff = result()?.calculation?.pricePerUnitDifference ?? 0;
+            >
+            <span class="text-underlined">
+              {{ result()?.calculation?.pricePerUnitModified |  userCurrency: '1.2-2' }}
             </span>
 
-            <span class="text-accent">
-              (+ {{ result()?.calculation?.pricePerUnitDifference |  userCurrency: '1.2-2' }})
+            <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+              ({{diff > 0 ? '+' : ''}} {{ diff |  userCurrency: '1.2-2' }})
             </span>
           }
           /

@@ -149,6 +149,18 @@ html, body {
   font-size: small;
 }
 
+.text-underlined {
+  text-decoration: underline;
+}
+
+.text-success {
+  color: #4caf50;
+}
+
+.text-danger {
+  color: #f44336;
+}
+
 $indents: 1 2 3 4 5 6 7 8 9 10;
 @each $indent in $indents {
   .indent-#{$indent} {
