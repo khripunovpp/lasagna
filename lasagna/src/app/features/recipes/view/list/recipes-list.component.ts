@@ -27,6 +27,7 @@ import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/
 import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
 import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
@@ -163,7 +164,8 @@ import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.c
     GroupingSortingComponent,
     GroupingTailsComponent,
     GroupingTailDirective,
-    GapColumnComponent
+    GapColumnComponent,
+    JsonPipe
   ],
   styles: [
     `:host {

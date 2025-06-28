@@ -42,6 +42,7 @@ import {CredentialsType} from '../../../settings/service/types/credentials.types
 
 import {Credential} from '../../../settings/service/models/Credential';
 import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-field.component';
+import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -67,6 +68,7 @@ import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-fi
     DatePickerComponent,
     UserCurrencyPipe,
     CredentialFieldComponent,
+    ControlExtraTemplateDirective,
 
   ],
   styles: [

@@ -4,14 +4,14 @@
       <lg-gap-column [position]="'start'">
         <lg-autocomplete #nameField
                          [key]="'name'"
-                         lgExpand
                          [placeholder]="'recipe.form.name.placeholder'|translate"
                          [resource]="'recipes-names'"
-                         formControlName="name"></lg-autocomplete>
+                         formControlName="name"
+                         lgExpand></lg-autocomplete>
 
         <lg-textarea [placeholder]="'recipe.form.description.placeholder'|translate"
-                     lgExpand
-                     formControlName="description"></lg-textarea>
+                     formControlName="description"
+                     lgExpand></lg-textarea>
       </lg-gap-column>
     </lg-card>
     <lg-card>
@@ -19,78 +19,59 @@
       <lg-gap-column [position]="'start'">
 
         <lg-number-input #amount
-                         lgExpand
                          [placeholder]="'recipe.form.outcome_amount.placeholder'|translate"
                          formControlName="outcome_amount"
+                         lgExpand
                          lgParseMath>
-          <div ngProjectAs="after">
+          <ng-template lgExtraTpl place="after">
             <lg-unit-switcher formControlName="outcome_unit">
             </lg-unit-switcher>
-          </div>
+          </ng-template>
         </lg-number-input>
 
         <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
           <lg-gap-column [position]="'start'">
-            <lg-gap-column formArrayName="ingredients" lgExpand [size]="'medium'">
-              @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
-                last = $last) {
+            <lg-gap-column [size]="'medium'" formArrayName="ingredients" lgExpand>
+              @for (control of ingredients.controls;track (control.value.amount + i + 1);let i = $index,
+                  last = $last) {
                 <ng-container [formGroupName]="i">
                   <lg-controls-row [mobileMode]="true">
                     <lg-gap-column [size]="'small'">
-                      @if (textFieldState()[i]) {
-                        <lg-control label="{{ 'recipe.form.ingredients.name.label'|translate }}">
-                          <ng-container ngProjectAs="endLabelTpl">
-                            <span (click)="closeTextField(i)">Hide</span>
-                          </ng-container>
 
-                          <lg-input
-                            (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
-                            [placeholder]="'recipe.form.ingredients.name.placeholder'|translate"
-                            formControlName="name"></lg-input>
-                        </lg-control>
-                      } @else {
-                        <lg-control>
-                          <ng-container ngProjectAs="labelTpl">
-                            <lg-button (click)="closeRecipeField(i)"
-                                       [flat]="true"
-                                       [size]="'small'"
-                                       [active]="!recipeFieldState()[i]">
-                              {{ 'recipe.form.ingredients.product_id.label'|translate }}
-                            </lg-button>
-                          </ng-container>
+                      <lg-control>
+                        <ng-container ngProjectAs="labelTpl">
+                          <lg-button (click)="closeRecipeField(i)"
+                                     [flat]="true"
+                                     [size]="'small'"
+                                     [active]="!recipeFieldState()[i]">
+                            {{ 'recipe.form.ingredients.product_id.label'|translate }}
+                          </lg-button>
+                        </ng-container>
 
-                          <ng-container ngProjectAs="afterLabelTpl">
-                            <lg-button (click)="openRecipeField(i)"
-                                       [flat]="true"
-                                       [size]="'small'"
-                                       [active]="recipeFieldState()[i]">
-                              {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
-                            </lg-button>
-                          </ng-container>
+                        <ng-container ngProjectAs="afterLabelTpl">
+                          <lg-button (click)="openRecipeField(i)"
+                                     [flat]="true"
+                                     [size]="'small'"
+                                     [active]="recipeFieldState()[i]">
+                            {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
+                          </lg-button>
+                        </ng-container>
 
-                          <ng-container ngProjectAs="endLabelTpl">
-                        <span (click)="openTextField(i)">
-                          {{ 'recipe.form.ingredients.name.switch-label'|translate }}
-                        </span>
-                          </ng-container>
+                        @if (recipeFieldState()[i]) {
+                          <lg-multiselect [resource]="'recipes'"
+                                          (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
+                                          [autoLoad]="true"
+                                          formControlName="recipe_id"></lg-multiselect>
+                        } @else {
+                          <lg-multiselect [resource]="'products'"
+                                          (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                          [autoLoad]="true"
+                                          #productsSelector
+                                          formControlName="product_id">
+                          </lg-multiselect>
+                        }
 
-                          @if (recipeFieldState()[i]) {
-                            <lg-multiselect [resource]="'recipes'"
-                                            (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
-                                            [autoLoad]="true"
-                                            formControlName="recipe_id"></lg-multiselect>
-                          } @else {
-                            <lg-multiselect [resource]="'products'"
-                                            (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
-                                            [autoLoad]="true"
-                                            #productsSelector
-                                            formControlName="product_id">
-                            </lg-multiselect>
-                          }
-
-                        </lg-control>
-                      }
-
+                      </lg-control>
                     </lg-gap-column>
 
                     <lg-number-input #amount
@@ -98,11 +79,10 @@
                                      (onKeydown)="addLast()"
                                      [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:(form.value.ingredients?.[i]?.unit || 'gram')}"
                                      formControlName="amount">
-                      <div ngProjectAs="after">
-
+                      <ng-template lgExtraTpl place="after">
                         <lg-unit-switcher formControlName="unit">
                         </lg-unit-switcher>
-                      </div>
+                      </ng-template>
                     </lg-number-input>
 
                     <ng-container ngProjectAs="rowActions">
@@ -134,8 +114,8 @@
     <lg-gap-column [position]="'start'" [size]="'medium'" style="--control-bg: #ffffff">
       <lg-multiselect #categorySelect
                       [resource]="'recipes-categories'"
-                      lgExpand
-                      formControlName="category_id"></lg-multiselect>
+                      formControlName="category_id"
+                      lgExpand></lg-multiselect>
 
       @if (topCategories().length) {
         <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
