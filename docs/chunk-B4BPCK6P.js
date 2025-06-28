@@ -1,0 +1,1 @@
+import{Qc as c,ab as t,db as i,mb as r}from"./chunk-NHWKWTII.js";var a=class e{constructor(p){this.templateRef=p}place=c("after");static \u0275fac=function(f){return new(f||e)(i(t))};static \u0275dir=r({type:e,selectors:[["","lgExtraTpl",""]],inputs:{place:[1,"place"]}})};export{a};
