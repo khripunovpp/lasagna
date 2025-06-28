@@ -9,7 +9,7 @@ import {Tag} from '../../../settings/service/models/Tag';
 
 export class Recipe {
   constructor(
-    props:Partial<RecipeDTO>
+    props: Partial<RecipeDTO>
   ) {
     this.name = String(props.name ?? '').trim();
     this.description = String(props.description ?? '').trim();
@@ -55,6 +55,36 @@ export class Recipe {
     value: number
     unit: 'currency' | 'percent'
   };
+
+  get perUnitPriceModified() {
+    if (!this.perUnitPriceModifier) {
+      return this.pricePerUnit;
+    }
+
+    let price = this.pricePerUnit;
+    const value = parseFloatingNumber(this.perUnitPriceModifier.value);
+
+    switch (this.perUnitPriceModifier.action) {
+      case 'add': {
+        if (this.perUnitPriceModifier.unit === 'currency') {
+          price += value;
+        } else if (this.perUnitPriceModifier.unit === 'percent') {
+          price += (price * value) / 100;
+        }
+        break;
+      }
+      case 'subtract': {
+
+        break;
+      }
+      case 'round': {
+        price = value || price;
+        break;
+      }
+    }
+
+    return price;
+  }
 
   get valid() {
     return this.name

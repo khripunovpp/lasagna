@@ -85,13 +85,14 @@
                                [placeholder]="'0'"
                                formControlName="amount">
                 <ng-template lgExtraTpl place="after">
-                  <lg-unit-switcher formControlName="unit">
+                  <lg-unit-switcher [disable]="true"
+                    formControlName="unit">
                   </lg-unit-switcher>
                 </ng-template>
               </lg-number-input>
 
               <lg-readonly-control [placeholder]="'0'"
-                                   [value]="item?.pricePerUnit| userCurrency: '1.2-4'"
+                                   [value]="item?.pricePerUnitModified| userCurrency: '1.2-4'"
                                    lgWidth="15%">
               </lg-readonly-control>
 

@@ -88,29 +88,7 @@ export class RecipeCost {
       return this.pricePerOutcomeUnit;
     }
 
-    let price = this.pricePerOutcomeUnit;
-    const value = parseFloatingNumber(this.recipe.perUnitPriceModifier.value);
-
-    switch (this.recipe.perUnitPriceModifier.action) {
-      case 'add': {
-        if (this.recipe.perUnitPriceModifier.unit === 'currency') {
-          price += value;
-        } else if (this.recipe.perUnitPriceModifier.unit === 'percent') {
-          price += (price * value) / 100;
-        }
-        break;
-      }
-      case 'subtract': {
-
-        break;
-      }
-      case 'round': {
-        price = value || price;
-        break;
-      }
-    }
-
-    return price;
+    return this.recipe.perUnitPriceModified;
   }
 
   get totalPriceWithAdditions() {

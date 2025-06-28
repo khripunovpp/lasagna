@@ -11,6 +11,7 @@ export abstract class InvoiceItemBase {
   abstract get totalPrice(): number;
 
   abstract get pricePerUnit(): number;
+  abstract get pricePerUnitModified(): number;
 
   abstract get compareKey(): string;
 

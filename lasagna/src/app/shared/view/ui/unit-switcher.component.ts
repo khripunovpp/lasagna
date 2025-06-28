@@ -14,7 +14,8 @@ export interface UnitGroupItem {
   selector: 'lg-unit-switcher',
   standalone: true,
   template: `
-      <div class="unit-switcher">
+      <div class="unit-switcher"
+           [class.disable]="disable">
           @for (item of items();track item.value;let last = $last, first = $first, index = $index) {
               <button (click)="onClickItem(item,index)"
                       [style]="item.style || 'default'"
@@ -37,6 +38,11 @@ export interface UnitGroupItem {
         gap: var(--unit-switcher-gap);
         align-items: center;
         justify-content: center;
+      }
+
+      .unit-switcher.disable {
+        opacity: 0.5;
+        pointer-events: none;
       }
 
       .unit-switcher__item {
@@ -76,6 +82,7 @@ export interface UnitGroupItem {
 })
 export class UnitSwitcherComponent implements ControlValueAccessor {
   @Input() flat = false;
+  @Input() disable = false;
   items = input<UnitGroupItem[]>([
     {
       label: 'gr.',

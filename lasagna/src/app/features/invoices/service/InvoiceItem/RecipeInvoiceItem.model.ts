@@ -18,7 +18,11 @@ export class RecipeInvoiceItem
   readonly type = InvoiceItemType.Recipe;
 
   get totalPrice(): number {
-    return this.pricePerUnit * this.amount;
+    return this.pricePerUnitModified * this.amount;
+  }
+
+  get totalPriceModified(): number {
+    return this.totalPrice;
   }
 
   get weightGram(): number {
@@ -39,6 +43,14 @@ export class RecipeInvoiceItem
       return this.recipe.pricePerUnit;
     }
     return 0;
+  }
+
+  get pricePerUnitModified(): number {
+    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
+      return 0;
+    }
+
+    return this.recipe.perUnitPriceModified;
   }
 
   get compareKey(): string {
