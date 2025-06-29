@@ -58,7 +58,11 @@ export class Ingredient {
     }
 
     if (this.recipe_id) {
-      return this.recipe_id.pricePerUnit;
+      if (this.recipe_id.outcome_unit === this.unit) {
+        return this.recipe_id.pricePerUnit;
+      } else {
+        return this.recipe_id.pricePerGram;
+      }
     }
 
     return this.totalPrice / this.totalWeightGram;
@@ -75,7 +79,7 @@ export class Ingredient {
     }
 
     if (this.recipe_id) {
-      total += this.recipe_id.pricePerUnit * this.amount;
+      total += this.pricePerUnit * this.amount;
     }
 
     return total;
