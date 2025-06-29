@@ -1,5 +1,5 @@
 export interface SortStrategy<T> {
-  groupBy(item: T): string
+  groupBy(item: T): string|string[]
 
   sort?(a: T, b: T, direction: 'asc' | 'desc', field: string): number
 }

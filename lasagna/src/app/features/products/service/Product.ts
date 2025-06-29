@@ -1,4 +1,3 @@
-import {Tag} from '../../settings/service/models/Tag';
 import {CategoryProduct} from '../../settings/service/models/CategoryProduct';
 import {ProductDTO} from './Product.scheme';
 import {Unit} from '../../../shared/service/types/Unit.types';
@@ -14,7 +13,6 @@ export class Product {
       unit?: string
       source?: string | undefined
       category_id?: string
-      tags?: string[] | undefined
       uuid?: string | undefined
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
@@ -27,9 +25,6 @@ export class Product {
     this.unit = props.unit as Unit;
     this.source = props.source;
     this.category_id = CategoryProduct.fromRaw(props.category_id);
-    this.tags = props.tags?.map((tag) => {
-      return Tag.fromRaw(tag);
-    });
     this.uuid = props.uuid;
     this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
     this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
@@ -42,7 +37,6 @@ export class Product {
   unit: Unit;
   category_id: CategoryProduct;
   source?: string;
-  tags?: Tag[] | undefined;
   uuid?: string | undefined;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
@@ -82,7 +76,6 @@ export class Product {
       unit: dto?.unit || 'gram',
       source: dto?.source || '',
       category_id: dto?.category_id || '',
-      tags: dto?.tags,
       uuid: dto?.uuid,
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
@@ -98,7 +91,6 @@ export class Product {
       unit: 'gram',
       source: undefined,
       category_id: '',
-      tags: [],
       uuid: undefined,
       createdAt: undefined,
       updatedAt: undefined,
@@ -115,7 +107,6 @@ export class Product {
     this.unit = dto.unit || this.unit;
     this.source = dto.source || this.source;
     this.category_id = CategoryProduct.fromRaw(dto.category_id || '');
-    this.tags = dto.tags?.map((tag: any) => Tag.fromRaw(tag)) || this.tags;
     this.uuid = dto.uuid || this.uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
@@ -131,7 +122,6 @@ export class Product {
       unit: this.unit,
       source: this.source ?? '',
       category_id: this.category_id.toUUID(),
-      tags: this.tags?.map((tag) => tag.toString()),
       uuid: this.uuid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

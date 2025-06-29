@@ -173,6 +173,8 @@ export class TagsControlComponent
     } else {
       this.value = Tag.fromRaw(value).toDTO();
     }
+
+    console.log('new tags value', value);
     this.onChange(this.value);
   }
 

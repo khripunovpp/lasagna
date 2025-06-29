@@ -11,7 +11,6 @@ export const ProductScheme = z.object({
   unit: UnitScheme,
   createdAt: z.union([z.string(), z.number()]).optional(),
   updatedAt: z.union([z.string(), z.number()]).optional(),
-  tags: z.array(z.string()).optional(),
   color: z.string().optional(),
 });
 

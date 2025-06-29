@@ -15,7 +15,7 @@ import {SelectionZoneService} from '../../../service/services';
         <section class="grouping-tails__section">
           <header class="grouping-tails__header">
             <lg-title [level]="3">
-              {{ group?.field }}
+              {{ group?.field || 'Unknown' }}
             </lg-title>
           </header>
 

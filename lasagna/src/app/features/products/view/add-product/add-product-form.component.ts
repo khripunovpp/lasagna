@@ -101,7 +101,6 @@ export class AddProductFormComponent
     unit: new FormControl('gram'),
     source: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null),
-    tags: new FormControl<string[]>([]),
   });
   userSettings = inject(SETTINGS)
   product = input<Product | null>(null);
@@ -129,7 +128,6 @@ export class AddProductFormComponent
       source: null,
       category_id: null,
       unit: 'gram',
-      tags: [],
     };
   }
 

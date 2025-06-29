@@ -32,6 +32,8 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
+import {TagsControlComponent} from '../../../../shared/view/ui/form/tags-control.component';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
 
 
 @Component({
@@ -58,7 +60,9 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
     TranslatePipe,
     UnitSwitcherComponent,
     CardComponent,
-    ControlExtraTemplateDirective
+    ControlExtraTemplateDirective,
+    TagsControlComponent,
+    GapRowComponent
   ],
   providers: [
     {
@@ -90,7 +94,9 @@ export class AddRecipeFormComponent
       this._getIngredientGroup(),
     ]),
     category_id: new FormControl<any>(null),
+    tags: new FormControl<string[]>([]),
   }, (group) => {
+    debugger
     const recipeTmpModel = Recipe.fromRaw(group.value);
 
     if (recipeTmpModel.outcomeAmountGreaterThanIngredients) {
@@ -129,6 +135,7 @@ export class AddRecipeFormComponent
     if (!recipe) {
       return;
     }
+    console.log('newformValue', recipeToFormValue(recipe));
     this.form.reset({
       ...recipeToFormValue(recipe),
       ingredients: [],
@@ -153,6 +160,7 @@ export class AddRecipeFormComponent
   resetForm(
     recipe?: Recipe
   ) {
+    debugger
     this.fillForm(recipe);
     this._loadUsingHistory();
     this.form.markAsPristine();
@@ -180,6 +188,7 @@ export class AddRecipeFormComponent
       debounceTime(100),
     ).subscribe({
       next: values => {
+        console.log('form values', values);
         if (!this.form.dirty) {
           return
         }

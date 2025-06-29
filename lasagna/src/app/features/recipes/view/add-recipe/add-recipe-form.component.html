@@ -32,8 +32,8 @@
         <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
           <lg-gap-column [position]="'start'">
             <lg-gap-column [size]="'medium'" formArrayName="ingredients" lgExpand>
-              @for (control of ingredients.controls;track (control.value.amount + i + 1);let i = $index,
-                  last = $last) {
+              @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
+                last = $last) {
                 <ng-container [formGroupName]="i">
                   <lg-controls-row [mobileMode]="true">
                     <lg-gap-column [size]="'small'">
@@ -111,15 +111,21 @@
       </lg-gap-column>
     </lg-card>
 
-    <lg-gap-column [position]="'start'" [size]="'medium'" style="--control-bg: #ffffff">
-      <lg-multiselect #categorySelect
-                      [resource]="'recipes-categories'"
-                      formControlName="category_id"
-                      lgExpand></lg-multiselect>
+    <lg-gap-row [equal]="true" [mobileMode]="true">
+      <lg-gap-column [position]="'start'" [size]="'medium'" style="--control-bg: #ffffff">
+        <lg-multiselect #categorySelect
+                        [resource]="'recipes-categories'"
+                        formControlName="category_id"
+                        lgExpand></lg-multiselect>
 
-      @if (topCategories().length) {
-        <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
-      }
-    </lg-gap-column>
+        @if (topCategories().length) {
+          <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+        }
+      </lg-gap-column>
+
+      <lg-tags-control [multi]="true"
+                       [resource]="'tags'"
+                       formControlName="tags"></lg-tags-control>
+    </lg-gap-row>
   </lg-gap-column>
 </form>

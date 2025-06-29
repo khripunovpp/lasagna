@@ -32,6 +32,13 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
           </lg-button>
 
           <lg-button [size]="'small'"
+                     (click)="onSortChange({group: 'tag'})"
+                     [style]="'warning'"
+                     [flat]="true">
+            Tag
+          </lg-button>
+
+          <lg-button [size]="'small'"
                      [style]="'warning'"
                      (click)="onSortChange({group: 'createdAt'})"
                      [flat]="true">

@@ -14,7 +14,7 @@ export class BaseGrouping<T = any>
     }
   }
 
-  groupBy(item: T): string {
+  groupBy(item: T): string | string[] {
     return JSON.stringify(item);
   }
 }

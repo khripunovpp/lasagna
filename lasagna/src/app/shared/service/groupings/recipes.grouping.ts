@@ -5,7 +5,23 @@ import {BaseGrouping} from './base-grouping';
 export class CategoryRecipeSortStrategy
   extends BaseGrouping<RecipeDTO> {
   override groupBy(item: RecipeDTO): string {
-    return item.category_id ?? 'uncategorized';
+    return item.category_id || '';
+  }
+
+  override sort(
+    a: RecipeDTO,
+    b: RecipeDTO,
+    direction: 'asc' | 'desc',
+    field: string = 'name'
+  ): number {
+    return recipeSortFunction(a, b, direction, field);
+  }
+}
+
+export class TagsRecipeSortStrategy
+  extends BaseGrouping<RecipeDTO> {
+  override groupBy(item: RecipeDTO) {
+    return item.tags?.map(tag => tag.toString()) || '';
   }
 
   override sort(

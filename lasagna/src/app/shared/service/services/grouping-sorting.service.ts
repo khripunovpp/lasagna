@@ -5,7 +5,7 @@ import {SortResult, SortResultGroup, SortStrategy} from '../types/sorting.types'
   providedIn: 'root'
 })
 export class GroupSortService {
-  sort<T>(
+  groupItems<T>(
     items: T[],
     strategy: SortStrategy<T>,
     direction: 'asc' | 'desc' = 'asc',
@@ -13,12 +13,23 @@ export class GroupSortService {
   ): SortResult<T> {
     const groupsMap = new Map<string, T[]>();
 
-    for (const item of items) {
-      const key = strategy.groupBy(item);
+    const checkFn = (key: string, item: T) => {
       if (!groupsMap.has(key)) {
         groupsMap.set(key, []);
       }
       groupsMap.get(key)!.push(item);
+    }
+
+    for (const item of items) {
+      const key = strategy.groupBy(item);
+      // could be array, string, number, etc.
+      if (Array.isArray(key)) {
+        for (const subKey of key) {
+          checkFn(subKey, item);
+        }
+      } else {
+        checkFn(key, item);
+      }
     }
 
     const result: SortResultGroup<T>[] = [];
@@ -34,6 +45,12 @@ export class GroupSortService {
     }
 
     return new SortResult(result.toSorted((a, b) => {
+      // compare field key, but if one of this is empty, put it at the end
+      if (a.field === '' && b.field !== '') {
+        return 1;
+      } else if (b.field === '' && a.field !== '') {
+        return -1;
+      }
       return a.field.localeCompare(b.field);
     }));
   }

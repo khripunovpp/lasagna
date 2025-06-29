@@ -218,15 +218,11 @@ export class AddRecipeComponent
   }
 
   async onEditRecipe() {
-    try {
-      if (!this.formComponent()?.validateForm()
+    if (!this.formComponent()?.validateForm()
         || !this.recipe()) {
         return;
       }
       await this._editRecipe(this.recipe()!);
-    } catch (e) {
-      this._notificationsService.error(errorHandler(e));
-    }
   }
 
   onRemoveDraft() {
