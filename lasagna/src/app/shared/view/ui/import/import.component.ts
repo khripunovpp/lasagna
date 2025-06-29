@@ -42,7 +42,10 @@ import {TranslatePipe} from '@ngx-translate/core';
       </lg-upload>
 
       <div #dialog>
-          <lg-dialog>
+          <lg-dialog (onCancel)="onClose()"
+                     [cancelButtonText]="'close-label'|translate"
+                     [confirmButtonText]="'confirm-label'|translate"
+                     (onConfirm)="onConfirm()">
               <lg-gap-column>
                   @if (data$ | async;as data) {
                       @if (analize$ | async;as duplicates) {
@@ -112,19 +115,6 @@ import {TranslatePipe} from '@ngx-translate/core';
                       <label>
                           {{ 'replace-duplicates-label'|translate }}
                       </label>
-                  </lg-gap-row>
-
-                  <lg-gap-row [center]="true">
-                      <lg-button (click)="onClose()"
-                                 [size]="'small'"
-                                 [style]="'danger'">
-                          {{ 'close-label'|translate }}
-                      </lg-button>
-                      <lg-button (click)="onConfirm()"
-                                 [size]="'small'"
-                                 [style]="'success'">
-                          {{ 'confirm-label'|translate }}
-                      </lg-button>
                   </lg-gap-row>
               </lg-gap-column>
           </lg-dialog>
