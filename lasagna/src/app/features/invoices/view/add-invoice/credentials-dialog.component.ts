@@ -7,26 +7,53 @@ import {Credential} from '../../../settings/service/models/Credential';
 import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
 
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
+import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 
 @Component({
   selector: 'lg-credentials-dialog',
   standalone: true,
   template: `
-      <lg-dialog [displayFooter]="false">
-          <lg-gap-column size="small">
-              @for (credential of credentials();track (credential.uuid)) {
-                  <lg-button (click)="onSelect(credential)">
-                      {{ credential.name }}
-                  </lg-button>
-              }
-          </lg-gap-column>
-      </lg-dialog>
+    <lg-dialog [displayFooter]="false">
+      <lg-gap-row size="small"
+                  cols="2"
+                  [wrap]="true">
+        @for (credential of credentials(); track (credential.uuid)) {
+          <button class="credential-item"
+                  (click)="onSelect(credential)">
+            <b class="credential-item__name">{{ credential.privateName }}</b>
+            <div class="text-wrap credential-item__inner">{{ credential.toFormattedString() }}</div>
+          </button>
+        }
+      </lg-gap-row>
+    </lg-dialog>
   `,
-  styles: [``],
+  styles: [`
+    .credential-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background-color: var(--accent-light-color);
+      appearance: none;
+      font-family: inherit;
+      font-size: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      border: none;
+    }
+
+    .credential-item__inner {
+      text-align: left;
+    }
+  `],
   imports: [
     DialogComponent,
     GapColumnComponent,
-    ButtonComponent
+    ButtonComponent,
+    GapRowComponent,
+    CardComponent,
+    WidthDirective
   ]
 })
 export class CredentialsDialogComponent {

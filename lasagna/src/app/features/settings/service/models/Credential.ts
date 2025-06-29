@@ -72,7 +72,25 @@ export class Credential {
   }
 
   toFormattedString() {
-    return `${this.name}\n${this.address}\n${this.country}\n${this.phone}\n${this.email}\n${this.taxId ? `Tax ID: ${this.taxId}` : ''}\n
-    `;
+    let string = '';
+    if (this.name) {
+      string += `\n${this.name}`;
+    }
+    if (this.address) {
+      string += `\n${this.address}`;
+    }
+    if (this.country) {
+      string += `, ${this.country}`;
+    }
+    if (this.phone) {
+      string += `\n${this.phone}`;
+    }
+    if (this.email) {
+      string += `\n${this.email}`;
+    }
+    if (this.taxId) {
+      string += `\nTax ID: ${this.taxId}`;
+    }
+    return string;
   }
 }

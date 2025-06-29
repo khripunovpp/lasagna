@@ -1,4 +1,4 @@
-import {Component, input, output, signal} from '@angular/core';
+import {Component, HostListener, input, output, signal} from '@angular/core';
 import {CardComponent} from '../card/card.component';
 import {ButtonComponent} from '../layout/button.component';
 import {FocusTrapDirective} from '../focus-trap.directive';
@@ -18,8 +18,8 @@ import {FocusTrapDirective} from '../focus-trap.directive';
                 Close
               </button>
             }
-            <lg-card>
-              <div class="dialog__inner-container" (click)="$event.stopPropagation()">
+            <lg-card (click)="$event.stopPropagation()">
+              <div class="dialog__inner-container">
 
                 <div class="dialog__inner">
                   <ng-content></ng-content>
@@ -132,6 +132,11 @@ export class DialogComponent {
   displayFooter = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
+
+  onEscKeyDown(event: unknown) {
+    console.log(event)
+    this.close();
+  }
 
   onCancelClick() {
     this.onCancel.emit();

@@ -15,7 +15,9 @@ import {NgClass, NgStyle} from '@angular/common';
          [class.gap-row__relaxed]="relaxed()"
          [class.gap-row__top]="top()"
          [class.gap-row__equal]="equal"
+         [class.gap-row__wrap]="wrap()"
          [ngClass]="size()"
+         [style]="'--cols: ' + cols()"
          [ngStyle]="styles()"
          class="gap-row">
       <ng-content></ng-content>
@@ -39,6 +41,7 @@ import {NgClass, NgStyle} from '@angular/common';
       padding-left: var(--lg-gap-row-pad-left);
       padding-right: var(--lg-gap-row-pad-right);
     }
+
 
     .gap-row__center {
       align-items: center;
@@ -90,6 +93,14 @@ import {NgClass, NgStyle} from '@angular/common';
       justify-content: space-between;
     }
 
+    .gap-row__wrap {
+      flex-wrap: wrap;
+
+      & > * {
+        flex: 0 0 calc((100% / var(--cols)) - (var(--gap) / var(--cols)));
+      }
+    }
+
     @media (max-width: 600px) {
 
       .gap-row__mobile {
@@ -128,6 +139,8 @@ export class GapRowComponent {
   fit = input<boolean>(false);
   mobileMode = input<boolean>(false);
   relaxed = input<boolean>(false);
+  wrap = input<boolean>(false);
+  cols = input<string|number>(1);
   size = input<
     'default' |
     'small' |
