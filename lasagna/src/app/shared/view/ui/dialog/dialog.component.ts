@@ -1,25 +1,55 @@
-import {Component, signal} from '@angular/core';
+import {Component, input, output, signal} from '@angular/core';
 import {CardComponent} from '../card/card.component';
+import {ButtonComponent} from '../layout/button.component';
+import {FocusTrapDirective} from '../focus-trap.directive';
 
 @Component({
   selector: 'lg-dialog',
   standalone: true,
   template: `
-      <div [style.display]="displayed() ? 'flex' : 'none'"
-           class="dialog">
-          <div class="dialog__container">
-              <div class="dialog__wrap">
-                  <div class="dialog__box">
-                      <lg-card>
-                          <ng-content></ng-content>
-                      </lg-card>
+    <div [style.display]="displayed() ? 'flex' : 'none'"
+         class="dialog" (click)="close()">
+      <div class="dialog__container">
+        <div class="dialog__wrap">
+          <div class="dialog__box" lgFocusTrap>
+            @if (closeButton()) {
+              <button class="dialog__close-button"
+                      aria-label="Close dialog">
+                Close
+              </button>
+            }
+            <lg-card>
+              <div class="dialog__inner-container" (click)="$event.stopPropagation()">
+
+                <div class="dialog__inner">
+                  <ng-content></ng-content>
+                </div>
+
+                @if (displayFooter()) {
+                  <div class="dialog__footer">
+                    <lg-button (click)="onCancelClick()"
+                               [style]="'secondary'"
+                               class="dialog__cancel-button">
+                      {{ cancelButtonText() }}
+                    </lg-button>
+
+                    <lg-button (click)="onConfirmClick()"
+                               class="dialog__confirm-button">
+                      {{ confirmButtonText() }}
+                    </lg-button>
                   </div>
+                }
               </div>
+            </lg-card>
           </div>
+        </div>
       </div>
+    </div>
   `,
   imports: [
-    CardComponent
+    CardComponent,
+    ButtonComponent,
+    FocusTrapDirective
   ],
   styles: [`
     .dialog {
@@ -56,6 +86,38 @@ import {CardComponent} from '../card/card.component';
 
     .dialog__box {
     }
+
+    .dialog__inner-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dialog__footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid #f5f5f5;
+      padding-top: 16px;
+    }
+
+    .dialog__close-button {
+      appearance: none;
+      border: none;
+      background: #f5f5f5;
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(0.9);
+      }
+    }
   `]
 
 })
@@ -64,6 +126,22 @@ export class DialogComponent {
   }
 
   displayed = signal(false);
+  closeButton = input(true);
+  cancelButtonText = input('Cancel');
+  confirmButtonText = input('Confirm');
+  displayFooter = input(true);
+  onCancel = output<void>();
+  onConfirm = output<void>();
+
+  onCancelClick() {
+    this.onCancel.emit();
+    this.close();
+  }
+
+  onConfirmClick() {
+    this.onConfirm.emit();
+    this.close();
+  }
 
   open() {
     this.displayed.set(true);

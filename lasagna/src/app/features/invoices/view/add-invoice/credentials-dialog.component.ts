@@ -12,7 +12,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/layout/button.componen
   selector: 'lg-credentials-dialog',
   standalone: true,
   template: `
-      <lg-dialog>
+      <lg-dialog [displayFooter]="false">
           <lg-gap-column size="small">
               @for (credential of credentials();track (credential.uuid)) {
                   <lg-button (click)="onSelect(credential)">
