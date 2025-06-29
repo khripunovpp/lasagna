@@ -4,10 +4,8 @@ import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.ser
 import {Stores} from '../../../shared/service/db/const/stores';
 import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
 import {Subject} from 'rxjs';
-import {TagsRepository} from '../../settings/service/repositories/tags.repository';
 import {Product} from './Product';
 import {ProductDTO} from './Product.scheme';
-import {Tag} from '../../settings/service/models/Tag';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +16,6 @@ export class ProductsRepository {
     private _categoryRepository: CategoryProductsRepository,
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
-    private _tagsRepository: TagsRepository,
   ) {
   }
 
@@ -28,17 +25,16 @@ export class ProductsRepository {
     return this._stream$.asObservable();
   }
 
+  get length() {
+    return this._indexDbService.getLength(Stores.PRODUCTS);
+  }
+
   loadAll() {
     return this._indexDbService.getAll(Stores.PRODUCTS).then(products => {
       this._stream$.next(products.map(product => Product.fromRaw(product)));
       return products;
     });
   }
-
-  get length() {
-    return this._indexDbService.getLength(Stores.PRODUCTS);
-  }
-
 
   async addOne(
     product: Product,
@@ -48,11 +44,6 @@ export class ProductsRepository {
     if (product.category_id) this._saveCategory(product.category_id.toString());
     if (product.source) this._saveSource(product.source);
     this._saveProductToHistory(uuid);
-    if (product.tags) {
-      for (const tag of product.tags) {
-        await this._saveTag(tag);
-      }
-    }
     return uuid;
   }
 
@@ -62,11 +53,6 @@ export class ProductsRepository {
   ) {
     await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
     this._saveProductToHistory(uuid);
-    if (product.tags) {
-      for (const tag of product.tags) {
-        await this._saveTag(tag);
-      }
-    }
   }
 
   async getOne(
@@ -194,9 +180,5 @@ export class ProductsRepository {
 
   private _saveProductToHistory(uuid: string) {
     this._usingHistoryService.count('products', uuid);
-  }
-
-  private _saveTag(tag: Tag) {
-    return this._tagsRepository.addOne(tag)
   }
 }

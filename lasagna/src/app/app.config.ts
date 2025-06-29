@@ -34,7 +34,7 @@ import {GroupSortService} from './shared/service/services/grouping-sorting.servi
 import {
   CategoryRecipeSortStrategy,
   RecipeAlphabeticalSortStrategy,
-  RecipeCreatedAtMonthSortStrategy
+  RecipeCreatedAtMonthSortStrategy, TagsRecipeSortStrategy
 } from './shared/service/groupings/recipes.grouping';
 import {injectQueryParams} from './shared/helpers';
 import {logoBase64} from './shared/view/const/logoBase64';
@@ -168,6 +168,7 @@ export const appConfig: ApplicationConfig = {
           'createdAt': RecipeCreatedAtMonthSortStrategy,
           'category': CategoryRecipeSortStrategy,
           'alphabetical': RecipeAlphabeticalSortStrategy,
+          'tag': TagsRecipeSortStrategy,
         }
 
         return recipes.pipe(
@@ -175,7 +176,7 @@ export const appConfig: ApplicationConfig = {
           map((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
             const strategy = new (groupingMap[grouping as string] ?? CategoryRecipeSortStrategy)();
-            return groupSortService.sort<RecipeDTO>(
+            return groupSortService.groupItems<RecipeDTO>(
               recipes,
               strategy,
               (sortDirection() as any) ?? 'asc',

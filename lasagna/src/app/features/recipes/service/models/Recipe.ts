@@ -11,41 +11,17 @@ export class Recipe {
   constructor(
     props: Partial<RecipeDTO>
   ) {
-    this.name = String(props.name ?? '').trim();
-    this.description = String(props.description ?? '').trim();
-    this.ingredients = props.ingredients?.map((ingredient) => {
-      return Ingredient.fromRaw(ingredient);
-    }).filter((ingredient) => !ingredient.empty) || [];
-    this.outcome_amount = parseFloat(String(props.outcome_amount ?? ''));
-    this.outcome_unit = (String(props.outcome_unit ?? '') || 'gram') as Unit;
-    this.uuid = String(props.uuid ?? '').trim() || undefined;
-    this.taxTemplateName = String(props.taxTemplateName ?? '').trim() || undefined;
-    this.category_id = CategoryRecipe.fromRaw(
-      typeof props.category_id === 'string' ? {
-        uuid: props.category_id,
-      } : props.category_id,
-    );
-    this.tags = props.tags?.map((tag) => {
-      return Tag.fromRaw(tag);
-    });
-    this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
-    this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
-    this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
-    this.perUnitPriceModifier = props.perUnitPriceModifier ? {
-      action: props.perUnitPriceModifier.action as any,
-      value: parseFloatingNumber(props.perUnitPriceModifier.value) || 0,
-      unit: props.perUnitPriceModifier.unit as any
-    } : undefined;
+    this.update(props);
   }
 
-  name: string;
-  description: string;
-  ingredients: Ingredient[];
-  outcome_amount: number;
-  outcome_unit: Unit;
-  uuid?: string | undefined;
+  name: string = '';
+  description: string = '';
+  ingredients: Ingredient[] = [];
+  outcome_amount: number = 0;
+  outcome_unit: Unit = 'gram';
+  uuid?: string | undefined = undefined;
   taxTemplateName?: string | undefined;
-  category_id: CategoryRecipe;
+  category_id?: CategoryRecipe;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
   tags?: Tag[];
@@ -222,7 +198,7 @@ export class Recipe {
       outcome_unit: this.outcome_unit,
       uuid: this.uuid,
       taxTemplateName: this.taxTemplateName,
-      category_id: this.category_id.toUUID(),
+      category_id: this.category_id?.toUUID(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       tags: this.tags?.map((tag) => {
@@ -242,9 +218,10 @@ export class Recipe {
   ) {
     this.name = dto?.name || this.name;
     this.description = dto?.description || this.description;
-    this.ingredients = dto?.ingredients ? dto.ingredients.map((ingredient: any) => {
-      return Ingredient.fromRaw(ingredient);
-    }) : this.ingredients;
+    this.ingredients = Array.isArray(dto?.ingredients)
+      ? dto.ingredients.map((ingredient: any) => {
+        return Ingredient.fromRaw(ingredient);
+      }) : this.ingredients;
     this.outcome_amount = dto?.outcome_amount ?? this.outcome_amount;
     this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
     this.uuid = dto?.uuid || this.uuid;
@@ -256,9 +233,10 @@ export class Recipe {
     ) : this.category_id;
     this.createdAt = dto?.createdAt || this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
-    this.tags = dto?.tags ? dto.tags.map((tag: any) => {
-      return Tag.fromRaw(tag);
-    }) : this.tags;
+    this.tags = Array.isArray(dto?.tags)
+      ? dto.tags.map((tag: any) => {
+        return Tag.fromRaw(tag);
+      }) : this.tags;
     this.color = dto?.color || this.color;
     this.perUnitPriceModifier = dto?.perUnitPriceModifier ? {
       action: dto.perUnitPriceModifier.action,

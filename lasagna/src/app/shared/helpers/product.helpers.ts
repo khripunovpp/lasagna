@@ -10,7 +10,6 @@ export const productToFormValue = (product?: Product) => {
     price: product?.price || null,
     source: product?.source || null,
     category_id: product?.category_id?.toUUID() || null,
-    tags: product?.tags?.map((tag) => tag.toString()) || null,
   }
 }
 
