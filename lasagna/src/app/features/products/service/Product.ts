@@ -19,23 +19,14 @@ export class Product {
       color?: string | undefined
     }
   ) {
-    this.name = props.name;
-    this.amount = parseFloat(String(props.amount));
-    this.price = props.price;
-    this.unit = props.unit as Unit;
-    this.source = props.source;
-    this.category_id = CategoryProduct.fromRaw(props.category_id);
-    this.uuid = props.uuid;
-    this.createdAt = props.createdAt ? Number(props.createdAt) : undefined;
-    this.updatedAt = props.updatedAt ? Number(props.updatedAt) : undefined;
-    this.color = this.color = String(props.color ?? '').trim() || estimateColor(this.name);
+    this.update(props);
   }
 
-  name: string;
-  amount: number;
-  price: number;
-  unit: Unit;
-  category_id: CategoryProduct;
+  name: string = '';
+  amount: number = 0;
+  price: number = 0;
+  unit: Unit = 'gram';
+  category_id?: CategoryProduct;
   source?: string;
   uuid?: string | undefined;
   createdAt?: number | undefined;
@@ -121,7 +112,7 @@ export class Product {
       price: this.price,
       unit: this.unit,
       source: this.source ?? '',
-      category_id: this.category_id.toUUID(),
+      category_id: this.category_id?.toUUID(),
       uuid: this.uuid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

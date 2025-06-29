@@ -16,7 +16,6 @@ export class DexieIndexDbService extends Dexie {
   constructor(
     private flexsearchIndexService: FlexsearchIndexService,
     @Inject(DB_NAME) dbName: string,
-    private _loggerService: LoggerService,
   ) {
     super(dbName);
 
@@ -30,24 +29,31 @@ export class DexieIndexDbService extends Dexie {
       if (migration.update) {
         schema.upgrade(migration.update);
       }
-      // console.log(`Migration ${migration.version} applied`);
+      this.logger.log(`Migration ${migration.version} applied`);
     }
+
     setTimeout(() => {
       this.initIndexes();
     });
   }
 
-  logger = inject(LoggerService).withContext({
+  private _loggerClass = inject(LoggerService);
+  logger = this._loggerClass.withContext({
     color: '#7f81fb',
     label: 'IndexDB'
-  })
-  productsStore!: Table<any, string>;
-  recipesStore!: Table<any, string>;
-  categoryStore!: Table<any, string>;
-  relations = new Map<string, string[]>();
+  });
+  cacheLogger = this._loggerClass.withContext({
+    color: '#7fc3fb',
+    label: 'IndexDB:Cache'
+  });
+  indexLogger = this._loggerClass.withContext({
+    color: '#7fdb7f',
+    label: 'IndexDB:Index'
+  });
+  private _cache = new Map<string, Map<string, any>>();
 
-  initIndexes(): Promise<void> {
-    return Promise.all([
+  async initIndexes(): Promise<void> {
+    await Promise.all([
       this.initIndex(Stores.PRODUCTS),
       this.initIndex(Stores.RECIPES),
       this.initIndex(Stores.PRODUCTS_CATEGORIES),
@@ -58,12 +64,12 @@ export class DexieIndexDbService extends Dexie {
       this.initIndex(Stores.SETTINGS),
       this.initIndex(Stores.INVOICES),
       this.initIndex(Stores.CREDENTIALS),
-    ]).then(() => {
-    });
+    ]);
+    this.logger.log('All indexes initialized successfully');
   }
 
   async initIndex(table: string): Promise<void> {
-    await this.flexsearchIndexService.initIndex(this.getStore(table as Stores), table, ['name']);
+    await this.flexsearchIndexService.initIndex(this.getStore(table as Stores), table, ['name', 'uuid']);
     const indexData = await this.getOne(Stores.INDICES, table);
 
     if (indexData) {
@@ -77,19 +83,17 @@ export class DexieIndexDbService extends Dexie {
 
       await this.saveIndex(table);
     }
-
-    // await this.saveIndex(table);
   }
 
   async saveIndex(table: string) {
     try {
       const indexData = this.flexsearchIndexService.getIndex(table);
       if (!indexData) {
-        console.error('No index data found for table:', table);
+        this.indexLogger.error('No index data found for table:', table);
         return;
       } else {
         const data = await this.flexsearchIndexService.exportIndex(table);
-        this.logger.log(table, 'Saving index data:', {data});
+        this.indexLogger.log(table, 'Saving index data:', {data});
         await this.replaceData(Stores.INDICES, table, {
           table,
           indexData: data,
@@ -101,23 +105,82 @@ export class DexieIndexDbService extends Dexie {
     }
   }
 
-  async loadIndex(table: string) {
-    const indexData = await this.filter(Stores.INDICES, 'table', table, true);
-
-    if (indexData?.[0]) {
-      return indexData[0].indexData;
+  async getOne<T = any>(
+    storeKey: Stores,
+    uuid: string
+  ): Promise<T> {
+    const cache = this._getCache(storeKey, uuid);
+    if (cache) {
+      this.cacheLogger.log(storeKey, 'Got one item from cache:', {uuid, cache});
+      return cache as T;
     }
-    return null;
+    // @ts-ignore
+    const response = await (this[storeKey] as Table<any>).get(uuid);
+    this.logger.log(storeKey, 'Got one item from store:', {response});
+    this._putCache(storeKey, uuid, response);
+    return response
   }
 
-  async getLength(storeKey: Stores): Promise<number> {
+  async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<{
+    data: T | null,
+    relations: Record<string, Record<string, any>>,
+  }> {
     // @ts-ignore
-    return (this[storeKey] as Table<any>).count();
+    const item = await this.getOne(storeKey, uuid);
+    if (!item) {
+      return Promise.resolve({
+        data: null,
+        relations: {},
+      });
+    }
+
+    const relations: Record<string, Record<string, any>> = {};
+    const rel = await this._collectRelations(item, relations);
+    this._putRelationsInto(item, rel);
+    this.logger.log(storeKey, 'Got one item from store with all relations:', {item, relations});
+
+    return {
+      data: item,
+      relations,
+    }
+  }
+
+  async getMany<T = any>(storeKey: Stores, uuids: string[]): Promise<T[]> {
+    // @ts-ignore
+    const table = (this[storeKey] as Table<any>);
+    const result = await table.where('uuid')
+      .anyOf(uuids)
+      .toArray();
+    this.logger.log(storeKey, 'Got many:', {result});
+    return result;
+  }
+
+  async getManyWithRelations<T = any>(storeKey: Stores, uuids: string[]): Promise<{
+    data: T[],
+    relations: Record<string, Record<string, any>>,
+  }> {
+    // @ts-ignore
+    const table = (this[storeKey] as Table<any>);
+    const items = await table.where('uuid').anyOf(uuids).toArray();
+    const relations: Record<string, Record<string, any>> = {};
+    for (const item of items) {
+      const rel = await this._collectRelations(item, relations);
+      this._putRelationsInto(item, rel);
+    }
+    return {
+      data: items,
+      relations,
+    };
+  }
+
+  async getAll<T = any>(storeKey: Stores): Promise<T[]> {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).toArray();
   }
 
   async addData<T = any>(storeKey: Stores, value: T, customUUID?: string): Promise<string> {
     try {
-      const uuid = customUUID || this.generateUuid();
+      const uuid = customUUID || this._generateUuid();
       const obj = {...value, uuid};
       // @ts-ignore
       await (this[storeKey] as Table<any>).put(obj);
@@ -126,6 +189,7 @@ export class DexieIndexDbService extends Dexie {
       }
       await this.flexsearchIndexService.addToIndex(storeKey, obj);
       await this.saveIndex(storeKey);
+      this._putCache(storeKey, uuid, value);
       return uuid;
     } catch (error) {
       throw error;
@@ -134,6 +198,11 @@ export class DexieIndexDbService extends Dexie {
 
   async replaceData<T = any>(storeKey: Stores, uuid: string, value: T): Promise<void> {
     const obj = {...value, uuid};
+    const cache = this._getCache(storeKey, uuid);
+    if (cache) {
+      this.cacheLogger.log(storeKey, 'Flushing cache for item:', {uuid, cache});
+      this._removeCache(storeKey, uuid);
+    }
     // @ts-ignore
     await (this[storeKey] as Table<any>).put(obj);
     if (storeKey === Stores.INDICES) {
@@ -141,14 +210,14 @@ export class DexieIndexDbService extends Dexie {
     }
     await this.flexsearchIndexService.addToIndex(storeKey, obj);
     await this.saveIndex(storeKey);
+    this._putCache(storeKey, uuid, value);
   }
 
   async replaceManyData<T = any>(storeKey: Stores, values: T[]): Promise<void> {
     // @ts-ignore
-
     const valuesWithUuid = values.map((value: any) => ({
       ...value,
-      uuid: value.uuid || this.generateUuid(),
+      uuid: value.uuid || this._generateUuid(),
     }));
     // @ts-ignore
     await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid);
@@ -157,13 +226,16 @@ export class DexieIndexDbService extends Dexie {
     }
     for (const value of valuesWithUuid) {
       await this.flexsearchIndexService.addToIndex(storeKey, value);
+      this._putCache(storeKey, value.uuid, value);
     }
     await this.saveIndex(storeKey);
   }
 
   async search(storeKey: Stores, indexField: string, value: string): Promise<any[]> {
     // @ts-ignore
-    const result = await (this[storeKey] as Table<any>).where(indexField).equals(value).toArray();
+    const result = await (this[storeKey] as Table<any>).where(indexField)
+      .equals(value)
+      .toArray();
     this.logger.log(storeKey, 'Search result:', {indexField, value, result});
     return result;
   }
@@ -183,44 +255,93 @@ export class DexieIndexDbService extends Dexie {
     return this[storeKey] as Table<any, string>;
   }
 
-  async getOne<T = any>(storeKey: Stores, uuid: string): Promise<T> {
+  async getLength(storeKey: Stores): Promise<number> {
     // @ts-ignore
-    const response = await (this[storeKey] as Table<any>).get(uuid);
-    this.logger.log(storeKey, 'Got one item from store:', {response});
-    return response
+    return (this[storeKey] as Table<any>).count();
   }
 
-  async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<{
-    data: T | null,
-    relations: Record<string, Record<string, any>>,
-  }> {
+  async remove(storeKey: Stores, uuid: string): Promise<void> {
+    const cache = this._getCache(storeKey, uuid);
     // @ts-ignore
-    const table = (this[storeKey] as Table<any>)
-    const item = await table.get(uuid);
-    if (!item) {
-      return Promise.resolve({
-        data: null,
-        relations: {},
-      });
+    await (this[storeKey] as Table<any>).delete(uuid);
+    if (storeKey === Stores.INDICES) {
+      return;
     }
+    if (cache) {
+      this.cacheLogger.log(storeKey, 'Flushing cache for item:', {uuid, cache});
+      this._removeCache(storeKey, uuid);
+    }
+    await this.flexsearchIndexService.removeFromIndex(storeKey, uuid);
+    await this.saveIndex(storeKey);
+  }
 
-    const relations: Record<string, Record<string, any>> = {};
-    const rel = await this.parse(item, relations);
-    this.apply(item, rel);
-    this.logger.log(storeKey, 'Got one item from store with all relations:', {item, relations});
+  async removeMany(storeKey: Stores, uuids: string[]): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkDelete(uuids);
 
-    return {
-      data: item,
-      relations,
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    for (const uuid of uuids) {
+      this._removeCache(storeKey, uuid);
+    }
+    await this.flexsearchIndexService.removeFromIndex(storeKey, uuids);
+    await this.saveIndex(storeKey);
+  }
+
+  async clear(storeKey: Stores): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).clear();
+    this._dropCache(storeKey);
+    await this._resetIndex(storeKey);
+  }
+
+  async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkPut(values.map(value => ({
+      ...value,
+      uuid: autoUUID ? this._generateUuid() : (value.uuid || this._generateUuid()),
+    })));
+
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    for (const value of values) {
+      await this.flexsearchIndexService.addToIndex(storeKey, value);
+      this._putCache(storeKey, value.uuid, value);
     }
   }
 
-  async parse(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
+  async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).orderBy(indexField).uniqueKeys();
+  }
+
+  async getVersion(): Promise<number> {
+    return (this as any).idbdb.version;
+  }
+
+  async restoreAllData(data: BuckupData[]): Promise<void> {
+    const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
+    for (const store of stores) {
+      const items = data.find(item => item.store === store);
+      if (items) {
+        // TODO validate schema
+        await this.clear(store);
+        await this.balkAdd(store, items.data, false);
+      } else {
+        throw new Error(`Store ${store} not found in backup data`);
+      }
+    }
+    this._cache.clear();
+  }
+
+  private async _collectRelations(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
     const entries = Object.entries(obj ?? {});
     for (const [key, value] of entries) {
       if (Array.isArray(value)) {
         for (const subItem of obj[key]) {
-          const rel = await this.parse(subItem, relations);
+          const rel = await this._collectRelations(subItem, relations);
         }
       } else {
         const relation = relationsMap[key];
@@ -244,12 +365,12 @@ export class DexieIndexDbService extends Dexie {
     return relations;
   }
 
-  apply(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
+  private _putRelationsInto(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
     const entries = Object.entries(obj ?? {});
     for (const [key, value] of entries) {
       if (Array.isArray(value)) {
         for (const subItem of obj[key]) {
-          this.apply(subItem, relations);
+          this._putRelationsInto(subItem, relations);
         }
       } else {
         const relationsStore = relations[key];
@@ -262,114 +383,55 @@ export class DexieIndexDbService extends Dexie {
     }
   }
 
-  async getAll<T = any>(storeKey: Stores): Promise<T[]> {
-    // @ts-ignore
-    const table = (this[storeKey] as Table<any>)
-    return table.toArray();
+  private _generateUuid(): string {
+    return generateUuid();
   }
 
-  async getFirst(storeKey: Stores): Promise<any> {
-    // @ts-ignore
-    const table = (this[storeKey] as Table<any>)
-    return table.toCollection().first();
-  }
-
-  async getMany<T = any>(storeKey: Stores, uuids: string[]): Promise<T[]> {
-    // @ts-ignore
-    const table = (this[storeKey] as Table<any>);
-    const result = await table.where('uuid').anyOf(uuids).toArray()
-
-    this.logger.log(storeKey, 'Got many:', {result});
-    return result;
-  }
-
-  async getManyWithRelations<T = any>(storeKey: Stores, uuids: string[]): Promise<{
-    data: T[],
-    relations: Record<string, Record<string, any>>,
-  }> {
-    // @ts-ignore
-    const table = (this[storeKey] as Table<any>);
-    const items = await table.where('uuid').anyOf(uuids).toArray();
-    const relations: Record<string, Record<string, any>> = {};
-    for (const item of items) {
-      const rel = await this.parse(item, relations);
-      this.apply(item, rel);
-    }
-    return {
-      data: items,
-      relations,
-    };
-  }
-
-  async remove(storeKey: Stores, uuid: string): Promise<void> {
-    // @ts-ignore
-    await (this[storeKey] as Table<any>).delete(uuid);
-    if (storeKey === Stores.INDICES) {
-      return;
-    }
-    await this.flexsearchIndexService.removeFromIndex(storeKey, uuid);
-    await this.saveIndex(storeKey);
-  }
-
-  async removeMany(storeKey: Stores, uuids: string[]): Promise<void> {
-    // @ts-ignore
-    await (this[storeKey] as Table<any>).bulkDelete(uuids);
-    if (storeKey === Stores.INDICES) {
-      return;
-    }
-    await this.flexsearchIndexService.removeFromIndex(storeKey, uuids);
-    await this.saveIndex(storeKey);
-  }
-
-  async clear(storeKey: Stores): Promise<void> {
-    // @ts-ignore
-    await (this[storeKey] as Table<any>).clear();
-    await this.resetIndex(storeKey);
-  }
-
-  async resetIndex(storeKey: Stores): Promise<void> {
+  private async _resetIndex(storeKey: Stores): Promise<void> {
     await this.flexsearchIndexService.clearIndex(storeKey);
     await this.saveIndex(storeKey);
   }
 
-  generateUuid(): string {
-    return generateUuid();
-  }
-
-  async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<void> {
-    // @ts-ignore
-    await (this[storeKey] as Table<any>).bulkPut(values.map(value => ({
-      ...value,
-      uuid: autoUUID ? this.generateUuid() : (value.uuid || this.generateUuid()),
-    })));
-    if (storeKey === Stores.INDICES) {
-      return;
+  private _putCache(storeKey: Stores, uuid: string, value: any): void {
+    if (storeKey === Stores.INDICES) return;
+    if (!this._cache.has(storeKey)) {
+      this._cache.set(storeKey, new Map<string, any>());
     }
-    for (const value of values) {
-      await this.flexsearchIndexService.addToIndex(storeKey, value);
+    const cache = this._cache.get(storeKey);
+    if (cache) {
+      cache.set(uuid, value);
+      this.cacheLogger.log(storeKey, 'Put item in cache:', {uuid, value});
+    } else {
+      this.cacheLogger.warn(storeKey, 'Cache not initialized for store:', storeKey);
     }
   }
 
-  async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
-    // @ts-ignore
-    return (this[storeKey] as Table<any>).orderBy(indexField).uniqueKeys();
+  private _getCache(storeKey: Stores, uuid: string): any | undefined {
+    const cache = this._cache.get(storeKey);
+    if (cache?.has(uuid)) {
+      this.cacheLogger.log(storeKey, 'Got item from cache:', {uuid});
+      return cache.get(uuid);
+    }
+    this.cacheLogger.warn(storeKey, 'Item not found in cache:', {uuid});
+    return undefined;
   }
 
-  async getVersion(storeKey: Stores): Promise<number> {
-    return (this as any).idbdb.version;
-  }
-
-  async restoreAllData(data: BuckupData[]): Promise<void> {
-    const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
-    for (const store of stores) {
-      const items = data.find(item => item.store === store);
-      if (items) {
-        // TODO validate schema
-        await this.clear(store);
-        await this.balkAdd(store, items.data, false);
-      } else {
-        throw new Error(`Store ${store} not found in backup data`);
+  private _removeCache(storeKey: Stores, uuid: string): void {
+    const cache = this._cache.get(storeKey);
+    if (cache) {
+      if (cache.has(uuid)) {
+        cache.delete(uuid);
+        this.cacheLogger.log(storeKey, 'Removed item from cache:', {uuid});
       }
+    }
+  }
+
+  private _dropCache(storeKey: Stores): void {
+    if (this._cache.has(storeKey)) {
+      this._cache.delete(storeKey);
+      this.cacheLogger.log(storeKey, 'Cache dropped for store:', storeKey);
+    } else {
+      this.cacheLogger.warn(storeKey, 'Cache not found for store:', storeKey);
     }
   }
 
