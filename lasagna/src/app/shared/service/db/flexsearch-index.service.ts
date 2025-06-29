@@ -15,20 +15,23 @@ export class FlexsearchIndexService {
     this.indices[tableName] = this.createIndex(fields);
   }
 
-  async search(table: string, query: string) {
+  async search(
+    table: string,
+    query: string,
+    options?: { limit?: number; enrich?: boolean; }
+  ) {
     const index = this.indices[table];
     if (index) {
-      const results = await index.searchAsync(query, {limit: 10, enrich: true});
+      const results = await index.searchAsync(query, {limit: 10, enrich: true, ...options});
 
-      return results;
+      return (results as any[]).flatMap((result) => ({...result}));
     }
-    return [];
+    return undefined;
   }
 
   getIndex(table: string) {
     return this.indices[table];
   }
-
 
   async addToIndex(table: string, record: any) {
     const index = this.indices[table];
@@ -80,7 +83,7 @@ export class FlexsearchIndexService {
   }
 
   async clearIndex(table: string) {
-    this.indices[table] = this.createIndex(['name']);
+    this.indices[table] = this.createIndex(['name', 'uuid']);
   }
 
   async removeIndex(table: string) {

@@ -51,7 +51,7 @@ export class TransferDataService {
     const source = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
     for (const store of source) {
       const items = await this._indexDbService.getAll(store);
-      const version = await this._indexDbService.getVersion(store);
+      const version = await this._indexDbService.getVersion();
       const createdAt = Date.now()
       data.push({
         store,
