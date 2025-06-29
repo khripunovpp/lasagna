@@ -26,6 +26,12 @@ export class CredentialsRepository {
     return this._indexDbService.replaceData(Stores.CREDENTIALS, uuid, credential.toDTO());
   }
 
+  updateMany(
+    credentials: Credential[]
+  ) {
+    return this._indexDbService.replaceManyData(Stores.CREDENTIALS, credentials.map((credential) => credential.toDTO()));
+  }
+
   async getOne(
     uuid: Credential | string | undefined,
   ) {

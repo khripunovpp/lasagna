@@ -17,6 +17,7 @@
   --bounce-bezier: cubic-bezier(.47, 1.64, .41, .8);
 
   --accent-color: #abc270;
+  --accent-light-color: #d0e4b7;
   --button-default-bg: #fec868;
   --background-color: #abc270;
   --active-color: #fda769;
@@ -159,6 +160,10 @@ html, body {
 
 .text-danger {
   color: #f44336;
+}
+
+.text-wrap {
+  white-space: pre-wrap;
 }
 
 $indents: 1 2 3 4 5 6 7 8 9 10;

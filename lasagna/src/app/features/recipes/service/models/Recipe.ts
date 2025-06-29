@@ -245,7 +245,7 @@ export class Recipe {
     this.ingredients = dto?.ingredients ? dto.ingredients.map((ingredient: any) => {
       return Ingredient.fromRaw(ingredient);
     }) : this.ingredients;
-    this.outcome_amount = dto?.outcome_amount || this.outcome_amount;
+    this.outcome_amount = dto?.outcome_amount ?? this.outcome_amount;
     this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
     this.uuid = dto?.uuid || this.uuid;
     this.taxTemplateName = dto?.taxTemplateName || this.taxTemplateName;

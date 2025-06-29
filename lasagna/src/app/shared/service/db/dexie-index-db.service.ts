@@ -143,6 +143,24 @@ export class DexieIndexDbService extends Dexie {
     await this.saveIndex(storeKey);
   }
 
+  async replaceManyData<T = any>(storeKey: Stores, values: T[]): Promise<void> {
+    // @ts-ignore
+
+    const valuesWithUuid = values.map((value: any) => ({
+      ...value,
+      uuid: value.uuid || this.generateUuid(),
+    }));
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid);
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    for (const value of valuesWithUuid) {
+      await this.flexsearchIndexService.addToIndex(storeKey, value);
+    }
+    await this.saveIndex(storeKey);
+  }
+
   async search(storeKey: Stores, indexField: string, value: string): Promise<any[]> {
     // @ts-ignore
     const result = await (this[storeKey] as Table<any>).where(indexField).equals(value).toArray();

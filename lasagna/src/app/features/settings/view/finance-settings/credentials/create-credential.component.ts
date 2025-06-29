@@ -183,14 +183,17 @@ export class CreateCredentialComponent {
 
   addRow() {
     this._rowsFormArray.push(this._getRowGroup());
-    this.credentials.update(current => [...current, new Credential({type: this.type()})]);
+    const newCredential = new Credential({
+      type: this.type()
+    });
+    this.credentials.update(current => [...current, newCredential]);
     this.form.markAsDirty();
   }
 
   async save() {
     try {
       await this._credentialsRepository
-        .addMany(this._formValueToCredentials());
+        .updateMany(this._formValueToCredentials());
       this._notificationService.success('Credentials saved successfully');
       this.form.markAsPristine();
     } catch (e) {
@@ -210,6 +213,7 @@ export class CreateCredentialComponent {
         phone: value.phone,
         email: value.email,
         type: this.type(),
+        uuid: value.uuid,
       });
     });
   }
