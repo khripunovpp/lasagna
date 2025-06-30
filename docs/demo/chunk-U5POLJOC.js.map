@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/layout/container/container.component.ts"],
+  "sourcesContent": ["import {Component} from '@angular/core';\n\n@Component({\n  selector: 'lg-container',\n  standalone: true,\n  template: `\n      <section class=\"container\">\n          <ng-content></ng-content>\n      </section>`,\n  styles: [\n    `\n      :host {\n        display: flex;\n        height: 100%;\n        padding: 0 32px;\n\n        @media (max-width: 768px) {\n          padding: 0 16px;\n        }\n      }\n\n      .container {\n        display: flex;\n        flex-direction: column;\n        margin: 0 auto;\n        width: 100%;\n        max-width: var(--container-width);\n        gap: 32px;\n      }\n\n      @media (max-width: 600px) {\n        .container {\n          gap: 16px;\n        }\n      }\n    `\n  ]\n})\nexport class ContainerComponent {\n}\n"],
+  "mappings": ";;;;;;;;;;;;;AAsCM,IAAO,qBAAP,MAAO,oBAAkB;;qCAAlB,qBAAkB;EAAA;yEAAlB,qBAAkB,WAAA,CAAA,CAAA,cAAA,CAAA,GAAA,oBAAA,KAAA,OAAA,GAAA,MAAA,GAAA,QAAA,CAAA,CAAA,GAAA,WAAA,CAAA,GAAA,UAAA,SAAA,4BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;;AAhCzB,MAAA,yBAAA,GAAA,WAAA,CAAA;AACI,MAAA,uBAAA,CAAA;AACJ,MAAA,uBAAA;;;;;sEA8BO,oBAAkB,CAAA;UApC9B;uBACW,gBAAc,YACZ,MAAI,UACN;;;mBAGK,QAAA,CAAA,knBAAA,EAAA,CAAA;;;;6EA8BJ,oBAAkB,EAAA,WAAA,sBAAA,UAAA,kEAAA,YAAA,GAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

@@ -1,4 +1,4 @@
-import {inject, Inject, Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import Dexie, {Table} from 'dexie';
 import {Stores} from './const/stores';
 import {migrations} from './migrations';
@@ -6,8 +6,8 @@ import {generateUuid} from '../../helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
 import {BuckupData} from '../services/transfer-data.service';
 import {relationsMap} from './const/relations-maps';
-import {DB_NAME} from '../tokens/db-name.token';
 import {LoggerService} from '../../../features/logger/logger.service';
+import {ENV_TOKEN} from '../tokens/env.token';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +15,9 @@ import {LoggerService} from '../../../features/logger/logger.service';
 export class DexieIndexDbService extends Dexie {
   constructor(
     private flexsearchIndexService: FlexsearchIndexService,
-    @Inject(DB_NAME) dbName: string,
   ) {
-    super(dbName);
+    const env = inject(ENV_TOKEN);
+    super(env.dbName);
 
     const seen = new Set();
     for (const migration of migrations) {

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/helpers/attribute.helper.ts"],
+  "sourcesContent": ["export const uuidOrNull = (value: unknown): string | null => {\n  if (value === null) {\n    return null;\n  }\n  return (value as any)?.uuid ?? null;\n};\n\n// flaterize object with uuid from complex object with arrays of objects and keep structute to string\nexport const flaterizeObjectWithUuid = <T>(value: any): T => {\n  const out = {} as any;\n  for (const key in value) {\n    if (Array.isArray(value[key])) {\n      out[key] = value[key].reduce((acc: any[], item: any) => {\n        if (typeof item === 'string') {\n          acc.push(item);\n          return acc;\n        }\n        acc.push(flaterizeObjectWithUuid(item));\n        return acc;\n      }, []);\n    } else if (value[key]?.uuid != null) {\n      out[key] = value[key].uuid;\n    } else {\n      out[key] = value[key];\n    }\n  }\n  return out as T;\n}\n\n// arrays includ\nexport const clearEmpties = (value: any) => {\n  const out = {} as any;\n  for (const key in value) {\n    if (Array.isArray(value[key])) {\n      out[key] = value[key].filter((item: any) => item != null).map(clearEmpties);\n    } else if (value[key] != null) {\n      out[key] = value[key];\n    }\n  }\n  return out;\n}\n\n\nexport const generateUuid = (): string => {\n  return Math.random().toString(36).substring(2) + Date.now().toString(36);\n}\n"],
+  "mappings": ";AA2CO,IAAM,eAAe,MAAa;AACvC,SAAO,KAAK,OAAM,EAAG,SAAS,EAAE,EAAE,UAAU,CAAC,IAAI,KAAK,IAAG,EAAG,SAAS,EAAE;AACzE;",
+  "names": []
+}

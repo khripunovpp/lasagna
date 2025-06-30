@@ -7,6 +7,7 @@
     "start-prod": "ng serve --no-hmr --configuration production",
     "start-host": "ng serve --no-hmr --host 192.168.1.252 --port 4200 --disable-host-check",
     "build": "ng build --base-href https://khripunovpp.github.io/lasagna/ && cp ../docs/index.html ../docs/404.html",
+    "build-demo": "ng build --configuration demo --base-href https://khripunovpp.github.io/lasagna/demo/ && cp ../docs/demo/index.html ../docs/demo/404.html",
     "cleanup": "ng generate @angular/core:cleanup-unused-imports",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/settings/service/providers/settings.token.ts"],
+  "sourcesContent": ["import {InjectionToken, Signal} from '@angular/core';\nimport {Settings} from '../models/Settings';\n\nexport const SETTINGS = new InjectionToken<Signal<Record<string, any>>>('Settings');\n"],
+  "mappings": ";;;;;AAGO,IAAM,WAAW,IAAI,eAA4C,UAAU;",
+  "names": []
+}

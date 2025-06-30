@@ -1,0 +1,360 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"POT-Creation-Date: 2025-05-23T22:24:04.614Z\n"
+"PO-Revision-Date: 2025-05-23 23:24+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"mime-version: 1.0\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "add-label"
+msgstr "Add"
+
+msgid "backup.last-label"
+msgstr "Last backup:"
+
+msgid "backup.make-btn"
+msgstr "Make backup"
+
+msgid "backup.restore-btn"
+msgstr "Restore backup"
+
+msgid "backup.restore-informer"
+msgstr "Be aware! This will override all your data!"
+
+msgid "backup.settings-title"
+msgstr "Backups"
+
+msgid "categories.products.link-label"
+msgstr "Products categories"
+
+msgid "categories.recipes.link-label"
+msgstr "Recipes categories"
+
+msgid "categories.settings-title"
+msgstr "Categories"
+
+msgid "close-label"
+msgstr "Close"
+
+msgid "confirm-label"
+msgstr "Confirm"
+
+msgid "delete-all-label"
+msgstr "Delete all"
+
+msgid "delete-selected-label"
+msgstr "Delete selected"
+
+msgid "deselect-all-label"
+msgstr "Deselect all"
+
+msgid "draft.list-prefix.existing"
+msgstr "Unsaved changes"
+
+msgid "draft.list-prefix.new"
+msgstr "Draft"
+
+msgid "drafts-close-label"
+msgstr "You have {{ length }} unsaved changes. Click to see them"
+
+msgid "drafts-label"
+msgstr "Close"
+
+msgid "edit-label"
+msgstr "Edit"
+
+msgid "edited-at-label"
+msgstr "edited"
+
+msgid "export-label"
+msgstr "Export"
+
+msgid "from-location"
+msgstr "from"
+
+msgid "hide-selection-label"
+msgstr "Hide selection"
+
+msgid "import-label"
+msgstr "Import"
+
+msgid "just-now"
+msgstr "just now"
+
+msgid "language.settings-title"
+msgstr "Localization"
+
+msgid "language.settings.currency-title"
+msgstr "Currency"
+
+msgid "language.settings.language-title"
+msgstr "Language"
+
+msgid "main.last-products"
+msgstr "Last edited products"
+
+msgid "main.last-recipes"
+msgstr "Last edited recipes"
+
+msgid "main.products.button"
+msgstr "Add your first product"
+
+msgid "main.recipes.button"
+msgstr "Add your first Recipe"
+
+msgid "main.title"
+msgstr "Hey"
+
+msgid "no-products"
+msgstr "No products found"
+
+msgid "no-recipes"
+msgstr "No recipes found"
+
+msgid "no-results"
+msgstr "No results found"
+
+msgid "product.form.amount.label"
+msgstr "Amount"
+
+msgid "product.form.amount.placeholder"
+msgstr "Wight in {{ unit }}"
+
+msgid "product.form.delete-btn"
+msgstr "Remove this product"
+
+msgid "product.form.delete-draft-btn"
+msgstr "Remove this draft"
+
+msgid "product.form.name.label"
+msgstr "Name"
+
+msgid "product.form.name.placeholder"
+msgstr "Name"
+
+msgid "product.form.price.label"
+msgstr "Price"
+
+msgid "product.form.price.placeholder"
+msgstr "For the entire product in your currency"
+
+msgid "product.form.save-btn.add.active"
+msgstr "Add this product"
+
+msgid "product.form.save-btn.add.disabled"
+msgstr "Type a name"
+
+msgid "product.form.save-btn.edit.active"
+msgstr "Save changes"
+
+msgid "product.form.save-btn.edit.disabled"
+msgstr "Nothing changed"
+
+msgid "product.form.source.label"
+msgstr "Source (supermarket, etc.)"
+
+msgid "product.form.source.placeholder"
+msgstr "Source (supermarket, etc.)"
+
+msgid "product.form.tags.label"
+msgstr "Tags"
+
+msgid "product.form.tags.placeholder"
+msgstr "Tags"
+
+msgid "product.form.title"
+msgstr "Add new product"
+
+msgid "products.list-title"
+msgstr "Products"
+
+msgid "products.menu-label"
+msgstr "Products"
+
+msgid "recipe.calculate-btn"
+msgstr "Calcualate"
+
+msgid "recipe.calculation.one-unit.label"
+msgstr "One"
+
+msgid "recipe.calculation.outcome.label"
+msgstr "Calculation outcome"
+
+msgid "recipe.calculation.price-chart"
+msgstr "Price breakdown"
+
+msgid "recipe.calculation.table.amount.title"
+msgstr "Amount"
+
+msgid "recipe.calculation.table.name.title"
+msgstr "Name"
+
+msgid "recipe.calculation.table.price.title"
+msgstr "Price per unit"
+
+msgid "recipe.calculation.table.total-row"
+msgstr "Total (without taxes and fees)"
+
+msgid "recipe.calculation.table.total.title"
+msgstr "Total Price"
+
+msgid "recipe.calculation.table.unit.title"
+msgstr "Unit"
+
+msgid "recipe.calculation.title.after-text"
+msgstr "cost calculation"
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr "Total cost with taxes"
+
+msgid "recipe.calculation.total-price.label"
+msgstr "Total cost"
+
+msgid "recipe.calculation.weight-chart"
+msgstr "Weight breakdown"
+
+msgid "recipe.form.delete-btn"
+msgstr "Remove this product"
+
+msgid "recipe.form.delete-draft-btn"
+msgstr "Remove this draft"
+
+msgid "recipe.form.description.label"
+msgstr "Description"
+
+msgid "recipe.form.description.placeholder"
+msgstr "Describe your recipe, how to make it, what to pay attention to, etc."
+
+msgid "recipe.form.ingredients.add-btn"
+msgstr "Add ingredient"
+
+msgid "recipe.form.ingredients.amount.label"
+msgstr "Amount"
+
+msgid "recipe.form.ingredients.amount.placeholder"
+msgstr "In {{ unit }}"
+
+msgid "recipe.form.ingredients.label"
+msgstr "Ingredients"
+
+msgid "recipe.form.ingredients.name.label"
+msgstr "Name"
+
+msgid "recipe.form.ingredients.name.placeholder"
+msgstr "Here you can write the name of the ingredient"
+
+msgid "recipe.form.ingredients.name.switch-label"
+msgstr "As text"
+
+msgid "recipe.form.name.label"
+msgstr "Name"
+
+msgid "recipe.form.name.placeholder"
+msgstr "Type your recipe name "
+
+msgid "recipe.form.save-btn.add.active"
+msgstr "Add this recipe"
+
+msgid "recipe.form.save-btn.add.disabled"
+msgstr "Type a name"
+
+msgid "recipe.form.save-btn.edit.active"
+msgstr "Save changes"
+
+msgid "recipe.form.save-btn.edit.disabled"
+msgstr "Nothing changed"
+
+msgid "recipe.form.title"
+msgstr "Add new recipe"
+
+msgid "recipes.calculate-btn"
+msgstr "Calculate"
+
+msgid "recipes.list-title"
+msgstr "Recipes"
+
+msgid "recipes.menu-label"
+msgstr "Recipes"
+
+msgid "replace-duplicates-label"
+msgstr "Replace all with new"
+
+msgid "saved-draft-label"
+msgstr "saved as draft"
+
+msgid "search.placeholder"
+msgstr "Search anything..."
+
+msgid "search.product-categories.title"
+msgstr "Products categories"
+
+msgid "search.product.title"
+msgstr "Products"
+
+msgid "search.recipe-categories.title"
+msgstr "Recipes categories"
+
+msgid "search.recipes.title"
+msgstr "Recipes"
+
+msgid "select-all-label"
+msgstr "Select all"
+
+msgid "select-many-label"
+msgstr "Select many"
+
+msgid "settings.title"
+msgstr "Settings"
+
+msgid "skip-duplicates-label"
+msgstr "Skip all duplicates"
+
+msgid "taxes.link-label"
+msgstr "Set taxes"
+
+msgid "taxes.settings-title"
+msgstr "Allowed taxes"
+
+msgid "unknown"
+msgstr "unknown"
+
+msgid "update-label"
+msgstr "Update"
+
+msgid "without-category-label"
+msgstr "Uncategorized"
+
+msgctxt "id.label"
+msgid "product.form.category"
+msgstr "Category"
+
+msgctxt "id.label"
+msgid "recipe.form.category"
+msgstr "Category"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.product"
+msgstr "Product"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.recipe"
+msgstr "Recipe"
+
+msgctxt "id.placeholder"
+msgid "product.form.category"
+msgstr "Category"
+
+msgctxt "amount.label"
+msgid "recipe.form.outcome"
+msgstr "Amount of the outcome"
+
+msgctxt "amount.placeholder"
+msgid "recipe.form.outcome"
+msgstr "Here you can write the amount of the outcome (e.g. 100, 12, etc.)"
