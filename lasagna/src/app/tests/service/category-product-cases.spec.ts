@@ -5,7 +5,6 @@ import {CategoryProduct} from '../../features/settings/service/models/CategoryPr
 import {TranslateModule} from '@ngx-translate/core';
 import {DB_NAME} from '../../shared/service/tokens/db-name.token';
 import {Stores} from '../../shared/service/db/const/stores';
-import {ENV_TOKEN} from '../../shared/service/tokens/env.token';
 
 describe('Categories products cases', () => {
   let repository: CategoryProductsRepository;
@@ -23,7 +22,7 @@ describe('Categories products cases', () => {
       providers: [
         CategoryProductsRepository,
         DexieIndexDbService,
-        ENV_TOKEN,
+        {provide: DB_NAME, useValue: 'TestDB'},
       ]
     });
 
