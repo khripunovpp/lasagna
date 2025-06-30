@@ -58,6 +58,7 @@
                            [noLoad]="true"
                            [placeholder]="'product.form.source.placeholder'|translate"
                            [resource]="'sources'"
+                           appendTo="body"
                            formControlName="source"></lg-autocomplete>
         </lg-control>
 
@@ -71,6 +72,7 @@
           <lg-multiselect #categorySelect
                           [placeholder]="'product.form.category_id.placeholder'|translate"
                           [resource]="'categories'"
+                          appendTo="body"
                           formControlName="category_id"></lg-multiselect>
         </lg-control>
 

@@ -96,7 +96,6 @@ export class AddRecipeFormComponent
     category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
   }, (group) => {
-    debugger
     const recipeTmpModel = Recipe.fromRaw(group.value);
 
     if (recipeTmpModel.outcomeAmountGreaterThanIngredients) {
@@ -160,7 +159,6 @@ export class AddRecipeFormComponent
   resetForm(
     recipe?: Recipe
   ) {
-    debugger
     this.fillForm(recipe);
     this._loadUsingHistory();
     this.form.markAsPristine();

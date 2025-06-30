@@ -100,43 +100,6 @@ import {JsonPipe} from '@angular/common';
             </lg-gap-column>
           </ng-template>
         </lg-grouping-tails>
-
-        <!--        @for (category of recipes(); track category?.category) {-->
-        <!--          <lg-title [level]="3">-->
-        <!--            {{ (category?.category) || ('without-category-label'|translate) }}-->
-        <!--          </lg-title>-->
-
-        <!--          <lg-card-list [mode]="selectionZoneService.selectionMode()"-->
-        <!--                        (onSelected)="selectionZoneService.putSelected($event)"-->
-        <!--                        (onDeleteOne)="deleteRecipe($event)"-->
-        <!--                        [selectAll]="selectionZoneService.selectAll()['recipe']"-->
-        <!--                        [deselectAll]="selectionZoneService.deselectAll()['recipe']">-->
-        <!--            @for (recipe of category.recipes; track $index; let i = $index) {-->
-        <!--              <ng-template lgCardListItem [uuid]="recipe.uuid" type="recipe">-->
-        <!--                <lg-gap-row [center]="true">-->
-        <!--                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>-->
-
-        <!--                  <lg-button [style]="'primary'"-->
-        <!--                             [size]="'small'"-->
-        <!--                             [link]="'/recipes/calculate/' + recipe.uuid"-->
-        <!--                             [flat]="true">-->
-        <!--                    {{ 'recipes.calculate-btn'|translate }}-->
-        <!--                  </lg-button>-->
-
-        <!--                  <small class="text-muted text-cursive" lgPull>-->
-        <!--                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}-->
-        <!--                  </small>-->
-        <!--                </lg-gap-row>-->
-        <!--              </ng-template>-->
-        <!--            }-->
-        <!--          </lg-card-list>-->
-        <!--        } @empty {-->
-        <!--          <lg-gap-row [center]="true">-->
-        <!--            <lg-title [level]="5">-->
-        <!--              {{ 'no-recipes'|translate }}-->
-        <!--            </lg-title>-->
-        <!--          </lg-gap-row>-->
-        <!--        }-->
       </lg-container>
     </lg-fade-in>
   `,

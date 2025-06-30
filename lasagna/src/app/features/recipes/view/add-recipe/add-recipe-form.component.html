@@ -3,9 +3,9 @@
     <lg-card>
       <lg-gap-column [position]="'start'">
         <lg-autocomplete #nameField
-                         [key]="'name'"
-                         [placeholder]="'recipe.form.name.placeholder'|translate"
+                         [key]="'name'" [placeholder]="'recipe.form.name.placeholder'|translate"
                          [resource]="'recipes-names'"
+                         appendTo="body"
                          formControlName="name"
                          lgExpand></lg-autocomplete>
 
@@ -61,12 +61,14 @@
                           <lg-multiselect [resource]="'recipes'"
                                           (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
                                           [autoLoad]="true"
+                                          appendTo="body"
                                           formControlName="recipe_id"></lg-multiselect>
                         } @else {
                           <lg-multiselect [resource]="'products'"
                                           (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
                                           [autoLoad]="true"
                                           #productsSelector
+                                          appendTo="body"
                                           formControlName="product_id">
                           </lg-multiselect>
                         }
@@ -111,10 +113,11 @@
       </lg-gap-column>
     </lg-card>
 
-    <lg-gap-row [equal]="true" [mobileMode]="true">
-      <lg-gap-column [position]="'start'" [size]="'medium'" style="--control-bg: #ffffff">
+    <lg-gap-row [equal]="true" [mobileMode]="true" style="--control-bg: #ffffff">
+      <lg-gap-column [position]="'start'" [size]="'medium'">
         <lg-multiselect #categorySelect
                         [resource]="'recipes-categories'"
+                        appendTo="body"
                         formControlName="category_id"
                         lgExpand></lg-multiselect>
 
