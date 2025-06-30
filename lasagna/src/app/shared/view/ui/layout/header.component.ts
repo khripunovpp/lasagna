@@ -7,77 +7,89 @@ import {GlobalSearchService} from '../../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
 import {LanguageService} from '../../../../features/settings/service/services/language.service';
+import {DemoInformerComponent} from '../demo-informer.component';
 
 @Component({
   selector: 'lg-header',
   standalone: true,
   template: `
-      <header class="lg-header">
-          <div class="lg-header__left">
-              @if (window.history.state && window.history.length > 1) {
-                  <button (click)="location.back()"
-                          class="lg-header__icon lg-header__icon--left">
-                      <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
-                  </button>
-              }
-          </div>
+    <header class="lg-header">
+      <div class="lg-header__left">
+        @if (window.history.state && window.history.length > 1) {
+          <button (click)="location.back()"
+                  class="lg-header__icon lg-header__icon--left">
+            <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
+          </button>
+        }
+      </div>
 
-          <div class="lg-header__leftToMiddle">
-              <a [routerLinkActiveOptions]="{ exact: false }"
-                 [routerLinkActive]="['route-active']"
-                 [routerLink]="'/home'"
-                 class="lg-header__icon">
-                  <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
-              </a>
+      <div class="lg-header__leftToMiddle">
 
-              <button (click)="globalSearchService.showBar()"
-                      class="lg-header__icon">
-                  <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
-              </button>
-          </div>
+        <lg-demo-informer></lg-demo-informer>
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/home'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
+        </a>
 
-          <div class="lg-header__middle">
-              <div class="lg-header__inner">
-                  @for (item of items();track item.label) {
-                      <a [routerLink]="item.link"
-                         [routerLinkActive]="['route-active']"
-                         [routerLinkActiveOptions]="{ exact: false }"
-                         class="lg-header__link">
-                          {{ item.label | translate }}
-                      </a>
-                  }
-              </div>
-          </div>
-          <div class="lg-header__rightToMiddle">
-              <a [routerLinkActiveOptions]="{ exact: false }"
-                 [routerLinkActive]="['route-active']"
-                 [routerLink]="'/settings'"
-                 class="lg-header__icon">
-                  <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
-              </a>
+        <button (click)="globalSearchService.showBar()"
+                class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+        </button>
+      </div>
 
-              <a [routerLinkActiveOptions]="{ exact: false }"
-                 [routerLinkActive]="['route-active']"
-                 [routerLink]="'/widgets'"
-                 class="lg-header__icon">
-                  <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
-              </a>
-          </div>
+      <div class="lg-header__middle">
+        <div class="lg-header__inner">
+          @for (item of items(); track item.label) {
+            <a [routerLink]="item.link"
+               [routerLinkActive]="['route-active']"
+               [routerLinkActiveOptions]="{ exact: false }"
+               class="lg-header__link">
+              {{ item.label | translate }}
+            </a>
+          }
+        </div>
+      </div>
+      <div class="lg-header__rightToMiddle">
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/settings'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
+        </a>
 
-          <div class="lg-header__right">
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/widgets'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
+        </a>
+      </div>
 
-          </div>
-      </header>
+      <div class="lg-header__right">
+
+      </div>
+    </header>
   `,
   styles: [`
-    .lg-header {
+    :host {
       position: fixed;
       z-index: 3;
-      height: var(--header-height);
       left: 50%;
       right: 0;
       top: 12px;
       transform: translateX(-50%);
+      max-width: var(--container-width);
+      width: calc(100% - 32px);
+    }
+
+    .lg-demo-informer {
+
+    }
+
+    .lg-header {
+      height: var(--header-height);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -86,8 +98,6 @@ import {LanguageService} from '../../../../features/settings/service/services/la
       overflow-x: auto;
       white-space: nowrap;
       padding: 0 16px;
-      max-width: var(--container-width);
-      width: calc(100% - 32px);
       @media (max-width: 768px) {
         justify-content: normal;
         scroll-snap-type: both mandatory;
@@ -180,7 +190,8 @@ import {LanguageService} from '../../../../features/settings/service/services/la
     RouterLink,
     RouterLinkActive,
     MatIcon,
-    TranslatePipe
+    TranslatePipe,
+    DemoInformerComponent
   ]
 })
 export class HeaderComponent {

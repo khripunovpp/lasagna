@@ -34,7 +34,8 @@ import {GroupSortService} from './shared/service/services/grouping-sorting.servi
 import {
   CategoryRecipeSortStrategy,
   RecipeAlphabeticalSortStrategy,
-  RecipeCreatedAtMonthSortStrategy, TagsRecipeSortStrategy
+  RecipeCreatedAtMonthSortStrategy,
+  TagsRecipeSortStrategy
 } from './shared/service/groupings/recipes.grouping';
 import {injectQueryParams} from './shared/helpers';
 import {logoBase64} from './shared/view/const/logoBase64';
@@ -44,6 +45,7 @@ import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {SettingsService} from './features/settings/service/services/settings.service';
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
+import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -70,6 +72,11 @@ export const appConfig: ApplicationConfig = {
 
       if (userService.isUserFirstTime) {
         userService.setUserFirstTime(false);
+      }
+
+      const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
+      if (isDemoFromQueryParams) {
+        localStorage.setItem('demo', 'true');
       }
 
       return Promise.all([
@@ -130,7 +137,23 @@ export const appConfig: ApplicationConfig = {
     })]),
     {
       provide: DB_NAME,
-      useValue: 'lasagna-db',
+      useFactory: () => {
+        const isDemo = inject(DEMO_MODE);
+
+        if (isDemo) {
+          return 'lasagna-demo-db';
+        }
+
+        return 'lasagna-db'
+      }
+    },
+    {
+      provide: DEMO_MODE,
+      useFactory: () => {
+        const isDemoFromLocalStorage = localStorage.getItem('demo') === 'true';
+        const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
+        return isDemoFromLocalStorage || isDemoFromQueryParams;
+      }
     },
     provideCharts(withDefaultRegisterables()),
     {
