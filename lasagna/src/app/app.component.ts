@@ -7,6 +7,7 @@ import {GlobalSearchComponent} from './shared/view/ui/global-search.component';
 import {LastBackupInformerComponent} from './shared/view/ui/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FontTesterComponent} from './shared/view/ui/font-tester.component';
+import {DemoInformerComponent} from './shared/view/ui/demo-informer.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import {FontTesterComponent} from './shared/view/ui/font-tester.component';
     LastBackupInformerComponent,
     TranslateModule,
     FontTesterComponent,
+    DemoInformerComponent,
 
   ],
   templateUrl: './app.component.html',
