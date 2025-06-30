@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/shared/view/ui/last-backup-informer.component.ts"],
-  "sourcesContent": ["\n    :host {\n      display: flex;\n      position: fixed;\n      z-index: 8;\n      bottom: 0;\n      left: 0;\n      right: 0;\n    }\n\n    a {\n      background-color: #007bff;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      cursor: pointer;\n      width: 100%;\n      text-align: center;\n      text-decoration: none;\n    }\n\n    a:hover {\n      background-color: #0056b3;\n    }\n  "],
-  "mappings": ";AACI;AACE,WAAA;AACA,YAAA;AACA,WAAA;AACA,UAAA;AACA,QAAA;AACA,SAAA;;AAGF;AACE,oBAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,SAAA;AACA,cAAA;AACA,mBAAA;;AAGF,CAAA;AACE,oBAAA;;",
-  "names": []
-}

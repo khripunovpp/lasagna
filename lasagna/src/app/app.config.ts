@@ -21,6 +21,7 @@ import * as Sentry from '@sentry/angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
+import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
 import {UserService} from './features/settings/service/services/user.service';
@@ -33,8 +34,7 @@ import {GroupSortService} from './shared/service/services/grouping-sorting.servi
 import {
   CategoryRecipeSortStrategy,
   RecipeAlphabeticalSortStrategy,
-  RecipeCreatedAtMonthSortStrategy,
-  TagsRecipeSortStrategy
+  RecipeCreatedAtMonthSortStrategy, TagsRecipeSortStrategy
 } from './shared/service/groupings/recipes.grouping';
 import {injectQueryParams} from './shared/helpers';
 import {logoBase64} from './shared/view/const/logoBase64';
@@ -128,6 +128,10 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     })]),
+    {
+      provide: DB_NAME,
+      useValue: 'lasagna-db',
+    },
     provideCharts(withDefaultRegisterables()),
     {
       provide: USER_LANGUAGE,
