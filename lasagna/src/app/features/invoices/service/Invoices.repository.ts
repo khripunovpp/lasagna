@@ -18,15 +18,12 @@ export class InvoicesRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _pdfGenerator: PdfGeneratorService,
-    private _productsRepository: ProductsRepository,
-    private _recipesRepository: RecipesRepository,
     private _settingsService: SettingsService,
   ) {
   }
 
   invoiceFactory = inject(INVOICE_FACTORY);
   private _stream$ = new Subject<Invoice[]>();
-  private _payloadsCache = new Map<string, any>();
 
   get items$() {
     return this._stream$.asObservable();
@@ -35,7 +32,6 @@ export class InvoicesRepository {
   get length() {
     return this._indexDbService.getLength(Stores.INVOICES);
   }
-
 
   createEmpty() {
     const invoice = this.invoiceFactory();
@@ -53,12 +49,8 @@ export class InvoicesRepository {
   }
 
   getDefaultPrefix() {
-   return this._settingsService.getInvoicePrefix() || generateRandomInvoicePrefix();
+    return this._settingsService.getInvoicePrefix() || generateRandomInvoicePrefix();
   }
-
-  // generateInvoiceNumber(invoice: InvoiceNewModel): string {
-  //   return generateInvoiceNumber(invoice);
-  // }
 
   generatePdf(
     invoice: Invoice,
@@ -85,11 +77,6 @@ export class InvoicesRepository {
     return invoicesInstances;
   }
 
-  // getAll() {
-  //   return this._indexDbService.getAll(Stores.INVOICES)
-  //     .then(res => res.map(inv => InvoiceNewModel.fromRaw(inv)));
-  // }
-
   async getOne(
     uuid?: string,
   ) {
@@ -114,68 +101,4 @@ export class InvoicesRepository {
   deleteMany(uuids: string[]) {
     return this._indexDbService.removeMany(Stores.INVOICES, uuids);
   }
-
-  async loadPayload(
-    invoice: Invoice,
-  ) {
-    try {
-      // if (!invoice || invoice.rows.length === 0) {
-      //   return;
-      // }
-      // const productsItems = invoice.rows.filter(item => item.payload?.type === 'product');
-      // const recipesItems = invoice.rows.filter(item => item.payload?.type === 'recipe');
-      //
-      //
-      // await Promise.all([
-      //   this._loadPayload(productsItems, this._productsRepository.getOne.bind(this._productsRepository)),
-      //   this._loadPayload(recipesItems, this._recipesRepository.getOne.bind(this._recipesRepository)),
-      // ]);
-      //
-      // const newInvoice = invoice.copy();
-      // newInvoice.rows = newInvoice.rows.map(item => {
-      //   debugger
-      //   if (!item.payload?.data) {
-      //     return item;
-      //   }
-      //   const cacheKey = this._makePayloadCacheKey(item);
-      //   if (this._payloadsCache.has(cacheKey)) {
-      //     item.payload.data = this._payloadsCache.get(cacheKey);
-      //   }
-      //   return item;
-      // });
-      //
-      // console.log('loadPayload', this._payloadsCache,newInvoice);
-    } catch (e) {
-
-    }
-  }
-
-  //
-  // private async _loadPayload(
-  //   invoiceItems: InvoiceItemModel[],
-  //   method: (uuid: string) => Promise<any>
-  // ) {
-  //   return Promise.all(invoiceItems?.map(async (invoiceItem) => {
-  //     if (!invoiceItem.payload?.data) {
-  //       return;
-  //     }
-  //     const cacheKey = this._makePayloadCacheKey(invoiceItem);
-  //     console.log(cacheKey, invoiceItem)
-  //     if (this._payloadsCache.has(cacheKey)) {
-  //       return;
-  //     }
-  //
-  //     const product = await method(invoiceItem.payload?.data?.uuid);
-  //     if (product) {
-  //       this._payloadsCache.set(cacheKey, product);
-  //     }
-  //     return;
-  //   }))
-  // }
-  //
-  // private _makePayloadCacheKey(
-  //   invoiceItem: InvoiceItemModel
-  // ): string {
-  //   return `${invoiceItem.payload?.type}-${invoiceItem.payload?.data?.uuid}`;
-  // }
 }

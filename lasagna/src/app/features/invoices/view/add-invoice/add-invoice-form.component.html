@@ -14,15 +14,15 @@
     </lg-gap-row>
 
     <lg-gap-row [mobileMode]="true" [relaxed]="true">
-      <lg-credential-field (selected)="onCredentialSelected($event)"
-                           (deleted)="onCredentialDeleted('system')"
+      <lg-credential-field (deleted)="onCredentialDeleted('system')"
+                           (selected)="onCredentialSelected($event)"
                            [type]="CredentialsType.system"
                            formControlName="credential_from"
                            lgExpand
                            placeholder="From"></lg-credential-field>
 
-      <lg-credential-field (selected)="onCredentialSelected($event)"
-                           (deleted)="onCredentialDeleted('customer')"
+      <lg-credential-field (deleted)="onCredentialDeleted('customer')"
+                           (selected)="onCredentialSelected($event)"
                            [type]="CredentialsType.customer"
                            formControlName="credential_to"
                            lgExpand
@@ -50,7 +50,7 @@
 
 
       <lg-gap-column [size]="'medium'" formArrayName="rows" lgExpand>
-        @for (control of rows.controls;track (control.value.amount + i + 1);let i = $index, last = $last) {
+        @for (control of rows.controls; track (control.value.amount + i + 1); let i = $index, last = $last) {
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
             <lg-controls-row [mobileMode]="true" [equal]="true">
@@ -58,7 +58,7 @@
                                         (onChanged)="onItemChanged($event, i)"
                                         formControlName="activeTab">
                 <lg-multiselect [resource]="'recipes'"
-                                [appendTo]="'body'"
+                                appendTo="body"
                                 [placeholder]="'Find recipe'"
                                 formControlName="recipe_id"
                                 (onSelected)="onRecipeSelected($event, i)"
@@ -67,7 +67,7 @@
 
                 <lg-multiselect [resource]="'products'"
                                 (onSelected)="onProductSelected($event, i)"
-                                [appendTo]="'body'"
+                                appendTo="body"
                                 formControlName="product_id"
                                 [placeholder]="'Find product'"
                                 ngProjectAs="products"
@@ -86,7 +86,7 @@
                                formControlName="amount">
                 <ng-template lgExtraTpl place="after">
                   <lg-unit-switcher [disable]="true"
-                    formControlName="unit">
+                                    formControlName="unit">
                   </lg-unit-switcher>
                 </ng-template>
               </lg-number-input>
