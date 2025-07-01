@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from './shared/view/ui/layout/header.component';
 import {FadeInComponent} from './shared/view/ui/fade-in.component';
@@ -7,7 +7,7 @@ import {GlobalSearchComponent} from './shared/view/ui/global-search.component';
 import {LastBackupInformerComponent} from './shared/view/ui/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FontTesterComponent} from './shared/view/ui/font-tester.component';
-import {DemoInformerComponent} from './shared/view/ui/demo-informer.component';
+import {DemoService} from './shared/service/services/demo.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,7 @@ import {DemoInformerComponent} from './shared/view/ui/demo-informer.component';
     LastBackupInformerComponent,
     TranslateModule,
     FontTesterComponent,
-    DemoInformerComponent,
+
 
   ],
   templateUrl: './app.component.html',
@@ -28,12 +28,14 @@ import {DemoInformerComponent} from './shared/view/ui/demo-informer.component';
   styleUrl: './app.component.scss',
   providers: []
 })
-export class AppComponent {
+export class AppComponent
+  implements OnInit {
   constructor() {
   }
 
-  title = 'lasagna';
+  demoService = inject(DemoService);
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.demoService.loadDemoData();
   }
 }
