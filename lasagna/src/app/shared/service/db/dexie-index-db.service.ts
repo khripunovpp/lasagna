@@ -330,7 +330,7 @@ export class DexieIndexDbService extends Dexie {
         await this.clear(store);
         await this.balkAdd(store, items.data, false);
       } else {
-        throw new Error(`Store ${store} not found in backup data`);
+        // throw new Error(`Store ${store} not found in backup data`);
       }
     }
     this._cache.clear();

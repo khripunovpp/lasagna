@@ -46,6 +46,7 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
 import {SettingsService} from './features/settings/service/services/settings.service';
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
+import {DemoService} from './shared/service/services/demo.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -69,6 +70,7 @@ export const appConfig: ApplicationConfig = {
       const docsService = inject(DocsService);
       const settingsService = inject(SettingsService);
       const userService = inject(UserService);
+      const demoService = inject(DemoService);
 
       if (userService.isUserFirstTime) {
         userService.setUserFirstTime(false);
@@ -76,7 +78,7 @@ export const appConfig: ApplicationConfig = {
 
       const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
       if (isDemoFromQueryParams) {
-        localStorage.setItem('demo', 'true');
+        demoService.switchOnDemoMode();
       }
 
       return Promise.all([
