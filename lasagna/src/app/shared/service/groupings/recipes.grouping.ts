@@ -100,9 +100,9 @@ export class RecipeCreatedAtMonthSortStrategy
     const dateA = new Date(yearA, monthA - 1, dayA);
     const dateB = new Date(yearB, monthB - 1, dayB);
     if (direction === 'asc') {
-      return dateB.getTime() - dateA.getTime();
-    } else {
       return dateA.getTime() - dateB.getTime();
+    } else {
+      return dateB.getTime() - dateA.getTime();
     }
   }
 }

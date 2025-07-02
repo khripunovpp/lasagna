@@ -19,81 +19,85 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
   template: `
     <lg-gap-row>
       <lg-dropdown>
-        <lg-button lgDropdownAnchor [size]="'small'">
-          Group by: {{ sorting().group }}
+        <lg-button [size]="'small'" lgDropdownAnchor>
+          {{ groupingToLabel[sorting().group] }}
         </lg-button>
 
         <lg-gap-column [size]="'small'">
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({group: 'category'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Category
+          <span>Grouping</span>
+
+          <lg-button (click)="onSortChange({group: 'category'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingToLabel['category'] }}
           </lg-button>
 
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({group: 'tag'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Tag
+          <lg-button (click)="onSortChange({group: 'tag'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingToLabel['tag'] }}
           </lg-button>
 
-          <lg-button [size]="'small'"
-                     [style]="'warning'"
-                     (click)="onSortChange({group: 'createdAt'})"
-                     [flat]="true">
-            Date
+          <lg-button (click)="onSortChange({group: 'createdAt'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingToLabel['createdAt'] }}
           </lg-button>
 
-          <lg-button [size]="'small'"
-                     [style]="'warning'"
-                     (click)="onSortChange({group: 'alphabetical'})"
-                     [flat]="true">
-            Alphabetical
+          <lg-button (click)="onSortChange({group: 'alphabetical'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingToLabel['alphabetical'] }}
           </lg-button>
         </lg-gap-column>
       </lg-dropdown>
 
+      <!--      <lg-dropdown>-->
+      <!--        <lg-button [size]="'small'" lgDropdownAnchor>-->
+      <!--          Sort by: {{ sorting().field }}-->
+      <!--        </lg-button>-->
+
+      <!--        <lg-gap-column [size]="'small'">-->
+      <!--          <lg-button [size]="'small'"-->
+      <!--                     (click)="onSortChange({field: 'name'})"-->
+      <!--                     [style]="'warning'"-->
+      <!--                     [flat]="true">-->
+      <!--            Name-->
+      <!--          </lg-button>-->
+
+      <!--          <lg-button [size]="'small'"-->
+      <!--                     (click)="onSortChange({field: 'createdAt'})"-->
+      <!--                     [style]="'warning'"-->
+      <!--                     [flat]="true">-->
+      <!--            Date-->
+      <!--          </lg-button>-->
+      <!--        </lg-gap-column>-->
+      <!--      </lg-dropdown>-->
+
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>
-          Sort by: {{ sorting().field }}
+          {{ groupingDirectionToLabel[sorting().direction] }}
         </lg-button>
 
         <lg-gap-column [size]="'small'">
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({field: 'name'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Name
+          <span>Grouping direction</span>
+
+          <lg-button (click)="onSortChange({direction: 'asc'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingDirectionToLabel['asc'] }}
           </lg-button>
 
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({field: 'createdAt'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Date
-          </lg-button>
-        </lg-gap-column>
-      </lg-dropdown>
-
-      <lg-dropdown>
-        <lg-button [size]="'small'" lgDropdownAnchor>
-          Sort direction: {{ sorting().direction }}
-        </lg-button>
-
-        <lg-gap-column [size]="'small'">
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({direction: 'asc'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Ascending
-          </lg-button>
-
-          <lg-button [size]="'small'"
-                     (click)="onSortChange({direction: 'desc'})"
-                     [style]="'warning'"
-                     [flat]="true">
-            Descending
+          <lg-button (click)="onSortChange({direction: 'desc'})"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'warning'">
+            {{ groupingDirectionToLabel['desc'] }}
           </lg-button>
         </lg-gap-column>
       </lg-dropdown>
@@ -104,6 +108,16 @@ export class GroupingSortingComponent {
   constructor() {
   }
 
+  readonly groupingToLabel:Record<string, string> = {
+    category: 'By category',
+    tag: 'By tag',
+    createdAt: 'By creation date',
+    alphabetical: 'By first letter'
+  };
+  readonly groupingDirectionToLabel:Record<string, string> = {
+    asc: 'From A to Z (from old to new)',
+    desc: 'From Z to A (from new to old)'
+  };
   router = inject(Router);
   aRouter = inject(ActivatedRoute);
   @ContentChild(GroupingSortingContainerComponent) context!: GroupingSortingContainerComponent;
@@ -119,7 +133,7 @@ export class GroupingSortingComponent {
   sorting = signal<{
     field: string,
     direction: 'asc' | 'desc' | string,
-    group?: string
+    group: string
   }>({field: 'name', direction: this.defaultDirection, group: 'category'});
   sortingEffect = effect(() => {
     const sort = this.sorting();
