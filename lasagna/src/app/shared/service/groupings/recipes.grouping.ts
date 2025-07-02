@@ -8,13 +8,25 @@ export class CategoryRecipeSortStrategy
     return item.category_id || '';
   }
 
-  override sort(
+  override innerSort(
     a: RecipeDTO,
     b: RecipeDTO,
     direction: 'asc' | 'desc',
     field: string = 'name'
   ): number {
-    return recipeSortFunction(a, b, direction, field);
+    return recipeInnerSortFunction(a, b);
+  }
+
+  override groupingSort(
+    a: string,
+    b: string,
+    direction: 'asc' | 'desc',
+  ): number {
+    if (direction === 'asc') {
+      return a.localeCompare(b);
+    } else {
+      return b.localeCompare(a);
+    }
   }
 }
 
@@ -24,13 +36,13 @@ export class TagsRecipeSortStrategy
     return item.tags?.map(tag => tag.toString()) || '';
   }
 
-  override sort(
+  override innerSort(
     a: RecipeDTO,
     b: RecipeDTO,
     direction: 'asc' | 'desc',
     field: string = 'name'
   ): number {
-    return recipeSortFunction(a, b, direction, field);
+    return recipeInnerSortFunction(a, b);
   }
 }
 
@@ -40,20 +52,25 @@ export class RecipeAlphabeticalSortStrategy
     return item.name.toLowerCase().charAt(0);
   }
 
-  override sort(
+  override innerSort(
     a: RecipeDTO,
     b: RecipeDTO,
     direction: 'asc' | 'desc',
     field: string = 'name'
   ): number {
-    return recipeSortFunction(a, b, direction, field);
+    return recipeInnerSortFunction(a, b);
   }
-}
 
-export class RecipeNameSortStrategy
-  implements SortStrategy<RecipeDTO> {
-  groupBy(item: RecipeDTO): string {
-    return item.name.toLowerCase().charAt(0);
+  override groupingSort(
+    a: string,
+    b: string,
+    direction: 'asc' | 'desc',
+  ): number {
+    if (direction === 'asc') {
+      return a.localeCompare(b);
+    } else {
+      return b.localeCompare(a);
+    }
   }
 }
 
@@ -64,17 +81,33 @@ export class RecipeCreatedAtMonthSortStrategy
     return `${date.getFullYear()}-${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}`;
   }
 
-  sort(
+  innerSort(
     a: RecipeDTO,
     b: RecipeDTO,
     direction: 'asc' | 'desc',
     field: string = 'createdAt'
   ): number {
-    return recipeSortFunction(a, b, direction, field);
+    return recipeInnerSortFunction(a, b);
+  }
+
+  groupingSort(
+    a: string,
+    b: string,
+    direction: 'asc' | 'desc',
+  ): number {
+    const [yearA, monthA, dayA] = a.split('-').map(Number);
+    const [yearB, monthB, dayB] = b.split('-').map(Number);
+    const dateA = new Date(yearA, monthA - 1, dayA);
+    const dateB = new Date(yearB, monthB - 1, dayB);
+    if (direction === 'asc') {
+      return dateB.getTime() - dateA.getTime();
+    } else {
+      return dateA.getTime() - dateB.getTime();
+    }
   }
 }
 
-export const recipeSortFunction = (
+export const recipeInnerSortFunction = (
   a: RecipeDTO,
   b: RecipeDTO,
   direction: 'asc' | 'desc' = 'asc',

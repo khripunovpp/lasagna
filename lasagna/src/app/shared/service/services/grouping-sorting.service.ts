@@ -36,9 +36,9 @@ export class GroupSortService {
 
     for (const [name, groupItems] of groupsMap.entries()) {
       let sortedItems: T[] = groupItems;
-      if (strategy.sort) {
+      if (strategy.innerSort) {
         sortedItems = groupItems.toSorted((a, b) => {
-          return strategy.sort?.(a, b, direction, field) || 0;
+          return strategy.innerSort?.(a, b, direction, field) || 0;
         });
       }
       result.push({field: name, items: sortedItems});
@@ -46,6 +46,9 @@ export class GroupSortService {
 
     return new SortResult(result.toSorted((a, b) => {
       // compare field key, but if one of this is empty, put it at the end
+      if (strategy.groupingSort) {
+        return strategy.groupingSort(a.field, b.field, direction);
+      }
       if (a.field === '' && b.field !== '') {
         return 1;
       } else if (b.field === '' && a.field !== '') {
