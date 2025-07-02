@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1751405696856,
+  "timestamp": 1751477490723,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -108,7 +108,7 @@
         "https://khripunovpp.github.io/lasagna/i18n/ru.mo",
         "https://khripunovpp.github.io/lasagna/i18n/ru.po",
         "https://khripunovpp.github.io/lasagna/index.html",
-        "https://khripunovpp.github.io/lasagna/main-75BXBJ5Q.js",
+        "https://khripunovpp.github.io/lasagna/main-IEUPLYQV.js",
         "https://khripunovpp.github.io/lasagna/manifest.webmanifest",
         "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js",
         "https://khripunovpp.github.io/lasagna/styles-QUXUWP4X.css"
@@ -317,9 +317,9 @@
     "https://khripunovpp.github.io/lasagna/img/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png": "b969fdc1666e17c25be12d7a8d5ba79c21cc78be",
     "https://khripunovpp.github.io/lasagna/img/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png": "f1e2c6025618f3493d2223c504fbf53a2bbf616b",
     "https://khripunovpp.github.io/lasagna/img/icon.png": "5fdca579260077f794f4f05365060fa37cebac41",
-    "https://khripunovpp.github.io/lasagna/index.html": "a4b78a2c067cd5a7c61deabdfd20b4cd2c92fd97",
+    "https://khripunovpp.github.io/lasagna/index.html": "d157aa68ef8fa9fa0f634704e8fdc9447d9757a0",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
-    "https://khripunovpp.github.io/lasagna/main-75BXBJ5Q.js": "73ec889c14c19fa41d5f5a3f03a0c0b9802cc563",
+    "https://khripunovpp.github.io/lasagna/main-IEUPLYQV.js": "02365ab89812930092164fac432186e0f68e1989",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8cd1c28d280a08d7ff10306717f454a84204da42",
     "https://khripunovpp.github.io/lasagna/media/Inter18pt-Regular-LPXS7NH5.woff2": "8abdb806484fc4302000105048cc3ea60db94d53",
     "https://khripunovpp.github.io/lasagna/media/Inter24pt-Bold-N5CAAED6.woff2": "96536670addcbcf631f65a86d7e11d820621cbe9",
