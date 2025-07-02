@@ -21,8 +21,13 @@ export class DemoService {
       if (!this.isDemo) {
         return;
       }
+      if (localStorage.getItem('demo_data_loaded') === 'true') {
+        console.log('Demo data already loaded');
+        return;
+      }
       const dump = await firstValueFrom(this._http.get<any>('./dump/demo_dump.json'));
       await this._dbService.restoreAllData(dump);
+      localStorage.setItem('demo_data_loaded', 'true');
       console.log({dump})
     } catch (error) {
       console.error('Error loading demo data:', error);

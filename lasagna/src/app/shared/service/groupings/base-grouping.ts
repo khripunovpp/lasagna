@@ -2,7 +2,7 @@ import {SortStrategy} from '../types/sorting.types';
 
 export class BaseGrouping<T = any>
   implements SortStrategy<T> {
-  sort(
+  innerSort(
     a: T,
     b: T,
     direction: 'asc' | 'desc' = 'asc'
@@ -11,6 +11,18 @@ export class BaseGrouping<T = any>
       return JSON.stringify(a).localeCompare(JSON.stringify(b));
     } else {
       return JSON.stringify(b).localeCompare(JSON.stringify(a));
+    }
+  }
+
+  groupingSort(
+    a: string,
+    b: string,
+    direction: 'asc' | 'desc' = 'asc'
+  ): number {
+    if (direction === 'asc') {
+      return a.localeCompare(b);
+    } else {
+      return b.localeCompare(a);
     }
   }
 
