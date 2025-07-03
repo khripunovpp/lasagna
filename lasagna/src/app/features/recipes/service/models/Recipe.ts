@@ -5,7 +5,7 @@ import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
 import {estimateColor, isColorString, parseFloatingNumber} from '../../../../shared/helpers';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
-
+import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
 
 export class Recipe {
   constructor(
@@ -26,40 +26,28 @@ export class Recipe {
   updatedAt?: number | undefined;
   tags?: Tag[];
   color?: string | undefined;
-  perUnitPriceModifier?: {
-    action: 'add' | 'subtract' | 'round'
-    value: number
-    unit: 'currency' | 'percent'
-  };
+  priceModifiers: RecipePriceModifier[] = [];
 
   get perUnitPriceModified() {
-    if (!this.perUnitPriceModifier) {
-      return this.pricePerUnit;
+    let value = this.pricePerUnit;
+    for (const modifier of this.priceModifiers) {
+      if (modifier.type !== 'per_unit') {
+        continue;
+      }
+      value = modifier.apply(value);
     }
+    return value
+  }
 
-    let price = this.pricePerUnit;
-    const value = parseFloatingNumber(this.perUnitPriceModifier.value);
-
-    switch (this.perUnitPriceModifier.action) {
-      case 'add': {
-        if (this.perUnitPriceModifier.unit === 'currency') {
-          price += value;
-        } else if (this.perUnitPriceModifier.unit === 'percent') {
-          price += (price * value) / 100;
-        }
-        break;
+  get totalPriceModified() {
+    let value = this.perUnitPriceModified * this.outcomeAmount;
+    for (const modifier of this.priceModifiers) {
+      if (modifier.type !== 'total') {
+        continue;
       }
-      case 'subtract': {
-
-        break;
-      }
-      case 'round': {
-        price = value || price;
-        break;
-      }
+      value = modifier.apply(value);
     }
-
-    return price;
+    return value
   }
 
   get valid() {
@@ -80,6 +68,13 @@ export class Recipe {
     return this.ingredients.reduce((acc, ingredient) => {
       return acc + ingredient.totalPrice;
     }, 0);
+  }
+
+  get outcomeAmount(): number {
+    if (this.outcome_amount) {
+      return parseFloatingNumber(this.outcome_amount);
+    }
+    return this.totalIngredientsWeight;
   }
 
   get perUnitLabel() {
@@ -144,11 +139,15 @@ export class Recipe {
       updatedAt: dto?.updatedAt,
       tags: dto?.tags,
       color: dto?.color,
-      perUnitPriceModifier: dto?.perUnitPriceModifier ? {
-        action: dto.perUnitPriceModifier.action,
-        value: parseFloatingNumber(dto.perUnitPriceModifier.value) || 0,
-        unit: dto.perUnitPriceModifier.unit,
-      } : undefined,
+      priceModifiers: Array.isArray(dto?.priceModifiers)
+        ? dto.priceModifiers.map((modifier: any) => {
+          return new RecipePriceModifier(
+            modifier.action,
+            modifier.unit,
+            parseFloatingNumber(modifier.value) || 0,
+            modifier.type || 'per_unit',
+          );
+        }) : [],
     });
   }
 
@@ -205,11 +204,7 @@ export class Recipe {
         return tag.toString();
       }),
       color: this.color || estimateColor(this.name),
-      perUnitPriceModifier: this.perUnitPriceModifier ? {
-        action: this.perUnitPriceModifier.action,
-        value: parseFloatingNumber(this.perUnitPriceModifier.value) || 0,
-        unit: this.perUnitPriceModifier.unit,
-      } : undefined,
+      priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
     };
   }
 
@@ -238,11 +233,15 @@ export class Recipe {
         return Tag.fromRaw(tag);
       }) : this.tags;
     this.color = dto?.color || this.color;
-    this.perUnitPriceModifier = dto?.perUnitPriceModifier ? {
-      action: dto.perUnitPriceModifier.action,
-      value: parseFloatingNumber(dto.perUnitPriceModifier.value) || 0,
-      unit: dto.perUnitPriceModifier.unit,
-    } : this.perUnitPriceModifier;
+    this.priceModifiers = Array.isArray(dto?.priceModifiers)
+      ? dto.priceModifiers.map((modifier: any) => {
+        return new RecipePriceModifier(
+          modifier.action,
+          modifier.unit,
+          parseFloatingNumber(modifier.value) || 0,
+          modifier.type || 'per_unit',
+        );
+      }) : this.priceModifiers;
     return this;
   }
 }

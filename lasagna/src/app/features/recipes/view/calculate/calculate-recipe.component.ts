@@ -53,6 +53,8 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
 import {difference} from 'lodash';
+import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
+import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -83,6 +85,7 @@ import {difference} from 'lodash';
     ControlExtraTemplateDirective,
     CurrencySymbolPipe,
     NumberInputComponent,
+    CalculationPriceModifiersComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -111,39 +114,17 @@ export class CalculateRecipeComponent
     ).subscribe((data) => {
       this.result.set(data['result']);
 
+      const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
+
       this.recipePriceAdditionsForm.patchValue({
-        action: this.result()?.calculation?.perUnitPriceModifier?.action || 'add',
-        value: this.result()?.calculation?.perUnitPriceModifier?.value || 0,
-        unit: this.result()?.calculation?.perUnitPriceModifier?.unit || 'currency',
-      } as any);
+        action: recipePriceModifiers?.action || 'add',
+        unit: recipePriceModifiers?.unit || 'gram',
+        value: recipePriceModifiers?.value || 0,
+        type: recipePriceModifiers?.type || 'per_unit',
+      })
     });
   }
 
-  userSettings = inject(SETTINGS);
-  additionalPriceUnit: UnitGroupItem[] = [
-    {
-      label: '$',
-      value: 'currency',
-      style: 'secondary',
-    },
-    {
-      label: '%',
-      value: 'percent',
-      style: 'secondary',
-    },
-  ];
-  additionalPriceAction: UnitGroupItem[] = [
-    {
-      label: 'Add',
-      value: 'add',
-      style: 'secondary',
-    },
-    {
-      label: 'Round to',
-      value: 'round',
-      style: 'secondary',
-    },
-  ];
   public doughnutChartType: ChartType = 'pie';
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
@@ -222,19 +203,8 @@ export class CalculateRecipeComponent
   notInGrams = computed(() => {
     return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== 'gram'
   });
-  recipePriceAdditionsForm = new FormGroup({
-    action: new FormControl<'add' | 'round'>('add'),
-    value: new FormControl<number | string>(0),
-    unit: new FormControl<'currency' | 'percent'>('currency'),
-  });
+  recipePriceAdditionsForm = new FormControl();
   values = toSignal(this.recipePriceAdditionsForm.valueChanges);
-  roundActionSelected = computed(() => {
-    return this.values()?.action === 'round';
-  });
-  showPriceAdditionUnits = computed(() => {
-    const action = this.result()?.calculation?.perUnitPriceModifier?.action;
-    return action === 'add' || !action;
-  });
 
   totalScaleFactor = computed(() => {
     if (!this.recalculateTotalsModel()) return 1;
@@ -252,6 +222,7 @@ export class CalculateRecipeComponent
   totalPriceWithAdditions = computed(() => {
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
+  protected readonly difference = difference;
 
   ngOnInit() {
   }
@@ -282,11 +253,14 @@ export class CalculateRecipeComponent
   ) {
     try {
       await this._calculateRecipeService.updateRecipe({
-        perUnitPriceModifier: {
-          action: formValue.action,
-          value: parseFloat(formValue.value) || 0,
-          unit: formValue.unit,
-        }
+        priceModifiers: [
+          new RecipePriceModifier(
+            formValue.action,
+            formValue.unit,
+            parseFloat(formValue.value) || 0,
+            formValue.type || 'per_unit',
+          ),
+        ]
       } as any);
 
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
@@ -295,6 +269,4 @@ export class CalculateRecipeComponent
       this._notificationService.error(errorHandler(error));
     }
   }
-
-  protected readonly difference = difference;
 }
