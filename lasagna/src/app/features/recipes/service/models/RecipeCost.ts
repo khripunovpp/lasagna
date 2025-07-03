@@ -1,6 +1,5 @@
 import {Recipe} from './Recipe';
 import {CalculationTableParams} from '../calulate-recipe.service';
-import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 
 export class RecipeCost {
   constructor(
@@ -48,23 +47,15 @@ export class RecipeCost {
   }
 
   get totalWeight(): number {
-    if (!this.recipe) {
-      return 0;
-    }
-
-    return this.recipe.ingredients.reduce((acc, ingredient) => {
-      return acc + ingredient.totalWeightGram;
-    }, 0);
+    return this.recipe?.totalIngredientsWeight || 0;
   }
 
   get outcomeAmount(): number {
     if (!this.recipe) {
       return 0;
     }
-    if (this.recipe.outcome_amount) {
-      return parseFloatingNumber(this.recipe.outcome_amount);
-    }
-    return this.totalWeight;
+
+    return this.recipe.outcomeAmount;
   }
 
   get outcomeUnit(): string {
@@ -76,6 +67,9 @@ export class RecipeCost {
   }
 
   get totalPriceDifference(): number {
+    if (!this.totalPriceWithAdditions) {
+      return 0;
+    }
     return this.totalPriceWithAdditions - this.totalPrice;
   }
 
@@ -84,19 +78,11 @@ export class RecipeCost {
   }
 
   get pricePerUnitModified(): number {
-    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
-      return this.pricePerOutcomeUnit;
-    }
-
-    return this.recipe.perUnitPriceModified;
+    return this.recipe?.perUnitPriceModified ?? 0;
   }
 
   get totalPriceWithAdditions() {
-    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
-      return this.totalPrice;
-    }
-
-    return this.pricePerUnitModified * this.outcomeAmount;
+    return this.recipe?.totalPriceModified || 0;
   }
 
   get recipeName(): string {
@@ -113,14 +99,6 @@ export class RecipeCost {
     }
 
     return this.recipe.uuid || '';
-  }
-
-  get perUnitPriceModifier() {
-    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
-      return null;
-    }
-
-    return this.recipe.perUnitPriceModifier;
   }
 
   get weightForUnit(): number {

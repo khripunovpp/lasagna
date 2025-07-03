@@ -21,6 +21,11 @@ export class RecipeInvoiceItem
     return this.pricePerUnitModified * this.amount;
   }
 
+  get pricePerUnitModified(): number {
+    // для иновйса подгоняем цену юнит исходя из тотала
+    return this.recipe.totalPriceModified / this.recipe.outcomeAmount
+  }
+
   get totalPriceModified(): number {
     return this.totalPrice;
   }
@@ -43,14 +48,6 @@ export class RecipeInvoiceItem
       return this.recipe.pricePerUnit;
     }
     return 0;
-  }
-
-  get pricePerUnitModified(): number {
-    if (!this.recipe || !this.recipe.perUnitPriceModifier) {
-      return 0;
-    }
-
-    return this.recipe.perUnitPriceModified;
   }
 
   get compareKey(): string {

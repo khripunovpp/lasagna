@@ -51,35 +51,8 @@
               </lg-card>
 
 
-              <lg-gap-row [formGroup]="recipePriceAdditionsForm"
-                          [size]="'small'"
+              <lg-gap-row [size]="'small'"
                           [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
-                <lg-number-input lgParseMath
-                                 placeholder="extra price"
-                                 formControlName="value">
-                  <ng-template lgExtraTpl place="before">
-                    <lg-unit-switcher formControlName="action"
-                                      [items]="additionalPriceAction">
-                    </lg-unit-switcher>
-                  </ng-template>
-
-                  @if (showPriceAdditionUnits()) {
-                    <ng-template lgExtraTpl place="after">
-                      <lg-unit-switcher formControlName="unit"
-                                        [items]="additionalPriceUnit">
-                      </lg-unit-switcher>
-                    </ng-template>
-                  }
-
-                  @if (roundActionSelected()) {
-                    <ng-template lgExtraTpl place="after">
-                      <b>{{ userSettings()['currency']|currencySymbol }}
-                        /
-                        {{ result()?.calculation?.outcomeUnit }}
-                      </b>
-                    </ng-template>
-                  }
-                </lg-number-input>
               </lg-gap-row>
             </lg-gap-column>
 
@@ -98,32 +71,40 @@
                       {{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}
                     </span>
 
-                     <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                      ({{diff > 0 ? '+' : ''}} {{ diff |  userCurrency: '1.2-2' }})
+                      <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+                      ({{ diff > 0 ? '+' : '' }} {{ diff |  userCurrency: '1.2-2' }})
                     </span>
                     }
                   </b>
                 </lg-gap-row>
               </lg-card>
 
-              <lg-gap-row [size]="'small'"
-                          [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
-                <lg-number-input lgParseMath
-                                 placeholder="amount"
-                                 [(ngModel)]="recalculateTotalsModel">
-                  <ng-template lgExtraTpl place="before">
-                    Recalculate for
-                  </ng-template>
+              <lg-gap-column [position]="'stretch'" size="small" style="--control-bg: #fff;padding: 0 16px">
 
-                  @if (roundActionSelected()) {
-                    <ng-template lgExtraTpl place="after">
-                      <b>
-                        {{ result()?.calculation?.outcomeUnit }}
-                      </b>
-                    </ng-template>
-                  }
-                </lg-number-input>
-              </lg-gap-row>
+<!--                <lg-number-input lgParseMath-->
+<!--                                 placeholder="amount"-->
+<!--                                 [(ngModel)]="recalculateTotalsModel">-->
+<!--                  <ng-template lgExtraTpl place="before">-->
+<!--                    Recalculate for-->
+<!--                  </ng-template>-->
+
+<!--                  &lt;!&ndash;                  @if (roundActionSelected()) {&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    <ng-template lgExtraTpl place="after">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                      <b>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                        {{ result()?.calculation?.outcomeUnit }}&ndash;&gt;-->
+<!--                  &lt;!&ndash;                      </b>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    </ng-template>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                  }&ndash;&gt;-->
+<!--                </lg-number-input>-->
+
+                <div>
+                  Price modifiers
+                </div>
+
+                <lg-calculation-price-modifiers
+                  [formControl]="recipePriceAdditionsForm"
+                  [recipeCost]="result()?.calculation"></lg-calculation-price-modifiers>
+              </lg-gap-column>
             </lg-gap-column>
           </lg-gap-column>
 
@@ -165,7 +146,7 @@
         @if (notInGrams()) {
           {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
 
-          @if (result()?.calculation?.totalPriceDifference) {
+          @if (result()?.calculation?.pricePerUnitDifference) {
             @let diff = result()?.calculation?.pricePerUnitDifference ?? 0;
             >
             <span class="text-underlined">
@@ -173,7 +154,7 @@
             </span>
 
             <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-              ({{diff > 0 ? '+' : ''}} {{ diff |  userCurrency: '1.2-2' }})
+              ({{ diff > 0 ? '+' : '' }} {{ diff |  userCurrency: '1.2-2' }})
             </span>
           }
           /
@@ -207,7 +188,7 @@
             </thead>
 
             <tbody>
-              @for (row of result()?.table;track $index;let i = $index) {
+              @for (row of result()?.table; track $index; let i = $index) {
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
 
