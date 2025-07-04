@@ -146,11 +146,11 @@
         @if (notInGrams()) {
           {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
 
-          @if (result()?.calculation?.pricePerUnitDifference) {
-            @let diff = result()?.calculation?.pricePerUnitDifference ?? 0;
+          @if (result()?.calculation?.hasPriceDifference) {
+            @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
             >
             <span class="text-underlined">
-              {{ result()?.calculation?.pricePerUnitModified |  userCurrency: '1.2-2' }}
+              {{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: '1.2-2' }}
             </span>
 
             <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">

@@ -85,6 +85,21 @@ export class RecipeCost {
     return this.recipe?.totalPriceModified || 0;
   }
 
+  get hasPriceDifference(): boolean {
+    return this.totalPriceDifference !== 0 || this.pricePerUnitDifference !== 0;
+  }
+
+  get pricePerUnitFromTotal(): number {
+    if (!this.recipe) {
+      return 0;
+    }
+    return  this.recipe.totalPriceModified / this.recipe.outcomeAmount;
+  }
+
+  get pricePerUnitFromTotalDifference(): number {
+    return this.pricePerUnitFromTotal - this.pricePerOutcomeUnit;
+  }
+
   get recipeName(): string {
     if (!this.recipe) {
       return '';
