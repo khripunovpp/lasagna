@@ -1,47 +1,67 @@
 <form [formGroup]="form" style="--control-bg: #fff">
   <lg-flex-column>
-    <lg-input #nameField
-              [placeholder]="'Just free style optional name. It\'s visible only for you'"
-              formControlName="name"></lg-input>
+    <lg-control label="Prvate name">
+      <lg-input #nameField
+                [placeholder]="'Just free style optional name. It\'s visible only for you'"
+                formControlName="name"></lg-input>
+    </lg-control>
 
-    <lg-flex-row [mobileMode]="true" [right]="true">
-      <lg-input formControlName="prefix"
-                lgWidth="15%"
-                placeholder="Prefix"></lg-input>
-      <lg-input formControlName="invoice_number"
-                lgWidth="30%"
-                placeholder="Number"></lg-input>
+    <lg-flex-row [mobileMode]="true" [relaxed]="true">
+      <lg-flex-row [left]="true" [mobileMode]="true" lgExpand>
+        <lg-control label="Prefix"
+                    lgWidth="25%">
+          <lg-input formControlName="prefix"
+                    placeholder="Prefix, for unique identification"
+          ></lg-input>
+        </lg-control>
+
+        <lg-control label="Invoice number" lgWidth="40%">
+          <lg-input formControlName="invoice_number"
+
+                    placeholder="Invoice number, you can choose any format"
+          ></lg-input>
+        </lg-control>
+      </lg-flex-row>
+
+      <lg-flex-row [mobileMode]="true" [right]="true" lgExpand>
+        <lg-control label="Date issued" lgExpand>
+          <lg-date-picker formControlName="date_issued"></lg-date-picker>
+        </lg-control>
+
+        <lg-control label="Due date" lgExpand>
+          <lg-date-picker formControlName="date_due"></lg-date-picker>
+        </lg-control>
+      </lg-flex-row>
     </lg-flex-row>
 
     <lg-flex-row [mobileMode]="true" [relaxed]="true">
-      <lg-credential-field (deleted)="onCredentialDeleted('system')"
-                           (selected)="onCredentialSelected($event)"
-                           [type]="CredentialsType.system"
-                           formControlName="credential_from"
-                           lgExpand
-                           placeholder="From"></lg-credential-field>
+      <lg-control label="Your company details" lgExpand>
+        <lg-credential-field (deleted)="onCredentialDeleted('system')"
+                             (selected)="onCredentialSelected($event)"
+                             [type]="CredentialsType.system"
+                             formControlName="credential_from"
+                             placeholder="Company name, address, etc.">
+        </lg-credential-field>
+      </lg-control>
 
-      <lg-credential-field (deleted)="onCredentialDeleted('customer')"
-                           (selected)="onCredentialSelected($event)"
-                           [type]="CredentialsType.customer"
-                           formControlName="credential_to"
-                           lgExpand
-                           placeholder="To"></lg-credential-field>
-
-      <lg-flex-column lgWidth="30%">
-        <lg-date-picker formControlName="date_issued"></lg-date-picker>
-        <lg-date-picker formControlName="date_due"></lg-date-picker>
-      </lg-flex-column>
+      <lg-control label="Your customer details" lgExpand>
+        <lg-credential-field (deleted)="onCredentialDeleted('customer')"
+                             (selected)="onCredentialSelected($event)"
+                             [type]="CredentialsType.customer"
+                             formControlName="credential_to"
+                             placeholder="Address, customer name, etc.">
+        </lg-credential-field>
+      </lg-control>
     </lg-flex-row>
 
     <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-flex-column [position]="'start'" [size]="'medium'">
       <lg-flex-row [equal]="true"
-                  [mobileMode]="true"
-                  [size]="'medium'"
-                  [styles]="{'--lg-gap-row-pad-right': '36px'}"
-                  lgExpand>
+                   [mobileMode]="true"
+                   [size]="'medium'"
+                   [styles]="{'--lg-gap-row-pad-right': '36px'}"
+                   lgExpand>
         <div lgWidth="40%">Item</div>
         <div lgWidth="30%">Amount</div>
         <div lgWidth="15%">Price per unit</div>
@@ -131,15 +151,20 @@
     <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-flex-row [mobileMode]="true" [relaxed]="true">
-      <lg-textarea [rows]="2"
-                   formControlName="notes"
-                   lgExpand
-                   placeholder="Notes"></lg-textarea>
+      <lg-control label="Notes"
+                  lgExpand>
+        <lg-textarea [rows]="2"
+                     formControlName="notes"
+                     placeholder="Notes for you or your customer"></lg-textarea>
+      </lg-control>
 
-      <lg-textarea [rows]="2"
-                   formControlName="terms"
-                   lgExpand
-                   placeholder="Terms"></lg-textarea>
+      <lg-control label="Terms"
+                  lgExpand>
+        <lg-textarea [rows]="2"
+                     formControlName="terms"
+                     lgExpand
+                     placeholder="Terms and conditions"></lg-textarea>
+      </lg-control>
     </lg-flex-row>
 
     <lg-flex-column position="end" size="small">

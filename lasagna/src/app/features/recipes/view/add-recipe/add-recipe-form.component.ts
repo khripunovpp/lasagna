@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, viewChildren} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
-import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
+import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 import {ControlGroupComponent} from '../../../../shared/view/ui/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';

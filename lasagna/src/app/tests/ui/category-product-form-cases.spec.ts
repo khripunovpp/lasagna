@@ -6,7 +6,7 @@ import {
 import {CategoryProductsRepository} from '../../shared/service/repositories';
 import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
 import {InputComponent} from '../../shared/view/ui/form/input.component';
-import {ControlComponent} from '../../shared/view/ui/form/control.component';
+import {ControlComponent} from '../../shared/view/ui/form/control-item/control.component';
 import {FlexRowComponent} from '../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';

@@ -10,7 +10,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
+import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
@@ -42,6 +42,9 @@ import {JsonPipe} from '@angular/common';
 import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
+import {
+  ControlLabelTemplateDirective
+} from '../../../../shared/view/ui/form/control-item/control-label-template.directive';
 
 
 @Component({
@@ -71,7 +74,8 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
     JsonPipe,
     TextareaComponent,
     InputComponent,
-    ControlExtraTemplateDirective
+    ControlExtraTemplateDirective,
+    ControlLabelTemplateDirective
   ],
   styles: [
     `
