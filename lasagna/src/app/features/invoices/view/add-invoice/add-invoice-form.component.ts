@@ -37,7 +37,6 @@ import {InvoiceItemType} from '@invoices/service/InvoiceItem/InvoiceItem.types';
 import {LoggerService} from '../../../logger/logger.service';
 
 
-
 import {CredentialsType} from '../../../settings/service/types/credentials.types';
 
 import {Credential} from '../../../settings/service/models/Credential';
@@ -176,7 +175,8 @@ export class AddInvoiceFormComponent
           this.rows.push(this._getInvoiceItemFromGroup(good));
         })
       } else {
-        this.rows.push(this._getInvoiceItemFromGroup());
+        const newRow = this.invoiceBuilderService.addRow(this._getLastRowType());
+        this.rows.push(this._getInvoiceItemFromGroup(newRow));
       }
     }
 
