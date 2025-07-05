@@ -107,17 +107,22 @@ export class DexieIndexDbService extends Dexie {
 
   async getOne<T = any>(
     storeKey: Stores,
-    uuid: string
+    uuid: string,
+    useCache = true
   ): Promise<T> {
-    const cache = this._getCache(storeKey, uuid);
-    if (cache) {
-      this.cacheLogger.log(storeKey, 'Got one item from cache:', {uuid, cache});
-      return cache as T;
+    if (useCache) {
+      const cache = this._getCache(storeKey, uuid);
+      if (cache) {
+        this.cacheLogger.log(storeKey, 'Got one item from cache:', {uuid, cache});
+        return cache as T;
+      }
     }
     // @ts-ignore
     const response = await (this[storeKey] as Table<any>).get(uuid);
     this.logger.log(storeKey, 'Got one item from store:', {response});
-    this._putCache(storeKey, uuid, response);
+    if (useCache) {
+      this._putCache(storeKey, uuid, response);
+    }
     return response
   }
 
@@ -126,7 +131,7 @@ export class DexieIndexDbService extends Dexie {
     relations: Record<string, Record<string, any>>,
   }> {
     // @ts-ignore
-    const item = await this.getOne(storeKey, uuid);
+    const item = await this.getOne(storeKey, uuid,false);
     if (!item) {
       return Promise.resolve({
         data: null,
