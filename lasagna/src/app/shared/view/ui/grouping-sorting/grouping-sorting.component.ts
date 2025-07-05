@@ -1,8 +1,8 @@
 import {Component, ContentChild, effect, EventEmitter, inject, Output, signal} from '@angular/core';
-import {GapRowComponent} from '../layout/gap-row.component';
+import {FlexRowComponent} from '../layout/flex-row.component';
 import {ButtonComponent} from '../layout/button.component';
 import {DropdownComponent} from '../dropdown/dropdown.component';
-import {GapColumnComponent} from '../layout/gap-column.component';
+import {FlexColumnComponent} from '../layout/flex-column.component';
 import {GroupingSortingContainerComponent} from './grouping-sorting.directive';
 import {ActivatedRoute, Router} from '@angular/router';
 import {injectQueryParams} from '../../../helpers/route.helpers';
@@ -11,19 +11,19 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
   selector: 'lg-grouping-sorting',
   standalone: true,
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     DropdownComponent,
-    GapColumnComponent
+    FlexColumnComponent
   ],
   template: `
-    <lg-gap-row>
+    <lg-flex-row>
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>
           {{ groupingToLabel[sorting().group] }}
         </lg-button>
 
-        <lg-gap-column [size]="'small'">
+        <lg-flex-column [size]="'small'">
           <span>Grouping</span>
 
           <lg-button (click)="onSortChange({group: 'category'})"
@@ -53,7 +53,7 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
                      [style]="'warning'">
             {{ groupingToLabel['alphabetical'] }}
           </lg-button>
-        </lg-gap-column>
+        </lg-flex-column>
       </lg-dropdown>
 
       <!--      <lg-dropdown>-->
@@ -83,7 +83,7 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
           {{ groupingDirectionToLabel[sorting().direction] }}
         </lg-button>
 
-        <lg-gap-column [size]="'small'">
+        <lg-flex-column [size]="'small'">
           <span>Grouping direction</span>
 
           <lg-button (click)="onSortChange({direction: 'asc'})"
@@ -99,9 +99,9 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
                      [style]="'warning'">
             {{ groupingDirectionToLabel['desc'] }}
           </lg-button>
-        </lg-gap-column>
+        </lg-flex-column>
       </lg-dropdown>
-    </lg-gap-row>
+    </lg-flex-row>
   `
 })
 export class GroupingSortingComponent {

@@ -1,19 +1,19 @@
 <form [formGroup]="form" style="--control-bg: #fff">
-  <lg-gap-column>
+  <lg-flex-column>
     <lg-input #nameField
               [placeholder]="'Just free style optional name. It\'s visible only for you'"
               formControlName="name"></lg-input>
 
-    <lg-gap-row [mobileMode]="true" [right]="true">
+    <lg-flex-row [mobileMode]="true" [right]="true">
       <lg-input formControlName="prefix"
                 lgWidth="15%"
                 placeholder="Prefix"></lg-input>
       <lg-input formControlName="invoice_number"
                 lgWidth="30%"
                 placeholder="Number"></lg-input>
-    </lg-gap-row>
+    </lg-flex-row>
 
-    <lg-gap-row [mobileMode]="true" [relaxed]="true">
+    <lg-flex-row [mobileMode]="true" [relaxed]="true">
       <lg-credential-field (deleted)="onCredentialDeleted('system')"
                            (selected)="onCredentialSelected($event)"
                            [type]="CredentialsType.system"
@@ -28,16 +28,16 @@
                            lgExpand
                            placeholder="To"></lg-credential-field>
 
-      <lg-gap-column lgWidth="30%">
+      <lg-flex-column lgWidth="30%">
         <lg-date-picker formControlName="date_issued"></lg-date-picker>
         <lg-date-picker formControlName="date_due"></lg-date-picker>
-      </lg-gap-column>
-    </lg-gap-row>
+      </lg-flex-column>
+    </lg-flex-row>
 
     <hr color="#fafafa" lgExpand size="2"/>
 
-    <lg-gap-column [position]="'start'" [size]="'medium'">
-      <lg-gap-row [equal]="true"
+    <lg-flex-column [position]="'start'" [size]="'medium'">
+      <lg-flex-row [equal]="true"
                   [mobileMode]="true"
                   [size]="'medium'"
                   [styles]="{'--lg-gap-row-pad-right': '36px'}"
@@ -46,10 +46,10 @@
         <div lgWidth="30%">Amount</div>
         <div lgWidth="15%">Price per unit</div>
         <div lgWidth="15%">Total</div>
-      </lg-gap-row>
+      </lg-flex-row>
 
 
-      <lg-gap-column [size]="'medium'" formArrayName="rows" lgExpand>
+      <lg-flex-column [size]="'medium'" formArrayName="rows" lgExpand>
         @for (control of rows.controls; track (control.value.amount + i + 1); let i = $index, last = $last) {
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
@@ -116,7 +116,7 @@
             }
           </ng-container>
         }
-      </lg-gap-column>
+      </lg-flex-column>
 
       <lg-button (click)="addGood()"
                  [size]="'small'"
@@ -126,11 +126,11 @@
                   aria-hidden="false"
                   fontIcon="add"></mat-icon>
       </lg-button>
-    </lg-gap-column>
+    </lg-flex-column>
 
     <hr color="#fafafa" lgExpand size="2"/>
 
-    <lg-gap-row [mobileMode]="true" [relaxed]="true">
+    <lg-flex-row [mobileMode]="true" [relaxed]="true">
       <lg-textarea [rows]="2"
                    formControlName="notes"
                    lgExpand
@@ -140,29 +140,29 @@
                    formControlName="terms"
                    lgExpand
                    placeholder="Terms"></lg-textarea>
-    </lg-gap-row>
+    </lg-flex-row>
 
-    <lg-gap-column position="end" size="small">
-      <lg-gap-row [relaxed]="true">
+    <lg-flex-column position="end" size="small">
+      <lg-flex-row [relaxed]="true">
         Subtotal
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.total | userCurrency: '1.2-4' }}
         </b>
-      </lg-gap-row>
+      </lg-flex-row>
 
-      <lg-gap-row [relaxed]="true">
+      <lg-flex-row [relaxed]="true">
         Tax
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.taxTotal | userCurrency: '1.2-4' }}
         </b>
-      </lg-gap-row>
+      </lg-flex-row>
 
-      <lg-gap-row [relaxed]="true">
+      <lg-flex-row [relaxed]="true">
         <b class="text-right text-bold">Total</b>
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.totalWithTax | userCurrency: '1.2-4' }}
         </b>
-      </lg-gap-row>
-    </lg-gap-column>
-  </lg-gap-column>
+      </lg-flex-row>
+    </lg-flex-column>
+  </lg-flex-column>
 </form>

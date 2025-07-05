@@ -1,5 +1,5 @@
 import {Component, Input, signal} from '@angular/core';
-import {GapColumnComponent} from './layout/gap-column.component';
+import {FlexColumnComponent} from './layout/flex-column.component';
 
 @Component({
   selector: 'lg-expander',
@@ -15,9 +15,9 @@ import {GapColumnComponent} from './layout/gap-column.component';
         </div>
 
         <div class="expander__content">
-          <lg-gap-column size="medium">
+          <lg-flex-column size="medium">
             <ng-content></ng-content>
-          </lg-gap-column>
+          </lg-flex-column>
         </div>
       } @else {
         <div class="expander__header">
@@ -29,7 +29,7 @@ import {GapColumnComponent} from './layout/gap-column.component';
     </div>
   `,
   imports: [
-    GapColumnComponent
+    FlexColumnComponent
   ],
   styles: [
     `

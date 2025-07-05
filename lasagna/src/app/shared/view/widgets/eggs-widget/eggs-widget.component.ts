@@ -1,7 +1,7 @@
 import {Component, computed, model, output, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {InputComponent} from '../../ui/form/input.component';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
 
@@ -9,7 +9,7 @@ import {DecimalPipe} from '@angular/common';
   selector: 'lg-eggs-widget',
   standalone: true,
   template: `
-      <lg-gap-column [size]="'medium'">
+      <lg-flex-column [size]="'medium'">
           <lg-title>
               Convert eggs to grams
           </lg-title>
@@ -49,12 +49,12 @@ import {DecimalPipe} from '@angular/common';
                   }
               </div>
           </div>
-      </lg-gap-column>
+      </lg-flex-column>
   `,
   imports: [
     FormsModule,
     InputComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
     TitleComponent,
     DecimalPipe
   ],

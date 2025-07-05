@@ -4,7 +4,7 @@ import {DraftForm, NotificationsService, SelectionZoneService} from '../../../..
 import {RecipeDTO} from '../../service/Recipe.scheme';
 import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
@@ -20,7 +20,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
   selector: 'lg-draft-recipes-list',
   standalone: true,
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     CardListComponent,
     CardListItemDirective,
@@ -79,7 +79,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
                       style="--card-bg: #bee5ff">
           @for (item of drafts(); track item.uuid) {
             <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-              <lg-gap-row [center]="true">
+              <lg-flex-row [center]="true">
                 <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
                   @if (item?.meta?.['uuid']) {
                     {{ 'draft.list-prefix.existing'|translate }}
@@ -92,7 +92,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
                 <small class="text-muted text-cursive">
                   {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                 </small>
-              </lg-gap-row>
+              </lg-flex-row>
             </ng-template>
           }
         </lg-card-list>

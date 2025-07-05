@@ -1,8 +1,8 @@
 import {Component, computed, model, Signal} from '@angular/core';
 import {SettingsService} from '../../service/services/settings.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FormsModule} from '@angular/forms';
 import {RadioComponent} from '../../../../shared/view/ui/form/radio.component';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
@@ -13,15 +13,15 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
   selector: 'lg-language-settings',
   standalone: true,
   template: `
-      <lg-gap-column size="medium">
+      <lg-flex-column size="medium">
           <lg-title [level]="6">{{ 'language.settings.language-title'|translate }}</lg-title>
 
           <section class="language-settings">
-              <lg-gap-column [size]="'medium'">
+              <lg-flex-column [size]="'medium'">
 
-                  <lg-gap-column [size]="'small'">
+                  <lg-flex-column [size]="'small'">
                       @for (lang of languages();track lang.code;let i = $index) {
-                          <lg-gap-row [center]="true" [mobileMode]="true" [size]="'small'">
+                          <lg-flex-row [center]="true" [mobileMode]="true" [size]="'small'">
                               <lg-radio [markOnHover]="true"
                                         [radio]="true"
                                         [name]="'lang'"
@@ -32,10 +32,10 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
                                         [noMark]="true">
                                   {{ lang.name }}
                               </lg-radio>
-                          </lg-gap-row>
+                          </lg-flex-row>
                       }
-                  </lg-gap-column>
-              </lg-gap-column>
+                  </lg-flex-column>
+              </lg-flex-column>
           </section>
 
           <lg-title [level]="6">
@@ -45,18 +45,18 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
 
           <lg-input (ngModelChange)="changeCurrency($event)"
                     [(ngModel)]="currency"></lg-input>
-      </lg-gap-column>
+      </lg-flex-column>
   `,
   styles: [``],
   imports: [
-    GapRowComponent,
-    GapColumnComponent,
+    FlexRowComponent,
+    FlexColumnComponent,
     FormsModule,
     RadioComponent,
     InputComponent,
     TitleComponent,
     TranslatePipe,
-    GapColumnComponent
+    FlexColumnComponent
   ]
 })
 export class LocalisationSettingsComponent {

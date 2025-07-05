@@ -17,14 +17,14 @@ import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
 import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
 
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {FormTemplateService} from '../../../../shared/service/services/form-templates.service';
 
 
@@ -65,11 +65,11 @@ import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/
     TableCardComponent,
     NgClass,
     ButtonComponent,
-    GapRowComponent,
+    FlexRowComponent,
     DecimalPipe,
     FormsModule,
     RouterLink,
-    GapColumnComponent,
+    FlexColumnComponent,
     NgTemplateOutlet,
     FadeInComponent,
     BaseChartDirective,

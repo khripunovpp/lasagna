@@ -2,7 +2,7 @@
   <lg-container>
     <lg-title>{{ 'main.title' | translate }}</lg-title>
 
-    <lg-gap-row [mobileMode]="true" [top]="true">
+    <lg-flex-row [mobileMode]="true" [top]="true">
       <lg-card>
         @if (recipes|async) {
           <lg-last-edited-recipes></lg-last-edited-recipes>
@@ -22,6 +22,6 @@
           </lg-button>
         }
       </lg-card>
-    </lg-gap-row>
+    </lg-flex-row>
   </lg-container>
 </lg-fade-in>

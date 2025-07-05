@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
-import {GapColumnComponent} from '../layout/gap-column.component';
+import {FlexColumnComponent} from '../layout/flex-column.component';
 
 import {injectQueryParams} from '../../../helpers/route.helpers';
 import {Router} from '@angular/router';
@@ -20,7 +20,7 @@ import {Router} from '@angular/router';
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    GapColumnComponent,
+    FlexColumnComponent,
     ],
   template: `
       <div [attr.aria-label]="'Tabs'"
@@ -42,10 +42,10 @@ import {Router} from '@angular/router';
           <div class="tabs__body">
               @if (tabs().length > 0) {
                   @if (activated()[selectedIndex()]) {
-                      <lg-gap-column [size]="'small'">
+                      <lg-flex-column [size]="'small'">
                           <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
                           </ng-container>
-                      </lg-gap-column>
+                      </lg-flex-column>
                   }
               }
           </div>

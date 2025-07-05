@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {Router} from '@angular/router';
@@ -20,7 +20,7 @@ import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
 import {AmountWidgetsComponent} from '../../../../shared/view/widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
@@ -51,13 +51,13 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
   imports: [
     ReactiveFormsModule,
     ControlComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
     MultiselectComponent,
     NumberInputComponent,
     TooltipComponent,
     AmountWidgetsComponent,
     ParseMathDirective,
-    GapRowComponent,
+    FlexRowComponent,
     ExpandDirective,
     ChipsListComponent,
     AutocompleteComponent,

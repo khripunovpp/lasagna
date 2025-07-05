@@ -1,7 +1,7 @@
 <lg-fade-in>
   <lg-container>
-    <lg-gap-column>
-      <lg-gap-row [center]="true" [mobileMode]="true">
+    <lg-flex-column>
+      <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-title>
           {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
         </lg-title>
@@ -12,28 +12,28 @@
                    [style]="'primary'">
           {{ 'edit-label' | translate }}
         </lg-button>
-      </lg-gap-row>
+      </lg-flex-row>
 
       @if (result()?.calculation?.totalPrice) {
-        <lg-gap-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
-          <lg-gap-column [position]="'stretch'">
+        <lg-flex-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
+          <lg-flex-column [position]="'stretch'">
 
             <lg-card size="small">
-              <lg-gap-row [size]="'small'" [relaxed]="true">
+              <lg-flex-row [size]="'small'" [relaxed]="true">
                 <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
 
                 <b>
                   {{ result()?.calculation?.outcomeAmount | number: '1.0-2' }}
                   {{ result()?.calculation?.outcomeUnit }}
                 </b>
-              </lg-gap-row>
+              </lg-flex-row>
 
             </lg-card>
 
 
-            <lg-gap-column [position]="'stretch'" size="small">
+            <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
-                <lg-gap-row [size]="'small'" [relaxed]="true">
+                <lg-flex-row [size]="'small'" [relaxed]="true">
                   <div>
                     {{ 'recipe.calculation.one-unit.label' | translate }} <b>
                     {{ result()?.calculation?.outcomeUnit }}
@@ -47,18 +47,18 @@
                       {{ result()?.calculation?.pricePerUnit | userCurrency:'1.2-5' }}
                     }
                   </b>
-                </lg-gap-row>
+                </lg-flex-row>
               </lg-card>
 
 
-              <lg-gap-row [size]="'small'"
+              <lg-flex-row [size]="'small'"
                           [relaxed]="true" style="--control-bg: #fff;padding: 0 16px">
-              </lg-gap-row>
-            </lg-gap-column>
+              </lg-flex-row>
+            </lg-flex-column>
 
-            <lg-gap-column [position]="'stretch'" size="small">
+            <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
-                <lg-gap-row [size]="'small'" [relaxed]="true">
+                <lg-flex-row [size]="'small'" [relaxed]="true">
                   <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
                   <b>
@@ -76,10 +76,10 @@
                     </span>
                     }
                   </b>
-                </lg-gap-row>
+                </lg-flex-row>
               </lg-card>
 
-              <lg-gap-column [position]="'stretch'" size="small" style="--control-bg: #fff;padding: 0 16px">
+              <lg-flex-column [position]="'stretch'" size="small" style="--control-bg: #fff;padding: 0 16px">
 
 <!--                <lg-number-input lgParseMath-->
 <!--                                 placeholder="amount"-->
@@ -104,12 +104,12 @@
                 <lg-calculation-price-modifiers
                   [formControl]="recipePriceAdditionsForm"
                   [recipeCost]="result()?.calculation"></lg-calculation-price-modifiers>
-              </lg-gap-column>
-            </lg-gap-column>
-          </lg-gap-column>
+              </lg-flex-column>
+            </lg-flex-column>
+          </lg-flex-column>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-gap-column [size]="'small'">
+            <lg-flex-column [size]="'small'">
               <lg-title [level]="5">
                 <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
               </lg-title>
@@ -121,11 +121,11 @@
                       #priceChart
                       baseChart>
               </canvas>
-            </lg-gap-column>
+            </lg-flex-column>
           </lg-card>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-gap-column [size]="'small'">
+            <lg-flex-column [size]="'small'">
               <lg-title [level]="5">
                 <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
               </lg-title>
@@ -137,9 +137,9 @@
                       #weightChart
                       baseChart>
               </canvas>
-            </lg-gap-column>
+            </lg-flex-column>
           </lg-card>
-        </lg-gap-row>
+        </lg-flex-row>
       }
 
       <ng-template #totalAmount>
@@ -218,6 +218,6 @@
         } @else {
         }
       </lg-table-card>
-    </lg-gap-column>
+    </lg-flex-column>
   </lg-container>
 </lg-fade-in>

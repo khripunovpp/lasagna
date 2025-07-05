@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, Signal} from '@angular/core';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {MatIcon} from '@angular/material/icon';
@@ -85,10 +85,10 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
                         [deselectAll]="selectionZoneService.deselectAll()">
             @for (product of category.products; track (product.uuid ?? '')+$index; let i = $index) {
               <ng-template lgCardListItem [uuid]="product.uuid" type="product">
-                <lg-gap-row [center]="true">
+                <lg-flex-row [center]="true">
                   <div class="expand">
-                    <lg-gap-row [center]="true">
-                      <lg-gap-row [center]="true" lgExpand>
+                    <lg-flex-row [center]="true">
+                      <lg-flex-row [center]="true" lgExpand>
                         <a [routerLink]="'/products/edit/' + product.uuid">
                           {{ product.name }} {{ product.source ? '- ' + product.source : '' }}
                         </a>
@@ -97,29 +97,29 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
                           {{ $any(product).pricePerUnit | userCurrency:'1.0-5' }}
                           {{ $any(product).perUnitLabel }}
                         </div>
-                      </lg-gap-row>
+                      </lg-flex-row>
 
                       <small class="text-muted text-cursive">
                         {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
                       </small>
-                    </lg-gap-row>
+                    </lg-flex-row>
                   </div>
-                </lg-gap-row>
+                </lg-flex-row>
               </ng-template>
             }
           </lg-card-list>
         } @empty {
-          <lg-gap-row [center]="true">
+          <lg-flex-row [center]="true">
             <lg-title [level]="5">
               {{ 'no-products'|translate }}
             </lg-title>
-          </lg-gap-row>
+          </lg-flex-row>
         }
       </lg-container>
     </lg-fade-in>
   `,
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     MatIcon,
     ContainerComponent,

@@ -3,7 +3,7 @@ import {EggsWidgetComponent} from '../eggs-widget/eggs-widget.component';
 
 
 import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../ui/layout/flex-row.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 
 
@@ -21,11 +21,11 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
   template: `
     <lg-fade-in>
       <lg-container>
-        <lg-gap-row [center]="true">
+        <lg-flex-row [center]="true">
           <lg-title>
             Widgets
           </lg-title>
-        </lg-gap-row>
+        </lg-flex-row>
 
         <lg-tabs>
           <ng-template label="Jelly calculator" alias="jelly-calculator" lgTab>
@@ -46,7 +46,7 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
   imports: [
     EggsWidgetComponent,
     ContainerComponent,
-    GapRowComponent,
+    FlexRowComponent,
     TitleComponent,
     BarcodeSeekerWidgetComponent,
     FadeInComponent,

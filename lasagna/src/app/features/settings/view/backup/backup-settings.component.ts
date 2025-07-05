@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {UploadComponent} from '../../../../shared/view/ui/form/upload.component';
@@ -14,8 +14,8 @@ import {NotificationsService, TransferDataService} from '../../../../shared/serv
   selector: 'lg-backup-settings',
   standalone: true,
   template: `
-      <lg-gap-column>
-          <lg-gap-row [center]="true" [mobileMode]="true">
+      <lg-flex-column>
+          <lg-flex-row [center]="true" [mobileMode]="true">
               <lg-button (click)="onBackup()"
                          [style]="'success'">
                   {{ 'backup.make-btn'|translate }}
@@ -24,12 +24,12 @@ import {NotificationsService, TransferDataService} from '../../../../shared/serv
               @if (transferDataService.currenBackupDate) {
                   {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
               }
-          </lg-gap-row>
+          </lg-flex-row>
 
 
           <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
               <lg-card style="--card-bg:#e78888">
-                  <lg-gap-column [position]="'center'">
+                  <lg-flex-column [position]="'center'">
                       <div class="text-center text-inverse">
                           {{ 'backup.restore-informer'|translate }}
                       </div>
@@ -37,16 +37,16 @@ import {NotificationsService, TransferDataService} from '../../../../shared/serv
                       <lg-button [style]="'danger'">
                           {{ 'backup.restore-btn'|translate }}
                       </lg-button>
-                  </lg-gap-column>
+                  </lg-flex-column>
               </lg-card>
           </lg-upload>
-      </lg-gap-column>
+      </lg-flex-column>
   `,
   styles: [``],
   imports: [
     CardComponent,
-    GapRowComponent,
-    GapColumnComponent,
+    FlexRowComponent,
+    FlexColumnComponent,
     FormsModule,
     TimeAgoPipe,
     ButtonComponent,

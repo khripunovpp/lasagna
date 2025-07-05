@@ -1,7 +1,7 @@
 <form [formGroup]="form">
-  <lg-gap-column>
+  <lg-flex-column>
     <lg-card>
-      <lg-gap-column [position]="'start'">
+      <lg-flex-column [position]="'start'">
         <lg-autocomplete #nameField
                          [key]="'name'" [placeholder]="'recipe.form.name.placeholder'|translate"
                          [resource]="'recipes-names'"
@@ -12,11 +12,11 @@
         <lg-textarea [placeholder]="'recipe.form.description.placeholder'|translate"
                      formControlName="description"
                      lgExpand></lg-textarea>
-      </lg-gap-column>
+      </lg-flex-column>
     </lg-card>
     <lg-card>
 
-      <lg-gap-column [position]="'start'">
+      <lg-flex-column [position]="'start'">
 
         <lg-number-input #amount
                          [placeholder]="'recipe.form.outcome_amount.placeholder'|translate"
@@ -30,13 +30,13 @@
         </lg-number-input>
 
         <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
-          <lg-gap-column [position]="'start'">
-            <lg-gap-column [size]="'medium'" formArrayName="ingredients" lgExpand>
+          <lg-flex-column [position]="'start'">
+            <lg-flex-column [size]="'medium'" formArrayName="ingredients" lgExpand>
               @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
                 last = $last) {
                 <ng-container [formGroupName]="i">
                   <lg-controls-row [mobileMode]="true">
-                    <lg-gap-column [size]="'small'">
+                    <lg-flex-column [size]="'small'">
 
                       <lg-control>
                         <ng-container ngProjectAs="labelTpl">
@@ -74,7 +74,7 @@
                         }
 
                       </lg-control>
-                    </lg-gap-column>
+                    </lg-flex-column>
 
                     <lg-number-input #amount
                                      lgParseMath
@@ -101,20 +101,20 @@
                   }
                 </ng-container>
               }
-            </lg-gap-column>
+            </lg-flex-column>
 
             <lg-button (click)="addIngredient()"
                        [size]="'small'"
                        [style]="'success'">
               {{ 'recipe.form.ingredients.add-btn'|translate }}
             </lg-button>
-          </lg-gap-column>
+          </lg-flex-column>
         </lg-control-group>
-      </lg-gap-column>
+      </lg-flex-column>
     </lg-card>
 
-    <lg-gap-row [equal]="true" [mobileMode]="true" style="--control-bg: #ffffff">
-      <lg-gap-column [position]="'start'" [size]="'medium'">
+    <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: #ffffff">
+      <lg-flex-column [position]="'start'" [size]="'medium'">
         <lg-multiselect #categorySelect
                         [resource]="'recipes-categories'"
                         appendTo="body"
@@ -124,11 +124,11 @@
         @if (topCategories().length) {
           <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
         }
-      </lg-gap-column>
+      </lg-flex-column>
 
       <lg-tags-control [multi]="true"
                        [resource]="'tags'"
                        formControlName="tags"></lg-tags-control>
-    </lg-gap-row>
-  </lg-gap-column>
+    </lg-flex-row>
+  </lg-flex-column>
 </form>

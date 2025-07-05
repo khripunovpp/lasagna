@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, inject, OnInit, viewChild, viewChildren, ViewEncapsulation} from '@angular/core';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {NotificationsService, SelectResourcesService} from '../../../../shared/service/services';
 import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
 import {debounceTime} from 'rxjs';
@@ -15,7 +15,7 @@ import {MatIcon} from '@angular/material/icon';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 import {InvoiceItemSelectorComponent} from './invoice-item-selector.component';
 import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
-import {GapRowComponent} from "../../../../shared/view/ui/layout/gap-row.component";
+import {FlexRowComponent} from "../../../../shared/view/ui/layout/flex-row.component";
 import {WidthDirective} from "../../../../shared/view/directives/width.directive";
 import {TextareaComponent} from "../../../../shared/view/ui/form/textarea.component";
 import {ReadonlyControlComponent} from '../../../../shared/view/ui/form/readonly-control.component';
@@ -50,7 +50,7 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
   templateUrl: './add-invoice-form.component.html',
   imports: [
     ReactiveFormsModule,
-    GapColumnComponent,
+    FlexColumnComponent,
     ButtonComponent,
     ControlsRowComponent,
     ExpandDirective,
@@ -61,7 +61,7 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
     InputComponent,
     InvoiceItemSelectorComponent,
     MultiselectComponent,
-    GapRowComponent,
+    FlexRowComponent,
     WidthDirective,
     TextareaComponent,
     ReadonlyControlComponent,

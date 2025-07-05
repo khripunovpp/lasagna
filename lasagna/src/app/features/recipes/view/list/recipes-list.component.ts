@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject} from '@angular/core';
 import {RecipesRepository} from '../../service/recipes.repository';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
@@ -26,7 +26,7 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
 import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/grouping-tails.component';
 import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
 import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {JsonPipe} from '@angular/common';
 
 
@@ -66,26 +66,26 @@ import {JsonPipe} from '@angular/common';
 
     <lg-fade-in>
       <lg-container>
-        <lg-gap-row [center]="true">
+        <lg-flex-row [center]="true">
           <lg-title>
             {{ 'recipes.list-title'|translate }}
           </lg-title>
-        </lg-gap-row>
+        </lg-flex-row>
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        <lg-gap-column [size]="'medium'">
+        <lg-flex-column [size]="'medium'">
           <lg-grouping-sorting></lg-grouping-sorting>
 
           <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-        </lg-gap-column>
+        </lg-flex-column>
 
         <lg-grouping-tails [sortResult]="recipes()">
           <ng-template lgGroupingTail let-recipe>
-            <lg-gap-column>
+            <lg-flex-column>
               <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
-              <lg-gap-row>
+              <lg-flex-row>
                 <lg-button [style]="'primary'"
                            [size]="'small'"
                            [link]="'/recipes/calculate/' + recipe.uuid"
@@ -96,8 +96,8 @@ import {JsonPipe} from '@angular/common';
                 <small class="text-muted text-cursive" lgPull>
                   {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
                 </small>
-              </lg-gap-row>
-            </lg-gap-column>
+              </lg-flex-row>
+            </lg-flex-column>
           </ng-template>
         </lg-grouping-tails>
       </lg-container>
@@ -107,7 +107,7 @@ import {JsonPipe} from '@angular/common';
     SelectionZoneService,
   ],
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     RouterLink,
     MatIcon,
@@ -127,7 +127,7 @@ import {JsonPipe} from '@angular/common';
     GroupingSortingComponent,
     GroupingTailsComponent,
     GroupingTailDirective,
-    GapColumnComponent,
+    FlexColumnComponent,
     JsonPipe
   ],
   styles: [

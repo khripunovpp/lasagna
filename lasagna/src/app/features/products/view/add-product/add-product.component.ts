@@ -3,7 +3,7 @@ import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} f
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {DraftForm} from '../../../../shared/service/services/draft-forms.service';
 import {ProductsRepository} from '../../service/products.repository';
@@ -17,7 +17,7 @@ import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {
   InlineSeparatedGroupComponent,
@@ -32,13 +32,13 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
     ContainerComponent,
     TitleComponent,
     AddProductFormComponent,
-    GapRowComponent,
+    FlexRowComponent,
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
     TimeAgoPipe,
     TranslatePipe,
-    GapColumnComponent,
+    FlexColumnComponent,
     UserCurrencyPipe,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
@@ -46,8 +46,8 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-column size="medium">
-                  <lg-gap-row [center]="true" [mobileMode]="true">
+              <lg-flex-column size="medium">
+                  <lg-flex-row [center]="true" [mobileMode]="true">
                       @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                           <lg-title>
                               {{ product()?.name }}
@@ -61,7 +61,7 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
                       @if (product()?.pricePerUnit) {
                           ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
                       }
-                  </lg-gap-row>
+                  </lg-flex-row>
 
                   <lg-inline-separated-group>
                       @if (draftRef() && formComponent()?.form?.dirty) {
@@ -93,11 +93,11 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
                       </small>
                   }
 
-              </lg-gap-column>
+              </lg-flex-column>
 
               <lg-add-product-form [product]="product()"></lg-add-product-form>
 
-              <lg-gap-row [mobileMode]="true" [relaxed]="true">
+              <lg-flex-row [mobileMode]="true" [relaxed]="true">
                   @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
                       <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                                  lgShrink
@@ -120,7 +120,7 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
                       </lg-button>
                   }
 
-              </lg-gap-row>
+              </lg-flex-row>
           </lg-container>
       </lg-fade-in>
   `,

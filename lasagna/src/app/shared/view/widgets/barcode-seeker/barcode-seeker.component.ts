@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, computed, input, OnDestroy, output, resource, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
 import {InputComponent} from '../../ui/form/input.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {ButtonComponent} from '../../ui/layout/button.component';
 
 import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../ui/layout/flex-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ControlComponent} from '../../ui/form/control.component';
 import {OpenFoodFactsService} from '../../../service/services/openfoodfacts.service';
@@ -25,13 +25,13 @@ import {Product} from '../../../../features/products/service/Product';
   templateUrl: './barcode-seeker.component.html',
   imports: [
     FormsModule,
-    GapColumnComponent,
+    FlexColumnComponent,
     InputComponent,
     TitleComponent,
     ButtonComponent,
     ExpandDirective,
     ParseMathDirective,
-    GapRowComponent,
+    FlexRowComponent,
     NumberInputComponent,
     ControlComponent,
     ShrinkDirective

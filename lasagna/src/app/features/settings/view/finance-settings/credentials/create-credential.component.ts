@@ -1,9 +1,9 @@
 import {Component, effect, input, signal} from '@angular/core';
-import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 
@@ -28,7 +28,7 @@ import {CredentialsType} from '../../../service/types/credentials.types';
   selector: 'lg-create-credential',
   standalone: true,
   template: `
-      <lg-gap-column>
+      <lg-flex-column>
           <ng-container [formGroup]="form">
               <ng-container formArrayName="rows">
                   @for (row of credentials();track (row.name + row.uuid);let i = $index, odd = $odd,last=$last) {
@@ -36,36 +36,36 @@ import {CredentialsType} from '../../../service/types/credentials.types';
                       <section class="credentials" [formGroupName]="i">
                           <div class="credentials__row"
                                [class.credentials__row--odd]="odd">
-                              <lg-gap-column size="small">
+                              <lg-flex-column size="small">
                                   <lg-input formControlName="privateName"
                                             [placeholder]="'Private Name'"></lg-input>
 
-                                  <lg-gap-row [top]="true" [fit]="true">
+                                  <lg-flex-row [top]="true" [fit]="true">
 
-                                      <lg-gap-column size="small">
+                                      <lg-flex-column size="small">
                                           <lg-input formControlName="taxId"
                                                     [placeholder]="'Tax ID'"></lg-input>
 
                                           <lg-input formControlName="name"
                                                     [placeholder]="'Name'"></lg-input>
 
-                                      </lg-gap-column>
+                                      </lg-flex-column>
 
-                                      <lg-gap-column size="small">
+                                      <lg-flex-column size="small">
                                           <lg-input formControlName="country"
                                                     [placeholder]="'Country'"></lg-input>
 
                                           <lg-input formControlName="address"
                                                     [placeholder]="'Address'"></lg-input>
-                                      </lg-gap-column>
+                                      </lg-flex-column>
 
-                                      <lg-gap-column size="small">
+                                      <lg-flex-column size="small">
                                           <lg-input formControlName="phone"
                                                     [placeholder]="'Phone'"></lg-input>
 
                                           <lg-input formControlName="email"
                                                     [placeholder]="'Email'"></lg-input>
-                                      </lg-gap-column>
+                                      </lg-flex-column>
 
                                       <lg-button [style]="'danger'"
                                                  lgShrink
@@ -75,8 +75,8 @@ import {CredentialsType} from '../../../service/types/credentials.types';
                                           <mat-icon aria-hidden="false" aria-label="Example home icon"
                                                     fontIcon="close"></mat-icon>
                                       </lg-button>
-                                  </lg-gap-row>
-                              </lg-gap-column>
+                                  </lg-flex-row>
+                              </lg-flex-column>
                           </div>
                       </section>
 
@@ -87,7 +87,7 @@ import {CredentialsType} from '../../../service/types/credentials.types';
               </ng-container>
           </ng-container>
 
-          <lg-gap-row>
+          <lg-flex-row>
               <lg-button (click)="save()"
                          [disabled]="!form.dirty"
                          [style]="'success'"
@@ -106,12 +106,12 @@ import {CredentialsType} from '../../../service/types/credentials.types';
                          lgShrink>
                   Add row
               </lg-button>
-          </lg-gap-row>
-      </lg-gap-column>
+          </lg-flex-row>
+      </lg-flex-column>
   `,
   styles: [``],
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     FormsModule,
     ButtonComponent,
     InputComponent,
@@ -119,10 +119,10 @@ import {CredentialsType} from '../../../service/types/credentials.types';
     ReactiveFormsModule,
     SelfCenterDirective,
     ShrinkDirective,
-    GapColumnComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
+    FlexColumnComponent,
     ReactiveFormsModule,
-    GapRowComponent,
+    FlexRowComponent,
     InputComponent,
     ButtonComponent,
     MatIcon,

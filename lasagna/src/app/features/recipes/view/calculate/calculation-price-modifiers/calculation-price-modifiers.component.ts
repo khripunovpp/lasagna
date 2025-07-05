@@ -9,7 +9,7 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
 import {RecipeCost} from '../../../service/models/RecipeCost';
-import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 
 @Component({
   selector: 'lg-calculation-price-modifiers',
@@ -20,10 +20,10 @@ import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.comp
     UnitSwitcherComponent,
     ControlExtraTemplateDirective,
     CurrencySymbolPipe,
-    GapRowComponent
+    FlexRowComponent
   ],
   template: `
-    <lg-gap-row [formGroup]="recipePriceAdditionsForm">
+    <lg-flex-row [formGroup]="recipePriceAdditionsForm">
       <lg-number-input formControlName="value"
                        lgParseMath
                        placeholder="extra price">
@@ -53,7 +53,7 @@ import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.comp
           </ng-template>
         }
       </lg-number-input>
-    </lg-gap-row>
+    </lg-flex-row>
 
   `,
   styles: [`

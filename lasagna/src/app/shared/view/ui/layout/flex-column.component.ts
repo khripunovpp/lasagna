@@ -2,16 +2,16 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
-  selector: 'lg-gap-column',
+  selector: 'lg-flex-column',
   standalone: true,
   template: `
-      <div [class.expand-mobile]="expandMobile"
-           [class.fill]="fill"
-           [ngClass]="size"
-           [style.align-items]="alignItems"
-           class="gap-column">
-          <ng-content></ng-content>
-      </div>
+    <div [class.expand-mobile]="expandMobile"
+         [class.fill]="fill"
+         [ngClass]="size"
+         [style.align-items]="alignItems"
+         class="gap-column">
+      <ng-content></ng-content>
+    </div>
   `,
   imports: [
     NgClass
@@ -71,7 +71,7 @@ import {NgClass} from '@angular/common';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GapColumnComponent {
+export class FlexColumnComponent {
   constructor() {
   }
 

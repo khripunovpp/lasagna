@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ControlComponent} from '../../../../../../shared/view/ui/form/control.component';
 import {InputComponent} from '../../../../../../shared/view/ui/form/input.component';
 import {ButtonComponent} from '../../../../../../shared/view/ui/layout/button.component';
-import {GapRowComponent} from '../../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../../../../../shared/view/directives/expand.directive';
 import {NoWrapDirective} from '../../../../../../shared/view/directives/no-wrap.directive';
 import {CategoryProductsRepository} from '../../../../../../shared/service/repositories';
@@ -16,7 +16,7 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '../..
   standalone: true,
   template: `
       <form [formGroup]="form">
-          <lg-gap-row [bottom]="true" [mobileMode]="true">
+          <lg-flex-row [bottom]="true" [mobileMode]="true">
               <lg-control label="Name" lgExpand>
                   <lg-input (onEnter)="onEnter()"
                             [placeholder]="'Your category name'"
@@ -42,7 +42,7 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '../..
                           }
                       </lg-button>
                   }</div>
-          </lg-gap-row>
+          </lg-flex-row>
       </form>
   `,
   imports: [
@@ -50,7 +50,7 @@ import {categoryProductDTOFromFormValue, categoryProductToFormValue} from '../..
     InputComponent,
     ControlComponent,
     ButtonComponent,
-    GapRowComponent,
+    FlexRowComponent,
     ExpandDirective,
     NoWrapDirective
   ],
