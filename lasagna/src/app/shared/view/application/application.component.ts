@@ -6,7 +6,7 @@ import {TitleComponent} from '../ui/layout/title/title.component';
 import {FadeInComponent} from '../ui/fade-in.component';
 import {LastEditedRecipesComponent} from './last-edited-recipes/last-edited-recipes.component';
 import {LastEditedProductsComponent} from './last-edited-products/last-edited-products.component';
-import {GapRowComponent} from '../ui/layout/gap-row.component';
+import {FlexRowComponent} from '../ui/layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ProductsRepository, RecipesRepository} from '../../service/repositories';
 import {AsyncPipe} from '@angular/common';
@@ -26,7 +26,7 @@ import {FontTesterComponent} from '../ui/font-tester.component';
     FadeInComponent,
     LastEditedRecipesComponent,
     LastEditedProductsComponent,
-    GapRowComponent,
+    FlexRowComponent,
     TranslatePipe,
     AsyncPipe,
     ButtonComponent

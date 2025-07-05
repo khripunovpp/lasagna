@@ -3,7 +3,7 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Val
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 import {ControlComponent} from '../../../../shared/view/ui/form/control.component';
 import {ControlGroupComponent} from '../../../../shared/view/ui/form/control-group.component';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
 import {debounceTime} from 'rxjs';
@@ -33,7 +33,7 @@ import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.co
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 import {TagsControlComponent} from '../../../../shared/view/ui/form/tags-control.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 
 
 @Component({
@@ -45,7 +45,7 @@ import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.compone
     InputComponent,
     ControlComponent,
     ControlGroupComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
     ButtonComponent,
     TextareaComponent,
     MultiselectComponent,
@@ -62,7 +62,7 @@ import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.compone
     CardComponent,
     ControlExtraTemplateDirective,
     TagsControlComponent,
-    GapRowComponent
+    FlexRowComponent
   ],
   providers: [
     {

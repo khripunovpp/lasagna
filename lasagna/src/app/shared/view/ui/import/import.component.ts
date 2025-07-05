@@ -8,8 +8,8 @@ import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialog/dialog.component';
 import {AsyncPipe, NgClass, NgTemplateOutlet} from '@angular/common';
-import {GapRowComponent} from '../layout/gap-row.component';
-import {GapColumnComponent} from '../layout/gap-column.component';
+import {FlexRowComponent} from '../layout/flex-row.component';
+import {FlexColumnComponent} from '../layout/flex-column.component';
 import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
@@ -24,8 +24,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     ButtonComponent,
     DialogComponent,
     AsyncPipe,
-    GapRowComponent,
-    GapColumnComponent,
+    FlexRowComponent,
+    FlexColumnComponent,
     FormsModule,
     NgClass,
     NgTemplateOutlet,
@@ -46,12 +46,12 @@ import {TranslatePipe} from '@ngx-translate/core';
                      [cancelButtonText]="'close-label'|translate"
                      [confirmButtonText]="'confirm-label'|translate"
                      (onConfirm)="onConfirm()">
-              <lg-gap-column>
+              <lg-flex-column>
                   @if (data$ | async;as data) {
                       @if (analize$ | async;as duplicates) {
-                          <lg-gap-column [size]="'medium'">
+                          <lg-flex-column [size]="'medium'">
                               @for (row of data;track row.name + row.uuid;let i = $index) {
-                                  <lg-gap-column [size]="'small'">
+                                  <lg-flex-column [size]="'small'">
 
                                       <div class="import-row"
                                            [class.update]="rowsToUpdate[row.name]"
@@ -94,29 +94,29 @@ import {TranslatePipe} from '@ngx-translate/core';
                                               }
                                           </div>
                                       }
-                                  </lg-gap-column>
+                                  </lg-flex-column>
                               }
-                          </lg-gap-column>
+                          </lg-flex-column>
                       }
                   }
 
-                  <lg-gap-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
+                  <lg-flex-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
                       <input (change)="onSkipAllDuplicates()"
                              [(ngModel)]="skipAllDuplicates"
                              type="checkbox">
                       <label>
                           {{ 'skip-duplicates-label'|translate }}
                       </label>
-                  </lg-gap-row>
+                  </lg-flex-row>
 
-                  <lg-gap-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
+                  <lg-flex-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
                       <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
                              type="checkbox">
                       <label>
                           {{ 'replace-duplicates-label'|translate }}
                       </label>
-                  </lg-gap-row>
-              </lg-gap-column>
+                  </lg-flex-row>
+              </lg-flex-column>
           </lg-dialog>
       </div>
 

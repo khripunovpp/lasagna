@@ -1,6 +1,6 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {ButtonComponent} from '../../../../../../shared/view/ui/layout/button.component';
-import {GapRowComponent} from '../../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
 import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
@@ -17,7 +17,7 @@ import {CategoryProduct} from '../../../../service/models/CategoryProduct';
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true">
+              <lg-flex-row [center]="true">
                   <lg-title>
                       Products' categories
                   </lg-title>
@@ -28,12 +28,12 @@ import {CategoryProduct} from '../../../../service/models/CategoryProduct';
                              [style]="'primary'">
                       Add
                   </lg-button>
-              </lg-gap-row>
+              </lg-flex-row>
 
               <lg-card-list>
                   @for (category of categories();track $index;let i = $index) {
                       <ng-template lgCardListItem>
-                          <lg-gap-row [center]="true">
+                          <lg-flex-row [center]="true">
                               <div class="expand">
                                   {{ category.name }}
                               </div>
@@ -50,7 +50,7 @@ import {CategoryProduct} from '../../../../service/models/CategoryProduct';
                                   <mat-icon aria-hidden="false" aria-label="Example home icon"
                                             fontIcon="close"></mat-icon>
                               </lg-button>
-                          </lg-gap-row>
+                          </lg-flex-row>
                       </ng-template>
                   }
               </lg-card-list>
@@ -58,7 +58,7 @@ import {CategoryProduct} from '../../../../service/models/CategoryProduct';
       </lg-fade-in>
   `,
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     MatIcon,
     ContainerComponent,

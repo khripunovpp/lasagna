@@ -1,14 +1,14 @@
-<lg-gap-column [size]="'medium'">
+<lg-flex-column [size]="'medium'">
   <lg-title>
     📷 Scan barcode or enter manually
   </lg-title>
 
-  <lg-gap-row [top]="true" [mobileMode]="true">
+  <lg-flex-row [top]="true" [mobileMode]="true">
     @if (showScanner()) {
 
       <video id="video"></video>
-      <lg-gap-column>
-        <lg-gap-row lgExpand>
+      <lg-flex-column>
+        <lg-flex-row lgExpand>
           <lg-input [(ngModel)]="barcode"
                     [placeholder]="'Barcode'"
                     lgExpand
@@ -17,11 +17,11 @@
           <lg-button (click)="onBarcodeManualInput()">Search</lg-button>
 
           <lg-button (click)="clear()">Clear</lg-button>
-        </lg-gap-row>
+        </lg-flex-row>
 
 
         @if (showProductForm() && productResult()) {
-          <lg-gap-column [size]="'medium'">
+          <lg-flex-column [size]="'medium'">
             <lg-control [label]="'Name'">
               <lg-input [(ngModel)]="product.name"
                         [placeholder]="'Name'"
@@ -44,12 +44,12 @@
             </lg-control>
 
             <lg-button lgShrink (click)="addProduct()">Add product</lg-button>
-          </lg-gap-column>
+          </lg-flex-column>
         }
-      </lg-gap-column>
+      </lg-flex-column>
     } @else {
       <lg-button (click)="openScanner()">Scan</lg-button>
     }
 
-  </lg-gap-row>
-</lg-gap-column>
+  </lg-flex-row>
+</lg-flex-column>

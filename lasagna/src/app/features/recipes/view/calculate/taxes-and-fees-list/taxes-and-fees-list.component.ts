@@ -2,7 +2,7 @@ import {Component, effect, input, output, signal} from '@angular/core';
 import {CardListComponent} from '../../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../../shared/view/ui/card/card-list-item.directive';
 
-import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ControlComponent} from '../../../../../shared/view/ui/form/control.component';
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
@@ -13,7 +13,7 @@ import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.compo
 import {MatIcon} from '@angular/material/icon';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
-import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -38,7 +38,7 @@ export interface TaxRow {
   imports: [
     CardListComponent,
     CardListItemDirective,
-    GapRowComponent,
+    FlexRowComponent,
     ReactiveFormsModule,
     ControlComponent,
     InputComponent,
@@ -48,7 +48,7 @@ export interface TaxRow {
     MatIcon,
     SelfCenterDirective,
     ShrinkDirective,
-    GapColumnComponent,
+    FlexColumnComponent,
     ParseMathDirective,
     TextareaComponent
 ],

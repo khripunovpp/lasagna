@@ -2,7 +2,7 @@ import {Component, Input, input, ViewEncapsulation} from '@angular/core';
 import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
-  selector: 'lg-gap-row',
+  selector: 'lg-flex-row',
   standalone: true,
   template: `
     <div [class.gap-row__bottom]="bottom()"
@@ -125,7 +125,7 @@ import {NgClass, NgStyle} from '@angular/common';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class GapRowComponent {
+export class FlexRowComponent {
   constructor() {
   }
 

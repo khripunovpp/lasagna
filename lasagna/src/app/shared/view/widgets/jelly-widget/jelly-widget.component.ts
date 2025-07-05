@@ -1,8 +1,8 @@
 import {Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
 
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../ui/layout/flex-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../ui/form/buttons-group.component';
 import {JellyCalculationModel} from './jelly-calculation.model';
 import {DecimalPipe} from '@angular/common';
@@ -18,10 +18,10 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
   selector: 'lg-jelly-widget',
   standalone: true,
   template: `
-      <lg-gap-column>
+      <lg-flex-column>
           <form [formGroup]="form">
-              <lg-gap-row [bottom]="true" [mobileMode]="true">
-                  <lg-gap-column formGroupName="from">
+              <lg-flex-row [bottom]="true" [mobileMode]="true">
+                  <lg-flex-column formGroupName="from">
                       In recipe you have
                       <lg-number-input formControlName="amount"
                                        lgParseMath
@@ -40,19 +40,19 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                       ></lg-range>
 
                       <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
-                  </lg-gap-column>
+                  </lg-flex-column>
 
 
-                  <lg-gap-column formGroupName="to">
+                  <lg-flex-column formGroupName="to">
                       @let fromType = form.value?.from?.type;
                       @let toType = form.value?.to?.type;
-                      <lg-gap-row class="text-center" [strictCenter]="true">
-                          <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
+                      <lg-flex-row class="text-center" [strictCenter]="true">
+                          <lg-flex-column lgShrink [size]="'small'" [position]="'center'">
                               <div>
                                   You need
                               </div>
 
-                              <lg-gap-row [size]="'small'" style="font-size: 2rem">
+                              <lg-flex-row [size]="'small'" style="font-size: 2rem">
                                   <div>{{ result() | number: '1.0-2' }}</div>
                                   @switch (toType) {
                                       @case ("powder") {
@@ -65,14 +65,14 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                           🧫
                                       }
                                   }
-                              </lg-gap-row>
+                              </lg-flex-row>
 
                               <div>
                                   grams of
                               </div>
-                          </lg-gap-column>
+                          </lg-flex-column>
                           @if (waterNeeded()) {
-                              <lg-gap-column lgShrink [size]="'small'" [position]="'center'">
+                              <lg-flex-column lgShrink [size]="'small'" [position]="'center'">
                                   <div>
                                       @switch (toType) {
                                           @case ("mass") {
@@ -96,10 +96,10 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                       }
                                   </div>
 
-                                  <lg-gap-row [size]="'small'" style="font-size: 2rem">
+                                  <lg-flex-row [size]="'small'" style="font-size: 2rem">
                                       <div>{{ waterNeeded() | number: '1.0-2' }}</div>
                                       💧
-                                  </lg-gap-row>
+                                  </lg-flex-row>
 
                                   <div>
                                       ml of water
@@ -109,9 +109,9 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                           }
                                       }
                                   </div>
-                              </lg-gap-column>
+                              </lg-flex-column>
                           }
-                      </lg-gap-row>
+                      </lg-flex-row>
 
                       <lg-range
                               [min]="120"
@@ -122,16 +122,16 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                       ></lg-range>
 
                       <lg-buttons-group formControlName="type" [items]="typeButtons"></lg-buttons-group>
-                  </lg-gap-column>
-              </lg-gap-row>
+                  </lg-flex-column>
+              </lg-flex-row>
           </form>
-      </lg-gap-column>
+      </lg-flex-column>
   `,
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    GapColumnComponent,
-    GapRowComponent,
+    FlexColumnComponent,
+    FlexRowComponent,
     ButtonsGroupComponent,
     DecimalPipe,
     ShrinkDirective,

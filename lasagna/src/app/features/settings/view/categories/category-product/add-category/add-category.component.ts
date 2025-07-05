@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
 import {CardComponent} from '../../../../../../shared/view/ui/card/card.component';
 import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
-import {GapRowComponent} from '../../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 
 @Component({
@@ -15,15 +15,15 @@ import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.componen
     CardComponent,
     TitleComponent,
     AddCategoryFormComponent,
-    GapRowComponent,
+    FlexRowComponent,
     FadeInComponent
   ],
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true">
+              <lg-flex-row [center]="true">
                   <lg-title>{{ uuid() ? 'Edit' : 'Add' }} product category</lg-title>
-              </lg-gap-row>
+              </lg-flex-row>
 
               <lg-card>
                   <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>

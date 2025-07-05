@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, signal} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {AddInvoiceFormComponent} from './add-invoice-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {NotificationsService} from '../../../../shared/service/services';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
@@ -11,7 +11,7 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe} from '@angular/common';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {InvoiceBuilderService} from '../invoice-builder.service';
 import {LoggerService} from '../../../logger/logger.service';
 import {
@@ -27,13 +27,13 @@ import {errorHandler} from '../../../../shared/helpers';
   imports: [
     ContainerComponent,
     TitleComponent,
-    GapRowComponent,
+    FlexRowComponent,
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
     TimeAgoPipe,
     TranslatePipe,
-    GapColumnComponent,
+    FlexColumnComponent,
     AddInvoiceFormComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
@@ -41,8 +41,8 @@ import {errorHandler} from '../../../../shared/helpers';
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-column size="medium">
-                  <lg-gap-row [center]="true" [mobileMode]="true">
+              <lg-flex-column size="medium">
+                  <lg-flex-row [center]="true" [mobileMode]="true">
                       @if (invoiceBuilderService.invoice()?.uuid) {
                           <lg-title>
                               {{ invoiceBuilderService.invoice()?.name }}
@@ -52,7 +52,7 @@ import {errorHandler} from '../../../../shared/helpers';
                               New invoice
                           </lg-title>
                       }
-                  </lg-gap-row>
+                  </lg-flex-row>
 
                   <lg-inline-separated-group>
                       <ng-template lgInlineSeparatedGroup>
@@ -87,11 +87,11 @@ import {errorHandler} from '../../../../shared/helpers';
                           {{ 'edited-at-label'|translate }} {{ this.invoiceBuilderService.invoice()?.updatedAt | timeAgo }}
                       </small>
                   }
-              </lg-gap-column>
+              </lg-flex-column>
 
               <lg-add-invoice-form #formComponent></lg-add-invoice-form>
 
-              <lg-gap-row [mobileMode]="true" [relaxed]="true">
+              <lg-flex-row [mobileMode]="true" [relaxed]="true">
                   <lg-button (click)="editInvoice()"
                              [disabled]="!formComponent?.form?.dirty"
                              lgShrink>
@@ -101,7 +101,7 @@ import {errorHandler} from '../../../../shared/helpers';
                           Nothing to save
                       }
                   </lg-button>
-              </lg-gap-row>
+              </lg-flex-row>
           </lg-container>
       </lg-fade-in>
   `,

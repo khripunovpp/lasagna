@@ -1,4 +1,4 @@
-<lg-gap-column>
+<lg-flex-column>
   <lg-card-list [formGroup]="taxesForm">
     <ng-container formArrayName="rows">
       @for (taxControl of taxesForm.controls.rows.controls;track taxControl.value.name && taxControl.value.amount;let i = $index, odd = $odd) {
@@ -6,7 +6,7 @@
           <section class="taxes" [formGroupName]="i">
             <div class="taxes__row"
                  [class.taxes__row--odd]="odd">
-              <lg-gap-row [bottom]="true" [fit]="true">
+              <lg-flex-row [bottom]="true" [fit]="true">
 
                 <small>Apply for all</small>
                 <lg-control [label]="'Name'">
@@ -56,7 +56,7 @@
                            (click)="deleteTxRow(i)">
                   <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="close"></mat-icon>
                 </lg-button>
-              </lg-gap-row>
+              </lg-flex-row>
             </div>
           </section>
         </ng-template>
@@ -90,4 +90,4 @@
 <!--      <b>{{ (totalTaxes() + total())| number: '1.2-2' }}</b>-->
 <!--    </lg-gap-row>-->
 <!--  </lg-title>-->
-</lg-gap-column>
+</lg-flex-column>

@@ -4,7 +4,7 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {RecipesRepository} from '../../../../shared/service/repositories';
 import {DraftForm, NotificationsService} from '../../../../shared/service/services';
@@ -12,7 +12,7 @@ import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Recipe} from '../../service/models/Recipe';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '../../../../shared/helpers';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
@@ -27,11 +27,11 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
     TitleComponent,
     AddRecipeFormComponent,
     ButtonComponent,
-    GapRowComponent,
+    FlexRowComponent,
     FadeInComponent,
     ShrinkDirective,
     TimeAgoPipe,
-    GapColumnComponent,
+    FlexColumnComponent,
     TranslatePipe,
     RouterLink,
     InlineSeparatedGroupComponent,
@@ -41,17 +41,17 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
 
       <lg-fade-in>
           <lg-container>
-              <lg-gap-column size="medium">
+              <lg-flex-column size="medium">
                   @if (addedRecipeInformerUUID();as uuid) {
                       <p>You just added new recipe. <a routerLink="/recipes/edit/{{ uuid }}">Want to have a look?</a>
                       </p>
                   }
                   @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-gap-row [mobileMode]="true" [center]="true">
+                      <lg-flex-row [mobileMode]="true" [center]="true">
                           <lg-title>
                               <span class="text-active">{{ recipe()?.name }}</span>
                           </lg-title>
-                      </lg-gap-row>
+                      </lg-flex-row>
 
                       <lg-inline-separated-group>
                           <ng-template lgInlineSeparatedGroup>
@@ -98,11 +98,11 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
                           {{ 'recipe.form.title'|translate }}
                       </lg-title>
                   }
-              </lg-gap-column>
+              </lg-flex-column>
 
               <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
 
-              <lg-gap-row [mobileMode]="true" [relaxed]="true">
+              <lg-flex-row [mobileMode]="true" [relaxed]="true">
                   @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
                       <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                                  lgShrink
@@ -126,7 +126,7 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
                   }
 
 
-              </lg-gap-row>
+              </lg-flex-row>
           </lg-container>
       </lg-fade-in>
   `,

@@ -1,9 +1,9 @@
 import {Component, computed, effect, signal} from '@angular/core';
-import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
@@ -26,7 +26,7 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
   selector: 'lg-taxes-settings',
   standalone: true,
   template: `
-      <lg-gap-column>
+      <lg-flex-column>
           <ng-container [formGroup]="taxesForm">
               <ng-container formArrayName="rows">
                   @for (taxRow of taxes();track (taxRow.name + taxRow.uuid);let i = $index, odd = $odd) {
@@ -35,7 +35,7 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
                       <section class="taxes" [formGroupName]="i">
                           <div class="taxes__row"
                                [class.taxes__row--odd]="odd">
-                              <lg-gap-row [top]="true" [fit]="true">
+                              <lg-flex-row [top]="true" [fit]="true">
                                   <lg-input
                                           formControlName="name"
                                           lgWidth="35%"
@@ -66,14 +66,14 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
                                       <mat-icon aria-hidden="false" aria-label="Example home icon"
                                                 fontIcon="close"></mat-icon>
                                   </lg-button>
-                              </lg-gap-row>
+                              </lg-flex-row>
                           </div>
                       </section>
                   }
               </ng-container>
           </ng-container>
 
-          <lg-gap-row>
+          <lg-flex-row>
               <lg-button (click)="saveTaxes()"
                          [disabled]="!taxesForm.dirty"
                          [style]="'success'"
@@ -92,12 +92,12 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
                          lgShrink>
                   Add tax
               </lg-button>
-          </lg-gap-row>
-      </lg-gap-column>
+          </lg-flex-row>
+      </lg-flex-column>
   `,
   styles: [``],
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     CheckboxComponent,
     FormsModule,
     ButtonComponent,
@@ -110,10 +110,10 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
     ShrinkDirective,
     TextareaComponent,
     WidthDirective,
-    GapColumnComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
+    FlexColumnComponent,
     ReactiveFormsModule,
-    GapRowComponent,
+    FlexRowComponent,
     InputComponent,
     TextareaComponent,
     CheckboxComponent,

@@ -1,5 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {GapRowComponent} from '../../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {ButtonComponent} from '../../../../../../shared/view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
@@ -17,7 +17,7 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true">
+              <lg-flex-row [center]="true">
                   <lg-title>
                       Recipes' categories
                   </lg-title>
@@ -28,12 +28,12 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
                              [style]="'primary'">
                       Add
                   </lg-button>
-              </lg-gap-row>
+              </lg-flex-row>
 
               <lg-card-list>
                   @for (category of categories();track $index;let i = $index) {
                       <ng-template lgCardListItem>
-                          <lg-gap-row [center]="true">
+                          <lg-flex-row [center]="true">
                               <div class="expand">
                                   {{ category.name }}
                               </div>
@@ -50,7 +50,7 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
                                   <mat-icon aria-hidden="false" aria-label="Example home icon"
                                             fontIcon="close"></mat-icon>
                               </lg-button>
-                          </lg-gap-row>
+                          </lg-flex-row>
                       </ng-template>
                   }
               </lg-card-list>
@@ -58,7 +58,7 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
       </lg-fade-in>
   `,
   imports: [
-    GapRowComponent,
+    FlexRowComponent,
     ButtonComponent,
     MatIcon,
     ContainerComponent,

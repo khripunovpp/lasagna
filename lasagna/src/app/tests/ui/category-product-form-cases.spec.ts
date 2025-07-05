@@ -7,7 +7,7 @@ import {CategoryProductsRepository} from '../../shared/service/repositories';
 import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
 import {InputComponent} from '../../shared/view/ui/form/input.component';
 import {ControlComponent} from '../../shared/view/ui/form/control.component';
-import {GapRowComponent} from '../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';
 import {ComponentRef} from '@angular/core';
@@ -39,7 +39,7 @@ describe('AddCategoryFormComponent', () => {
         ButtonComponent,
         InputComponent,
         ControlComponent,
-        GapRowComponent,
+        FlexRowComponent,
         ExpandDirective,
         NoWrapDirective,
         AddCategoryFormComponent,

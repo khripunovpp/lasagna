@@ -4,10 +4,10 @@ import {CredentialsType} from '../../../settings/service/types/credentials.types
 import {CredentialsRepository} from '../../../settings/service/repositories/credentials.repository';
 import {NotificationsService} from '../../../../shared/service/services';
 import {Credential} from '../../../settings/service/models/Credential';
-import {GapColumnComponent} from '../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {GapRowComponent} from '../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 
@@ -16,7 +16,7 @@ import {WidthDirective} from '../../../../shared/view/directives/width.directive
   standalone: true,
   template: `
     <lg-dialog [displayFooter]="false">
-      <lg-gap-row size="small"
+      <lg-flex-row size="small"
                   cols="2"
                   [wrap]="true">
         @for (credential of credentials(); track (credential.uuid)) {
@@ -26,7 +26,7 @@ import {WidthDirective} from '../../../../shared/view/directives/width.directive
             <div class="text-wrap credential-item__inner">{{ credential.toFormattedString() }}</div>
           </button>
         }
-      </lg-gap-row>
+      </lg-flex-row>
     </lg-dialog>
   `,
   styles: [`
@@ -49,9 +49,9 @@ import {WidthDirective} from '../../../../shared/view/directives/width.directive
   `],
   imports: [
     DialogComponent,
-    GapColumnComponent,
+    FlexColumnComponent,
     ButtonComponent,
-    GapRowComponent,
+    FlexRowComponent,
     CardComponent,
     WidthDirective
   ]

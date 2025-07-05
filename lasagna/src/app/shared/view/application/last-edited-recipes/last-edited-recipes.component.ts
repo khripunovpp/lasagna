@@ -1,24 +1,24 @@
 import {Component, signal} from '@angular/core';
 import { RecipesRepository} from '../../../../features/recipes/service/recipes.repository';
-import {GapColumnComponent} from '../../ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {TimeAgoPipe} from '../../pipes/time-ago.pipe';
 import {Recipe} from '../../../../features/recipes/service/models/Recipe';
-import {GapRowComponent} from '../../ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../ui/layout/flex-row.component';
 import {PullDirective} from '../../directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-last-edited-recipes',
   template: `
-      <lg-gap-column>
+      <lg-flex-column>
           <lg-title [level]="4">{{ 'main.last-recipes'|translate }}</lg-title>
 
-          <lg-gap-column [size]="'medium'">
+          <lg-flex-column [size]="'medium'">
               @for (item of recipes();track item.recipe.uuid) {
-                  <lg-gap-row [center]="true" [size]="'medium'" [mobileMode]="true">
+                  <lg-flex-row [center]="true" [size]="'medium'" [mobileMode]="true">
                       <a [routerLink]="['/recipes/edit/', item.recipe.uuid]" class="last-edited-recipe">
                           {{ item.recipe.name }}
                       </a>
@@ -26,14 +26,14 @@ import {TranslatePipe} from '@ngx-translate/core';
                       <small class="text-muted text-cursive" lgPull>
                           {{ (item?.updatedAt) | timeAgo }}
                       </small>
-                  </lg-gap-row>
+                  </lg-flex-row>
               } @empty {
                   <div class="last-edited-recipe-name">
                       {{ 'no-recipes'|translate }}
                   </div>
               }
-          </lg-gap-column>
-      </lg-gap-column>
+          </lg-flex-column>
+      </lg-flex-column>
   `,
   styles: [
     `
@@ -46,11 +46,11 @@ import {TranslatePipe} from '@ngx-translate/core';
   ],
   standalone: true,
   imports: [
-    GapColumnComponent,
+    FlexColumnComponent,
     RouterLink,
     TitleComponent,
     TimeAgoPipe,
-    GapRowComponent,
+    FlexRowComponent,
     PullDirective,
     TranslatePipe
   ]

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
-import {GapRowComponent} from '../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
 import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
@@ -24,7 +24,7 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
   styleUrls: ['./settings.component.scss'],
   imports: [
     ContainerComponent,
-    GapRowComponent,
+    FlexRowComponent,
     TitleComponent,
     RouterLink,
     RouterLinkActive,

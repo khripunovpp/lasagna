@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, DestroyRef, inject, signal} from '@angular/core';
-import {GapColumnComponent} from '../../../../../shared/view/ui/layout/gap-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 import {TitleComponent} from '../../../../../shared/view/ui/layout/title/title.component';
 
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {GapRowComponent} from '../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {SettingsService} from '../../../service/services/settings.service';
 
 import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
@@ -16,8 +16,8 @@ import {debounceTime} from 'rxjs';
   selector: 'lg-invoices-settings',
   standalone: true,
   template: `
-      <lg-gap-column [formGroup]="form">
-          <lg-gap-column size="medium">
+      <lg-flex-column [formGroup]="form">
+          <lg-flex-column size="medium">
               <lg-title [level]="5">
                   Logo
               </lg-title>
@@ -32,38 +32,38 @@ import {debounceTime} from 'rxjs';
               <lg-file-input [buttonStyle]="logoBase64() ? 'danger' : 'default'"
                              [buttonText]="logoBase64() ? 'Replace with new one' : 'Upload logo'"
                              formControlName="logo"></lg-file-input>
-          </lg-gap-column>
+          </lg-flex-column>
 
-          <lg-gap-column size="medium">
+          <lg-flex-column size="medium">
               <lg-title [level]="5">
                   Prefix for invoices
               </lg-title>
 
               <lg-input formControlName="prefix"></lg-input>
-          </lg-gap-column>
+          </lg-flex-column>
 
-          <lg-gap-column size="medium">
+          <lg-flex-column size="medium">
               <lg-title [level]="5">
                   Precision
               </lg-title>
 
-              <lg-gap-row>
-                  <lg-gap-column size="small">
+              <lg-flex-row>
+                  <lg-flex-column size="small">
                       <lg-title [flat]="true" [level]="6">
                           For rows
                       </lg-title>
                       <lg-number-input formControlName="precisionRows"></lg-number-input>
-                  </lg-gap-column>
+                  </lg-flex-column>
 
-                  <lg-gap-column size="small">
+                  <lg-flex-column size="small">
                       <lg-title [flat]="true" [level]="6">
                           For totals
                       </lg-title>
                       <lg-number-input formControlName="precisionTotals"></lg-number-input>
-                  </lg-gap-column>
-              </lg-gap-row>
-          </lg-gap-column>
-      </lg-gap-column>
+                  </lg-flex-column>
+              </lg-flex-row>
+          </lg-flex-column>
+      </lg-flex-column>
   `,
   styles: [`
     .lg-invoices-settings__logo {
@@ -82,11 +82,11 @@ import {debounceTime} from 'rxjs';
     }
   `],
   imports: [
-    GapColumnComponent,
+    FlexColumnComponent,
     InputComponent,
     TitleComponent,
     ReactiveFormsModule,
-    GapRowComponent,
+    FlexRowComponent,
     NumberInputComponent,
     FileInputComponent
   ]

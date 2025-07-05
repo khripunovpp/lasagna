@@ -3,7 +3,7 @@ import {AddCategoryRecipeFormComponent} from './add-category-recipe-form.compone
 import {ActivatedRoute} from '@angular/router';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
-import {GapRowComponent} from '../../../../../../shared/view/ui/layout/gap-row.component';
+import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
 import {CardComponent} from '../../../../../../shared/view/ui/card/card.component';
 
@@ -13,7 +13,7 @@ import {CardComponent} from '../../../../../../shared/view/ui/card/card.componen
   imports: [
     FadeInComponent,
     ContainerComponent,
-    GapRowComponent,
+    FlexRowComponent,
     TitleComponent,
     AddCategoryRecipeFormComponent,
     CardComponent
@@ -21,9 +21,9 @@ import {CardComponent} from '../../../../../../shared/view/ui/card/card.componen
   template: `
       <lg-fade-in>
           <lg-container>
-              <lg-gap-row [center]="true">
+              <lg-flex-row [center]="true">
                   <lg-title>{{ uuid() ? 'Edit' : 'Add' }} recipe category</lg-title>
-              </lg-gap-row>
+              </lg-flex-row>
 
               <lg-card>
                   <lg-add-category-recipe-form [uuid]="uuid()"></lg-add-category-recipe-form>
