@@ -54,15 +54,15 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../i
           <!--          </lg-button>-->
           <!--        </ng-template>-->
 
-          <ng-template lgInlineSeparatedGroup>
-            <lg-button [flat]="true"
-                       [disabled]="!selected?.size"
-                       [size]="'small'"
-                       [style]="'danger'"
-                       (click)="selectionZoneService.onDeleteSelected()">
-              {{ 'delete-selected-label' | translate }}
-            </lg-button>
-          </ng-template>
+<!--          <ng-template lgInlineSeparatedGroup>-->
+<!--            <lg-button [flat]="true"-->
+<!--                       [disabled]="!selected?.size"-->
+<!--                       [size]="'small'"-->
+<!--                       [style]="'danger'"-->
+<!--                       (click)="selectionZoneService.onDeleteSelected()">-->
+<!--              {{ 'delete-selected-label' | translate }}-->
+<!--            </lg-button>-->
+<!--          </ng-template>-->
         }
       } @else {
         <ng-template lgInlineSeparatedGroup>

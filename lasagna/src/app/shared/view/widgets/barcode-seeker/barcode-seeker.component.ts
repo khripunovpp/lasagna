@@ -10,7 +10,7 @@ import {ExpandDirective} from '../../directives/expand.directive';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {FlexRowComponent} from '../../ui/layout/flex-row.component';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
-import {ControlComponent} from '../../ui/form/control.component';
+import {ControlComponent} from '../../ui/form/control-item/control.component';
 import {OpenFoodFactsService} from '../../../service/services/openfoodfacts.service';
 import {ShrinkDirective} from '../../directives/shrink.directive';
 import {BarcodeReaderService} from '../../../service/services/barcode-reader.service';

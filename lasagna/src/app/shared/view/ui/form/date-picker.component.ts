@@ -38,6 +38,12 @@ import {CUSTOM_DATE_FORMATS} from '../../../helpers/date-formats.helper';
 
   ],
   styles: [`
+
+    lg-date-picker {
+      display: flex;
+      width: 100%;
+    }
+
     .lg-date-picker {
       flex: 1;
       width: 100%;

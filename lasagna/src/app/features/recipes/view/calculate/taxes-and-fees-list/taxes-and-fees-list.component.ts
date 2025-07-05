@@ -4,7 +4,7 @@ import {CardListItemDirective} from '../../../../../shared/view/ui/card/card-lis
 
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {ControlComponent} from '../../../../../shared/view/ui/form/control.component';
+import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
 import {CheckboxComponent} from '../../../../../shared/view/ui/form/chckbox.component';
 

@@ -23,55 +23,61 @@ import {Credential} from '../../../settings/service/models/Credential';
 @Component({
   selector: 'lg-credential-field',
   template: `
-      <div class="lg-credential-field">
+    <div class="lg-credential-field">
+      @if (displayedCredentialValue) {
+        <div class="lg-credential-field__free_style">
+          <lg-textarea [ngModel]="displayedCredentialValue"
+                       [placeholder]="placeholder()"
+                       [readOnly]="true"></lg-textarea>
+        </div>
+      } @else {
+        <div [formGroup]="form" class="lg-credential-field__injected">
+          <lg-textarea (change)="onChange(form.value)"
+                       [placeholder]="placeholder()"
+                       formControlName="free_style"></lg-textarea>
+        </div>
+      }
+      <div class="lg-credential-field__controls">
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="dialog.open()"
+                       [flat]="true"
+                       [style]="'success'"
+                       lgShrink>
+              Add
+            </lg-button>
+          </ng-template>
+
           @if (displayedCredentialValue) {
-              <div class="lg-credential-field__free_style">
-                  <lg-textarea [ngModel]="displayedCredentialValue"
-                               [placeholder]="placeholder()"
-                               [readOnly]="true"></lg-textarea>
-              </div>
-          } @else {
-              <div [formGroup]="form" class="lg-credential-field__injected">
-                  <lg-textarea (change)="onChange(form.value)"
-                               [placeholder]="'From'"
-                               formControlName="free_style"></lg-textarea>
-              </div>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button [flat]="true"
+                         (click)="onCredentialDeleted()"
+                         [style]="'danger'"
+                         lgShrink>
+                Delete
+              </lg-button>
+            </ng-template>
           }
-          <div class="lg-credential-field__controls">
-              <lg-inline-separated-group>
-                  <ng-template lgInlineSeparatedGroup>
-                      <lg-button (click)="dialog.open()"
-                                 [flat]="true"
-                                 [style]="'success'"
-                                 lgShrink>
-                          Add
-                      </lg-button>
-                  </ng-template>
-
-                  @if (displayedCredentialValue) {
-                      <ng-template lgInlineSeparatedGroup>
-                          <lg-button [flat]="true"
-                                     (click)="onCredentialDeleted()"
-                                     [style]="'danger'"
-                                     lgShrink>
-                              Delete
-                          </lg-button>
-                      </ng-template>
-                  }
-              </lg-inline-separated-group>
-          </div>
+        </lg-inline-separated-group>
       </div>
+    </div>
 
-      <lg-credentials-dialog #dialog
-                             (selected)="onCredentialSelected($event)"
-                             [type]="type()"></lg-credentials-dialog>
+    <lg-credentials-dialog #dialog
+                           (selected)="onCredentialSelected($event)"
+                           [type]="type()"></lg-credentials-dialog>
   `,
   styles: [`
+    :host {
+      display: flex;
+      width: 100%;
+    }
+
     .lg-credential-field {
       display: flex;
       flex-direction: column;
       gap: 8px;
       position: relative;
+      width: 100%;
 
       &__controls {
         position: absolute;
@@ -128,7 +134,7 @@ export class CredentialFieldComponent
     id: new FormControl<Credential | null>(null),
   });
   type = input(CredentialsType.system);
-  placeholder = input<string>('From');
+  placeholder = input<string>('');
   displayedCredentialValue = '';
   selected = output<Credential | undefined>();
   deleted = output();

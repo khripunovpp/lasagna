@@ -38,42 +38,39 @@
                   <lg-controls-row [mobileMode]="true">
                     <lg-flex-column [size]="'small'">
 
-                      <lg-control>
-                        <ng-container ngProjectAs="labelTpl">
-                          <lg-button (click)="closeRecipeField(i)"
-                                     [flat]="true"
-                                     [size]="'small'"
-                                     [active]="!recipeFieldState()[i]">
-                            {{ 'recipe.form.ingredients.product_id.label'|translate }}
-                          </lg-button>
-                        </ng-container>
+                      <ng-container ngProjectAs="labelTpl">
+                        <lg-button (click)="closeRecipeField(i)"
+                                   [flat]="true"
+                                   [size]="'small'"
+                                   [active]="!recipeFieldState()[i]">
+                          {{ 'recipe.form.ingredients.product_id.label'|translate }}
+                        </lg-button>
+                      </ng-container>
 
-                        <ng-container ngProjectAs="afterLabelTpl">
-                          <lg-button (click)="openRecipeField(i)"
-                                     [flat]="true"
-                                     [size]="'small'"
-                                     [active]="recipeFieldState()[i]">
-                            {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
-                          </lg-button>
-                        </ng-container>
+                      <ng-container ngProjectAs="afterLabelTpl">
+                        <lg-button (click)="openRecipeField(i)"
+                                   [flat]="true"
+                                   [size]="'small'"
+                                   [active]="recipeFieldState()[i]">
+                          {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
+                        </lg-button>
+                      </ng-container>
 
-                        @if (recipeFieldState()[i]) {
-                          <lg-multiselect [resource]="'recipes'"
-                                          (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
-                                          [autoLoad]="true"
-                                          appendTo="body"
-                                          formControlName="recipe_id"></lg-multiselect>
-                        } @else {
-                          <lg-multiselect [resource]="'products'"
-                                          (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
-                                          [autoLoad]="true"
-                                          #productsSelector
-                                          appendTo="body"
-                                          formControlName="product_id">
-                          </lg-multiselect>
-                        }
-
-                      </lg-control>
+                      @if (recipeFieldState()[i]) {
+                        <lg-multiselect [resource]="'recipes'"
+                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
+                                        [autoLoad]="true"
+                                        appendTo="body"
+                                        formControlName="recipe_id"></lg-multiselect>
+                      } @else {
+                        <lg-multiselect [resource]="'products'"
+                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                        [autoLoad]="true"
+                                        #productsSelector
+                                        appendTo="body"
+                                        formControlName="product_id">
+                        </lg-multiselect>
+                      }
                     </lg-flex-column>
 
                     <lg-number-input #amount
