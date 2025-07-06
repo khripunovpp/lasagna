@@ -16,7 +16,12 @@ export const InvoiceScheme = z.object({
   notes: z.string().nullable(),
   terms: z.string().nullable(),
   invoice_number: z.string().nullable(),
-  prefix: z.string().nullable()
+  prefix: z.string().nullable(),
+  state: z.enum(['draft', 'issued', 'paid', 'cancelled']).default('draft'),
+  frozenDto: z.object({
+    system_credential_string: z.string().nullable(),
+    customer_credential_string: z.string().nullable(),
+  }).optional(),
 });
 
 export type InvoiceDTO = z.infer<typeof InvoiceScheme>;

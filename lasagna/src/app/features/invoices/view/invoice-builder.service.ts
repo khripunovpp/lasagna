@@ -49,10 +49,7 @@ export class InvoiceBuilderService {
   /**
    * Фабрика для создания позиций счета-фактуры.
    */
-  factory = new InvoiceItemFactory(
-    this._cache.product as Map<string, Product>,
-    this._cache.recipe as Map<string, Recipe>
-  );
+  factory = new InvoiceItemFactory();
 
   /**
    * Сигнал для хранения текущего счета-фактуры.
@@ -234,6 +231,34 @@ export class InvoiceBuilderService {
     newInvoice.removeCredential(type);
     this._invoice.set(newInvoice);
     return this._invoice();
+  }
+
+  markPaid() {
+    if (!this._invoice()) return;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.markPaid();
+    this._invoice.set(newInvoice);
+  }
+
+  markAsCanceled() {
+    if (!this._invoice()) return;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.markCancelled();
+    this._invoice.set(newInvoice);
+  }
+
+  markAsDraft() {
+    if (!this._invoice()) return;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.state = 'draft' as any; // Reset state to draft TODO for tese only
+    this._invoice.set(newInvoice);
+  }
+
+  issueInvoice() {
+    if (!this._invoice()) return;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.issue();
+    this._invoice.set(newInvoice);
   }
 
   /**

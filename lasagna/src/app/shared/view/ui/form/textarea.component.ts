@@ -3,14 +3,16 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 
 @Component({
   selector: 'lg-textarea',
-  standalone: true,
+  host: {
+    '[class.readonly]': 'readOnly()'
+  },
   template: `
       <textarea #input
                 (input)="onChangeInput($event)"
                 [attr.rows]="rows()"
                 [placeholder]="placeholder()"
                 [value]="value"
-                [readOnly]="readOnly()"
+                [readonly]="readOnly()"
                 class="textarea"
       ></textarea>
   `,
@@ -19,6 +21,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
       :host {
         display: flex;
         flex: 1;
+        position: relative;
+        opacity: 0.99;
       }
 
       .textarea {
@@ -39,6 +43,24 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
       .textarea:focus {
         outline: none;
         box-shadow: var(--focus-shadow);
+      }
+
+      .textarea[readonly] {
+        background-color: transparent;
+        border: 1px solid var(--control-bg);
+      }
+
+      :host.readonly::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--control-bg);
+        border-radius: 12px;
+        opacity: 0.4;
       }
     `
   ],

@@ -16,6 +16,7 @@ import {NgClass, NgStyle} from '@angular/common';
          [class.gap-row__top]="top()"
          [class.gap-row__equal]="equal"
          [class.gap-row__wrap]="wrap()"
+         [class.gap-row__mobileReverse]="mobileReverse()"
          [ngClass]="size()"
          [style]="'--cols: ' + cols()"
          [ngStyle]="styles()"
@@ -120,6 +121,10 @@ import {NgClass, NgStyle} from '@angular/common';
       .gap-row__mobile.tiny {
         --gap: 2px;
       }
+
+      .gap-row__mobileReverse {
+        flex-direction: column-reverse;
+      }
     }
     `
   ],
@@ -138,6 +143,7 @@ export class FlexRowComponent {
   top = input<boolean>(false);
   fit = input<boolean>(false);
   mobileMode = input<boolean>(false);
+  mobileReverse = input<boolean>(false);
   relaxed = input<boolean>(false);
   wrap = input<boolean>(false);
   cols = input<string|number>(1);

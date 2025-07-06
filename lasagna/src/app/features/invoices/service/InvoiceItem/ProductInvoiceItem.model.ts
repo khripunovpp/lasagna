@@ -11,6 +11,7 @@ export class ProductInvoiceItem
     public product: Product,
     public amount: number = 0,
     public unit: string = 'gram',
+    public frozenDto: InvoiceItemDTO["frozenDto"] = undefined,
   ) {
     super();
   }
@@ -40,7 +41,7 @@ export class ProductInvoiceItem
     return this.product.pricePerUnit;
   }
 
-  get pricePerUnitModified(){
+  get pricePerUnitModified() {
     return this.pricePerUnit
   }
 
@@ -67,6 +68,7 @@ export class ProductInvoiceItem
       amount: parseFloatingNumber(this.amount),
       unit: this.unit || 'gram',
       recipe_id: null,
+      frozenDto: this.frozenDto,
     };
   }
 
@@ -93,5 +95,22 @@ export class ProductInvoiceItem
       this.amount,
       this.unit
     );
+  }
+
+  freeze(): void {
+    const {frozenDto, ...dto} = this.toDTO();
+    this.frozenDto = {
+      amount: dto.amount,
+      unit: dto.unit,
+      type: dto.type,
+      entity_id: this.product.uuid || null,
+      entity_name: this.product.name,
+      pricePerUnit: this.pricePerUnitModified,
+      totalPrice: this.totalPrice,
+    }
+  }
+
+  unfreeze(): void {
+    this.frozenDto = undefined;
   }
 }
