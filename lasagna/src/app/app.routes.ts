@@ -8,6 +8,9 @@ import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';
 import {InvoiceBuilderService} from '@invoices/view/invoice-builder.service';
 import {LOGGER_CONTEXT} from './features/logger/logger-context.provider';
 import {LoggerService} from './features/logger/logger.service';
+import {inject} from '@angular/core';
+import {BrowserTabTrackingService} from './shared/service/services/browser-tab-tracking.service';
+import {NotificationsService} from './shared/service/services';
 
 export const routes: Routes = [{
   path: '',
@@ -137,7 +140,20 @@ export const routes: Routes = [{
           },
           data: {
             editRoute: true,
-          }
+          },
+          canDeactivate: [
+            () => {
+              const browserTabTrackingService = inject(BrowserTabTrackingService);
+              const notificationsService = inject(NotificationsService);
+              if (browserTabTrackingService.hasUnsavedChanges) {
+                console.warn('Unsaved changes detected');
+                notificationsService.warning('You have unsaved changes. Please save or discard them before leaving.');
+                return false; // Prevent navigation if there are unsaved changes
+              }
+
+              return true;
+            },
+          ]
         },
       ]
     },

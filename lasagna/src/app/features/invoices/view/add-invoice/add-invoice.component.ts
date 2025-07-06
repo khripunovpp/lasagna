@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, signal} from '@angular/core';
+import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {AddInvoiceFormComponent} from './add-invoice-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,7 +8,7 @@ import {NotificationsService} from '../../../../shared/service/services';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, NgClass} from '@angular/common';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
@@ -20,6 +20,10 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {InvoicesRepository} from '../../service/Invoices.repository';
 import {errorHandler} from '../../../../shared/helpers';
+import {BrowserTabTrackingService} from '../../../../shared/service/services/browser-tab-tracking.service';
+import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
+import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 
 @Component({
   selector: 'app-add-invoice',
@@ -36,74 +40,117 @@ import {errorHandler} from '../../../../shared/helpers';
     FlexColumnComponent,
     AddInvoiceFormComponent,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective
+    InlineSeparatedGroupDirective,
+    NgClass,
+    PullDirective
   ],
   template: `
-      <lg-fade-in>
-          <lg-container>
-              <lg-flex-column size="medium">
-                  <lg-flex-row [center]="true" [mobileMode]="true">
-                      @if (invoiceBuilderService.invoice()?.uuid) {
-                          <lg-title>
-                              {{ invoiceBuilderService.invoice()?.name }}
-                          </lg-title>
-                      } @else {
-                          <lg-title>
-                              New invoice
-                          </lg-title>
-                      }
-                  </lg-flex-row>
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-column size="medium">
+          <lg-flex-row [center]="true"
+                       [mobileReverse]="true"
+                       [mobileMode]="true">
+            @if (invoiceBuilderService.invoice()?.uuid) {
+              <lg-title>
+                {{ invoiceBuilderService.invoice()?.name }}
+              </lg-title>
+            } @else {
+              <lg-title>
+                New invoice
+              </lg-title>
+            }
 
-                  <lg-inline-separated-group>
-                      <ng-template lgInlineSeparatedGroup>
-                          <lg-button (click)="generatePDF()"
-                                     [flat]="true"
-                                     [style]="'success'"
-                                     lgShrink>
-                              Generate PDF
-                          </lg-button>
-                      </ng-template>
+            <span [ngClass]="stateBadgeClass()">
+                {{ stateLabel() }}
+              </span>
 
-                      <ng-template lgInlineSeparatedGroup>
-                          <lg-button (click)="copyInvoice()"
-                                     [flat]="true"
-                                     [style]="'warning'"
-                                     lgShrink>
-                              Copy
-                          </lg-button>
-                      </ng-template>
 
-                      <ng-template lgInlineSeparatedGroup>
-                          <lg-button (click)="onDeleteInvoice()" [flat]="true"
-                                     [style]="'danger'"
-                                     lgShrink>
-                              Delete Invoice
-                          </lg-button>
-                      </ng-template>
-                  </lg-inline-separated-group>
-
-                  @if (invoiceBuilderService.invoice()?.updatedAt) {
-                      <small class="text-muted text-cursive">
-                          {{ 'edited-at-label'|translate }} {{ this.invoiceBuilderService.invoice()?.updatedAt | timeAgo }}
-                      </small>
-                  }
-              </lg-flex-column>
-
-              <lg-add-invoice-form #formComponent></lg-add-invoice-form>
-
-              <lg-flex-row [mobileMode]="true" [relaxed]="true">
-                  <lg-button (click)="editInvoice()"
-                             [disabled]="!formComponent?.form?.dirty"
+            <lg-inline-separated-group lgPull lgShrink>
+              @if (invoiceBuilderService.invoice()?.canMarkPaid) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button (click)="changeState('paid')"
+                             [flat]="true"
+                             [style]="'success'"
                              lgShrink>
-                      @if (formComponent?.form?.dirty) {
-                          Save changes
-                      } @else {
-                          Nothing to save
-                      }
+                    Mark as paid
                   </lg-button>
-              </lg-flex-row>
-          </lg-container>
-      </lg-fade-in>
+                </ng-template>
+              }
+
+              @if (invoiceBuilderService.invoice()?.canCancel) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button (click)="changeState('cancelled')"
+                             [flat]="true"
+                             [style]="'danger'"
+                             lgShrink>
+                    Mark as canceled
+                  </lg-button>
+                </ng-template>
+              }
+            </lg-inline-separated-group>
+          </lg-flex-row>
+
+
+          <lg-inline-separated-group>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (onClick)="generatePDF()"
+                         [disabled]="!!invoiceBuilderService.invoice()?.canBeUpdated"
+                         [flat]="true"
+                         [style]="'success'"
+                         lgShrink>
+                Generate PDF
+              </lg-button>
+            </ng-template>
+
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (onClick)="copyInvoice()"
+                         [flat]="true"
+                         [style]="'warning'"
+                         lgShrink>
+                Copy
+              </lg-button>
+            </ng-template>
+
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (onClick)="onDeleteInvoice()" [flat]="true"
+                         [style]="'danger'"
+                         lgShrink>
+                Delete Invoice
+              </lg-button>
+            </ng-template>
+          </lg-inline-separated-group>
+
+          @if (invoiceBuilderService.invoice()?.updatedAt) {
+            <small class="text-muted text-cursive">
+              {{ 'edited-at-label'|translate }} {{ this.invoiceBuilderService.invoice()?.updatedAt | timeAgo }}
+            </small>
+          }
+        </lg-flex-column>
+
+        <lg-add-invoice-form #formComponent></lg-add-invoice-form>
+
+        <lg-flex-row [mobileMode]="true" [relaxed]="true">
+          <lg-button (click)="editInvoice()"
+                     [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
+                     lgShrink>
+            @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
+              Save changes
+            } @else {
+              Nothing to save
+            }
+          </lg-button>
+
+          @if (invoiceBuilderService.invoice()?.canBeUpdated) {
+            <lg-button (click)="issueInvoice()"
+                       [style]="'success'"
+                       lgShrink>
+              Issue and download invoice
+            </lg-button>
+          }
+        </lg-flex-row>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `
@@ -122,19 +169,36 @@ export class AddInvoiceComponent
     private _notificationsService: NotificationsService,
     private _loggerService: LoggerService,
     private _invoicesRepository: InvoicesRepository,
+    private _browserTabTrackingService: BrowserTabTrackingService,
   ) {
   }
 
   uuid = signal<string | undefined>(undefined);
-
-  ngOnDestroy() {
-  }
+  formComponent = viewChild('formComponent', {read: AddInvoiceFormComponent});
+  stateLabel = computed(() => {
+    if (!this.invoiceBuilderService.invoice()) {
+      return 'Unknown';
+    }
+    const state = this.invoiceBuilderService.invoice()!.state;
+    return stateToLabelMap[state] || 'Unknown';
+  });
+  stateBadgeClass = computed(() => {
+    if (!this.invoiceBuilderService.invoice()) {
+      return stateToBadgeClassMap['draft'];
+    }
+    const state = this.invoiceBuilderService.invoice()!.state;
+    return stateToBadgeClassMap[state || 'draft'];
+  });
 
   ngOnInit() {
 
   }
 
   ngAfterViewInit() {
+  }
+
+  ngOnDestroy() {
+
   }
 
   onDeleteInvoice() {
@@ -168,6 +232,28 @@ export class AddInvoiceComponent
     });
   }
 
+  changeState(state: string) {
+    switch (state as InvoiceState) {
+      case 'draft':
+        this.invoiceBuilderService.markAsDraft();
+        break;
+      case 'paid':
+        this.invoiceBuilderService.markPaid();
+        break;
+      case 'cancelled':
+        this.invoiceBuilderService.markAsCanceled();
+        break;
+      case 'issued':
+        this.invoiceBuilderService.issueInvoice();
+        break;
+      default:
+        this._loggerService.error('Unknown state', state);
+        return;
+    }
+
+    this.editInvoice();
+  }
+
   editInvoice() {
     if (!this.invoiceBuilderService.invoice()) {
       return;
@@ -176,9 +262,23 @@ export class AddInvoiceComponent
       this.invoiceBuilderService.invoice()?.uuid!,
       this.invoiceBuilderService.invoice()!
     ).then(() => {
+      this._browserTabTrackingService.disableProtection();
       this._notificationsService.success('Invoice edited');
 
       this.router.navigate(['/invoices', 'edit', this.invoiceBuilderService.invoice()?.uuid]);
+    });
+  }
+
+  issueInvoice() {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) return;
+    this.invoiceBuilderService.issueInvoice();
+    this._invoicesRepository.replaceOne(
+      this.invoiceBuilderService.invoice()?.uuid!,
+      this.invoiceBuilderService.invoice()!
+    ).then(() => {
+      this._browserTabTrackingService.disableProtection();
+      this._notificationsService.success('Invoice issued');
+      this.generatePDF();
     });
   }
 }

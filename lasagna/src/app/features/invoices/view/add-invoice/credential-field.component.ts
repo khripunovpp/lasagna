@@ -23,7 +23,8 @@ import {Credential} from '../../../settings/service/models/Credential';
 @Component({
   selector: 'lg-credential-field',
   template: `
-    <div class="lg-credential-field">
+    <div class="lg-credential-field"
+         [class.lg-credential-field__readonly]="readonly()">
       @if (displayedCredentialValue) {
         <div class="lg-credential-field__free_style">
           <lg-textarea [ngModel]="displayedCredentialValue"
@@ -34,32 +35,35 @@ import {Credential} from '../../../settings/service/models/Credential';
         <div [formGroup]="form" class="lg-credential-field__injected">
           <lg-textarea (change)="onChange(form.value)"
                        [placeholder]="placeholder()"
+                       [readOnly]="readonly()"
                        formControlName="free_style"></lg-textarea>
         </div>
       }
-      <div class="lg-credential-field__controls">
-        <lg-inline-separated-group>
-          <ng-template lgInlineSeparatedGroup>
-            <lg-button (click)="dialog.open()"
-                       [flat]="true"
-                       [style]="'success'"
-                       lgShrink>
-              Add
-            </lg-button>
-          </ng-template>
-
-          @if (displayedCredentialValue) {
+      @if (!readonly()) {
+        <div class="lg-credential-field__controls">
+          <lg-inline-separated-group>
             <ng-template lgInlineSeparatedGroup>
-              <lg-button [flat]="true"
-                         (click)="onCredentialDeleted()"
-                         [style]="'danger'"
+              <lg-button (click)="dialog.open()"
+                         [flat]="true"
+                         [style]="'success'"
                          lgShrink>
-                Delete
+                Add
               </lg-button>
             </ng-template>
-          }
-        </lg-inline-separated-group>
-      </div>
+
+            @if (displayedCredentialValue) {
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button [flat]="true"
+                           (click)="onCredentialDeleted()"
+                           [style]="'danger'"
+                           lgShrink>
+                  Delete
+                </lg-button>
+              </ng-template>
+            }
+          </lg-inline-separated-group>
+        </div>
+      }
     </div>
 
     <lg-credentials-dialog #dialog
@@ -135,6 +139,7 @@ export class CredentialFieldComponent
   });
   type = input(CredentialsType.system);
   placeholder = input<string>('');
+  readonly = input(false);
   displayedCredentialValue = '';
   selected = output<Credential | undefined>();
   deleted = output();
@@ -171,7 +176,6 @@ export class CredentialFieldComponent
     value: unknown,
   ) {
     this._change(value);
-    console.log('writeValue', value);
   }
 
   registerOnChange(fn: any) {

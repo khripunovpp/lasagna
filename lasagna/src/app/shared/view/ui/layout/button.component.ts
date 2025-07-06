@@ -21,47 +21,48 @@ export type ButtonSizes =
   selector: 'lg-button',
   standalone: true,
   template: `
-      @if (link()) {
-          <a [class.active]="active()"
-             [class.flat]="flat()"
-             [class.disabled]="disabled()"
-             [class.icon]="icon()"
-             [class.no-bottom-radius]="noBottomRadius()"
-             [class.no-left-radius]="noLeftRadius()"
-             [class.no-radius]="noRadius()"
-             [class.no-right-radius]="noRightRadius()"
-             [class.no-top-radius]="noTopRadius()"
-             [class.no-scale]="noScale()"
-             [ngClass]="style() + ' ' + size()"
-             [routerLink]="link() ? link() : null"
-             [routerLinkActive]="['route-active']"
-             class="button">
-              <ng-container *ngTemplateOutlet="content"></ng-container>
-          </a>
-      } @else {
-          <button (click)="onClick.emit($event)"
-                  [class.active]="active()"
-                  [class.flat]="flat()"
-                  [class.disabled]="disabled()"
-                  [class.icon]="icon()"
-                  [class.no-bottom-radius]="noBottomRadius()"
-                  [class.no-left-radius]="noLeftRadius()"
-                  [class.no-radius]="noRadius()"
-                  [class.no-right-radius]="noRightRadius()"
-                  [class.no-top-radius]="noTopRadius()"
-                  [class.no-scale]="noScale()"
-                  [ngClass]="style() + ' ' + size()"
-                  class="button"
-                  type="button">
-              <ng-container *ngTemplateOutlet="content"></ng-container>
-          </button>
-      }
+    @if (link()) {
+      <a [class.active]="active()"
+         [class.flat]="flat()"
+         [class.disabled]="disabled()"
+         [class.icon]="icon()"
+         [class.no-bottom-radius]="noBottomRadius()"
+         [class.no-left-radius]="noLeftRadius()"
+         [class.no-radius]="noRadius()"
+         [class.no-right-radius]="noRightRadius()"
+         [class.no-top-radius]="noTopRadius()"
+         [class.no-scale]="noScale()"
+         [ngClass]="style() + ' ' + size()"
+         [routerLink]="link() ? link() : null"
+         [routerLinkActive]="['route-active']"
+         class="button">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </a>
+    } @else {
+      <button (click)="onClickHandler($event)"
+              [class.active]="active()"
+              [class.flat]="flat()"
+              [class.disabled]="disabled()"
+              [class.icon]="icon()"
+              [class.no-bottom-radius]="noBottomRadius()"
+              [class.no-left-radius]="noLeftRadius()"
+              [class.no-radius]="noRadius()"
+              [class.no-right-radius]="noRightRadius()"
+              [class.no-top-radius]="noTopRadius()"
+              [class.no-scale]="noScale()"
+              [ngClass]="style() + ' ' + size()"
+              [disabled]="disabled()"
+              class="button"
+              type="button">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </button>
+    }
 
-      <ng-template #content>
+    <ng-template #content>
          <span class="button__content">
               <ng-content></ng-content>
          </span>
-      </ng-template>
+    </ng-template>
   `,
   encapsulation: ViewEncapsulation.None,
   imports: [
@@ -300,4 +301,13 @@ export class ButtonComponent {
   disabled = input<boolean>(false);
   routerLinkActive = viewChild(RouterLinkActive);
   noScale = input<boolean>(false);
+
+  onClickHandler(event: MouseEvent) {
+    debugger
+    if (this.disabled()) {
+      event.preventDefault();
+      return;
+    }
+    this.onClick.emit(event);
+  }
 }

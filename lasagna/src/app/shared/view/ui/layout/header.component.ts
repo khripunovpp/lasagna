@@ -82,6 +82,9 @@ import {DemoInformerComponent} from '../demo-informer.component';
       transform: translateX(-50%);
       max-width: var(--container-width);
       width: calc(100% - 32px);
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
 
     .lg-demo-informer {

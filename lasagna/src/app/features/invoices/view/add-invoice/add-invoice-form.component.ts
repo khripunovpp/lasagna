@@ -43,6 +43,10 @@ import {Credential} from '../../../settings/service/models/Credential';
 import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-field.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
+import {BrowserTabTrackingService} from '../../../../shared/service/services/browser-tab-tracking.service';
+import {FullScreenBlockerDirective} from '../../../../shared/view/directives/full-block.directive';
+import {DisableFocusDirective} from '../../../../shared/view/directives/disable-focus.directive';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -70,6 +74,9 @@ import {ControlComponent} from '../../../../shared/view/ui/form/control-item/con
     CredentialFieldComponent,
     ControlExtraTemplateDirective,
     ControlComponent,
+    FullScreenBlockerDirective,
+    DisableFocusDirective,
+    DatePipe,
 
   ],
   styles: [
@@ -86,6 +93,7 @@ export class AddInvoiceFormComponent
     public invoiceBuilderService: InvoiceBuilderService,
     private _notificationsService: NotificationsService,
     private _logger: LoggerService,
+    private _browserTabTrackingService: BrowserTabTrackingService,
   ) {
   }
 
@@ -113,14 +121,20 @@ export class AddInvoiceFormComponent
   ngOnInit() {
     this.fillForm(this.invoiceBuilderService.invoice());
 
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.form.valueChanges.pipe(
       debounceTime(100),
     ).subscribe(values => {
       if (!this.form.dirty) {
         return
       }
+      this._browserTabTrackingService.enableProtection();
       this._logger.log('Form value changed', values);
       this.invoiceBuilderService.patchInvoice(fromFormToDTO(this.form.getRawValue()) as any);
+      this.recalculateRows();
     });
   }
 
@@ -150,12 +164,20 @@ export class AddInvoiceFormComponent
   }
 
   addGood() {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     const newRow = this.invoiceBuilderService.addRow(this._getLastRowType());
     this.rows.push(this._getInvoiceItemFromGroup(newRow));
     this.form.markAsDirty();
   }
 
   deleteGood(index: number) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.rows.removeAt(index);
     this.invoiceBuilderService.removeRow(index);
     this.form.markAsDirty();
@@ -189,6 +211,10 @@ export class AddInvoiceFormComponent
     recipe: any,
     index: number
   ) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.invoiceBuilderService.setRecipePayload(index, Recipe.fromRaw(recipe)).then((row) => {
       this.amountField()?.at(index)?.focus();
       this.rows.at(index).patchValue({
@@ -201,6 +227,10 @@ export class AddInvoiceFormComponent
     product: any,
     index: number
   ) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     const row = this.invoiceBuilderService.setProductPayload(index, Product.fromRaw(product));
     this.amountField()?.at(index)?.focus();
     this.rows.at(index).patchValue({
@@ -212,16 +242,43 @@ export class AddInvoiceFormComponent
     type: InvoiceItemType,
     index: number
   ) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.invoiceBuilderService.changeRowType(index, type);
     this.rows.at(index).patchValue({
       recipe_id: null,
       product_id: null,
+      pricePerUnit: null,
+      totalPrice: null,
     })
+  }
+
+  recalculateRows() {
+    const invoiceRows = this.invoiceBuilderService.invoice()?.rows || [];
+    this.rows.controls.forEach((row, index) => {
+      const item = invoiceRows[index];
+      if (item) {
+        row.patchValue({
+          pricePerUnit: item.pricePerUnitModified || null,
+          totalPrice: item.totalPrice || null,
+        }, {
+          emitEvent: false,
+          onlySelf: true,
+        });
+      }
+    });
+    this.form.markAsDirty();
   }
 
   onCredentialSelected(
     credential: Credential | undefined
   ) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.form.markAsDirty();
     this.invoiceBuilderService.setCredential(credential);
   }
@@ -229,6 +286,10 @@ export class AddInvoiceFormComponent
   onCredentialDeleted(
     type: 'system' | 'customer'
   ) {
+    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
+      return
+    }
+
     this.form.markAsDirty();
     this.invoiceBuilderService.deleteCredential(type);
   }

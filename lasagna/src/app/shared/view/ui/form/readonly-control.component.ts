@@ -1,5 +1,5 @@
-import {Component, ElementRef, Input, input, signal, ViewChild} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {Component, ElementRef, forwardRef, Input, input, signal, ViewChild} from '@angular/core';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'lg-readonly-control',
@@ -29,6 +29,7 @@ import {FormsModule} from '@angular/forms';
       }
 
       .lg-readonly-control {
+        width: 100%;
         display: flex;
         border-radius: 12px;
         gap: 16px;
@@ -84,9 +85,17 @@ import {FormsModule} from '@angular/forms';
   imports: [
     FormsModule
   ],
+   providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ReadonlyControlComponent),
+      multi: true
+    }
+  ]
 })
 
-export class ReadonlyControlComponent {
+export class ReadonlyControlComponent
+implements ControlValueAccessor{
   constructor() {
   }
 
@@ -97,6 +106,24 @@ export class ReadonlyControlComponent {
 
   focus() {
     this.input?.nativeElement.focus();
+  }
+
+
+  onChange: (value: string) => void = () => {
+  };
+  onTouched: () => void = () => {
+  };
+
+  writeValue(value: string): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
   }
 
   ngAfterViewInit() {

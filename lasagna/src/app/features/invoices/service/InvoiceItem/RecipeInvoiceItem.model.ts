@@ -11,6 +11,7 @@ export class RecipeInvoiceItem
     public recipe: Recipe,
     public amount: number = 0,
     public unit: string = 'gram',
+    public frozenDto: InvoiceItemDTO["frozenDto"] = undefined,
   ) {
     super();
   }
@@ -22,12 +23,11 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnitModified(): number {
+    if (this.frozenDto) {
+      return this.frozenDto.pricePerUnit;
+    }
     // для иновйса подгоняем цену юнит исходя из тотала
     return this.recipe.totalPriceModified / this.recipe.outcomeAmount
-  }
-
-  get totalPriceModified(): number {
-    return this.totalPrice;
   }
 
   get weightGram(): number {
@@ -38,6 +38,9 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnit(): number {
+    if (this.frozenDto) {
+      return this.frozenDto.pricePerUnit;
+    }
     if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
       return 0;
     }
@@ -73,6 +76,7 @@ export class RecipeInvoiceItem
       unit: this.unit || 'gram',
       recipe_id: this.recipe.uuid || null,
       product_id: null,
+      frozenDto: this.frozenDto,
     };
   }
 
@@ -97,7 +101,25 @@ export class RecipeInvoiceItem
     return new RecipeInvoiceItem(
       this.recipe,
       this.amount,
-      this.unit
+      this.unit,
+      this.frozenDto,
     );
+  }
+
+  freeze(): void {
+    const {frozenDto, ...dto} = this.toDTO();
+    this.frozenDto = {
+      amount: dto.amount,
+      unit: dto.unit,
+      type: dto.type,
+      entity_id: this.recipe.uuid || null,
+      entity_name: this.recipe.name,
+      pricePerUnit: this.pricePerUnitModified,
+      totalPrice: this.totalPrice,
+    }
+  }
+
+  unfreeze(): void {
+    this.frozenDto = undefined;
   }
 }

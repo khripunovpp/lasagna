@@ -67,7 +67,7 @@ export class InvoicesRepository {
   }
 
   async loadToObservable() {
-    const factory = new InvoiceItemFactory(new Map(), new Map());
+    const factory = new InvoiceItemFactory();
 
     const invoiceDTOs = await this._indexDbService.getAll<InvoiceDTO>(Stores.INVOICES);
     const invoicesInstances = invoiceDTOs.map(dto => Invoice.fromRaw(dto, factory));
@@ -81,7 +81,7 @@ export class InvoicesRepository {
     uuid?: string,
   ) {
     if (!uuid) return;
-    const factory = new InvoiceItemFactory(new Map(), new Map());
+    const factory = new InvoiceItemFactory();
     const result = await this._indexDbService.getOne<InvoiceDTO>(Stores.INVOICES, uuid);
     return Invoice.fromRaw(result, factory);
   }

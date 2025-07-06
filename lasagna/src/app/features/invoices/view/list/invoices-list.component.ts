@@ -1,10 +1,10 @@
-import {Component, inject, OnInit, Signal} from '@angular/core';
+import {Component, computed, inject, OnInit, Signal} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
-import {CurrencyPipe, DatePipe, DecimalPipe} from '@angular/common';
+import {CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass} from '@angular/common';
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {Stores} from '../../../../shared/service/db/const/stores';
@@ -22,14 +22,15 @@ import {CATEGORIZED_INVOICES_LIST} from './categorized-invoices-list.token';
 import {InvoicesRepository} from '../../service/Invoices.repository';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {Invoice} from '../../service/Inovice/Invoice';
+import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 
 @Component({
   selector: 'lg-invoices-list',
   standalone: true,
   template: `
     <lg-controls-bar>
-      <lg-button [icon]="true"
-                 (click)="onAddInvoice()"
+      <lg-button (click)="onAddInvoice()"
+                 [icon]="true"
                  [size]="'medium'"
                  [style]="'success'">
         <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
@@ -45,7 +46,7 @@ import {Invoice} from '../../service/Inovice/Invoice';
 
         <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
 
-        @for (category of invoices(); track $index; let i = $index) {
+        @for (category of invoices(); track $index; let ic = $index) {
           <lg-title [level]="3">
             {{ category?.group_key || ('without-category-label'|translate) }}
           </lg-title>
@@ -64,9 +65,8 @@ import {Invoice} from '../../service/Inovice/Invoice';
                         #{{ invoice.prefix }}/{{ invoice.invoice_number }} - {{ invoice.name }}
                       </a>
 
-                      <div>
-                        <!--                        {{ $any(invoice).pricePerUnit | userCurrency:'1.0-5' }}-->
-                        <!--                        {{ $any(invoice).perUnitLabel }}-->
+                      <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
+                        {{ stateLabels()?.[ic]?.[i] }}
                       </div>
                     </lg-flex-row>
 
@@ -116,7 +116,9 @@ import {Invoice} from '../../service/Inovice/Invoice';
     TranslatePipe,
     FlexColumnComponent,
     DatePipe,
-    DecimalPipe
+    DecimalPipe,
+    JsonPipe,
+    NgClass
   ],
   providers: [
     SelectionZoneService,
@@ -144,6 +146,22 @@ export class InvoicesListComponent
     group_key: string
     items: Invoice[]
   }[]> = toSignal(inject(CATEGORIZED_INVOICES_LIST));
+  stateLabels = computed(() => {
+    return this.invoices()?.map(prefixGroup => {
+      return prefixGroup?.items?.map(invoice => {
+        const state = invoice!.state;
+        return stateToLabelMap[state] || 'Unknown';
+      })
+    });
+  });
+  stateBadgeClasses = computed(() => {
+    return this.invoices()?.map(prefixGroup => {
+      return prefixGroup?.items?.map(invoice => {
+        const state = invoice!.state;
+        return stateToBadgeClassMap[state || 'draft'];
+      })
+    });
+  });
   protected readonly Stores = Stores;
 
   deleteOne(

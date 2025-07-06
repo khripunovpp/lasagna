@@ -63,6 +63,8 @@ export const makeInvoiceItemFormGroup = (
     product_id: new FormControl(productId),
     free_name: new FormControl(null),
     free_price: new FormControl(null),
+    pricePerUnit: new FormControl(item?.pricePerUnitModified || null),
+    totalPrice: new FormControl(item?.totalPrice || null),
   })
 }
 
@@ -117,19 +119,27 @@ export const fromInvoiceToFormValue = (
         recipe_id: recipeId,
         free_name: null,
         free_price: null,
+        pricePerUnit: item.pricePerUnitModified?.toString() || null,
+        totalPrice: item.totalPrice?.toString() || null,
       }
     }),
-    credential_from: {
+    credential_from: invoice.canBeUpdated ? {
       free_style: invoice.credential_from_string || '',
       id: invoice.system_credential_id
         ? Credential.fromRaw(invoice.system_credential_id)
         : undefined,
+    } : {
+      free_style: invoice.frozenDto?.system_credential_string || '',
+      id: undefined,
     },
-    credential_to: {
+    credential_to: invoice.canBeUpdated ?{
       free_style: invoice.credential_to_string || '',
       id: invoice.customer_credential_id
         ? Credential.fromRaw(invoice.customer_credential_id)
         : undefined,
+    } : {
+      free_style: invoice.frozenDto?.customer_credential_string || '',
+      id: undefined,
     },
     date_issued: invoice.date_issued ? new Date(invoice.date_issued).toISOString() : null,
     date_due: invoice.date_due ? new Date(invoice.date_due).toISOString() : null,

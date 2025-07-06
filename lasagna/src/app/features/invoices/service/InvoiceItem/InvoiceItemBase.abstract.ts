@@ -5,12 +5,14 @@ export abstract class InvoiceItemBase {
   abstract readonly type: InvoiceItemType;
   abstract readonly amount: number;
   abstract readonly unit: string;
+  abstract frozenDto: InvoiceItemDTO['frozenDto'];
 
   abstract get weightGram(): number;
 
   abstract get totalPrice(): number;
 
   abstract get pricePerUnit(): number;
+
   abstract get pricePerUnitModified(): number;
 
   abstract get compareKey(): string;
@@ -30,4 +32,8 @@ export abstract class InvoiceItemBase {
   abstract setPayload(payload: unknown): void;
 
   abstract clone(): InvoiceItemBase;
+
+  abstract freeze(): void;
+
+  abstract unfreeze(): void;
 }
