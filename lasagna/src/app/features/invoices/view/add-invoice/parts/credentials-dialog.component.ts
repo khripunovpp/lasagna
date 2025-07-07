@@ -1,15 +1,15 @@
 import {Component, effect, input, output, signal, viewChild} from '@angular/core';
-import {DialogComponent} from '../../../../shared/view/ui/dialog/dialog.component';
-import {CredentialsType} from '../../../settings/service/types/credentials.types';
-import {CredentialsRepository} from '../../../settings/service/repositories/credentials.repository';
-import {NotificationsService} from '../../../../shared/service/services';
-import {Credential} from '../../../settings/service/models/Credential';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {DialogComponent} from '../../../../../shared/view/ui/dialog/dialog.component';
+import {CredentialsType} from '../../../../settings/service/types/credentials.types';
+import {CredentialsRepository} from '../../../../settings/service/repositories/credentials.repository';
+import {NotificationsService} from '../../../../../shared/service/services';
+import {Credential} from '../../../../settings/service/models/Credential';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {WidthDirective} from '../../../../shared/view/directives/width.directive';
+import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {CardComponent} from '../../../../../shared/view/ui/card/card.component';
+import {WidthDirective} from '../../../../../shared/view/directives/width.directive';
 
 @Component({
   selector: 'lg-credentials-dialog',

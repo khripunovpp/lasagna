@@ -1,13 +1,13 @@
 import {Component, forwardRef, input, output} from '@angular/core';
 
-import {CredentialsType} from '../../../settings/service/types/credentials.types';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {CredentialsDialogComponent} from '@invoices/view/add-invoice/credentials-dialog.component';
+import {CredentialsType} from '../../../../settings/service/types/credentials.types';
+import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+import {CredentialsDialogComponent} from '@invoices/view/add-invoice/parts/credentials-dialog.component';
 
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
-} from '../../../../shared/view/ui/inline-separated-group.component';
+} from '../../../../../shared/view/ui/inline-separated-group.component';
 import {
   ControlValueAccessor,
   FormControl,
@@ -16,9 +16,9 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
 } from '@angular/forms';
-import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
-import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
-import {Credential} from '../../../settings/service/models/Credential';
+import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
+import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
+import {Credential} from '../../../../settings/service/models/Credential';
 
 @Component({
   selector: 'lg-credential-field',
