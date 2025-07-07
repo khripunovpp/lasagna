@@ -1,6 +1,6 @@
 import {Component, effect, forwardRef, Input, output, signal, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {InvoiceItemType} from '../../service/InvoiceItem/InvoiceItem.types';
+import {InvoiceItemType} from '../../../service/InvoiceItem/InvoiceItem.types';
 
 @Component({
   selector: 'lg-invoice-item-selector',

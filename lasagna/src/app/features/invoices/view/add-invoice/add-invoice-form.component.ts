@@ -13,7 +13,7 @@ import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {MatIcon} from '@angular/material/icon';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
-import {InvoiceItemSelectorComponent} from './invoice-item-selector.component';
+import {InvoiceItemSelectorComponent} from './parts/invoice-item-selector.component';
 import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
 import {FlexRowComponent} from "../../../../shared/view/ui/layout/flex-row.component";
 import {WidthDirective} from "../../../../shared/view/directives/width.directive";
@@ -40,7 +40,7 @@ import {LoggerService} from '../../../logger/logger.service';
 import {CredentialsType} from '../../../settings/service/types/credentials.types';
 
 import {Credential} from '../../../settings/service/models/Credential';
-import {CredentialFieldComponent} from '@invoices/view/add-invoice/credential-field.component';
+import {CredentialFieldComponent} from '@invoices/view/add-invoice/parts/credential-field.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 import {BrowserTabTrackingService} from '../../../../shared/service/services/browser-tab-tracking.service';
