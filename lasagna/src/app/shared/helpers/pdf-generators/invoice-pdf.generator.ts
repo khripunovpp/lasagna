@@ -81,13 +81,13 @@ export function generateInvoicePdf(
 
   const subtotal = invoice.total.toFixed(settings.totalPrecision || 2);
   const taxRate = 0.2;
-  // const totalWithTax = subtotal * (1 + taxRate);
-  const totalWithTax = subtotal;
+  // const totalWithTaxAndFees = subtotal * (1 + taxRate);
+  const totalWithTaxAndFees = subtotal;
 
   doc.text('Subtotal:', footerRightColX, tableEndY);
   doc.text(String(subtotal) + (settings.currency || 'USD'), footerRightColX + 30, tableEndY);
   doc.text('Total (with Tax):', footerRightColX, tableEndY + lineSpacing);
-  doc.text(String(totalWithTax) + (settings.currency || 'USD'), footerRightColX + 30, tableEndY + lineSpacing);
+  doc.text(String(totalWithTaxAndFees) + (settings.currency || 'USD'), footerRightColX + 30, tableEndY + lineSpacing);
 
   doc.save(`invoice-${invoice.pdfNumber || 'unnamed'}.pdf`);
 }

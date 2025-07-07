@@ -4,12 +4,8 @@ import {CredentialsType} from '../../../../settings/service/types/credentials.ty
 import {CredentialsRepository} from '../../../../settings/service/repositories/credentials.repository';
 import {NotificationsService} from '../../../../../shared/service/services';
 import {Credential} from '../../../../settings/service/models/Credential';
-import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
-
-import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
-import {CardComponent} from '../../../../../shared/view/ui/card/card.component';
-import {WidthDirective} from '../../../../../shared/view/directives/width.directive';
+import {errorHandler} from '../../../../../shared/helpers';
 
 @Component({
   selector: 'lg-credentials-dialog',
@@ -17,8 +13,8 @@ import {WidthDirective} from '../../../../../shared/view/directives/width.direct
   template: `
     <lg-dialog [displayFooter]="false">
       <lg-flex-row size="small"
-                  cols="2"
-                  [wrap]="true">
+                   cols="2"
+                   [wrap]="true">
         @for (credential of credentials(); track (credential.uuid)) {
           <button class="credential-item"
                   (click)="onSelect(credential)">
@@ -49,11 +45,7 @@ import {WidthDirective} from '../../../../../shared/view/directives/width.direct
   `],
   imports: [
     DialogComponent,
-    FlexColumnComponent,
-    ButtonComponent,
-    FlexRowComponent,
-    CardComponent,
-    WidthDirective
+    FlexRowComponent
   ]
 })
 export class CredentialsDialogComponent {
@@ -71,6 +63,9 @@ export class CredentialsDialogComponent {
     this._credentialsRepository.getAllByType(this.type())
       .then((credentials) => {
         this.credentials.set(credentials);
+      })
+      .catch((error) => {
+        this._notificationService.error(errorHandler(error));
       });
   });
 

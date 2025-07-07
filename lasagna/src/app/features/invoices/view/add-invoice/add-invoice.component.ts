@@ -24,6 +24,7 @@ import {BrowserTabTrackingService} from '../../../../shared/service/services/bro
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
 
 @Component({
   selector: 'app-add-invoice',
@@ -42,7 +43,8 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     NgClass,
-    PullDirective
+    PullDirective,
+    InvoiceTaxesAndFeesComponent
   ],
   template: `
     <lg-fade-in>

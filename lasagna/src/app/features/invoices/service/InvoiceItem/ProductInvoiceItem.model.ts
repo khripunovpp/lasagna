@@ -4,6 +4,8 @@ import {Product} from '../../../products/service/Product';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
+import {Tax} from '../../../settings/service/models/Tax';
+import {undefined} from 'zod';
 
 export class ProductInvoiceItem
   extends InvoiceItemBase {
@@ -11,7 +13,7 @@ export class ProductInvoiceItem
     public product: Product,
     public amount: number = 0,
     public unit: string = 'gram',
-    public frozenDto: InvoiceItemDTO["frozenDto"] = undefined,
+    public pinnedDto: InvoiceItemDTO['pinnedDto'],
   ) {
     super();
   }
@@ -68,7 +70,7 @@ export class ProductInvoiceItem
       amount: parseFloatingNumber(this.amount),
       unit: this.unit || 'gram',
       recipe_id: null,
-      frozenDto: this.frozenDto,
+      pinnedDto: this.pinnedDto,
     };
   }
 
@@ -93,24 +95,32 @@ export class ProductInvoiceItem
     return new ProductInvoiceItem(
       this.product,
       this.amount,
-      this.unit
+      this.unit,
+      this.pinnedDto,
     );
   }
 
-  freeze(): void {
-    const {frozenDto, ...dto} = this.toDTO();
-    this.frozenDto = {
+  pinDto(): void {
+    const {pinnedDto, ...dto} = this.toDTO();
+    this.pinnedDto = {
       amount: dto.amount,
       unit: dto.unit,
       type: dto.type,
       entity_id: this.product.uuid || null,
       entity_name: this.product.name,
       pricePerUnit: this.pricePerUnitModified,
-      totalPrice: this.totalPrice,
     }
   }
 
-  unfreeze(): void {
-    this.frozenDto = undefined;
+  unpin() {
+    this.pinnedDto = null;
+  }
+
+  calculateTaxesAndFeesAmount(taxesAndFees: Tax[]): number {
+    return 0;
+  }
+
+  calculateTaxesAndFeesMap(taxesAndFees: Tax[]): Map<Tax["uuid"], number> {
+    return new Map<Tax['uuid'], number>();
   }
 }

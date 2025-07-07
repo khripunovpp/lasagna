@@ -11,6 +11,7 @@ import {Recipe} from '../../recipes/service/models/Recipe';
 import {LoggerService} from '../../logger/logger.service';
 import {Credential} from '../../settings/service/models/Credential';
 import {CredentialsRepository} from '../../settings/service/repositories/credentials.repository';
+import {Tax} from '../../settings/service/models/Tax';
 
 
 type PayloadMap = Partial<Record<InvoiceItemType, Map<string, number>>>;
@@ -125,9 +126,11 @@ export class InvoiceBuilderService {
         recipe_id: row.recipe_id,
       };
     });
+    const taxesDTO = values.taxes_and_fees?.map((tax: any) => tax.toDTO()) || [];
     newInvoice.patch(commonInvoiceDTO);
     newInvoice.patchRows(rowsDTO, this.factory);
-    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {values, newInvoice});
+    newInvoice.replaceTaxes(taxesDTO)
+    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {values, newInvoice,oldInvoice: this._invoice()});
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -259,6 +262,26 @@ export class InvoiceBuilderService {
     const newInvoice = this._invoice()!.clone();
     newInvoice.issue();
     this._invoice.set(newInvoice);
+  }
+
+  addTax(
+    tax: Tax
+  ): Invoice | undefined {
+    if (!this._invoice()) return undefined;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.addTax(tax);
+    this._invoice.set(newInvoice);
+    return this._invoice();
+  }
+
+  removeTax(
+    tax: Tax
+  ): Invoice | undefined {
+    if (!this._invoice()) return undefined;
+    const newInvoice = this._invoice()!.clone();
+    newInvoice.removeTax(tax);
+    this._invoice.set(newInvoice);
+    return this._invoice();
   }
 
   /**

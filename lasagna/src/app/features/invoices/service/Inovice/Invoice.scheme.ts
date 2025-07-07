@@ -1,5 +1,6 @@
 import {z} from 'zod';
 import {InvoiceItemScheme} from '../InvoiceItem/InvoiceItem.scheme';
+import {TaxScheme} from '../../../settings/service/schemes/Tax.scheme';
 
 export const InvoiceScheme = z.object({
   name: z.string(),
@@ -18,10 +19,11 @@ export const InvoiceScheme = z.object({
   invoice_number: z.string().nullable(),
   prefix: z.string().nullable(),
   state: z.enum(['draft', 'issued', 'paid', 'cancelled']).default('draft'),
-  frozenDto: z.object({
+  pinnedDto: z.object({
     system_credential_string: z.string().nullable(),
     customer_credential_string: z.string().nullable(),
   }).optional(),
+  taxes_and_fees: z.array(z.lazy<any>(() => TaxScheme)),
 });
 
 export type InvoiceDTO = z.infer<typeof InvoiceScheme>;

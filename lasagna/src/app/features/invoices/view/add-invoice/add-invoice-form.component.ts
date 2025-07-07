@@ -44,9 +44,9 @@ import {CredentialFieldComponent} from '@invoices/view/add-invoice/parts/credent
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 import {BrowserTabTrackingService} from '../../../../shared/service/services/browser-tab-tracking.service';
-import {FullScreenBlockerDirective} from '../../../../shared/view/directives/full-block.directive';
-import {DisableFocusDirective} from '../../../../shared/view/directives/disable-focus.directive';
 import {DatePipe} from '@angular/common';
+import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
+import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -74,9 +74,9 @@ import {DatePipe} from '@angular/common';
     CredentialFieldComponent,
     ControlExtraTemplateDirective,
     ControlComponent,
-    FullScreenBlockerDirective,
-    DisableFocusDirective,
     DatePipe,
+    InvoiceTaxesAndFeesComponent,
+
 
   ],
   styles: [
@@ -119,8 +119,11 @@ export class AddInvoiceFormComponent
   }
 
   ngOnInit() {
+    console.log('ngOnInit', {
+      invoice: this.invoiceBuilderService.invoice(),
+    })
     this.fillForm(this.invoiceBuilderService.invoice());
-
+    console.log(this.invoiceBuilderService.invoice()?.getRowTaxAmount(0));
     if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
       return
     }
@@ -134,7 +137,6 @@ export class AddInvoiceFormComponent
       this._browserTabTrackingService.enableProtection();
       this._logger.log('Form value changed', values);
       this.invoiceBuilderService.patchInvoice(fromFormToDTO(this.form.getRawValue()) as any);
-      this.recalculateRows();
     });
   }
 
@@ -190,7 +192,9 @@ export class AddInvoiceFormComponent
     this.rows.clear();
 
     if (invoice) {
-      this.form.reset(fromInvoiceToFormValue(invoice));
+      debugger
+      const newValue = fromInvoiceToFormValue(invoice);
+      this.form.reset(newValue);
 
       if (invoice.rows.length) {
         invoice.rows.forEach((good: InvoiceItemBase) => {
@@ -292,6 +296,31 @@ export class AddInvoiceFormComponent
 
     this.form.markAsDirty();
     this.invoiceBuilderService.deleteCredential(type);
+  }
+
+  onTotalPriceChange(
+    event: any,
+    index: number
+  ) {
+    this.invoiceBuilderService.invoice()?.pinPricePerUnitByTotal(index, event);
+    this.recalculateRows();
+  }
+
+  onPerUnitPriceChange(
+    event: any,
+    index: number
+  ) {
+    this.invoiceBuilderService.invoice()?.pinPricePerUnit(index, event);
+    this.recalculateRows();
+
+    // console.log(calculateIncludedTax(event, this.invoiceBuilderService.invoice()!.taxesAndFees));
+  }
+
+  onAmountChange(
+    event: any,
+    index: number
+  ) {
+    this.recalculateRows();
   }
 
   private _getLastRowType(): InvoiceItemType {

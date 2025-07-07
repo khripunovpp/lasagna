@@ -33,7 +33,7 @@ export interface UnitGroupItem {
     `
 
       .unit-switcher {
-        --unit-switcher-gap: 8px;
+        --unit-switcher-gap: 2px;
         display: flex;
         gap: var(--unit-switcher-gap);
         align-items: center;

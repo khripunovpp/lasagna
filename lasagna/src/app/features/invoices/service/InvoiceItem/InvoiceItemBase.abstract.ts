@@ -1,11 +1,12 @@
 import {InvoiceItemType} from './InvoiceItem.types';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
+import {Tax} from '../../../settings/service/models/Tax';
 
 export abstract class InvoiceItemBase {
   abstract readonly type: InvoiceItemType;
   abstract readonly amount: number;
   abstract readonly unit: string;
-  abstract frozenDto: InvoiceItemDTO['frozenDto'];
+  abstract pinnedDto: InvoiceItemDTO['pinnedDto'];
 
   abstract get weightGram(): number;
 
@@ -33,7 +34,15 @@ export abstract class InvoiceItemBase {
 
   abstract clone(): InvoiceItemBase;
 
-  abstract freeze(): void;
+  abstract pinDto(): void;
 
-  abstract unfreeze(): void;
+  abstract unpin(): void;
+
+  abstract calculateTaxesAndFeesMap(
+    taxesAndFees: Tax[]
+  ): Map<Tax['uuid'], number>;
+
+  abstract calculateTaxesAndFeesAmount(
+    taxesAndFees: Tax[]
+  ): number;
 }

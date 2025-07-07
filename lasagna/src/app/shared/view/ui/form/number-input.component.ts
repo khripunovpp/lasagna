@@ -19,31 +19,31 @@ import {NgTemplateOutlet} from '@angular/common';
   selector: 'lg-number-input',
   standalone: true,
   template: `
-      <div [class.disabled]="disable()"
-           class="lg-number-input">
-          @if (beforeExtraTpl()?.templateRef) {
-              <div class="lg-number-input__before">
-                  <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
-              </div>
-          }
-          <input #input
-                 (blur)="focused.set(false)"
-                 (change)="onInputChange.emit(value)"
-                 (focus)="focused.set(true)"
-                 (input)="onChangeInput($event)"
-                 (keydown)="onKeydown.emit()"
-                 [disabled]="disable()"
-                 [placeholder]="placeholder()"
-                 [value]="value"
-                 class="input"
-                 type="tel">
-          @if (afterExtraTpl()?.templateRef) {
-              <div class="lg-number-input__after">
-                  <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
-              </div>
-          }
+    <div [class.disabled]="disable()"
+         class="lg-number-input">
+      @if (beforeExtraTpl()?.templateRef) {
+        <div class="lg-number-input__before">
+          <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
+        </div>
+      }
+      <input #input
+             (blur)="focused.set(false)"
+             (change)="onInputChange.emit(value)"
+             (focus)="focused.set(true)"
+             (input)="onChangeInput($event)"
+             (keydown)="onKeydown.emit()"
+             [disabled]="disable()"
+             [placeholder]="placeholder()"
+             [value]="value"
+             class="input"
+             type="tel">
+      @if (afterExtraTpl()?.templateRef) {
+        <div class="lg-number-input__after">
+          <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+        </div>
+      }
 
-      </div>
+    </div>
 
   `,
   styles: [
@@ -78,7 +78,6 @@ import {NgTemplateOutlet} from '@angular/common';
         flex: 1;
         background-color: var(--control-bg);
         border-radius: 12px;
-        gap: 16px;
       }
 
       .lg-number-input.disabled {
