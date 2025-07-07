@@ -18,14 +18,23 @@ export const invoiceItemFormShape = {
   product_id: new FormControl<{
     uuid: string
   } | null>(null),
-  free_name: new FormControl<string | null>(null),
-  free_price: new FormControl<string | null>(null),
+  pricePerUnit: new FormControl<string | null>(null),
+  totalPrice: new FormControl<string | null>(null),
 };
+
+export const invoiceTaxItemFormShape = {
+  name: new FormControl<string>('', Validators.required),
+  amount: new FormControl<number | string>(0, Validators.required),
+  percentage: new FormControl<boolean>(true, Validators.required),
+  description: new FormControl<string | null>(''),
+  items: new FormControl<string[]>([]),
+  uuid: new FormControl<string | null>(null),
+}
 
 export const invoiceFormShape = {
   name: new FormControl<string>('', Validators.required),
   rows: new FormArray([
-    new FormGroup(invoiceItemFormShape)
+    new FormGroup(invoiceItemFormShape),
   ]),
   credential_from: new FormControl<{
     free_style?: string
@@ -41,6 +50,7 @@ export const invoiceFormShape = {
   terms: new FormControl<string | null>(''),
   invoice_number: new FormControl<string>(''),
   prefix: new FormControl<string>(''),
+  taxes_and_fees: new FormControl([]),
 };
 
 export const makeInvoiceItemFormGroup = (
@@ -61,10 +71,8 @@ export const makeInvoiceItemFormGroup = (
     activeTab: new FormControl(item?.type || 'recipe'),
     recipe_id: new FormControl(recipeId),
     product_id: new FormControl(productId),
-    free_name: new FormControl(null),
-    free_price: new FormControl(null),
-    pricePerUnit: new FormControl(item?.pricePerUnitModified || null),
-    totalPrice: new FormControl(item?.totalPrice || null),
+    totalPrice: new FormControl(item?.totalPrice),
+    pricePerUnit: new FormControl(item?.pricePerUnit),
   })
 }
 
@@ -73,14 +81,13 @@ export const fromFormToDTO = (
 ): Partial<InvoiceDTO> => {
   return {
     name: formValue.name || '',
-    rows: formValue.rows?.map<InvoiceItemDTO>((item) => {
+    rows: formValue.rows?.map((item) => {
       return {
         amount: parseFloat(item.amount || '0'),
         unit: item.unit || 'gram',
         type: (item.activeTab || 'recipe') as InvoiceItemDTO['type'],
         recipe_id: item.recipe_id?.uuid || null,
         product_id: item.product_id?.uuid || null,
-        free_name: item.free_name || null,
       }
     }),
     credential_from_string: formValue.credential_from?.free_style || '',
@@ -93,6 +100,7 @@ export const fromFormToDTO = (
     terms: formValue.terms || '',
     invoice_number: formValue.invoice_number || '',
     prefix: formValue.prefix || '',
+    taxes_and_fees: formValue.taxes_and_fees as any,
   };
 }
 
@@ -117,10 +125,8 @@ export const fromInvoiceToFormValue = (
         activeTab: item.type as 'recipe' | 'product' | 'custom',
         product_id: productId,
         recipe_id: recipeId,
-        free_name: null,
-        free_price: null,
-        pricePerUnit: item.pricePerUnitModified?.toString() || null,
-        totalPrice: item.totalPrice?.toString() || null,
+        totalPrice: item.totalPrice.toString(),
+        pricePerUnit: item.pricePerUnitModified.toString(),
       }
     }),
     credential_from: invoice.canBeUpdated ? {
@@ -129,16 +135,16 @@ export const fromInvoiceToFormValue = (
         ? Credential.fromRaw(invoice.system_credential_id)
         : undefined,
     } : {
-      free_style: invoice.frozenDto?.system_credential_string || '',
+      free_style: invoice.pinnedDto?.system_credential_string || '',
       id: undefined,
     },
-    credential_to: invoice.canBeUpdated ?{
+    credential_to: invoice.canBeUpdated ? {
       free_style: invoice.credential_to_string || '',
       id: invoice.customer_credential_id
         ? Credential.fromRaw(invoice.customer_credential_id)
         : undefined,
     } : {
-      free_style: invoice.frozenDto?.customer_credential_string || '',
+      free_style: invoice.pinnedDto?.customer_credential_string || '',
       id: undefined,
     },
     date_issued: invoice.date_issued ? new Date(invoice.date_issued).toISOString() : null,
@@ -147,6 +153,7 @@ export const fromInvoiceToFormValue = (
     terms: invoice.terms || '',
     invoice_number: invoice.invoice_number || '',
     prefix: invoice.prefix || '',
+    taxes_and_fees: invoice.taxesAndFees as any,
   };
 };
 

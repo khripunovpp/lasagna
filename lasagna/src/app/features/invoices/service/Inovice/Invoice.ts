@@ -7,6 +7,7 @@ import {InvoiceItemDTO} from '../InvoiceItem/InvoiceItem.scheme';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Credential} from '../../../settings/service/models/Credential';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
+import {Tax} from '../../../settings/service/models/Tax';
 
 export class Invoice {
   constructor(
@@ -38,7 +39,9 @@ export class Invoice {
   public createdAt: number = Date.now();
   public updatedAt: number = Date.now();
   public state: InvoiceState = InvoiceState.draft;
-  public frozenDto: InvoiceDTO["frozenDto"] = undefined;
+  public pinnedDto: InvoiceDTO["pinnedDto"] = undefined;
+  // Taxes and fees are frozen by default, in the database we keep them as is in the invoice object
+  public taxesAndFees: Tax[] = [];
 
   get pdfNumber(): string {
     return `${this.prefix}/${this.invoice_number}`;
@@ -49,11 +52,16 @@ export class Invoice {
   }
 
   get taxTotal(): number {
-    return 0; // Placeholder for tax calculation logic
+    let total = 0;
+    for (let idx = 0; idx < this.rows.length; idx++) {
+      total += this.getRowTaxAmount(idx);
+    }
+
+    return total;
   }
 
-  get totalWithTax(): number {
-    return this.total + this.taxTotal;
+  get totalWithTaxAndFees(): number {
+    return this.total + this.taxTotal + this.feesAmount;
   }
 
   get canBeUpdated() {
@@ -69,6 +77,15 @@ export class Invoice {
   get canMarkPaid() {
     return this.state === InvoiceState.issued
       || this.state === InvoiceState.draft;
+  }
+
+  get feesAmount(): number {
+    return this.taxesAndFees.reduce((sum, tax) => {
+      if (!tax.percentage) {
+        return sum + tax.amount;
+      }
+      return sum;
+    }, 0);
   }
 
   static fromRaw(
@@ -101,7 +118,8 @@ export class Invoice {
       updatedAt: this.updatedAt || Date.now(),
       createdAt: this.createdAt || Date.now(),
       state: this.state,
-      frozenDto: this.frozenDto,
+      pinnedDto: this.pinnedDto,
+      taxes_and_fees: this.taxesAndFees.map(tax => tax.toDTO()),
     };
   }
 
@@ -119,16 +137,19 @@ export class Invoice {
     if (dto.customer_credential_id != null && !this.customer_credential_id) {
       this.customer_credential_id = Credential.fromRaw(dto.customer_credential_id);
     }
+    if (Array.isArray(dto.taxes_and_fees) && !this.taxesAndFees.length) {
+      this.taxesAndFees = dto.taxes_and_fees.map(tax => Tax.fromRaw(tax));
+    }
     if (dto.date_issued != null) this.date_issued = new Date(dto.date_issued!).getTime();
     if (dto.date_due != null) this.date_due = new Date(dto.date_due!).getTime();
     if (dto.notes != null) this.notes = toString(dto.notes);
     if (dto.terms != null) this.terms = toString(dto.terms);
     if (dto.createdAt != null) this.createdAt = new Date(dto.createdAt!).getTime();
     if (dto.state != null) this.state = dto.state as InvoiceState;
-    if (dto.frozenDto != null) {
-      this.frozenDto = {
-        system_credential_string: dto.frozenDto.system_credential_string || '',
-        customer_credential_string: dto.frozenDto.customer_credential_string || '',
+    if (dto.pinnedDto != null) {
+      this.pinnedDto = {
+        system_credential_string: dto.pinnedDto.system_credential_string || '',
+        customer_credential_string: dto.pinnedDto.customer_credential_string || '',
       };
     }
 
@@ -163,6 +184,21 @@ export class Invoice {
         }
       }
     });
+
+    this.markUpdated();
+  }
+
+  replaceTaxes(
+    taxes: Partial<InvoiceDTO>['taxes_and_fees']
+  ) {
+    if (!this.canBeUpdated || !Array.isArray(taxes)) return;
+
+    this.taxesAndFees = [];
+
+    for (const tax of taxes) {
+      const newTax = Tax.fromRaw(tax);
+      this.taxesAndFees.push(newTax);
+    }
 
     this.markUpdated();
   }
@@ -250,6 +286,7 @@ export class Invoice {
     copy.rows = this.rows.map(item => item.clone());
     copy.system_credential_id = Credential.fromRaw(this.system_credential_id?.toDTO());
     copy.customer_credential_id = Credential.fromRaw(this.customer_credential_id?.toDTO());
+    copy.taxesAndFees = this.taxesAndFees.map(tax => Tax.fromRaw(tax.toDTO()));
     return copy;
   }
 
@@ -263,13 +300,52 @@ export class Invoice {
    * Небезапсоный метод для заморозки строк инвойса. Не проверяет состояние
    */
   freezeRows() {
-    this.frozenDto = {
+    this.pinnedDto = {
       system_credential_string: this.system_credential_id?.toFormattedString() ?? '',
       customer_credential_string: this.customer_credential_id?.toFormattedString() ?? '',
     }
     for (const item of this.rows) {
-      item.freeze();
+      item.pinDto();
     }
+  }
+
+  pinRow(
+    index: number
+  ) {
+    if (index < 0 || index >= this.rows.length) {
+      throw new Error('Index out of bounds');
+    }
+    const item = this.rows[index];
+    item.pinDto();
+  }
+
+  pinPricePerUnitByTotal(
+    index: number,
+    total: number
+  ) {
+    if (index < 0 || index >= this.rows.length) {
+      throw new Error('Index out of bounds');
+    }
+    const item = this.rows[index];
+    const pricePerUnit = total / item.amount;
+    item.pinnedDto = {
+      ...item.pinnedDto as any,
+      pricePerUnit: pricePerUnit,
+    };
+  }
+
+  pinPricePerUnit(
+    index: number,
+    pricePerUnit: number
+  ) {
+    if (index < 0 || index >= this.rows.length) {
+      throw new Error('Index out of bounds');
+    }
+    const item = this.rows[index];
+    item.pinnedDto = {
+      ...item.pinnedDto as any,
+      pricePerUnit: pricePerUnit,
+    };
   }
 
   /**
@@ -277,9 +353,9 @@ export class Invoice {
    * Небезапсоный метод для разморозки строк инвойса. Не проверяет состояние
    */
   unfreezeRows() {
-    this.frozenDto = undefined;
+    this.pinnedDto = undefined;
     for (const item of this.rows) {
-      item.unfreeze();
+      item.unpin();
     }
   }
 
@@ -310,6 +386,36 @@ export class Invoice {
     this.freezeRows();
     this.state = InvoiceState.issued;
     this.updatedAt = Date.now();
+  }
+
+  addTax(
+    tax: Tax
+  ) {
+    if (!this.canBeUpdated) return;
+    this.taxesAndFees.push(tax);
+    this.markUpdated();
+  }
+
+  removeTax(
+    tax: Tax
+  ) {
+    if (!this.canBeUpdated) return;
+    const index = this.taxesAndFees.findIndex(t => t.uuid === tax.uuid);
+    if (index !== -1) {
+      this.taxesAndFees.splice(index, 1);
+      this.markUpdated();
+    }
+  }
+
+  getRowTaxAmount(
+    index: number
+  ): number {
+    if (index < 0 || index >= this.rows.length) {
+      throw new Error('Index out of bounds');
+    }
+    const item = this.rows[index];
+
+    return item.calculateTaxesAndFeesAmount(this.taxesAndFees);
   }
 
   private _getRowKey(

@@ -1,6 +1,7 @@
 <form [formGroup]="form"
       style="--control-bg: #fff">
-  @let canBeUpdated = invoiceBuilderService.invoice()?.canBeUpdated;
+  @let invoice = invoiceBuilderService.invoice();
+  @let canBeUpdated = invoice?.canBeUpdated;
   <lg-flex-column>
     <lg-control label="Prvate name">
       @if (canBeUpdated) {
@@ -96,11 +97,14 @@
       <lg-flex-row [equal]="true"
                    [mobileMode]="true"
                    [size]="'medium'"
+                   [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px' : 0}"
                    lgExpand>
-        <div lgWidth="40%">Item</div>
-        <div lgWidth="30%">Amount</div>
-        <div lgWidth="15%">Price per unit</div>
-        <div lgWidth="15%">Total</div>
+        <div lgWidth="30%">Item</div>
+        <div lgWidth="20%">Amount</div>
+        <div lgWidth="12.5%">Price per unit</div>
+        <div lgWidth="12.5%">Price</div>
+        <div lgWidth="12.5%">Taxes and fees</div>
+        <div lgWidth="12.5%">Total</div>
       </lg-flex-row>
 
 
@@ -111,7 +115,7 @@
             <lg-controls-row [mobileMode]="true" [equal]="true">
 
               @if (canBeUpdated) {
-                <lg-invoice-item-selector lgWidth="40%"
+                <lg-invoice-item-selector lgWidth="30%"
                                           (onChanged)="onItemChanged($event, i)"
                                           formControlName="activeTab">
                   <lg-multiselect [resource]="'recipes'"
@@ -130,14 +134,10 @@
                                   ngProjectAs="products"
                                   [autoLoad]="true">
                   </lg-multiselect>
-
-                  <lg-input ngProjectAs="freeStyle"
-                            formControlName="free_name"
-                            [placeholder]="'Just type name'"></lg-input>
                 </lg-invoice-item-selector>
               } @else {
                 <lg-readonly-control [placeholder]="'Unknown item'"
-                                     [value]="item?.frozenDto?.entity_name"
+                                     [value]="item?.pinnedDto?.entity_name"
                                      lgWidth="40%">
                 </lg-readonly-control>
               }
@@ -145,7 +145,8 @@
               @if (canBeUpdated) {
                 <lg-number-input #amount
                                  lgParseMath
-                                 lgWidth="30%"
+                                 lgWidth="20%"
+                                 (onInputChange)="onAmountChange($event, i)"
                                  [placeholder]="'0'"
                                  formControlName="amount">
                   <ng-template lgExtraTpl place="after">
@@ -156,19 +157,50 @@
                 </lg-number-input>
               } @else {
                 <lg-readonly-control [placeholder]="'0'"
-                                     [value]="item?.frozenDto?.amount"
-                                     lgWidth="30%">
+                                     [value]="item?.pinnedDto?.amount"
+                                     lgWidth="12.5%">
                 </lg-readonly-control>
               }
 
+              @if (canBeUpdated) {
+                <lg-number-input lgParseMath
+                                 (onInputChange)="onPerUnitPriceChange($event, i)"
+                                 lgWidth="12.5%"
+                                 [placeholder]="'0'"
+                                 formControlName="pricePerUnit">
+                </lg-number-input>
+              } @else {
+                <lg-readonly-control [placeholder]="'0'"
+                                     [value]="item?.pricePerUnitModified | userCurrency: '1.2-4'"
+                                     lgWidth="12.5%">
+                </lg-readonly-control>
+              }
+
+
+              @if (canBeUpdated) {
+                <lg-number-input lgParseMath
+                                 (onInputChange)="onTotalPriceChange($event, i)"
+                                 lgWidth="12.5%"
+                                 [placeholder]="'0'"
+                                 formControlName="totalPrice">
+                </lg-number-input>
+              } @else {
+                <lg-readonly-control [placeholder]="'0'"
+                                     [value]="item?.totalPrice | userCurrency: '1.2-4'"
+                                     lgWidth="12.5%">
+                </lg-readonly-control>
+              }
+
+              @let taxAmount = item?.calculateTaxesAndFeesAmount(invoice?.taxesAndFees ?? []) ?? 0;
+
               <lg-readonly-control [placeholder]="'0'"
-                                   formControlName="pricePerUnit"
-                                   lgWidth="15%">
+                                   [value]="taxAmount | userCurrency: '1.2-4'"
+                                   lgWidth="12.5%">
               </lg-readonly-control>
 
               <lg-readonly-control [placeholder]="'0'"
-                                   formControlName="totalPrice"
-                                   lgWidth="15%">
+                                   [value]="((item?.totalPrice ?? 0) + taxAmount) | userCurrency: '1.2-4'"
+                                   lgWidth="12.5%">
               </lg-readonly-control>
 
               @if (canBeUpdated) {
@@ -201,6 +233,13 @@
         </lg-button>
       }
     </lg-flex-column>
+
+    <hr color="#fafafa" lgExpand size="2"/>
+
+    <lg-invoice-taxes-and-fees (onAdd)="invoiceBuilderService.addTax($event[1])"
+                               (onRemove)="invoiceBuilderService.removeTax($event[1])"
+                               [invoice]="invoiceBuilderService.invoice()"
+                               formControlName="taxes_and_fees"></lg-invoice-taxes-and-fees>
 
     <hr color="#fafafa" lgExpand size="2"/>
 
@@ -250,9 +289,16 @@
       </lg-flex-row>
 
       <lg-flex-row [relaxed]="true">
+        Fees
+        <b class="text-right text-bold" lgWidth="200px">
+          {{ invoiceBuilderService.invoice()?.feesAmount | userCurrency: '1.2-4' }}
+        </b>
+      </lg-flex-row>
+
+      <lg-flex-row [relaxed]="true">
         <b class="text-right text-bold">Total</b>
         <b class="text-right text-bold" lgWidth="200px">
-          {{ invoiceBuilderService.invoice()?.totalWithTax | userCurrency: '1.2-4' }}
+          {{ invoiceBuilderService.invoice()?.totalWithTaxAndFees | userCurrency: '1.2-4' }}
         </b>
       </lg-flex-row>
     </lg-flex-column>

@@ -4,6 +4,7 @@ import {InvoiceItemDTO} from './InvoiceItem.scheme';
 import {parseFloatingNumber} from '../../../../shared/helpers';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Recipe} from '../../../recipes/service/models/Recipe';
+import {Tax} from '../../../settings/service/models/Tax';
 
 export class RecipeInvoiceItem
   extends InvoiceItemBase {
@@ -11,7 +12,7 @@ export class RecipeInvoiceItem
     public recipe: Recipe,
     public amount: number = 0,
     public unit: string = 'gram',
-    public frozenDto: InvoiceItemDTO["frozenDto"] = undefined,
+    public pinnedDto: InvoiceItemDTO["pinnedDto"],
   ) {
     super();
   }
@@ -23,8 +24,8 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnitModified(): number {
-    if (this.frozenDto) {
-      return this.frozenDto.pricePerUnit;
+    if (this.pinnedDto) {
+      return this.pinnedDto.pricePerUnit;
     }
     // для иновйса подгоняем цену юнит исходя из тотала
     return this.recipe.totalPriceModified / this.recipe.outcomeAmount
@@ -38,8 +39,8 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnit(): number {
-    if (this.frozenDto) {
-      return this.frozenDto.pricePerUnit;
+    if (this.pinnedDto) {
+      return this.pinnedDto.pricePerUnit;
     }
     if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
       return 0;
@@ -76,7 +77,7 @@ export class RecipeInvoiceItem
       unit: this.unit || 'gram',
       recipe_id: this.recipe.uuid || null,
       product_id: null,
-      frozenDto: this.frozenDto,
+      pinnedDto: this.pinnedDto,
     };
   }
 
@@ -102,24 +103,48 @@ export class RecipeInvoiceItem
       this.recipe,
       this.amount,
       this.unit,
-      this.frozenDto,
+      this.pinnedDto,
     );
   }
 
-  freeze(): void {
-    const {frozenDto, ...dto} = this.toDTO();
-    this.frozenDto = {
+  pinDto(): void {
+    const {pinnedDto, ...dto} = this.toDTO();
+    this.pinnedDto = {
       amount: dto.amount,
       unit: dto.unit,
       type: dto.type,
       entity_id: this.recipe.uuid || null,
       entity_name: this.recipe.name,
       pricePerUnit: this.pricePerUnitModified,
-      totalPrice: this.totalPrice,
     }
   }
 
-  unfreeze(): void {
-    this.frozenDto = undefined;
+  unpin(): void {
+    this.pinnedDto = null;
+  }
+
+  calculateTaxesAndFeesMap(
+    taxesAndFees: Tax[],
+  ): Map<Tax["uuid"], number> {
+    let totalPrice = this.totalPrice;
+    const taxesMap = new Map<Tax['uuid'], number>();
+    for (const tax of taxesAndFees) {
+      let taxAmount = 0;
+      if (tax.percentage) {
+        taxAmount = (totalPrice * tax.amount) / 100;
+      }
+      taxesMap.set(tax.uuid, taxAmount);
+      totalPrice += taxAmount;
+    }
+    return taxesMap;
+  }
+
+  calculateTaxesAndFeesAmount(
+    taxesAndFees: Tax[]
+  ): number {
+    const amount = Array.from(
+      this.calculateTaxesAndFeesMap(taxesAndFees).values(),
+    ).reduce((acc, amount) => acc + amount, 0);
+    return amount;
   }
 }
