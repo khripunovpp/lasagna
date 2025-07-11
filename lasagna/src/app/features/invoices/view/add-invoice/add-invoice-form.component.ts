@@ -47,6 +47,7 @@ import {BrowserTabTrackingService} from '../../../../shared/service/services/bro
 import {DatePipe} from '@angular/common';
 import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
 import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
+import {CheckboxComponent} from '../../../../shared/view/ui/form/chckbox.component';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -76,8 +77,7 @@ import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
     ControlComponent,
     DatePipe,
     InvoiceTaxesAndFeesComponent,
-
-
+    CheckboxComponent,
   ],
   styles: [
     `
@@ -312,8 +312,14 @@ export class AddInvoiceFormComponent
   ) {
     this.invoiceBuilderService.invoice()?.pinPricePerUnit(index, event);
     this.recalculateRows();
+  }
 
-    // console.log(calculateIncludedTax(event, this.invoiceBuilderService.invoice()!.taxesAndFees));
+  onTotalPriceWithTaxesAndFeesChange(
+    event: any,
+    index: number
+  ) {
+    // this.invoiceBuilderService.invoice()?.pinPricePerUnitByTotal(index, event);
+    this.recalculateRows();
   }
 
   onAmountChange(
@@ -332,8 +338,9 @@ export class AddInvoiceFormComponent
   }
 
   private _getInvoiceItemFromGroup(
-    item?: Invoice['rows'][number]
+    item?: Invoice['rows'][number],
+    invoice?: Invoice
   ) {
-    return makeInvoiceItemFormGroup(item);
+    return makeInvoiceItemFormGroup(item,invoice);
   }
 }

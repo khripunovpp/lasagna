@@ -20,6 +20,7 @@ export const invoiceItemFormShape = {
   } | null>(null),
   pricePerUnit: new FormControl<string | null>(null),
   totalPrice: new FormControl<string | null>(null),
+  totalPriceWithTaxesAndFees: new FormControl<string | null>(null),
 };
 
 export const invoiceTaxItemFormShape = {
@@ -51,10 +52,12 @@ export const invoiceFormShape = {
   invoice_number: new FormControl<string>(''),
   prefix: new FormControl<string>(''),
   taxes_and_fees: new FormControl([]),
+  taxesIncluded: new FormControl<boolean>(false),
 };
 
 export const makeInvoiceItemFormGroup = (
-  item?: InvoiceItemBase
+  item?: InvoiceItemBase,
+  invoice?: Invoice
 ): FormGroup => {
   let productId = null;
   let recipeId = null;
@@ -65,6 +68,8 @@ export const makeInvoiceItemFormGroup = (
     recipeId = {uuid: item.recipe.uuid};
   }
 
+  const totalPriceWithTaxesAndFees = (((item?.totalPrice || 0) + (item?.calculateTaxesAndFeesAmount(invoice?.taxesAndFees || []) || 0)) || 0) || null;
+
   return new FormGroup({
     amount: new FormControl(item?.amount || null, Validators.required),
     unit: new FormControl(item?.unit ?? 'gram', Validators.required),
@@ -72,7 +77,8 @@ export const makeInvoiceItemFormGroup = (
     recipe_id: new FormControl(recipeId),
     product_id: new FormControl(productId),
     totalPrice: new FormControl(item?.totalPrice),
-    pricePerUnit: new FormControl(item?.pricePerUnit),
+    pricePerUnit: new FormControl(item?.pricePerUnitModified),
+    totalPriceWithTaxesAndFees: new FormControl(totalPriceWithTaxesAndFees),
   })
 }
 
@@ -101,6 +107,7 @@ export const fromFormToDTO = (
     invoice_number: formValue.invoice_number || '',
     prefix: formValue.prefix || '',
     taxes_and_fees: formValue.taxes_and_fees as any,
+    taxesIncluded: formValue.taxesIncluded || false,
   };
 }
 
@@ -127,6 +134,9 @@ export const fromInvoiceToFormValue = (
         recipe_id: recipeId,
         totalPrice: item.totalPrice.toString(),
         pricePerUnit: item.pricePerUnitModified.toString(),
+        totalPriceWithTaxesAndFees: (
+          (item.totalPrice || 0) + (item.calculateTaxesAndFeesAmount(invoice.taxesAndFees || []) || 0)
+        ).toString(),
       }
     }),
     credential_from: invoice.canBeUpdated ? {
@@ -154,6 +164,7 @@ export const fromInvoiceToFormValue = (
     invoice_number: invoice.invoice_number || '',
     prefix: invoice.prefix || '',
     taxes_and_fees: invoice.taxesAndFees as any,
+    taxesIncluded: invoice.taxesAlreadyIncluded || false,
   };
 };
 

@@ -177,7 +177,7 @@
               }
 
 
-              @if (canBeUpdated) {
+              @if (canBeUpdated && !invoice?.taxesAlreadyIncluded) {
                 <lg-number-input lgParseMath
                                  (onInputChange)="onTotalPriceChange($event, i)"
                                  lgWidth="12.5%"
@@ -198,10 +198,19 @@
                                    lgWidth="12.5%">
               </lg-readonly-control>
 
-              <lg-readonly-control [placeholder]="'0'"
-                                   [value]="((item?.totalPrice ?? 0) + taxAmount) | userCurrency: '1.2-4'"
-                                   lgWidth="12.5%">
-              </lg-readonly-control>
+              @if (invoice?.taxesAlreadyIncluded) {
+                <lg-number-input lgParseMath
+                                 (onInputChange)="onTotalPriceWithTaxesAndFeesChange($event, i)"
+                                 lgWidth="12.5%"
+                                 [placeholder]="'0'"
+                                 formControlName="totalPriceWithTaxesAndFees">
+                </lg-number-input>
+              } @else {
+                <lg-readonly-control [placeholder]="'0'"
+                                     [value]="((item?.totalPrice ?? 0) + taxAmount) | userCurrency: '1.2-4'"
+                                     lgWidth="12.5%">
+                </lg-readonly-control>
+              }
 
               @if (canBeUpdated) {
                 <ng-container ngProjectAs="rowActions">
@@ -240,6 +249,8 @@
                                (onRemove)="invoiceBuilderService.removeTax($event[1])"
                                [invoice]="invoiceBuilderService.invoice()"
                                formControlName="taxes_and_fees"></lg-invoice-taxes-and-fees>
+
+    <lg-checkbox formControlName="taxesIncluded"></lg-checkbox>
 
     <hr color="#fafafa" lgExpand size="2"/>
 

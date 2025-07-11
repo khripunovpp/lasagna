@@ -116,6 +116,7 @@ export class InvoiceBuilderService {
       prefix: values.prefix || '',
       system_credential_id: values.system_credential_id?.id || null,
       customer_credential_id: values.customer_credential_id?.id || null,
+      taxesIncluded: values.taxesIncluded || false,
     };
     const rowsDTO = values.rows.map((row: any) => {
       return {

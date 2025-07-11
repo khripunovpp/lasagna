@@ -8,6 +8,7 @@ import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Credential} from '../../../settings/service/models/Credential';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {Tax} from '../../../settings/service/models/Tax';
+import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
 
 export class Invoice {
   constructor(
@@ -42,6 +43,7 @@ export class Invoice {
   public pinnedDto: InvoiceDTO["pinnedDto"] = undefined;
   // Taxes and fees are frozen by default, in the database we keep them as is in the invoice object
   public taxesAndFees: Tax[] = [];
+  public taxesAlreadyIncluded: boolean = false;
 
   get pdfNumber(): string {
     return `${this.prefix}/${this.invoice_number}`;
@@ -95,6 +97,27 @@ export class Invoice {
     return new Invoice(raw as InvoiceDTO, factory);
   }
 
+  setTaxesAlreadyIncluded(
+    value: boolean
+  ) {
+    if (!this.canBeUpdated) return;
+    console.log('Setting taxes already included:', value);
+    this.taxesAlreadyIncluded = value;
+    if (this.taxesAlreadyIncluded) {
+      for (let idx = 0; idx < this.rows.length; idx++) {
+        const item = this.rows[idx];
+        const perUnitTaxAmountIncluded = calculateIncludedTax(item.pricePerUnitModified, this.taxesAndFees);
+        console.log({
+          itemPricePerUnit: item.pricePerUnitModified,
+          perUnitTaxAmountIncluded,
+          resultingPricePerUnit: item.pricePerUnitModified - perUnitTaxAmountIncluded,
+        })
+        this.pinPricePerUnit(idx, item.pricePerUnitModified - perUnitTaxAmountIncluded);
+      }
+    }
+    this.markUpdated();
+  }
+
   markUpdated() {
     if (!this.canBeUpdated) return;
     this.updatedAt = Date.now();
@@ -120,6 +143,7 @@ export class Invoice {
       state: this.state,
       pinnedDto: this.pinnedDto,
       taxes_and_fees: this.taxesAndFees.map(tax => tax.toDTO()),
+      taxesIncluded: this.taxesAlreadyIncluded,
     };
   }
 
@@ -146,6 +170,9 @@ export class Invoice {
     if (dto.terms != null) this.terms = toString(dto.terms);
     if (dto.createdAt != null) this.createdAt = new Date(dto.createdAt!).getTime();
     if (dto.state != null) this.state = dto.state as InvoiceState;
+    if (dto.taxesIncluded != null) {
+      this.setTaxesAlreadyIncluded(dto.taxesIncluded);
+    }
     if (dto.pinnedDto != null) {
       this.pinnedDto = {
         system_credential_string: dto.pinnedDto.system_credential_string || '',
