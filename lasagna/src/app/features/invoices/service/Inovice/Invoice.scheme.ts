@@ -24,6 +24,7 @@ export const InvoiceScheme = z.object({
     customer_credential_string: z.string().nullable(),
   }).optional(),
   taxes_and_fees: z.array(z.lazy<any>(() => TaxScheme)),
+  taxesIncluded: z.boolean().default(false),
 });
 
 export type InvoiceDTO = z.infer<typeof InvoiceScheme>;

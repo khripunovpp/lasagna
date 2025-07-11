@@ -4,7 +4,10 @@ export const calculateIncludedTax = (
   priceWithTax: number,
   taxRates: Tax[],
 ) => {
-  const totalTaxRate = taxRates.reduce((sum, tax) => sum + tax.amount, 0) / 100;
+  const totalTaxRate = taxRates.reduce((sum, tax) => {
+    if (!tax.percentage) return sum;
+    return sum + tax.amount;
+  }, 0) / 100;
   const priceWithoutTax = priceWithTax / (1 + totalTaxRate);
 
   return priceWithTax - priceWithoutTax;
