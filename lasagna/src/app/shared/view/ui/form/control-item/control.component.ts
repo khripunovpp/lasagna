@@ -1,12 +1,13 @@
 import {Component, computed, contentChildren, input, ViewEncapsulation} from '@angular/core';
 import {ControlLabelTemplateDirective} from './control-label-template.directive';
-import {NgTemplateOutlet} from '@angular/common';
+import {NgStyle, NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'lg-control',
   template: `
-    <div class="control">
-      <label class="control__label">
+    <div [style.flex-direction]="flow()"
+         class="control">
+      <label [attr.for]="labelFor()" class="control__label">
         <ng-container *ngTemplateOutlet="beforeLabelTpl()"></ng-container>
 
         <span class="control__label-string">
@@ -71,7 +72,8 @@ import {NgTemplateOutlet} from '@angular/common';
     `
   ],
   imports: [
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    NgStyle
   ],
   encapsulation: ViewEncapsulation.None
 })
@@ -80,6 +82,8 @@ export class ControlComponent {
   }
 
   label = input('');
+  flow = input<'row' | 'column' | 'column-reverse' | 'row-reverse'>('column');
+  labelFor = input<string | null>(null);
   labelTpls = contentChildren(ControlLabelTemplateDirective);
   beforeLabelTpl = computed(() => {
     return this.labelTpls().find(tpl => tpl.position() === 'before')?.templateRef || null;

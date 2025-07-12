@@ -48,6 +48,8 @@ import {DatePipe} from '@angular/common';
 import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
 import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
 import {CheckboxComponent} from '../../../../shared/view/ui/form/chckbox.component';
+import {ControlBoxComponent} from '../../../../shared/view/ui/form/control-box.component';
+import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 
 @Component({
   selector: 'lg-add-invoice-form',
@@ -78,6 +80,8 @@ import {CheckboxComponent} from '../../../../shared/view/ui/form/chckbox.compone
     DatePipe,
     InvoiceTaxesAndFeesComponent,
     CheckboxComponent,
+    ControlBoxComponent,
+    ShrinkDirective,
   ],
   styles: [
     `
