@@ -141,6 +141,7 @@ export class CheckboxComponent
   @Input() value: string | number = '';
   modelValue: boolean = false;
   name = input<string>('');
+  labelId = input<string>('');
   size = input<
     'small' | 'default' | 'large' | 'medium'
   >('default');

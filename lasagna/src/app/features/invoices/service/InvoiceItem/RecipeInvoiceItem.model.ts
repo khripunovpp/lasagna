@@ -24,7 +24,7 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnitModified(): number {
-    if (this.pinnedDto) {
+    if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
     // для иновйса подгоняем цену юнит исходя из тотала
@@ -39,7 +39,7 @@ export class RecipeInvoiceItem
   }
 
   get pricePerUnit(): number {
-    if (this.pinnedDto) {
+    if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
     if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
