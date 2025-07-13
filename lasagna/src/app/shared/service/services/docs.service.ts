@@ -22,6 +22,7 @@ export interface TreeNode {
   title?: string;
   language?: string;
   children?: TreeNode[];
+  _expanded?: boolean; // Used for UI state, not stored in DB
 }
 
 interface MetaInfo {
