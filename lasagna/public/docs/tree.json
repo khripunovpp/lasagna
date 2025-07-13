@@ -64,6 +64,44 @@
   },
   {
     "type": "folder",
+    "name": "invoices",
+    "children": [
+      {
+        "type": "file",
+        "name": "creating-invoices[en].md",
+        "language": "en",
+        "path": "invoices/creating-invoices[en].md",
+        "title": "creating-invoices[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "creating-invoices[ru].md",
+        "language": "ru",
+        "path": "invoices/creating-invoices[ru].md",
+        "title": "creating-invoices[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "invoices-overview[en].md",
+        "language": "en",
+        "path": "invoices/invoices-overview[en].md",
+        "title": "invoices-overview[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "invoices-overview[ru].md",
+        "language": "ru",
+        "path": "invoices/invoices-overview[ru].md",
+        "title": "invoices-overview[ru]",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "type": "folder",
     "name": "recipes",
     "children": [
       {
