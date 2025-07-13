@@ -1,24 +1,392 @@
 [
   {
     "type": "file",
-    "name": "requirenments.md",
-    "path": "getting-started/install/requirenments.md",
-    "title": "Требования",
+    "name": "header[ru].md",
+    "language": "ru",
+    "path": "getting-started/header[ru].md",
+    "title": "Шапка приложения",
+    "order": 1,
     "data": {
-      "title": "Требования",
-      "type": "card"
+      "title": "Шапка приложения",
+      "order": 1
     },
-    "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n"
+    "html": "<h2>🔝 Верхняя панель (хедер)</h2>\n<p><strong>Верхняя панель</strong> всегда закреплена в верхней части экрана и обеспечивает быстрый доступ к навигации и вспомогательным инструментам.</p>\n<h3>🧭 Элементы панели:</h3>\n<ul>\n<li><p>⬅️ <strong>Кнопка «Назад»</strong><br>Возвращает на предыдущий экран. Удобно при переходе из вложенных страниц или при редактировании.</p>\n</li>\n<li><p>🏠 <strong>Кнопка «Домой»</strong><br>Быстрый переход на главную страницу (дашборд) из любой части приложения.</p>\n</li>\n<li><p>🔎 <strong>Полнотекстовый поиск</strong><br>Гибкий поиск по рецептам, продуктам и инвойсам:  </p>\n<ul>\n<li>Поддерживает частичные совпадения, точные фразы и несколько слов.  </li>\n<li>Результаты сортируются по релевантности и контексту.</li>\n</ul>\n</li>\n<li><p>⚙️ <strong>Кнопка «Настройки»</strong><br>Открывает панель настроек приложения, где можно:  </p>\n<ul>\n<li>Изменить язык и интерфейс  </li>\n<li>Управлять политиками конфиденциальности  </li>\n<li>Ознакомиться с пользовательскими соглашениями</li>\n</ul>\n</li>\n<li><p>🧩 <strong>Кнопка «Виджеты»</strong><br>Открывает доступ к вспомогательным инструментам. Например:  </p>\n<ul>\n<li>🧬 <strong>Конвертер желатина</strong> – помогает переводить между листовым и порошковым желатином  </li>\n<li>⏳ (В будущем появятся другие виджеты)</li>\n</ul>\n</li>\n</ul>\n<hr>\n<p>Эта панель остаётся доступной на всех экранах и делает навигацию по приложению быстрой и интуитивной.</p>\n"
   },
   {
     "type": "file",
-    "name": "intro.md",
-    "path": "getting-started/intro.md",
-    "title": "Начало работы",
+    "name": "hedaer[en].md",
+    "language": "en",
+    "path": "getting-started/hedaer[en].md",
+    "title": "Top Bar (Header)",
+    "order": 1,
     "data": {
-      "title": "Начало работы",
-      "type": "card"
+      "title": "Top Bar (Header)",
+      "order": 1
     },
-    "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n<h2>Шаг 2</h2>\n<p>Запусти <code>npm install</code>.</p>\n"
+    "html": "<h2>🔝 Top Bar (Header)</h2>\n<p>The <strong>top bar</strong> provides quick access to navigation and utilities, and is always visible at the top of the screen.</p>\n<h3>🧭 Elements:</h3>\n<ul>\n<li><p>⬅️ <strong>Back Button</strong><br>Navigate to the previous screen. Useful when returning from nested views or edit pages.</p>\n</li>\n<li><p>🏠 <strong>Home Button</strong><br>Instantly go back to the main dashboard (Home Page) from anywhere in the app.</p>\n</li>\n<li><p>🔎 <strong>Full-text Search</strong><br>Search across recipes, products, and invoices using flexible input:  </p>\n<ul>\n<li>Supports partial text, exact phrases, and multiple keywords.  </li>\n<li>Results are ranked by relevance and context.</li>\n</ul>\n</li>\n<li><p>⚙️ <strong>Settings Button</strong><br>Opens the app settings panel where you can:  </p>\n<ul>\n<li>Change language and preferences  </li>\n<li>Manage privacy options  </li>\n<li>View legal policies</li>\n</ul>\n</li>\n<li><p>🧩 <strong>Widgets Button</strong><br>Opens the utilities menu. Available widgets include:  </p>\n<ul>\n<li>🧬 <strong>Gelatin Converter</strong> – helps convert between sheet and powdered gelatin  </li>\n<li>⏳ (More tools coming soon)</li>\n</ul>\n</li>\n</ul>\n<hr>\n<p>This top bar is designed to stay minimal yet functional, giving you full control no matter which screen you&#39;re on.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "start-page[en].md",
+    "language": "en",
+    "path": "getting-started/start-page[en].md",
+    "title": "Home Page",
+    "order": 0,
+    "data": {
+      "title": "Home Page",
+      "order": 0
+    },
+    "html": "<h1>🏠 Home Page</h1>\n<p>After launching the app, you land on the <strong>Home Page</strong> — your starting screen and the main entry point to all key features.</p>\n<h2>What&#39;s on this page:</h2>\n<ul>\n<li>In the center, you&#39;ll see blocks titled <strong>&quot;Last edited recipes&quot;</strong> and <strong>&quot;Last edited products&quot;</strong>. These give you quick access to the items you&#39;ve recently worked on.</li>\n<li>Each entry displays the item’s name and the time it was last modified. Clicking an item opens it for editing.</li>\n</ul>\n<h2>Top Navigation Bar (Header):</h2>\n<p>The navigation menu is located at the top of the screen and includes:</p>\n<ul>\n<li><strong>Home</strong> — return to the main dashboard.</li>\n<li><strong>Recipes</strong> — navigate to the full list of recipes.</li>\n<li><strong>Products</strong> — browse all saved products.</li>\n<li><strong>Invoices</strong> — view and manage invoices.</li>\n<li><strong>Settings</strong> — adjust preferences, view policies, and manage personal data.</li>\n<li><strong>More</strong> — access additional actions like sync or export.</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "start-page[ru].md",
+    "language": "ru",
+    "path": "getting-started/start-page[ru].md",
+    "title": "Главная страница",
+    "order": 0,
+    "data": {
+      "title": "Главная страница",
+      "order": 0
+    },
+    "html": "<h1>🏠 Главная страница</h1>\n<p>После входа в приложение вы попадаете на <strong>главную страницу</strong> — это ваш стартовый экран и точка доступа ко всем основным функциям.</p>\n<h2>Что здесь есть:</h2>\n<ul>\n<li>В центре расположены блоки <strong>«Последние редактированные рецепты»</strong> и <strong>«Последние редактированные продукты»</strong>. Это быстрый доступ к тем элементам, с которыми вы недавно работали.</li>\n<li>В каждом блоке отображаются названия элементов и дата последнего изменения. При клике вы сразу переходите к редактированию выбранного рецепта или продукта.</li>\n</ul>\n<h2>Верхняя панель (хедер):</h2>\n<p>Навигационное меню находится в верхней части экрана и включает в себя:</p>\n<ul>\n<li><strong>Домой</strong> — вернуться на главную.</li>\n<li><strong>Recipes</strong> — переход в раздел всех рецептов.</li>\n<li><strong>Products</strong> — список всех продуктов.</li>\n<li><strong>Invoices</strong> — выставленные инвойсы.</li>\n<li><strong>Настройки</strong> — персонализация, соглашения и другие параметры.</li>\n<li><strong>Прочее</strong> — дополнительные действия (например, синхронизация или экспорт).</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "creating-invoices[en].md",
+    "language": "en",
+    "path": "invoices/creating-invoices[en].md",
+    "title": "Invoice Editing Page",
+    "order": 1,
+    "data": {
+      "title": "Invoice Editing Page",
+      "order": 1
+    },
+    "html": "<h1>🧾 Invoice Editing Page</h1>\n<p>This page allows you to create and edit an invoice with detailed order information — including recipes, products, taxes, notes, and metadata. It’s used to generate a final invoice for your client.</p>\n<hr>\n<h2>⚙️ General Principles</h2>\n<ul>\n<li>✏️ All fields are editable only in the <code>Draft</code> status.</li>\n<li>🔐 Once the invoice is set to <code>Issued</code>, <code>Paid</code>, or <code>Canceled</code>, editing is disabled.</li>\n<li>💡 If you manually edit the <strong>price per unit</strong> or the <strong>total</strong>, the value becomes “locked” — it won’t update even if the linked recipe or product changes.</li>\n<li>🔁 If not edited manually, prices automatically follow updates in recipes/products.</li>\n<li>📄 PDF generation is available in all statuses except <code>Draft</code>.</li>\n</ul>\n<hr>\n<h2>📌 Invoice Statuses</h2>\n<table>\n<thead>\n<tr>\n<th>Status</th>\n<th>Description</th>\n<th>Editable</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Draft</code></td>\n<td>Initial state. Everything is editable.</td>\n<td>✅</td>\n</tr>\n<tr>\n<td><code>Issued</code></td>\n<td>Finalized invoice. All prices are locked and cannot be edited.</td>\n<td>❌</td>\n</tr>\n<tr>\n<td><code>Paid</code></td>\n<td>Marked as paid. Can only be changed to <code>Canceled</code>.</td>\n<td>❌</td>\n</tr>\n<tr>\n<td><code>Canceled</code></td>\n<td>Canceled invoice. No changes allowed.</td>\n<td>❌</td>\n</tr>\n</tbody></table>\n<h3>🔁 Status Transitions</h3>\n<ul>\n<li><code>Draft</code> → <code>Issued</code> / <code>Paid</code> / <code>Canceled</code></li>\n<li><code>Issued</code> → <code>Paid</code> / <code>Canceled</code></li>\n<li><code>Paid</code> → <code>Canceled</code></li>\n<li><code>Canceled</code> → ❌ (locked)</li>\n</ul>\n<hr>\n<h2>🧾 Main Fields</h2>\n<ul>\n<li><strong>Private name</strong> — internal invoice name.</li>\n<li><strong>Prefix</strong> — invoice group prefix.</li>\n<li><strong>Invoice number</strong> — auto-generated ID.</li>\n<li><strong>Date issued / Due date</strong> — issue and due dates for the invoice.</li>\n</ul>\n<hr>\n<h2>🏢 Company and Client Info</h2>\n<ul>\n<li><strong>Your company details</strong> — free-text field. You can either write manually or insert pre-saved company info from settings.</li>\n<li><strong>Customer details</strong> — same logic; enter manually or insert from saved client list.</li>\n</ul>\n<hr>\n<h2>📋 Line Items Table</h2>\n<p>You can add:</p>\n<ul>\n<li>🥣 <strong>Recipes</strong> — price is pulled from the recipe calculation settings.</li>\n<li>📦 <strong>Products</strong> — price is taken from the product card.</li>\n</ul>\n<p>🔁 Prices include <strong>modifiers</strong> (if any).<br>📝 You can manually edit <strong>price per unit</strong> or <strong>total</strong> — the other value will recalculate automatically based on quantity.</p>\n<hr>\n<h2>🧾 Taxes and Fees</h2>\n<ul>\n<li>Add with <strong>Add tax or fee</strong> button.</li>\n<li>Choose from predefined options in your settings.</li>\n<li>Both <strong>percentage</strong> and <strong>fixed</strong> amounts are supported.</li>\n<li>Order matters: taxes/fees are applied sequentially.</li>\n</ul>\n<hr>\n<h2>🗒️ Notes and Terms</h2>\n<ul>\n<li><strong>Notes</strong> — additional comments or message for the client.</li>\n<li><strong>Terms</strong> — legal or business conditions (e.g., payment policy, delivery terms).</li>\n</ul>\n<hr>\n<h2>🧮 Invoice Footer</h2>\n<p>Displays:</p>\n<ul>\n<li><strong>Subtotal</strong> — line item total before taxes/fees.</li>\n<li><strong>Tax</strong> — total taxes applied.</li>\n<li><strong>Fees</strong> — extra charges (like delivery).</li>\n<li><strong>Total</strong> — final invoice amount.</li>\n</ul>\n<hr>\n<h2>📤 Actions</h2>\n<ul>\n<li><strong>Issue and download invoice</strong> — locks the invoice (<code>Issued</code>) and generates a PDF.</li>\n<li><strong>Generate PDF</strong> — available in all statuses except <code>Draft</code>.</li>\n<li><strong>Copy / Delete Invoice</strong> — clone or remove invoice.</li>\n<li><strong>Mark as paid / canceled</strong> — change invoice status manually.</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "creating-invoices[ru].md",
+    "language": "ru",
+    "path": "invoices/creating-invoices[ru].md",
+    "title": "Страница редактирования инвойса",
+    "order": 1,
+    "data": {
+      "title": "Страница редактирования инвойса",
+      "order": 1
+    },
+    "html": "<h1>🧾 Страница редактирования инвойса</h1>\n<p>Эта страница позволяет создать и отредактировать инвойс с детальной информацией о заказе: рецепты, продукты, налоги, условия и общие данные. Используется для генерации окончательного счёта на оплату.</p>\n<hr>\n<h2>⚙️ Общие принципы</h2>\n<ul>\n<li>✏️ Все поля редактируемы только в статусе <code>Draft</code>.</li>\n<li>🔐 После перевода в статус <code>Issued</code>, <code>Paid</code> или <code>Canceled</code>, редактирование невозможно.</li>\n<li>💡 Если вручную изменить <strong>цену за единицу</strong> или <strong>итоговую цену</strong>, она &quot;закрепляется&quot; — даже при обновлении рецепта цена останется прежней.</li>\n<li>🔁 Если не редактировать вручную — цена будет автоматически подтягиваться из рецепта или карточки продукта.</li>\n<li>📄 PDF можно сгенерировать во всех статусах, кроме <code>Draft</code>.</li>\n</ul>\n<hr>\n<h2>📌 Статусы инвойса</h2>\n<table>\n<thead>\n<tr>\n<th>Статус</th>\n<th>Описание</th>\n<th>Возможность редактирования</th>\n</tr>\n</thead>\n<tbody><tr>\n<td><code>Draft</code></td>\n<td>Черновик. Можно редактировать всё.</td>\n<td>✅</td>\n</tr>\n<tr>\n<td><code>Issued</code></td>\n<td>Выпущен. Всё зафиксировано, редактирование невозможно.</td>\n<td>❌</td>\n</tr>\n<tr>\n<td><code>Paid</code></td>\n<td>Оплачен. Финальный статус. Можно только перевести в <code>Canceled</code>.</td>\n<td>❌</td>\n</tr>\n<tr>\n<td><code>Canceled</code></td>\n<td>Отменён. Ничего изменить нельзя.</td>\n<td>❌</td>\n</tr>\n</tbody></table>\n<h3>🔁 Переходы между статусами</h3>\n<ul>\n<li><code>Draft</code> → <code>Issued</code> / <code>Paid</code> / <code>Canceled</code></li>\n<li><code>Issued</code> → <code>Paid</code> / <code>Canceled</code></li>\n<li><code>Paid</code> → <code>Canceled</code></li>\n<li><code>Canceled</code> → ❌ (изменения невозможны)</li>\n</ul>\n<hr>\n<h2>🧾 Основные поля</h2>\n<ul>\n<li><strong>Private name</strong> — внутреннее имя инвойса.</li>\n<li><strong>Prefix</strong> — префикс инвойса, используется для группировки.</li>\n<li><strong>Invoice number</strong> — автоматически генерируемый идентификатор.</li>\n<li><strong>Date issued / Due date</strong> — дата выставления и срок действия.</li>\n</ul>\n<hr>\n<h2>🏢 Данные компании и клиента</h2>\n<ul>\n<li><strong>Your company details</strong> — текстовое поле. Можно вручную указать реквизиты, или выбрать из добавленных в настройках.</li>\n<li><strong>Customer details</strong> — аналогично, можно ввести вручную или выбрать из сохранённых клиентов.</li>\n</ul>\n<hr>\n<h2>📋 Таблица позиций</h2>\n<p>В инвойс можно добавлять:</p>\n<ul>\n<li>🥣 <strong>Рецепты</strong> — цена берётся из настроек калькуляции рецепта.</li>\n<li>📦 <strong>Продукты</strong> — цена берётся из карточки продукта.</li>\n</ul>\n<p>🔁 Цены подтягиваются с учётом <strong>модификаторов</strong>, если они есть.<br>📝 Можно вручную изменить <strong>цену за единицу</strong> или <strong>итоговую сумму</strong> — другое значение будет пересчитано автоматически.</p>\n<hr>\n<h2>🧾 Налоги и надбавки</h2>\n<ul>\n<li>Добавляются кнопкой <strong>Add tax or fee</strong>.</li>\n<li>Выбираются из предопределённых в настройках.</li>\n<li>Поддерживаются как <strong>проценты</strong>, так и <strong>фиксированные суммы</strong>.</li>\n<li>Порядок влияет на расчёт (сначала один, затем второй).</li>\n</ul>\n<hr>\n<h2>🗒️ Примечания и Условия</h2>\n<ul>\n<li><strong>Notes</strong> — любые комментарии к заказу.</li>\n<li><strong>Terms</strong> — условия сделки (например, оплата, доставка и т.д.).</li>\n</ul>\n<hr>\n<h2>🧮 Футер инвойса</h2>\n<p>Отображает:</p>\n<ul>\n<li><strong>Subtotal</strong> — итоговая сумма позиций без налогов/надбавок.</li>\n<li><strong>Tax</strong> — суммарные налоги.</li>\n<li><strong>Fees</strong> — дополнительные сборы.</li>\n<li><strong>Total</strong> — финальная сумма инвойса.</li>\n</ul>\n<hr>\n<h2>📤 Действия</h2>\n<ul>\n<li><strong>Issue and download invoice</strong> — переводит инвойс в статус <code>Issued</code> и генерирует PDF.</li>\n<li><strong>Generate PDF</strong> — доступно во всех статусах кроме <code>Draft</code>.</li>\n<li><strong>Copy / Delete Invoice</strong> — дублирование или удаление.</li>\n<li><strong>Mark as paid / canceled</strong> — смена статуса вручную.</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "invoices-overview[en].md",
+    "language": "en",
+    "path": "invoices/invoices-overview[en].md",
+    "title": "What are invoices?",
+    "order": 0,
+    "data": {
+      "title": "What are invoices?",
+      "order": 0
+    },
+    "html": "<h1>🧾 What are invoices?</h1>\n<p>Invoices are a system for generating and tracking bills for your orders. You can use them for:</p>\n<ul>\n<li>💰 Calculating the total cost of an order based on recipes and products  </li>\n<li>📦 Tracking expenses and sales  </li>\n<li>🧾 Storing information about clients, order dates, and due dates  </li>\n<li>🧾 Generating final PDF documents to send to clients (in future versions)</li>\n</ul>\n<p>Each invoice is a document that contains a list of items (recipes, products, or custom entries) with quantity, price, and total amount.</p>\n<hr>\n<h1>📄 Invoice List Page</h1>\n<p>This page displays all created invoices. Here you can:</p>\n<ul>\n<li>✅ Create new invoices  </li>\n<li>🗑️ Select and delete multiple invoices  </li>\n<li>👁 View status, creation date, due date, and remaining days for each invoice</li>\n</ul>\n<hr>\n<h2>🔘 Main elements</h2>\n<ul>\n<li><strong>Create invoice button</strong> (<code>➕</code>) — opens the form to create a new invoice.</li>\n<li><strong>Select many</strong> — activates multi-select mode for bulk actions (like deletion).</li>\n<li><strong>Invoice info includes</strong>:<ul>\n<li><strong>Number</strong> — the invoice ID, which includes a prefix, date, and random suffix (e.g., <code>#UK-FR/20250707-8c</code>)</li>\n<li><strong>Status</strong> — can be <code>Draft</code>, <code>Sent</code>, <code>Paid</code>, etc.</li>\n<li><strong>Date due</strong> — the invoice due date</li>\n<li><strong>Days left</strong> — calculated automatically from the due date</li>\n<li><strong>Last edited date</strong> — shown in the top-right corner</li>\n</ul>\n</li>\n</ul>\n<hr>\n<h2>📂 Grouping by prefix</h2>\n<p>Invoices are grouped by <strong>prefix</strong>, which is part of the invoice ID and can be set manually or automatically during creation. The prefix appears before the date and is used for logical grouping.</p>\n<hr>\n<h2>🧠 Tips</h2>\n<ul>\n<li>✏️ Clicking the invoice name opens it for editing  </li>\n<li>⏱ Days left are calculated automatically based on the due date  </li>\n<li>🗑️ Deletion is only available in multi-select mode  </li>\n<li>🕒 Sorting and filtering will be available in future versions</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "invoices-overview[ru].md",
+    "language": "ru",
+    "path": "invoices/invoices-overview[ru].md",
+    "title": "Что такое инвойсы?",
+    "order": 0,
+    "data": {
+      "title": "Что такое инвойсы?",
+      "order": 0
+    },
+    "html": "<h1>🧾 Что такое инвойсы?</h1>\n<p>Инвойсы — это система выставления и учёта счетов для ваших заказов. Вы можете использовать их для:</p>\n<ul>\n<li>💰 Расчёта итоговой стоимости заказа на основе рецептов и продуктов</li>\n<li>📦 Учёта затрат и продаж</li>\n<li>🧾 Хранения информации о клиентах, дате заказа и сроке исполнения</li>\n<li>🧾 Генерации финального PDF-документа для отправки заказчику (в будущих версиях)</li>\n</ul>\n<p>Каждый инвойс — это документ, содержащий список позиций (рецептов, продуктов, или произвольных строк), с количеством, ценой и итоговой суммой.</p>\n<hr>\n<h1>📄 Страница инвойсов</h1>\n<p>На этой странице отображаются все созданные инвойсы. Здесь можно:</p>\n<ul>\n<li>✅ Создавать новые инвойсы  </li>\n<li>🗑️ Выделять и удалять сразу несколько инвойсов  </li>\n<li>👁 Просматривать статус, дату создания, дату действия и срок действия каждого инвойса</li>\n</ul>\n<hr>\n<h2>🔘 Основные элементы</h2>\n<ul>\n<li><strong>Кнопка создания инвойса</strong> (<code>➕</code>) — открывает форму создания нового инвойса.</li>\n<li><strong>Селектор &quot;Выделить несколько&quot;</strong> — включает режим мультивыбора для массовых операций (например, удаления).</li>\n<li><strong>Информация об инвойсе</strong>:<ul>\n<li><strong>Номер</strong> — ID инвойса, содержащий префикс, дату и случайный суффикс (например: <code>#UK-FR/20250707-8c</code>).</li>\n<li><strong>Статус</strong> — может быть <code>Draft</code>, <code>Sent</code>, <code>Paid</code> и др.</li>\n<li><strong>Date due</strong> — дата действия/срока инвойса.</li>\n<li><strong>Days left</strong> — количество дней до срока.</li>\n<li><strong>Дата последнего изменения</strong> — показывается в правом углу.</li>\n</ul>\n</li>\n</ul>\n<hr>\n<h2>📂 Группировка по префиксу</h2>\n<p>Инвойсы группируются по <strong>префиксу</strong>, который является частью ID и задаётся автоматически или вручную при создании инвойса. Префикс расположен перед датой и используется как логическая группировка.</p>\n<hr>\n<h2>🧠 Подсказки</h2>\n<ul>\n<li>✏️ Клик по названию инвойса откроет его для редактирования.</li>\n<li>⏱ Осталось дней до срока — рассчитывается автоматически.</li>\n<li>🗑 Удаление — доступно только при включенном мультивыборе.</li>\n<li>🕒 Инвойсы можно сортировать и фильтровать (будет доступно в следующих версиях).</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "adding-recipes[en].md",
+    "language": "en",
+    "path": "recipes/adding-recipes[en].md",
+    "title": "Creating and Editing a Recipe",
+    "order": 1,
+    "data": {
+      "title": "Creating and Editing a Recipe",
+      "order": 1
+    },
+    "html": "<h1>✏️ Creating and Editing a Recipe</h1>\n<p>A recipe is a combination of ingredients (products or sub-recipes) with defined quantities and optional output weight.<br>Each recipe can include a title, description, total yield, category, and tags for filtering and sorting.</p>\n<h2>🧾 Main Fields</h2>\n<h3>📛 Recipe Name</h3>\n<ul>\n<li>The top field is used to enter the <strong>recipe name</strong> (e.g., &quot;Caramel Napoleon&quot;).</li>\n</ul>\n<h3>📝 Description</h3>\n<ul>\n<li>Below that is a <strong>free-text field</strong> for describing the method, mold size, portioning details, notes, etc.</li>\n</ul>\n<h3>⚖️ Total Yield (optional but affects pricing)</h3>\n<ul>\n<li>This field defines the <strong>final yield</strong> of the recipe (e.g., 1000 g or 12 pcs).</li>\n<li>If <strong>left empty</strong>, the total weight of all ingredients is used to calculate cost per gram or piece.</li>\n<li>If <strong>filled</strong>, the system treats this as the <strong>actual yield</strong>, and pricing is based on that number — useful when some mass is lost during preparation.</li>\n</ul>\n<blockquote>\n<p>Recommended for baked goods, reductions, or recipes where weight loss occurs in the process.</p>\n</blockquote>\n<h2>🧩 Ingredients</h2>\n<p>Each ingredient can be either:</p>\n<ul>\n<li>✅ A <strong>product</strong> from your stock</li>\n<li>🔁 A <strong>sub-recipe</strong></li>\n</ul>\n<p>For each ingredient, you define:</p>\n<ul>\n<li>Name (selected from list)</li>\n<li>Quantity</li>\n<li>Unit — automatically pre-filled when you select a product or sub-recipe (grams or pieces)</li>\n</ul>\n<p>You can mix both products and sub-recipes in a single recipe.<br>Click <strong>“Add Ingredient”</strong> to insert a new row.</p>\n<h3>➕ Math Expressions</h3>\n<p>All numeric fields support <strong>math expressions</strong>, such as:</p>\n<ul>\n<li><code>100+20</code> → 120  </li>\n<li><code>400*2</code> → 800  </li>\n<li><code>200*0.75</code> → 150  </li>\n<li><code>100 + 10%</code> → 110</li>\n</ul>\n<p>This allows for fast scaling, portioning, or converting recipes directly in the input fields.</p>\n<h2>🏷️ Category and Tags</h2>\n<ul>\n<li><p><strong>Category</strong> — determines which group the recipe belongs to on the main list.<br>Categories are managed in the Settings section.</p>\n</li>\n<li><p><strong>Tags</strong> — custom keywords for filtering and organizing recipes.<br>Examples: <code>vegan</code>, <code>filling</code>, <code>seasonal</code>, <code>decoration</code>, <code>base</code></p>\n</li>\n</ul>\n<h2>💾 Saving</h2>\n<ul>\n<li>Click <strong>“Save Changes”</strong> to store your recipe.</li>\n<li>If you leave the page without saving, your changes will be preserved as a <strong>draft</strong>.</li>\n</ul>\n<hr>\n<p>This page gives you full control over the structure, content, and cost of your recipes — whether for planning, production, or invoicing.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "adding-recipes[ru].md",
+    "language": "ru",
+    "path": "recipes/adding-recipes[ru].md",
+    "title": "Создание и редактирование рецепта",
+    "order": 1,
+    "data": {
+      "title": "Создание и редактирование рецепта",
+      "order": 1
+    },
+    "html": "<h1>✏️ Создание и редактирование рецепта</h1>\n<p>Рецепт — это комбинация ингредиентов (продуктов или подрецептов) с заданным весом.<br>Каждый рецепт может содержать текстовые описания, итоговую массу, категорию и теги для фильтрации и сортировки.</p>\n<h2>🧾 Основные поля</h2>\n<h3>📛 Название рецепта</h3>\n<ul>\n<li>В верхней части страницы указывается <strong>название рецепта</strong> (например, &quot;Наполеон карамельный&quot;).</li>\n</ul>\n<h3>📝 Описание</h3>\n<ul>\n<li>Ниже — <strong>поле для описания</strong> технологии, размеров, структуры и других важных заметок.</li>\n</ul>\n<h3>⚖️ Итоговая масса (опционально, влияет на расчёт)</h3>\n<ul>\n<li>Это поле используется для указания <strong>фактического выхода</strong> рецепта (например, 1000 г или 12 шт).</li>\n<li>Если <strong>пусто</strong>, себестоимость рассчитывается на основе <strong>суммарного веса ингредиентов</strong>.</li>\n<li>Если <strong>заполнено</strong>, цена за 1 г/шт будет рассчитана от этого значения, даже если часть ингредиентов теряется в процессе.</li>\n</ul>\n<blockquote>\n<p>Используется, например, если часть массы уходит при выпекании или в процессе приготовления.</p>\n</blockquote>\n<h2>🧩 Ингредиенты</h2>\n<p>Каждый ингредиент может быть:</p>\n<ul>\n<li>✅ Продуктом (ингредиентом со склада)</li>\n<li>🔁 Подрецептом (другим рецептом)</li>\n</ul>\n<p>Для каждого ингредиента указывается:</p>\n<ul>\n<li>Название</li>\n<li>Количество</li>\n<li>Единица измерения — <strong>автоматически подставляется</strong> при выборе продукта или рецепта (граммы или штуки)</li>\n</ul>\n<p>Можно комбинировать продукты и рецепты внутри одного списка.<br>Нажмите <strong>«Добавить ингредиент»</strong>, чтобы добавить строку.</p>\n<h3>➕ Поддержка вычислений</h3>\n<p>Во <strong>всех числовых полях</strong> можно вводить <strong>математические выражения</strong> — например:</p>\n<ul>\n<li><code>100+20</code> → 120  </li>\n<li><code>400*2</code> → 800  </li>\n<li><code>200*0.75</code> → 150  </li>\n<li><code>100 + 10%</code> → 110</li>\n</ul>\n<p>Это удобно при масштабировании, делении порций или быстром вводе формул.</p>\n<h2>🏷️ Категория и теги</h2>\n<ul>\n<li><p><strong>Категория</strong> — определяет, в какую группу попадёт рецепт в списке.<br>Категории управляются в настройках.</p>\n</li>\n<li><p><strong>Теги</strong> — позволяют быстро фильтровать и группировать рецепты по смыслу:<br>Например: <code>веган</code>, <code>начинка</code>, <code>декор</code>, <code>основа</code>, <code>сезонное</code>.</p>\n</li>\n</ul>\n<h2>💾 Сохранение</h2>\n<ul>\n<li>Нажмите <strong>«Сохранить изменения»</strong>, чтобы сохранить рецепт.</li>\n<li>Если покинуть страницу без сохранения — данные сохраняются как <strong>черновик</strong> и будут доступны позже.</li>\n</ul>\n<hr>\n<p>Редактор рецепта позволяет собрать точную структуру блюда, задать вес выхода и получать достоверную себестоимость — для продажи, планирования или инвойсов.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "calculation[en].md",
+    "language": "en",
+    "path": "recipes/calculation[en].md",
+    "title": "Recipe Cost Calculation",
+    "order": 2,
+    "data": {
+      "title": "Recipe Cost Calculation",
+      "order": 2
+    },
+    "html": "<h1>📊 Recipe Cost Calculation Page</h1>\n<p>This page displays the total cost of a recipe, suggested selling price, and breakdown by ingredient.</p>\n<hr>\n<h2>⚙️ Calculation For</h2>\n<p>Specifies the number of units the recipe is calculated for:</p>\n<ul>\n<li>Examples: <code>14 piece</code>, <code>200 gram</code></li>\n<li>Used to compute <strong>price per unit</strong> and <strong>total cost</strong>.</li>\n</ul>\n<hr>\n<h2>💶 Price Per Unit</h2>\n<p>Shows cost details for a single unit of the recipe:</p>\n<ul>\n<li><strong>Base cost</strong> — calculated from ingredients.</li>\n<li><strong>Selling price</strong> — adjusted with price modifiers.</li>\n<li><strong>Profit</strong> — displayed in green.</li>\n<li><strong>Weight per unit</strong> — if total output is set.</li>\n<li>➡️ <strong>Arrow</strong> shows that the price has changed due to modifiers.</li>\n</ul>\n<hr>\n<h2>💰 Total Cost</h2>\n<p>Displays the <strong>base total cost</strong> of the entire recipe (excluding modifiers).</p>\n<hr>\n<h2>🎛️ Price Modifiers</h2>\n<p>Allow you to define a selling price without changing the ingredient data:</p>\n<ul>\n<li><code>Per unit</code> or <code>Total</code> — whether the modifier applies per unit or to the total.</li>\n<li><code>Add</code> or <code>Round to</code> — add a fixed/percent value or round the price.</li>\n<li><code>$</code> or <code>%</code> — define the value format.</li>\n</ul>\n<p>🧮 If <code>Total</code> is selected, the unit price is recalculated:</p>\n<p>unit price = total price / output quantity</p>\n<p>🗑️ To remove a modifier, simply clear the amount field.</p>\n<hr>\n<h2>📈 Price and Weight Breakdown</h2>\n<p>Two pie charts:</p>\n<ul>\n<li><strong>By price</strong> — shows each ingredient’s share of the total cost.</li>\n<li><strong>By weight</strong> — shows each ingredient’s contribution to the total weight.</li>\n</ul>\n<hr>\n<h2>🧾 Ingredient Table</h2>\n<table>\n<thead>\n<tr>\n<th>#</th>\n<th>Name</th>\n<th>Quantity</th>\n<th>Unit</th>\n<th>Price per unit</th>\n<th>Total cost</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>1</td>\n<td>Dark chocolate 55% MAKRO</td>\n<td>360</td>\n<td>gram</td>\n<td>€0.01795</td>\n<td>€6.46</td>\n</tr>\n<tr>\n<td>2</td>\n<td>Cream Makro</td>\n<td>525</td>\n<td>gram</td>\n<td>€0.00423</td>\n<td>€2.22</td>\n</tr>\n<tr>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n</tr>\n</tbody></table>\n<p>🔗 Clicking the name opens the ingredient or recipe details page.</p>\n<hr>\n<h2>🧮 Table Footer Summary</h2>\n<ul>\n<li><strong>Total weight</strong> — always shown in grams (without modifiers).</li>\n<li><strong>Average price per gram</strong> — based on all ingredients.</li>\n<li><strong>Total cost</strong> — the sum of all ingredient costs.</li>\n</ul>\n<hr>\n"
+  },
+  {
+    "type": "file",
+    "name": "calculation[ru].md",
+    "language": "ru",
+    "path": "recipes/calculation[ru].md",
+    "title": "Расчёт стоимости рецепта",
+    "order": 2,
+    "data": {
+      "title": "Расчёт стоимости рецепта",
+      "order": 2
+    },
+    "html": "<h1>📊 Страница расчёта стоимости рецепта</h1>\n<p>На этой странице отображается себестоимость рецепта, возможная цена реализации и структура затрат.</p>\n<hr>\n<h2>⚙️ Расчёт для</h2>\n<p>Это поле указывает, для какого количества единиц производится расчёт:</p>\n<ul>\n<li>Например: <code>14 piece</code>, <code>200 gram</code>.</li>\n<li>Используется при вычислении стоимости <strong>за единицу</strong> и <strong>общей стоимости</strong>.</li>\n</ul>\n<hr>\n<h2>💶 За одну единицу</h2>\n<p>Отображается информация о стоимости одной единицы продукта:</p>\n<ul>\n<li><strong>Себестоимость</strong> — рассчитывается на основе ингредиентов.</li>\n<li><strong>Цена реализации</strong> — с учётом модификатора.</li>\n<li><strong>Разница</strong> — прибыль, отображается зелёным.</li>\n<li><strong>Вес одной единицы</strong> — рассчитывается, если указан итоговый вес.</li>\n<li>➡️ <strong>Стрелка</strong> показывает, что цена изменилась после применения модификатора.</li>\n</ul>\n<hr>\n<h2>💰 Общая стоимость</h2>\n<p>Показывает <strong>себестоимость всего рецепта</strong> без учёта модификаторов и наценок.</p>\n<hr>\n<h2>🎛️ Модификаторы цены (Price modifiers)</h2>\n<p>Позволяют задать цену реализации, не влияя на ингредиенты:</p>\n<ul>\n<li><code>Per unit</code> или <code>Total</code> — модификатор применяется к единичной или общей стоимости.</li>\n<li><code>Add</code> или <code>Round to</code> — добавить сумму/процент или округлить.</li>\n<li><code>$</code> или <code>%</code> — формат модификатора: в валюте или в процентах.</li>\n</ul>\n<p>🧮 Если выбран <code>Total</code>, то цена за единицу пересчитывается по формуле:</p>\n<p>цена за единицу = общая цена / объём выхода</p>\n<p>🗑️ Чтобы удалить модификатор, просто очистите значение поля.</p>\n<hr>\n<h2>📈 Разбивка по цене и весу</h2>\n<p>Два круговых графика:</p>\n<ul>\n<li><strong>По цене</strong> — показывает вклад каждого ингредиента в итоговую стоимость.</li>\n<li><strong>По весу</strong> — показывает вклад каждого ингредиента в итоговый вес.</li>\n</ul>\n<hr>\n<h2>🧾 Таблица ингредиентов</h2>\n<table>\n<thead>\n<tr>\n<th>№</th>\n<th>Название</th>\n<th>Кол-во</th>\n<th>Ед. изм.</th>\n<th>Цена за ед.</th>\n<th>Стоимость</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>1</td>\n<td>Шоколад темный 55% MAKRO</td>\n<td>360</td>\n<td>gram</td>\n<td>€0.01795</td>\n<td>€6.46</td>\n</tr>\n<tr>\n<td>2</td>\n<td>Сливки Makro</td>\n<td>525</td>\n<td>gram</td>\n<td>€0.00423</td>\n<td>€2.22</td>\n</tr>\n<tr>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n<td>...</td>\n</tr>\n</tbody></table>\n<p>🔗 Клик по названию ингредиента откроет его страницу.</p>\n<hr>\n<h2>🧮 Итого внизу таблицы</h2>\n<ul>\n<li><strong>Общий вес</strong> — итог в граммах, <strong>без модификаторов</strong>.</li>\n<li><strong>Средняя цена за грамм</strong> — на основе всех ингредиентов.</li>\n<li><strong>Итоговая стоимость</strong> — сумма всех затрат.</li>\n</ul>\n<hr>\n"
+  },
+  {
+    "type": "file",
+    "name": "recipes-overview[en].md",
+    "language": "en",
+    "path": "recipes/recipes-overview[en].md",
+    "title": "Recipes Overview",
+    "order": 0,
+    "data": {
+      "title": "Recipes Overview",
+      "order": 0
+    },
+    "html": "<h1>📖 Recipes</h1>\n<p>A recipe is the core data structure in the system. It consists of one or more products or sub-recipes, along with their quantities, units, and optional descriptions.<br>Recipes allow you to calculate precise costs, define composition, and include them in invoices.</p>\n<h2>🧭 The Recipes Page</h2>\n<p>This page displays your full list of saved and draft recipes.</p>\n<h3>🗂️ Grouping</h3>\n<p>By default, recipes are <strong>grouped by category</strong>, which you assign manually. You can also change the grouping method:</p>\n<ul>\n<li><code>By category</code> (default)</li>\n<li><code>By tag</code></li>\n<li><code>By creation date</code></li>\n<li><code>By first letter</code></li>\n</ul>\n<h3>🔄 Grouping Direction</h3>\n<p>Each group can be sorted in different directions:</p>\n<ul>\n<li><code>From A to Z</code> (alphabetically or from old to new)</li>\n<li><code>From Z to A</code> (reverse order)</li>\n</ul>\n<h3>🔠 Inside Groups</h3>\n<p>Within each group, recipes are <strong>automatically sorted alphabetically</strong>.</p>\n<h2>✏️ Drafts</h2>\n<p>If you modify a recipe but haven’t saved it fully, it appears as a <strong>draft</strong> and is visually marked.<br>You’ll also see a banner at the top showing the number of unsaved drafts.</p>\n<h2>✅ Selection &amp; Bulk Actions</h2>\n<ul>\n<li>Click a recipe card to enter <strong>selection mode</strong></li>\n<li>Once selected, you can:<ul>\n<li>Delete multiple recipes at once</li>\n<li>Export selected recipes</li>\n</ul>\n</li>\n</ul>\n<h2>🔁 Import &amp; Export</h2>\n<p>In the bottom right corner you’ll find two buttons:</p>\n<ul>\n<li><strong>Export recipes</strong> — download your recipes to a file</li>\n<li><strong>Import products</strong> — upload products to use in recipes</li>\n</ul>\n<blockquote>\n<p>Import/export is useful for transferring data between devices or using templates.</p>\n</blockquote>\n<hr>\n<p>This section is the heart of the system. Here you combine ingredients, structure your ideas, and calculate the true cost of your creations.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "recipes-overview[ru].md",
+    "language": "ru",
+    "path": "recipes/recipes-overview[ru].md",
+    "title": "Обзор рецептов",
+    "order": 0,
+    "data": {
+      "title": "Обзор рецептов",
+      "order": 0
+    },
+    "html": "<h1>📖 Рецепты</h1>\n<p>Рецепт — это основная структурная единица в системе. Он состоит из одного или нескольких продуктов или подрецептов, их количества, единиц измерения и описания.<br>С помощью рецепта вы можете точно рассчитать себестоимость, состав и использовать его в инвойсах.</p>\n<h2>🧭 Страница «Рецепты»</h2>\n<p>На странице рецептов отображается весь список сохранённых и черновых рецептов.</p>\n<h3>🗂️ Группировка</h3>\n<p>По умолчанию рецепты <strong>группируются по категориям</strong>, которые задаются вручную. Также доступны другие способы группировки:</p>\n<ul>\n<li><code>По категории</code> (default)</li>\n<li><code>По тегу</code></li>\n<li><code>По дате создания</code></li>\n<li><code>По первой букве</code></li>\n</ul>\n<h3>🔄 Направление сортировки</h3>\n<p>Для каждой группы можно изменить <strong>направление отображения</strong>:</p>\n<ul>\n<li><code>From A to Z</code> (по алфавиту или от старого к новому)</li>\n<li><code>From Z to A</code> (в обратном порядке)</li>\n</ul>\n<h3>🔠 Внутри группы</h3>\n<p>Рецепты внутри каждой группы <strong>автоматически сортируются по алфавиту</strong>.</p>\n<h2>✏️ Черновики</h2>\n<p>Если рецепт был изменён, но не сохранён полностью — он отображается как <strong>черновик</strong>, и выделяется в списке.<br>Наверху появится уведомление о количестве несохранённых изменений.</p>\n<h2>✅ Выделение и массовые действия</h2>\n<ul>\n<li>Нажмите на карточку рецепта, чтобы включить <strong>режим выделения</strong>.</li>\n<li>После выбора можно:<ul>\n<li>Удалить рецепты</li>\n<li>Экспортировать выбранные рецепты</li>\n</ul>\n</li>\n</ul>\n<h2>🔁 Импорт и экспорт</h2>\n<p>В нижнем правом углу расположены кнопки:</p>\n<ul>\n<li><strong>Экспорт recipes</strong> — сохранить рецепты в файл</li>\n<li><strong>Импортировать products</strong> — подгрузить продукты для рецептов</li>\n</ul>\n<blockquote>\n<p>Импорт рецептов и продуктов используется для переноса данных между устройствами или создания шаблонов.</p>\n</blockquote>\n<hr>\n<p>Этот раздел — сердце всей системы. Именно здесь собираются ингредиенты, формируется структура и рассчитывается себестоимость блюд.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "buckups[en].md",
+    "language": "en",
+    "path": "settings/buckups[en].md",
+    "title": "Backups",
+    "order": 5,
+    "data": {
+      "title": "Backups",
+      "order": 5
+    },
+    "html": "<h2>🗄️ Backups</h2>\n<p>This section allows you to manually <strong>create and restore backups</strong> of your data.</p>\n<blockquote>\n<p>This app is <strong>offline-first</strong> — all your data is stored locally in your browser using secure storage (IndexedDB).<br>Because of this, it&#39;s <strong>highly recommended</strong> to make regular backups to avoid data loss in case of browser crashes, device resets, or accidental clearing of storage.</p>\n</blockquote>\n<h3>🟢 Create Backup</h3>\n<ul>\n<li>Click <strong>Make a Backup</strong> to download a complete snapshot of your local data (products, recipes, invoices, settings, etc.)</li>\n<li>The backup file will be saved to your device.</li>\n<li>A timestamp indicates when the last backup was made.</li>\n</ul>\n<h3>🔴 Restore Backup</h3>\n<ul>\n<li>Click <strong>Restore Backup</strong> to import a previously saved file.</li>\n<li>⚠️ <strong>Warning:</strong> This action will <strong>overwrite all current data</strong> in the app.</li>\n<li>Useful for moving your data to another device or recovering a lost session.</li>\n</ul>\n<hr>\n<p>We do not store any of your data on remote servers unless you explicitly enable cloud sync in the future.<br>Until then, you are the sole owner and guardian of your information — make backups regularly.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "buckups[ru].md",
+    "language": "ru",
+    "path": "settings/buckups[ru].md",
+    "title": "Резервные копии",
+    "order": 5,
+    "data": {
+      "title": "Резервные копии",
+      "order": 5
+    },
+    "html": "<h2>🗄️ Резервные копии</h2>\n<p>Этот раздел позволяет вручную <strong>создавать и восстанавливать резервные копии</strong> ваших данных.</p>\n<blockquote>\n<p>Приложение работает по принципу <strong>offline-first</strong> — все данные хранятся <strong>локально в вашем браузере</strong> с использованием безопасного хранилища (IndexedDB).<br>Поэтому <strong>настоятельно рекомендуется</strong> регулярно сохранять резервные копии, чтобы избежать потери данных в случае сбоя браузера, очистки кэша или смены устройства.</p>\n</blockquote>\n<h3>🟢 Создать резервную копию</h3>\n<ul>\n<li>Нажмите <strong>Сделать резервную копию</strong>, чтобы сохранить полный снимок ваших данных (продукты, рецепты, инвойсы, настройки и т.д.)</li>\n<li>Файл копии будет загружен на ваше устройство.</li>\n<li>Справа отображается дата последней копии.</li>\n</ul>\n<h3>🔴 Восстановить резервную копию</h3>\n<ul>\n<li>Нажмите <strong>Восстановить резервную копию</strong>, чтобы загрузить ранее сохранённый файл.</li>\n<li>⚠️ <strong>Внимание:</strong> при восстановлении <strong>все текущие данные будут перезаписаны</strong>.</li>\n<li>Это удобно для переноса данных на другое устройство или возврата к прошлому состоянию.</li>\n</ul>\n<hr>\n<p>Мы не храним ваши данные на сторонних серверах, если вы явно не включите облачную синхронизацию (в будущем).<br>Пока что <strong>только вы</strong> отвечаете за сохранность своей информации — не забывайте делать резервные копии.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "categories[en].md",
+    "language": "en",
+    "path": "settings/categories[en].md",
+    "title": "Category Management",
+    "order": 1,
+    "data": {
+      "title": "Category Management",
+      "order": 1
+    },
+    "html": "<h2>🗂️ Category Management</h2>\n<p>The <strong>Categories</strong> tab in the Settings section allows you to manage product and recipe categories. Categorization helps you organize items, filter data, and group similar content for better clarity and reporting.</p>\n<h3>📦 Product Categories</h3>\n<p>Navigate to <strong>Product Categories</strong> to view and manage the list of all available product groups.</p>\n<p>Each category is displayed in a list and includes:</p>\n<ul>\n<li>The category name (e.g., &quot;Glazes and coatings&quot;, &quot;Oils and fats&quot;, &quot;Gluten-free ingredients&quot;)</li>\n<li>Actions:<ul>\n<li>✏️ <strong>Edit</strong> — rename the category</li>\n<li>❌ <strong>Delete</strong> — permanently remove the category</li>\n</ul>\n</li>\n</ul>\n<p>To <strong>add a new category</strong>:</p>\n<ol>\n<li>Click on <strong>Add</strong> next to the section title.</li>\n<li>Enter a name in the input field.</li>\n<li>Click <strong>Save category</strong> to confirm.</li>\n</ol>\n<blockquote>\n<p>⚠️ Deleting a category will not delete associated products, but those products will become uncategorized.</p>\n</blockquote>\n<h3>🧾 Recipe Categories</h3>\n<p>Similarly, click on <strong>Recipe Categories</strong> to manage how your recipes are grouped:</p>\n<ul>\n<li>Create categories such as &quot;Cakes&quot;, &quot;Ganache&quot;, &quot;Bases&quot;, &quot;Decorations&quot;, etc.</li>\n<li>This improves sorting and structuring in large recipe collections.</li>\n</ul>\n<hr>\n<p>Categorization is optional but strongly recommended for keeping your data structured and easy to search or export.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "categories[ru].md",
+    "language": "ru",
+    "path": "settings/categories[ru].md",
+    "title": "Управление категориями",
+    "order": 1,
+    "data": {
+      "title": "Управление категориями",
+      "order": 1
+    },
+    "html": "<h2>🗂️ Управление категориями</h2>\n<p>Вкладка <strong>Категории</strong> в настройках позволяет управлять категориями продуктов и рецептов. Категории помогают структурировать данные, удобно фильтровать позиции и группировать схожие элементы.</p>\n<h3>📦 Категории продуктов</h3>\n<p>Перейдите в раздел <strong>Категории продуктов</strong>, чтобы просмотреть и изменить список доступных групп для ингредиентов.</p>\n<p>Каждая категория отображается в виде строки со следующими действиями:</p>\n<ul>\n<li>Название категории (например, «Глазури и покрытия», «Жиры и масла», «Безглютеновые ингредиенты»)</li>\n<li>Действия:<ul>\n<li>✏️ <strong>Редактировать</strong> — изменить название категории</li>\n<li>❌ <strong>Удалить</strong> — удалить категорию из системы</li>\n</ul>\n</li>\n</ul>\n<p>Чтобы <strong>добавить новую категорию</strong>:</p>\n<ol>\n<li>Нажмите <strong>Add</strong> рядом с заголовком списка.</li>\n<li>Введите название в появившееся поле.</li>\n<li>Нажмите <strong>Save category</strong>, чтобы сохранить.</li>\n</ol>\n<blockquote>\n<p>⚠️ Удаление категории не удаляет продукты, связанные с ней, но делает их «без категории».</p>\n</blockquote>\n<h3>🧾 Категории рецептов</h3>\n<p>Аналогично, раздел <strong>Категории рецептов</strong> позволяет группировать рецепты по типу или назначению:</p>\n<ul>\n<li>Вы можете создать категории, такие как: «Торты», «Ганаши», «Основа», «Декор» и т.д.</li>\n<li>Это упрощает навигацию в больших коллекциях рецептов.</li>\n</ul>\n<hr>\n<p>Использование категорий необязательно, но настоятельно рекомендуется для порядка и удобства при работе с большим объёмом данных.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "credential-settings[en].md",
+    "language": "en",
+    "path": "settings/credential-settings[en].md",
+    "title": "Invoice Credentials",
+    "order": 3,
+    "data": {
+      "title": "Invoice Credentials",
+      "order": 3
+    },
+    "html": "<h2>🧾 Invoice Credentials</h2>\n<p>The <strong>Credentials</strong> tab allows you to define the sender and recipient details that will appear on generated invoices.</p>\n<p>This section is divided into two subtabs:</p>\n<ul>\n<li><strong>System</strong> – your own business details (used as the sender)</li>\n<li><strong>Customer</strong> – predefined recipient data (coming soon)</li>\n</ul>\n<h3>🧷 System Credentials</h3>\n<p>These fields are used to populate the sender block of each invoice. They are especially useful for legal, accounting, and tax purposes.</p>\n<blockquote>\n<p>You can define multiple credentials if needed (e.g., for different legal entities, languages, or brands).</p>\n</blockquote>\n<h4>Fields (labels coming soon):</h4>\n<p>Although labels are not yet displayed in the UI, the input fields represent the following information (from left to right, top to bottom):</p>\n<ol>\n<li><strong>Tax Identification Number</strong> – e.g., VAT number or national tax number  </li>\n<li><strong>Country</strong> – your legal country of registration  </li>\n<li><strong>Phone number</strong> – for contact or support purposes  </li>\n<li><strong>Company name</strong> – or your personal name as a freelancer  </li>\n<li><strong>Address</strong> – your business or billing address  </li>\n<li><strong>Email</strong> – for invoice replies or legal notices</li>\n</ol>\n<h3>➕ Actions</h3>\n<ul>\n<li><strong>Add row</strong> – create additional credential sets (e.g., for other branches or brands)</li>\n<li><strong>No changes</strong> – indicator that there are no unsaved edits</li>\n<li>❌ Red cross – remove the selected credential block</li>\n</ul>\n<blockquote>\n<p>All entered information will be automatically inserted into every invoice PDF you generate.</p>\n</blockquote>\n<hr>\n<p>Use this section to ensure that your invoices are properly identified and legally compliant.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "credential-settings[ru].md",
+    "language": "ru",
+    "path": "settings/credential-settings[ru].md",
+    "title": "Реквизиты для инвойсов",
+    "order": 3,
+    "data": {
+      "title": "Реквизиты для инвойсов",
+      "order": 3
+    },
+    "html": "<h2>🧾 Реквизиты для инвойсов</h2>\n<p>Вкладка <strong>Credentials</strong> позволяет указать данные отправителя и получателя, которые будут автоматически подставляться в каждый создаваемый инвойс.</p>\n<p>Интерфейс разделён на две вкладки:</p>\n<ul>\n<li><strong>System</strong> – ваши собственные реквизиты (отправитель)</li>\n<li><strong>Customer</strong> – данные получателя (в разработке)</li>\n</ul>\n<h3>🧷 Реквизиты отправителя (System)</h3>\n<p>Эти поля используются для заполнения блока «от кого» в каждом PDF-инвойсе.<br>Они особенно важны для юридического оформления, бухгалтерии и расчётов с налогами.</p>\n<blockquote>\n<p>Вы можете добавить несколько наборов реквизитов — например, для разных брендов или языков.</p>\n</blockquote>\n<h4>Поля (лейблы появятся позже):</h4>\n<p>Хотя на текущий момент подписи к полям не отображаются, они идут в следующем порядке (слева направо, сверху вниз):</p>\n<ol>\n<li><strong>Налоговый номер</strong> — например, ИНН или VAT  </li>\n<li><strong>Страна</strong> — страна регистрации  </li>\n<li><strong>Телефон</strong> — контактный номер  </li>\n<li><strong>Название компании</strong> — или ваше имя как самозанятого  </li>\n<li><strong>Адрес</strong> — юридический или почтовый адрес  </li>\n<li><strong>E-mail</strong> — для связи или официальной информации</li>\n</ol>\n<h3>➕ Действия</h3>\n<ul>\n<li><strong>Add row</strong> – добавить ещё один набор реквизитов  </li>\n<li><strong>No changes</strong> – отображается, если изменений не было  </li>\n<li>❌ Красный крест – удалить выбранный блок</li>\n</ul>\n<blockquote>\n<p>Все указанные данные будут автоматически подставляться в PDF-инвойсы, создаваемые в системе.</p>\n</blockquote>\n<hr>\n<p>Этот раздел позволяет обеспечить юридическую корректность инвойсов и сэкономить время при их создании.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "invoice-settings[en].md",
+    "language": "en",
+    "path": "settings/invoice-settings[en].md",
+    "title": "Invoice Settings",
+    "order": 2,
+    "data": {
+      "title": "Invoice Settings",
+      "order": 2
+    },
+    "html": "<h2>🧾 Invoice Settings</h2>\n<p>The <strong>Invoice settings</strong> tab lets you customize the appearance and formatting of generated invoices.</p>\n<h3>🖼️ Logo</h3>\n<ul>\n<li><strong>Upload logo</strong> — allows you to upload your custom logo that will be displayed on all exported PDF invoices.</li>\n<li>Recommended format: PNG with transparent background for best results.</li>\n</ul>\n<h3>🆔 Invoice Prefix</h3>\n<ul>\n<li>The <strong>Prefix for invoices</strong> field lets you define a custom prefix that will be prepended to each invoice number.</li>\n<li>Examples:  <ul>\n<li><code>UK-FR-</code> → results in <code>UK-FR-001</code>, <code>UK-FR-002</code>, etc.  </li>\n<li><code>2025-INV-</code> → useful for year-based or categorized numbering</li>\n</ul>\n</li>\n</ul>\n<blockquote>\n<p>📌 The prefix is only visual and does not affect the invoice’s internal ID.</p>\n</blockquote>\n<h3>🔢 Rounding Precision</h3>\n<p>The <strong>Precision</strong> section allows you to define how many decimal places are shown:</p>\n<ul>\n<li><p><strong>For rows</strong> — number of decimal places for each invoice line item<br><em>(e.g., 1.234 becomes 1.23 if precision = 2)</em></p>\n</li>\n<li><p><strong>For totals</strong> — number of decimal places for the total amount<br><em>(2 is recommended for currency-based values)</em></p>\n</li>\n</ul>\n<blockquote>\n<p>These settings affect display only — the internal calculations maintain full precision.</p>\n</blockquote>\n<hr>\n<p>These settings allow you to tailor invoice formatting to match your brand and bookkeeping preferences.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "invoice-settings[ru].md",
+    "language": "ru",
+    "path": "settings/invoice-settings[ru].md",
+    "title": "Настройки инвойсов",
+    "order": 2,
+    "data": {
+      "title": "Настройки инвойсов",
+      "order": 2
+    },
+    "html": "<h2>🧾 Настройки инвойсов</h2>\n<p>Во вкладке <strong>Invoice settings</strong> можно настроить внешний вид и поведение создаваемых инвойсов.</p>\n<h3>🖼️ Логотип</h3>\n<ul>\n<li><strong>Upload logo</strong> — позволяет загрузить ваш фирменный логотип, который будет отображаться на всех PDF-инвойсах.</li>\n<li>Рекомендуется использовать изображение в формате PNG с прозрачным фоном.</li>\n</ul>\n<h3>🆔 Префикс для инвойсов</h3>\n<ul>\n<li>Поле <strong>Prefix for invoices</strong> позволяет задать префикс, который будет автоматически добавляться к каждому номеру инвойса.</li>\n<li>Примеры:  <ul>\n<li><code>UK-FR-</code> → результат: <code>UK-FR-001</code>, <code>UK-FR-002</code> и т.д.</li>\n<li><code>2025-INV-</code> → для обозначения года или типа документа</li>\n</ul>\n</li>\n</ul>\n<blockquote>\n<p>📌 Префикс не влияет на уникальность ID — он используется только для визуального оформления.</p>\n</blockquote>\n<h3>🔢 Точность округления</h3>\n<p>В разделе <strong>Precision</strong> задаётся количество знаков после запятой:</p>\n<ul>\n<li><p><strong>For rows</strong> — сколько знаков отображается для каждой строки (позиции) в таблице инвойса.<br><em>(Например, 1.234 → 1.23 при precision = 2)</em></p>\n</li>\n<li><p><strong>For totals</strong> — точность для итоговой суммы инвойса.<br><em>(Рекомендуется: 2 для валютных значений)</em></p>\n</li>\n</ul>\n<blockquote>\n<p>Эти параметры влияют только на отображение, а не на внутренние расчёты.</p>\n</blockquote>\n<hr>\n<p>Эти настройки позволяют адаптировать внешний вид инвойсов под ваш стиль и требования учёта.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "language[en].md",
+    "language": "en",
+    "path": "settings/language[en].md",
+    "title": "Language Settings",
+    "order": 0,
+    "data": {
+      "title": "Language Settings",
+      "order": 0
+    },
+    "html": "<h2>🌐 Language Settings</h2>\n<p>The <strong>Localization</strong> section in the Settings page allows you to configure the interface language and default currency for the application.</p>\n<h3>🗣️ Interface Language</h3>\n<p>You can choose one of the available interface languages:</p>\n<ul>\n<li>🇵🇹 <strong>Português</strong> — Portuguese  </li>\n<li>🇷🇺 <strong>Русский</strong> — Russian  </li>\n<li>🇬🇧 <strong>English</strong> — English</li>\n</ul>\n<p>The selected language is stored locally and applied across the entire application.<br>Once selected, the interface updates automatically — no page reload is required.</p>\n<blockquote>\n<p>❗ Only <strong>one language</strong> can be active at a time.</p>\n</blockquote>\n<h3>💱 Currency</h3>\n<p>The <code>Currency</code> field accepts codes in the <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a> format.<br>Examples include:</p>\n<ul>\n<li><code>EUR</code> — Euro  </li>\n<li><code>USD</code> — US Dollar  </li>\n<li><code>RUB</code> — Russian Ruble</li>\n</ul>\n<p>The selected currency is used throughout the app:</p>\n<ul>\n<li>in recipe cost calculations</li>\n<li>on generated invoices</li>\n<li>in all displayed financial values</li>\n</ul>\n<hr>\n<p>This section is essential for tailoring the app experience to your region and preferences.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "language[ru].md",
+    "language": "ru",
+    "path": "settings/language[ru].md",
+    "title": "Язык и валюта",
+    "order": 0,
+    "data": {
+      "title": "Язык и валюта",
+      "order": 0
+    },
+    "html": "<h2>🌐 Настройки языка</h2>\n<p>Раздел <strong>Localization</strong> в настройках позволяет выбрать язык интерфейса приложения и валюту, используемую по умолчанию.</p>\n<h3>🗣️ Выбор языка</h3>\n<p>Пользователь может выбрать один из доступных языков интерфейса:</p>\n<ul>\n<li>🇵🇹 <strong>Português</strong> — португальский</li>\n<li>🇷🇺 <strong>Русский</strong> — русский</li>\n<li>🇬🇧 <strong>English</strong> — английский</li>\n</ul>\n<p>Выбор сохраняется локально и применяется ко всем основным разделам приложения.<br>При смене языка интерфейс обновляется автоматически — перезагрузка страницы не требуется.</p>\n<blockquote>\n<p>❗ Можно выбрать только <strong>один язык одновременно</strong>.</p>\n</blockquote>\n<h3>💱 Валюта</h3>\n<ul>\n<li>В поле <code>Currency</code> указывается код валюты в формате <a href=\"https://en.wikipedia.org/wiki/ISO_4217\">ISO 4217</a>, например:<ul>\n<li><code>EUR</code> — евро</li>\n<li><code>USD</code> — доллар США</li>\n<li><code>RUB</code> — российский рубль</li>\n</ul>\n</li>\n</ul>\n<p>Эта валюта используется:</p>\n<ul>\n<li>при расчёте стоимости рецептов</li>\n<li>в генерации инвойсов</li>\n<li>в отображении финансовых значений в интерфейсе</li>\n</ul>\n<hr>\n<p>Этот раздел — основа для персонализации интерфейса под конкретного пользователя и рынок.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "taxes-and-fees[en].md",
+    "language": "en",
+    "path": "settings/taxes-and-fees[en].md",
+    "title": "Taxes and Fees",
+    "order": 4,
+    "data": {
+      "title": "Taxes and Fees",
+      "order": 4
+    },
+    "html": "<h2>💰 Taxes and Fees</h2>\n<p>The <strong>Taxes</strong> section allows you to create, edit, and remove tax rates and additional fees that can be applied to recipes and invoices.</p>\n<p>This flexible system is designed to support both VAT/IVA and extra charges (like delivery or rush fees).</p>\n<h3>🧾 Row fields</h3>\n<p>Each row includes:</p>\n<ol>\n<li><strong>Name</strong> – a descriptive label (e.g. <code>Base IVA</code>, <code>Delivery anywhere</code>, <code>Urgent order</code>)</li>\n<li><strong>Description</strong> – (optional) for internal notes, such as region or conditions</li>\n<li><strong>Type</strong>:<ul>\n<li><code>%</code> – percentage-based (used for taxes)</li>\n<li>💶 (no icon, just a number) – fixed amount (used for surcharges/fees)</li>\n</ul>\n</li>\n<li><strong>Value</strong>:<ul>\n<li>If <code>%</code> is selected, the value is calculated as a percentage (e.g. 23%)</li>\n<li>If percentage is <strong>not selected</strong>, it&#39;s treated as a fixed amount (e.g. 12.99)</li>\n</ul>\n</li>\n</ol>\n<blockquote>\n<p>⚠️ Currently, surcharges (fees) are always fixed. Percentage-based fees will be supported in the future.</p>\n</blockquote>\n<h3>➕ Actions</h3>\n<ul>\n<li><strong>Add tax</strong> – add a new row for tax or fee  </li>\n<li>❌ Red cross – delete the selected entry  </li>\n<li><strong>No changes</strong> – indicates that no unsaved edits are present</li>\n</ul>\n<hr>\n<p>These values are used in recipe cost calculations and invoice generation. They help reflect actual pricing and ensure compliance with tax regulations.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "taxes-and-fees[ru].md",
+    "language": "ru",
+    "path": "settings/taxes-and-fees[ru].md",
+    "title": "Налоги и надбавки",
+    "order": 4,
+    "data": {
+      "title": "Налоги и надбавки",
+      "order": 4
+    },
+    "html": "<h2>💰 Налоги и надбавки (Taxes and Fees)</h2>\n<p>Раздел <strong>Taxes</strong> позволяет создавать, редактировать и удалять налоговые ставки и дополнительные сборы (надбавки), которые можно применять к рецептам и инвойсам.</p>\n<p>Этот инструмент гибко настраивается и подходит как для НДС/IVA, так и для любых сервисных надбавок (например, за срочность или доставку).</p>\n<h3>🧾 Элементы строки</h3>\n<p>Каждая строка включает:</p>\n<ol>\n<li><strong>Название</strong> — любое понятное имя: <code>Base IVA</code>, <code>Delivery anywhere</code>, <code>Срочная доставка</code></li>\n<li><strong>Описание</strong> — (опционально) для внутренних пояснений, например страна или условия применения</li>\n<li><strong>Тип</strong>:<ul>\n<li><code>%</code> — процентная ставка (используется для налогов)</li>\n<li>💶 (без иконки, просто число) — фиксированная сумма (используется для надбавок)</li>\n</ul>\n</li>\n<li><strong>Значение</strong>:<ul>\n<li>Если выбран <code>%</code>, значение считается от суммы (например, 23%)</li>\n<li>Если процент <strong>не выбран</strong>, это фиксированная сумма (например, 12.99)</li>\n</ul>\n</li>\n</ol>\n<blockquote>\n<p>⚠️ На текущий момент надбавки всегда фиксированы. В будущем появится возможность указания процента и для надбавок.</p>\n</blockquote>\n<h3>➕ Действия</h3>\n<ul>\n<li><strong>Add tax</strong> — добавляет новую строку с налогом или надбавкой</li>\n<li>❌ Красный крест — удаляет соответствующую строку</li>\n<li><strong>No changes</strong> — отображается, если нет несохранённых изменений</li>\n</ul>\n<hr>\n<p>Эти параметры используются при расчёте стоимости рецептов и генерации инвойсов. Они помогают учесть все дополнительные расходы и соблюсти налоговые требования.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "adding-and-editing[en].md",
+    "language": "en",
+    "path": "storage/adding-and-editing[en].md",
+    "title": "Creating and Editing a Product",
+    "order": 1,
+    "data": {
+      "title": "Creating and Editing a Product",
+      "order": 1
+    },
+    "html": "<h1>✏️ Creating and Editing a Product</h1>\n<p>This page lets you create a new product or edit an existing one.<br>Products are used in recipes and invoices, so it’s important to set the correct price, weight, and category.</p>\n<h2>🧾 Fields and Elements</h2>\n<h3>🧠 Product Name</h3>\n<ul>\n<li>The top text field is for the <strong>product name</strong> (e.g., &quot;Sugar&quot;, &quot;Vanilla&quot;, &quot;Flour T65&quot;).</li>\n</ul>\n<h3>⚖️ Weight and Price</h3>\n<ul>\n<li>On the left: enter the <strong>amount or weight</strong> (e.g., 1 gram or 1 piece).</li>\n<li>On the right: enter the <strong>price for the specified amount</strong> in your base currency (e.g., <code>0.023 €</code>).</li>\n<li>You can switch between units: <code>g</code> or <code>pcs</code> (default is grams).</li>\n<li>Clicking the <strong>➕ icon</strong> opens a <strong>calculation widget</strong>:<ul>\n<li>For example: a widget to calculate the weight of eggs based on count and size.</li>\n</ul>\n</li>\n</ul>\n<h3>🏷️ Category</h3>\n<ul>\n<li>Choose a category that fits the product (e.g., &quot;Dairy&quot;, &quot;Flavors and Spices&quot;).</li>\n<li>Categories are managed in the Settings section and make it easier to organize and search.</li>\n</ul>\n<h3>🛒 Source</h3>\n<ul>\n<li>Optionally, enter the source — store, website, or supplier where you usually buy this product.</li>\n</ul>\n<h2>⚡ Quick Tags (Chips)</h2>\n<ul>\n<li>Below the Source field, you’ll see <strong>quick tags</strong> — the 5 most recently used sources.</li>\n<li>Click a chip to instantly fill the Source field with that value.</li>\n</ul>\n<h2>💾 Saving</h2>\n<ul>\n<li>The <strong>Save Changes</strong> button saves your product:<ul>\n<li>Either creates a new one</li>\n<li>Or updates an existing entry if you&#39;re editing it</li>\n</ul>\n</li>\n</ul>\n<blockquote>\n<p>❗ If you leave the page without saving, your changes are kept as a draft — but it’s better to save manually.</p>\n</blockquote>\n<hr>\n<p>This screen gives you flexible control over your ingredients, ensuring every product has an accurate price, source, and classification for recipe cost calculation.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "adding-and-editing[ru].md",
+    "language": "ru",
+    "path": "storage/adding-and-editing[ru].md",
+    "title": "Создание и редактирование продукта",
+    "order": 1,
+    "data": {
+      "title": "Создание и редактирование продукта",
+      "order": 1
+    },
+    "html": "<p>✏️ Создание и редактирование продукта</p>\n<p>На этой странице вы можете создать новый продукт или отредактировать существующий.<br>Продукты используются в рецептах и инвойсах, поэтому важно указывать корректную цену, вес и категорию.</p>\n<h2>🧾 Поля и элементы</h2>\n<h3>🧠 Название продукта</h3>\n<ul>\n<li>Верхнее текстовое поле — это <strong>название продукта</strong> (например, &quot;Сахар&quot;, &quot;Ваниль&quot;, &quot;Мука T65&quot;).</li>\n</ul>\n<h3>⚖️ Вес и цена</h3>\n<ul>\n<li>Слева указывается <strong>вес или количество</strong> (например, 1 грамм или 1 штука).</li>\n<li>Справа — <strong>стоимость указанного веса/количества</strong> в валюте (например, <code>0.023 €</code>).</li>\n<li>Единицы можно переключать: <code>гр.</code> или <code>шт.</code> (по умолчанию граммы).</li>\n<li>Нажав на <strong>иконку ➕</strong>, можно вызвать <strong>виджет расчёта веса</strong>:<ul>\n<li>Например: виджет для расчёта веса яиц по количеству и размеру.</li>\n</ul>\n</li>\n</ul>\n<h3>🏷️ Категория</h3>\n<ul>\n<li>Выберите категорию, к которой относится продукт (например, &quot;Молочные&quot;, &quot;Ароматизаторы и специи&quot;).</li>\n<li>Категории задаются в настройках и упрощают навигацию и фильтрацию.</li>\n</ul>\n<h3>🛒 Источник</h3>\n<ul>\n<li>Укажите, где вы покупаете этот продукт — название магазина, сайта или поставщика (опционально).</li>\n</ul>\n<h2>⚡ Быстрые теги (чипы)</h2>\n<ul>\n<li>Под полем «Источник» отображаются <strong>быстрые элементы</strong> — это 5 последних использованных поставщиков или магазинов.</li>\n<li>Нажмите на чип, чтобы быстро вставить значение в поле «Источник».</li>\n</ul>\n<h2>💾 Сохранение</h2>\n<ul>\n<li>Кнопка <strong>Сохранить изменения</strong> — сохраняет текущие данные.</li>\n<li>При этом продукт либо:<ul>\n<li>создаётся как новый,</li>\n<li>либо обновляется, если уже существует.</li>\n</ul>\n</li>\n</ul>\n<blockquote>\n<p>❗Если вы покидаете страницу без сохранения, изменения остаются в черновике, но лучше сохранить вручную.</p>\n</blockquote>\n<hr>\n<p>Эта страница позволяет гибко добавлять любые виды продуктов с точной ценой и источником, что особенно важно для расчёта себестоимости рецептов.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "storage-overview[en].md",
+    "language": "en",
+    "path": "storage/storage-overview[en].md",
+    "title": "Stock (Products Page)",
+    "order": 0,
+    "data": {
+      "title": "Stock (Products Page)",
+      "order": 0
+    },
+    "html": "<h1>🧺 Stock (Products Page)</h1>\n<p>The <strong>Stock</strong> section is where you manage all ingredients and materials used in your recipes.<br>Each item on this page is called a <strong>product</strong>, and it has a price, unit, category, and edit history.</p>\n<h2>🗃️ Page Structure</h2>\n<ul>\n<li>Products are automatically <strong>grouped by categories</strong>.</li>\n<li>Items <strong>without a category</strong> appear at the top.</li>\n<li>Each product displays the <strong>last edited</strong> timestamp in the top-right corner.</li>\n</ul>\n<h2>📝 Drafts</h2>\n<p>If you made changes to a product but didn’t save them, a message will appear at the top indicating <strong>unsaved changes</strong>.<br>Click the message to view or review your draft edits.</p>\n<h2>✅ Selection Mode &amp; Bulk Actions</h2>\n<p>Clicking on a product activates <strong>selection mode</strong>:</p>\n<ul>\n<li>You can select multiple products at once.</li>\n<li>After selection, bulk actions become available:<ul>\n<li><strong>Delete</strong> selected products</li>\n<li><strong>Export</strong> selected products to a file</li>\n</ul>\n</li>\n</ul>\n<p>Available selection tools:</p>\n<ul>\n<li><code>Select all</code></li>\n<li><code>Hide selection</code></li>\n<li><code>Clear selection from all</code></li>\n</ul>\n<h2>🔁 Import &amp; Export</h2>\n<p>At the bottom right of the screen, you&#39;ll find two key options:</p>\n<ul>\n<li><strong>Export products</strong> — saves your product list to a file (for backup or transfer)</li>\n<li><strong>Import products</strong> — uploads a file with product data (in a compatible format)</li>\n</ul>\n<blockquote>\n<p>Importing will add new products and update existing ones if their IDs match.</p>\n</blockquote>\n<h2>📌 Sorting and Display</h2>\n<ul>\n<li>Products are <strong>always sorted by category</strong>, and within each category by <strong>last edited date</strong>.</li>\n<li>The interface is optimized for speed and clarity, helping you quickly locate ingredients and keep data up to date.</li>\n</ul>\n<hr>\n<p>This section is the foundation for cost calculations. Accurate product data = accurate recipe and invoice totals.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "storage-overview[ru].md",
+    "language": "ru",
+    "path": "storage/storage-overview[ru].md",
+    "title": "Склад (страница продуктов)",
+    "order": 0,
+    "data": {
+      "title": "Склад (страница продуктов)",
+      "order": 0
+    },
+    "html": "<h1>🧺 Склад (страница продуктов)</h1>\n<p>Раздел <strong>Склад</strong> — это место, где хранятся все ваши ингредиенты и материалы, используемые в рецептах.<br>Каждая сущность в этом разделе — это <strong>продукт</strong>, у которого есть цена, единица измерения, категория и история изменений.</p>\n<h2>🗃️ Структура страницы</h2>\n<ul>\n<li>Продукты автоматически группируются по категориям.</li>\n<li>В начале списка отображаются продукты <strong>без категории</strong>.</li>\n<li>В правом верхнем углу каждого продукта указано, когда он последний раз редактировался.</li>\n</ul>\n<h2>📝 Черновики</h2>\n<p>Если вы редактировали продукт, но не сохранили изменения — наверху отобразится уведомление о <strong>несохранённых изменениях</strong>.<br>Нажмите на него, чтобы быстро перейти к просмотру или сохранению черновиков.</p>\n<h2>✅ Выделение и массовые действия</h2>\n<p>При клике по продукту включается режим выделения:</p>\n<ul>\n<li>Можно выбрать несколько продуктов сразу.</li>\n<li>После выбора становятся доступны действия:<ul>\n<li><strong>Удаление</strong> выбранных продуктов</li>\n<li><strong>Экспорт</strong> выбранных продуктов в файл</li>\n</ul>\n</li>\n<li>Для удобства есть команды:<ul>\n<li><code>Выбрать все</code></li>\n<li><code>Скрыть выбор</code></li>\n<li><code>Убрать выделение со всего</code></li>\n</ul>\n</li>\n</ul>\n<h2>🔁 Импорт и экспорт</h2>\n<p>В нижнем правом углу находятся кнопки:</p>\n<ul>\n<li><strong>Экспорт products</strong> — сохранить список продуктов в файл (например, для бэкапа или переноса)</li>\n<li><strong>Импортировать products</strong> — загрузить продукты из файла (в формате, совместимом с системой)</li>\n</ul>\n<blockquote>\n<p>Импорт добавляет новые продукты и может обновлять существующие, если ID совпадают.</p>\n</blockquote>\n<h2>📌 Сортировка и отображение</h2>\n<ul>\n<li>Продукты <strong>всегда сортируются по категориям</strong>, а внутри — по дате последнего редактирования.</li>\n<li>Удобный интерфейс позволяет быстро найти нужный ингредиент и следить за актуальностью данных.</li>\n</ul>\n<hr>\n<p>Этот раздел — основа работы с себестоимостью. От правильности данных на складе зависит точность расчёта рецептов и инвойсов.</p>\n"
   }
 ]

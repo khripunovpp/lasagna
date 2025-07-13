@@ -1,1 +1,0 @@
-import{ec as n,mb as r}from"./chunk-NHWKWTII.js";var o=class t{constructor(){}width="100%";flex="1 1 100%";static \u0275fac=function(i){return new(i||t)};static \u0275dir=r({type:t,selectors:[["","lgExpand",""]],hostVars:4,hostBindings:function(i,e){i&2&&n("width",e.width)("flex",e.flex)}})};export{o as a};

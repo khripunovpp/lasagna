@@ -27,7 +27,7 @@ import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/
 import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
 import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {JsonPipe} from '@angular/common';
+
 
 
 @Component({
@@ -128,8 +128,7 @@ import {JsonPipe} from '@angular/common';
     GroupingTailsComponent,
     GroupingTailDirective,
     FlexColumnComponent,
-    JsonPipe
-  ],
+    ],
   styles: [
     `:host {
       display: block;
