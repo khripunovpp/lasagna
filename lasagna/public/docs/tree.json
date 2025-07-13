@@ -4,30 +4,41 @@
     "name": "getting-started",
     "children": [
       {
-        "type": "folder",
-        "name": "install",
-        "children": [
-          {
-            "type": "file",
-            "name": "requirenments.md",
-            "path": "getting-started/install/requirenments.md",
-            "title": "Требования",
-            "data": {
-              "title": "Требования",
-              "type": "card"
-            }
-          }
-        ]
-      },
-      {
         "type": "file",
         "name": "intro.md",
+        "language": "en",
         "path": "getting-started/intro.md",
         "title": "Начало работы",
         "data": {
           "title": "Начало работы",
           "type": "card"
         }
+      },
+      {
+        "type": "folder",
+        "name": "start-screen",
+        "children": [
+          {
+            "type": "file",
+            "name": "start-page[en].md",
+            "language": "en",
+            "path": "getting-started/start-screen/start-page[en].md",
+            "title": "Home Page",
+            "data": {
+              "title": "Home Page"
+            }
+          },
+          {
+            "type": "file",
+            "name": "start-page[ru].md",
+            "language": "ru",
+            "path": "getting-started/start-screen/start-page[ru].md",
+            "title": "Главная страница",
+            "data": {
+              "title": "Главная страница"
+            }
+          }
+        ]
       }
     ]
   }

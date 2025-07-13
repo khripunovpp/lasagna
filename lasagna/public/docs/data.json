@@ -1,18 +1,8 @@
 [
   {
     "type": "file",
-    "name": "requirenments.md",
-    "path": "getting-started/install/requirenments.md",
-    "title": "Требования",
-    "data": {
-      "title": "Требования",
-      "type": "card"
-    },
-    "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n"
-  },
-  {
-    "type": "file",
     "name": "intro.md",
+    "language": "en",
     "path": "getting-started/intro.md",
     "title": "Начало работы",
     "data": {
@@ -20,5 +10,27 @@
       "type": "card"
     },
     "html": "<h2>Шаг 1</h2>\n<p>Скачай проект.</p>\n<h2>Шаг 2</h2>\n<p>Запусти <code>npm install</code>.</p>\n"
+  },
+  {
+    "type": "file",
+    "name": "start-page[en].md",
+    "language": "en",
+    "path": "getting-started/start-screen/start-page[en].md",
+    "title": "Home Page",
+    "data": {
+      "title": "Home Page"
+    },
+    "html": "<h1>🏠 Home Page</h1>\n<p>After launching the app, you land on the <strong>Home Page</strong> — your starting screen and the main entry point to all key features.</p>\n<h2>What&#39;s on this page:</h2>\n<ul>\n<li>In the center, you&#39;ll see blocks titled <strong>&quot;Last edited recipes&quot;</strong> and <strong>&quot;Last edited products&quot;</strong>. These give you quick access to the items you&#39;ve recently worked on.</li>\n<li>Each entry displays the item’s name and the time it was last modified. Clicking an item opens it for editing.</li>\n</ul>\n<h2>Top Navigation Bar (Header):</h2>\n<p>The navigation menu is located at the top of the screen and includes:</p>\n<ul>\n<li><strong>Home</strong> — return to the main dashboard.</li>\n<li><strong>Recipes</strong> — navigate to the full list of recipes.</li>\n<li><strong>Products</strong> — browse all saved products.</li>\n<li><strong>Invoices</strong> — view and manage invoices.</li>\n<li><strong>Settings</strong> — adjust preferences, view policies, and manage personal data.</li>\n<li><strong>More</strong> — access additional actions like sync or export.</li>\n</ul>\n"
+  },
+  {
+    "type": "file",
+    "name": "start-page[ru].md",
+    "language": "ru",
+    "path": "getting-started/start-screen/start-page[ru].md",
+    "title": "Главная страница",
+    "data": {
+      "title": "Главная страница"
+    },
+    "html": "<h1>🏠 Главная страница</h1>\n<p>После входа в приложение вы попадаете на <strong>главную страницу</strong> — это ваш стартовый экран и точка доступа ко всем основным функциям.</p>\n<h2>Что здесь есть:</h2>\n<ul>\n<li>В центре расположены блоки <strong>«Последние редактированные рецепты»</strong> и <strong>«Последние редактированные продукты»</strong>. Это быстрый доступ к тем элементам, с которыми вы недавно работали.</li>\n<li>В каждом блоке отображаются названия элементов и дата последнего изменения. При клике вы сразу переходите к редактированию выбранного рецепта или продукта.</li>\n</ul>\n<h2>Верхняя панель (хедер):</h2>\n<p>Навигационное меню находится в верхней части экрана и включает в себя:</p>\n<ul>\n<li><strong>Домой</strong> — вернуться на главную.</li>\n<li><strong>Recipes</strong> — переход в раздел всех рецептов.</li>\n<li><strong>Products</strong> — список всех продуктов.</li>\n<li><strong>Invoices</strong> — выставленные инвойсы.</li>\n<li><strong>Настройки</strong> — персонализация, соглашения и другие параметры.</li>\n<li><strong>Прочее</strong> — дополнительные действия (например, синхронизация или экспорт).</li>\n</ul>\n"
   }
 ]

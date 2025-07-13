@@ -6,9 +6,9 @@ const {marked} = require('marked');
 
 const inputDir = '/markdowns';
 const outputDir = './public/docs';
-const treeOutput = path.join(outputDir, 'tree.json');
-const dataOutput = path.join(outputDir, 'data.json');
-const metaOutput = path.join(outputDir, 'meta.json');
+const treeOutput = path.join(__dirname, '..', outputDir, 'tree.json');
+const dataOutput = path.join(__dirname, '..', outputDir, 'data.json');
+const metaOutput = path.join(__dirname, '..', outputDir, 'meta.json');
 
 const tree = [];
 const docs = [];
@@ -33,6 +33,7 @@ function walk(dir, base = '', treeRef) {
       const fileNode = {
         type: 'file',
         name: entry,
+        language: parseLanguageFromName(entry),
         path: relPath.replace(/\\/g, '/'),
         title: data.title || entry.replace('.md', ''),
         data
@@ -48,11 +49,17 @@ function walk(dir, base = '', treeRef) {
   });
 }
 
+function parseLanguageFromName(name) {
+  // 'start-page[en].md' match exact en
+  const match = name.match(/\[([a-z]{2})\]/);
+  return match ? match[1] : 'en';
+}
+
 fs.mkdirSync(outputDir, {recursive: true});
 walk(__dirname + inputDir, '', tree);
 
 fs.writeFileSync(treeOutput, JSON.stringify(tree, null, 2));
 fs.writeFileSync(dataOutput, JSON.stringify(docs, null, 2));
-fs.writeFileSync(metaOutput, JSON.stringify({ updatedAt: Date.now() }, null, 2));
+fs.writeFileSync(metaOutput, JSON.stringify({updatedAt: Date.now()}, null, 2));
 
 console.log('📘 Документация сгенерирована');

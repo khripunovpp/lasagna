@@ -3,20 +3,22 @@ import {DocFile, DocsService} from '../../service/services/docs.service';
 import {defer, filter, map, startWith, switchMap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ContainerComponent} from '../ui/layout/container/container.component';
 
 @Component({
   selector: 'lg-article',
   template: `
-      <div class="lg-article">
-          @if (content | async;as contentHTML) {
-              <div [innerHTML]="contentHTML"></div>
-          }
+    <div class="lg-article">
+      @if (content | async; as contentHTML) {
+        <div [innerHTML]="contentHTML"></div>
+      }
 
-      </div>
+    </div>
   `,
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    ContainerComponent
   ]
 })
 export class ArticleComponent {
