@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'lg-container',
   standalone: true,
   template: `
-      <section class="container">
-          <ng-content></ng-content>
-      </section>`,
+    <section [class.compact]="compact()"
+             class="container">
+      <ng-content></ng-content>
+    </section>`,
   styles: [
     `
       :host {
@@ -33,8 +34,13 @@ import {Component} from '@angular/core';
           gap: 16px;
         }
       }
+
+      .container.compact {
+        gap: 0 !important;
+      }
     `
   ]
 })
 export class ContainerComponent {
+  compact = input(false)
 }

@@ -234,8 +234,8 @@ export const routes: Routes = [{
 
     {
       path: 'docs',
-      loadComponent: () => import('./shared/view/documentation/documentation-tree.component')
-        .then(m => m.DocumentationTreeComponent),
+      loadComponent: () => import('./shared/view/documentation/documentation-container.component')
+        .then(m => m.DocumentationContainerComponent),
       children: [
         {
           path: '**',

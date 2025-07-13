@@ -12,10 +12,15 @@ import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-l
       @if (content | async; as contentHTML) {
         <div [innerHTML]="contentHTML"></div>
       }
-
     </div>
   `,
-  standalone: true,
+  styles:[
+    `
+      .lg-article {
+        display: flex;
+      }
+    `
+  ],
   imports: [
     AsyncPipe
   ]
