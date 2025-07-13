@@ -65,6 +65,13 @@ import {DemoInformerComponent} from '../demo-informer.component';
            class="lg-header__icon">
           <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
         </a>
+
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/docs'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
+        </a>
       </div>
 
       <div class="lg-header__right">

@@ -12,6 +12,7 @@ export interface DocFile {
   path: string;
   title: string;
   html: string;
+  language?: string;
 }
 
 export interface TreeNode {
