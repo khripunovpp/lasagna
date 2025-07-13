@@ -43,7 +43,7 @@ export class ArticleComponent {
       url: this.route.snapshot.url.map(segment => segment.path).join('/'),
     })),
     map(({data, url}) => {
-      const doc = data.filter(doc => doc.path.includes(url || 'getting-started/start-screen/start-page'));
+      const doc = data.filter(doc => doc.path.includes(url || '/start-page'));
       const targetByLang = doc.find(d => d.language === this._userLang());
       if (!doc.length) {
         return 'Start'

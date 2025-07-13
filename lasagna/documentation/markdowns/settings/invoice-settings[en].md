@@ -1,3 +1,8 @@
+---
+title: "Invoice Settings"
+order: 2
+---
+
 ## 🧾 Invoice Settings
 
 The **Invoice settings** tab lets you customize the appearance and formatting of generated invoices.

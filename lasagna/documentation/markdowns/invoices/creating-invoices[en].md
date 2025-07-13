@@ -1,3 +1,8 @@
+---
+title: "Invoice Editing Page"
+order: 1
+---
+
 # 🧾 Invoice Editing Page
 
 This page allows you to create and edit an invoice with detailed order information — including recipes, products, taxes, notes, and metadata. It’s used to generate a final invoice for your client.

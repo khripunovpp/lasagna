@@ -1,5 +1,6 @@
 ---
 title: "Home Page"
+order: 0
 ---
 
 # 🏠 Home Page

@@ -1,3 +1,9 @@
+---
+title: "Creating and Editing a Recipe"
+order: 1
+---
+
+
 # ✏️ Creating and Editing a Recipe
 
 A recipe is a combination of ingredients (products or sub-recipes) with defined quantities and optional output weight.  

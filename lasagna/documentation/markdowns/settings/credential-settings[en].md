@@ -1,3 +1,7 @@
+---
+title: "Invoice Credentials"
+order: 3
+---
 ## 🧾 Invoice Credentials
 
 The **Credentials** tab allows you to define the sender and recipient details that will appear on generated invoices.
