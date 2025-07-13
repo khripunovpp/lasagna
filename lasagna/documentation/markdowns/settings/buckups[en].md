@@ -1,3 +1,8 @@
+---
+title: "Backups"
+order: 5
+---
+
 ## 🗄️ Backups
 
 This section allows you to manually **create and restore backups** of your data.

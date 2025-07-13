@@ -1,3 +1,8 @@
+---
+title: "What are invoices?"
+order: 0
+---
+
 # 🧾 What are invoices?
 
 Invoices are a system for generating and tracking bills for your orders. You can use them for:

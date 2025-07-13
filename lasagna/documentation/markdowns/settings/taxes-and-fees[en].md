@@ -1,3 +1,7 @@
+---
+title: "Taxes and Fees"
+order: 4
+---
 ## 💰 Taxes and Fees
 
 The **Taxes** section allows you to create, edit, and remove tax rates and additional fees that can be applied to recipes and invoices.

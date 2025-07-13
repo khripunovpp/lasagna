@@ -36,6 +36,7 @@ function walk(dir, base = '', treeRef) {
         language: parseLanguageFromName(entry),
         path: relPath.replace(/\\/g, '/'),
         title: data.title || entry.replace('.md', ''),
+        order: data.order || 0,
         data
       };
 

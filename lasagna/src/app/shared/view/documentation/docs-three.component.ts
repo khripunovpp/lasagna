@@ -48,11 +48,11 @@ import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
 
         @if (item.path) {
           <a [routerLink]="getPath(item.path)" class="doc-tree-link">
-            {{ nameToTitleMap[item.name] ?? item.name }}
+            {{ item.title ?? nameToTitleMap[item.name] ?? item.name }}
           </a>
         } @else {
           <div class="doc-tree-folder-name">
-            {{ nameToTitleMap[item.name] ?? item.name }}
+            {{ item.title ?? nameToTitleMap[item.name] ?? item.name }}
           </div>
         }
       </div>
@@ -132,9 +132,10 @@ export class DocsThreeComponent
   dropdownElementRef = viewChild(DropdownComponent, {read: ElementRef});
   nameToTitleMap: Record<string, string> = {
     'getting-started': 'Getting Started',
-    'intro.md': 'Introduction',
-    'install': 'Installation',
-    'requirenments.md': 'Requirements',
+    'invoices': 'Invoices',
+    'settings': 'Settings',
+    'recipes': 'Recipes',
+    'storage': 'Storage',
   };
 
   onNavigationEnd = defer(() => this._router.events.pipe(

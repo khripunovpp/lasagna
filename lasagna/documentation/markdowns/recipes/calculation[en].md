@@ -1,3 +1,9 @@
+---
+title: "Recipe Cost Calculation"
+order: 2
+---
+
+
 # 📊 Recipe Cost Calculation Page
 
 This page displays the total cost of a recipe, suggested selling price, and breakdown by ingredient.

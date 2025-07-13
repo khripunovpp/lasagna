@@ -1,3 +1,9 @@
+---
+title: "Creating and Editing a Product"
+order: 1
+---
+
+
 # ✏️ Creating and Editing a Product
 
 This page lets you create a new product or edit an existing one.  

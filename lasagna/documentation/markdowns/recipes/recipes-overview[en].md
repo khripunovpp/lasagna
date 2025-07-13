@@ -1,3 +1,8 @@
+---
+title: "Recipes Overview"
+order: 0
+---
+
 # 📖 Recipes
 
 A recipe is the core data structure in the system. It consists of one or more products or sub-recipes, along with their quantities, units, and optional descriptions.  

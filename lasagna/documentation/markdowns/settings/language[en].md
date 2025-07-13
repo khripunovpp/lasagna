@@ -1,3 +1,9 @@
+---
+title: "Language Settings"
+order: 0
+---
+
+
 ## 🌐 Language Settings
 
 The **Localization** section in the Settings page allows you to configure the interface language and default currency for the application.

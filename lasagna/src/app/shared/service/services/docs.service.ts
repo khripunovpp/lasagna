@@ -13,6 +13,7 @@ export interface DocFile {
   title: string;
   html: string;
   language?: string;
+  order?: number; // Used for sorting, not stored in DB
 }
 
 export interface TreeNode {
@@ -23,7 +24,9 @@ export interface TreeNode {
   language?: string;
   children?: TreeNode[];
   _expanded?: boolean; // Used for UI state, not stored in DB
+  order?: number; // Used for sorting, not stored in DB
 }
+
 
 interface MetaInfo {
   updatedAt: string;
@@ -38,6 +41,13 @@ export class DocsService {
   ) {
   }
 
+  orderTitles: Record<string, number> = {
+    'getting-started': 1,
+    'invoices': 4,
+    'settings': 5,
+    'recipes': 3,
+    'storage': 2,
+  };
   private _userLang = inject(USER_LANGUAGE);
   private docs$ = new BehaviorSubject<DocFile[]>([]);
   private tree$ = new BehaviorSubject<TreeNode[]>([]);
@@ -107,7 +117,10 @@ export class DocsService {
     if (filteredChildren.length > 0) {
       return {
         ...node,
-        children: filteredChildren,
+        children: filteredChildren
+          .toSorted((a: TreeNode, b: TreeNode) => {
+            return (a.order || 0) - (b.order || 0);
+          }),
       };
     }
 
@@ -129,14 +142,15 @@ export class DocsService {
   private async _getStoredDocs() {
     const docsRecords = await this._indexedDB.getAll(Stores.DOCUMENTATION);
 
-    const tree = docsRecords
+    const tree = (docsRecords
       ?.find((item: any) => item.key === 'tree')?.value.reduce((acc: any, item: TreeNode) => {
         const filteredNode = this.filterLanguage(item, this._userLang());
         if (filteredNode) {
           acc.push(filteredNode);
         }
         return acc;
-      }, []) || [];
+      }, []) || []).toSorted((a: TreeNode, b: TreeNode) =>
+      (this.orderTitles[a.name || ''] || 0) - (this.orderTitles[b.name || ''] || 0));
     const docs = docsRecords?.find((item: any) => item.key === 'data')?.value;
 
     return {

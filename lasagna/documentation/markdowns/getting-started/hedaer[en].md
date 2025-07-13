@@ -1,5 +1,6 @@
 ---
-title: "Header"
+title: "Top Bar (Header)"
+order: 1
 ---
 
 ## 🔝 Top Bar (Header)

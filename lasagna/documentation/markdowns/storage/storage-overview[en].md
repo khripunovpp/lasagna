@@ -1,3 +1,8 @@
+---
+title: "Stock (Products Page)"
+order: 0
+---
+
 # 🧺 Stock (Products Page)
 
 The **Stock** section is where you manage all ingredients and materials used in your recipes.  

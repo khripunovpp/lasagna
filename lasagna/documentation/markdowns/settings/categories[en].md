@@ -1,3 +1,8 @@
+---
+title: "Category Management"
+order: 1
+---
+
 ## 🗂️ Category Management
 
 The **Categories** tab in the Settings section allows you to manage product and recipe categories. Categorization helps you organize items, filter data, and group similar content for better clarity and reporting.
