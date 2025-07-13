@@ -64,6 +64,60 @@
   },
   {
     "type": "folder",
+    "name": "recipes",
+    "children": [
+      {
+        "type": "file",
+        "name": "adding-recipes[en].md",
+        "language": "en",
+        "path": "recipes/adding-recipes[en].md",
+        "title": "adding-recipes[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "adding-recipes[ru].md",
+        "language": "ru",
+        "path": "recipes/adding-recipes[ru].md",
+        "title": "adding-recipes[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "calculation[en].md",
+        "language": "en",
+        "path": "recipes/calculation[en].md",
+        "title": "calculation[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "calculation[ru].md",
+        "language": "ru",
+        "path": "recipes/calculation[ru].md",
+        "title": "calculation[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "recipes-overview[en].md",
+        "language": "en",
+        "path": "recipes/recipes-overview[en].md",
+        "title": "recipes-overview[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "recipes-overview[ru].md",
+        "language": "ru",
+        "path": "recipes/recipes-overview[ru].md",
+        "title": "recipes-overview[ru]",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "type": "folder",
     "name": "settings",
     "children": [
       {
