@@ -1,6 +1,6 @@
 import {Component, computed, contentChildren, input, ViewEncapsulation} from '@angular/core';
 import {ControlLabelTemplateDirective} from './control-label-template.directive';
-import {NgStyle, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'lg-control',
@@ -73,8 +73,7 @@ import {NgStyle, NgTemplateOutlet} from '@angular/common';
   ],
   imports: [
     NgTemplateOutlet,
-    NgStyle
-  ],
+    ],
   encapsulation: ViewEncapsulation.None
 })
 export class ControlComponent {

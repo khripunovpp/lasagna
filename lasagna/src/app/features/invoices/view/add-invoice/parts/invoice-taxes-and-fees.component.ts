@@ -23,14 +23,14 @@ import {ExpandDirective} from '../../../../../shared/view/directives/expand.dire
 import {ReadonlyControlComponent} from '../../../../../shared/view/ui/form/readonly-control.component';
 import {WidthDirective} from '../../../../../shared/view/directives/width.directive';
 import {Invoice} from '@invoices/service/Inovice/Invoice';
-import {ControlExtraTemplateDirective} from '../../../../../shared/view/ui/form/control-extra-template.directive';
+
 import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-row.component';
-import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
-import {InvoiceItemSelectorComponent} from '@invoices/view/add-invoice/parts/invoice-item-selector.component';
-import {MultiselectComponent} from '../../../../../shared/view/ui/form/multiselect.component';
-import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
-import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
-import {UnitSwitcherComponent} from '../../../../../shared/view/ui/unit-switcher.component';
+
+
+
+
+
+
 
 @Component({
   selector: 'lg-invoice-taxes-and-fees',
@@ -140,15 +140,8 @@ import {UnitSwitcherComponent} from '../../../../../shared/view/ui/unit-switcher
     ReactiveFormsModule,
     ReadonlyControlComponent,
     WidthDirective,
-    ControlExtraTemplateDirective,
     ControlsRowComponent,
-    InputComponent,
-    InvoiceItemSelectorComponent,
-    MultiselectComponent,
-    NumberInputComponent,
-    ParseMathDirective,
-    UnitSwitcherComponent
-  ],
+        ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

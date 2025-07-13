@@ -42,16 +42,16 @@ import {randomRGB} from '../../../../shared/helpers/color.helper';
 import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {TranslatePipe} from '@ngx-translate/core';
-import {InputComponent} from '../../../../shared/view/ui/form/input.component';
-import {UnitGroupItem, UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
-import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
+
+import {UnitGroupItem} from '../../../../shared/view/ui/unit-switcher.component';
+
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
-import {ControlExtraTemplateDirective} from '../../../../shared/view/ui/form/control-extra-template.directive';
+
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
-import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
-import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+
+
 import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
@@ -78,13 +78,7 @@ import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/
     ExpandDirective,
     UserCurrencyPipe,
     TranslatePipe,
-    InputComponent,
     ReactiveFormsModule,
-    UnitSwitcherComponent,
-    ParseMathDirective,
-    ControlExtraTemplateDirective,
-    CurrencySymbolPipe,
-    NumberInputComponent,
     CalculationPriceModifiersComponent,
   ],
   templateUrl: './calculate-recipe.component.html',

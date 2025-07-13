@@ -4,7 +4,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/layout/button.componen
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
-import {CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass} from '@angular/common';
+import {CurrencyPipe, DatePipe, DecimalPipe, NgClass} from '@angular/common';
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {Stores} from '../../../../shared/service/db/const/stores';
@@ -117,7 +117,6 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
     FlexColumnComponent,
     DatePipe,
     DecimalPipe,
-    JsonPipe,
     NgClass
   ],
   providers: [
