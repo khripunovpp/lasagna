@@ -165,5 +165,43 @@
         "data": {}
       }
     ]
+  },
+  {
+    "type": "folder",
+    "name": "storage",
+    "children": [
+      {
+        "type": "file",
+        "name": "adding-and-editing[en].md",
+        "language": "en",
+        "path": "storage/adding-and-editing[en].md",
+        "title": "adding-and-editing[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "adding-and-editing[ru].md",
+        "language": "ru",
+        "path": "storage/adding-and-editing[ru].md",
+        "title": "adding-and-editing[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "storage-overview[en].md",
+        "language": "en",
+        "path": "storage/storage-overview[en].md",
+        "title": "storage-overview[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "storage-overview[ru].md",
+        "language": "ru",
+        "path": "storage/storage-overview[ru].md",
+        "title": "storage-overview[ru]",
+        "data": {}
+      }
+    ]
   }
 ]
