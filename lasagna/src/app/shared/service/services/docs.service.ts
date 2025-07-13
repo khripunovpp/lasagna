@@ -1,9 +1,10 @@
 // 📁 src/app/services/docs.service.ts
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, firstValueFrom} from 'rxjs';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
+import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
 
 export interface DocFile {
   type: 'file';
@@ -18,6 +19,7 @@ export interface TreeNode {
   name: string;
   path?: string;
   title?: string;
+  language?: string;
   children?: TreeNode[];
 }
 
@@ -34,51 +36,80 @@ export class DocsService {
   ) {
   }
 
+  private _userLang = inject(USER_LANGUAGE);
   private docs$ = new BehaviorSubject<DocFile[]>([]);
   private tree$ = new BehaviorSubject<TreeNode[]>([]);
 
   async init() {
-    const remoteMeta = await firstValueFrom(this._http.get<MetaInfo>('./docs/meta.json'));
-    const localData = await this._indexedDB.getAll(Stores.DOCUMENTATION);
-    const localMeta = localData?.find((item:any) => item.key === 'meta')?.value;
+    try {
+      const remoteMeta = await firstValueFrom(this._http.get<MetaInfo>('./docs/meta.json'));
+      const localData = await this._indexedDB.getAll(Stores.DOCUMENTATION);
+      const localMeta = localData?.find((item: any) => item.key === 'meta')?.value;
 
-    const needsUpdate = !localMeta || new Date(remoteMeta.updatedAt) > new Date(localMeta.updatedAt);
+      const needsUpdate = !localMeta || new Date(remoteMeta.updatedAt) > new Date(localMeta.updatedAt);
 
-    if (needsUpdate) {
-      const [data, tree]: [
-        DocFile[],
-        TreeNode[]
-      ] = await Promise.all([
-        firstValueFrom(this._http.get<DocFile[]>('./docs/data.json')),
-        firstValueFrom(this._http.get<TreeNode[]>('./docs/tree.json')),
-      ]);
+      if (needsUpdate) {
+        const [data, tree]: [
+          DocFile[],
+          TreeNode[]
+        ] = await Promise.all([
+          firstValueFrom(this._http.get<DocFile[]>('./docs/data.json')),
+          firstValueFrom(this._http.get<TreeNode[]>('./docs/tree.json')),
+        ]);
 
-      await this._indexedDB.balkAdd(Stores.DOCUMENTATION, [
-        {
-          key: 'meta',
-          value: remoteMeta,
-        },
-        {
-          key: 'data',
-          value: data,
-        },
-        {
-          key: 'tree',
-          value: tree,
-        },
-      ]);
+        await this._indexedDB.balkAdd(Stores.DOCUMENTATION, [
+          {
+            key: 'meta',
+            value: remoteMeta,
+          },
+          {
+            key: 'data',
+            value: data,
+          },
+          {
+            key: 'tree',
+            value: tree,
+          },
+        ]);
 
-      this.docs$.next(data);
-      this.tree$.next(tree);
-    } else {
-      const docsRecords = await this._indexedDB.getAll(Stores.DOCUMENTATION);
+        this.docs$.next(data);
+        this.tree$.next(tree);
+      } else {
+        const docsRecords = await this._getStoredDocs();
 
-      const tree = docsRecords?.find((item:any) => item.key === 'tree')?.value;
-      const docs = docsRecords?.find((item:any) => item.key === 'data')?.value;
-
-      this.tree$.next(tree);
-      this.docs$.next(docs);
+        this.tree$.next(docsRecords.tree);
+        this.docs$.next(docsRecords.docs);
+      }
+    } catch (error) {
+      throw new Error(`Failed to initialize docs service: ${error}`);
     }
+  }
+
+  filterLanguage(node: TreeNode, lang: string): TreeNode | null {
+    if (node.language && node.language !== lang) {
+      return null;
+    }
+    if (node.type === 'file') {
+      return node;
+    }
+
+    const filteredChildren: TreeNode[] = (node.children || []).reduce((acc: TreeNode[], child: TreeNode) => {
+      const filteredChild = this.filterLanguage(child, lang);
+
+      if (filteredChild) {
+        acc.push(filteredChild);
+      }
+      return acc;
+    }, []);
+
+    if (filteredChildren.length > 0) {
+      return {
+        ...node,
+        children: filteredChildren,
+      };
+    }
+
+    return null;
   }
 
   getDocs() {
@@ -91,5 +122,24 @@ export class DocsService {
 
   async getDocByPath(path: string) {
     // return await this.db.docs.get(path);
+  }
+
+  private async _getStoredDocs() {
+    const docsRecords = await this._indexedDB.getAll(Stores.DOCUMENTATION);
+
+    const tree = docsRecords
+      ?.find((item: any) => item.key === 'tree')?.value.reduce((acc: any, item: TreeNode) => {
+        const filteredNode = this.filterLanguage(item, this._userLang());
+        if (filteredNode) {
+          acc.push(filteredNode);
+        }
+        return acc;
+      }, []) || [];
+    const docs = docsRecords?.find((item: any) => item.key === 'data')?.value;
+
+    return {
+      tree,
+      docs,
+    };
   }
 }

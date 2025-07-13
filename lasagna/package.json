@@ -18,7 +18,8 @@
     "po:export:en": "i18next-conv -l en -s public/i18n/en.po -t public/i18n/en.json",
     "po:import": "npm run po:import:ru && npm run po:import:pt && npm run po:import:en",
     "po:export": "npm run po:export:ru && npm run po:export:pt && npm run po:export:en",
-    "extract": "ngx-translate-extract --input ./src --output ./public/i18n/{en,pt,ru}.json --format json --sort"
+    "extract": "ngx-translate-extract --input ./src --output ./public/i18n/{en,pt,ru}.json --format json --sort",
+    "build-docs": "cd documentation && node build.js"
   },
   "private": true,
   "dependencies": {
