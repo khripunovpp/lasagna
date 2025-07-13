@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {DocFile, DocsService} from '../../service/services/docs.service';
+import {Component, inject} from '@angular/core';
+import {DocsService} from '../../service/services/docs.service';
 import {defer, filter, map, startWith, switchMap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {ContainerComponent} from '../ui/layout/container/container.component';
+import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
 
 @Component({
   selector: 'lg-article',
@@ -17,8 +17,7 @@ import {ContainerComponent} from '../ui/layout/container/container.component';
   `,
   standalone: true,
   imports: [
-    AsyncPipe,
-    ContainerComponent
+    AsyncPipe
   ]
 })
 export class ArticleComponent {
@@ -29,6 +28,7 @@ export class ArticleComponent {
   ) {
   }
 
+  private _userLang = inject(USER_LANGUAGE);
   content = defer(() => this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null),
@@ -37,12 +37,16 @@ export class ArticleComponent {
       data,
       url: this.route.snapshot.url.map(segment => segment.path).join('/'),
     })),
-    map(({data,url}) => {
-      if (!url) {
-        return 'Start';
+    map(({data, url}) => {
+      const doc = data.filter(doc => doc.path.includes(url || 'getting-started/start-screen/start-page'));
+      const targetByLang = doc.find(d => d.language === this._userLang());
+      if (!doc.length) {
+        return 'Start'
       }
-      const doc = data.find(doc => doc.path.includes(url));
-      return doc?.html || '404 Not Found';
+      if (doc.length > 1 && targetByLang) {
+        return targetByLang.html;
+      }
+      return doc[0]?.html || '404 Not Found';
     }),
   ));
 }
