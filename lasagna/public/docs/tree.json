@@ -20,6 +20,26 @@
         "children": [
           {
             "type": "file",
+            "name": "header[ru].md",
+            "language": "ru",
+            "path": "getting-started/start-screen/header[ru].md",
+            "title": "Шапка приложения",
+            "data": {
+              "title": "Шапка приложения"
+            }
+          },
+          {
+            "type": "file",
+            "name": "hedaer[en].md",
+            "language": "en",
+            "path": "getting-started/start-screen/hedaer[en].md",
+            "title": "Header",
+            "data": {
+              "title": "Header"
+            }
+          },
+          {
+            "type": "file",
             "name": "start-page[en].md",
             "language": "en",
             "path": "getting-started/start-screen/start-page[en].md",
@@ -39,6 +59,110 @@
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "settings",
+    "children": [
+      {
+        "type": "file",
+        "name": "buckups[en].md",
+        "language": "en",
+        "path": "settings/buckups[en].md",
+        "title": "buckups[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "buckups[ru].md",
+        "language": "ru",
+        "path": "settings/buckups[ru].md",
+        "title": "buckups[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "categories[en].md",
+        "language": "en",
+        "path": "settings/categories[en].md",
+        "title": "categories[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "categories[ru].md",
+        "language": "ru",
+        "path": "settings/categories[ru].md",
+        "title": "categories[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "credential-settings[en].md",
+        "language": "en",
+        "path": "settings/credential-settings[en].md",
+        "title": "credential-settings[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "credential-settings[ru].md",
+        "language": "ru",
+        "path": "settings/credential-settings[ru].md",
+        "title": "credential-settings[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "invoice-settings[en].md",
+        "language": "en",
+        "path": "settings/invoice-settings[en].md",
+        "title": "invoice-settings[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "invoice-settings[ru].md",
+        "language": "ru",
+        "path": "settings/invoice-settings[ru].md",
+        "title": "invoice-settings[ru]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "language[en].md",
+        "language": "en",
+        "path": "settings/language[en].md",
+        "title": "language[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "language[ru].md",
+        "language": "ru",
+        "path": "settings/language[ru].md",
+        "title": "Язык и валюта",
+        "data": {
+          "title": "Язык и валюта"
+        }
+      },
+      {
+        "type": "file",
+        "name": "taxes-and-fees[en].md",
+        "language": "en",
+        "path": "settings/taxes-and-fees[en].md",
+        "title": "taxes-and-fees[en]",
+        "data": {}
+      },
+      {
+        "type": "file",
+        "name": "taxes-and-fees[ru].md",
+        "language": "ru",
+        "path": "settings/taxes-and-fees[ru].md",
+        "title": "taxes-and-fees[ru]",
+        "data": {}
       }
     ]
   }
