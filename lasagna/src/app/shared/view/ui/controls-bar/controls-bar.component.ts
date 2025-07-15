@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, HostBinding, inject, Renderer2, viewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostBinding,
+  inject,
+  OnDestroy,
+  Renderer2,
+  viewChild
+} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -57,7 +66,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
   ]
 })
 export class ControlsBarComponent
-  implements AfterViewInit {
+  implements AfterViewInit, OnDestroy {
   elementRef = viewChild<ElementRef<HTMLDivElement>>('bar');
   renderer = inject(Renderer2);
   @HostBinding('style.--controls-bar-shift') bottomPosition = '10px';
@@ -72,5 +81,11 @@ export class ControlsBarComponent
 
     const copyStyleAttribute = document.body.getAttribute('style') || '';
     this.renderer.setAttribute(document.body, 'style', `--controls-bar-space:${shift || 0}px; ${copyStyleAttribute}`);
+  }
+
+  ngOnDestroy() {
+    const oldStyle = document.body.getAttribute('style') || '';
+    const newStyle = oldStyle.replace(/--controls-bar-space:\d+px;/, '').trim();
+    this.renderer.setAttribute(document.body, 'style', newStyle);
   }
 }

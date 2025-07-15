@@ -1,6 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {HeaderComponent} from './shared/view/ui/layout/header.component';
 import {FadeInComponent} from './shared/view/ui/fade-in.component';
 import {PwaInstallComponent} from './shared/view/ui/pwa-install.component';
 import {GlobalSearchComponent} from './shared/view/ui/global-search.component';
@@ -8,6 +7,8 @@ import {LastBackupInformerComponent} from './shared/view/ui/last-backup-informer
 import {TranslateModule} from '@ngx-translate/core';
 import {FontTesterComponent} from './shared/view/ui/font-tester.component';
 import {DemoService} from './shared/service/services/demo.service';
+import {FooterComponent} from './shared/view/ui/layout/footer.component';
+import {HeaderComponent} from './shared/view/ui/layout/header.component';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,7 @@ import {DemoService} from './shared/service/services/demo.service';
     LastBackupInformerComponent,
     TranslateModule,
     FontTesterComponent,
-
-
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   standalone: true,

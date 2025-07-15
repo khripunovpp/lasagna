@@ -1,8 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
 .app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-content {
   --app-content-top-padding: calc(var(--header-height) + 44px);
   padding-top: var(--app-content-top-padding);
   padding-bottom: calc(32px + var(--controls-bar-space, 0px))
+}
+
+.app-footer {
+  margin-top: auto;
 }
