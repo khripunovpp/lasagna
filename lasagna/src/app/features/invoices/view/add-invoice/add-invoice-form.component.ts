@@ -193,7 +193,6 @@ export class AddInvoiceFormComponent
     this.rows.clear();
 
     if (invoice) {
-      debugger
       const newValue = fromInvoiceToFormValue(invoice);
       this.form.reset(newValue);
 
