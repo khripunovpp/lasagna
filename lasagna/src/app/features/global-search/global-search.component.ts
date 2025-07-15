@@ -10,6 +10,7 @@ import {FocusTrapDirective} from '../../shared/view/ui/focus-trap.directive';
 import {groupBy} from '../../shared/helpers/grouping.helper';
 import {TitleComponent} from '../../shared/view/ui/layout/title/title.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
 
 @Component({
   selector: 'lg-global-search',
@@ -34,7 +35,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                 </div>
               } @else {
                 <div #resultsDomRef class="lg-global-search__results">
-                  @for (item of results; track item) {
+                  @for (item of results; track item.context) {
                     @if (item.context === 'product') {
                       <lg-fade-in>
                         <div class="lg-global-search__results-caption">
@@ -42,11 +43,13 @@ import {TranslatePipe} from '@ngx-translate/core';
                         </div>
 
                         <div class="lg-global-search__results__list">
-                          @for (res of item.result; track res) {
+                          @for (res of item.result; track res.data?.uuid) {
                             <div class="lg-global-search__item">
                               <a [routerLink]="['/products/edit/', res.data?.uuid]">
                                 {{ res.data?.name }}
                               </a>
+
+                              {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
                             </div>
                           }
                         </div>
@@ -65,6 +68,8 @@ import {TranslatePipe} from '@ngx-translate/core';
                               <a [routerLink]="['/recipes/edit/', res.data?.uuid]">
                                 {{ res.data?.name }}
                               </a>
+
+                              {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
                             </div>
                           }
                         </div>
@@ -82,6 +87,8 @@ import {TranslatePipe} from '@ngx-translate/core';
                             <a [routerLink]="['/settings/categories/products/edit/', res.data?.uuid]">
                               {{ res.data?.name }}
                             </a>
+
+                            {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
                           </div>
                         }
                       </lg-fade-in>
@@ -98,6 +105,26 @@ import {TranslatePipe} from '@ngx-translate/core';
                             <a [routerLink]="['/settings/categories/recipes/edit/', res.data?.uuid]">
                               {{ res.data?.name }}
                             </a>
+
+                            {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
+                          </div>
+                        }
+                      </lg-fade-in>
+                    }
+
+                    @if (item.context === 'invoice') {
+                      <lg-fade-in>
+                        <div class="lg-global-search__results-caption">
+                          <lg-title [level]="5">Invoices</lg-title>
+                        </div>
+
+                        @for (res of item.result; track res) {
+                          <div class="lg-global-search__item">
+                            <a [routerLink]="['/invoices/edit/', res.data?.uuid]">
+                              {{ res.data?.name }}
+                            </a>
+
+                            {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
                           </div>
                         }
                       </lg-fade-in>
@@ -186,7 +213,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     ReactiveFormsModule,
     FocusTrapDirective,
     TitleComponent,
-    TranslatePipe
+    TranslatePipe,
+    TimeAgoPipe
   ]
 })
 export class GlobalSearchComponent {

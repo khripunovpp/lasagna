@@ -51,6 +51,9 @@ export class DexieIndexDbService extends Dexie {
     label: 'IndexDB:Index'
   });
   private _cache = new Map<string, Map<string, any>>();
+  readonly #_fieldsMap: Partial<Record<string, string[]>> = {
+    [Stores.INVOICES]: ['uuid', 'name', 'prefix'],
+  }
 
   async initIndexes(): Promise<void> {
     await Promise.all([
@@ -69,7 +72,11 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async initIndex(table: string): Promise<void> {
-    await this.flexsearchIndexService.initIndex(this.getStore(table as Stores), table, ['name', 'uuid']);
+    await this.flexsearchIndexService.initIndex(
+      this.getStore(table as Stores),
+      table,
+      this.#_fieldsMap[table] || ['name', 'uuid']
+    );
     const indexData = await this.getOne(Stores.INDICES, table);
 
     if (indexData) {
@@ -131,7 +138,7 @@ export class DexieIndexDbService extends Dexie {
     relations: Record<string, Record<string, any>>,
   }> {
     // @ts-ignore
-    const item = await this.getOne(storeKey, uuid,false);
+    const item = await this.getOne(storeKey, uuid, false);
     if (!item) {
       return Promise.resolve({
         data: null,

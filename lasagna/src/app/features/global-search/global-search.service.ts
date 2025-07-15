@@ -5,12 +5,14 @@ import {ProductsRepository} from '../products/service/products.repository';
 import {RecipesRepository} from '../recipes/service/recipes.repository';
 import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
 import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
+import {InvoicesRepository} from '@invoices/service/Invoices.repository';
 
 export enum SearchResultContext {
   PRODUCT = 'product',
   RECIPE = 'recipe',
   CATEGORY_PRODUCT = 'category_product',
   CATEGORY_RECIPE = 'category_recipe',
+  INVOICE = 'invoice',
 }
 
 export interface SearchResult {
@@ -29,6 +31,7 @@ export class GlobalSearchService {
     private _recipesRepository: RecipesRepository,
     private _categoryProductsRepository: CategoryProductsRepository,
     private _categoryRecipesRepository: CategoryRecipesRepository,
+    private _invoicesRepository: InvoicesRepository,
   ) {
   }
 
@@ -54,9 +57,12 @@ export class GlobalSearchService {
       this._searchInRecipes(query),
       this._searchInProductsCategories(query),
       this._searchInRecipesCategories(query),
+      this._searchInInvoices(query),
     ]);
 
     const flat = results.flat();
+
+    console.log({flat})
 
     const resultsPayload = [];
 
@@ -72,6 +78,8 @@ export class GlobalSearchService {
         });
       }
     }
+
+    console.log({resultsPayload})
 
     this.resultsPayload.set(resultsPayload);
     return resultsPayload;
@@ -101,6 +109,11 @@ export class GlobalSearchService {
           results.push(categoryRecipe);
           break;
         }
+        case SearchResultContext.INVOICE: {
+          const invoice = await this._invoicesRepository.getOne(item);
+          results.push(invoice);
+          break;
+        }
       }
     }
     return results;
@@ -123,11 +136,16 @@ export class GlobalSearchService {
     return this._searchUniqueResults(query, Stores.RECIPES_CATEGORIES, SearchResultContext.CATEGORY_RECIPE);
   }
 
+  private async _searchInInvoices(query: string) {
+    return this._searchUniqueResults(query, Stores.INVOICES, SearchResultContext.INVOICE);
+  }
+
   private async _searchUniqueResults(
     query: string,
     store: Stores,
     context: SearchResultContext,
   ) {
+    console.log({ query, store, context });
     const results = await this._flexsearchIndexService.search(store, query);
     const flat = (results as any[]).flatMap<SearchResult>(group => group.result);
     // @ts-ignore

@@ -23,6 +23,7 @@ export class FlexsearchIndexService {
     const index = this.indices[table];
     if (index) {
       const results = await index.searchAsync(query, {limit: 10, enrich: true, ...options});
+      console.log({results,index,table})
 
       return (results as any[]).flatMap((result) => ({...result}));
     }
