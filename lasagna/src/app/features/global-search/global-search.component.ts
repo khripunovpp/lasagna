@@ -4,7 +4,7 @@ import {GlobalSearchService, SearchResultContext} from './global-search.service'
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {debounceTime, from, Observable, of, switchMap} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, JsonPipe} from '@angular/common';
 import {FadeInComponent} from '../../shared/view/ui/fade-in.component';
 import {FocusTrapDirective} from '../../shared/view/ui/focus-trap.directive';
 import {groupBy} from '../../shared/helpers/grouping.helper';
@@ -47,6 +47,10 @@ import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
                             <div class="lg-global-search__item">
                               <a [routerLink]="['/products/edit/', res.data?.uuid]">
                                 {{ res.data?.name }}
+
+                                @if (res.data?.source) {
+                                  - {{ res.data?.source }}
+                                }
                               </a>
 
                               {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
@@ -121,7 +125,7 @@ import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
                         @for (res of item.result; track res) {
                           <div class="lg-global-search__item">
                             <a [routerLink]="['/invoices/edit/', res.data?.uuid]">
-                              {{ res.data?.name }}
+                              #{{ res.data?.prefix }}/{{ res.data?.invoice_number }} - {{ res.data?.name }}
                             </a>
 
                             {{ 'edited-at-label'|translate }} {{ (res.data?.updatedAt || res.data?.createdAt) | timeAgo }}
@@ -214,7 +218,8 @@ import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
     FocusTrapDirective,
     TitleComponent,
     TranslatePipe,
-    TimeAgoPipe
+    TimeAgoPipe,
+    JsonPipe
   ]
 })
 export class GlobalSearchComponent {
