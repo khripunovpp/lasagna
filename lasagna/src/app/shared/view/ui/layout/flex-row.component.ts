@@ -100,6 +100,10 @@ import {NgClass, NgStyle} from '@angular/common';
       & > * {
         flex: 0 0 calc((100% / var(--cols)) - (var(--gap) / var(--cols)));
       }
+
+      &.gap-row__fit > * {
+        flex: 0;
+      }
     }
 
     @media (max-width: 600px) {

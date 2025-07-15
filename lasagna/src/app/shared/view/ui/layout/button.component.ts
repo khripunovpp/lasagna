@@ -90,6 +90,7 @@ export type ButtonSizes =
         transition: all 0.4s;
         transition-timing-function: var(--bounce-bezier);
         position: relative;
+        white-space: nowrap;
       }
 
       .button__content {
