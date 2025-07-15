@@ -21,79 +21,85 @@ import {NotificationsService} from '../../../../../shared/service/services';
 import {Tax} from '../../../service/models/Tax';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-taxes-settings',
   standalone: true,
   template: `
-      <lg-flex-column>
-          <ng-container [formGroup]="taxesForm">
-              <ng-container formArrayName="rows">
-                  @for (taxRow of taxes();track (taxRow.name + taxRow.uuid);let i = $index, odd = $odd) {
+    <lg-flex-column>
+      <ng-container [formGroup]="taxesForm">
+        <ng-container formArrayName="rows">
+          Taxes
+          @for (taxRow of taxesAndFees(); track (taxRow.name + taxRow.uuid + i); let i = $index, odd = $odd) {
+            @let tacControl = taxesForm.controls.rows.controls[i];
 
-                      @let tacControl = taxesForm.controls.rows.controls[i];
-                      <section class="taxes" [formGroupName]="i">
-                          <div class="taxes__row"
-                               [class.taxes__row--odd]="odd">
-                              <lg-flex-row [top]="true" [fit]="true">
-                                  <lg-input
-                                          formControlName="name"
-                                          lgWidth="35%"
-                                          [placeholder]="'Name'"></lg-input>
+            @if (feesIndex() === i) {
+              Fees
+            }
+            <section [formGroupName]="i" class="taxes">
+              <div [class.taxes__row--odd]="odd"
+                   class="taxes__row">
+                <lg-flex-row [fit]="true" [top]="true">
+                  <lg-input
+                    [placeholder]="'Name'"
+                    formControlName="name"
+                    lgWidth="35%"></lg-input>
 
-                                  <lg-textarea [rows]="3"
-                                               lgWidth="35%"
-                                               formControlName="description"
-                                               [placeholder]="'Description'"></lg-textarea>
+                  <lg-textarea [placeholder]="'Description'"
+                               [rows]="3"
+                               formControlName="description"
+                               lgWidth="35%"></lg-textarea>
 
-                                  <lg-checkbox
-                                          (onCheckboxChanged)="onTaxValueChange(i)"
-                                          [customMark]="'%'"
-                                          lgShrink
-                                          formControlName="percentage"></lg-checkbox>
+                  <lg-checkbox
+                    (onCheckboxChanged)="onTaxValueChange(i)"
+                    [customMark]="'%'"
+                    [name]="taxRow.name+i"
+                    formControlName="percentage"
+                    lgShrink></lg-checkbox>
 
-                                  <lg-number-input
-                                          lgParseMath
-                                          (onInputChange)="onTaxValueChange(i)"
-                                          formControlName="value"
-                                          [placeholder]="'Value'"></lg-number-input>
+                  <lg-number-input
+                    (onInputChange)="onTaxValueChange(i)"
+                    [placeholder]="'Value'"
+                    formControlName="value"
+                    lgParseMath></lg-number-input>
 
-                                  <lg-button [style]="'danger'"
-                                             lgShrink
-                                             [size]="'tiny'"
-                                             [icon]="true"
-                                             (click)="deleteTxRow(i)">
-                                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                fontIcon="close"></mat-icon>
-                                  </lg-button>
-                              </lg-flex-row>
-                          </div>
-                      </section>
-                  }
-              </ng-container>
-          </ng-container>
+                  <lg-button (click)="deleteTxRow(i)"
+                             [icon]="true"
+                             [size]="'tiny'"
+                             [style]="'danger'"
+                             lgShrink>
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"
+                              fontIcon="close"></mat-icon>
+                  </lg-button>
+                </lg-flex-row>
+              </div>
+            </section>
+          }
+        </ng-container>
+      </ng-container>
 
-          <lg-flex-row>
-              <lg-button (click)="saveTaxes()"
-                         [disabled]="!taxesForm.dirty"
-                         [style]="'success'"
-                         lgSelfCenter
-                         lgShrink>
-                  @if (taxesForm.dirty) {
-                      Save changes
-                  } @else {
-                      No changes
-                  }
-              </lg-button>
+      <lg-flex-row>
+        <lg-button (click)="saveTaxes()"
+                   [disabled]="!taxesForm.dirty"
+                   [style]="'success'"
+                   lgSelfCenter
+                   lgShrink>
+          @if (taxesForm.dirty) {
+            Save changes
+          } @else {
+            No changes
+          }
+        </lg-button>
 
-              <lg-button (click)="addTaxRow()"
-                         [style]="'warning'"
-                         lgSelfCenter
-                         lgShrink>
-                  Add tax
-              </lg-button>
-          </lg-flex-row>
-      </lg-flex-column>
+        <lg-button (click)="addTaxRow()"
+                   [style]="'warning'"
+                   lgSelfCenter
+                   lgShrink>
+          Add tax
+        </lg-button>
+      </lg-flex-row>
+    </lg-flex-column>
   `,
   styles: [``],
   imports: [
@@ -121,7 +127,8 @@ import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
     ButtonComponent,
     MatIcon,
     SelfCenterDirective,
-    ShrinkDirective
+    ShrinkDirective,
+    JsonPipe
   ]
 })
 export class TaxesSettingsComponent {
@@ -131,8 +138,10 @@ export class TaxesSettingsComponent {
   ) {
   }
 
-  taxes = signal<Tax[]>([]);
-  rows = computed(() => this.taxes().map((tax) => Tax.fromRaw(tax)));
+  taxesAndFees = signal<Tax[]>([]);
+  feesIndex = computed(() => {
+    return this.taxesAndFees().findIndex((tax) => !tax.percentage);
+  });
 
   taxesForm = new FormGroup({
     rows: new FormArray([
@@ -141,7 +150,7 @@ export class TaxesSettingsComponent {
   });
   rowsEffect = effect(() => {
     this._rowsFormArray.clear();
-    this.rows().forEach((row, index) => {
+    this.taxesAndFees().forEach((row, index) => {
       this._rowsFormArray.push(this._getRowGroup(row));
     });
     this.taxesForm.updateValueAndValidity();
@@ -160,7 +169,7 @@ export class TaxesSettingsComponent {
 
   ngOnInit() {
     this._taxesRepository.getAll().then((taxes) => {
-      this.taxes.set(taxes);
+      this.taxesAndFees.set(taxes.toSorted((a, b) => a.name.localeCompare(b.name) && +b.percentage - +a.percentage));
     });
   }
 
@@ -173,6 +182,7 @@ export class TaxesSettingsComponent {
   deleteTxRow(index: number) {
     const tax = this.taxesForm.value.rows?.[index]?.uuid;
     this._rowsFormArray.removeAt(index);
+    this.taxesAndFees.update(current => current.filter(t => t.uuid !== tax));
     this.taxesForm.markAsDirty();
     if (tax) {
       this._taxesRepository.deleteOne(tax);
@@ -180,7 +190,9 @@ export class TaxesSettingsComponent {
   }
 
   addTaxRow() {
-    this._rowsFormArray.push(this._getRowGroup());
+    const tax = Tax.empty();
+    this._rowsFormArray.push(this._getRowGroup(tax));
+    this.taxesAndFees.update(current => [...current, tax]);
     this.taxesForm.markAsDirty();
   }
 

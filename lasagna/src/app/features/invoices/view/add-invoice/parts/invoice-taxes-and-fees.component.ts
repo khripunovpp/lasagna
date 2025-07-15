@@ -137,6 +137,7 @@ import {NgTemplateOutlet} from '@angular/common';
             Taxes
 
             <lg-flex-row [wrap]="true"
+                         [fit]="true"
                          cols="2"
                          size="small">
               @for (tax of taxes(); track (tax.uuid)) {
@@ -151,6 +152,7 @@ import {NgTemplateOutlet} from '@angular/common';
             Fees
 
             <lg-flex-row [wrap]="true"
+                         [fit]="true"
                          cols="2"
                          size="small">
               @for (fee of fees(); track (fee.uuid)) {
@@ -162,12 +164,13 @@ import {NgTemplateOutlet} from '@angular/common';
       </lg-flex-column>
 
       <ng-template #dialogItemTpl let-tax>
-        <button (click)="select(tax)"
-                [disabled]="getDisabled(tax)"
-                class="credential-item">
+        <lg-button (click)="select(tax)"
+                   [disabled]="getDisabled(tax)"
+                   [size]="'small'"
+                   [style]="'warning'">
           <b class="credential-item__name">{{ tax.name }}</b>
           <!--                                        <div class="text-wrap credential-item__inner">{{ tax.toFormattedString() }}</div>-->
-        </button>
+        </lg-button>
       </ng-template>
     </lg-dialog>
   `,
