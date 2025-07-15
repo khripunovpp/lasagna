@@ -1,17 +1,18 @@
-# Privacy Policy for Lasanha
+# Privacy Policy for Lasagna
 
-**Effective date:** [Specify the date of publication]  
-**Last updated:** [Auto-updated upon any changes]
+**Effective date:** 15 July 2025 00:00 UTC
+
+**Last updated:** 15 July 2025 00:00 UTC
 
 ---
 
 ## 1. Who We Are
 
-**Lasanha** is an independent project created and maintained by an individual developer based in **Portugal (European Union)**. This is an offline-first, progressive web application (PWA) for calculating recipe costs, designed for small food businesses and home bakers.
+**Lasagna** is an independent project created and maintained by an individual developer based in **Portugal (European Union)**. This is an offline-first, progressive web application (PWA) for calculating recipe costs, designed for small food businesses and home bakers.
 
 We respect your privacy and are committed to transparency regarding how your data is handled.
 
-You can contact us at: *[email address to be added]*
+You can contact us at: khripunovpp@gmail.com
 
 ---
 
@@ -100,8 +101,8 @@ We recommend you check this page periodically.
 ## 10. Contact Us
 
 For questions, requests, or privacy concerns, please contact us:  
-**Email:** *[to be added]*
+**Email:** khripunovpp@gmail.com
 
 ---
 
-*We are committed to building respectful, privacy-first tools for small creators and businesses. Thank you for using Lasanha.*
+*We are committed to building respectful, privacy-first tools for small creators and businesses. Thank you for using Lasagna.*

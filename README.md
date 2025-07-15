@@ -1,6 +1,6 @@
 DEMO https://khripunovpp.github.io/lasagna?demo=true
 
-# 🧁 Lasanha — Offline-first PWA for Recipe Costing & Invoicing
+# 🧁 Lasagna — Offline-first PWA for Recipe Costing & Invoicing
 
 > Calculate the cost of recipes, manage ingredients, and generate client invoices — all **offline**, fast, and without registration.
 
@@ -44,8 +44,8 @@ DEMO https://khripunovpp.github.io/lasagna?demo=true
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/your-username/lasanha.git
-cd lasanha
+git clone https://github.com/your-username/Lasagna.git
+cd Lasagna
 npm install
 npm run start
 ```
@@ -103,7 +103,7 @@ See the [📚 Full Documentation](./docs/README.md) for:
 > I’m a solo indie dev building this for small bakers, home chefs, and passionate creators 🍳
 
 - ⭐ Star the repo to support!
-- 🐞 Found a bug? Open an [issue](https://github.com/your-username/lasanha/issues)
+- 🐞 Found a bug? Open an [issue](https://github.com/your-username/Lasagna/issues)
 - 📬 Have ideas? [Email me](mailto:you@example.com)
 
 ---
