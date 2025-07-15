@@ -52,7 +52,14 @@ export class DexieIndexDbService extends Dexie {
   });
   private _cache = new Map<string, Map<string, any>>();
   readonly #_fieldsMap: Partial<Record<string, string[]>> = {
-    [Stores.INVOICES]: ['uuid', 'name', 'prefix'],
+    [Stores.INVOICES]: [
+      'uuid',
+      'name',
+      'prefix',
+      'invoice_number',
+      'credential_from_string',
+      'credential_to_string'
+    ],
   }
 
   async initIndexes(): Promise<void> {
