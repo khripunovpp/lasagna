@@ -127,9 +127,8 @@ export class GlobalSearchService {
     return this._searchUniqueResults(query, Stores.RECIPES, SearchResultContext.RECIPE);
   }
 
-
   private _searchInProductsCategories(query: string) {
-    return this._searchUniqueResults(query, Stores.PRODUCTS_CATEGORIES, SearchResultContext.CATEGORY_PRODUCT)
+    return this._searchUniqueResults(query, Stores.PRODUCTS_CATEGORIES, SearchResultContext.CATEGORY_PRODUCT);
   }
 
   private async _searchInRecipesCategories(query: string) {
@@ -145,7 +144,6 @@ export class GlobalSearchService {
     store: Stores,
     context: SearchResultContext,
   ) {
-    console.log({ query, store, context });
     const results = await this._flexsearchIndexService.search(store, query);
     const flat = (results as any[]).flatMap<SearchResult>(group => group.result);
     // @ts-ignore

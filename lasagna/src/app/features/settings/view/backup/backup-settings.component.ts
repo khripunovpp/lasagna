@@ -9,38 +9,51 @@ import {UploadComponent} from '../../../../shared/view/ui/form/upload.component'
 import {TranslatePipe} from '@ngx-translate/core';
 import {injectQueryParams} from '../../../../shared/helpers';
 import {NotificationsService, TransferDataService} from '../../../../shared/service/services';
+import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
 
 @Component({
   selector: 'lg-backup-settings',
   standalone: true,
   template: `
-      <lg-flex-column>
-          <lg-flex-row [center]="true" [mobileMode]="true">
-              <lg-button (click)="onBackup()"
-                         [style]="'success'">
-                  {{ 'backup.make-btn'|translate }}
-              </lg-button>
+    <lg-flex-column>
+      <lg-flex-row [center]="true" [mobileMode]="true">
+        <lg-button (click)="onBackup()"
+                   [style]="'success'">
+          {{ 'backup.make-btn'|translate }}
+        </lg-button>
 
-              @if (transferDataService.currenBackupDate) {
-                  {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
-              }
-          </lg-flex-row>
+        @if (transferDataService.currenBackupDate) {
+          {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
+        }
+      </lg-flex-row>
 
 
-          <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
-              <lg-card style="--card-bg:#e78888">
-                  <lg-flex-column [position]="'center'">
-                      <div class="text-center text-inverse">
-                          {{ 'backup.restore-informer'|translate }}
-                      </div>
+      <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
+        <lg-card style="--card-bg:#e78888">
+          <lg-flex-column [position]="'center'">
+            <div class="text-center text-inverse">
+              {{ 'backup.restore-informer'|translate }}
+            </div>
 
-                      <lg-button [style]="'danger'">
-                          {{ 'backup.restore-btn'|translate }}
-                      </lg-button>
-                  </lg-flex-column>
-              </lg-card>
-          </lg-upload>
-      </lg-flex-column>
+            <lg-button [style]="'danger'">
+              {{ 'backup.restore-btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
+        </lg-card>
+      </lg-upload>
+
+      <lg-card style="--card-bg:#fcd9b5">
+        <lg-flex-column [position]="'center'">
+          <div class="text-center">
+            This will flush all caches and reload the application.
+          </div>
+
+          <lg-button (click)="onFlush()" [style]="'success'">
+            Flush all cashes
+          </lg-button>
+        </lg-flex-column>
+      </lg-card>
+    </lg-flex-column>
   `,
   styles: [``],
   imports: [
@@ -61,6 +74,7 @@ export class BackupSettingsComponent {
   downloadBackupParam = injectQueryParams('download_backup');
   transferDataService = inject(TransferDataService);
   notificationsService = inject(NotificationsService);
+  dexieIndexDbService = inject(DexieIndexDbService);
 
   ngAfterViewInit() {
     if (this.downloadBackupParam()) {
@@ -92,6 +106,19 @@ export class BackupSettingsComponent {
       console.error(e);
     } finally {
       loader.close();
+      loader.close();
+    }
+  }
+
+  async onFlush() {
+    try {
+      await this.dexieIndexDbService.flushCache();
+      this.notificationsService.success('Caches flushed successfully');
+      window.location.reload();
+    } catch (e) {
+      this.notificationsService.showJsonErrors([JSON.stringify(e)], 'Flush failed');
+      console.error(e);
+    } finally {
     }
   }
 }
