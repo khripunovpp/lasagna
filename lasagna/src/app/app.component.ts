@@ -1,8 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {FadeInComponent} from './shared/view/ui/fade-in.component';
 import {PwaInstallComponent} from './shared/view/ui/pwa-install.component';
-import {GlobalSearchComponent} from './shared/view/ui/global-search.component';
+import {GlobalSearchComponent} from './features/global-search/global-search.component';
 import {LastBackupInformerComponent} from './shared/view/ui/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FontTesterComponent} from './shared/view/ui/font-tester.component';
@@ -15,7 +14,6 @@ import {HeaderComponent} from './shared/view/ui/layout/header.component';
   imports: [
     RouterOutlet,
     HeaderComponent,
-    FadeInComponent,
     PwaInstallComponent,
     GlobalSearchComponent,
     LastBackupInformerComponent,

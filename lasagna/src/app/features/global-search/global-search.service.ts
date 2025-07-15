@@ -1,10 +1,10 @@
 import {Injectable, signal} from '@angular/core';
-import {FlexsearchIndexService} from '../db/flexsearch-index.service';
-import {Stores} from '../db/const/stores';
-import {ProductsRepository} from '../../../features/products/service/products.repository';
-import {RecipesRepository} from '../../../features/recipes/service/recipes.repository';
-import {CategoryProductsRepository} from '../../../features/settings/service/repositories/category-products.repository';
-import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
+import {FlexsearchIndexService} from '../../shared/service/db/flexsearch-index.service';
+import {Stores} from '../../shared/service/db/const/stores';
+import {ProductsRepository} from '../products/service/products.repository';
+import {RecipesRepository} from '../recipes/service/recipes.repository';
+import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
+import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
 
 export enum SearchResultContext {
   PRODUCT = 'product',
