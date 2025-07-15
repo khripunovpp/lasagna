@@ -1,7 +1,8 @@
-# Cookie Policy for Lasanha
+# Cookie Policy for Lasagna
 
-**Effective date:** [Specify the date]  
-**Last updated:** [Auto-updated upon changes]
+**Effective date:** 15 July 2025 00:00 UTC
+
+**Last updated:** 15 July 2025 00:00 UTC
 
 ---
 
@@ -15,7 +16,7 @@ In this policy, we also include similar technologies like **LocalStorage**, **Se
 
 ## 2. Do We Use Cookies?
 
-Yes — Lasanha uses cookies and local storage technologies for the following purposes:
+Yes — Lasagna uses cookies and local storage technologies for the following purposes:
 
 - **Strictly Necessary Cookies**: ensure basic functionality and user preferences (e.g. cookie consent itself).
 - **Analytics Cookies**: help us understand user behavior through tools like **Google Analytics**.
@@ -68,13 +69,13 @@ You can manage your preferences at any time:
 
 ## 6. Third-Party Services
 
-Lasanha uses the following third-party services that may set cookies or similar identifiers:
+Lasagna uses the following third-party services that may set cookies or similar identifiers:
 
 - **Google Analytics 4** — anonymous usage statistics.
 - **Sentry** — app crash and error tracking.
 - **[Future] CDN / Image Hosting Provider** — for media delivery (when enabled).
 
-These services operate under their own privacy and cookie policies, which we link to from our [Privacy Policy](#).
+These services operate under their own privacy and cookie policies, which we link to from our [Privacy Policy](https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md).
 
 ---
 
@@ -88,7 +89,7 @@ We recommend checking this page from time to time.
 ## 8. Contact Us
 
 If you have any questions about this Cookie Policy, please contact us at:  
-**Email:** *[to be added]*
+**Email:** khripunovpp@gmail.com
 
 ---
 

@@ -1,13 +1,14 @@
-# Terms of Service for Lasanha
+# Terms of Service for Lasagna
 
-**Effective date:** [Specify the date]  
-**Last updated:** [Auto-updated upon changes]
+**Effective date:** 15 July 2025 00:00 UTC
+
+**Last updated:** 15 July 2025 00:00 UTC
 
 ---
 
 ## 1. Introduction
 
-Welcome to **Lasanha**, an independent, offline-first web application developed by a solo developer based in **Portugal (EU)**.
+Welcome to **Lasagna**, an independent, offline-first web application developed by a solo developer based in **Portugal (EU)**.
 
 These Terms of Service apply to your use of the app, both in its free and future paid versions.  
 By using the app, you agree to these terms. If you do not agree, you must not use the app.
@@ -16,7 +17,7 @@ By using the app, you agree to these terms. If you do not agree, you must not us
 
 ## 2. Use of the App
 
-You may use Lasanha to:
+You may use Lasagna to:
 
 - Create and manage your own products, recipes, and cost calculations;
 - Generate and store invoices;
@@ -36,7 +37,7 @@ You must not use the app to store or share unlawful, offensive, or unauthorized 
 
 ## 4. Future Cloud Sync and Remote Storage
 
-Lasanha will offer **cloud synchronization** as a **paid feature**. When enabled:
+Lasagna will offer **cloud synchronization** as a **paid feature**. When enabled:
 
 - Your recipes, ingredients, invoices, and associated images will be stored on our servers.
 - You must create an account to use sync (authentication required).
@@ -112,15 +113,15 @@ We reserve the right to suspend or terminate your access to premium services if 
 These Terms may be updated as the app evolves.  
 The latest version will always be available on the website or in the app interface.
 
-Continued use of Lasanha means you accept any updates.
+Continued use of Lasagna means you accept any updates.
 
 ---
 
 ## 12. Contact
 
 For questions, requests, or legal concerns, please contact us at:  
-**Email:** *[to be added]*
+**Email:** khripunovpp@gmail.com
 
 ---
 
-💡 *Lasanha is built with respect for privacy, clarity, and independence. We aim to support small creators and entrepreneurs with useful tools — and with no hidden agendas.*
+💡 *Lasagna is built with respect for privacy, clarity, and independence. We aim to support small creators and entrepreneurs with useful tools — and with no hidden agendas.*
