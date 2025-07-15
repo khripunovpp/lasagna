@@ -303,7 +303,6 @@ export class ButtonComponent {
   noScale = input<boolean>(false);
 
   onClickHandler(event: MouseEvent) {
-    debugger
     if (this.disabled()) {
       event.preventDefault();
       return;
