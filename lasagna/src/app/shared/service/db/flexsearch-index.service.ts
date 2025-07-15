@@ -56,7 +56,6 @@ export class FlexsearchIndexService {
     }
   }
 
-
   async exportIndex(table: string): Promise<string> {
     const index = this.indices[table];
     if (!index) throw new Error(`No index found for table ${table}`);

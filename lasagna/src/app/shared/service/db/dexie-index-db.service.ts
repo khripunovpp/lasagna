@@ -352,7 +352,13 @@ export class DexieIndexDbService extends Dexie {
         // throw new Error(`Store ${store} not found in backup data`);
       }
     }
+    await this.flushCache();
+  }
+
+  async flushCache(): Promise<void> {
     this._cache.clear();
+    await this.clear(Stores.INDICES);
+    this.cacheLogger.log('Cache flushed');
   }
 
   private async _collectRelations(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
