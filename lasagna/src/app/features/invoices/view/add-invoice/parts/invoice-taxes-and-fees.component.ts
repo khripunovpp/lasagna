@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, computed,
   effect,
   forwardRef,
   inject,
@@ -25,82 +25,98 @@ import {WidthDirective} from '../../../../../shared/view/directives/width.direct
 import {Invoice} from '@invoices/service/Inovice/Invoice';
 
 import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-row.component';
-
-
-
-
-
-
+import {NgTemplateOutlet} from '@angular/common';
 
 @Component({
   selector: 'lg-invoice-taxes-and-fees',
   template: `
     <lg-flex-column [position]="'start'" [size]="'medium'">
       @let canBeUpdated = invoice()?.canBeUpdated;
-      <lg-flex-row [equal]="true"
-                   [mobileMode]="true"
-                   [size]="'medium'"
-                   [styles]="{'--lg-gap-row-pad-right': '36px'}"
-                   lgExpand>
-        <div lgWidth="70%">Item</div>
-        <div lgWidth="30%">Amount</div>
-        <!--        <div lgWidth="15%">Total</div>-->
-      </lg-flex-row>
+      @if (selectedTaxes().length) {
+        <lg-flex-row [equal]="true"
+                     [mobileMode]="true"
+                     [size]="'medium'"
+                     [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
+                     lgExpand>
+          <div lgWidth="70%">Tax</div>
+          <div lgWidth="30%">Amount</div>
+          <!--        <div lgWidth="15%">Total</div>-->
+        </lg-flex-row>
 
+        <lg-flex-column [size]="'medium'" lgExpand>
+          @for (tax of selectedTaxes(); track tax.uuid; let i = $index, last = $last) {
+            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax }"></ng-container>
+          }
+        </lg-flex-column>
+      }
 
-      <lg-flex-column [size]="'medium'" lgExpand>
-        @for (tax of selected(); track tax.uuid; let i = $index, last = $last) {
-          <ng-container>
-            <lg-controls-row [mobileMode]="true" [equal]="true">
-              <lg-flex-row lgWidth="70%" size="small" [center]="true" [mobileMode]="true">
-                @if (canBeUpdated) {
-                  <lg-flex-row size="small">
-                    <lg-button [size]="'small'"
-                               (onClick)="moveTop(tax)"
-                               [icon]="true">
-                      <mat-icon aria-hidden="false" fontIcon="arrow_upward"></mat-icon>
-                    </lg-button>
-                    <lg-button [size]="'small'"
-                               (onClick)="moveBottom(tax)"
-                               [icon]="true">
-                      <mat-icon aria-hidden="false" fontIcon="arrow_downward"></mat-icon>
-                    </lg-button>
-                  </lg-flex-row>
-                }
+      @if (selectedFees().length) {
+        <lg-flex-row [equal]="true"
+                     [mobileMode]="true"
+                     [size]="'medium'"
+                     [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
+                     lgExpand>
+          <div lgWidth="70%">Fee</div>
+          <div lgWidth="30%">Amount</div>
+          <!--        <div lgWidth="15%">Total</div>-->
+        </lg-flex-row>
 
-                <lg-readonly-control [value]="tax.name"
-                                     lgExpand
-                                     placeholder="">
-                </lg-readonly-control>
+        <lg-flex-column [size]="'medium'" lgExpand>
+          @for (tax of selectedFees(); track tax.uuid; let i = $index, last = $last) {
+            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax }"></ng-container>
+          }
+        </lg-flex-column>
+
+      }
+      <ng-template #itemTpl let-tax>
+        <lg-controls-row [equal]="true" [mobileMode]="true">
+          <lg-flex-row [center]="true" [mobileMode]="true" lgWidth="70%" size="small">
+            @if (canBeUpdated) {
+              <lg-flex-row size="small">
+                <lg-button [size]="'small'"
+                           (onClick)="moveTop(tax)"
+                           [icon]="true">
+                  <mat-icon aria-hidden="false" fontIcon="arrow_upward"></mat-icon>
+                </lg-button>
+                <lg-button [size]="'small'"
+                           (onClick)="moveBottom(tax)"
+                           [icon]="true">
+                  <mat-icon aria-hidden="false" fontIcon="arrow_downward"></mat-icon>
+                </lg-button>
               </lg-flex-row>
+            }
+
+            <lg-readonly-control [value]="tax.name"
+                                 lgExpand
+                                 placeholder="">
+            </lg-readonly-control>
+          </lg-flex-row>
 
 
-              <lg-readonly-control [value]="tax.amount"
-                                   lgWidth="30%"
-                                   placeholder="">
-                <div ngProjectAs="after">{{ tax.percentage ? '%' : '$' }}</div>
-              </lg-readonly-control>
+          <lg-readonly-control [value]="tax.amount"
+                               lgWidth="30%"
+                               placeholder="">
+            <div ngProjectAs="after">{{ tax.percentage ? '%' : '$' }}</div>
+          </lg-readonly-control>
 
-              <!--              <lg-readonly-control [value]="tax.amount"-->
-              <!--                                   lgWidth="15%"-->
-              <!--                                   placeholder="">-->
+          <!--              <lg-readonly-control [value]="tax.amount"-->
+          <!--                                   lgWidth="15%"-->
+          <!--                                   placeholder="">-->
 
-              <!--                <div ngProjectAs="after">$</div>-->
-              <!--              </lg-readonly-control>-->
-              @if (canBeUpdated) {
-                <ng-container ngProjectAs="rowActions">
-                  <lg-button [style]="'danger'"
-                             [size]="'tiny'"
-                             (onClick)="select(tax)"
-                             [icon]="true">
-                    <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
-                  </lg-button>
-                </ng-container>
-              }
-            </lg-controls-row>
-          </ng-container>
-        }
-      </lg-flex-column>
+          <!--                <div ngProjectAs="after">$</div>-->
+          <!--              </lg-readonly-control>-->
+          @if (canBeUpdated) {
+            <ng-container ngProjectAs="rowActions">
+              <lg-button [style]="'danger'"
+                         [size]="'tiny'"
+                         (onClick)="select(tax)"
+                         [icon]="true">
+                <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
+              </lg-button>
+            </ng-container>
+          }
+        </lg-controls-row>
+      </ng-template>
 
       @if (canBeUpdated) {
         <lg-button (onClick)="open()"
@@ -115,18 +131,44 @@ import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-
     </lg-flex-column>
 
     <lg-dialog [displayFooter]="false">
-      <lg-flex-row [wrap]="true"
-                   cols="2"
-                   size="small">
-        @for (tax of taxesAndFees(); track (tax.uuid)) {
-          <button class="credential-item"
-                  [disabled]="getDisabled(tax)"
-                  (click)="select(tax)">
-            <b class="credential-item__name">{{ tax.name }}</b>
-            <!--                                        <div class="text-wrap credential-item__inner">{{ tax.toFormattedString() }}</div>-->
-          </button>
+      <lg-flex-column>
+        @if (taxes().length) {
+          <lg-flex-column size="small">
+            Taxes
+
+            <lg-flex-row [wrap]="true"
+                         cols="2"
+                         size="small">
+              @for (tax of taxes(); track (tax.uuid)) {
+                <ng-container *ngTemplateOutlet="dialogItemTpl; context: { $implicit: tax }"></ng-container>
+              }
+            </lg-flex-row>
+          </lg-flex-column>
         }
-      </lg-flex-row>
+
+        @if (fees().length) {
+          <lg-flex-column size="small">
+            Fees
+
+            <lg-flex-row [wrap]="true"
+                         cols="2"
+                         size="small">
+              @for (fee of fees(); track (fee.uuid)) {
+                <ng-container *ngTemplateOutlet="dialogItemTpl; context: { $implicit: fee }"></ng-container>
+              }
+            </lg-flex-row>
+          </lg-flex-column>
+        }
+      </lg-flex-column>
+
+      <ng-template #dialogItemTpl let-tax>
+        <button (click)="select(tax)"
+                [disabled]="getDisabled(tax)"
+                class="credential-item">
+          <b class="credential-item__name">{{ tax.name }}</b>
+          <!--                                        <div class="text-wrap credential-item__inner">{{ tax.toFormattedString() }}</div>-->
+        </button>
+      </ng-template>
     </lg-dialog>
   `,
   styles: [``],
@@ -141,7 +183,8 @@ import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-
     ReadonlyControlComponent,
     WidthDirective,
     ControlsRowComponent,
-        ],
+    NgTemplateOutlet,
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -155,8 +198,12 @@ export class InvoiceTaxesAndFeesComponent
   implements ControlValueAccessor {
   invoice = input<Invoice | undefined>(undefined);
   taxesAndFees = signal<Tax[]>([]);
+  taxes = computed(() => this.taxesAndFees().filter(t => t.percentage));
+  fees = computed(() => this.taxesAndFees().filter(t => !t.percentage));
   dialog = viewChild(DialogComponent);
   selected = signal<Tax[]>([]);
+  selectedTaxes = computed(() => this.selected().filter(t => t.percentage));
+  selectedFees = computed(() => this.selected().filter(t => !t.percentage));
   onAdd = output<[number, Tax]>();
   onRemove = output<[number, Tax]>();
   private readonly _taxesRepository = inject(TaxesRepository);
