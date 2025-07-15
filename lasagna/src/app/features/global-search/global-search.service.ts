@@ -57,10 +57,11 @@ export class GlobalSearchService {
     ]);
 
     const flat = results.flat();
+
     const resultsPayload = [];
 
     for (const item of flat) {
-      const data = await this.getResource(item);
+      const data = await this.getResource(item as any);
       if (!data) continue;
       if (data.length === 0) continue;
       for (const d of data) {
@@ -106,39 +107,41 @@ export class GlobalSearchService {
   }
 
   private async _searchInProducts(query: string) {
-    const results = await this._flexsearchIndexService.search(Stores.PRODUCTS, query);
-
-    return (results as any[]).flatMap(group => ({
-      context: SearchResultContext.PRODUCT,
-      field: group.field,
-      result: group.result,
-    }));
+    return this._searchUniqueResults(query, Stores.PRODUCTS, SearchResultContext.PRODUCT);
   }
 
   private async _searchInRecipes(query: string) {
-    const results = await this._flexsearchIndexService.search(Stores.RECIPES, query);
-    return (results as any[]).flatMap(group => ({
-      context: SearchResultContext.RECIPE,
-      field: group.field,
-      result: group.result,
-    }));
+    return this._searchUniqueResults(query, Stores.RECIPES, SearchResultContext.RECIPE);
   }
 
-  private async _searchInProductsCategories(query: string) {
-    const results = await this._flexsearchIndexService.search(Stores.PRODUCTS_CATEGORIES, query);
-    return (results as any[]).flatMap(group => ({
-      context: SearchResultContext.CATEGORY_PRODUCT,
-      field: group.field,
-      result: group.result,
-    }));
+
+  private _searchInProductsCategories(query: string) {
+    return this._searchUniqueResults(query, Stores.PRODUCTS_CATEGORIES, SearchResultContext.CATEGORY_PRODUCT)
   }
 
   private async _searchInRecipesCategories(query: string) {
-    const results = await this._flexsearchIndexService.search(Stores.RECIPES_CATEGORIES, query);
-    return (results as any[]).flatMap(group => ({
-      context: SearchResultContext.CATEGORY_RECIPE,
-      field: group.field,
-      result: group.result,
-    }));
+    return this._searchUniqueResults(query, Stores.RECIPES_CATEGORIES, SearchResultContext.CATEGORY_RECIPE);
+  }
+
+  private async _searchUniqueResults(
+    query: string,
+    store: Stores,
+    context: SearchResultContext,
+  ) {
+    const results = await this._flexsearchIndexService.search(store, query);
+    const flat = (results as any[]).flatMap<SearchResult>(group => group.result);
+    // @ts-ignore
+    const uniqueResults: Set<string> = flat.reduce((acc: Set<string>, item: string) => {
+      if (!acc.has(item)) {
+        acc.add(item);
+      }
+      return acc;
+    }, new Set<string>());
+
+    return [{
+      context: context,
+      field: 'mixed',
+      result: Array.from(uniqueResults.values()),
+    }]
   }
 }
