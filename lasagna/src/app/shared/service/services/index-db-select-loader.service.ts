@@ -20,6 +20,13 @@ export class IndexDbSelectLoaderService
     return this._indexDb.getAll(storeName) as Promise<T[]>;
   }
 
+  fullLoad<T>(
+    storeName: Stores,
+  ) {
+    return this._indexDb.getAllWithRelations(storeName)
+      .then(response => response.data) as Promise<T[]>;
+  }
+
   live<T>(
     storeName: Stores,
   ) {

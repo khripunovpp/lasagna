@@ -69,6 +69,9 @@ export class SelectResourcesService {
             return this._localstorageSelectLoaderService.load((cfg.loaderConfig as LocalstorageSelectLoaderConfig)?.['key']!);
           }
           const indexDbCfg = cfg.loaderConfig as IndexDbSelectLoaderConfig;
+          if (indexDbCfg?.full) {
+            return this._indexDbSelectLoaderService.fullLoad(indexDbCfg?.['storeName']!);
+          }
           return this._indexDbSelectLoaderService.load(indexDbCfg?.['storeName']!)
         },
 

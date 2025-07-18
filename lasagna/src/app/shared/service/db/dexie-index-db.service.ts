@@ -197,6 +197,23 @@ export class DexieIndexDbService extends Dexie {
     return (this[storeKey] as Table<any>).toArray();
   }
 
+  async getAllWithRelations<T = any>(storeKey: Stores): Promise<{
+    data: T[],
+    relations: Record<string, Record<string, any>>,
+  }> {
+    // @ts-ignore
+    const items = await this.getAll(storeKey);
+    const relations: Record<string, Record<string, any>> = {};
+    for (const item of items) {
+      const rel = await this._collectRelations(item, relations);
+      this._putRelationsInto(item, rel);
+    }
+    return {
+      data: items,
+      relations,
+    };
+  }
+
   async addData<T = any>(storeKey: Stores, value: T, customUUID?: string): Promise<string> {
     try {
       const uuid = customUUID || this._generateUuid();

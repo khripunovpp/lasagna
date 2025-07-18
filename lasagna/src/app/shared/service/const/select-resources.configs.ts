@@ -10,6 +10,7 @@ export interface IndexDbSelectLoaderConfig {
   name: string
   storeName: Stores
   selectUniqueKey?: string
+  full?: boolean
 }
 
 export interface LocalstorageSelectLoaderConfig {
@@ -44,6 +45,14 @@ export const resources: Record<string, SelectResourcesConfig> = {
     loaderConfig: {
       name: 'indexDb',
       storeName: Stores.RECIPES,
+    },
+  },
+  recipesFull: {
+    name: 'recipesFull',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.RECIPES,
+      full: true,
     },
   },
   'recipes-names': {
