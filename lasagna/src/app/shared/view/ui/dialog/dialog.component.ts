@@ -1,7 +1,8 @@
-import {Component, HostListener, input, output, signal} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {CardComponent} from '../card/card.component';
 import {ButtonComponent} from '../layout/button.component';
 import {FocusTrapDirective} from '../focus-trap.directive';
+import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
 
 @Component({
   selector: 'lg-dialog',
@@ -132,6 +133,14 @@ export class DialogComponent {
   displayFooter = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
+  readonly #_bodyLocker = inject(BODY_LOCKER);
+  displayedEffect= effect(() => {
+    if (this.displayed()) {
+      this.#_bodyLocker.lock();
+    } else {
+      this.#_bodyLocker.unlock();
+    }
+  });
 
   onEscKeyDown(event: unknown) {
     console.log(event)
