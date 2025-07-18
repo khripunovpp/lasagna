@@ -5,7 +5,7 @@ function createUpdateButton() {
   button.style.color = 'var(--text-color)';
   button.style.border = 'none';
   button.style.padding = '10px 20px';
-  button.style.paddingBottom = 'env(safe-area-inset-bottom,10px)';
+  button.style.paddingBottom = 'calc(env(safe-area-inset-bottom, 10px) + 10px)';
   button.style.cursor = 'pointer';
   button.style.width = '100%';
   button.addEventListener('click', () => {
