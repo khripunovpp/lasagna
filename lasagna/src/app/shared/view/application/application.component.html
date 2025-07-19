@@ -23,5 +23,11 @@
         }
       </lg-card>
     </lg-flex-row>
+
+    @if (!isOnboardingComplete()) {
+      <lg-card>
+        <lg-onboarding></lg-onboarding>
+      </lg-card>
+    }
   </lg-container>
 </lg-fade-in>

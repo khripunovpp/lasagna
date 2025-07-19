@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
@@ -11,11 +11,13 @@ import {RecipeDTO} from './Recipe.scheme';
 import {Tag} from '../../settings/service/models/Tag';
 import {ProductsRepository} from '../../products/service/products.repository';
 import {response} from 'express';
+import {OnboardingService} from '../../onboarding/onboarding.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesRepository {
+  private _onboardingService = inject(OnboardingService);
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
@@ -50,6 +52,11 @@ export class RecipesRepository {
       for (const tag of recipe.tags) {
         await this._saveTag(tag);
       }
+    }
+
+    // Онбординг: если это первый рецепт, отмечаем шаг завершённым
+    if (!this._onboardingService.isRecipeDone()) {
+      this._onboardingService.markRecipeDone();
     }
 
     return uuid;
