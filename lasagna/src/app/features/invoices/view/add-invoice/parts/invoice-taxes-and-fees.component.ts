@@ -26,6 +26,7 @@ import {Invoice} from '@invoices/service/Inovice/Invoice';
 
 import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-row.component';
 import {NgTemplateOutlet} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-invoice-taxes-and-fees',
@@ -38,8 +39,8 @@ import {NgTemplateOutlet} from '@angular/common';
                      [size]="'medium'"
                      [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
                      lgExpand>
-          <div lgWidth="70%">Tax</div>
-          <div lgWidth="30%">Amount</div>
+          <div lgWidth="70%">{{ 'invoices.tax' | translate }}</div>
+          <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
           <!--        <div lgWidth="15%">Total</div>-->
         </lg-flex-row>
 
@@ -56,8 +57,8 @@ import {NgTemplateOutlet} from '@angular/common';
                      [size]="'medium'"
                      [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
                      lgExpand>
-          <div lgWidth="70%">Fee</div>
-          <div lgWidth="30%">Amount</div>
+          <div lgWidth="70%">{{ 'invoices.fee' | translate }}</div>
+          <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
           <!--        <div lgWidth="15%">Total</div>-->
         </lg-flex-row>
 
@@ -122,7 +123,7 @@ import {NgTemplateOutlet} from '@angular/common';
         <lg-button (onClick)="open()"
                    [size]="'small'"
                    [style]="'success'">
-          Add tax or fee
+          {{ 'invoices.add-tax-or-fee' | translate }}
           <mat-icon [inline]="true"
                     aria-hidden="false"
                     fontIcon="add"></mat-icon>
@@ -134,7 +135,7 @@ import {NgTemplateOutlet} from '@angular/common';
       <lg-flex-column>
         @if (taxes().length) {
           <lg-flex-column size="small">
-            Taxes
+            {{ 'invoices.taxes' | translate }}
 
             <lg-flex-row [wrap]="true"
                          [fit]="true"
@@ -149,7 +150,7 @@ import {NgTemplateOutlet} from '@angular/common';
 
         @if (fees().length) {
           <lg-flex-column size="small">
-            Fees
+            {{ 'invoices.fees' | translate }}
 
             <lg-flex-row [wrap]="true"
                          [fit]="true"
@@ -187,6 +188,7 @@ import {NgTemplateOutlet} from '@angular/common';
     WidthDirective,
     ControlsRowComponent,
     NgTemplateOutlet,
+    TranslatePipe,
   ],
   providers: [
     {

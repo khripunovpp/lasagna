@@ -14,6 +14,7 @@ import {TabDirective} from '../../ui/tabs/tab.directive';
 import {TabsComponent} from '../../ui/tabs/tabs.component';
 
 import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-widgets-page',
@@ -23,20 +24,20 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
       <lg-container>
         <lg-flex-row [center]="true">
           <lg-title>
-            Widgets
+            {{ 'widgets.page.title' | translate }}
           </lg-title>
         </lg-flex-row>
 
         <lg-tabs>
-          <ng-template label="Jelly calculator" alias="jelly-calculator" lgTab>
+          <ng-template [label]="'widgets.page.jelly-calculator' | translate" alias="jelly-calculator" lgTab>
              <lg-jelly-widget></lg-jelly-widget>
           </ng-template>
 
-          <ng-template label="Eggs calculator" alias="eggs-calculator" lgTab>
+          <ng-template [label]="'widgets.page.eggs-calculator' | translate" alias="eggs-calculator" lgTab>
              <lg-eggs-widget></lg-eggs-widget>
           </ng-template>
 
-          <ng-template label="Barcode Seeker" alias="barcode-seeker" lgTab>
+          <ng-template [label]="'widgets.page.barcode-seeker' | translate" alias="barcode-seeker" lgTab>
               <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
           </ng-template>
         </lg-tabs>
@@ -52,7 +53,8 @@ import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
     FadeInComponent,
     TabDirective,
     TabsComponent,
-    JellyWidgetComponent
+    JellyWidgetComponent,
+    TranslatePipe
 ]
 })
 export class WidgetsPageComponent {

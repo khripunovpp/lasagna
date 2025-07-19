@@ -47,6 +47,7 @@ import {BrowserTabTrackingService} from '../../../../shared/service/services/bro
 import {DatePipe} from '@angular/common';
 import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
 import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 
@@ -79,6 +80,7 @@ import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
     ControlComponent,
     DatePipe,
     InvoiceTaxesAndFeesComponent,
+    TranslatePipe,
         ],
   styles: [
     `

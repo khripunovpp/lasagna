@@ -24,6 +24,7 @@ import {BrowserTabTrackingService} from '../../../../shared/service/services/bro
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -58,7 +59,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
               </lg-title>
             } @else {
               <lg-title>
-                New invoice
+                {{ 'invoices.new-invoice' | translate }}
               </lg-title>
             }
 
@@ -74,7 +75,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                              [flat]="true"
                              [style]="'success'"
                              lgShrink>
-                    Mark as paid
+                    {{ 'invoices.mark-as-paid' | translate }}
                   </lg-button>
                 </ng-template>
               }
@@ -85,7 +86,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                              [flat]="true"
                              [style]="'danger'"
                              lgShrink>
-                    Mark as canceled
+                    {{ 'invoices.mark-as-canceled' | translate }}
                   </lg-button>
                 </ng-template>
               }
@@ -100,7 +101,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                          [flat]="true"
                          [style]="'success'"
                          lgShrink>
-                Generate PDF
+                {{ 'invoices.generate-pdf' | translate }}
               </lg-button>
             </ng-template>
 
@@ -109,7 +110,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                          [flat]="true"
                          [style]="'warning'"
                          lgShrink>
-                Copy
+                {{ 'invoices.copy' | translate }}
               </lg-button>
             </ng-template>
 
@@ -117,7 +118,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
               <lg-button (onClick)="onDeleteInvoice()" [flat]="true"
                          [style]="'danger'"
                          lgShrink>
-                Delete Invoice
+                {{ 'invoices.delete' | translate }}
               </lg-button>
             </ng-template>
           </lg-inline-separated-group>
@@ -136,9 +137,9 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                      [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
                      lgShrink>
             @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
-              Save changes
+              {{ 'invoices.save-changes' | translate }}
             } @else {
-              Nothing to save
+              {{ 'invoices.nothing-to-save' | translate }}
             }
           </lg-button>
 
@@ -146,7 +147,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
             <lg-button (click)="issueInvoice()"
                        [style]="'success'"
                        lgShrink>
-              Issue and download invoice
+              {{ 'invoices.issue-and-download' | translate }}
             </lg-button>
           }
         </lg-flex-row>
@@ -171,6 +172,7 @@ export class AddInvoiceComponent
     private _loggerService: LoggerService,
     private _invoicesRepository: InvoicesRepository,
     private _browserTabTrackingService: BrowserTabTrackingService,
+    private _translateService: TranslateService,
   ) {
   }
 
@@ -178,10 +180,11 @@ export class AddInvoiceComponent
   formComponent = viewChild('formComponent', {read: AddInvoiceFormComponent});
   stateLabel = computed(() => {
     if (!this.invoiceBuilderService.invoice()) {
-      return 'Unknown';
+      return this._translateService.instant('invoices.state.unknown');
     }
     const state = this.invoiceBuilderService.invoice()!.state;
-    return stateToLabelMap[state] || 'Unknown';
+    const key = stateToLabelMap[state];
+    return key ? this._translateService.instant(key) : this._translateService.instant('invoices.state.unknown');
   });
   stateBadgeClass = computed(() => {
     if (!this.invoiceBuilderService.invoice()) {
@@ -207,7 +210,7 @@ export class AddInvoiceComponent
       return;
     }
     this._invoicesRepository.deleteOne(this.invoiceBuilderService.invoice()!.uuid!).then(() => {
-      this._notificationsService.success('Invoice deleted');
+      this._notificationsService.success('invoices.deleted');
       this.router.navigate(['invoices']);
     });
   }
@@ -224,7 +227,7 @@ export class AddInvoiceComponent
       return;
     }
     this._invoicesRepository.createCopy(this.invoiceBuilderService.invoice()!).then((newUUID) => {
-      this._notificationsService.success('Invoice copied');
+      this._notificationsService.success('invoices.copied');
       this.router.navigate(['invoices', 'edit', newUUID]).then(() => {
         window.location.reload();
       })
@@ -278,7 +281,7 @@ export class AddInvoiceComponent
       this.invoiceBuilderService.invoice()!
     ).then(() => {
       this._browserTabTrackingService.disableProtection();
-      this._notificationsService.success('Invoice issued');
+      this._notificationsService.success('invoices.issued');
       this.generatePDF();
     });
   }

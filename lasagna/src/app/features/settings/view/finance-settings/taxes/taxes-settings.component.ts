@@ -22,6 +22,7 @@ import {Tax} from '../../../service/models/Tax';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
 import {JsonPipe} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-taxes-settings',
@@ -30,23 +31,23 @@ import {JsonPipe} from '@angular/common';
     <lg-flex-column>
       <ng-container [formGroup]="taxesForm">
         <ng-container formArrayName="rows">
-          Taxes
+          {{ 'settings.taxes.title' | translate }}
           @for (taxRow of taxesAndFees(); track (taxRow.name + taxRow.uuid + i); let i = $index, odd = $odd) {
             @let tacControl = taxesForm.controls.rows.controls[i];
 
             @if (feesIndex() === i) {
-              Fees
+              {{ 'settings.taxes.fees' | translate }}
             }
             <section [formGroupName]="i" class="taxes">
               <div [class.taxes__row--odd]="odd"
                    class="taxes__row">
                 <lg-flex-row [fit]="true" [top]="true">
                   <lg-input
-                    [placeholder]="'Name'"
+                    [placeholder]="'settings.taxes.name' | translate"
                     formControlName="name"
                     lgWidth="35%"></lg-input>
 
-                  <lg-textarea [placeholder]="'Description'"
+                  <lg-textarea [placeholder]="'settings.taxes.description' | translate"
                                [rows]="3"
                                formControlName="description"
                                lgWidth="35%"></lg-textarea>
@@ -60,7 +61,7 @@ import {JsonPipe} from '@angular/common';
 
                   <lg-number-input
                     (onInputChange)="onTaxValueChange(i)"
-                    [placeholder]="'Value'"
+                    [placeholder]="'settings.taxes.value' | translate"
                     formControlName="value"
                     lgParseMath></lg-number-input>
 
@@ -86,9 +87,9 @@ import {JsonPipe} from '@angular/common';
                    lgSelfCenter
                    lgShrink>
           @if (taxesForm.dirty) {
-            Save changes
+            {{ 'settings.taxes.save-changes' | translate }}
           } @else {
-            No changes
+            {{ 'settings.taxes.no-changes' | translate }}
           }
         </lg-button>
 
@@ -96,7 +97,7 @@ import {JsonPipe} from '@angular/common';
                    [style]="'warning'"
                    lgSelfCenter
                    lgShrink>
-          Add tax
+          {{ 'settings.taxes.add-tax' | translate }}
         </lg-button>
       </lg-flex-row>
     </lg-flex-column>
@@ -128,7 +129,8 @@ import {JsonPipe} from '@angular/common';
     MatIcon,
     SelfCenterDirective,
     ShrinkDirective,
-    JsonPipe
+    JsonPipe,
+    TranslatePipe
   ]
 })
 export class TaxesSettingsComponent {
@@ -201,7 +203,7 @@ export class TaxesSettingsComponent {
       const taxes = this.taxesForm.value.rows?.map((item) => Tax.fromRaw(taxDTOFromFormValue(item))) ?? [];
       await this._taxesRepository
         .addMany(taxes);
-      this._notificationService.success('Taxes saved successfully');
+      this._notificationService.success('settings.taxes.saved-success');
       this.taxesForm.markAsPristine();
     } catch (e) {
       this._notificationService.error(errorHandler(e));

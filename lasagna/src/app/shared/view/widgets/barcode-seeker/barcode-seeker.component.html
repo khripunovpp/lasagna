@@ -1,6 +1,6 @@
 <lg-flex-column [size]="'medium'">
   <lg-title>
-    📷 Scan barcode or enter manually
+    📷 {{ 'widgets.barcode.title' | translate }}
   </lg-title>
 
   <lg-flex-row [top]="true" [mobileMode]="true">
@@ -10,45 +10,45 @@
       <lg-flex-column>
         <lg-flex-row lgExpand>
           <lg-input [(ngModel)]="barcode"
-                    [placeholder]="'Barcode'"
+                    [placeholder]="'widgets.barcode.placeholder' | translate"
                     lgExpand
                     lgParseMath></lg-input>
 
-          <lg-button (click)="onBarcodeManualInput()">Search</lg-button>
+          <lg-button (click)="onBarcodeManualInput()">{{ 'widgets.barcode.search' | translate }}</lg-button>
 
-          <lg-button (click)="clear()">Clear</lg-button>
+          <lg-button (click)="clear()">{{ 'widgets.barcode.clear' | translate }}</lg-button>
         </lg-flex-row>
 
 
         @if (showProductForm() && productResult()) {
           <lg-flex-column [size]="'medium'">
-            <lg-control [label]="'Name'">
+            <lg-control [label]="'widgets.barcode.name' | translate">
               <lg-input [(ngModel)]="product.name"
-                        [placeholder]="'Name'"
+                        [placeholder]="'widgets.barcode.name' | translate"
                         lgExpand
                         lgParseMath></lg-input>
             </lg-control>
-            <lg-control [label]="'Amount'">
+            <lg-control [label]="'widgets.barcode.amount' | translate">
               <lg-number-input [(ngModel)]="product.amount"
-                               [placeholder]="'Amount'"
+                               [placeholder]="'widgets.barcode.amount' | translate"
                                lgExpand
                                lgParseMath></lg-number-input>
             </lg-control>
 
-            <lg-control [label]="'Price'">
+            <lg-control [label]="'widgets.barcode.price' | translate">
               <lg-number-input [(ngModel)]="product.price"
-                               [placeholder]="'Price'"
+                               [placeholder]="'widgets.barcode.price' | translate"
                                lgExpand
                                lgParseMath></lg-number-input>
               <div>{{ product.unit }}</div>
             </lg-control>
 
-            <lg-button lgShrink (click)="addProduct()">Add product</lg-button>
+            <lg-button lgShrink (click)="addProduct()">{{ 'widgets.barcode.add-product' | translate }}</lg-button>
           </lg-flex-column>
         }
       </lg-flex-column>
     } @else {
-      <lg-button (click)="openScanner()">Scan</lg-button>
+      <lg-button (click)="openScanner()">{{ 'widgets.barcode.scan' | translate }}</lg-button>
     }
 
   </lg-flex-row>

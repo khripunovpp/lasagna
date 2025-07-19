@@ -11,6 +11,7 @@ import {CategoryRecipesRepository} from '../../../../../../shared/service/reposi
 import {Router} from '@angular/router';
 import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
 import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '../../../../../../shared/helpers';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-add-category-recipe-form',
@@ -18,9 +19,9 @@ import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '../../.
   template: `
       <form [formGroup]="form">
           <lg-flex-row [bottom]="true" [mobileMode]="true">
-              <lg-control label="Name" lgExpand>
+              <lg-control [label]="'settings.category.name' | translate" lgExpand>
                   <lg-input (onEnter)="onEnter()"
-                            [placeholder]="'Your category name'"
+                            [placeholder]="'settings.category.placeholder' | translate"
                             formControlName="name"></lg-input>
               </lg-control>
 
@@ -29,17 +30,17 @@ import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '../../.
                       <lg-button [disabled]="!form.dirty"
                                  (click)="editCategory()">
                           @if (form.dirty) {
-                              Save category
+                              {{ 'settings.category.save' | translate }}
                           } @else {
-                              No changes
+                              {{ 'settings.category.no-changes' | translate }}
                           }
                       </lg-button>
                   } @else {
                       <lg-button [disabled]="!form.dirty" (click)="addCategory()">
                           @if (form.dirty) {
-                              Add category
+                              {{ 'settings.category.add' | translate }}
                           } @else {
-                              Enter a name
+                              {{ 'settings.category.enter-name' | translate }}
                           }
                       </lg-button>
                   }
@@ -54,7 +55,8 @@ import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '../../.
     ButtonComponent,
     FlexRowComponent,
     ExpandDirective,
-    NoWrapDirective
+    NoWrapDirective,
+    TranslatePipe
   ],
   styles: [
     `
@@ -102,7 +104,7 @@ export class AddCategoryRecipeFormComponent
       this.form.reset({
         name: '',
       });
-      this._notificationsService.success('Category added');
+      this._notificationsService.success('settings.category.added');
       this.form.markAsPristine();
     });
   }
@@ -112,7 +114,7 @@ export class AddCategoryRecipeFormComponent
       return Promise.resolve();
     }
     return this._categoryRepository.editCategory(this.uuid(), this.category()!).then(() => {
-      this._notificationsService.success('Category edited');
+      this._notificationsService.success('settings.category.edited');
       this.form.markAsPristine();
     });
   }

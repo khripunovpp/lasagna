@@ -1,6 +1,7 @@
 import {Component, effect, output, signal, viewChild} from '@angular/core';
 
 import {BarcodeSeekerWidgetComponent} from './barcode-seeker/barcode-seeker.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-product-widgets',
@@ -11,7 +12,7 @@ import {BarcodeSeekerWidgetComponent} from './barcode-seeker/barcode-seeker.comp
           <div class="product-widgets__buttons">
               <button (click)="onWidgetSelect('scan')"
                       class="product-widgets__button">
-                  Scan
+                  {{ 'widgets.scan.title' | translate }}
               </button>
           </div>
           @if (selectedWidget() === 'scan') {
@@ -22,7 +23,8 @@ import {BarcodeSeekerWidgetComponent} from './barcode-seeker/barcode-seeker.comp
       </div>
   `,
   imports: [
-    BarcodeSeekerWidgetComponent
+    BarcodeSeekerWidgetComponent,
+    TranslatePipe
 ],
   styles: [
     `

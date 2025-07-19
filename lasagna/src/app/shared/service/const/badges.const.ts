@@ -5,8 +5,8 @@ export const stateToBadgeClassMap: Record<string, string> = {
   issued: 'text-info'
 }
 export const stateToLabelMap: Record<string, string> = {
-  draft: 'Draft',
-  paid: 'Paid',
-  cancelled: 'Cancelled',
-  issued: 'Issued'
+  draft: 'invoices.state.draft',
+  paid: 'invoices.state.paid',
+  cancelled: 'invoices.state.cancelled',
+  issued: 'invoices.state.issued'
 };

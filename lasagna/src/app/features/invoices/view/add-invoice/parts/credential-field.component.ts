@@ -19,6 +19,7 @@ import {
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
 import {Credential} from '../../../../settings/service/models/Credential';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-credential-field',
@@ -47,7 +48,7 @@ import {Credential} from '../../../../settings/service/models/Credential';
                          [flat]="true"
                          [style]="'success'"
                          lgShrink>
-                Add
+                {{ 'invoices.credential.add' | translate }}
               </lg-button>
             </ng-template>
 
@@ -57,7 +58,7 @@ import {Credential} from '../../../../settings/service/models/Credential';
                            (click)="onCredentialDeleted()"
                            [style]="'danger'"
                            lgShrink>
-                  Delete
+                  {{ 'invoices.credential.delete' | translate }}
                 </lg-button>
               </ng-template>
             }
@@ -121,7 +122,8 @@ import {Credential} from '../../../../settings/service/models/Credential';
     ReactiveFormsModule,
     ShrinkDirective,
     TextareaComponent,
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
   providers: [
     {

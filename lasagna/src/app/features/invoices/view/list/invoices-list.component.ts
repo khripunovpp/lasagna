@@ -17,12 +17,13 @@ import {SelectionZoneService} from '../../../../shared/service/services/selectio
 import {SelectionToolsComponent} from '../../../../shared/view/ui/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CATEGORIZED_INVOICES_LIST} from './categorized-invoices-list.token';
 import {InvoicesRepository} from '../../service/Invoices.repository';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {Invoice} from '../../service/Inovice/Invoice';
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
+import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';
 
 @Component({
   selector: 'lg-invoices-list',
@@ -40,11 +41,10 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
     <lg-fade-in>
       <lg-container>
         <lg-title>
-          <!--          {{ 'products.list-title'|translate }}-->
-          Invoices
+          {{ 'invoices.list-title' | translate }}
         </lg-title>
 
-        <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+        <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
 
         @for (category of invoices(); track $index; let ic = $index) {
           <lg-title [level]="3">
@@ -57,7 +57,7 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
                         [selectAll]="selectionZoneService.selectAll()"
                         [deselectAll]="selectionZoneService.deselectAll()">
             @for (invoice of category.items; track (invoice.uuid ?? '') + $index; let i = $index) {
-              <ng-template lgCardListItem [uuid]="invoice.uuid" type="product">
+              <ng-template lgCardListItem [uuid]="invoice.uuid" type="invoice">
                 <lg-flex-column [size]="'medium'">
                   <lg-flex-row [center]="true">
                     <lg-flex-row [center]="true" lgExpand>
@@ -78,11 +78,11 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
 
                   <lg-flex-row [center]="true">
                     <div>
-                      Date due: {{ invoice.date_due | date:'shortDate' }}
+                      {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
                     </div>
 
                     <div>
-                      Days left: {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
+                      {{ 'invoices.days-left' | translate }}: {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
                     </div>
                   </lg-flex-row>
                 </lg-flex-column>
@@ -92,7 +92,7 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
         } @empty {
           <lg-flex-row [center]="true">
             <lg-title [level]="5">
-              {{ 'no-products'|translate }}
+              {{ 'no-invoices'|translate }}
             </lg-title>
           </lg-flex-row>
         }
@@ -137,8 +137,11 @@ export class InvoicesListComponent
     public selectionZoneService: SelectionZoneService,
     private _invoicesRepository: InvoicesRepository,
     private _router: Router,
+    private _translateService: TranslateService,
   ) {
   }
+
+  private _userLang = inject(USER_LANGUAGE);
 
   nowDate = Date.now();
   invoices: Signal<{
@@ -146,10 +149,14 @@ export class InvoicesListComponent
     items: Invoice[]
   }[]> = toSignal(inject(CATEGORIZED_INVOICES_LIST));
   stateLabels = computed(() => {
+    // Добавляем зависимость от языка для реактивности
+    this._userLang();
+    
     return this.invoices()?.map(prefixGroup => {
       return prefixGroup?.items?.map(invoice => {
         const state = invoice!.state;
-        return stateToLabelMap[state] || 'Unknown';
+        const key = stateToLabelMap[state];
+        return key ? this._translateService.instant(key) : this._translateService.instant('invoices.state.unknown');
       })
     });
   });
@@ -173,7 +180,7 @@ export class InvoicesListComponent
       return;
     }
     this._invoicesRepository.deleteOne(event!.uuid).then(() => {
-      this._notificationsService.success('invoice.deleted');
+      this._notificationsService.success('invoices.deleted');
       this.loadItems();
     });
   }

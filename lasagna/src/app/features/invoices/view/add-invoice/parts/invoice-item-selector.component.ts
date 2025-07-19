@@ -1,6 +1,7 @@
 import {Component, effect, forwardRef, Input, output, signal, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {InvoiceItemType} from '../../../service/InvoiceItem/InvoiceItem.types';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-invoice-item-selector',
@@ -12,7 +13,7 @@ import {InvoiceItemType} from '../../../service/InvoiceItem/InvoiceItem.types';
           <button class="invoice-item-selector__tab"
                   [class.active]="activeIndex() === index"
                   (click)="onClickItem(item, index)">
-            {{ item.title }}
+            {{ item.title | translate }}
           </button>
         }
       </div>
@@ -130,7 +131,7 @@ import {InvoiceItemType} from '../../../service/InvoiceItem/InvoiceItem.types';
       }
     `
   ],
-  imports: [],
+  imports: [TranslatePipe],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -149,11 +150,11 @@ export class InvoiceItemSelectorComponent
   }[]>([
     {
       slug: InvoiceItemType.Recipe,
-      title: 'Recipe',
+      title: 'invoices.item-selector.recipe',
     },
     {
       slug: InvoiceItemType.Product,
-      title: 'Product',
+      title: 'invoices.item-selector.product',
     },
     // {
     //   slug: InvoiceItemType.Custom,

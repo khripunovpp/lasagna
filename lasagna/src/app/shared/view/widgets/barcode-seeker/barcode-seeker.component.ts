@@ -17,6 +17,7 @@ import {BarcodeReaderService} from '../../../service/services/barcode-reader.ser
 import {ProductsRepository} from '../../../../features/products/service/products.repository';
 import {NotificationsService} from '../../../service/services/notifications.service';
 import {Product} from '../../../../features/products/service/Product';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -34,7 +35,8 @@ import {Product} from '../../../../features/products/service/Product';
     FlexRowComponent,
     NumberInputComponent,
     ControlComponent,
-    ShrinkDirective
+    ShrinkDirective,
+    TranslatePipe
   ],
 
   styles: [
