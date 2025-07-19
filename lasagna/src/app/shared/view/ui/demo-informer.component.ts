@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, HostListener, inject, signal, ViewEn
 import {DEMO_MODE} from '../../service/tokens/demo-mode.token';
 import {PortalComponent} from './layout/portal.component';
 import {DemoService} from '../../service/services/demo.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-demo-informer',
@@ -11,12 +12,12 @@ import {DemoService} from '../../service/services/demo.service';
     @if (isDemoMode) {
       <button (click)="toggle()"
               class="lg-demo-informer__btn">
-        <b>DEMO</b>
+        <b>{{ 'demo.title' | translate }}</b>
 
         @if (visible()) {
           <span #element (click)="toggle()">
-            You are in demo mode. Some features are disabled and we could move this address so you will lose your data.
-            <br><br><strong class="text-underlined" (click)="switchOff($event)">Click here to switch off demo mode</strong>
+            {{ 'demo.message' | translate }}
+            <br><br><strong class="text-underlined" (click)="switchOff($event)">{{ 'demo.switch-off' | translate }}</strong>
           </span>
 
           <lg-portal [appendTarget]="'body'"
@@ -79,7 +80,8 @@ import {DemoService} from '../../service/services/demo.service';
     }
   `],
   imports: [
-    PortalComponent
+    PortalComponent,
+    TranslatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
