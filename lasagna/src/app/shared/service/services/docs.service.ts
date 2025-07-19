@@ -93,7 +93,9 @@ export class DocsService {
         this.docs$.next(docsRecords.docs);
       }
     } catch (error) {
-      throw new Error(`Failed to initialize docs service: ${error}`);
+      console.error('Failed to initialize docs service:', error);
+      // Не выбрасываем ошибку, чтобы не прерывать работу приложения
+      // throw new Error(`Failed to initialize docs service: ${error}`);
     }
   }
 
@@ -125,6 +127,10 @@ export class DocsService {
     }
 
     return null;
+  }
+
+  getDocsView() {
+    return this.docs$.getValue();
   }
 
   getDocs() {

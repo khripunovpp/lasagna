@@ -8,6 +8,7 @@ import {BuckupData} from '../services/transfer-data.service';
 import {relationsMap} from './const/relations-maps';
 import {DB_NAME} from '../tokens/db-name.token';
 import {LoggerService} from '../../../features/logger/logger.service';
+import {IndexHandlersManager} from './handlers/index-handlers.manager';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ import {LoggerService} from '../../../features/logger/logger.service';
 export class DexieIndexDbService extends Dexie {
   constructor(
     private flexsearchIndexService: FlexsearchIndexService,
+    private indexHandlersManager: IndexHandlersManager,
     @Inject(DB_NAME) dbName: string,
   ) {
     super(dbName);
@@ -31,10 +33,6 @@ export class DexieIndexDbService extends Dexie {
       }
       this.logger.log(`Migration ${migration.version} applied`);
     }
-
-    setTimeout(() => {
-      this.initIndexes();
-    });
   }
 
   private _loggerClass = inject(LoggerService);
@@ -58,44 +56,94 @@ export class DexieIndexDbService extends Dexie {
       'prefix',
       'invoice_number',
       'credential_from_string',
-      'credential_to_string'
+      'credential_to_string',
+      'full_invoice_number',
+      'searchable_text'
+    ],
+    [Stores.DOCUMENTATION]: [
+      'title',
+      'html',
+      'path',
+      'language',
+      'name'
     ],
   }
 
   async initIndexes(): Promise<void> {
-    await Promise.all([
-      this.initIndex(Stores.PRODUCTS),
-      this.initIndex(Stores.RECIPES),
-      this.initIndex(Stores.PRODUCTS_CATEGORIES),
-      this.initIndex(Stores.RECIPES_CATEGORIES),
-      this.initIndex(Stores.TAGS),
-      this.initIndex(Stores.TAXES),
-      this.initIndex(Stores.DOCUMENTATION),
-      this.initIndex(Stores.SETTINGS),
-      this.initIndex(Stores.INVOICES),
-      this.initIndex(Stores.CREDENTIALS),
-    ]);
-    this.logger.log('All indexes initialized successfully');
+    try {
+      // Инициализируем индексы последовательно для лучшей отладки
+      const tables = [
+        Stores.PRODUCTS,
+        Stores.RECIPES,
+        Stores.PRODUCTS_CATEGORIES,
+        Stores.RECIPES_CATEGORIES,
+        Stores.TAGS,
+        Stores.TAXES,
+        Stores.DOCUMENTATION,
+        Stores.SETTINGS,
+        Stores.INVOICES,
+        Stores.CREDENTIALS,
+      ];
+
+      for (const table of tables) {
+        await this.initIndex(table);
+      }
+
+      this.logger.log('All indexes initialized successfully');
+    } catch (error) {
+      this.logger.error('Error initializing indexes:', error);
+      // Не выбрасываем ошибку, чтобы не прерывать работу приложения
+      // throw error;
+    }
   }
 
   async initIndex(table: string): Promise<void> {
-    await this.flexsearchIndexService.initIndex(
-      this.getStore(table as Stores),
-      table,
-      this.#_fieldsMap[table] || ['name', 'uuid']
-    );
-    const indexData = await this.getOne(Stores.INDICES, table);
+    try {
+      this.indexLogger.log(`Initializing index for table: ${table}`);
 
-    if (indexData) {
-      await this.flexsearchIndexService.importIndex(table, indexData.indexData);
-    } else {
-      await this.getAll(table as Stores).then(async (data) => {
-        for (const item of data) {
-          await this.flexsearchIndexService.addToIndex(table, item);
+      await this.flexsearchIndexService.initIndex(
+        this.getStore(table as Stores),
+        table,
+        this.#_fieldsMap[table] || ['name', 'uuid']
+      );
+      const indexData = await this.getOne(Stores.INDICES, table);
+
+      if (indexData) {
+        this.indexLogger.log(`Importing existing index for table: ${table}`);
+        await this.flexsearchIndexService.importIndex(table, indexData.indexData);
+      } else {
+        this.indexLogger.log(`Creating new index for table: ${table}`);
+        const data = await this.getAll(table as Stores);
+        this.indexLogger.log(`Found ${data.length} items in table: ${table}`, {data: data.slice(0, 2)});
+
+        if (data.length > 0) {
+          const transformedData = this.indexHandlersManager.transformData(table, data);
+
+          for (const item of transformedData.data) {
+            await this.flexsearchIndexService.addToIndex(table, item);
+          }
+
+          this.indexLogger.log(`Indexed ${transformedData.data.length} items for ${table}`, {
+            handler: transformedData.handlerName
+          });
+
+          if (transformedData.data.length > 0) {
+            try {
+              await this.saveIndex(table);
+            } catch (error) {
+              this.indexLogger.error(`Error saving index for table ${table}:`, error);
+            }
+          } else {
+            this.indexLogger.log(`No data to index for table: ${table}, skipping save`);
+          }
+        } else {
+          this.indexLogger.log(`No data found for table: ${table}, skipping index creation`);
         }
-      });
-
-      await this.saveIndex(table);
+      }
+    } catch (error) {
+      this.indexLogger.error(`Error initializing index for table ${table}:`, error);
+      // Не выбрасываем ошибку, чтобы не прерывать инициализацию других индексов
+      // throw error;
     }
   }
 
@@ -107,15 +155,33 @@ export class DexieIndexDbService extends Dexie {
         return;
       } else {
         const data = await this.flexsearchIndexService.exportIndex(table);
-        this.indexLogger.log(table, 'Saving index data:', {data});
-        await this.replaceData(Stores.INDICES, table, {
-          table,
-          indexData: data,
-        });
+        if (data && data.length > 0) {
+          this.indexLogger.log(table, 'Saving index data:', {
+            dataLength: data.length,
+            dataPreview: data.substring(0, 100)
+          });
+          const newData = {
+            table,
+            indexData: data,
+          };
+          await this.replaceData(Stores.INDICES, table, newData);
+
+          this.indexLogger.log(table, 'Index data saved successfully',{newData});
+        } else {
+          this.indexLogger.warn(table, 'No data to save for index');
+          // Удаляем запись индекса, если данных нет
+          try {
+            await this.remove(Stores.INDICES, table);
+          } catch (e) {
+            // Игнорируем ошибки при удалении несуществующей записи
+          }
+        }
       }
+
     } catch (error) {
-      console.error('Error saving index:', error);
-      throw error;
+      this.indexLogger.error('Error saving index:', error);
+      // Не выбрасываем ошибку, чтобы не прерывать работу приложения
+      // throw error;
     }
   }
 
@@ -224,7 +290,12 @@ export class DexieIndexDbService extends Dexie {
         return uuid;
       }
       await this.flexsearchIndexService.addToIndex(storeKey, obj);
-      await this.saveIndex(storeKey);
+      // Сохраняем индекс только если есть данные
+      try {
+        await this.saveIndex(storeKey);
+      } catch (error) {
+        this.logger.error(`Error saving index for ${storeKey}:`, error);
+      }
       this._putCache(storeKey, uuid, value);
       return uuid;
     } catch (error) {
@@ -245,7 +316,12 @@ export class DexieIndexDbService extends Dexie {
       return;
     }
     await this.flexsearchIndexService.addToIndex(storeKey, obj);
-    await this.saveIndex(storeKey);
+    // Сохраняем индекс только если есть данные
+    try {
+      await this.saveIndex(storeKey);
+    } catch (error) {
+      this.logger.error(`Error saving index for ${storeKey}:`, error);
+    }
     this._putCache(storeKey, uuid, value);
   }
 
@@ -264,7 +340,14 @@ export class DexieIndexDbService extends Dexie {
       await this.flexsearchIndexService.addToIndex(storeKey, value);
       this._putCache(storeKey, value.uuid, value);
     }
-    await this.saveIndex(storeKey);
+    // Сохраняем индекс только если есть данные
+    if (valuesWithUuid.length > 0) {
+      try {
+        await this.saveIndex(storeKey);
+      } catch (error) {
+        this.logger.error(`Error saving index for ${storeKey}:`, error);
+      }
+    }
   }
 
   async search(storeKey: Stores, indexField: string, value: string): Promise<any[]> {
@@ -308,7 +391,12 @@ export class DexieIndexDbService extends Dexie {
       this._removeCache(storeKey, uuid);
     }
     await this.flexsearchIndexService.removeFromIndex(storeKey, uuid);
-    await this.saveIndex(storeKey);
+    // Сохраняем индекс только если есть данные
+    try {
+      await this.saveIndex(storeKey);
+    } catch (error) {
+      this.logger.error(`Error saving index for ${storeKey}:`, error);
+    }
   }
 
   async removeMany(storeKey: Stores, uuids: string[]): Promise<void> {
@@ -322,30 +410,54 @@ export class DexieIndexDbService extends Dexie {
       this._removeCache(storeKey, uuid);
     }
     await this.flexsearchIndexService.removeFromIndex(storeKey, uuids);
-    await this.saveIndex(storeKey);
+    // Сохраняем индекс только если есть данные
+    if (uuids.length > 0) {
+      try {
+        await this.saveIndex(storeKey);
+      } catch (error) {
+        this.logger.error(`Error saving index for ${storeKey}:`, error);
+      }
+    }
   }
 
   async clear(storeKey: Stores): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).clear();
     this._dropCache(storeKey);
-    await this._resetIndex(storeKey);
+    if (storeKey !== Stores.INDICES) {
+      await this._resetIndex(storeKey);
+    }
   }
 
   async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<void> {
-    // @ts-ignore
-    await (this[storeKey] as Table<any>).bulkPut(values.map(value => ({
+    this.logger.log(`Bulk adding ${values.length} items to ${storeKey}`, {autoUUID});
+
+    const valuesWithUuid = values.map(value => ({
       ...value,
       uuid: autoUUID ? this._generateUuid() : (value.uuid || this._generateUuid()),
-    })));
+    }));
+
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid);
 
     if (storeKey === Stores.INDICES) {
       return;
     }
-    for (const value of values) {
+
+    this.logger.log(`Adding ${valuesWithUuid.length} items to index for ${storeKey}`);
+    for (const value of valuesWithUuid) {
       await this.flexsearchIndexService.addToIndex(storeKey, value);
       this._putCache(storeKey, value.uuid, value);
     }
+    // Сохраняем индекс только если есть данные
+    if (valuesWithUuid.length > 0) {
+      try {
+        await this.saveIndex(storeKey);
+      } catch (error) {
+        this.logger.error(`Error saving index for ${storeKey}:`, error);
+      }
+    }
+    this.logger.log(`Successfully bulk added ${valuesWithUuid.length} items to ${storeKey}`);
   }
 
   async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
@@ -369,12 +481,21 @@ export class DexieIndexDbService extends Dexie {
         // throw new Error(`Store ${store} not found in backup data`);
       }
     }
-    await this.flushCache();
+    // Инициализируем индексы после восстановления всех данных
+    try {
+      await this.initIndexes();
+    } catch (error) {
+      this.logger.error('Error initializing indexes after restore:', error);
+    }
+    // Не вызываем flushCache, чтобы избежать рекурсии
+    // await this.flushCache();
   }
 
   async flushCache(): Promise<void> {
     this._cache.clear();
     await this.clear(Stores.INDICES);
+    // Не пересоздаем индексы здесь, чтобы избежать рекурсии
+    // await this.initIndexes();
     this.cacheLogger.log('Cache flushed');
   }
 
@@ -431,7 +552,8 @@ export class DexieIndexDbService extends Dexie {
 
   private async _resetIndex(storeKey: Stores): Promise<void> {
     await this.flexsearchIndexService.clearIndex(storeKey);
-    await this.saveIndex(storeKey);
+    // Не сохраняем пустой индекс
+    // await this.saveIndex(storeKey);
   }
 
   private _putCache(storeKey: Stores, uuid: string, value: any): void {
