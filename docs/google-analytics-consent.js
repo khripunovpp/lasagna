@@ -1,44 +1,149 @@
+// Google Analytics Configuration
+const GA_TRACKING_ID = 'G-GWN769JKRP';
+let gtagLoaded = false;
+
+// Dynamic Google Analytics loader
+function loadGoogleAnalytics(
+  callback = () => { }
+) {
+  if (gtagLoaded) return;
+
+  // Create and load gtag script
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+
+  script.onload = function() {
+    // Initialize gtag after script loads
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+
+    // Set default consent to 'denied'
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied'
+    });
+
+    gtag('js', new Date());
+    gtag('config', GA_TRACKING_ID);
+
+    gtagLoaded = true;
+    console.log('Google Analytics loaded dynamically');
+
+    // Execute callback after GA is fully initialized
+    if (typeof callback === 'function') {
+      callback();
+    }
+  };
+
+  document.head.appendChild(script);
+}
+
 // Google Analytics Consent Management Functions
 function consentGrantedAdStorage() {
-  gtag('consent', 'update', {
-    'ad_storage': 'granted'
-  });
+  if (!gtagLoaded) {
+    loadGoogleAnalytics(() => {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted'
+      });
+    });
+  } else {
+    gtag('consent', 'update', {
+      'ad_storage': 'granted'
+    });
+  }
 }
 
 function consentGrantedAdUserData() {
-  gtag('consent', 'update', {
-    'ad_user_data': 'granted'
-  });
+  if (!gtagLoaded) {
+    loadGoogleAnalytics(() => {
+      gtag('consent', 'update', {
+        'ad_user_data': 'granted'
+      });
+    });
+  } else {
+    gtag('consent', 'update', {
+      'ad_user_data': 'granted'
+    });
+  }
 }
 
 function consentGrantedAdPersonalization() {
-  gtag('consent', 'update', {
-    'ad_personalization': 'granted'
-  });
+  if (!gtagLoaded) {
+    loadGoogleAnalytics(() => {
+      gtag('consent', 'update', {
+        'ad_personalization': 'granted'
+      });
+    });
+  } else {
+    gtag('consent', 'update', {
+      'ad_personalization': 'granted'
+    });
+  }
 }
 
 function consentGrantedAnalyticsStorage() {
-  gtag('consent', 'update', {
-    'analytics_storage': 'granted'
-  });
+  if (!gtagLoaded) {
+    loadGoogleAnalytics(() => {
+      gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
+    });
+  } else {
+    gtag('consent', 'update', {
+      'analytics_storage': 'granted'
+    });
+  }
 }
 
 function consentGrantedAll() {
-  gtag('consent', 'update', {
-    'ad_storage': 'granted',
-    'ad_user_data': 'granted',
-    'ad_personalization': 'granted',
-    'analytics_storage': 'granted'
-  });
+  if (!gtagLoaded) {
+    loadGoogleAnalytics(() => {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    });
+  } else {
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+  }
 }
 
 function consentDeniedAll() {
-  gtag('consent', 'update', {
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'analytics_storage': 'denied'
-  });
+}
+
+// Restore consent state on page load
+function restoreConsentState() {
+  const consent = localStorage.getItem('cookie-consent');
+  if (consent && consent !== 'none') {
+    // Load Google Analytics if user has consented (not rejected)
+    if (consent === 'all' || consent === 'analytics') {
+      loadGoogleAnalytics(() => {
+        if (consent === 'all') {
+          gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+          });
+        } else if (consent === 'analytics') {
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+          });
+        }
+      });
+    }
+  }
 }
 
 // Make functions globally available
@@ -48,6 +153,7 @@ window.consentGrantedAdPersonalization = consentGrantedAdPersonalization;
 window.consentGrantedAnalyticsStorage = consentGrantedAnalyticsStorage;
 window.consentGrantedAll = consentGrantedAll;
 window.consentDeniedAll = consentDeniedAll;
+window.loadGoogleAnalytics = loadGoogleAnalytics;
 
 // Cookie Consent Banner Management
 function createConsentButton(text, onClick, className = '') {
@@ -128,7 +234,9 @@ function createConsentBanner() {
 }
 
 function hasUserConsented() {
-  return localStorage.getItem('cookie-consent') !== null;
+  const consent = localStorage.getItem('cookie-consent');
+  // Show banner again if user rejected (consent === 'none') or hasn't made a choice
+  return consent !== null && consent !== 'none';
 }
 
 function showConsentBanner() {
@@ -148,6 +256,9 @@ function hideConsentBanner() {
 // Initialize consent banner
 const consentBanner = createConsentBanner();
 document.body.appendChild(consentBanner);
+
+// Restore consent state if user has already consented
+restoreConsentState();
 
 // Show banner if user hasn't consented yet
 if (!hasUserConsented()) {
