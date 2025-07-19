@@ -91,26 +91,26 @@ function createConsentBanner() {
   content.style.gap = '10px';
 
   const textDiv = document.createElement('div');
-  textDiv.innerHTML = '<p style="margin: 0;">Мы используем cookies для улучшения вашего опыта. Выберите ваши предпочтения:</p>';
+  textDiv.innerHTML = '<p style="margin: 0;">We use cookies to enhance your experience. Please choose your preferences:</p>';
 
   const buttonsDiv = document.createElement('div');
   buttonsDiv.style.display = 'flex';
   buttonsDiv.style.gap = '10px';
   buttonsDiv.style.flexWrap = 'wrap';
 
-  const acceptAllBtn = createConsentButton('Принять все', () => {
+  const acceptAllBtn = createConsentButton('Accept All', () => {
     consentGrantedAll();
     localStorage.setItem('cookie-consent', 'all');
     hideConsentBanner();
   }, 'accept-all');
 
-  const analyticsOnlyBtn = createConsentButton('Только аналитика', () => {
+  const analyticsOnlyBtn = createConsentButton('Analytics Only', () => {
     consentGrantedAnalyticsStorage();
     localStorage.setItem('cookie-consent', 'analytics');
     hideConsentBanner();
   }, 'accept-analytics');
 
-  const rejectAllBtn = createConsentButton('Отклонить все', () => {
+  const rejectAllBtn = createConsentButton('Reject All', () => {
     consentDeniedAll();
     localStorage.setItem('cookie-consent', 'none');
     hideConsentBanner();
