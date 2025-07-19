@@ -1,0 +1,1 @@
+import{Rc as c,bb as t,eb as i,nb as r}from"./chunk-X5WXA3YI.js";var a=class e{constructor(p){this.templateRef=p}place=c("after");static \u0275fac=function(f){return new(f||e)(i(t))};static \u0275dir=r({type:e,selectors:[["","lgExtraTpl",""]],inputs:{place:[1,"place"]}})};export{a};

@@ -1,0 +1,1 @@
+var e={draft:"text-secondary",paid:"text-success",cancelled:"text-danger",issued:"text-info"},t={draft:"invoices.state.draft",paid:"invoices.state.paid",cancelled:"invoices.state.cancelled",issued:"invoices.state.issued"};export{e as a,t as b};
