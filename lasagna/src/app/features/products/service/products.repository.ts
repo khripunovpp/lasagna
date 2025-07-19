@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
@@ -6,11 +6,13 @@ import {DraftFormsService, UsingHistoryService} from '../../../shared/service/se
 import {Subject} from 'rxjs';
 import {Product} from './Product';
 import {ProductDTO} from './Product.scheme';
+import { OnboardingService } from '../../onboarding/onboarding.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsRepository {
+  private _onboardingService = inject(OnboardingService);
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
@@ -44,6 +46,12 @@ export class ProductsRepository {
     if (product.category_id) this._saveCategory(product.category_id.toString());
     if (product.source) this._saveSource(product.source);
     this._saveProductToHistory(uuid);
+
+    // Онбординг: если это первый продукт, отмечаем шаг завершённым
+    if (!this._onboardingService.isProductDone()) {
+      this._onboardingService.markProductDone();
+    }
+
     return uuid;
   }
 

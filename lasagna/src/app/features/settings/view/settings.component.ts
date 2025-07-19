@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
 import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
 import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
@@ -15,7 +15,7 @@ import {SettingsService} from '../service/services/settings.service';
 import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/invoices-settings.component";
 import {CredentialSettingsComponent} from './finance-settings/credentials/credential-settings.component';
 import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.component';
-
+import {OnboardingService} from '../../onboarding/onboarding.service';
 
 @Component({
   selector: 'lg-settings',
@@ -40,9 +40,16 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
     TaxesSettingsComponent
   ]
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
+  private _onboardingService = inject(OnboardingService);
+
   constructor(
     public settingsService: SettingsService,
   ) {
+  }
+
+  ngOnInit() {
+    // Отмечаем шаг настроек как завершённый при посещении страницы
+    this._onboardingService.markSettingsDone();
   }
 }

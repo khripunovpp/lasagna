@@ -12,6 +12,8 @@ import {ProductsRepository, RecipesRepository} from '../../service/repositories'
 import {AsyncPipe} from '@angular/common';
 import {ButtonComponent} from '../ui/layout/button.component';
 import {FontTesterComponent} from '../ui/font-tester.component';
+import {OnboardingComponent} from '../../../features/onboarding/onboarding.component';
+import {OnboardingService} from '../../../features/onboarding/onboarding.service';
 
 
 @Component({
@@ -29,12 +31,17 @@ import {FontTesterComponent} from '../ui/font-tester.component';
     FlexRowComponent,
     TranslatePipe,
     AsyncPipe,
-    ButtonComponent
-]
+    ButtonComponent,
+    OnboardingComponent
+  ]
 })
 export class ApplicationComponent {
   title = 'lasagna';
 
+  private _onboardingService = inject(OnboardingService);
   recipes = inject(RecipesRepository).length;
   products = inject(ProductsRepository).length;
+
+  // Используем сигнал из сервиса напрямую
+  isOnboardingComplete = this._onboardingService.isOnboardingComplete;
 }
