@@ -1,0 +1,1 @@
+import{bb as t,eb as i,nb as r}from"./chunk-X5WXA3YI.js";var n=class e{constructor(c){this.template=c}uuid="";type="";static \u0275fac=function(p){return new(p||e)(i(t))};static \u0275dir=r({type:e,selectors:[["","lgCardListItem",""]],inputs:{uuid:"uuid",type:"type"}})};export{n as a};
