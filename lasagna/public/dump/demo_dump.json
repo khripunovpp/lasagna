@@ -4,7 +4,7 @@
     "data": [
       {
         "uuid": "prod-001a",
-        "name": "Ванильный экстракт натуральный",
+        "name": "Natural vanilla extract",
         "amount": 250,
         "price": 12.5,
         "unit": "ml",
@@ -16,7 +16,7 @@
       },
       {
         "uuid": "prod-002b",
-        "name": "Кокосовая мука без глютена",
+        "name": "Gluten-free coconut flour",
         "amount": 1000,
         "price": 8.7,
         "unit": "gram",
@@ -28,7 +28,7 @@
       },
       {
         "uuid": "prod-003c",
-        "name": "Молоко овсяное органическое",
+        "name": "Organic oat milk",
         "amount": 1000,
         "price": 3.9,
         "unit": "ml",
@@ -40,7 +40,7 @@
       },
       {
         "uuid": "prod-004d",
-        "name": "Глазурь шоколадная темная",
+        "name": "Dark chocolate glaze",
         "amount": 500,
         "price": 7.2,
         "unit": "gram",
@@ -52,7 +52,7 @@
       },
       {
         "uuid": "prod-005e",
-        "name": "Эритритол кристаллический",
+        "name": "Crystalline erythritol",
         "amount": 750,
         "price": 6.3,
         "unit": "gram",
@@ -64,7 +64,7 @@
       },
       {
         "uuid": "prod-006f",
-        "name": "Желатин листовой пищевой",
+        "name": "Food-grade sheet gelatin",
         "amount": 200,
         "price": 4,
         "unit": "gram",
@@ -76,7 +76,7 @@
       },
       {
         "uuid": "prod-007g",
-        "name": "Кокосовое масло холодного отжима",
+        "name": "Cold-pressed coconut oil",
         "amount": 1000,
         "price": 11.7,
         "unit": "ml",
@@ -88,7 +88,7 @@
       },
       {
         "uuid": "prod-008h",
-        "name": "Пельмени с мясом говядины",
+        "name": "Beef dumplings",
         "amount": 1500,
         "price": 14.2,
         "unit": "gram",
@@ -100,7 +100,7 @@
       },
       {
         "uuid": "prod-009i",
-        "name": "Лецитин соевый пищевой",
+        "name": "Soy lecithin food grade",
         "amount": 250,
         "price": 5.8,
         "unit": "gram",
@@ -112,7 +112,7 @@
       },
       {
         "uuid": "prod-010j",
-        "name": "Крем масляный ванильный",
+        "name": "Vanilla buttercream",
         "amount": 1000,
         "price": 9.9,
         "unit": "gram",
@@ -124,7 +124,7 @@
       },
       {
         "uuid": "prod-011k",
-        "name": "Сыр рикотта свежий",
+        "name": "Fresh ricotta cheese",
         "amount": 500,
         "price": 6.5,
         "unit": "gram",
@@ -136,7 +136,7 @@
       },
       {
         "uuid": "prod-012l",
-        "name": "Мука кукурузная жёлтая",
+        "name": "Yellow cornmeal",
         "amount": 1000,
         "price": 2.4,
         "unit": "gram",
@@ -148,7 +148,7 @@
       },
       {
         "uuid": "prod-013m",
-        "name": "Ликёр апельсиновый",
+        "name": "Orange liqueur",
         "amount": 700,
         "price": 18,
         "unit": "ml",
@@ -160,7 +160,7 @@
       },
       {
         "uuid": "prod-014n",
-        "name": "Морковь свежая",
+        "name": "Fresh carrots",
         "amount": 800,
         "price": 2.1,
         "unit": "gram",
@@ -172,7 +172,7 @@
       },
       {
         "uuid": "prod-015o",
-        "name": "Миндаль жареный",
+        "name": "Roasted almonds",
         "amount": 300,
         "price": 9.5,
         "unit": "gram",
@@ -184,7 +184,7 @@
       },
       {
         "uuid": "prod-016p",
-        "name": "Паста томатная домашняя",
+        "name": "Homemade tomato paste",
         "amount": 500,
         "price": 5.3,
         "unit": "gram",
@@ -196,7 +196,7 @@
       },
       {
         "uuid": "prod-017q",
-        "name": "Мёд натуральный лесной",
+        "name": "Natural forest honey",
         "amount": 750,
         "price": 7.7,
         "unit": "gram",
@@ -208,7 +208,7 @@
       },
       {
         "uuid": "prod-018r",
-        "name": "Разрыхлитель теста с кальцием",
+        "name": "Calcium baking powder",
         "amount": 250,
         "price": 3,
         "unit": "gram",
@@ -220,7 +220,7 @@
       },
       {
         "uuid": "prod-019s",
-        "name": "Сироп кленовый чистый",
+        "name": "Pure maple syrup",
         "amount": 500,
         "price": 14.5,
         "unit": "ml",
@@ -231,7 +231,7 @@
         "updatedAt": 1751400018000
       },
       {
-        "name": "Морская соль крупная",
+        "name": "Coarse sea salt",
         "amount": 1000,
         "price": 2,
         "unit": "gram",
@@ -244,7 +244,7 @@
       },
       {
         "uuid": "prod-021u",
-        "name": "Посыпка сахарная цветная",
+        "name": "Colored sugar sprinkles",
         "amount": 250,
         "price": 4.5,
         "unit": "gram",
@@ -256,7 +256,7 @@
       },
       {
         "uuid": "prod-022v",
-        "name": "Форма силиконовая для кексов",
+        "name": "Silicone cupcake mold",
         "amount": 1,
         "price": 15,
         "unit": "piece",
@@ -268,7 +268,7 @@
       },
       {
         "uuid": "prod-023w",
-        "name": "Пюре клубничное замороженное",
+        "name": "Frozen strawberry puree",
         "amount": 1000,
         "price": 8,
         "unit": "gram",
@@ -280,7 +280,7 @@
       },
       {
         "uuid": "prod-024x",
-        "name": "Шоколад горький 70%",
+        "name": "Dark chocolate 70%",
         "amount": 500,
         "price": 10.5,
         "unit": "gram",
@@ -292,7 +292,7 @@
       },
       {
         "uuid": "prod-025y",
-        "name": "Яйца куриные свежие",
+        "name": "Fresh chicken eggs",
         "amount": 12,
         "price": 3.2,
         "unit": "piece",
@@ -303,7 +303,7 @@
         "updatedAt": 1751400024000
       },
       {
-        "name": "Кардамон молотый",
+        "name": "Ground cardamom",
         "amount": 100,
         "price": 14,
         "unit": "gram",
@@ -316,7 +316,7 @@
       },
       {
         "uuid": "prod-027aa",
-        "name": "Кукурузный крахмал без глютена",
+        "name": "Gluten-free cornstarch",
         "amount": 1000,
         "price": 4.8,
         "unit": "gram",
@@ -328,7 +328,7 @@
       },
       {
         "uuid": "prod-028bb",
-        "name": "Молоко миндальное натуральное",
+        "name": "Natural almond milk",
         "amount": 1000,
         "price": 5.2,
         "unit": "ml",
@@ -340,7 +340,7 @@
       },
       {
         "uuid": "prod-029cc",
-        "name": "Глазурь белая ванильная",
+        "name": "White vanilla glaze",
         "amount": 500,
         "price": 7.5,
         "unit": "gram",
@@ -352,7 +352,7 @@
       },
       {
         "uuid": "prod-030dd",
-        "name": "Сахарозаменитель стевия",
+        "name": "Stevia sweetener",
         "amount": 250,
         "price": 6,
         "unit": "gram",
@@ -364,7 +364,7 @@
       },
       {
         "uuid": "prod-031ee",
-        "name": "Агар-агар порошок",
+        "name": "Agar-agar powder",
         "amount": 100,
         "price": 5.5,
         "unit": "gram",
@@ -376,7 +376,7 @@
       },
       {
         "uuid": "prod-032ff",
-        "name": "Масло оливковое экстра вирджин",
+        "name": "Extra virgin olive oil",
         "amount": 1000,
         "price": 15,
         "unit": "ml",
@@ -388,7 +388,7 @@
       },
       {
         "uuid": "prod-033gg",
-        "name": "Замороженная малина",
+        "name": "Frozen raspberries",
         "amount": 1000,
         "price": 10.2,
         "unit": "gram",
@@ -406,8 +406,8 @@
     "store": "recipesStore",
     "data": [
       {
-        "name": "Шоколадный торт с кремом",
-        "description": "Классический шоколадный торт с нежным кремом. Идеально подходит для праздников и особых случаев.",
+        "name": "Chocolate cake with cream",
+        "description": "Classic chocolate cake with delicate cream. Perfect for holidays and special occasions.",
         "ingredients": [
           {
             "amount": 200,
@@ -446,13 +446,13 @@
         "category_id": "cakes",
         "createdAt": 1751400100000,
         "updatedAt": 1751400100000,
-        "tags": ["шоколад", "торт", "десерт"],
+        "tags": ["chocolate", "cake", "dessert"],
         "color": "#8B4513",
         "priceModifiers": []
       },
       {
-        "name": "Ванильные кексы",
-        "description": "Нежные ванильные кексы с хрустящей корочкой. Простой рецепт для начинающих кондитеров.",
+        "name": "Vanilla cupcakes",
+        "description": "Delicate vanilla cupcakes with crispy crust. Simple recipe for beginner pastry chefs.",
         "ingredients": [
           {
             "amount": 200,
@@ -491,13 +491,13 @@
         "category_id": "cupcakes-muffins",
         "createdAt": 1751400200000,
         "updatedAt": 1751400200000,
-        "tags": ["кексы", "ваниль", "выпечка"],
+        "tags": ["cupcakes", "vanilla", "baking"],
         "color": "#F5DEB3",
         "priceModifiers": []
       },
       {
-        "name": "Крем-чизкейк",
-        "description": "Классический нью-йоркский чизкейк с нежной текстурой и насыщенным вкусом.",
+        "name": "Cream cheesecake",
+        "description": "Classic New York cheesecake with delicate texture and rich flavor.",
         "ingredients": [
           {
             "amount": 500,
@@ -531,13 +531,13 @@
         "category_id": "cheesecakes",
         "createdAt": 1751400300000,
         "updatedAt": 1751400300000,
-        "tags": ["чизкейк", "десерт", "крем"],
+        "tags": ["cheesecake", "dessert", "cream"],
         "color": "#FFF8DC",
         "priceModifiers": []
       },
       {
-        "name": "Меренги с ягодами",
-        "description": "Воздушные меренги с свежими ягодами. Легкий и элегантный десерт.",
+        "name": "Meringues with berries",
+        "description": "Airy meringues with fresh berries. Light and elegant dessert.",
         "ingredients": [
           {
             "amount": 4,
@@ -566,13 +566,13 @@
         "category_id": "meringues",
         "createdAt": 1751400400000,
         "updatedAt": 1751400400000,
-        "tags": ["меренги", "ягоды", "легкий"],
+        "tags": ["meringues", "berries", "light"],
         "color": "#FFE4E1",
         "priceModifiers": []
       },
       {
-        "name": "Шоколадный мусс",
-        "description": "Нежный шоколадный мусс с насыщенным вкусом. Идеально для романтического ужина.",
+        "name": "Chocolate mousse",
+        "description": "Delicate chocolate mousse with rich flavor. Perfect for romantic dinner.",
         "ingredients": [
           {
             "amount": 200,
@@ -601,13 +601,13 @@
         "category_id": "mousses",
         "createdAt": 1751400500000,
         "updatedAt": 1751400500000,
-        "tags": ["мусс", "шоколад", "романтический"],
+        "tags": ["mousse", "chocolate", "romantic"],
         "color": "#654321",
         "priceModifiers": []
       },
       {
-        "name": "Печенье с орехами",
-        "description": "Хрустящее печенье с миндалем и грецкими орехами. Классический рецепт.",
+        "name": "Nut cookies",
+        "description": "Crispy cookies with almonds and walnuts. Classic recipe.",
         "ingredients": [
           {
             "amount": 200,
@@ -641,13 +641,13 @@
         "category_id": "cookies",
         "createdAt": 1751400600000,
         "updatedAt": 1751400600000,
-        "tags": ["печенье", "орехи", "хрустящее"],
+        "tags": ["cookies", "nuts", "crispy"],
         "color": "#DEB887",
         "priceModifiers": []
       },
       {
-        "name": "Тирамису",
-        "description": "Классический итальянский десерт с кофе и маскарпоне. Элегантно и вкусно.",
+        "name": "Tiramisu",
+        "description": "Classic Italian dessert with coffee and mascarpone. Elegant and delicious.",
         "ingredients": [
           {
             "amount": 500,
@@ -681,13 +681,13 @@
         "category_id": "author-desserts",
         "createdAt": 1751400700000,
         "updatedAt": 1751400700000,
-        "tags": ["тирамису", "итальянский", "кофе"],
+        "tags": ["tiramisu", "italian", "coffee"],
         "color": "#8B7355",
         "priceModifiers": []
       },
       {
-        "name": "Веганский шоколадный торт",
-        "description": "Вкусный шоколадный торт без яиц и молока. Подходит для веганов.",
+        "name": "Vegan chocolate cake",
+        "description": "Delicious chocolate cake without eggs and milk. Suitable for vegans.",
         "ingredients": [
           {
             "amount": 200,
@@ -721,13 +721,13 @@
         "category_id": "vegan-desserts",
         "createdAt": 1751400800000,
         "updatedAt": 1751400800000,
-        "tags": ["веганский", "шоколад", "без яиц"],
+        "tags": ["vegan", "chocolate", "egg-free"],
         "color": "#654321",
         "priceModifiers": []
       },
       {
-        "name": "Безглютеновые кексы",
-        "description": "Вкусные кексы без глютена. Подходят для людей с целиакией.",
+        "name": "Gluten-free cupcakes",
+        "description": "Delicious gluten-free cupcakes. Suitable for people with celiac disease.",
         "ingredients": [
           {
             "amount": 200,
@@ -761,13 +761,13 @@
         "category_id": "gluten-free-baking",
         "createdAt": 1751400900000,
         "updatedAt": 1751400900000,
-        "tags": ["безглютеновые", "кексы", "диетические"],
+        "tags": ["gluten-free", "cupcakes", "dietary"],
         "color": "#F5DEB3",
         "priceModifiers": []
       },
       {
-        "name": "Желе из ягод",
-        "description": "Освежающее желе из свежих ягод. Легкий летний десерт.",
+        "name": "Berry jelly",
+        "description": "Refreshing jelly from fresh berries. Light summer dessert.",
         "ingredients": [
           {
             "amount": 500,
@@ -796,13 +796,13 @@
         "category_id": "jellies-jams",
         "createdAt": 1751401000000,
         "updatedAt": 1751401000000,
-        "tags": ["желе", "ягоды", "летний"],
+        "tags": ["jelly", "berries", "summer"],
         "color": "#FF69B4",
         "priceModifiers": []
       },
       {
-        "name": "Карамельный соус",
-        "description": "Густой карамельный соус для десертов. Идеально сочетается с мороженым.",
+        "name": "Caramel sauce",
+        "description": "Thick caramel sauce for desserts. Perfectly pairs with ice cream.",
         "ingredients": [
           {
             "amount": 200,
@@ -831,13 +831,13 @@
         "category_id": "caramel",
         "createdAt": 1751401100000,
         "updatedAt": 1751401100000,
-        "tags": ["карамель", "соус", "мороженое"],
+        "tags": ["caramel", "sauce", "ice cream"],
         "color": "#D2691E",
         "priceModifiers": []
       },
       {
-        "name": "Бисквит классический",
-        "description": "Воздушный бисквит для тортов и пирожных. Основа многих десертов.",
+        "name": "Classic sponge cake",
+        "description": "Airy sponge cake for cakes and pastries. Foundation of many desserts.",
         "ingredients": [
           {
             "amount": 4,
@@ -884,27 +884,27 @@
     "data": [
       {
         "uuid": "238288eb05ac479ab739",
-        "name": "Суперфуды и добавки"
+        "name": "Superfoods and supplements"
       },
       {
         "uuid": "510494d2e91b45c1ba6d",
-        "name": "Зерновые основы"
+        "name": "Grain bases"
       },
       {
         "uuid": "8421e7d8e7784d45acd6",
-        "name": "Безглютеновая выпечка"
+        "name": "Gluten-free baking"
       },
       {
         "uuid": "ac4ddc73cc454565a1a1",
-        "name": "Плант-бейзд кремы"
+        "name": "Plant-based creams"
       },
       {
         "uuid": "b790b99abbb9429ebd9e",
-        "name": "Матча-десерты"
+        "name": "Matcha desserts"
       },
       {
         "uuid": "ef65359f7907453ca46b",
-        "name": "Ореховые пасты"
+        "name": "Nut pastes"
       }
     ],
     "version": 160,
