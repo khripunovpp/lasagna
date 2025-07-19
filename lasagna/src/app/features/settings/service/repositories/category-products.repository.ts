@@ -3,6 +3,7 @@ import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryProduct} from '../models/CategoryProduct';
 import {CategoryProductDTO} from '../../../../shared/service/db/shemes/CategoryProduct.scheme';
+import {CategoryProductFactory} from '../factories/category-product.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {CategoryProductDTO} from '../../../../shared/service/db/shemes/CategoryP
 export class CategoryProductsRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
+    private _categoryProductFactory: CategoryProductFactory,
   ) {
   }
 
@@ -18,6 +20,9 @@ export class CategoryProductsRepository {
   }
 
   updateOne(uuid: string, category: CategoryProduct) {
+    if (category.system) {
+      category.system = false;
+    }
     return this._indexDbService.replaceData(Stores.PRODUCTS_CATEGORIES, uuid, category.toDTO());
   }
 
@@ -27,20 +32,20 @@ export class CategoryProductsRepository {
     return this._indexDbService
       .getOne<CategoryProductDTO>(Stores.PRODUCTS_CATEGORIES, uuid)
       .then(category => {
-        return CategoryProduct.fromRaw(category);
+        return this._categoryProductFactory.fromRaw(category);
       });
   }
 
   getAll() {
     return this._indexDbService.getAll<CategoryProduct>(Stores.PRODUCTS_CATEGORIES)
-      .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
+      .then(categories => categories.map(category => this._categoryProductFactory.fromRaw(category)));
   }
 
   getMany(
     uuids: string[],
   ) {
     return this._indexDbService.getMany<CategoryProduct>(Stores.PRODUCTS_CATEGORIES, uuids)
-      .then(categories => categories.map(category => CategoryProduct.fromRaw(category)));
+      .then(categories => categories.map(category => this._categoryProductFactory.fromRaw(category)));
   }
 
   deleteOne(uuid: string) {
@@ -55,34 +60,35 @@ export class CategoryProductsRepository {
     const categories = await this.getAll();
     if (categories.length === 0) {
       const defaultCategories = [
-        "Кремы и начинки",
-        "Глазури и покрытия",
-        "Сиропы и пропитки",
-        "Фруктовые и ягодные компоненты",
-        "Орехи и семена",
-        "Шоколад и какао-продукты",
-        "Мука и крахмалы",
-        "Подсластители (сахар, мед, сиропы)",
-        "Жиры и масла",
-        "Яйца и яичные продукты",
-        "Молочные продукты",
-        "Ароматизаторы и специи",
-        "Разрыхлители и стабилизаторы",
-        "Желирующие вещества (агар, желатин, пектин)",
-        "Украшения и декор",
-        "Формы для выпечки и инвентарь",
-        "Кондитерские добавки и эмульгаторы",
-        "Безглютеновые ингредиенты",
-        "Веганские и растительные альтернативы",
-        "Диетические и низкокалорийные продукты",
-        "Замороженные и полуфабрикаты",
-        "Напитки и ликеры для десертов",
-        "Овощи",
-        "Пасты",
-        "Соль"
-      ].map((name, index) => CategoryProduct.fromRaw({
+        "creams-fillings",
+        "glazes-coatings",
+        "syrups-soaking",
+        "fruit-berry",
+        "nuts-seeds",
+        "chocolate-cocoa",
+        "flour-starches",
+        "sweeteners",
+        "fats-oils",
+        "eggs-egg-products",
+        "dairy",
+        "flavors-spices",
+        "leavening-stabilizers",
+        "gelling-agents",
+        "decorations",
+        "baking-forms",
+        "confectionery-additives",
+        "gluten-free",
+        "vegan-alternatives",
+        "dietary-low-calorie",
+        "frozen-semi-finished",
+        "beverages-liqueurs",
+        "vegetables",
+        "pasta",
+        "salt"
+      ].map((name) => CategoryProduct.fromRaw({
         uuid: name,
         name,
+        system: true,
       }).toDTO());
       await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesInstalled', 'true');

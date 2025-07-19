@@ -1,7 +1,8 @@
 export class CategoryRecipe {
   constructor(
     private _name: string,
-    private _uuid?: string
+    private _uuid?: string,
+    public system?: boolean
   ) {
   }
 
@@ -20,6 +21,7 @@ export class CategoryRecipe {
     return new CategoryRecipe(
       dto?.name || '',
       dto?.uuid || undefined,
+      dto?.system || false,
     );
   }
 
@@ -39,6 +41,7 @@ export class CategoryRecipe {
     return {
       name: this.name,
       uuid: this.uuid,
+      system: this.system,
     };
   }
 
@@ -47,6 +50,7 @@ export class CategoryRecipe {
   ) {
     this._name = dto.name || this.name;
     this._uuid = dto.uuid || this.uuid;
+    this.system = dto.system !== undefined ? dto.system : this.system;
     return this;
   }
 

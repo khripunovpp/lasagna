@@ -101,10 +101,37 @@ export const migrations: {
     version: 7,
     schema: {
       [Stores.PRODUCTS]: '++uuid,name,source',
-      [Stores.RECIPES]: '++uuid,name',
-      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
-      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES]: '++uuid,name,source',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name,color,system',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name,system',
     },
+    update: tx => {
+      return new Promise(async (resolve) => {
+        // Добавляем флаг system к существующим категориям продуктов
+        const productCategoriesTable = tx.table(Stores.PRODUCTS_CATEGORIES);
+        const productCategories = await productCategoriesTable.toArray();
+        
+        await Promise.all(productCategories.map((category: any) => {
+          if (category.system === undefined) {
+            return productCategoriesTable.update(category.uuid, { system: false });
+          }
+          return Promise.resolve();
+        }));
+
+        // Добавляем флаг system к существующим категориям рецептов
+        const recipeCategoriesTable = tx.table(Stores.RECIPES_CATEGORIES);
+        const recipeCategories = await recipeCategoriesTable.toArray();
+        
+        await Promise.all(recipeCategories.map((category: any) => {
+          if (category.system === undefined) {
+            return recipeCategoriesTable.update(category.uuid, { system: false });
+          }
+          return Promise.resolve();
+        }));
+
+        resolve();
+      })
+    }
   },
   // migrate categories to new format
   // uuid should replced with the same as name
@@ -114,8 +141,8 @@ export const migrations: {
     schema: {
       [Stores.PRODUCTS]: '++uuid,name,source',
       [Stores.RECIPES]: '++uuid,name',
-      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
-      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name,color,system',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name,system',
     },
     update: tx => {
       const tables = [
