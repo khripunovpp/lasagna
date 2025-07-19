@@ -6,6 +6,7 @@ import {RecipesRepository} from '../recipes/service/recipes.repository';
 import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
 import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
 import {InvoicesRepository} from '@invoices/service/Invoices.repository';
+import {DocFile, DocsService} from '../../shared/service/services/docs.service';
 
 export enum SearchResultContext {
   PRODUCT = 'product',
@@ -13,6 +14,7 @@ export enum SearchResultContext {
   CATEGORY_PRODUCT = 'category_product',
   CATEGORY_RECIPE = 'category_recipe',
   INVOICE = 'invoice',
+  DOCUMENTATION = 'documentation',
 }
 
 export interface SearchResult {
@@ -32,6 +34,7 @@ export class GlobalSearchService {
     private _categoryProductsRepository: CategoryProductsRepository,
     private _categoryRecipesRepository: CategoryRecipesRepository,
     private _invoicesRepository: InvoicesRepository,
+    private _docsService: DocsService,
   ) {
   }
 
@@ -58,6 +61,7 @@ export class GlobalSearchService {
       this._searchInProductsCategories(query),
       this._searchInRecipesCategories(query),
       this._searchInInvoices(query),
+      this._searchInDocumentation(query),
     ]);
 
     const flat = results.flat();
@@ -71,9 +75,10 @@ export class GlobalSearchService {
       if (!data) continue;
       if (data.length === 0) continue;
       for (const d of data) {
+        const uuid = (d as any)?.uuid ?? (d as any)?.path ?? '';
         resultsPayload.push({
           context: item.context,
-          uuid: encodeURIComponent(d?.uuid ?? ''),
+          uuid: encodeURIComponent(uuid),
           data: d as any,
         });
       }
@@ -114,6 +119,11 @@ export class GlobalSearchService {
           results.push(invoice);
           break;
         }
+        case SearchResultContext.DOCUMENTATION: {
+          // For documentation, the item is already the full document data
+          results.push(item);
+          break;
+        }
       }
     }
     return results;
@@ -139,15 +149,38 @@ export class GlobalSearchService {
     return this._searchUniqueResults(query, Stores.INVOICES, SearchResultContext.INVOICE);
   }
 
+  private async _searchInDocumentation(query: string) {
+    try {
+      const results = await this._searchUniqueResults(query, Stores.DOCUMENTATION, SearchResultContext.DOCUMENTATION);
+      if (!results || results.length === 0) return [];
+
+      const docs = this._docsService.getDocsView();
+
+      const filteredDocs = docs.filter((doc: DocFile) => {
+        return results[0].result
+          .some((result: any) => doc.path.includes(result));
+      });
+
+      return [{
+        context: SearchResultContext.DOCUMENTATION,
+        field: 'mixed',
+        result: filteredDocs,
+      }];
+    } catch (error) {
+      console.error('Error searching documentation:', error);
+      return [];
+    }
+  }
+
   private async _searchUniqueResults(
     query: string,
     store: Stores,
     context: SearchResultContext,
   ) {
     const results = await this._flexsearchIndexService.search(store, query);
-    const flat = (results as any[]).flatMap<SearchResult>(group => group.result);
+    const flat = (results as any[])?.flatMap<SearchResult>(group => group.result);
     // @ts-ignore
-    const uniqueResults: Set<string> = flat.reduce((acc: Set<string>, item: string) => {
+    const uniqueResults: Set<string> = flat?.reduce((acc: Set<string>, item: string) => {
       if (!acc.has(item)) {
         acc.add(item);
       }
@@ -157,7 +190,7 @@ export class GlobalSearchService {
     return [{
       context: context,
       field: 'mixed',
-      result: Array.from(uniqueResults.values()),
+      result: Array.from(uniqueResults?.values() ?? []),
     }]
   }
 }

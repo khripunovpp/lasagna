@@ -47,6 +47,7 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {DemoService} from './shared/service/services/demo.service';
+import {DexieIndexDbService} from './shared/service/db/dexie-index-db.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -71,6 +72,7 @@ export const appConfig: ApplicationConfig = {
       const settingsService = inject(SettingsService);
       const userService = inject(UserService);
       const demoService = inject(DemoService);
+      const indexDbService = inject(DexieIndexDbService);
 
       if (userService.isUserFirstTime) {
         userService.setUserFirstTime(false);
@@ -84,7 +86,7 @@ export const appConfig: ApplicationConfig = {
       return Promise.all([
         categoryRepository.preloadCategories(),
         recipeCategoryRepository.preloadCategories(),
-        docsService.init(),
+        docsService.init().finally(() => indexDbService.initIndexes()),
         settingsService.loadSettings().then((settings) => {
           settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
           if (localStorage.getItem('logoBase64') === null) {

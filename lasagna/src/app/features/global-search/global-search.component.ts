@@ -119,6 +119,25 @@ import {toObservable} from '@angular/core/rxjs-interop';
                       </a>
                     </ng-template>
                   }
+
+                  @if (item.context === 'documentation') {
+                    <ng-template [ngTemplateOutlet]="sectionTpl"
+                                 [ngTemplateOutletContext]="{
+                                      $implicit: item.result,
+                                      caption: 'search.documentation.title' | translate,
+                                      itemTpl: documentationItemTpl
+                                    }">
+                    </ng-template>
+
+                    <ng-template #documentationItemTpl let-data>
+                      <a [routerLink]="['/docs', data?.path]">
+                        {{ data?.title }}
+                        @if (data?.language) {
+                          <span class="lg-global-search__language-badge">({{ data?.language }})</span>
+                        }
+                      </a>
+                    </ng-template>
+                  }
                 }
               </div>
             } @else {
@@ -198,6 +217,12 @@ import {toObservable} from '@angular/core/rxjs-interop';
       flex-direction: column;
       gap: 32px;
       max-height: 400px;
+
+    .lg-global-search__language-badge {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      font-style: italic;
+    }
       overflow-y: auto;
       background-color: rgba(255, 255, 255, 0.7);
       margin-top: 32px;
