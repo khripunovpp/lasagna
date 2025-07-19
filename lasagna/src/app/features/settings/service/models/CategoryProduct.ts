@@ -6,6 +6,7 @@ export class CategoryProduct {
     private _name: string,
     private _uuid?: string,
     private _color?: string | undefined,
+    public system?: boolean,
   ) {
   }
 
@@ -32,6 +33,7 @@ export class CategoryProduct {
       dto?.name || dto,
       dto?.uuid || undefined,
       dto?.color || undefined,
+      dto?.system || false,
     );
   }
 
@@ -52,6 +54,7 @@ export class CategoryProduct {
       name: this.name,
       uuid: this.uuid,
       color: this.ownColor,
+      system: this.system,
     };
   }
 
@@ -61,6 +64,7 @@ export class CategoryProduct {
     this._name = dto?.name || this.name;
     this._uuid = dto?.uuid || this.uuid;
     this._color = dto?.color || this.ownColor;
+    this.system = dto?.system !== undefined ? dto.system : this.system;
     return this;
   }
 

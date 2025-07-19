@@ -3,6 +3,7 @@ import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryRecipe} from '../models/CategoryRecipe';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
+import {CategoryRecipeFactory} from '../factories/category-recipe.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRe
 export class CategoryRecipesRepository {
   constructor(
     public _indexDbService: DexieIndexDbService,
+    private _categoryRecipeFactory: CategoryRecipeFactory,
   ) {
   }
 
@@ -18,6 +20,9 @@ export class CategoryRecipesRepository {
   }
 
   editCategory(uuid: string, category: CategoryRecipe) {
+    if (category.system) {
+      category.system = false;
+    }
     return this._indexDbService.replaceData(Stores.RECIPES_CATEGORIES, uuid, category.toDTO());
   }
 
@@ -27,14 +32,14 @@ export class CategoryRecipesRepository {
     return this._indexDbService
       .getOne<CategoryRecipe>(Stores.RECIPES_CATEGORIES, uuid)
       .then(category => {
-        return CategoryRecipe.fromRaw(category);
+        return this._categoryRecipeFactory.fromRaw(category);
       });
   }
 
 
   getCategories() {
     return this._indexDbService.getAll<CategoryRecipe>(Stores.RECIPES_CATEGORIES).then(categories => {
-      return categories.map(category => CategoryRecipe.fromRaw(category));
+      return categories.map(category => this._categoryRecipeFactory.fromRaw(category));
     });
   }
 
@@ -43,7 +48,7 @@ export class CategoryRecipesRepository {
   ) {
     return this._indexDbService.getMany<CategoryRecipe>(Stores.RECIPES_CATEGORIES, uuids)
       .then(categories => {
-        return categories.map(category => CategoryRecipe.fromRaw(category));
+        return categories.map(category => this._categoryRecipeFactory.fromRaw(category));
       })
   }
 
@@ -59,39 +64,40 @@ export class CategoryRecipesRepository {
     const categories = await this.getCategories();
     if (categories.length === 0) {
       const defaultCategories = [
-        'Бисквиты',
-        'Песочное тесто',
-        'Заварное тесто',
-        'Слоёное тесто',
-        'Дрожжевое тесто',
-        'Бриошь и сдоба',
-        'Меренги',
-        'Кремы',
-        'Начинки',
-        'Глазури и покрытия',
-        'Торты',
-        'Пирожные',
-        'Кексы и маффины',
-        'Чизкейки',
-        'Тарты',
-        'Макарон',
-        'Печенье',
-        'Рулеты',
-        'Шоколадные изделия',
-        'Карамель',
-        'Муссы',
-        'Панна котта',
-        'Желе и конфитюры',
-        'Суфле',
-        'Десерты в стаканах',
-        'Выпечка без глютена',
-        'Выпечка без сахара',
-        'Веганские десерты',
-        'Завтраки',
-        'Авторские десерты'
-      ].map((name, index) => CategoryRecipe.fromRaw({
+        'biscuits',
+        'shortcrust-pastry',
+        'choux-pastry',
+        'puff-pastry',
+        'yeast-dough',
+        'brioche-sweet-bread',
+        'meringues',
+        'creams',
+        'fillings',
+        'glazes-coatings',
+        'cakes',
+        'pastries',
+        'cupcakes-muffins',
+        'cheesecakes',
+        'tarts',
+        'macarons',
+        'cookies',
+        'rolls',
+        'chocolate-products',
+        'caramel',
+        'mousses',
+        'panna-cotta',
+        'jellies-jams',
+        'souffles',
+        'glass-desserts',
+        'gluten-free-baking',
+        'sugar-free-baking',
+        'vegan-desserts',
+        'breakfasts',
+        'author-desserts'
+      ].map((name) => CategoryRecipe.fromRaw({
         uuid: name,
         name,
+        system: true,
       }).toDTO());
       await this._indexDbService.balkAdd(Stores.RECIPES_CATEGORIES, defaultCategories, false);
       localStorage.setItem('categoriesRecipesInstalled', 'true');
