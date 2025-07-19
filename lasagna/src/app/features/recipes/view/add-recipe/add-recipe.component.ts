@@ -17,6 +17,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '../../../../shared/helpers';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
+import {AnalyticsService} from '../../../../shared/service/analytics.service';
 
 
 @Component({
@@ -141,6 +142,7 @@ export class AddRecipeComponent
     private _aRoute: ActivatedRoute,
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
+    private _analyticsService: AnalyticsService,
   ) {
   }
 
@@ -242,6 +244,15 @@ export class AddRecipeComponent
 
   private _addRecipe(recipe: Recipe) {
     return this._recipesRepository.addRecipe(recipe).then((newUUID) => {
+      // Track recipe creation analytics
+      this._analyticsService.trackRecipeCreated(recipe.name, {
+        recipe_uuid: newUUID,
+        ingredients_count: recipe.ingredients?.length || 0,
+        outcome_amount: recipe.outcome_amount,
+        outcome_unit: recipe.outcome_unit,
+        category: recipe.category_id?.name
+      });
+
       this.formComponent()?.resetForm();
       this._notificationsService.success('Recipe added');
       this.recipe.set(undefined);

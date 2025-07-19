@@ -24,6 +24,7 @@ import {
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
+import {AnalyticsService} from '../../../../shared/service/analytics.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -139,6 +140,7 @@ export class AddProductComponent
     private _aRoute: ActivatedRoute,
     private _productsRepository: ProductsRepository,
     private _notificationsService: NotificationsService,
+    private _analyticsService: AnalyticsService,
   ) {
   }
 
@@ -233,6 +235,13 @@ export class AddProductComponent
 
   private _addProduct(product: Product) {
     this._productsRepository.addOne(product).then((newUUID) => {
+      // Track product creation analytics
+      this._analyticsService.trackProductCreated(product.name, {
+        product_uuid: newUUID,
+        price_per_unit: product.pricePerUnit,
+        unit: product.unit,
+        category: product.category_id?.name
+      });
 
       this.formComponent()?.resetForm();
       this._notificationsService.success('Product added');
