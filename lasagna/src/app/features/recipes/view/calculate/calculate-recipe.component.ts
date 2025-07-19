@@ -55,6 +55,7 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
+import {AnalyticsService} from '../../../../shared/service/analytics.service';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -102,11 +103,27 @@ export class CalculateRecipeComponent
     private _injector: Injector,
     private _router: Router,
     private _notificationService: NotificationsService,
+    private _analyticsService: AnalyticsService,
   ) {
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
       this.result.set(data['result']);
+
+      // Track recipe calculation analytics
+      if (data['result']) {
+        const calculation = data['result'];
+        this._analyticsService.trackRecipeCalculated(
+          calculation.calculation?.recipe?.name,
+          calculation.calculation?.outcomeAmount,
+          {
+            recipe_uuid: this.uuid(),
+            total_price: calculation.calculation?.totalPrice,
+            ingredients_count: calculation.calculation?.ingredients?.length || 0,
+            outcome_unit: calculation.calculation?.outcomeUnit
+          }
+        );
+      }
 
       const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
 
