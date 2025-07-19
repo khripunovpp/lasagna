@@ -6,6 +6,7 @@ import {ButtonComponent} from '../ui/layout/button.component';
 import {DropdownComponent} from '../ui/dropdown/dropdown.component';
 import {MatIcon} from '@angular/material/icon';
 import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-docs-three',
@@ -48,11 +49,11 @@ import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
 
         @if (item.path) {
           <a [routerLink]="getPath(item.path)" class="doc-tree-link">
-            {{ item.title ?? nameToTitleMap[item.name] ?? item.name }}
+            {{ (nameToTitleMap[item.name] ?? item.title ?? item.name) | translate }}
           </a>
         } @else {
           <div class="doc-tree-folder-name">
-            {{ item.title ?? nameToTitleMap[item.name] ?? item.name }}
+            {{ (nameToTitleMap[item.name] ?? item.title ?? item.name) | translate }}
           </div>
         }
       </div>
@@ -73,7 +74,7 @@ import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
     ButtonComponent,
     DropdownComponent,
     MatIcon,
-
+    TranslatePipe,
   ],
   styles: [`
     .lg-documentation-container {
@@ -131,11 +132,11 @@ export class DocsThreeComponent
   dropdownComponent = viewChild(DropdownComponent);
   dropdownElementRef = viewChild(DropdownComponent, {read: ElementRef});
   nameToTitleMap: Record<string, string> = {
-    'getting-started': 'Getting Started',
-    'invoices': 'Invoices',
-    'settings': 'Settings',
-    'recipes': 'Recipes',
-    'storage': 'Storage',
+    'getting-started': 'docs.getting-started',
+    'invoices': 'docs.invoices',
+    'settings': 'docs.settings',
+    'recipes': 'docs.recipes',
+    'storage': 'docs.storage',
   };
 
   onNavigationEnd = defer(() => this._router.events.pipe(

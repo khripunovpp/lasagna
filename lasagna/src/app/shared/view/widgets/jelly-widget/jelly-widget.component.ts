@@ -12,6 +12,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NumberInputComponent} from '../../ui/form/number-input.component';
 import {ParseMathDirective} from '../../directives/parse-math.directive';
 import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-template.directive';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -22,12 +23,12 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
           <form [formGroup]="form">
               <lg-flex-row [bottom]="true" [mobileMode]="true">
                   <lg-flex-column formGroupName="from">
-                      In recipe you have
+                      {{ 'jelly.in-recipe-you-have' | translate }}
                       <lg-number-input formControlName="amount"
                                        lgParseMath
                                        [placeholder]="'Amount'">
                           <ng-template lgExtraTpl place="after">
-                              grams of
+                              {{ 'jelly.grams-of' | translate }}
                           </ng-template>
                       </lg-number-input>
 
@@ -49,7 +50,7 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                       <lg-flex-row class="text-center" [strictCenter]="true">
                           <lg-flex-column lgShrink [size]="'small'" [position]="'center'">
                               <div>
-                                  You need
+                                  {{ 'jelly.you-need' | translate }}
                               </div>
 
                               <lg-flex-row [size]="'small'" style="font-size: 2rem">
@@ -68,7 +69,7 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                               </lg-flex-row>
 
                               <div>
-                                  grams of
+                                  {{ 'jelly.grams-of' | translate }}
                               </div>
                           </lg-flex-column>
                           @if (waterNeeded()) {
@@ -77,7 +78,7 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                       @switch (toType) {
                                           @case ("mass") {
                                               <div>
-                                                  With
+                                                  {{ 'jelly.with' | translate }}
                                               </div>
                                           }
                                       }
@@ -85,12 +86,12 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                       @switch (toType) {
                                           @case ("powder") {
                                               <div>
-                                                  And
+                                                  {{ 'jelly.and' | translate }}
                                               </div>
                                           }
                                           @case ("leaf") {
                                               <div>
-                                                  And
+                                                  {{ 'jelly.and' | translate }}
                                               </div>
                                           }
                                       }
@@ -102,10 +103,10 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
                                   </lg-flex-row>
 
                                   <div>
-                                      ml of water
+                                      {{ 'jelly.ml-of-water' | translate }}
                                       @switch (toType) {
                                           @case ("mass") {
-                                              <br>included
+                                              <br>{{ 'jelly.included' | translate }}
                                           }
                                       }
                                   </div>
@@ -138,7 +139,8 @@ import {ControlExtraTemplateDirective} from '../../ui/form/control-extra-templat
     RangeComponent,
     NumberInputComponent,
     ParseMathDirective,
-    ControlExtraTemplateDirective
+    ControlExtraTemplateDirective,
+    TranslatePipe
   ],
   styles: [`
     :host {
@@ -237,17 +239,17 @@ export class JellyWidgetComponent {
 
   typeButtons: ButtonGroupItem[] = [
     {
-      label: 'powder',
+      label: 'jelly.type.powder',
       value: 'powder',
       style: 'secondary'
     },
     {
-      label: 'leaf',
+      label: 'jelly.type.leaf',
       value: 'leaf',
       style: 'secondary'
     },
     {
-      label: 'mass',
+      label: 'jelly.type.mass',
       value: 'mass',
       style: 'secondary'
     }

@@ -1,6 +1,7 @@
 import {Component, effect, forwardRef, Input, input, signal, ViewEncapsulation} from '@angular/core';
 import {ButtonComponent, ButtonSizes, ButtonStyle} from '../layout/button.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {TranslatePipe} from '@ngx-translate/core';
 
 export interface ButtonGroupItem {
   label: string
@@ -28,7 +29,7 @@ export interface ButtonGroupItem {
                          class="buttons-group__item"
                          [noRadius]="!first && !last"
                          [class.buttons-group__item--active]="activeIndex() == index">
-                  {{ item.label }}
+                  {{ item.label | translate }}
               </lg-button>
           }
       </div>
@@ -53,7 +54,8 @@ export interface ButtonGroupItem {
     `
   ],
   imports: [
-    ButtonComponent
+    ButtonComponent,
+    TranslatePipe
   ],
   encapsulation: ViewEncapsulation.None,
 

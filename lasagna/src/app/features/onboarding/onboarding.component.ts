@@ -29,7 +29,7 @@ interface OnboardingStep {
     @if (!allDone()) {
       <section class="onboarding">
         <lg-flex-column>
-          <lg-title [level]="4">Онбординг</lg-title>
+          <lg-title [level]="4">{{ 'onboarding.title' | translate }}</lg-title>
 
           <lg-flex-column [size]="'medium'">
             @for (step of steps(); track step.key) {
@@ -37,12 +37,12 @@ interface OnboardingStep {
                    [class.onboarding__step--done]="step.done"
                    [class.onboarding__step--disabled]="!step.done && !isCurrentStep(step)">
                 <div class="onboarding__step-content">
-                  <span class="onboarding__step-label">{{ step.label }}</span>
-                  <span class="onboarding__step-desc">{{ step.description }}</span>
+                  <span class="onboarding__step-label">{{ step.label | translate }}</span>
+                  <span class="onboarding__step-desc">{{ step.description | translate }}</span>
                 </div>
                 <lg-button [disabled]="!step.done && !isCurrentStep(step)" 
                           (onClick)="step.action()">
-                  {{ step.done ? 'Готово' : (isCurrentStep(step) ? 'Перейти' : 'Недоступно') }}
+                  {{ step.done ? ('onboarding.done' | translate) : (isCurrentStep(step) ? ('onboarding.go' | translate) : ('onboarding.unavailable' | translate)) }}
                 </lg-button>
               </div>
             }
@@ -68,6 +68,7 @@ interface OnboardingStep {
       background: var(--color-bg-secondary, #f9f9f9);
       border-radius: 0.5rem;
       padding: 1rem;
+      border: 1px solid var(--onboarding-border);
       transition: background 0.2s;
     }
 
@@ -106,22 +107,22 @@ export class OnboardingComponent {
   steps = computed<OnboardingStep[]>(() => [
     {
       key: 'settings',
-      label: 'Настройка языка и валюты',
-      description: 'Выберите язык интерфейса и валюту учёта',
+      label: 'onboarding.settings.label',
+      description: 'onboarding.settings.description',
       done: this._onboarding.isSettingsDone(),
       action: () => this.goToSettings()
     },
     {
       key: 'product',
-      label: 'Добавьте первый продукт',
-      description: 'Создайте хотя бы один продукт',
+      label: 'onboarding.product.label',
+      description: 'onboarding.product.description',
       done: this._onboarding.isProductDone(),
       action: () => this.goToAddProduct()
     },
     {
       key: 'recipe',
-      label: 'Добавьте первый рецепт',
-      description: 'Создайте хотя бы один рецепт',
+      label: 'onboarding.recipe.label',
+      description: 'onboarding.recipe.description',
       done: this._onboarding.isRecipeDone(),
       action: () => this.goToAddRecipe()
     }

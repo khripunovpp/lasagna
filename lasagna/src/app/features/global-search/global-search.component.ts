@@ -108,7 +108,7 @@ import {toObservable} from '@angular/core/rxjs-interop';
                     <ng-template [ngTemplateOutlet]="sectionTpl"
                                  [ngTemplateOutletContext]="{
                                       $implicit: item.result,
-                                      caption: 'Invoices',
+                                      caption: 'search.invoices.title' | translate,
                                       itemTpl: invoiceItemTpl
                                     }">
                     </ng-template>

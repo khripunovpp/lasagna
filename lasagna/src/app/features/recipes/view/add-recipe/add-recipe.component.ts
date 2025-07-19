@@ -43,7 +43,7 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
           <lg-container>
               <lg-flex-column size="medium">
                   @if (addedRecipeInformerUUID();as uuid) {
-                      <p>You just added new recipe. <a routerLink="/recipes/edit/{{ uuid }}">Want to have a look?</a>
+                      <p>{{ 'recipe.added-informer' | translate }} <a routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
                       </p>
                   }
                   @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {

@@ -11,6 +11,7 @@ import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-in
 import {FileInputComponent} from '../../../../../shared/view/ui/form/file-input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {debounceTime} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-invoices-settings',
@@ -19,7 +20,7 @@ import {debounceTime} from 'rxjs';
       <lg-flex-column [formGroup]="form">
           <lg-flex-column size="medium">
               <lg-title [level]="5">
-                  Logo
+                  {{ 'settings.invoices.logo' | translate }}
               </lg-title>
 
               @if (logoBase64()) {
@@ -30,13 +31,13 @@ import {debounceTime} from 'rxjs';
               }
 
               <lg-file-input [buttonStyle]="logoBase64() ? 'danger' : 'default'"
-                             [buttonText]="logoBase64() ? 'Replace with new one' : 'Upload logo'"
+                             [buttonText]="logoBase64() ? ('settings.invoices.replace-logo' | translate) : ('settings.invoices.upload-logo' | translate)"
                              formControlName="logo"></lg-file-input>
           </lg-flex-column>
 
           <lg-flex-column size="medium">
               <lg-title [level]="5">
-                  Prefix for invoices
+                  {{ 'settings.invoices.prefix' | translate }}
               </lg-title>
 
               <lg-input formControlName="prefix"></lg-input>
@@ -44,20 +45,20 @@ import {debounceTime} from 'rxjs';
 
           <lg-flex-column size="medium">
               <lg-title [level]="5">
-                  Precision
+                  {{ 'settings.invoices.precision' | translate }}
               </lg-title>
 
               <lg-flex-row>
                   <lg-flex-column size="small">
                       <lg-title [flat]="true" [level]="6">
-                          For rows
+                          {{ 'settings.invoices.precision-rows' | translate }}
                       </lg-title>
                       <lg-number-input formControlName="precisionRows"></lg-number-input>
                   </lg-flex-column>
 
                   <lg-flex-column size="small">
                       <lg-title [flat]="true" [level]="6">
-                          For totals
+                          {{ 'settings.invoices.precision-totals' | translate }}
                       </lg-title>
                       <lg-number-input formControlName="precisionTotals"></lg-number-input>
                   </lg-flex-column>
@@ -88,7 +89,8 @@ import {debounceTime} from 'rxjs';
     ReactiveFormsModule,
     FlexRowComponent,
     NumberInputComponent,
-    FileInputComponent
+    FileInputComponent,
+    TranslatePipe
   ]
 })
 export class InvoicesSettingsComponent

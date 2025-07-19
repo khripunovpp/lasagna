@@ -224,7 +224,7 @@ export class HeaderComponent {
         link: '/products',
       },
       {
-        label: 'Invoices',
+        label: _('invoices.menu-label'),
         link: '/invoices',
       },
     ]);

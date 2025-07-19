@@ -30,7 +30,7 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
                                         (change)="changeLang(lang.code)"
                                         [size]="'small'"
                                         [noMark]="true">
-                                  {{ lang.name }}
+                                  {{ lang.name | translate }}
                               </lg-radio>
                           </lg-flex-row>
                       }
@@ -74,9 +74,9 @@ export class LocalisationSettingsComponent {
 
   currency = model('EUR');
   langsMap: Record<string, string> = {
-    'en': 'English',
-    'pt': 'Português',
-    'ru': 'Русский',
+    'en': 'settings.language.english',
+    'pt': 'settings.language.portuguese',
+    'ru': 'settings.language.russian',
   };
   selectedLang: Signal<string>;
   selectedLangModel = model<boolean[]>([]);
@@ -84,7 +84,7 @@ export class LocalisationSettingsComponent {
     return this._settingsService.languages
       .map((lang: string) => ({
         code: lang,
-        name: this.langsMap[lang] || lang,
+        name: this.langsMap[lang] ? this.langsMap[lang] : lang,
       }));
   });
 

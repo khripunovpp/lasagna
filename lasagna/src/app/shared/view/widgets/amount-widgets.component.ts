@@ -1,5 +1,6 @@
 import {Component, output, signal} from '@angular/core';
 import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-amount-widgets',
@@ -9,7 +10,7 @@ import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
            class="amount-widgets">
           <div class="amount-widgets__buttons">
               <button (click)="onWidgetSelect('eggs')"
-                      class="amount-widgets__button">Eggs
+                      class="amount-widgets__button">{{ 'widgets.eggs.title' | translate }}
               </button>
           </div>
           @if (selectedWidget() === 'eggs') {
@@ -20,7 +21,8 @@ import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
       </div>
   `,
   imports: [
-    EggsWidgetComponent
+    EggsWidgetComponent,
+    TranslatePipe
   ],
   styles: [
     `

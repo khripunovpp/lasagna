@@ -6,6 +6,7 @@ import {FlexColumnComponent} from '../layout/flex-column.component';
 import {GroupingSortingContainerComponent} from './grouping-sorting.directive';
 import {ActivatedRoute, Router} from '@angular/router';
 import {injectQueryParams} from '../../../helpers/route.helpers';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-grouping-sorting',
@@ -14,17 +15,18 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
     FlexRowComponent,
     ButtonComponent,
     DropdownComponent,
-    FlexColumnComponent
+    FlexColumnComponent,
+    TranslatePipe
   ],
   template: `
     <lg-flex-row>
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>
-          {{ groupingToLabel[sorting().group] }}
+          {{ getGroupingLabel(sorting().group) }}
         </lg-button>
 
         <lg-flex-column [size]="'small'">
-          <span>Grouping</span>
+          <span>{{ 'grouping.title' | translate }}</span>
 
           <lg-button (click)="onSortChange({group: 'category'})"
                      [flat]="true"
@@ -80,11 +82,11 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
 
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>
-          {{ groupingDirectionToLabel[sorting().direction] }}
+          {{ getGroupingDirectionLabel(sorting().direction) }}
         </lg-button>
 
         <lg-flex-column [size]="'small'">
-          <span>Grouping direction</span>
+          <span>{{ 'grouping.direction.title' | translate }}</span>
 
           <lg-button (click)="onSortChange({direction: 'asc'})"
                      [flat]="true"
@@ -105,18 +107,20 @@ import {injectQueryParams} from '../../../helpers/route.helpers';
   `
 })
 export class GroupingSortingComponent {
-  constructor() {
+  constructor(
+    private translateService: TranslateService
+  ) {
   }
 
   readonly groupingToLabel:Record<string, string> = {
-    category: 'By category',
-    tag: 'By tag',
-    createdAt: 'By creation date',
-    alphabetical: 'By first letter'
+    category: 'grouping.by-category',
+    tag: 'grouping.by-tag',
+    createdAt: 'grouping.by-creation-date',
+    alphabetical: 'grouping.by-first-letter'
   };
   readonly groupingDirectionToLabel:Record<string, string> = {
-    asc: 'From A to Z (from old to new)',
-    desc: 'From Z to A (from new to old)'
+    asc: 'grouping.direction.asc',
+    desc: 'grouping.direction.desc'
   };
   router = inject(Router);
   aRouter = inject(ActivatedRoute);
@@ -180,5 +184,15 @@ export class GroupingSortingComponent {
       // update page
       window.location.reload();
     })
+  }
+
+  getGroupingLabel(group: string): string {
+    const key = this.groupingToLabel[group];
+    return key ? this.translateService.instant(key) : group;
+  }
+
+  getGroupingDirectionLabel(direction: string): string {
+    const key = this.groupingDirectionToLabel[direction];
+    return key ? this.translateService.instant(key) : direction;
   }
 }

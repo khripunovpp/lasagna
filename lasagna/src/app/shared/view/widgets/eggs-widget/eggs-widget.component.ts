@@ -4,6 +4,7 @@ import {InputComponent} from '../../ui/form/input.component';
 import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
 import {TitleComponent} from '../../ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-eggs-widget',
@@ -11,41 +12,41 @@ import {DecimalPipe} from '@angular/common';
   template: `
       <lg-flex-column [size]="'medium'">
           <lg-title>
-              Convert eggs to grams
+              {{ 'widgets.eggs.convert-title' | translate }}
           </lg-title>
 
           <lg-input [(ngModel)]="eggs"
                     (ngModelChange)="changed.emit(calculated())"
-                    [placeholder]="'How many eggs do you have?'"
+                    [placeholder]="'widgets.eggs.placeholder' | translate"
                     [theme]="'contrast'"></lg-input>
           <div class="eggs-widget__eggs">
               <div (click)="onChooseEggSize('small')"
                    [class.selected]="selected() === 'small'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
-                  Small
+                  {{ 'widgets.eggs.size.small' | translate }}
                   @if (selected() === 'small' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} grams
+                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
                   }
               </div>
               <div (click)="onChooseEggSize('medium')"
                    [class.selected]="selected() === 'medium'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
-                  Medium
+                  {{ 'widgets.eggs.size.medium' | translate }}
 
                   @if (selected() === 'medium' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} grams
+                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
                   }
               </div>
               <div (click)="onChooseEggSize('large')"
                    [class.selected]="selected() === 'large'"
                    class="eggs-widget__egg">
                   <img alt="Egg" src="img/egg.svg">
-                  Large
+                  {{ 'widgets.eggs.size.large' | translate }}
 
                   @if (selected() === 'large' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} grams
+                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
                   }
               </div>
           </div>
@@ -56,7 +57,8 @@ import {DecimalPipe} from '@angular/common';
     InputComponent,
     FlexColumnComponent,
     TitleComponent,
-    DecimalPipe
+    DecimalPipe,
+    TranslatePipe
   ],
   styles: [`
     :host {

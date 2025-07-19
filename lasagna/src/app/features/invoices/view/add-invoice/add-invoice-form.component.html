@@ -3,10 +3,10 @@
   @let invoice = invoiceBuilderService.invoice();
   @let canBeUpdated = invoice?.canBeUpdated;
   <lg-flex-column>
-    <lg-control label="Prvate name">
+    <lg-control [label]="'invoices.private-name' | translate">
       @if (canBeUpdated) {
         <lg-input #nameField
-                  [placeholder]="'Just free style optional name. It\'s visible only for you'"
+                  [placeholder]="'invoices.private-name-placeholder' | translate"
                   formControlName="name"></lg-input>
       } @else {
         <lg-readonly-control [placeholder]="''"
@@ -17,51 +17,51 @@
 
     <lg-flex-row [mobileMode]="true" [relaxed]="true">
       <lg-flex-row [left]="true" [mobileMode]="true" lgExpand>
-        <lg-control label="Prefix"
+        <lg-control [label]="'invoices.prefix' | translate"
                     lgWidth="25%">
           @if (canBeUpdated) {
             <lg-input formControlName="prefix"
-                      placeholder="Prefix, for unique identification"
+                      [placeholder]="'invoices.prefix-placeholder' | translate"
             ></lg-input>
           } @else {
             <lg-readonly-control [value]="form.value?.prefix"
-                                 placeholder="Prefix, for unique identification">
+                                 [placeholder]="'invoices.prefix-placeholder' | translate">
             </lg-readonly-control>
           }
         </lg-control>
 
-        <lg-control label="Invoice number" lgWidth="40%">
+        <lg-control [label]="'invoices.invoice-number' | translate" lgWidth="40%">
           @if (canBeUpdated) {
             <lg-input formControlName="invoice_number"
-                      placeholder="Invoice number, you can choose any format"
+                      [placeholder]="'invoices.invoice-number-placeholder' | translate"
                       [required]="true"></lg-input>
           } @else {
             <lg-readonly-control [value]="form.value?.invoice_number"
-                                 placeholder="Invoice number, you can choose any format">
+                                 [placeholder]="'invoices.invoice-number-placeholder' | translate">
             </lg-readonly-control>
           }
         </lg-control>
       </lg-flex-row>
 
       <lg-flex-row [mobileMode]="true" [right]="true" lgExpand>
-        <lg-control label="Date issued" lgExpand>
+        <lg-control [label]="'invoices.date-issued' | translate" lgExpand>
           @if (canBeUpdated) {
             <lg-date-picker formControlName="date_issued"
                             [required]="true"></lg-date-picker>
           } @else {
             <lg-readonly-control [value]="form.value?.date_issued | date: 'dd.MM.yyyy'"
-                                 placeholder="Date issued"
+                                 [placeholder]="'invoices.date-issued' | translate"
                                  lgExpand>
             </lg-readonly-control>
           }
         </lg-control>
 
-        <lg-control label="Due date" lgExpand>
+        <lg-control [label]="'invoices.due-date' | translate" lgExpand>
           @if (canBeUpdated) {
             <lg-date-picker formControlName="date_due"></lg-date-picker>
           } @else {
             <lg-readonly-control [value]="form.value?.date_due | date: 'dd.MM.yyyy'"
-                                 placeholder="Due date"
+                                 [placeholder]="'invoices.due-date' | translate"
                                  lgExpand>
             </lg-readonly-control>
           }
@@ -70,23 +70,23 @@
     </lg-flex-row>
 
     <lg-flex-row [mobileMode]="true" [relaxed]="true">
-      <lg-control label="Your company details" lgExpand>
+      <lg-control [label]="'invoices.company-details' | translate" lgExpand>
         <lg-credential-field (deleted)="onCredentialDeleted('system')"
                              (selected)="onCredentialSelected($event)"
                              [readonly]="!canBeUpdated"
                              [type]="CredentialsType.system"
                              formControlName="credential_from"
-                             placeholder="Company name, address, etc.">
+                             [placeholder]="'invoices.company-placeholder' | translate">
         </lg-credential-field>
       </lg-control>
 
-      <lg-control label="Your customer details" lgExpand>
+      <lg-control [label]="'invoices.customer-details' | translate" lgExpand>
         <lg-credential-field (deleted)="onCredentialDeleted('customer')"
                              (selected)="onCredentialSelected($event)"
                              [readonly]="!canBeUpdated"
                              [type]="CredentialsType.customer"
                              formControlName="credential_to"
-                             placeholder="Address, customer name, etc.">
+                             [placeholder]="'invoices.customer-placeholder' | translate">
         </lg-credential-field>
       </lg-control>
     </lg-flex-row>
@@ -99,12 +99,12 @@
                    [size]="'medium'"
                    [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px' : 0}"
                    lgExpand>
-        <div lgWidth="30%">Item</div>
-        <div lgWidth="20%">Amount</div>
-        <div lgWidth="12.5%">Price per unit</div>
-        <div lgWidth="12.5%">Price</div>
-        <div lgWidth="12.5%">Taxes and fees</div>
-        <div lgWidth="12.5%">Total</div>
+        <div lgWidth="30%">{{ 'invoices.item' | translate }}</div>
+        <div lgWidth="20%">{{ 'invoices.amount' | translate }}</div>
+        <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}</div>
+        <div lgWidth="12.5%">{{ 'invoices.price' | translate }}</div>
+        <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}</div>
+        <div lgWidth="12.5%">{{ 'invoices.total' | translate }}</div>
       </lg-flex-row>
 
 
@@ -120,7 +120,7 @@
                                           formControlName="activeTab">
                   <lg-multiselect [resource]="'recipes'"
                                   appendTo="body"
-                                  [placeholder]="'Find recipe'"
+                                  [placeholder]="'invoices.find-recipe' | translate"
                                   formControlName="recipe_id"
                                   (onSelected)="onRecipeSelected($event, i)"
                                   ngProjectAs="recipes"
@@ -130,13 +130,13 @@
                                   (onSelected)="onProductSelected($event, i)"
                                   appendTo="body"
                                   formControlName="product_id"
-                                  [placeholder]="'Find product'"
+                                  [placeholder]="'invoices.find-product' | translate"
                                   ngProjectAs="products"
                                   [autoLoad]="true">
                   </lg-multiselect>
                 </lg-invoice-item-selector>
               } @else {
-                <lg-readonly-control [placeholder]="'Unknown item'"
+                <lg-readonly-control [placeholder]="'invoices.unknown-item' | translate"
                                      [value]="item?.pinnedDto?.entity_name"
                                      lgWidth="40%">
                 </lg-readonly-control>
@@ -235,7 +235,7 @@
         <lg-button (click)="addGood()"
                    [size]="'small'"
                    [style]="'success'">
-          Add item
+          {{ 'invoices.add-item' | translate }}
           <mat-icon [inline]="true"
                     aria-hidden="false"
                     fontIcon="add"></mat-icon>
@@ -265,29 +265,29 @@
     <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-flex-row [mobileMode]="true" [relaxed]="true">
-      <lg-control label="Notes"
+      <lg-control [label]="'invoices.notes' | translate"
                   lgExpand>
         @if (canBeUpdated) {
           <lg-textarea [rows]="2"
                        formControlName="notes"
-                       placeholder="Notes for you or your customer"></lg-textarea>
+                       [placeholder]="'invoices.notes-placeholder' | translate"></lg-textarea>
         } @else {
           <lg-readonly-control formControlName="notes"
                                lgExpand
-                               placeholder="No notes"></lg-readonly-control>
+                               [placeholder]="'invoices.notes-placeholder' | translate"></lg-readonly-control>
         }
       </lg-control>
 
-      <lg-control label="Terms"
+      <lg-control [label]="'invoices.terms' | translate"
                   lgExpand>
         @if (canBeUpdated) {
           <lg-textarea [rows]="2"
                        formControlName="terms"
                        lgExpand
-                       placeholder="Terms and conditions"></lg-textarea>
+                       [placeholder]="'invoices.terms-placeholder' | translate"></lg-textarea>
         } @else {
           <lg-readonly-control formControlName="terms"
-                               placeholder="No terms"
+                               [placeholder]="'invoices.terms-placeholder' | translate"
                                lgExpand>
           </lg-readonly-control>
         }
@@ -296,28 +296,28 @@
 
     <lg-flex-column position="end" size="small">
       <lg-flex-row [relaxed]="true">
-        Subtotal
+        {{ 'invoices.subtotal' | translate }}
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.total | userCurrency: '1.2-4' }}
         </b>
       </lg-flex-row>
 
       <lg-flex-row [relaxed]="true">
-        Tax
+        {{ 'invoices.tax' | translate }}
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.taxTotal | userCurrency: '1.2-4' }}
         </b>
       </lg-flex-row>
 
       <lg-flex-row [relaxed]="true">
-        Fees
+        {{ 'invoices.fee' | translate }}
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.feesAmount | userCurrency: '1.2-4' }}
         </b>
       </lg-flex-row>
 
       <lg-flex-row [relaxed]="true">
-        <b class="text-right text-bold">Total</b>
+        <b class="text-right text-bold">{{ 'invoices.total' | translate }}</b>
         <b class="text-right text-bold" lgWidth="200px">
           {{ invoiceBuilderService.invoice()?.totalWithTaxAndFees | userCurrency: '1.2-4' }}
         </b>
