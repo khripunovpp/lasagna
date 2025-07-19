@@ -19,20 +19,24 @@
         </lg-flex-row>
       </ng-template>
 
-      <ng-template alias="invoice" [label]="'settings.invoice.title' | translate" lgTab>
+      <ng-template [label]="'settings.invoice.title' | translate" alias="invoice" lgTab>
         <lg-invoices-settings></lg-invoices-settings>
       </ng-template>
 
-      <ng-template alias="credentials" [label]="'settings.credentials.title' | translate" lgTab>
+      <ng-template [label]="'settings.credentials.title' | translate" alias="credentials" lgTab>
         <lg-credentials-settings></lg-credentials-settings>
       </ng-template>
 
-      <ng-template alias="taxes" [label]="'settings.taxes.title' | translate" lgTab>
+      <ng-template [label]="'settings.taxes.title' | translate" alias="taxes" lgTab>
         <lg-taxes-settings></lg-taxes-settings>
       </ng-template>
 
       <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
         <lg-backup-settings></lg-backup-settings>
+      </ng-template>
+
+      <ng-template alias="logs" label="{{ 'log-center.title'|translate }}" lgTab>
+        <lg-log-center-page></lg-log-center-page>
       </ng-template>
     </lg-tabs>
   </lg-container>

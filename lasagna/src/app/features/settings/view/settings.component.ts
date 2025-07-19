@@ -16,6 +16,7 @@ import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/in
 import {CredentialSettingsComponent} from './finance-settings/credentials/credential-settings.component';
 import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.component';
 import {OnboardingService} from '../../onboarding/onboarding.service';
+import {LogCenterPageComponent} from './log-center/log-center-page.component';
 
 @Component({
   selector: 'lg-settings',
@@ -37,7 +38,8 @@ import {OnboardingService} from '../../onboarding/onboarding.service';
     TabsComponent,
     InvoicesSettingsComponent,
     CredentialSettingsComponent,
-    TaxesSettingsComponent
+    TaxesSettingsComponent,
+    LogCenterPageComponent
   ]
 })
 export class SettingsComponent implements OnInit {

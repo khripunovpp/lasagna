@@ -5,6 +5,7 @@ import {GroupingTailDirective} from './grouping-tail.directive';
 import {NgTemplateOutlet} from '@angular/common';
 import {SelectableSectionComponent} from '../selectable-section.component';
 import {SelectionZoneService} from '../../../service/services';
+import {GroupingHeaderDirective} from './grouping-header.directive';
 
 @Component({
   selector: 'lg-grouping-tails',
@@ -14,21 +15,35 @@ import {SelectionZoneService} from '../../../service/services';
       @for (group of sortResult?.groups; track group?.field) {
         <section class="grouping-tails__section">
           <header class="grouping-tails__header">
-            <lg-title [level]="3">
-              {{ group?.field || 'Unknown' }}
-            </lg-title>
+            @if (groupingHeaderDirective) {
+              <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
+                            [ngTemplateOutletContext]="{ $implicit: group?.field }">
+              </ng-container>
+            } @else {
+              <lg-title [level]="3">
+                {{ group?.field || 'Unknown' }}
+              </lg-title>
+            }
           </header>
 
           <div class="grouping-tails__content">
             @for (tail of group?.items; track tail) {
               <div class="grouping-tails__item">
-                <lg-selectable-section [key]="tail.uuid">
+                @if (selectable) {
+                  <lg-selectable-section [key]="tail.uuid">
+                    <div class="grouping-tails__item-inner">
+                      <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
+                                    [ngTemplateOutletContext]="{ $implicit: tail }">
+                      </ng-container>
+                    </div>
+                  </lg-selectable-section>
+                } @else {
                   <div class="grouping-tails__item-inner">
                     <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
                                   [ngTemplateOutletContext]="{ $implicit: tail }">
                     </ng-container>
                   </div>
-                </lg-selectable-section>
+                }
               </div>
             }
           </div>
@@ -59,23 +74,20 @@ import {SelectionZoneService} from '../../../service/services';
 
     .grouping-tails__content {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 16px;
     }
 
     .grouping-tails__item {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      align-items: stretch;
+      width: 100%;
     }
 
     .grouping-tails__item-inner {
       display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px;
-      border-radius: 32px;
-      background-color: #fff;
+      align-items: stretch;
+      width: 100%;
     }
   `]
 })
@@ -86,6 +98,8 @@ export class GroupingTailsComponent {
   }
 
   @Input() sortResult!: SortResult<any> | undefined;
+  @Input() selectable: boolean = false;
 
   @ContentChild(GroupingTailDirective) groupingTailDirective!: GroupingTailDirective;
+  @ContentChild(GroupingHeaderDirective) groupingHeaderDirective!: GroupingHeaderDirective;
 }

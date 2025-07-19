@@ -27,6 +27,7 @@ import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/
 import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
 import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
 
 
@@ -80,9 +81,10 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
           <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
         </lg-flex-column>
 
-        <lg-grouping-tails [sortResult]="recipes()">
+        <lg-grouping-tails [sortResult]="recipes()" [selectable]="true">
           <ng-template lgGroupingTail let-recipe>
-            <lg-flex-column>
+            <lg-card>
+              <lg-flex-column>
               <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
               <lg-flex-row>
@@ -98,6 +100,7 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
                 </small>
               </lg-flex-row>
             </lg-flex-column>
+            </lg-card>
           </ng-template>
         </lg-grouping-tails>
       </lg-container>
@@ -128,7 +131,8 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
     GroupingTailsComponent,
     GroupingTailDirective,
     FlexColumnComponent,
-    ],
+    CardComponent,
+  ],
   styles: [
     `:host {
       display: block;

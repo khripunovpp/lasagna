@@ -98,7 +98,7 @@
 <!--                </lg-number-input>-->
 
                 <div>
-                  Price modifiers
+                  {{ 'recipe.calculation.price-modifiers.title' | translate }}
                 </div>
 
                 <lg-calculation-price-modifiers
@@ -158,7 +158,7 @@
             </span>
           }
           /
-          {{ result()?.calculation?.weightForUnit |  number: '1.0-2' }} gram
+          {{ result()?.calculation?.weightForUnit |  number: '1.0-2' }} {{ 'recipe.calculation.gram' | translate }}
         } @else {
           {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
         }
