@@ -6,6 +6,7 @@ import {ContainerComponent} from '../../../../../../shared/view/ui/layout/contai
 import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
 import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
 import {CardComponent} from '../../../../../../shared/view/ui/card/card.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-add-category-recipe',
@@ -16,13 +17,14 @@ import {CardComponent} from '../../../../../../shared/view/ui/card/card.componen
     FlexRowComponent,
     TitleComponent,
     AddCategoryRecipeFormComponent,
-    CardComponent
+    CardComponent,
+    TranslatePipe
   ],
   template: `
       <lg-fade-in>
           <lg-container>
               <lg-flex-row [center]="true">
-                  <lg-title>{{ uuid() ? 'Edit' : 'Add' }} recipe category</lg-title>
+                  <lg-title>{{ uuid() ? ('categories.edit-recipe' | translate) : ('categories.add-recipe' | translate) }}</lg-title>
               </lg-flex-row>
 
               <lg-card>

@@ -10,6 +10,7 @@ import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.componen
 import {NotificationsService} from '../../../../../../shared/service/services';
 import {CategoryRecipesRepository} from '../../../../../../shared/service/repositories';
 import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-category-recipe-list',
@@ -19,14 +20,14 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
           <lg-container>
               <lg-flex-row [center]="true">
                   <lg-title>
-                      Recipes' categories
+                      {{ 'categories.recipes.title' | translate }}
                   </lg-title>
 
                   <lg-button [flat]="true"
                              [link]="'/settings/categories/recipes/add'"
                              [size]="'small'"
                              [style]="'primary'">
-                      Add
+                      {{ 'add-label' | translate }}
                   </lg-button>
               </lg-flex-row>
 
@@ -41,7 +42,7 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
                                          [size]="'small'"
                                          [link]="'/settings/categories/recipes/edit/' + category.uuid"
                                          [flat]="true">
-                                  Edit
+                                  {{ 'edit-label' | translate }}
                               </lg-button>
                               <lg-button [style]="'danger'"
                                          [size]="'tiny'"
@@ -65,7 +66,8 @@ import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
     TitleComponent,
     CardListComponent,
     CardListItemDirective,
-    FadeInComponent
+    FadeInComponent,
+    TranslatePipe
   ],
   styles: [
     `:host {
@@ -91,7 +93,7 @@ export class CategoryRecipeListComponent
     if (!category.uuid) return Promise.resolve();
     return this.categoryRepository.deleteCategory(category.uuid).then(() => {
       this.loadCategory();
-      this._notificationsService.success('Category deleted');
+      this._notificationsService.success('categories.deleted');
     });
   }
 
