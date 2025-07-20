@@ -9,31 +9,28 @@ import { NotificationsService } from '../../../../shared/service/services/notifi
 import { AuthService } from '../../../../shared/service/services/auth.service';
 import { TimeAgoPipe } from '../../../../shared/view/pipes/time-ago.pipe';
 import { AsyncPipe } from '@angular/common';
-import { LoginComponent } from './login.component';
 
 @Component({
   selector: 'lg-sync-settings',
   standalone: true,
   template: `
     <lg-flex-column>
-      @if (!authService.isAuthenticated()) {
-        <lg-login></lg-login>
-      } @else {
+      @if (authService.isAuthenticated()) {
         <lg-card>
           <lg-flex-column [size]="'small'">
             <h3>{{ 'sync.title' | translate }}</h3>
             <p>{{ 'sync.description' | translate }}</p>
-            
+
             <lg-flex-row [center]="true" [mobileMode]="true">
-              <lg-button 
-                (click)="onSync()" 
+              <lg-button
+                (click)="onSync()"
                 [style]="'success'"
                 [disabled]="syncService.isSyncing()">
                 {{ 'sync.sync-btn' | translate }}
               </lg-button>
             </lg-flex-row>
 
-            @if (syncService.lastSyncTime$ | async; as lastSync) {
+            @if (syncService.lastSyncTime(); as lastSync) {
               <div class="text-center">
                 {{ 'sync.last-sync' | translate }} {{ lastSync | timeAgo }}
               </div>
@@ -42,11 +39,11 @@ import { LoginComponent } from './login.component';
         </lg-card>
       }
 
-      @if (syncService.syncStatus$ | async; as status) {
+      @if (syncService.syncStatus(); as status) {
         <lg-card>
           <lg-flex-column [size]="'small'">
             <h4>{{ 'sync.status.title' | translate }}</h4>
-            
+
             <div class="sync-status-grid">
               <div class="sync-status-item">
                 <h5>{{ 'sync.status.products' | translate }}</h5>
@@ -89,8 +86,8 @@ import { LoginComponent } from './login.component';
       </lg-card>
     </lg-flex-column>
   `,
-  styles: [`
-    .sync-status-grid {
+  styles: [
+    `.sync-status-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
@@ -122,8 +119,7 @@ import { LoginComponent } from './login.component';
     ButtonComponent,
     TranslatePipe,
     TimeAgoPipe,
-    AsyncPipe,
-    LoginComponent
+    AsyncPipe
   ]
 })
 export class SyncSettingsComponent implements OnInit {
@@ -131,17 +127,12 @@ export class SyncSettingsComponent implements OnInit {
   notificationsService = inject(NotificationsService);
   authService = inject(AuthService);
 
-  ngOnInit() {
-    // Обновляем статус синхронизации при загрузке компонента
-    this.syncService.refreshSyncStatus();
-  }
+  ngOnInit() {}
 
   async onSync() {
     const loader = this.notificationsService.loading('Syncing data...');
-    
     try {
       const result = await this.syncService.syncData();
-      
       this.notificationsService.success('Sync completed successfully');
     } catch (error) {
       this.notificationsService.error(`Sync failed: ${(error as Error).message}`);
@@ -149,4 +140,4 @@ export class SyncSettingsComponent implements OnInit {
       loader.close();
     }
   }
-} 
+}

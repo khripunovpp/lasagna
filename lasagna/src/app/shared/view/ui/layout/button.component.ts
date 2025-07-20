@@ -42,6 +42,7 @@ export type ButtonSizes =
       <button (click)="onClickHandler($event)"
               [class.active]="active()"
               [class.flat]="flat()"
+              [attr.type]="type()"
               [class.disabled]="disabled()"
               [class.icon]="icon()"
               [class.no-bottom-radius]="noBottomRadius()"
@@ -290,6 +291,7 @@ export class ButtonComponent {
   onClick = output<any>();
   style = input<ButtonStyle>('default');
   size = input<ButtonSizes>('default');
+  type = input<string>('button');
   icon = input<boolean>(false);
   flat = input<boolean>(false);
   link = input<string>('');

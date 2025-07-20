@@ -9,9 +9,7 @@ export default {
       path: '/sync/data',
       handler: 'sync.syncData',
       config: {
-        auth: {
-          scope: ['authenticated']
-        }
+        auth: {strategies: ['users-permissions']}
       }
     },
     {
@@ -19,9 +17,7 @@ export default {
       path: '/sync/status/:userId',
       handler: 'sync.getSyncStatus',
       config: {
-        auth: {
-          scope: ['authenticated']
-        }
+        auth: {strategies: ['users-permissions']}
       }
     },
     {
@@ -29,9 +25,7 @@ export default {
       path: '/sync/dirty/:userId',
       handler: 'sync.getDirtyData',
       config: {
-        auth: {
-          scope: ['authenticated']
-        }
+        auth: {strategies: ['users-permissions']}
       }
     }
   ]

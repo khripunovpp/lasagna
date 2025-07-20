@@ -1,4 +1,8 @@
 export default [
+  {
+    name: 'global::log-sync',
+    config: {},
+  },
   'strapi::logger',
   'strapi::errors',
   'strapi::security',

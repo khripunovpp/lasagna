@@ -7,21 +7,28 @@ export default {
     try {
       // Проверяем авторизацию пользователя
       if (!ctx.state.user) {
+        console.log('[syncData] No user in ctx.state');
         return ctx.unauthorized('Authentication required');
       }
 
       const { data } = ctx.request.body;
       const userId = ctx.state.user.id;
       
+      console.log('[syncData] userId:', userId);
+      console.log('[syncData] incoming data:', JSON.stringify(data, null, 2));
+      
       if (!data) {
+        console.log('[syncData] No data in request body');
         return ctx.badRequest('Data is required');
       }
 
       const syncService = strapi.service('api::sync.sync');
       const result = await syncService.syncData(data, userId);
       
+      console.log('[syncData] result:', JSON.stringify(result, null, 2));
       return ctx.send(result);
     } catch (error) {
+      console.error('[syncData] Error:', error);
       return ctx.badRequest('Sync failed', { error: error.message });
     }
   },

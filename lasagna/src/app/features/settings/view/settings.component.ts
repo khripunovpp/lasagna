@@ -18,6 +18,9 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
 import {SyncSettingsComponent} from './sync/sync-settings.component';
+import {AccountSettingsComponent} from './account/account-settings.component';
+import {AuthService} from '../../../shared/service/services/auth.service';
+import {AsyncPipe, JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'lg-settings',
@@ -41,11 +44,15 @@ import {SyncSettingsComponent} from './sync/sync-settings.component';
     CredentialSettingsComponent,
     TaxesSettingsComponent,
     LogCenterPageComponent,
-    SyncSettingsComponent
+    SyncSettingsComponent,
+    AccountSettingsComponent,
+    AsyncPipe,
+    JsonPipe
   ]
 })
 export class SettingsComponent implements OnInit {
   private _onboardingService = inject(OnboardingService);
+  authService = inject(AuthService);
 
   constructor(
     public settingsService: SettingsService,

@@ -1,10 +1,10 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, inject, signal } from '@angular/core';
 import { DexieIndexDbService } from '../db/dexie-index-db.service';
 import { Stores } from '../db/const/stores';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { LoggerService } from '../../../features/logger/logger.service';
 import { AuthService } from './auth.service';
+import { RestService } from '../../../features/api/rest.service';
+import { HttpHeaders } from '@angular/common/http';
 
 export interface SyncStatus {
   products: {
@@ -44,7 +44,7 @@ export interface SyncResult {
   providedIn: 'root'
 })
 export class SyncService {
-  private _http = inject(HttpClient);
+  private _restService = inject(RestService);
   private _indexedDB = inject(DexieIndexDbService);
   private _logger = inject(LoggerService);
   private _authService = inject(AuthService);
@@ -54,9 +54,9 @@ export class SyncService {
     label: 'SyncService'
   });
 
-  private _syncStatus$ = new BehaviorSubject<SyncStatus | null>(null);
-  private _isSyncing$ = new BehaviorSubject<boolean>(false);
-  private _lastSyncTime$ = new BehaviorSubject<number | null>(null);
+  syncStatus = signal<SyncStatus | null>(null);
+  isSyncing = signal<boolean>(false);
+  lastSyncTime = signal<number | null>(null);
 
   // API endpoints
   private readonly API_BASE = 'http://localhost:1337/api';
@@ -64,86 +64,45 @@ export class SyncService {
   private readonly STATUS_ENDPOINT = `${this.API_BASE}/sync/status`;
   private readonly DIRTY_ENDPOINT = `${this.API_BASE}/sync/dirty`;
 
-  // Observables
-  syncStatus$ = this._syncStatus$.asObservable();
-  isSyncing$ = this._isSyncing$.asObservable();
-  lastSyncTime$ = this._lastSyncTime$.asObservable();
-
   constructor() {
     this.loadLastSyncTime();
-    // Обновляем статус синхронизации при инициализации
     this.updateLocalSyncStatus();
   }
 
-  /**
-   * Синхронизирует данные с сервером
-   */
   async syncData(userId?: string): Promise<SyncResult> {
-    this._isSyncing$.next(true);
-    
-    // Используем переданный userId или получаем из AuthService
+    this.isSyncing.set(true);
     const currentUserId = userId || this._authService.getUserId();
-    if (!currentUserId) {
-      throw new Error('User ID is required for sync');
-    }
-
+    if (!currentUserId) throw new Error('User ID is required for sync');
     this.logger.log('Starting sync for user:', currentUserId);
-
     try {
-      // Проверяем авторизацию
-      if (!this._authService.isAuthenticated()) {
-        throw new Error('Authentication required for sync');
-      }
-
-      // Получаем данные для синхронизации
+      if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync');
       const syncData = await this.prepareSyncData();
-      
-      // Получаем заголовки авторизации
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
-      
-      // Отправляем на сервер
-      const result = await this._http.post<SyncResult>(this.SYNC_ENDPOINT, {
-        data: syncData
-      }, { headers }).toPromise();
-
+      const result = await this._restService.post<SyncResult>(this.SYNC_ENDPOINT, { data: syncData }, headers);
       if (result) {
         this.logger.log('Sync completed successfully:', result);
         this.updateLastSyncTime();
         await this.updateLocalSyncStatus();
         return result;
       }
-
       throw new Error('No response from server');
     } catch (error) {
       this.logger.error('Sync failed:', error);
       throw error;
     } finally {
-      this._isSyncing$.next(false);
+      this.isSyncing.set(false);
     }
   }
 
-  /**
-   * Получает статус синхронизации с сервера
-   */
   async getSyncStatus(userId?: string): Promise<SyncStatus> {
     try {
-      // Используем переданный userId или получаем из AuthService
       const currentUserId = userId || this._authService.getUserId();
-      if (!currentUserId) {
-        throw new Error('User ID is required for sync status');
-      }
-
-      // Проверяем авторизацию
-      if (!this._authService.isAuthenticated()) {
-        throw new Error('Authentication required for sync status');
-      }
-
-      // Получаем заголовки авторизации
+      if (!currentUserId) throw new Error('User ID is required for sync status');
+      if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync status');
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
-      
-      const status = await this._http.get<SyncStatus>(`${this.STATUS_ENDPOINT}/${currentUserId}`, { headers }).toPromise();
+      const status = await this._restService.get<SyncStatus>(`${this.STATUS_ENDPOINT}/${currentUserId}`, undefined, headers);
       if (status) {
-        this._syncStatus$.next(status);
+        this.syncStatus.set(status);
         return status;
       }
       throw new Error('No status response from server');
@@ -153,26 +112,13 @@ export class SyncService {
     }
   }
 
-  /**
-   * Получает "грязные" данные с сервера для синхронизации
-   */
   async getDirtyData(userId?: string): Promise<any> {
     try {
-      // Используем переданный userId или получаем из AuthService
       const currentUserId = userId || this._authService.getUserId();
-      if (!currentUserId) {
-        throw new Error('User ID is required for dirty data');
-      }
-
-      // Проверяем авторизацию
-      if (!this._authService.isAuthenticated()) {
-        throw new Error('Authentication required for dirty data');
-      }
-
-      // Получаем заголовки авторизации
+      if (!currentUserId) throw new Error('User ID is required for dirty data');
+      if (!this._authService.isAuthenticated()) throw new Error('Authentication required for dirty data');
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
-      
-      const dirtyData = await this._http.get(`${this.DIRTY_ENDPOINT}/${currentUserId}`, { headers }).toPromise();
+      const dirtyData = await this._restService.get(`${this.DIRTY_ENDPOINT}/${currentUserId}`, undefined, headers);
       return dirtyData;
     } catch (error) {
       this.logger.error('Failed to get dirty data:', error);
@@ -180,35 +126,23 @@ export class SyncService {
     }
   }
 
-  /**
-   * Подготавливает данные для синхронизации
-   */
   private async prepareSyncData(): Promise<any> {
     const [products, categories, recipes] = await Promise.all([
       this._indexedDB.getAll(Stores.PRODUCTS),
       this._indexedDB.getAll(Stores.PRODUCTS_CATEGORIES),
       this._indexedDB.getAll(Stores.RECIPES)
     ]);
-
-    // Фильтруем только "грязные" данные
     const dirtyProducts = products.filter((p: any) => p.dirtyToSync);
     const dirtyCategories = categories.filter((c: any) => c.dirtyToSync);
     const dirtyRecipes = recipes.filter((r: any) => r.dirtyToSync);
-
-    // Извлекаем ингредиенты из рецептов
     const allIngredients: any[] = [];
     dirtyRecipes.forEach((recipe: any) => {
       if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
         recipe.ingredients.forEach((ingredient: any) => {
-          allIngredients.push({
-            ...ingredient,
-            recipe_id: recipe.uuid // Связываем с рецептом
-          });
+          allIngredients.push({ ...ingredient, recipe_id: recipe.uuid });
         });
       }
     });
-
-    // Преобразуем данные в формат Strapi
     const transformedProducts = dirtyProducts.map((product: any) => ({
       name: product.name,
       price: product.price,
@@ -222,7 +156,6 @@ export class SyncService {
       dirtyToSync: product.dirtyToSync,
       category_id: product.category_id
     }));
-
     const transformedCategories = dirtyCategories.map((category: any) => ({
       name: category.name,
       color: category.color,
@@ -232,7 +165,6 @@ export class SyncService {
       syncedAt: category.syncedAt,
       dirtyToSync: category.dirtyToSync
     }));
-
     const transformedRecipes = dirtyRecipes.map((recipe: any) => ({
       name: recipe.name,
       description: recipe.description,
@@ -248,7 +180,6 @@ export class SyncService {
       dirtyToSync: recipe.dirtyToSync,
       category_id: recipe.category_id
     }));
-
     const transformedIngredients = allIngredients.map((ingredient: any) => ({
       name: ingredient.name,
       amount: ingredient.amount,
@@ -260,14 +191,12 @@ export class SyncService {
       product_id: ingredient.product_id?.uuid || ingredient.product_id,
       recipe_id: ingredient.recipe_id?.uuid || ingredient.recipe_id
     }));
-
     this.logger.log('Prepared sync data:', {
       products: transformedProducts.length,
       categories: transformedCategories.length,
       recipes: transformedRecipes.length,
       ingredients: transformedIngredients.length
     });
-
     return {
       products: transformedProducts,
       categories: transformedCategories,
@@ -276,9 +205,6 @@ export class SyncService {
     };
   }
 
-    /**
-   * Обновляет локальный статус синхронизации
-   */
   private async updateLocalSyncStatus(): Promise<void> {
     try {
       const [products, categories, recipes] = await Promise.all([
@@ -286,70 +212,57 @@ export class SyncService {
         this._indexedDB.getAll(Stores.PRODUCTS_CATEGORIES),
         this._indexedDB.getAll(Stores.RECIPES)
       ]);
-
-      // Извлекаем ингредиенты из рецептов
       const allIngredients: any[] = [];
       recipes.forEach((recipe: any) => {
         if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
           allIngredients.push(...recipe.ingredients);
         }
       });
-
       const status: SyncStatus = {
         products: {
           total: products.length,
           synced: products.filter((p: any) => !p.dirtyToSync).length,
           dirty: products.filter((p: any) => p.dirtyToSync).length,
-          lastSync: this._lastSyncTime$.value
+          lastSync: this.lastSyncTime()
         },
         categories: {
           total: categories.length,
           synced: categories.filter((c: any) => !c.dirtyToSync).length,
           dirty: categories.filter((c: any) => c.dirtyToSync).length,
-          lastSync: this._lastSyncTime$.value
+          lastSync: this.lastSyncTime()
         },
         recipes: {
           total: recipes.length,
           synced: recipes.filter((r: any) => !r.dirtyToSync).length,
           dirty: recipes.filter((r: any) => r.dirtyToSync).length,
-          lastSync: this._lastSyncTime$.value
+          lastSync: this.lastSyncTime()
         },
         ingredients: {
           total: allIngredients.length,
           synced: allIngredients.filter((i: any) => !i.dirtyToSync).length,
           dirty: allIngredients.filter((i: any) => i.dirtyToSync).length,
-          lastSync: this._lastSyncTime$.value
+          lastSync: this.lastSyncTime()
         }
       };
-
-      this._syncStatus$.next(status);
+      this.syncStatus.set(status);
     } catch (error) {
       this.logger.error('Failed to update local sync status:', error);
     }
   }
 
-  /**
-   * Загружает время последней синхронизации
-   */
   private loadLastSyncTime(): void {
     const lastSync = localStorage.getItem('last_sync_time');
     if (lastSync) {
-      this._lastSyncTime$.next(parseInt(lastSync));
+      this.lastSyncTime.set(parseInt(lastSync));
     }
   }
 
-  /**
-   * Обновляет время последней синхронизации
-   */
   private updateLastSyncTime(): void {
     const now = Date.now();
     localStorage.setItem('last_sync_time', now.toString());
-    this._lastSyncTime$.next(now);
+    this.lastSyncTime.set(now);
   }
 
-  /**
-   * Помечает данные как "грязные" для синхронизации
-   */
   async markAsDirty(store: Stores, uuid: string): Promise<void> {
     try {
       const item = await this._indexedDB.getOne(store, uuid);
@@ -363,9 +276,6 @@ export class SyncService {
     }
   }
 
-  /**
-   * Помечает данные как синхронизированные
-   */
   async markAsSynced(store: Stores, uuid: string): Promise<void> {
     try {
       const item = await this._indexedDB.getOne(store, uuid);
@@ -380,30 +290,18 @@ export class SyncService {
     }
   }
 
-  /**
-   * Получает текущий статус синхронизации
-   */
   getCurrentStatus(): SyncStatus | null {
-    return this._syncStatus$.value;
+    return this.syncStatus();
   }
 
-  /**
-   * Проверяет, идет ли синхронизация
-   */
-  isSyncing(): boolean {
-    return this._isSyncing$.value;
+  isSyncingNow(): boolean {
+    return this.isSyncing();
   }
 
-  /**
-   * Получает время последней синхронизации
-   */
   getLastSyncTime(): number | null {
-    return this._lastSyncTime$.value;
+    return this.lastSyncTime();
   }
 
-  /**
-   * Обновляет статус синхронизации
-   */
   async refreshSyncStatus(): Promise<void> {
     await this.updateLocalSyncStatus();
   }

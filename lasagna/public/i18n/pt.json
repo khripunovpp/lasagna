@@ -389,5 +389,16 @@
   "sync.login.login-btn": "Entrar",
   "sync.login.logging-in": "Entrando...",
   "sync.login.authenticated": "Você está autenticado!",
-  "sync.login.logout-btn": "Sair"
+  "sync.login.logout-btn": "Sair",
+  "account.title": "Conta",
+  "account.username": "Nome de usuário",
+  "account.email": "Email",
+  "account.password": "Senha",
+  "account.login": "Entrar",
+  "account.logout": "Sair",
+  "account.register": "Registrar",
+  "account.to-register": "Não tem conta? Registre-se",
+  "account.to-login": "Já tem conta? Entrar",
+  "account.logging-in": "Entrando...",
+  "account.registering": "Registrando..."
 }

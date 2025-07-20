@@ -389,5 +389,16 @@
     "demo.switch-off": "Click here to exit demo mode",
     "recipe.calculation.price-modifiers.title": "Price modifiers",
     "recipe.calculation.recalculate-for": "Recalculate for",
-    "recipe.calculation.gram": "gram"
+    "recipe.calculation.gram": "gram",
+    "account.title": "Account",
+    "account.username": "Username",
+    "account.email": "Email",
+    "account.password": "Password",
+    "account.login": "Login",
+    "account.logout": "Logout",
+    "account.register": "Register",
+    "account.to-register": "No account? Register",
+    "account.to-login": "Already have an account? Login",
+    "account.logging-in": "Logging in...",
+    "account.registering": "Registering..."
 }

@@ -389,5 +389,16 @@
     "docs.invoices": "Счета",
     "docs.settings": "Настройки",
     "docs.recipes": "Рецепты",
-    "docs.storage": "Хранилище"
+    "docs.storage": "Хранилище",
+  "account.title": "Аккаунт",
+  "account.username": "Имя пользователя",
+  "account.email": "Email",
+  "account.password": "Пароль",
+  "account.login": "Войти",
+  "account.logout": "Выйти",
+  "account.register": "Зарегистрироваться",
+  "account.to-register": "Нет аккаунта? Зарегистрируйтесь",
+  "account.to-login": "Уже есть аккаунт? Войти",
+  "account.logging-in": "Вход...",
+  "account.registering": "Регистрация..."
 }
