@@ -14,6 +14,7 @@ import {ButtonComponent} from '../ui/layout/button.component';
 import {FontTesterComponent} from '../ui/font-tester.component';
 import {OnboardingComponent} from '../../../features/onboarding/onboarding.component';
 import {OnboardingService} from '../../../features/onboarding/onboarding.service';
+import {WidthDirective} from '../directives/width.directive';
 
 
 @Component({
@@ -32,7 +33,8 @@ import {OnboardingService} from '../../../features/onboarding/onboarding.service
     TranslatePipe,
     AsyncPipe,
     ButtonComponent,
-    OnboardingComponent
+    OnboardingComponent,
+    WidthDirective
   ]
 })
 export class ApplicationComponent {

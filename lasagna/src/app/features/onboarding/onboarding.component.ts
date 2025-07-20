@@ -31,16 +31,20 @@ interface OnboardingStep {
         <lg-flex-column>
           <lg-title [level]="4">{{ 'onboarding.title' | translate }}</lg-title>
 
+          <p class="no-margin">
+            Hello! Welcome to Lasagna! To get better know the app, please complete the following steps.
+          </p>
+
           <lg-flex-column [size]="'medium'">
             @for (step of steps(); track step.key) {
-              <div class="onboarding__step" 
+              <div class="onboarding__step"
                    [class.onboarding__step--done]="step.done"
                    [class.onboarding__step--disabled]="!step.done && !isCurrentStep(step)">
                 <div class="onboarding__step-content">
                   <span class="onboarding__step-label">{{ step.label | translate }}</span>
                   <span class="onboarding__step-desc">{{ step.description | translate }}</span>
                 </div>
-                <lg-button [disabled]="!step.done && !isCurrentStep(step)" 
+                <lg-button [disabled]="!step.done && !isCurrentStep(step)"
                           (onClick)="step.action()">
                   {{ step.done ? ('onboarding.done' | translate) : (isCurrentStep(step) ? ('onboarding.go' | translate) : ('onboarding.unavailable' | translate)) }}
                 </lg-button>

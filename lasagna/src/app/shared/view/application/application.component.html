@@ -2,32 +2,27 @@
   <lg-container>
     <lg-title>{{ 'main.title' | translate }}</lg-title>
 
-    <lg-flex-row [mobileMode]="true" [top]="true">
-      <lg-card>
-        @if (recipes|async) {
-          <lg-last-edited-recipes></lg-last-edited-recipes>
-        } @else {
-          <lg-button link="/recipes/add">
-            {{ 'main.recipes.button' | translate }}
-          </lg-button>
-        }
-      </lg-card>
-
-      <lg-card>
-        @if (products|async) {
-          <lg-last-edited-products></lg-last-edited-products>
-        } @else {
-          <lg-button link="/products/add" [style]="'success'">
-            {{ 'main.products.button' | translate }}
-          </lg-button>
-        }
-      </lg-card>
-    </lg-flex-row>
-
     @if (!isOnboardingComplete()) {
       <lg-card>
         <lg-onboarding></lg-onboarding>
       </lg-card>
     }
+
+    <lg-flex-row [mobileMode]="true"
+                 [top]="true"
+                 [wrap]="true"
+                 cols="2">
+      @if (recipes|async) {
+        <lg-card>
+          <lg-last-edited-recipes></lg-last-edited-recipes>
+        </lg-card>
+      }
+
+      @if (products|async) {
+        <lg-card>
+          <lg-last-edited-products></lg-last-edited-products>
+        </lg-card>
+      }
+    </lg-flex-row>
   </lg-container>
 </lg-fade-in>

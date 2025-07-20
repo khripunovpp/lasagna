@@ -16,15 +16,13 @@ import {provideServiceWorker} from '@angular/service-worker';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import 'hammerjs';
-import {DocsService} from './shared/service/services';
 import * as Sentry from '@sentry/angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CategoryProductsRepository, CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
+import {CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
 import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
-import {UserService} from './features/settings/service/services/user.service';
 import {SETTINGS} from './features/settings/service/providers/settings.token';
 import {CATEGORIZED_RECIPES_LIST} from './shared/service/tokens/categorized-recipes-list.token';
 import {from, map, shareReplay, switchMap} from 'rxjs';
@@ -38,16 +36,13 @@ import {
   TagsRecipeSortStrategy
 } from './shared/service/groupings/recipes.grouping';
 import {injectQueryParams} from './shared/helpers';
-import {logoBase64} from './shared/view/const/logoBase64';
-import {generateRandomInvoicePrefix} from './shared/helpers/pdf-generators/prefix-generator';
 import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {SettingsService} from './features/settings/service/services/settings.service';
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
-import {DemoService} from './shared/service/services/demo.service';
-import {DexieIndexDbService} from './shared/service/db/dexie-index-db.service';
+import {appInitializer} from './app.initializer';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -64,47 +59,11 @@ export const appConfig: ApplicationConfig = {
     provideHotToastConfig(),
     provideHttpClient(),
     provideAnimationsAsync(),
-
-    provideAppInitializer(() => {
-      const categoryRepository = inject(CategoryProductsRepository);
-      const recipeCategoryRepository = inject(CategoryRecipesRepository);
-      const docsService = inject(DocsService);
-      const settingsService = inject(SettingsService);
-      const userService = inject(UserService);
-      const demoService = inject(DemoService);
-      const indexDbService = inject(DexieIndexDbService);
-
-      if (userService.isUserFirstTime) {
-        userService.setUserFirstTime(false);
-      }
-
-      const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
-      if (isDemoFromQueryParams) {
-        demoService.switchOnDemoMode();
-      }
-
-      return Promise.all([
-        categoryRepository.preloadCategories(),
-        recipeCategoryRepository.preloadCategories(),
-        docsService.init().finally(() => indexDbService.initIndexes()),
-        settingsService.loadSettings().then((settings) => {
-          settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
-          if (localStorage.getItem('logoBase64') === null) {
-            localStorage.setItem('logoBase64', logoBase64);
-          }
-
-          if (!settingsService.getInvoicePrefix()) {
-            settingsService.setInvoicePrefix(generateRandomInvoicePrefix());
-          }
-
-        }),
-      ])
-    }),
+    provideAppInitializer(appInitializer),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),
-
     provideHotToastConfig({
       autoClose: true,
       position: 'bottom-right',
@@ -112,7 +71,6 @@ export const appConfig: ApplicationConfig = {
     }),
 
     importProvidersFrom(HammerModule),
-
     {
       provide: ErrorHandler,
       useFactory: () => {
