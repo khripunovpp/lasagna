@@ -1,0 +1,1 @@
+import{ia as i}from"./chunk-7OEWD2OI.js";import{ob as t}from"./chunk-7BND6AGV.js";var n=class r{transform(e){return i(e)}static \u0275fac=function(o){return new(o||r)};static \u0275pipe=t({name:"currencySymbol",type:r,pure:!0})};export{n as a};

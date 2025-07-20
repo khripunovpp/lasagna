@@ -1,0 +1,1 @@
+import{p as t}from"./chunk-JNPSWS74.js";import{ca as e}from"./chunk-7BND6AGV.js";var o=new e("RouterManager"),c={provide:o,useFactory:a=>({navigateWithReset:function(n){this.navigate(n),this.replace(n)},replace:function(n){window.history.replaceState({},"",a.createUrlTree(n).toString())},navigate:function(n){a.navigate(n)}}),deps:[t]};export{o as a,c as b};
