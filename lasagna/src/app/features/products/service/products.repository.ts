@@ -43,9 +43,8 @@ export class ProductsRepository
 
   async loadAll() {
     const products = await this.getAll();
-    const instances = products.map(product => Product.fromRaw(product));
-    this._stream$.next(instances);
-    return instances;
+    this._stream$.next(products);
+    return products;
   }
 
   async getOne(
@@ -77,7 +76,9 @@ export class ProductsRepository
   }
 
   getAll() {
-    return this._indexDbService.getAll<ProductDTO>(Stores.PRODUCTS);
+    return this._indexDbService.getAll<ProductDTO>(Stores.PRODUCTS).then(products => {
+      return products.map(product => Product.fromRaw(product));
+    });
   }
 
   async addOne(
@@ -97,6 +98,14 @@ export class ProductsRepository
     }
 
     return uuid;
+  }
+
+  async addMany(
+    products: Product[],
+    autoUUID: boolean = true
+  ) {
+    debugger
+    return this._indexDbService.balkAdd(Stores.PRODUCTS, products.map(product => product.toDTO()),autoUUID);
   }
 
   async replaceOne(

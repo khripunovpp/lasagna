@@ -24,7 +24,8 @@ export class Product extends BaseModel {
     }
   ) {
     super();
-    this.update(props);
+    this.update(props, true);
+    this.dirtyToSync = props.dirtyToSync ?? false;
   }
 
   name: string = '';
@@ -120,6 +121,7 @@ export class Product extends BaseModel {
 
   override update(
     dto: any,
+    doNotMarkDirty: boolean = false,
   ) {
     this.name = dto.name || this.name;
     this.amount = dto.amount ? Number(dto.amount) : this.amount;
@@ -133,7 +135,7 @@ export class Product extends BaseModel {
     this.updatedAt = dto?.updatedAt || Date.now();
     this.syncedAt = dto?.syncedAt ? Number(dto.syncedAt) : this.syncedAt;
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
-    super.update(dto);
+    super.update(dto, doNotMarkDirty);
     return this as Product;
   }
 

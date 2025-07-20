@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
@@ -10,14 +10,12 @@ import {Recipe} from './models/Recipe';
 import {RecipeDTO} from './Recipe.scheme';
 import {Tag} from '../../settings/service/models/Tag';
 import {ProductsRepository} from '../../products/service/products.repository';
-import {response} from 'express';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesRepository {
-  private _onboardingService = inject(OnboardingService);
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
@@ -28,6 +26,7 @@ export class RecipesRepository {
   ) {
   }
 
+  private _onboardingService = inject(OnboardingService);
   private _stream$ = new Subject<Recipe[]>();
 
   get recipes$() {
@@ -60,6 +59,10 @@ export class RecipesRepository {
     }
 
     return uuid;
+  }
+
+  addMany(recipes: Recipe[]) {
+    return this._indexDbService.balkAdd(Stores.RECIPES, recipes.map(recipe => recipe.toDTO()))
   }
 
   loadRecipes() {

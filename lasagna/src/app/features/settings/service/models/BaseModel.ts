@@ -21,7 +21,9 @@ export abstract class BaseModel
   }
 
   markAsNeedSync() {
+    debugger
     this.dirtyToSync = true;
+    console.log('Marking as dirty to sync', this.uuid);
   }
 
   needSync() {
@@ -38,7 +40,9 @@ export abstract class BaseModel
 
   update(
     dto: any,
+    doNotMarkDirty: boolean = false,
   ) {
+    if (doNotMarkDirty) return;
     this.markAsNeedSync();
   }
 
