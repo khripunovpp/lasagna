@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "products",
+  "collectionName": "recipes",
   "info": {
-    "singularName": "product",
-    "pluralName": "products",
-    "displayName": "Product",
-    "description": "Products for recipe calculations"
+    "singularName": "recipe",
+    "pluralName": "recipes",
+    "displayName": "Recipe",
+    "description": "Recipes for cooking"
   },
   "options": {
     "draftAndPublish": false
@@ -15,18 +15,10 @@
       "type": "string",
       "required": true
     },
-    "price": {
-      "type": "decimal",
-      "required": true
+    "description": {
+      "type": "text"
     },
-    "amount": {
-      "type": "decimal",
-      "required": true
-    },
-    "source": {
-      "type": "string"
-    },
-    "unit": {
+    "outcome_unit": {
       "type": "enumeration",
       "enum": [
         "gram",
@@ -35,8 +27,21 @@
       ],
       "required": true
     },
+    "outcome_amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "taxTemplateName": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "json"
+    },
     "color": {
       "type": "string"
+    },
+    "priceModifiers": {
+      "type": "json"
     },
     "uuid": {
       "type": "string",
@@ -62,4 +67,4 @@
       "target": "plugin::users-permissions.user"
     }
   }
-}
+} 

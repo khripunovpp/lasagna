@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "products",
+  "collectionName": "ingredients",
   "info": {
-    "singularName": "product",
-    "pluralName": "products",
-    "displayName": "Product",
-    "description": "Products for recipe calculations"
+    "singularName": "ingredient",
+    "pluralName": "ingredients",
+    "displayName": "Ingredient",
+    "description": "Recipe ingredients"
   },
   "options": {
     "draftAndPublish": false
@@ -15,16 +15,9 @@
       "type": "string",
       "required": true
     },
-    "price": {
-      "type": "decimal",
-      "required": true
-    },
     "amount": {
       "type": "decimal",
       "required": true
-    },
-    "source": {
-      "type": "string"
     },
     "unit": {
       "type": "enumeration",
@@ -34,9 +27,6 @@
         "piece"
       ],
       "required": true
-    },
-    "color": {
-      "type": "string"
     },
     "uuid": {
       "type": "string",
@@ -53,13 +43,11 @@
       "type": "boolean",
       "default": false
     },
-    "category_id": {
+    "product_id": {
       "type": "string"
     },
-    "user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user"
+    "recipe_id": {
+      "type": "string"
     }
   }
-}
+} 

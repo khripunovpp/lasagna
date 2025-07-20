@@ -13,4 +13,5 @@ export * from './select-resources.service';
 export * from './selection-zone.service';
 export * from './transfer-data.service';
 export * from './using-history.service';
+export * from './sync.service';
 

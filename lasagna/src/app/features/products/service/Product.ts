@@ -82,20 +82,22 @@ export class Product extends BaseModel {
   static fromCloud(dto: any) {
     const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
     const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
-    debugger
+    const syncedAt = dto?.syncedAt ? new Date(dto?.syncedAt) : undefined;
 
     return new Product({
-      name: dto?.Name || '',
-      amount: Number(dto?.Amount) || 0,
-      price: Number(dto?.Price) || 0,
+      name: dto?.name || '',
+      amount: Number(dto?.amount) || 0,
+      price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
       source: dto?.source || '',
-      category_id: dto?.category || '',
-      uuid: dto?.clientId,
-      cloud_uuid: dto?.documentId,
+      category_id: dto?.category_id || '',
+      uuid: dto?.uuid,
+      cloud_uuid: dto?.cloud_uuid,
       createdAt: createdAt?.getTime(),
       updatedAt: updatedAt?.getTime(),
+      syncedAt: syncedAt?.getTime(),
       color: dto?.color,
+      dirtyToSync: dto?.dirtyToSync ?? false,
     });
   }
 
@@ -155,13 +157,17 @@ export class Product extends BaseModel {
 
   override toCloudDTO(): any {
     return {
-      Name: this.name,
-      Amount: this.amount,
-      Price: this.price,
-      clientId: this.uuid,
-      category: this.category_id?.toUUID(),
+      name: this.name,
+      price: this.price,
+      amount: this.amount,
       source: this.source,
       unit: this.unit,
+      color: this.color || estimateColor(this.name),
+      uuid: this.uuid,
+      cloud_uuid: this.cloud_uuid,
+      syncedAt: this.syncedAt,
+      dirtyToSync: this.dirtyToSync,
+      category_id: this.category_id?.toUUID(),
     };
   }
 }
