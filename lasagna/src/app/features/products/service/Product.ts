@@ -3,8 +3,9 @@ import {ProductDTO} from './Product.scheme';
 import {Unit} from '../../../shared/service/types/Unit.types';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {estimateColor, isColorString} from '../../../shared/helpers/color.helper';
+import {BaseModel} from "../../settings/service/models/BaseModel";
 
-export class Product {
+export class Product extends BaseModel {
   constructor(
     props: {
       name: string
@@ -14,11 +15,15 @@ export class Product {
       source?: string | undefined
       category_id?: string
       uuid?: string | undefined
+      cloud_uuid?: string | undefined
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
+      syncedAt?: number | string | undefined
       color?: string | undefined
+      dirtyToSync?: boolean | undefined
     }
   ) {
+    super();
     this.update(props);
   }
 
@@ -28,9 +33,6 @@ export class Product {
   unit: Unit = 'gram';
   category_id?: CategoryProduct;
   source?: string;
-  uuid?: string | undefined;
-  createdAt?: number | undefined;
-  updatedAt?: number | undefined;
   color?: string | undefined;
 
   get ownColor() {
@@ -68,8 +70,31 @@ export class Product {
       source: dto?.source || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
+      cloud_uuid: dto?.cloud_uuid,
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
+      syncedAt: dto?.syncedAt,
+      color: dto?.color,
+      dirtyToSync: dto?.dirtyToSync ?? false,
+    });
+  }
+
+  static fromCloud(dto: any) {
+    const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
+    const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
+    debugger
+
+    return new Product({
+      name: dto?.Name || '',
+      amount: Number(dto?.Amount) || 0,
+      price: Number(dto?.Price) || 0,
+      unit: dto?.unit || 'gram',
+      source: dto?.source || '',
+      category_id: dto?.category || '',
+      uuid: dto?.clientId,
+      cloud_uuid: dto?.documentId,
+      createdAt: createdAt?.getTime(),
+      updatedAt: updatedAt?.getTime(),
       color: dto?.color,
     });
   }
@@ -83,13 +108,15 @@ export class Product {
       source: undefined,
       category_id: '',
       uuid: undefined,
+      cloud_uuid: undefined,
       createdAt: undefined,
       updatedAt: undefined,
+      syncedAt: undefined,
       color: undefined,
     });
   }
 
-  update(
+  override update(
     dto: any,
   ) {
     this.name = dto.name || this.name;
@@ -99,13 +126,16 @@ export class Product {
     this.source = dto.source || this.source;
     this.category_id = CategoryProduct.fromRaw(dto.category_id || '');
     this.uuid = dto.uuid || this.uuid;
+    this.cloud_uuid = dto.cloud_uuid || this.cloud_uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
+    this.syncedAt = dto?.syncedAt ? Number(dto.syncedAt) : this.syncedAt;
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
+    super.update(dto);
     return this as Product;
   }
 
-  toDTO(): ProductDTO {
+  override toDTO(): ProductDTO {
     return {
       name: this.name,
       amount: this.amount,
@@ -114,9 +144,24 @@ export class Product {
       source: this.source ?? '',
       category_id: this.category_id?.toUUID(),
       uuid: this.uuid,
+      cloud_uuid: this.cloud_uuid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      syncedAt: this.syncedAt,
       color: this.color || estimateColor(this.name),
+      dirtyToSync: this.dirtyToSync,
+    };
+  }
+
+  override toCloudDTO(): any {
+    return {
+      Name: this.name,
+      Amount: this.amount,
+      Price: this.price,
+      clientId: this.uuid,
+      category: this.category_id?.toUUID(),
+      source: this.source,
+      unit: this.unit,
     };
   }
 }

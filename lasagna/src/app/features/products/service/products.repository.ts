@@ -1,26 +1,36 @@
-import {Injectable, inject} from '@angular/core';
-import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
-import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
-import {Stores} from '../../../shared/service/db/const/stores';
-import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
-import {Subject} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {RepositoryAbstract} from '../../settings/service/repositories/repository.abstract';
+import {RepositoryInterface} from '../../settings/service/repositories/repository.inerface';
 import {Product} from './Product';
-import {ProductDTO} from './Product.scheme';
-import { OnboardingService } from '../../onboarding/onboarding.service';
+import {CategoryProductsRepository} from "../../settings/service/repositories/category-products.repository";
+
+import {DraftFormsService, UsingHistoryService} from "../../../shared/service/services";
+import {OnboardingService} from '../../onboarding/onboarding.service';
+import {Subject} from 'rxjs';
+import {Stores} from "../../../shared/service/db/const/stores";
+import {ProductDTO} from "./Product.scheme";
+import {DexieIndexDbService} from "../../../shared/service/db/dexie-index-db.service";
+import {ProductsApiService} from "../../api/products-api.service";
+import {CloudSyncService} from "../../api/cloud-sync.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsRepository {
-  private _onboardingService = inject(OnboardingService);
+export class ProductsRepository
+  extends RepositoryAbstract
+  implements RepositoryInterface<Product> {
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
+    private _productsApiService: ProductsApiService,
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
+    private _cloudSyncService: CloudSyncService,
   ) {
+    super(_indexDbService, _cloudSyncService);
   }
 
+  private _onboardingService = inject(OnboardingService);
   private _stream$ = new Subject<Product[]>();
 
   get products$() {
@@ -31,36 +41,11 @@ export class ProductsRepository {
     return this._indexDbService.getLength(Stores.PRODUCTS);
   }
 
-  loadAll() {
-    return this._indexDbService.getAll(Stores.PRODUCTS).then(products => {
-      this._stream$.next(products.map(product => Product.fromRaw(product)));
-      return products;
-    });
-  }
-
-  async addOne(
-    product: Product,
-  ) {
-    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, product.toDTO());
-
-    if (product.category_id) this._saveCategory(product.category_id.toString());
-    if (product.source) this._saveSource(product.source);
-    this._saveProductToHistory(uuid);
-
-    // Онбординг: если это первый продукт, отмечаем шаг завершённым
-    if (!this._onboardingService.isProductDone()) {
-      this._onboardingService.markProductDone();
-    }
-
-    return uuid;
-  }
-
-  async updateOne(
-    uuid: string,
-    product: Product
-  ) {
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
-    this._saveProductToHistory(uuid);
+  async loadAll() {
+    const products = await this.getAll();
+    const instances = products.map(product => Product.fromRaw(product));
+    this._stream$.next(instances);
+    return instances;
   }
 
   async getOne(
@@ -91,47 +76,90 @@ export class ProductsRepository {
     });
   }
 
+  getAll() {
+    return this._indexDbService.getAll<ProductDTO>(Stores.PRODUCTS);
+  }
+
+  async addOne(
+    product: Product,
+  ) {
+    const dto = product.toDTO();
+    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, dto);
+    await this.safetyPutToCloud(Stores.PRODUCTS, product.update({uuid}));
+
+    if (product.category_id) this._saveCategory(product.category_id.toString());
+    if (product.source) this._saveSource(product.source);
+    this._saveProductToHistory(uuid);
+
+    // Онбординг: если это первый продукт, отмечаем шаг завершённым
+    if (!this._onboardingService.isProductDone()) {
+      this._onboardingService.markProductDone();
+    }
+
+    return uuid;
+  }
+
+  async replaceOne(
+    uuid: string,
+    product: Product
+  ) {
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
+    await this.safetyPutToCloud(Stores.PRODUCTS, product);
+    this._saveProductToHistory(uuid);
+  }
+
+  async editOne(
+    uuid: string,
+    product: Product
+  ) {
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
+    this._saveProductToHistory(uuid);
+  }
+
+  async deleteOne(uuid: string) {
+    await this._cloudSyncService.deleteData(Stores.PRODUCTS, uuid)
+    return this._indexDbService.remove(Stores.PRODUCTS, uuid);
+  }
+
+  deleteMany(uuids: string[]) {
+    return this._indexDbService.removeMany(Stores.PRODUCTS, uuids);
+  }
+
   getProducts() {
     return this._indexDbService.getAll(Stores.PRODUCTS) as Promise<Product[]>;
   }
 
-  getLastProducts() {
+  async getLastProducts() {
     const {top} = this._usingHistoryService.read('products');
     const keys = Object.keys(top);
     if (keys.length === 0) {
       return Promise.resolve([]);
     }
 
-    return this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, keys).then(recipes => {
-      return recipes.toSorted((a, b) => {
-        if (!a.uuid || !b.uuid) {
-          return 0;
-        }
-        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
-      }).map(product => ({
-        product: Product.fromRaw(product),
-        updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,
-        count: product.uuid ? top[product.uuid].count : 0,
-      }))
-    })
+    const recipes = await this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, keys);
+    return recipes.toSorted((a, b) => {
+      if (!a.uuid || !b.uuid) {
+        return 0;
+      }
+      return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+    }).map(product => ({
+      product: Product.fromRaw(product),
+      updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,
+      count: product.uuid ? top[product.uuid].count : 0,
+    }));
   }
 
-  deleteProduct(uuid: string) {
-    return this._indexDbService.remove(Stores.PRODUCTS, uuid);
-  }
-
-  getTopCategories() {
+  async getTopCategories() {
     const {top} = this._usingHistoryService.read('products_categories');
     const keys = Object.keys(top);
 
-    return this._categoryRepository.getMany(keys).then(categories => {
-      return categories.toSorted((a, b) => {
-        if (!a.uuid || !b.uuid) {
-          return 0;
-        }
-        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
-      });
-    })
+    const categories = await this._categoryRepository.getMany(keys);
+    return categories.toSorted((a, b) => {
+      if (!a.uuid || !b.uuid) {
+        return 0;
+      }
+      return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+    });
   }
 
   async getTopSources() {
@@ -170,13 +198,12 @@ export class ProductsRepository {
   }
 
   removeDraftProduct(key: string) {
-    this._draftFormsService.removeDraftForm('draft_products', key);
+    return this._draftFormsService.removeDraftForm('draft_products', key);
   }
 
   removeDraftMany(uuids: string[]) {
     return this._draftFormsService.removeDraftForm('draft_products', uuids);
   }
-
 
   private _saveCategory(uuid: string) {
     this._usingHistoryService.count('products_categories', uuid);

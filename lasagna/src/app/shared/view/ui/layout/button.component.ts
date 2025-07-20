@@ -259,7 +259,7 @@ export type ButtonSizes =
           padding: 2px;
 
           .mat-icon {
-            font-size: 10px;
+            font-size: 16px;
             width: 16px;
             height: 16px;
           }

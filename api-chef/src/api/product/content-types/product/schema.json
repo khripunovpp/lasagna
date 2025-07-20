@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "Price": {
+      "type": "decimal",
+      "required": true
+    },
+    "Amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "clientId": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "category": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "gram",
+        "piece"
+      ],
+      "required": true
+    }
+  }
+}
