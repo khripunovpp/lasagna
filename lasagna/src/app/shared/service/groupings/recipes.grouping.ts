@@ -1,9 +1,16 @@
 import {SortStrategy} from '../types/sorting.types';
 import {RecipeDTO} from '../../../features/recipes/service/Recipe.scheme';
 import {BaseGrouping} from './base-grouping';
+import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
 
 export class CategoryRecipeSortStrategy
   extends BaseGrouping<RecipeDTO> {
+  constructor(
+    public categoryRecipesRepository: CategoryRecipesRepository,
+  ) {
+    super();
+  }
+
   override groupBy(item: RecipeDTO): string {
     return item.category_id || '';
   }
@@ -27,6 +34,11 @@ export class CategoryRecipeSortStrategy
     } else {
       return b.localeCompare(a);
     }
+  }
+
+  override async fieldTransform(field: string) {
+    const category = await this.categoryRecipesRepository.getOne(field);
+    return category?.name || field;
   }
 }
 

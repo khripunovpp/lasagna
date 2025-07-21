@@ -29,4 +29,8 @@ export class BaseGrouping<T = any>
   groupBy(item: T): string | string[] {
     return JSON.stringify(item);
   }
+
+  fieldTransform?(field: string): string | Promise<string> {
+    return field;
+  }
 }

@@ -43,6 +43,7 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {appInitializer} from './app.initializer';
+import {SortStrategy} from './shared/service/types/sorting.types';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -149,23 +150,23 @@ export const appConfig: ApplicationConfig = {
           switchMap(() => recipesRepository.recipes$),
           map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
         );
-        const groupingMap: Record<string, any> = {
-          'createdAt': RecipeCreatedAtMonthSortStrategy,
-          'category': CategoryRecipeSortStrategy,
-          'alphabetical': RecipeAlphabeticalSortStrategy,
-          'tag': TagsRecipeSortStrategy,
+        const groupingMap: Record<string, () => any> = {
+          'createdAt': () => new RecipeCreatedAtMonthSortStrategy(),
+          'category': () => new CategoryRecipeSortStrategy(categoryRepository),
+          'alphabetical': () => new RecipeAlphabeticalSortStrategy(),
+          'tag': () => new TagsRecipeSortStrategy(),
         }
 
         return recipes.pipe(
-          // map((recipes: RecipeDTO[]) => recipes.toSorted((a: RecipeDTO, b: RecipeDTO) => a.name.localeCompare(b.name))),
-          map((recipes: RecipeDTO[]) => {
+          switchMap((recipes: RecipeDTO[]) => {
             const grouping = groupingParam();
-            const strategy = new (groupingMap[grouping as string] ?? CategoryRecipeSortStrategy)();
+            const strategy: SortStrategy<any> = groupingMap[grouping as string]?.() ?? groupingMap['category']();
+
             return groupSortService.groupItems<RecipeDTO>(
               recipes,
               strategy,
               (sortDirection() as any) ?? 'asc',
-              (sortField() as any) ?? 'name'
+              (sortField() as any) ?? 'name',
             );
           }),
           shareReplay(1),
