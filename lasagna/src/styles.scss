@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import "@ng-select/ng-select/themes/default.theme.css";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./theme-vars";
 
 :root {
   --text-font: 'Rubik', "Helvetica Neue", system-ui, Arial, sans-serif;
@@ -97,6 +98,7 @@
   --tabs-label-active-text: #fff;
   --tabs-body-bg: #fff;
 }
+
 
 /* fallback */
 @font-face {

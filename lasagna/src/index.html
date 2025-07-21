@@ -148,6 +148,111 @@
         rel="apple-touch-startup-image">
 </head>
 <body>
+<script>
+  (function () {
+    // Список тем
+    const themes = [
+      "lasa-giallo", "lasa-arancio", "lasa-rosso",
+      "bianco-minimal", "neve-soft", "sabbia-crema", "perla-grigio", "latte", "cenere", "minimal-gold",
+      "miele-mint", "fragola-cream", "pistacchio", "lavanda", "pesca", "zucchero", "menta-lime", "caramello", "mirtillo", "limone-dolce",
+      "notte-nera", "blu-profondo", "verde-bosco", "grigio-carbon", "moka", "nero-oro", "acciaio",
+      "neon-pink", "cyber-green", "retro-wave",
+      "soft-ivory",
+      "calm-gray",
+      "olive-tones",
+      "warm-stone",
+      "sage-mint",
+      "linen-sand",
+      "mist-blue",
+      "dusty-lavender",
+      "cappuccino",
+      "stone-black",
+      "forest-muted",
+      "pearl-white",
+      "urban-night",
+      "taupe-neutral",
+      "soft-charcoal",
+      "sandstone-ocean",
+      "desert-rose",
+      "clay-terracotta",
+      "stone-aqua",
+      "moss-beige",
+      "cocoa-cream",
+      "sunset-lavender",
+      "nordic-fjord",
+      "forest-fog",
+      "harbor-gray",
+      "linen-olive",
+      "amber-pearl",
+      "pine-smoke",
+      "silver-coffee",
+      "lavender-steel",
+      "charcoal-rose",
+      "marine-sand",
+      "graphite-ice",
+      "wine-taupe",
+      "soft-denim",
+      "plum-ash",
+      "sand-mist",
+      "dune-olive",
+      "slate-fog",
+      "oyster-peach",
+      "arctic-dawn",
+      "copper-mist",
+      "stone-lake",
+      "meadow-sky",
+      "clay-ivory"
+    ];
+
+    const STORAGE_KEY = "selectedThemeIndex";
+
+    // Создаём кнопку
+    const btn = document.createElement("button");
+    Object.assign(btn.style, {
+      position: "fixed",
+      top: "10px",
+      right: "10px",
+      zIndex: "9999",
+      padding: "8px 12px",
+      background: "rgba(0,0,0,0.7)",
+      color: "#fff",
+      border: "none",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontSize: "14px",
+      fontFamily: "sans-serif"
+    });
+    document.body.appendChild(btn);
+
+    function updateButtonLabel(idx) {
+      const name = themes[idx];
+      btn.textContent = `🎨 ${idx + 1}/${themes.length} ${name}`;
+    }
+
+    // Установка темы по индексу
+    function setThemeByIndex(idx) {
+      if (idx < 0 || idx >= themes.length) idx = 0;
+      const themeName = themes[idx];
+      document.documentElement.setAttribute("data-theme", themeName);
+      localStorage.setItem(STORAGE_KEY, idx); // сохраняем именно индекс
+      updateButtonLabel(idx);
+      return idx;
+    }
+
+    // Загружаем индекс темы из localStorage
+    let currentIdx = parseInt(localStorage.getItem(STORAGE_KEY), 10);
+    if (isNaN(currentIdx) || currentIdx < 0 || currentIdx >= themes.length) {
+      currentIdx = 0;
+    }
+    currentIdx = setThemeByIndex(currentIdx);
+
+    // Переключатель
+    btn.addEventListener("click", () => {
+      currentIdx = (currentIdx + 1) % themes.length;
+      currentIdx = setThemeByIndex(currentIdx);
+    });
+  })();
+</script>
 <app-root></app-root>
 <noscript>Please enable JavaScript to continue using this application.</noscript>
 <script src="pwa-update-compoent.js"></script>
