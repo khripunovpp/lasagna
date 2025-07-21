@@ -23,91 +23,105 @@ import {ExpandDirective} from '../../../../../shared/view/directives/expand.dire
 import {CredentialsRepository} from '../../../service/repositories/credentials.repository';
 import {Credential} from '../../../service/models/Credential';
 import {CredentialsType} from '../../../service/types/credentials.types';
+import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-create-credential',
   standalone: true,
   template: `
-      <lg-flex-column>
-          <ng-container [formGroup]="form">
-              <ng-container formArrayName="rows">
-                  @for (row of credentials();track (row.name + row.uuid);let i = $index, odd = $odd,last=$last) {
-                      @let tacControl = form.controls.rows.controls[i];
-                      <section class="credentials" [formGroupName]="i">
-                          <div class="credentials__row"
-                               [class.credentials__row--odd]="odd">
-                              <lg-flex-column size="small">
-                                  <lg-input formControlName="privateName"
-                                            [placeholder]="'Private Name'"></lg-input>
+    <lg-flex-column>
+      <ng-container [formGroup]="form">
+        <ng-container formArrayName="rows">
+          @for (row of credentials(); track (row.name + row.uuid); let i = $index, odd = $odd, last = $last) {
+            @let tacControl = form.controls.rows.controls[i];
+            <section class="credentials" [formGroupName]="i">
+              <div class="credentials__row"
+                   [class.credentials__row--odd]="odd">
+                <lg-flex-column size="small">
+                  <lg-control [label]="'Private Name'">
+                    <lg-input placeholder=""
+                              formControlName="privateName"></lg-input>
+                  </lg-control>
 
-                                  <lg-flex-row [top]="true" [fit]="true">
+                  <lg-flex-row [top]="true" [fit]="true">
+                    <lg-flex-column size="small">
+                      <lg-control [label]="'Tax ID'">
+                        <lg-input formControlName="taxId"
+                                  placeholder=""></lg-input>
+                      </lg-control>
 
-                                      <lg-flex-column size="small">
-                                          <lg-input formControlName="taxId"
-                                                    [placeholder]="'Tax ID'"></lg-input>
+                      <lg-control [label]="'Name'">
+                        <lg-input formControlName="name"
+                                  placeholder=""></lg-input>
+                      </lg-control>
+                    </lg-flex-column>
 
-                                          <lg-input formControlName="name"
-                                                    [placeholder]="'Name'"></lg-input>
+                    <lg-flex-column size="small">
+                      <lg-control [label]="'Country'">
+                        <lg-input formControlName="country"
+                                  placeholder=""></lg-input>
+                      </lg-control>
 
-                                      </lg-flex-column>
+                      <lg-control [label]="'Address'">
+                        <lg-input formControlName="address"
+                                  placeholder=""></lg-input>
+                      </lg-control>
+                    </lg-flex-column>
 
-                                      <lg-flex-column size="small">
-                                          <lg-input formControlName="country"
-                                                    [placeholder]="'Country'"></lg-input>
+                    <lg-flex-column size="small">
+                      <lg-control [label]="'Phone'">
+                        <lg-input formControlName="phone"
+                                  placeholder=""></lg-input>
+                      </lg-control>
 
-                                          <lg-input formControlName="address"
-                                                    [placeholder]="'Address'"></lg-input>
-                                      </lg-flex-column>
+                      <lg-control [label]="'Email'">
+                        <lg-input formControlName="email"
+                                  placeholder=""></lg-input>
+                      </lg-control>
+                    </lg-flex-column>
 
-                                      <lg-flex-column size="small">
-                                          <lg-input formControlName="phone"
-                                                    [placeholder]="'Phone'"></lg-input>
+                    <lg-button [style]="'danger'"
+                               lgShrink
+                               [size]="'tiny'"
+                               [icon]="true"
+                               (click)="deleteRow(i)">
+                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                fontIcon="close"></mat-icon>
+                    </lg-button>
+                  </lg-flex-row>
+                </lg-flex-column>
+              </div>
+            </section>
 
-                                          <lg-input formControlName="email"
-                                                    [placeholder]="'Email'"></lg-input>
-                                      </lg-flex-column>
+            @if (!last) {
+              <hr color="#fafafa" lgExpand size="2"/>
+            }
+          }
+        </ng-container>
+      </ng-container>
 
-                                      <lg-button [style]="'danger'"
-                                                 lgShrink
-                                                 [size]="'tiny'"
-                                                 [icon]="true"
-                                                 (click)="deleteRow(i)">
-                                          <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                                    fontIcon="close"></mat-icon>
-                                      </lg-button>
-                                  </lg-flex-row>
-                              </lg-flex-column>
-                          </div>
-                      </section>
+      <lg-flex-row>
+        <lg-button (click)="save()"
+                   [disabled]="!form.dirty"
+                   [style]="'success'"
+                   lgSelfCenter
+                   lgShrink>
+          @if (form.dirty) {
+            Save changes
+          } @else {
+            No changes
+          }
+        </lg-button>
 
-                      @if (!last) {
-                          <hr color="#fafafa" lgExpand size="2"/>
-                      }
-                  }
-              </ng-container>
-          </ng-container>
-
-          <lg-flex-row>
-              <lg-button (click)="save()"
-                         [disabled]="!form.dirty"
-                         [style]="'success'"
-                         lgSelfCenter
-                         lgShrink>
-                  @if (form.dirty) {
-                      Save changes
-                  } @else {
-                      No changes
-                  }
-              </lg-button>
-
-              <lg-button (click)="addRow()"
-                         [style]="'warning'"
-                         lgSelfCenter
-                         lgShrink>
-                  Add row
-              </lg-button>
-          </lg-flex-row>
-      </lg-flex-column>
+        <lg-button (click)="addRow()"
+                   [style]="'warning'"
+                   lgSelfCenter
+                   lgShrink>
+          Add row
+        </lg-button>
+      </lg-flex-row>
+    </lg-flex-column>
   `,
   styles: [``],
   imports: [
@@ -128,7 +142,9 @@ import {CredentialsType} from '../../../service/types/credentials.types';
     MatIcon,
     SelfCenterDirective,
     ShrinkDirective,
-    ExpandDirective
+    ExpandDirective,
+    ControlComponent,
+    TranslatePipe
   ]
 })
 export class CreateCredentialComponent {

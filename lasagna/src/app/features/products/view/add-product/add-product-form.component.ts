@@ -42,6 +42,7 @@ import {smaller} from 'mathjs';
 
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
+import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 
 
 
@@ -70,7 +71,8 @@ import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/con
     CurrencySymbolPipe,
     InputComponent,
     ControlExtraTemplateDirective,
-    ],
+    ControlComponent,
+  ],
   styles: [
     `
       lg-eggs-widget {

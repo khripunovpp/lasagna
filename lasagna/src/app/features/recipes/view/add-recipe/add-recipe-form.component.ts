@@ -34,6 +34,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
 import {TagsControlComponent} from '../../../../shared/view/ui/form/tags-control.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {ControlComponent} from "../../../../shared/view/ui/form/control-item/control.component";
 
 
 @Component({
@@ -60,7 +61,8 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
     CardComponent,
     ControlExtraTemplateDirective,
     TagsControlComponent,
-    FlexRowComponent
+    FlexRowComponent,
+    ControlComponent
   ],
   providers: [
     {

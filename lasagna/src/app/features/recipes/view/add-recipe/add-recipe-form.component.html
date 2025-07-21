@@ -2,32 +2,41 @@
   <lg-flex-column>
     <lg-card>
       <lg-flex-column [position]="'start'">
-        <lg-autocomplete #nameField
-                         [key]="'name'" [placeholder]="'recipe.form.name.placeholder'|translate"
-                         [resource]="'recipes-names'"
-                         appendTo="body"
-                         formControlName="name"
-                         lgExpand></lg-autocomplete>
+        <lg-control [label]="'recipe.form.name.placeholder'|translate"
+                    lgExpand>
+          <lg-autocomplete #nameField
+                           [key]="'name'"
+                           [resource]="'recipes-names'"
+                           appendTo="body"
+                           formControlName="name"
+                           placeholdeк=""
+          ></lg-autocomplete>
+        </lg-control>
 
-        <lg-textarea [placeholder]="'recipe.form.description.placeholder'|translate"
-                     formControlName="description"
-                     lgExpand></lg-textarea>
+        <lg-control [label]="'recipe.form.description.placeholder'|translate"
+                    lgExpand>
+          <lg-textarea formControlName="description"
+                       lgExpand
+                       placeholder=""></lg-textarea>
+
+        </lg-control>
       </lg-flex-column>
     </lg-card>
     <lg-card>
 
       <lg-flex-column [position]="'start'">
-
-        <lg-number-input #amount
-                         [placeholder]="'recipe.form.outcome_amount.placeholder'|translate"
-                         formControlName="outcome_amount"
-                         lgExpand
-                         lgParseMath>
-          <ng-template lgExtraTpl place="after">
-            <lg-unit-switcher formControlName="outcome_unit">
-            </lg-unit-switcher>
-          </ng-template>
-        </lg-number-input>
+        <lg-control [label]="'recipe.form.outcome_amount.placeholder'|translate"
+                    lgExpand>
+          <lg-number-input #amount
+                           formControlName="outcome_amount"
+                           lgParseMath
+                           placeholder="">
+            <ng-template lgExtraTpl place="after">
+              <lg-unit-switcher formControlName="outcome_unit">
+              </lg-unit-switcher>
+            </ng-template>
+          </lg-number-input>
+        </lg-control>
 
         <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
           <lg-flex-column [position]="'start'">
@@ -111,21 +120,25 @@
     </lg-card>
 
     <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
-      <lg-flex-column [position]="'start'" [size]="'medium'">
-        <lg-multiselect #categorySelect
-                        [resource]="'recipes-categories'"
-                        appendTo="body"
-                        formControlName="category_id"
-                        lgExpand></lg-multiselect>
+      <lg-control [label]="'recipe.form.category.placeholder'|translate">
+        <lg-flex-column [position]="'start'" [size]="'medium'">
+          <lg-multiselect #categorySelect
+                          [resource]="'recipes-categories'"
+                          appendTo="body"
+                          formControlName="category_id"
+                          lgExpand></lg-multiselect>
 
-        @if (topCategories().length) {
-          <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
-        }
-      </lg-flex-column>
+          @if (topCategories().length) {
+            <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+          }
+        </lg-flex-column>
+      </lg-control>
 
-      <lg-tags-control [multi]="true"
-                       [resource]="'tags'"
-                       formControlName="tags"></lg-tags-control>
+      <lg-control [label]="'recipe.form.tags.placeholder'|translate">
+        <lg-tags-control [multi]="true"
+                         [resource]="'tags'"
+                         formControlName="tags"></lg-tags-control>
+      </lg-control>
     </lg-flex-row>
   </lg-flex-column>
 </form>
