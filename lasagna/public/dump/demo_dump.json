@@ -1708,5 +1708,68 @@
     ],
     "version": 160,
     "createdAt": 1752612594841
+  },
+  {
+    "store": "taxes",
+    "data": [
+      {
+        "name": "Стандартная ставка 23%",
+        "amount": 23,
+        "percentage": true,
+        "description": "Применяется ко всем продуктам и рецептам по умолчанию",
+        "items": [],
+        "uuid": "tax001default"
+      },
+      {
+        "name": "Низкая ставка 6%",
+        "amount": 6,
+        "percentage": false,
+        "description": "Для базовых ингредиентов (молоко, яйца)",
+        "items": [],
+        "uuid": "tax002low"
+      },
+      {
+        "name": "Без НДС 0%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для промо-акций или экспортных товаров",
+        "items": [],
+        "uuid": "tax003zero"
+      },
+      {
+        "name": "Суперсниженная 2%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для социально значимых товаров",
+        "items": [],
+        "uuid": "tax004superReduced"
+      },
+      {
+        "name": "Роскошные товары 30%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Применяется к деликатесам",
+        "items": [],
+        "uuid": "tax005luxury"
+      },
+      {
+        "name": "Услуги 13%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Например, упаковка, доставка",
+        "items": [],
+        "uuid": "tax006service"
+      },
+      {
+        "name": "Эко-ставка 10%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для продуктов с экомаркировкой",
+        "items": [],
+        "uuid": "tax007eco"
+      }
+    ],
+    "version": 160,
+    "createdAt": 1752415013627
   }
 ]
