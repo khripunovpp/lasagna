@@ -23,6 +23,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
 import {JsonPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
 
 @Component({
   selector: 'lg-taxes-settings',
@@ -42,28 +43,37 @@ import {TranslatePipe} from '@ngx-translate/core';
               <div [class.taxes__row--odd]="odd"
                    class="taxes__row">
                 <lg-flex-row [fit]="true" [top]="true">
-                  <lg-input
-                    [placeholder]="'settings.taxes.name' | translate"
-                    formControlName="name"
-                    lgWidth="35%"></lg-input>
+                  <lg-control [label]="'settings.taxes.name' | translate"
+                              lgWidth="35%">
+                    <lg-input placeholder=""
+                              formControlName="name"></lg-input>
+                  </lg-control>
 
-                  <lg-textarea [placeholder]="'settings.taxes.description' | translate"
-                               [rows]="3"
-                               formControlName="description"
-                               lgWidth="35%"></lg-textarea>
+                  <lg-control [label]="'settings.taxes.description' | translate"
+                              lgWidth="35%">
+                    <lg-textarea placeholder=""
+                                 [rows]="3"
+                                 formControlName="description"></lg-textarea>
+                  </lg-control>
 
-                  <lg-checkbox
-                    (onCheckboxChanged)="onTaxValueChange(i)"
-                    [customMark]="'%'"
-                    [name]="taxRow.name+i"
-                    formControlName="percentage"
-                    lgShrink></lg-checkbox>
+                  <lg-control [label]="'settings.taxes.percentage' | translate"
+                              lgShrink>
+                    <lg-checkbox
+                      (onCheckboxChanged)="onTaxValueChange(i)"
+                      [customMark]="'%'"
+                      [name]="taxRow.name+i"
+                      formControlName="percentage"
+                    ></lg-checkbox>
+                  </lg-control>
 
-                  <lg-number-input
-                    (onInputChange)="onTaxValueChange(i)"
-                    [placeholder]="'settings.taxes.value' | translate"
-                    formControlName="value"
-                    lgParseMath></lg-number-input>
+
+                  <lg-control [label]="'settings.taxes.value' | translate">
+                    <lg-number-input
+                      (onInputChange)="onTaxValueChange(i)"
+                      placeholder=""
+                      formControlName="value"
+                      lgParseMath></lg-number-input>
+                  </lg-control>
 
                   <lg-button (click)="deleteTxRow(i)"
                              [icon]="true"
@@ -130,7 +140,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     SelfCenterDirective,
     ShrinkDirective,
     JsonPipe,
-    TranslatePipe
+    TranslatePipe,
+    ControlComponent
   ]
 })
 export class TaxesSettingsComponent {
