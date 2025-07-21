@@ -94,7 +94,7 @@
                     </ng-container>
                   </lg-controls-row>
                   @if (!last) {
-                    <hr size="2" lgExpand color="#fafafa"/>
+                    <hr size="2" lgExpand color="var(--hr-bg)"/>
                   }
                 </ng-container>
               }
@@ -110,7 +110,7 @@
       </lg-flex-column>
     </lg-card>
 
-    <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: #ffffff">
+    <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
       <lg-flex-column [position]="'start'" [size]="'medium'">
         <lg-multiselect #categorySelect
                         [resource]="'recipes-categories'"

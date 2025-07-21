@@ -61,15 +61,15 @@ interface OnboardingStep {
     }
 
     .onboarding {
-      --onboarding-bg: var(--color-bg, #fff);
-      --onboarding-border: var(--color-border, #e0e0e0);
+      --onboarding-bg: var(--color-bg, var(--onboarding-bg));
+      --onboarding-border: var(--color-border, var(--onboarding-border));
     }
 
     .onboarding__step {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--color-bg-secondary, #f9f9f9);
+      background: var(--color-bg-secondary, var(--onboarding-bg-secondary));
       border-radius: 0.5rem;
       padding: 1rem;
       border: 1px solid var(--onboarding-border);
@@ -77,12 +77,12 @@ interface OnboardingStep {
     }
 
     .onboarding__step--done {
-      background: var(--color-success-bg, #e6ffe6);
+      background: var(--color-success-bg, var(--onboarding-success-bg));
       opacity: 0.7;
     }
 
     .onboarding__step--disabled {
-      background: var(--color-bg-disabled, #f0f0f0);
+      background: var(--color-bg-disabled, var(--onboarding-bg-disabled));
       opacity: 0.5;
     }
 
@@ -99,7 +99,7 @@ interface OnboardingStep {
 
     .onboarding__step-desc {
       font-size: 0.95rem;
-      color: var(--color-text-secondary, #888);
+      color: var(--color-text-secondary, var(--onboarding-text-secondary));
     }
   `
   ]
