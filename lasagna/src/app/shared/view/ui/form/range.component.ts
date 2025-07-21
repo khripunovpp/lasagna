@@ -58,13 +58,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     /* Track */
     .custom-range::-webkit-slider-runnable-track {
       height: 6px;
-      background: #ddd;
+      background: var(--range-track-bg);
       border-radius: 3px;
     }
 
     .custom-range::-moz-range-track {
       height: 6px;
-      background: #ddd;
+      background: var(--range-track-bg);
       border-radius: 3px;
     }
 
@@ -106,13 +106,13 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     .tick-line {
       width: 1px;
       height: 10px;
-      background-color: #666;
+      background-color: var(--range-tick-color);
       margin: 0 auto;
     }
 
     .label {
       font-size: 10px;
-      color: #666;
+      color: var(--range-tick-color);
       margin-top: 2px;
       display: block;
     }

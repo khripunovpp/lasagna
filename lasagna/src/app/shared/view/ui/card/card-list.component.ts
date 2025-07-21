@@ -61,8 +61,8 @@ import {MatIcon} from '@angular/material/icon';
       }
 
       .lg-checkbox {
-        --control-bg: #abc2ff;
-        --control-bg-selected: #abc2ff;
+        --control-bg: var(--card-list-checkbox-bg);
+        --control-bg-selected: var(--card-list-checkbox-bg);
       }
 
       .lg-card-list__inner {
@@ -86,7 +86,7 @@ import {MatIcon} from '@angular/material/icon';
         align-items: center;
         padding: 16px;
         gap: 8px;
-        background-color: #ffffff;
+        background-color: var(--card-list-bg);
         border-radius: 32px;
         white-space: nowrap;
 

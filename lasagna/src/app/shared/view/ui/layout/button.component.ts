@@ -77,7 +77,7 @@ export type ButtonSizes =
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #fff;
+        background-color: var(--card-bg);
         color: var(--text-color);
         padding: 16px 24px;
         font-size: 1rem;
@@ -155,7 +155,7 @@ export type ButtonSizes =
           left: 0;
           right: 0;
           bottom: 0;
-          background-color: rgba(0, 0, 0, 0.3);
+          background-color: var(--button-flat-overlay);
           border-radius: inherit;
         }
 
@@ -173,52 +173,52 @@ export type ButtonSizes =
       }
 
       .button.primary {
-        background-color: #28a63c;
+        background-color: var(--button-primary-bg);
 
         &.flat {
-          color: #28a63c;
+          color: var(--button-primary-bg);
         }
       }
 
       .button.secondary {
-        background-color: #fafafa;
+        background-color: var(--button-secondary-bg);
 
         &.flat {
-          color: #fafafa;
+          color: var(--button-secondary-bg);
         }
       }
 
       .button.success {
-        background-color: #1a8c50;
-        color: #fff8fa;
+        background-color: var(--button-success-bg);
+        color: var(--button-success-text);
 
         &.flat {
-          color: #1a8c50;
+          color: var(--button-success-bg);
         }
       }
 
       .button.danger {
-        background-color: #ee3333;
-        color: #fff8fa;
+        background-color: var(--button-danger-bg);
+        color: var(--button-danger-text);
 
         &.flat {
-          color: #ee3333;
+          color: var(--button-danger-bg);
         }
       }
 
       .button.warning {
-        background-color: #ec7b1c;
+        background-color: var(--button-warning-bg);
 
         &.flat {
-          color: #ec7b1c;
+          color: var(--button-warning-bg);
         }
       }
 
       .button.info {
-        background-color: #2531c2;
+        background-color: var(--button-info-bg);
 
         &.flat {
-          color: #2531c2;
+          color: var(--button-info-bg);
         }
       }
 
@@ -231,7 +231,7 @@ export type ButtonSizes =
       .button.transcluent {
         backdrop-filter: blur(3px);
 
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: var(--button-transcluent-bg);
       }
 
       .button.icon {

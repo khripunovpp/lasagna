@@ -62,7 +62,7 @@ export class ChipsListComponent
   constructor() {
   }
 
-  @HostBinding('style.--chip-color') chipColor = '#007bff';
+  @HostBinding('style.--chip-color') chipColor = 'var(--chip-default-bg)';
   control = input<ControlValueAccessor>()
   @Input() items: {
     label: string

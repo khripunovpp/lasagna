@@ -78,8 +78,8 @@ import {Router} from '@angular/router';
       display: flex;
       gap: 8px;
       padding: 16px;
-      background-color: #eed2f0;
-      border-bottom: 2px solid #ecc9ee;
+      background-color: var(--tabs-labels-bg);
+      border-bottom: 2px solid var(--tabs-labels-border);
       overflow-x: auto;
       white-space: nowrap;
       scroll-behavior: smooth;
@@ -90,7 +90,7 @@ import {Router} from '@angular/router';
     }
 
     .tabs__labels button {
-      background: #fff;
+      background: var(--tabs-label-bg);
       border: none;
       border-radius: 12px;
       padding: 0.5rem 1rem;
@@ -104,16 +104,16 @@ import {Router} from '@angular/router';
     }
 
     .tabs__labels button:hover {
-      background-color: #f0f0f0;
+      background-color: var(--tabs-label-hover-bg);
     }
 
     .tabs__labels button:focus {
-      outline: 2px solid #007bff;
+      outline: 2px solid var(--tabs-label-focus);
     }
 
     .tabs__labels button.active {
       background-color: var(--accent-color);
-      color: #fff;
+      color: var(--tabs-label-active-text);
     }
 
     .tabs__body {
@@ -121,7 +121,7 @@ import {Router} from '@angular/router';
       flex-direction: column;
       gap: 12px;
       padding: 24px 16px;
-      background-color: #fff;
+      background-color: var(--tabs-body-bg);
       border-radius: 0 0 12px 12px;
     }
 

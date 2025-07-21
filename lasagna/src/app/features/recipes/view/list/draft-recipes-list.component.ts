@@ -76,7 +76,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
                       (onSelected)="selectionZoneService.putSelected($event)"
                       [selectAll]="selectionZoneService.selectAll()"
                       [deselectAll]="selectionZoneService.deselectAll()"
-                      style="--card-bg: #bee5ff">
+                      style="--card-bg: var(--card-bg-draft)">
           @for (item of drafts(); track item.uuid) {
             <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
               <lg-flex-row [center]="true">

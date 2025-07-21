@@ -44,7 +44,7 @@
       </lg-flex-column>
     </lg-card>
 
-    <lg-flex-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: #ffffff">
+    <lg-flex-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: var(--hr-bg-strong)">
       <lg-flex-column>
         <lg-autocomplete #sourceInput
                          (onSelected)="sourceChips.clearSelected()"
