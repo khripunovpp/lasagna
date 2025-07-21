@@ -18,15 +18,17 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
       map((products: Product[]) => groupBy(products, 'category_id')),
       mergeMap(async (grouped: Record<string, Product[]>) => {
           const list = [];
+          const uuids = Object.keys(grouped).filter(uuid => uuid !== ''); // исключаем пустые категории
+          const categories = await categoryRepository.getMany(uuids);
 
-          for (const category in grouped) {
-            const products = grouped[category];
-            const categoryName = await categoryRepository.getOne(category);
-
-            list.push({
-              category: categoryName?.toString(),
-              products: products,
-            });
+          for (const category of categories) {
+            const products = grouped[category.uuid!];
+            if (products && products.length) {
+              list.push({
+                category: category.toString(),
+                products: products,
+              });
+            }
           }
 
           if (!list.length) return [];
