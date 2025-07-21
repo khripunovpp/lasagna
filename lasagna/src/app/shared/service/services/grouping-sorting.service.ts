@@ -5,12 +5,12 @@ import {SortResult, SortResultGroup, SortStrategy} from '../types/sorting.types'
   providedIn: 'root'
 })
 export class GroupSortService {
-  groupItems<T>(
+  async groupItems<T>(
     items: T[],
     strategy: SortStrategy<T>,
     direction: 'asc' | 'desc' = 'asc',
-    field: string = 'name'
-  ): SortResult<T> {
+    field: string = 'name',
+  ): Promise<SortResult<T>> {
     const groupsMap = new Map<string, T[]>();
 
     const checkFn = (key: string, item: T) => {
@@ -41,7 +41,9 @@ export class GroupSortService {
           return strategy.innerSort?.(a, b, direction, field) || 0;
         });
       }
-      result.push({field: name, items: sortedItems});
+
+      const fieldName = strategy?.fieldTransform ? await strategy.fieldTransform(name) : name;
+      result.push({field: fieldName, items: sortedItems});
     }
 
     return new SortResult(result.toSorted((a, b) => {
