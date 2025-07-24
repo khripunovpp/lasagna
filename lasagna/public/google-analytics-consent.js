@@ -183,8 +183,8 @@ function createConsentBanner() {
   banner.style.bottom = '0';
   banner.style.left = '0';
   banner.style.width = '100%';
-  banner.style.backgroundColor = 'var(--background-color)';
-  banner.style.color = 'var(--text-color)';
+  banner.style.backgroundColor = 'var(--cookie-noty-bg-color)';
+  banner.style.color = 'var(--cookie-noty-text-color)';
   banner.style.borderTop = '1px solid var(--border-color)';
   banner.style.boxShadow = '0 -2px 10px rgba(0,0,0,0.1)';
 

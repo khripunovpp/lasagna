@@ -20,6 +20,7 @@ import {NgTemplateOutlet} from '@angular/common';
   standalone: true,
   template: `
     <div [class.disabled]="disable()"
+         [class.moveBeforeAbove]="moveBeforeAbove()"
          class="lg-number-input">
       @if (beforeExtraTpl()?.templateRef) {
         <div class="lg-number-input__before">
@@ -64,6 +65,16 @@ import {NgTemplateOutlet} from '@angular/common';
         align-items: center;
         gap: 16px;
         padding: 0 16px 0 0;
+      }
+
+      .lg-number-input.moveBeforeAbove {
+        flex-wrap: wrap;
+      }
+
+      .lg-number-input.moveBeforeAbove .lg-number-input__before {
+        width: 100%;
+        padding-top: 16px;
+        padding-right: 16px;
       }
 
       .lg-number-input__before {
@@ -128,6 +139,7 @@ export class NumberInputComponent
   onKeydown = output();
   placeholder = input('Enter text here');
   disable = input<boolean>(false);
+  moveBeforeAbove = input<boolean>(false);
   focused = signal<boolean>(false);
   extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
   afterExtraTpl = computed(() => {

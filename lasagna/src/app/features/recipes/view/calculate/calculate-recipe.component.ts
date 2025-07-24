@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  inject,
   Injector,
   model,
   OnInit,
@@ -19,7 +18,7 @@ import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/com
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 
@@ -43,19 +42,18 @@ import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {TranslatePipe} from '@ngx-translate/core';
 
-import {UnitGroupItem} from '../../../../shared/view/ui/unit-switcher.component';
-
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
-
-import {SETTINGS} from '../../../settings/service/providers/settings.token';
 
 
 import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
 import {AnalyticsService} from '../../../../shared/service/analytics.service';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -81,6 +79,7 @@ import {AnalyticsService} from '../../../../shared/service/analytics.service';
     TranslatePipe,
     ReactiveFormsModule,
     CalculationPriceModifiersComponent,
+    SelfStartDirective,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -216,6 +215,7 @@ export class CalculateRecipeComponent
   });
   recipePriceAdditionsForm = new FormControl();
   values = toSignal(this.recipePriceAdditionsForm.valueChanges);
+  isMobile = matchMediaSignal(mobileBreakpoint);
 
   totalScaleFactor = computed(() => {
     if (!this.recalculateTotalsModel()) return 1;

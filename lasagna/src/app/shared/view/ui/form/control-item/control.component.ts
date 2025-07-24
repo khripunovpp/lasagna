@@ -7,24 +7,26 @@ import {NgTemplateOutlet} from '@angular/common';
   template: `
     <div [style.flex-direction]="flow()"
          class="control">
-      <label [attr.for]="labelFor()" class="control__label">
-        <ng-container *ngTemplateOutlet="beforeLabelTpl()"></ng-container>
+      @if (label() || commonLabelTpl()) {
+        <label [attr.for]="labelFor()" class="control__label">
+          <ng-container *ngTemplateOutlet="beforeLabelTpl()"></ng-container>
 
-        <span class="control__label-string">
+          <span class="control__label-string">
           @if (commonLabelTpl()) {
             <ng-container *ngTemplateOutlet="commonLabelTpl()"></ng-container>
           } @else if (label()) {
             {{ label() }}
           }
         </span>
-        <ng-container *ngTemplateOutlet="afterLabelTpl()"></ng-container>
+          <ng-container *ngTemplateOutlet="afterLabelTpl()"></ng-container>
 
-        @if (endLabelTpl()) {
-          <span class="control__label-end">
+          @if (endLabelTpl()) {
+            <span class="control__label-end">
             <ng-container *ngTemplateOutlet="endLabelTpl()"></ng-container>
           </span>
-        }
-      </label>
+          }
+        </label>
+      }
 
       <div class="control__content">
         <ng-content></ng-content>
@@ -45,10 +47,19 @@ import {NgTemplateOutlet} from '@angular/common';
       }
 
       .control__label {
-        font-size: 0.9rem;
+        font-size: 14px;
         display: flex;
         align-items: flex-end;
         gap: 8px;
+        min-width: 0;
+
+        &-string {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 100%;
+          display: inline-block;
+        }
       }
 
       .control__label-end {

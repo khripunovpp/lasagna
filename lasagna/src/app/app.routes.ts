@@ -11,6 +11,7 @@ import {LoggerService} from './features/logger/logger.service';
 import {inject} from '@angular/core';
 import {BrowserTabTrackingService} from './shared/service/services/browser-tab-tracking.service';
 import {NotificationsService} from './shared/service/services';
+import {TranslateService} from '@ngx-translate/core';
 
 export const routes: Routes = [{
   path: '',
@@ -146,8 +147,8 @@ export const routes: Routes = [{
               const browserTabTrackingService = inject(BrowserTabTrackingService);
               const notificationsService = inject(NotificationsService);
               if (browserTabTrackingService.hasUnsavedChanges) {
-                console.warn('Unsaved changes detected');
-                notificationsService.warning('You have unsaved changes. Please save or discard them before leaving.');
+                const translateService = inject(TranslateService);
+                notificationsService.warning(translateService.instant('unsaved-changes-warning'));
                 return false; // Prevent navigation if there are unsaved changes
               }
 

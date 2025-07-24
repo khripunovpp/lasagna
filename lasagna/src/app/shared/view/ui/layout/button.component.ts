@@ -228,6 +228,12 @@ export type ButtonSizes =
         border-radius: 12px;
       }
 
+      .button.tiny {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+      }
+
       .button.transcluent {
         backdrop-filter: blur(3px);
 
@@ -247,7 +253,7 @@ export type ButtonSizes =
         }
 
         &.small {
-          padding: 6px;
+          padding: 0;
 
           .mat-icon {
             font-size: 16px;

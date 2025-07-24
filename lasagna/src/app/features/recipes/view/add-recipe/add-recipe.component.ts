@@ -18,6 +18,7 @@ import {errorHandler} from '../../../../shared/helpers';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/analytics.service';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 
 @Component({
@@ -36,7 +37,8 @@ import {AnalyticsService} from '../../../../shared/service/analytics.service';
     TranslatePipe,
     RouterLink,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective
+    InlineSeparatedGroupDirective,
+    SelfStartDirective
   ],
   template: `
 
@@ -44,12 +46,13 @@ import {AnalyticsService} from '../../../../shared/service/analytics.service';
           <lg-container>
               <lg-flex-column size="medium">
                   @if (addedRecipeInformerUUID();as uuid) {
-                      <p>{{ 'recipe.added-informer' | translate }} <a routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
+                      <p>
+                        {{ 'recipe.added-informer' | translate }} <a routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
                       </p>
                   }
                   @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
                       <lg-flex-row [mobileMode]="true" [center]="true">
-                          <lg-title>
+                          <lg-title lgSelfStart>
                               <span class="text-active">{{ recipe()?.name }}</span>
                           </lg-title>
                       </lg-flex-row>

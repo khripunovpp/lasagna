@@ -10,6 +10,8 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
 import {RecipeCost} from '../../../service/models/RecipeCost';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 
 @Component({
   selector: 'lg-calculation-price-modifiers',
@@ -24,7 +26,8 @@ import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.co
   ],
   template: `
     <lg-flex-row [formGroup]="recipePriceAdditionsForm">
-      <lg-number-input formControlName="value"
+      <lg-number-input [moveBeforeAbove]="isMobile()"
+                       formControlName="value"
                        lgParseMath
                        placeholder="extra price">
         <ng-template lgExtraTpl place="before">
@@ -117,6 +120,7 @@ export class CalculationPriceModifiersComponent
     },
   ];
   onChanged = output<RecipePriceModifier[]>();
+  isMobile = matchMediaSignal(mobileBreakpoint);
 
   showPriceAdditionUnits = computed(() => {
 

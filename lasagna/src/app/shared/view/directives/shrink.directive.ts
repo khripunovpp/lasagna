@@ -8,7 +8,7 @@ export class ShrinkDirective {
   constructor() {
   }
 
-  @HostBinding('style.flex') flex = '0 1 auto';
+  @HostBinding('style.flex-shrink') flexShrink = '1';
   // @HostBinding('style.align-self') alignSelf = 'flex-start';
   @HostBinding('style.width') width = 'auto';
 }

@@ -1,4 +1,4 @@
-import {Component, ContentChild, EventEmitter, Input, Optional, Output} from '@angular/core';
+import {Component, ContentChild, Input, Optional} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
 import {TitleComponent} from '../layout/title/title.component';
 import {GroupingTailDirective} from './grouping-tail.directive';
@@ -6,6 +6,7 @@ import {NgTemplateOutlet} from '@angular/common';
 import {SelectableSectionComponent} from '../selectable-section.component';
 import {SelectionZoneService} from '../../../service/services';
 import {GroupingHeaderDirective} from './grouping-header.directive';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-grouping-tails',
@@ -21,7 +22,7 @@ import {GroupingHeaderDirective} from './grouping-header.directive';
               </ng-container>
             } @else {
               <lg-title [level]="3">
-                {{ group?.field || 'Unknown' }}
+                {{ group?.field || translateService.instant('unknown') }}
               </lg-title>
             }
           </header>
@@ -94,6 +95,7 @@ import {GroupingHeaderDirective} from './grouping-header.directive';
 export class GroupingTailsComponent {
   constructor(
     @Optional() public selectionZoneService: SelectionZoneService,
+    public translateService: TranslateService,
   ) {
   }
 

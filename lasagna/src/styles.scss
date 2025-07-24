@@ -97,6 +97,9 @@
   --tabs-label-focus: #007bff;
   --tabs-label-active-text: #fff;
   --tabs-body-bg: #fff;
+
+  --cookie-noty-bg-color: #f8f9fa;
+  --cookie-noty-text-color: #212529;
 }
 
 
@@ -156,6 +159,7 @@ body {
   font-weight: var(--text-font-weight, 400);
   height: 100%;
   font-size: 16px;
+  line-height: 24px;
   color: var(--text-color);
   position: relative;
   background-color: var(--background-color);

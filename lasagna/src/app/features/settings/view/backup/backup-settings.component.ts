@@ -6,10 +6,11 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {UploadComponent} from '../../../../shared/view/ui/form/upload.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {injectQueryParams} from '../../../../shared/helpers';
 import {NotificationsService, TransferDataService} from '../../../../shared/service/services';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -18,7 +19,8 @@ import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.
     <lg-flex-column>
       <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-button (click)="onBackup()"
-                   [style]="'success'">
+                   [style]="'success'"
+                   lgSelfStart>
           {{ 'backup.make-btn'|translate }}
         </lg-button>
 
@@ -45,11 +47,11 @@ import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.
       <lg-card style="--card-bg:#fcd9b5">
         <lg-flex-column [position]="'center'">
           <div class="text-center">
-            This will flush all caches and reload the application.
+            {{ 'backup.flush-informer'|translate }}
           </div>
 
           <lg-button (click)="onFlush()" [style]="'success'">
-            Flush all cashes
+            {{ 'backup.flush-btn'|translate }}
           </lg-button>
         </lg-flex-column>
       </lg-card>
@@ -64,7 +66,8 @@ import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.
     TimeAgoPipe,
     ButtonComponent,
     UploadComponent,
-    TranslatePipe
+    TranslatePipe,
+    SelfStartDirective
   ]
 })
 export class BackupSettingsComponent {
@@ -75,6 +78,7 @@ export class BackupSettingsComponent {
   transferDataService = inject(TransferDataService);
   notificationsService = inject(NotificationsService);
   dexieIndexDbService = inject(DexieIndexDbService);
+  translate = inject(TranslateService);
 
   ngAfterViewInit() {
     if (this.downloadBackupParam()) {
@@ -83,13 +87,13 @@ export class BackupSettingsComponent {
   }
 
   async onBackup() {
-    const loader = this.notificationsService.loading('Creating backup');
+    const loader = this.notificationsService.loading(this.translate.instant('backup.creating'));
     try {
       await this.transferDataService.exportAll('json');
-      this.notificationsService.success('Backup created successfully');
+      this.notificationsService.success(this.translate.instant('backup.created'));
       localStorage.setItem('lastBackupDate', Date.now().toString());
     } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], 'Backup failed');
+      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.failed'));
       console.error(e);
     } finally {
       loader.close();
@@ -97,12 +101,12 @@ export class BackupSettingsComponent {
   }
 
   async onRestore(event: File[]) {
-    const loader = this.notificationsService.loading('Restoring backup');
+    const loader = this.notificationsService.loading(this.translate.instant('backup.restoring'));
     try {
       await this.transferDataService.restoreAllData(event);
-      this.notificationsService.success('Restore completed successfully');
+      this.notificationsService.success(this.translate.instant('backup.restored'));
     } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], 'Restore failed');
+      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.restore-failed'));
       console.error(e);
     } finally {
       loader.close();
@@ -113,10 +117,10 @@ export class BackupSettingsComponent {
   async onFlush() {
     try {
       await this.dexieIndexDbService.flushCache();
-      this.notificationsService.success('Caches flushed successfully');
+      this.notificationsService.success(this.translate.instant('backup.flushed'));
       window.location.reload();
     } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], 'Flush failed');
+      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.flush-failed'));
       console.error(e);
     } finally {
     }

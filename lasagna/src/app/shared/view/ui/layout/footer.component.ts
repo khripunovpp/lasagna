@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-footer',
@@ -7,13 +8,11 @@ import {FadeInComponent} from '../fade-in.component';
   template: `
     <lg-fade-in>
       <footer class="lg-footer">
-        By using this app, you agree to our
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md" target="_blank">Privacy
-          Policy</a>,
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md" target="_blank">Terms of
-          Service</a>,
-        and
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md" target="_blank">Cookie Policy</a>.
+        {{ 'footer.agree' | translate }}
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md" target="_blank">{{ 'footer.privacy' | translate }}</a>,
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md" target="_blank">{{ 'footer.terms' | translate }}</a>,
+        {{ 'footer.and' | translate }}
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md" target="_blank">{{ 'footer.cookie' | translate }}</a>.
       </footer>
     </lg-fade-in>
   `,
@@ -30,7 +29,8 @@ import {FadeInComponent} from '../fade-in.component';
 
   `],
   imports: [
-    FadeInComponent
+    FadeInComponent,
+    TranslatePipe
   ]
 })
 export class FooterComponent {

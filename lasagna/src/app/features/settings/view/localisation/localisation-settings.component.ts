@@ -7,45 +7,46 @@ import {FormsModule} from '@angular/forms';
 import {RadioComponent} from '../../../../shared/view/ui/form/radio.component';
 import {InputComponent} from '../../../../shared/view/ui/form/input.component';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 
 @Component({
   selector: 'lg-language-settings',
   standalone: true,
   template: `
-      <lg-flex-column size="medium">
-          <lg-title [level]="6">{{ 'language.settings.language-title'|translate }}</lg-title>
+    <lg-flex-column size="medium">
+      <lg-title [level]="6">{{ 'language.settings.language-title'|translate }}</lg-title>
 
-          <section class="language-settings">
-              <lg-flex-column [size]="'medium'">
+      <section class="language-settings">
+        <lg-flex-column [size]="'small'">
+          @for (lang of languages(); track lang.code; let i = $index) {
+            <lg-flex-row [center]="true"
+                         [mobileMode]="true"
+                         [size]="'small'">
+              <lg-radio [markOnHover]="true"
+                        [radio]="true"
+                        lgSelfStart
+                        [name]="'lang'"
+                        [value]="lang.code"
+                        [ngModel]="selectedLangModel()[i]"
+                        (change)="changeLang(lang.code)"
+                        [size]="'small'"
+                        [noMark]="true">
+                {{ lang.name | translate }}
+              </lg-radio>
+            </lg-flex-row>
+          }
+        </lg-flex-column>
+      </section>
 
-                  <lg-flex-column [size]="'small'">
-                      @for (lang of languages();track lang.code;let i = $index) {
-                          <lg-flex-row [center]="true" [mobileMode]="true" [size]="'small'">
-                              <lg-radio [markOnHover]="true"
-                                        [radio]="true"
-                                        [name]="'lang'"
-                                        [value]="lang.code"
-                                        [ngModel]="selectedLangModel()[i]"
-                                        (change)="changeLang(lang.code)"
-                                        [size]="'small'"
-                                        [noMark]="true">
-                                  {{ lang.name | translate }}
-                              </lg-radio>
-                          </lg-flex-row>
-                      }
-                  </lg-flex-column>
-              </lg-flex-column>
-          </section>
+      <lg-title [level]="6">
+        {{ 'language.settings.currency-title'|translate }}
+        (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
+      </lg-title>
 
-          <lg-title [level]="6">
-              {{ 'language.settings.currency-title'|translate }}
-              (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
-          </lg-title>
-
-          <lg-input (ngModelChange)="changeCurrency($event)"
-                    [(ngModel)]="currency"></lg-input>
-      </lg-flex-column>
+      <lg-input (ngModelChange)="changeCurrency($event)"
+                [(ngModel)]="currency"></lg-input>
+    </lg-flex-column>
   `,
   styles: [``],
   imports: [
@@ -56,7 +57,8 @@ import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.comp
     InputComponent,
     TitleComponent,
     TranslatePipe,
-    FlexColumnComponent
+    FlexColumnComponent,
+    SelfStartDirective
   ]
 })
 export class LocalisationSettingsComponent {
