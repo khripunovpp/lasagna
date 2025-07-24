@@ -25,6 +25,7 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateService} from '@ngx-translate/core';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 
 @Component({
@@ -45,7 +46,8 @@ import {TranslateService} from '@ngx-translate/core';
     InlineSeparatedGroupDirective,
     NgClass,
     PullDirective,
-    ],
+    SelfStartDirective,
+  ],
   template: `
     <lg-fade-in>
       <lg-container>
@@ -54,16 +56,16 @@ import {TranslateService} from '@ngx-translate/core';
                        [mobileReverse]="true"
                        [mobileMode]="true">
             @if (invoiceBuilderService.invoice()?.uuid) {
-              <lg-title>
+              <lg-title lgSelfStart>
                 {{ invoiceBuilderService.invoice()?.name }}
               </lg-title>
             } @else {
-              <lg-title>
+              <lg-title lgSelfStart>
                 {{ 'invoices.new-invoice' | translate }}
               </lg-title>
             }
 
-            <span [ngClass]="stateBadgeClass()">
+            <span [ngClass]="stateBadgeClass()" lgSelfStart>
                 {{ stateLabel() }}
               </span>
 

@@ -48,7 +48,7 @@ import {NgClass} from '@angular/common';
       height: 100%;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width:768px) {
       .gap-column {
         display: flex;
         flex-direction: column;

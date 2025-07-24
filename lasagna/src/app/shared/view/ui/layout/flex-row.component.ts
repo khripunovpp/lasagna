@@ -86,6 +86,10 @@ import {NgClass, NgStyle} from '@angular/common';
 
     }
 
+    .gap-row__equal {
+      align-items: stretch;
+    }
+
     .gap-row__equal > * {
       flex: 1;
     }
@@ -106,11 +110,9 @@ import {NgClass, NgStyle} from '@angular/common';
       }
     }
 
-    @media (max-width: 600px) {
-
+    @media (max-width: 768px) {
       .gap-row__mobile {
         flex-direction: column;
-        align-items: flex-start;
         --gap: 16px;
       }
 

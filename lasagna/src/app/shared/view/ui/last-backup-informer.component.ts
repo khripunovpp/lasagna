@@ -3,6 +3,7 @@ import {TimeAgoPipe} from '../pipes/time-ago.pipe';
 import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {UserService} from '../../../features/settings/service/services/user.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-last-backup-informer',
@@ -15,7 +16,7 @@ import {UserService} from '../../../features/settings/service/services/user.serv
         @if (lastBackupDate()) {
           {{ lastBackupDate() | timeAgo | titlecase }}
         } @else {
-          So far no backup, click to create one
+          {{ 'backup.no-backup' | translate }}
         }
       </a>
     }
@@ -48,7 +49,8 @@ import {UserService} from '../../../features/settings/service/services/user.serv
   imports: [
     TimeAgoPipe,
     TitleCasePipe,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ]
 })
 export class LastBackupInformerComponent {

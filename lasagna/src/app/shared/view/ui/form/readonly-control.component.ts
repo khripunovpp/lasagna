@@ -1,24 +1,25 @@
 import {Component, ElementRef, forwardRef, Input, input, signal, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-readonly-control',
   standalone: true,
   template: `
-      <div class="lg-readonly-control">
-          <input #input
-                 [disabled]="true"
-                 [placeholder]="placeholder()"
-                 [readonly]="true"
-                 [value]="value"
-                 class="input"
-                 type="text">
+    <div class="lg-readonly-control">
+      <input #input
+             [disabled]="true"
+             [placeholder]="placeholder() | translate"
+             [readonly]="true"
+             [value]="value"
+             class="input"
+             type="text">
 
-          <div [style.display]="noAfter() ? 'none' : 'flex'"
-               class="lg-readonly-control__after">
-              <ng-content select="after"></ng-content>
-          </div>
+      <div [style.display]="noAfter() ? 'none' : 'flex'"
+           class="lg-readonly-control__after">
+        <ng-content select="after"></ng-content>
       </div>
+    </div>
   `,
   styles: [
     `
@@ -83,7 +84,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     `
   ],
   imports: [
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
    providers: [
     {
@@ -95,9 +97,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 })
 
 export class ReadonlyControlComponent
-implements ControlValueAccessor{
-  constructor() {
-  }
+  implements ControlValueAccessor {
+  constructor(private translate: TranslateService) {}
 
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   @Input() value: string | number | null | undefined = '';

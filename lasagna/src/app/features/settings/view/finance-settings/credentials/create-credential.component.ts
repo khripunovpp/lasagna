@@ -1,21 +1,12 @@
 import {Component, effect, input, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
-
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
-
 import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
-
-
-
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
-
 import {MatIcon} from '@angular/material/icon';
-
-
 import {NotificationsService} from '../../../../../shared/service/services';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler} from '../../../../../shared/helpers';
@@ -24,6 +15,11 @@ import {CredentialsRepository} from '../../../service/repositories/credentials.r
 import {Credential} from '../../../service/models/Credential';
 import {CredentialsType} from '../../../service/types/credentials.types';
 import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
+import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
+import {NgTemplateOutlet} from '@angular/common';
+import {ControlBoxComponent} from '../../../../../shared/view/ui/form/control-box.component';
+import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
@@ -36,62 +32,89 @@ import {TranslatePipe} from '@ngx-translate/core';
           @for (row of credentials(); track (row.name + row.uuid); let i = $index, odd = $odd, last = $last) {
             @let tacControl = form.controls.rows.controls[i];
             <section class="credentials" [formGroupName]="i">
-              <div class="credentials__row"
-                   [class.credentials__row--odd]="odd">
-                <lg-flex-column size="small">
-                  <lg-control [label]="'Private Name'">
-                    <lg-input placeholder=""
-                              formControlName="privateName"></lg-input>
-                  </lg-control>
+              @if (isMobile()) {
+                <lg-control-box>
+                  <lg-flex-column style="--control-bg: white">
+                    <ng-container *ngTemplateOutlet="rowTpl"></ng-container>
+                  </lg-flex-column>
+                </lg-control-box>
+              } @else {
+                <div class="credentials__row"
+                     [class.credentials__row--odd]="odd">
 
-                  <lg-flex-row [top]="true" [fit]="true">
-                    <lg-flex-column size="small">
-                      <lg-control [label]="'Tax ID'">
-                        <lg-input formControlName="taxId"
-                                  placeholder=""></lg-input>
-                      </lg-control>
+                  <lg-flex-row [bottom]="true">
+                    <ng-container *ngTemplateOutlet="rowTpl"></ng-container>
+                  </lg-flex-row>
+                </div>
+              }
 
-                      <lg-control [label]="'Name'">
-                        <lg-input formControlName="name"
-                                  placeholder=""></lg-input>
-                      </lg-control>
-                    </lg-flex-column>
+              <ng-template #rowTpl>
+                <lg-flex-column size="small"
+                                lgExpand>
+                  <lg-flex-row [mobileMode]="true">
+                    <lg-control [label]="'settings.credentials.private-name'|translate">
+                      <lg-input placeholder=""
+                                formControlName="privateName"></lg-input>
+                    </lg-control>
+                  </lg-flex-row>
 
-                    <lg-flex-column size="small">
-                      <lg-control [label]="'Country'">
-                        <lg-input formControlName="country"
-                                  placeholder=""></lg-input>
-                      </lg-control>
+                  <lg-flex-row [equal]="true"
+                               [mobileMode]="true"
+                               size="small">
+                    <lg-control [label]="'settings.credentials.name'|translate">
+                      <lg-input formControlName="name"
+                                placeholder=""></lg-input>
+                    </lg-control>
 
-                      <lg-control [label]="'Address'">
-                        <lg-input formControlName="address"
-                                  placeholder=""></lg-input>
-                      </lg-control>
-                    </lg-flex-column>
+                    <lg-control [label]="'settings.credentials.tax-id'|translate">
+                      <lg-input formControlName="taxId"
+                                placeholder=""></lg-input>
+                    </lg-control>
+                  </lg-flex-row>
 
-                    <lg-flex-column size="small">
-                      <lg-control [label]="'Phone'">
-                        <lg-input formControlName="phone"
-                                  placeholder=""></lg-input>
-                      </lg-control>
+                  <lg-flex-row [equal]="true"
+                               [mobileMode]="true"
+                               size="small">
+                    <lg-control [label]="'settings.credentials.country'|translate">
+                      <lg-input formControlName="country"
+                                placeholder=""></lg-input>
+                    </lg-control>
 
-                      <lg-control [label]="'Email'">
-                        <lg-input formControlName="email"
-                                  placeholder=""></lg-input>
-                      </lg-control>
-                    </lg-flex-column>
+                    <lg-control [label]="'settings.credentials.address'|translate">
+                      <lg-input formControlName="address"
+                                placeholder=""></lg-input>
+                    </lg-control>
+                  </lg-flex-row>
 
-                    <lg-button [style]="'danger'"
-                               lgShrink
-                               [size]="'tiny'"
-                               [icon]="true"
-                               (click)="deleteRow(i)">
-                      <mat-icon aria-hidden="false" aria-label="Example home icon"
-                                fontIcon="close"></mat-icon>
-                    </lg-button>
+                  <lg-flex-row [equal]="true"
+                               [mobileMode]="true"
+                               size="small">
+                    <lg-control [label]="'settings.credentials.phone'|translate">
+                      <lg-input formControlName="phone"
+                                placeholder=""></lg-input>
+                    </lg-control>
+
+                    <lg-control [label]="'settings.credentials.email'|translate">
+                      <lg-input formControlName="email"
+                                placeholder=""></lg-input>
+                    </lg-control>
                   </lg-flex-row>
                 </lg-flex-column>
-              </div>
+
+                <lg-button (click)="deleteRow(i)"
+                           [icon]="!isMobile()"
+                           [size]="'tiny'"
+                           [style]="'danger'"
+                           lgSelfEnd
+                           lgShrink>
+                  @if (isMobile()) {
+                    {{ 'settings.credentials.delete-row'|translate }}
+                  } @else {
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"
+                              fontIcon="close"></mat-icon>
+                  }
+                </lg-button>
+              </ng-template>
             </section>
 
             @if (!last) {
@@ -108,9 +131,9 @@ import {TranslatePipe} from '@ngx-translate/core';
                    lgSelfCenter
                    lgShrink>
           @if (form.dirty) {
-            Save changes
+            {{ 'settings.credentials.save-changes'|translate }}
           } @else {
-            No changes
+            {{ 'settings.credentials.no-changes'|translate }}
           }
         </lg-button>
 
@@ -118,7 +141,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                    [style]="'warning'"
                    lgSelfCenter
                    lgShrink>
-          Add row
+          {{ 'settings.credentials.add-row'|translate }}
         </lg-button>
       </lg-flex-row>
     </lg-flex-column>
@@ -129,7 +152,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     FormsModule,
     ButtonComponent,
     InputComponent,
-    MatIcon,
     ReactiveFormsModule,
     SelfCenterDirective,
     ShrinkDirective,
@@ -144,6 +166,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     ShrinkDirective,
     ExpandDirective,
     ControlComponent,
+    NgTemplateOutlet,
+    ControlBoxComponent,
+    SelfEndDirective,
     TranslatePipe
   ]
 })
@@ -154,6 +179,7 @@ export class CreateCredentialComponent {
   ) {
   }
 
+  isMobile = matchMediaSignal(mobileBreakpoint);
   type = input(CredentialsType.system);
   credentials = signal<Credential[]>([]);
   form = new FormGroup({
@@ -175,7 +201,6 @@ export class CreateCredentialComponent {
         this.credentials.set(credentials);
       });
   });
-
 
   formValues = this.form.valueChanges.pipe(
     takeUntilDestroyed(),

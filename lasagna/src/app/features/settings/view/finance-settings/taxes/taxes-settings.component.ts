@@ -10,7 +10,6 @@ import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.com
 import {CheckboxComponent} from '../../../../../shared/view/ui/form/chckbox.component';
 import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
-import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 
 import {MatIcon} from '@angular/material/icon';
@@ -21,9 +20,15 @@ import {NotificationsService} from '../../../../../shared/service/services';
 import {Tax} from '../../../service/models/Tax';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
-import {JsonPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
+import {SelfStartDirective} from '../../../../../shared/view/directives/self-start.directive';
+import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
+import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
+import {ControlBoxComponent} from '../../../../../shared/view/ui/form/control-box.component';
+import {NgTemplateOutlet} from '@angular/common';
+import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.directive';
 
 @Component({
   selector: 'lg-taxes-settings',
@@ -39,25 +44,43 @@ import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/
             @if (feesIndex() === i) {
               {{ 'settings.taxes.fees' | translate }}
             }
+
             <section [formGroupName]="i" class="taxes">
-              <div [class.taxes__row--odd]="odd"
-                   class="taxes__row">
-                <lg-flex-row [fit]="true" [top]="true">
+              @if (isMobile()) {
+                <lg-control-box>
+                  <lg-flex-column style="--control-bg: white">
+                    <ng-container *ngTemplateOutlet="rowTpl"></ng-container>
+                  </lg-flex-column>
+                </lg-control-box>
+              } @else {
+                <div [class.taxes__row--odd]="odd"
+                     class="taxes__row">
+                  <ng-container *ngTemplateOutlet="rowTpl"></ng-container>
+                </div>
+              }
+
+              <ng-template #rowTpl>
+                <lg-flex-row [fit]="true"
+                             [mobileMode]="true"
+                             [top]="true">
                   <lg-control [label]="'settings.taxes.name' | translate"
+                              lgShrink
                               lgWidth="35%">
-                    <lg-input placeholder=""
-                              formControlName="name"></lg-input>
+                    <lg-input formControlName="name"
+                              placeholder=""></lg-input>
                   </lg-control>
 
                   <lg-control [label]="'settings.taxes.description' | translate"
+                              lgShrink
                               lgWidth="35%">
-                    <lg-textarea placeholder=""
-                                 [rows]="3"
-                                 formControlName="description"></lg-textarea>
+                    <lg-textarea [rows]="4"
+                                 formControlName="description"
+                                 placeholder=""></lg-textarea>
                   </lg-control>
 
                   <lg-control [label]="'settings.taxes.percentage' | translate"
-                              lgShrink>
+                              lgShrink
+                              lgWidth="15%">
                     <lg-checkbox
                       (onCheckboxChanged)="onTaxValueChange(i)"
                       [customMark]="'%'"
@@ -67,24 +90,30 @@ import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/
                   </lg-control>
 
 
-                  <lg-control [label]="'settings.taxes.value' | translate">
+                  <lg-control [label]="'settings.taxes.value' | translate"
+                              lgWidth="15%">
                     <lg-number-input
                       (onInputChange)="onTaxValueChange(i)"
-                      placeholder=""
                       formControlName="value"
-                      lgParseMath></lg-number-input>
+                      lgParseMath
+                      placeholder=""></lg-number-input>
                   </lg-control>
 
                   <lg-button (click)="deleteTxRow(i)"
-                             [icon]="true"
+                             [icon]="!isMobile()"
                              [size]="'tiny'"
                              [style]="'danger'"
+                             lgSelfEnd
                              lgShrink>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon"
-                              fontIcon="close"></mat-icon>
+                    @if (isMobile()) {
+                      Delete this row
+                    } @else {
+                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                fontIcon="close"></mat-icon>
+                    }
                   </lg-button>
                 </lg-flex-row>
-              </div>
+              </ng-template>
             </section>
           }
         </ng-container>
@@ -139,9 +168,12 @@ import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/
     MatIcon,
     SelfCenterDirective,
     ShrinkDirective,
-    JsonPipe,
     TranslatePipe,
-    ControlComponent
+    ControlComponent,
+    SelfStartDirective,
+    ControlBoxComponent,
+    NgTemplateOutlet,
+    SelfEndDirective
   ]
 })
 export class TaxesSettingsComponent {
@@ -155,7 +187,7 @@ export class TaxesSettingsComponent {
   feesIndex = computed(() => {
     return this.taxesAndFees().findIndex((tax) => !tax.percentage);
   });
-
+  isMobile = matchMediaSignal(mobileBreakpoint);
   taxesForm = new FormGroup({
     rows: new FormArray([
       this._getRowGroup(),

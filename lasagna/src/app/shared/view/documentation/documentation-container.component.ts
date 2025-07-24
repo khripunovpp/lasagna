@@ -24,7 +24,7 @@ import {DocsThreeComponent} from './docs-three.component';
     .lg-documentation-container__content {
       margin-top: 32px;
 
-      @media (max-width: 600px) {
+      @media (max-width: 768px) {
         margin-top: 8px;
       }
     }

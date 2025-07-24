@@ -25,6 +25,7 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/analytics.service';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 @Component({
   selector: 'app-add-recipe',
@@ -42,7 +43,8 @@ import {AnalyticsService} from '../../../../shared/service/analytics.service';
     FlexColumnComponent,
     UserCurrencyPipe,
     InlineSeparatedGroupComponent,
-    InlineSeparatedGroupDirective
+    InlineSeparatedGroupDirective,
+    SelfStartDirective
   ],
   template: `
       <lg-fade-in>
@@ -50,17 +52,17 @@ import {AnalyticsService} from '../../../../shared/service/analytics.service';
               <lg-flex-column size="medium">
                   <lg-flex-row [center]="true" [mobileMode]="true">
                       @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                          <lg-title>
+                          <lg-title lgSelfStart>
                               {{ product()?.name }}
                           </lg-title>
                       } @else {
-                          <lg-title>
+                          <lg-title lgSelfStart>
                               {{ 'product.form.title'|translate }}
                           </lg-title>
                       }
 
                       @if (product()?.pricePerUnit) {
-                          ({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
+                          <span lgSelfStart>({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})</span>
                       }
                   </lg-flex-row>
 

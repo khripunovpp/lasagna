@@ -74,6 +74,10 @@ import {Router} from '@angular/router';
       padding: 0;
     }
 
+    .tabs.flat .tabs__labels button:not(.active) {
+      background-color: #efefef;
+    }
+
     .tabs__labels {
       display: flex;
       gap: 8px;
@@ -100,7 +104,7 @@ import {Router} from '@angular/router';
       font-family: inherit;
       text-decoration: none;
       position: relative;
-      z-index: 1  ;
+      z-index: 1;
     }
 
     .tabs__labels button:hover {

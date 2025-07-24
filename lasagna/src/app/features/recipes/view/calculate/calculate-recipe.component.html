@@ -9,7 +9,8 @@
         <lg-button [flat]="true"
                    [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
                    [size]="'small'"
-                   [style]="'primary'">
+                   [style]="'primary'"
+                   lgSelfStart>
           {{ 'edit-label' | translate }}
         </lg-button>
       </lg-flex-row>
@@ -52,7 +53,7 @@
 
 
               <lg-flex-row [size]="'small'"
-                          [relaxed]="true" style="--control-bg: var(--hr-bg-strong);padding: 0 16px">
+                           [relaxed]="true" style="--control-bg: var(--hr-bg-strong);padding: 0 16px">
               </lg-flex-row>
             </lg-flex-column>
 
@@ -79,23 +80,26 @@
                 </lg-flex-row>
               </lg-card>
 
-              <lg-flex-column [position]="'stretch'" size="small" style="--control-bg: var(--hr-bg-strong);padding: 0 16px">
+              <lg-flex-column [position]="'stretch'"
+                              size="small"
+                              [style.padding]="isMobile() ? '0' : '0 16px'"
+                              style="--control-bg: var(--hr-bg-strong);">
 
-<!--                <lg-number-input lgParseMath-->
-<!--                                 placeholder="amount"-->
-<!--                                 [(ngModel)]="recalculateTotalsModel">-->
-<!--                  <ng-template lgExtraTpl place="before">-->
-<!--                    Recalculate for-->
-<!--                  </ng-template>-->
+                <!--                <lg-number-input lgParseMath-->
+                <!--                                 placeholder="amount"-->
+                <!--                                 [(ngModel)]="recalculateTotalsModel">-->
+                <!--                  <ng-template lgExtraTpl place="before">-->
+                <!--                    Recalculate for-->
+                <!--                  </ng-template>-->
 
-<!--                  &lt;!&ndash;                  @if (roundActionSelected()) {&ndash;&gt;-->
-<!--                  &lt;!&ndash;                    <ng-template lgExtraTpl place="after">&ndash;&gt;-->
-<!--                  &lt;!&ndash;                      <b>&ndash;&gt;-->
-<!--                  &lt;!&ndash;                        {{ result()?.calculation?.outcomeUnit }}&ndash;&gt;-->
-<!--                  &lt;!&ndash;                      </b>&ndash;&gt;-->
-<!--                  &lt;!&ndash;                    </ng-template>&ndash;&gt;-->
-<!--                  &lt;!&ndash;                  }&ndash;&gt;-->
-<!--                </lg-number-input>-->
+                <!--                  &lt;!&ndash;                  @if (roundActionSelected()) {&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                    <ng-template lgExtraTpl place="after">&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                      <b>&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                        {{ result()?.calculation?.outcomeUnit }}&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                      </b>&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                    </ng-template>&ndash;&gt;-->
+                <!--                  &lt;!&ndash;                  }&ndash;&gt;-->
+                <!--                </lg-number-input>-->
 
                 <div>
                   {{ 'recipe.calculation.price-modifiers.title' | translate }}
@@ -192,7 +196,7 @@
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
 
-                  <td>
+                  <td width="200">
                     <div [ngClass]="'indent-' + row.indent">
                       @if (row.type !== 'total') {
                         <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit/' : '/products/edit/', row.uuid]">

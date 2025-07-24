@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, effect} from '@angular/core';
 import {NotificationsService} from '../../../../../shared/service/services';
 import {CredentialsRepository} from '../../../service/repositories/credentials.repository';
 import {CredentialsType} from '../../../service/types/credentials.types';
@@ -35,6 +35,5 @@ export class CredentialSettingsComponent {
     private _notificationService: NotificationsService,
   ) {
   }
-
   protected readonly CredentialsType = CredentialsType;
 }

@@ -19,17 +19,24 @@ export class WidthDirective {
   }
 
   @HostBinding('style.max-width') get maxWidth() {
-     if (mediaMobMax()) {
+    if (mediaMobMax()) {
       return '100%';
     }
     return 'calc(var(--lg-width, 100%) - var(--gap, 0px))';
   }
 
-  @HostBinding('style.flex') get flex() {
+  @HostBinding('style.flex-grow') get flexGrow() {
     if (mediaMobMax()) {
       return 'auto';
     }
-    return `1 0 ${this.lgWidth}`;
+    return 1
+  };
+
+  @HostBinding('style.flex-basis') get flexBasis() {
+    if (mediaMobMax()) {
+      return 'auto';
+    }
+    return this.lgWidth;
   };
 
   @HostBinding('style.align-self') get alignSelf() {

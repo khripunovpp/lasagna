@@ -32,7 +32,7 @@ interface OnboardingStep {
           <lg-title [level]="4">{{ 'onboarding.title' | translate }}</lg-title>
 
           <p class="no-margin">
-            Hello! Welcome to Lasagna! To get better know the app, please complete the following steps.
+            {{ 'onboarding.welcome' | translate }}
           </p>
 
           <lg-flex-column [size]="'medium'">

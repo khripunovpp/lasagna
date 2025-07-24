@@ -58,7 +58,7 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
       }
 
 
-      @media (max-width: 600px) {
+      @media (max-width: 768px) {
 
         .controls-row__mobile {
           align-items: stretch;
