@@ -1,1 +1,0 @@
-import{ec as o,nb as e}from"./chunk-7BND6AGV.js";var n=class t{constructor(){}flex="0 1 auto";width="auto";static \u0275fac=function(i){return new(i||t)};static \u0275dir=e({type:t,selectors:[["","lgShrink",""]],hostVars:4,hostBindings:function(i,r){i&2&&o("flex",r.flex)("width",r.width)}})};export{n as a};
