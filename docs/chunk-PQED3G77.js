@@ -1,1 +1,0 @@
-import{ec as r,nb as e}from"./chunk-7BND6AGV.js";var s=class i{constructor(){}selfAlign="start";static \u0275fac=function(t){return new(t||i)};static \u0275dir=e({type:i,selectors:[["","lgSelfStart",""]],hostVars:2,hostBindings:function(t,o){t&2&&r("align-self",o.selfAlign)}})};export{s as a};

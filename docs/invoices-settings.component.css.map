@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/settings/view/finance-settings/invoices-settings/invoices-settings.component.ts"],
+  "sourcesContent": ["\n    .lg-invoices-settings__logo {\n      width: 100%;\n      max-width: 200px;\n      height: auto;\n      border-radius: 12px;\n      object-fit: cover;\n      background-color: var(--control-bg);\n      padding: 15px;\n\n      img {\n        width: 100%;\n        height: auto;\n      }\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,SAAA;AACA,aAAA;AACA,UAAA;AACA,iBAAA;AACA,cAAA;AACA,oBAAA,IAAA;AACA,WAAA;;AAEA,CATF,2BASE;AACE,SAAA;AACA,UAAA;;",
+  "names": []
+}

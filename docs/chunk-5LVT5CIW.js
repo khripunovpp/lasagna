@@ -1,1 +1,0 @@
-import{Mc as s,va as r}from"./chunk-7BND6AGV.js";function d(n,a="max"){let i=window,e=r(!1),m=`(${a}-width: ${a==="min"?n+1:n}px)`,t=i.matchMedia(m);e.set(t.matches);let o=c=>{e.set(c.matches)};return t.addEventListener("change",o),s(()=>()=>{t.removeEventListener("change",o)}),e}export{d as a};

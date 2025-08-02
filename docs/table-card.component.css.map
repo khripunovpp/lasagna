@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/card/table-card.component.ts"],
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        width: 100%;\n      }\n\n      .table__scroll {\n        overflow-x: auto;\n      }\n\n      table {\n        width: 100%;\n        border-collapse: collapse;\n        --border-color: #efefef;\n      }\n\n      table thead tr {\n        border-bottom: 1px solid var(--border-color);\n      }\n\n      table thead th {\n        text-align: left;\n        padding: 16px 24px;\n        opacity: 0.4;\n        font-size: 0.8em;\n      }\n\n      table tbody tr {\n        border-bottom: 1px solid var(--border-color);\n      }\n\n      table tbody tr:last-child {\n        border-bottom: none;\n      }\n\n      td {\n        padding: 16px 24px;\n      }\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,SAAA;;AAGF,CAAA;AACE,cAAA;;AAGF;AACE,SAAA;AACA,mBAAA;AACA,kBAAA;;AAGF,MAAA,MAAA;AACE,iBAAA,IAAA,MAAA,IAAA;;AAGF,MAAA,MAAA;AACE,cAAA;AACA,WAAA,KAAA;AACA,WAAA;AACA,aAAA;;AAGF,MAAA,MAAA;AACE,iBAAA,IAAA,MAAA,IAAA;;AAGF,MAAA,MAAA,EAAA;AACE,iBAAA;;AAGF;AACE,WAAA,KAAA;;",
+  "names": []
+}

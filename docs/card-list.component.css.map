@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/card/card-list.component.ts"],
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        width: 100%;\n      }\n\n\n      .lg-card-list {\n      }\n\n      .lg-checkbox {\n        --control-bg: var(--card-list-checkbox-bg);\n        --control-bg-selected: var(--card-list-checkbox-bg);\n      }\n\n      .lg-card-list__inner {\n        display: flex;\n        flex-direction: column;\n        width: 100%;\n        overflow: hidden;\n        gap: 16px;\n      }\n\n      .lg-card-list__item {\n        display: flex;\n        gap: 8px;\n        align-items: center;\n      }\n\n      .lg-card-list__item__inner {\n        flex: 1;\n        overflow-x: auto;\n        display: flex;\n        align-items: center;\n        padding: 16px;\n        gap: 8px;\n        background-color: var(--card-list-bg);\n        border-radius: 32px;\n        white-space: nowrap;\n\n        & > * {\n          flex: 1;\n        }\n      }\n\n      .lg-card-list__item.colored {\n        //background-color: #f6f6f6\n      }\n\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,SAAA;;AAOF,CAAA;AACE,gBAAA,IAAA;AACA,yBAAA,IAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,SAAA;AACA,YAAA;AACA,OAAA;;AAGF,CAAA;AACE,WAAA;AACA,OAAA;AACA,eAAA;;AAGF,CAAA;AACE,QAAA;AACA,cAAA;AACA,WAAA;AACA,eAAA;AACA,WAAA;AACA,OAAA;AACA,oBAAA,IAAA;AACA,iBAAA;AACA,eAAA;;AAEA,CAXF,0BAWE,EAAA;AACE,QAAA;;",
+  "names": []
+}

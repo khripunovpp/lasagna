@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/pipes/currency-symbol.pipe.ts"],
+  "sourcesContent": ["// currency-symbol.pipe.ts\nimport {Pipe, PipeTransform} from '@angular/core';\nimport {currencyStringToSymbol} from '../../helpers/assets/currency.helper';\n\n@Pipe({\n  name: 'currencySymbol',\n  standalone: true,\n})\nexport class CurrencySymbolPipe implements PipeTransform {\n  transform(value: string): string {\n    return currencyStringToSymbol(value);\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;AAQM,IAAO,qBAAP,MAAO,oBAAkB;EAC7B,UAAU,OAAa;AACrB,WAAO,uBAAuB,KAAK;EACrC;;qCAHW,qBAAkB;EAAA;6FAAlB,qBAAkB,MAAA,KAAA,CAAA;;;sEAAlB,oBAAkB,CAAA;UAJ9B;WAAK;MACJ,MAAM;MACN,YAAY;KACb;;;",
+  "names": []
+}

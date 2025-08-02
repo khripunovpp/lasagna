@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/grouping-tails/grouping-tails.component.ts"],
+  "sourcesContent": ["\n    .grouping-tails {\n      display: flex;\n      flex-direction: column;\n      gap: 32px;\n    }\n\n    .grouping-tails__section {\n      display: flex;\n      flex-direction: column;\n      gap: 24px;\n    }\n\n    .grouping-tails__header {\n    }\n\n    .grouping-tails__content {\n      display: flex;\n      flex-direction: column;\n      gap: 16px;\n    }\n\n    .grouping-tails__item {\n      display: flex;\n      align-items: stretch;\n      width: 100%;\n    }\n\n    .grouping-tails__item-inner {\n      display: flex;\n      align-items: stretch;\n      width: 100%;\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAMF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,SAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,SAAA;;",
+  "names": []
+}

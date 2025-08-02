@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/import/import.component.ts"],
+  "sourcesContent": ["\n    .import-row {\n      display: flex;\n      flex-direction: row;\n      gap: 8px;\n      border: 1px solid #f5f5f5;\n      border-radius: 24px;\n      padding: 8px 16px;\n    }\n\n    .import-row.disabled {\n      opacity: 0.5;\n    }\n\n    .import-row.skip {\n      border-color: #008ad8;\n      background-color: #dceaff;\n    }\n\n    .import-row.duplicated {\n      border-color: #ffbaba;\n      background-color: #fff4f4;\n    }\n\n    .import-row.update {\n      border-color: #8ca68c;\n      background-color: #e5f4e3;\n    }\n\n    .import-row.add {\n      border-color: #8ca68c;\n      background-color: #e5f4e3;\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;AACA,UAAA,IAAA,MAAA;AACA,iBAAA;AACA,WAAA,IAAA;;AAGF,CATA,UASA,CAAA;AACE,WAAA;;AAGF,CAbA,UAaA,CAAA;AACE,gBAAA;AACA,oBAAA;;AAGF,CAlBA,UAkBA,CAAA;AACE,gBAAA;AACA,oBAAA;;AAGF,CAvBA,UAuBA,CAAA;AACE,gBAAA;AACA,oBAAA;;AAGF,CA5BA,UA4BA,CAAA;AACE,gBAAA;AACA,oBAAA;;",
+  "names": []
+}

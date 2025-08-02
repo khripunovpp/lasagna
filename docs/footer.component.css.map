@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/layout/footer.component.ts"],
+  "sourcesContent": ["\n    .lg-footer {\n      text-align: center;\n      font-size: 0.9rem;\n      color: #555;\n      padding: 1em;\n      line-height: 1.6;\n      padding-top: 100px;\n      padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n    }\n\n  "],
+  "mappings": ";AACI,CAAA;AACE,cAAA;AACA,aAAA;AACA,SAAA;AACA,WAAA;AACA,eAAA;AACA,eAAA;AACA,kBAAA,KAAA,IAAA,oBAAA,EAAA,KAAA,EAAA;;",
+  "names": []
+}
