@@ -9,13 +9,17 @@ import {ContainerComponent} from '../../../shared/view/ui/layout/container/conta
   selector: 'lg-documentation-container',
   template: `
     <lg-container [compact]="true">
-      <lg-docs-three></lg-docs-three>
-
-      <lg-faq></lg-faq>
+      @defer {
+        <lg-docs-three></lg-docs-three>
+      }
 
       <div class="lg-documentation-container__content">
         <router-outlet></router-outlet>
       </div>
+
+      @defer {
+        <lg-faq></lg-faq>
+      }
     </lg-container>
   `,
   host: {
@@ -23,11 +27,7 @@ import {ContainerComponent} from '../../../shared/view/ui/layout/container/conta
   },
   styles: [`
     .lg-documentation-container__content {
-      margin-top: 32px;
 
-      @media (max-width: 768px) {
-        margin-top: 8px;
-      }
     }
   `],
   imports: [

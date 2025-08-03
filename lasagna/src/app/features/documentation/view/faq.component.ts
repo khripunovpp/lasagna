@@ -2,44 +2,28 @@ import {Component, computed, inject} from '@angular/core';
 import {FaqService} from '../service/faq.service';
 import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
 import {SafeHtmlPipe} from '../../../shared/view/pipes/safehtml.pipe';
+import {TranslatePipe} from '@ngx-translate/core';
+import {SelfStartDirective} from '../../../shared/view/directives/self-start.directive';
+import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 
 @Component({
   selector: 'lg-faq',
   standalone: true,
-  imports: [SafeHtmlPipe, SafeHtmlPipe],
+  imports: [SafeHtmlPipe, SafeHtmlPipe, TranslatePipe, SelfStartDirective, TitleComponent],
   template: `
-    <section class="faq-section">
-      <h2>Часто задаваемые вопросы</h2>
+    <lg-title>
+      {{ 'faq.title' | translate }}
+    </lg-title>
 
-      @for (section of localizedFaqs(); track section.path) {
-        <section class="faq-block">
-          <h3>{{ section.title }}</h3>
-          <div [innerHTML]="section.html | safeHtml"></div>
-        </section>
-      }
-    </section>
+    @for (section of localizedFaqs(); track section.path) {
+      <section class="faq-block">
+        <h3>{{ section.title }}</h3>
+        <div [innerHTML]="section.html | safeHtml"></div>
+      </section>
+    }
   `,
   styles: [`
-    .faq-section {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-    }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-    }
-
-    .faq-block {
-      margin-bottom: 2rem;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
   `]
 })
 export class FaqComponent {

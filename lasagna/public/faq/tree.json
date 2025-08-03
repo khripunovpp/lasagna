@@ -34,6 +34,28 @@
   },
   {
     "type": "file",
+    "name": "01-offline-and-installation[ru].md",
+    "language": "ru",
+    "path": "01-offline-and-installation[ru].md",
+    "title": "📶 Оффлайн и установка",
+    "order": 0,
+    "data": {
+      "title": "📶 Оффлайн и установка"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[ru].md",
+    "language": "ru",
+    "path": "02-storage-and-safety[ru].md",
+    "title": "💾 Хранение и безопасность",
+    "order": 0,
+    "data": {
+      "title": "💾 Хранение и безопасность"
+    }
+  },
+  {
+    "type": "file",
     "name": "02-storage[en].md",
     "language": "en",
     "path": "02-storage[en].md",
@@ -67,6 +89,17 @@
   },
   {
     "type": "file",
+    "name": "03-features-and-pricing[ru].md",
+    "language": "ru",
+    "path": "03-features-and-pricing[ru].md",
+    "title": "💰 Функции и обновления",
+    "order": 0,
+    "data": {
+      "title": "💰 Функции и обновления"
+    }
+  },
+  {
+    "type": "file",
     "name": "03-offline[en].md",
     "language": "en",
     "path": "03-offline[en].md",
@@ -96,6 +129,28 @@
     "order": 0,
     "data": {
       "title": "⚡ Оффлайн и производительность"
+    }
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[ru].md",
+    "language": "ru",
+    "path": "04-accounts-and-support[ru].md",
+    "title": "🛠️ Учётные записи и поддержка",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Учётные записи и поддержка"
+    }
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[ru].md",
+    "language": "ru",
+    "path": "05-how-to-install[ru].md",
+    "title": "🧩 Как установить приложение",
+    "order": 0,
+    "data": {
+      "title": "🧩 Как установить приложение"
     }
   }
 ]

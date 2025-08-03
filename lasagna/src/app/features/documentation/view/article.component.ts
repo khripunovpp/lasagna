@@ -14,7 +14,7 @@ import {DocsService} from '../service/docs.service';
       }
     </div>
   `,
-  styles:[
+  styles: [
     `
       .lg-article {
         display: flex;
@@ -43,7 +43,10 @@ export class ArticleComponent {
       url: this.route.snapshot.url.map(segment => segment.path).join('/'),
     })),
     map(({data, url}) => {
-      const doc = data.filter(doc => doc.path.includes(url || '/start-page'));
+      if (!url) {
+        return '';
+      }
+      const doc = data.filter(doc => doc.path.includes(url));
       const targetByLang = doc.find(d => d.language === this._userLang());
       if (!doc.length) {
         return 'Start'
