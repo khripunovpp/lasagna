@@ -26,24 +26,27 @@ import {TranslatePipe} from '@ngx-translate/core';
       display: flex;
       position: fixed;
       z-index: 8;
-      bottom: 0;
+      top: 50%;
       left: 0;
       right: 0;
+      transform: translateY(-50%);
     }
 
     a {
-      background-color: #007bff;
+      background-image: linear-gradient(45deg, #de2c51, #fff400);
       color: white;
       border: none;
       padding: 10px 20px;
       cursor: pointer;
-      width: 100%;
       text-align: center;
       text-decoration: none;
+      border-radius: 0 16px 16px 0;
+      background-size: calc(100% + 70px) 100%;
+      transition: background-position 0.3s ease;
     }
 
     a:hover {
-      background-color: #0056b3;
+      background-position: -70px 0;
     }
   `],
   imports: [
@@ -65,26 +68,31 @@ export class LastBackupInformerComponent {
     ? new Date(this.storedBackupDate()!) :
     undefined);
   showButton = computed(() => {
+    if (location.hostname === 'localhost') {
+      return false;
+    }
     const sinceDate = this.userService.isUserFirstDate;
     if (!sinceDate) {
       return false
     }
-    const sinceDateDays = Math.floor((this.today.getTime() - sinceDate.getTime()) / this.oneDayInMilliseconds);
-
-    if (sinceDateDays < 1) {
+    const todayTs = this.today.getTime();
+    const sinceDateTs = sinceDate.getTime();
+    const diffInMilliseconds = todayTs - sinceDateTs;
+    if (diffInMilliseconds < 0) {
+      return false; // Since date is in the future
+    }
+    if (diffInMilliseconds < this.oneDayInMilliseconds) {
       return false
     }
 
     if (!this.lastBackupDate()) {
       return true
     }
+    const lastBackupDateTs = this.lastBackupDate()!.getTime();
 
-    return (this.today.getTime() - this.lastBackupDate()!.getTime()) > this.oneDayInMilliseconds
+    return lastBackupDateTs < sinceDateTs ||
+      lastBackupDateTs < todayTs - this.oneDayInMilliseconds;
   });
-
-  @HostBinding('attr.hidden') get hidden() {
-    return location.hostname === 'localhost' ? 'true' : undefined;
-  }
 
   hide() {
     this.storedBackupDate.set(null);
