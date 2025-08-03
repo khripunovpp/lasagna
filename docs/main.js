@@ -1,52 +1,55 @@
 import {
+  FaqService
+} from "./chunk-CH4CH5AO.js";
+import {
   provideCharts,
   withDefaultRegisterables
-} from "./chunk-ZSXR7ZUH.js";
+} from "./chunk-CQ6QXFFO.js";
 import {
   BrowserTabTrackingService,
   DateAdapter,
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-PO56DWHF.js";
+} from "./chunk-XOYG6A4K.js";
 import {
   GroupSortService
-} from "./chunk-XOACDSX6.js";
-import "./chunk-TYIBBDVS.js";
+} from "./chunk-KBVHATZI.js";
+import "./chunk-G4PXRSTU.js";
 import {
   InputComponent
-} from "./chunk-AO5PP7UL.js";
+} from "./chunk-OQ3JCQM7.js";
 import {
   CATEGORIZED_RECIPES_LIST
-} from "./chunk-DUTPPEXJ.js";
+} from "./chunk-YVI4JC4E.js";
 import {
   PortalComponent
-} from "./chunk-ZWXMCOVO.js";
+} from "./chunk-OAK3DILL.js";
 import {
   BODY_LOCKER,
   FocusTrapDirective
-} from "./chunk-IY7DTGCX.js";
+} from "./chunk-ZLF4HQCJ.js";
 import {
   ROUTER_MANAGER_PROVIDER
-} from "./chunk-7SDCJP3V.js";
-import "./chunk-TVTKUYPC.js";
+} from "./chunk-H2M3LVXP.js";
+import "./chunk-KX57H5F3.js";
 import {
   MatIcon
-} from "./chunk-NEK7DTWJ.js";
+} from "./chunk-2S7K7J4C.js";
 import {
   TimeAgoPipe
-} from "./chunk-WN33OFJL.js";
+} from "./chunk-2SB67YCR.js";
 import {
   FlexColumnComponent
-} from "./chunk-54ALPN33.js";
+} from "./chunk-ZIFIR5EQ.js";
 import "./chunk-R64U7JLD.js";
 import {
   FadeInComponent
-} from "./chunk-TAG7HLT2.js";
+} from "./chunk-GKY6K6EK.js";
 import "./chunk-HNJAQDA3.js";
 import {
   TitleComponent
-} from "./chunk-HAWQY6NL.js";
+} from "./chunk-OZKYQV4U.js";
 import {
   CalculateRecipeService,
   CategoryProductsRepository,
@@ -55,12 +58,12 @@ import {
   GlobalSearchService,
   ProductsRepository,
   RecipesRepository
-} from "./chunk-TZO5KX4G.js";
+} from "./chunk-RDDMZZTF.js";
 import {
   DocsService
-} from "./chunk-HRKLZBBB.js";
+} from "./chunk-SB4UTUHL.js";
+import "./chunk-43WBLRRZ.js";
 import {
-  ButtonComponent,
   FormControl,
   FormControlDirective,
   FormsModule,
@@ -71,28 +74,34 @@ import {
   Recipe,
   SETTINGS,
   SettingsService,
-  TranslateLoader,
-  TranslateModule,
-  TranslatePipe,
-  TranslateService,
   generateRandomInvoicePrefix,
   groupBy,
   injectQueryParams,
   marker,
   provideHotToastConfig,
   toObservable
-} from "./chunk-RPP3IG6S.js";
+} from "./chunk-TAPHUHMD.js";
+import "./chunk-Q4M4NLQD.js";
 import {
-  ActivatedRoute,
+  ButtonComponent
+} from "./chunk-UXLMBQY2.js";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslatePipe,
+  TranslateService
+} from "./chunk-UMVMUCIR.js";
+import {
   DB_NAME,
   DISABLE_LOGGER,
   DexieIndexDbService,
-  DomRendererFactory2,
-  HammerModule,
-  HttpClient,
-  HttpErrorResponse,
   LOGGER_CONTEXT,
   LoggerService,
+  USER_LANGUAGE
+} from "./chunk-JNTX3JOU.js";
+import "./chunk-5WJUMO7X.js";
+import {
+  ActivatedRoute,
   NavigationCancel,
   NavigationEnd,
   NavigationError,
@@ -103,20 +112,23 @@ import {
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
-  USER_LANGUAGE,
-  bootstrapApplication,
-  provideHttpClient,
   provideRouter,
   withInMemoryScrolling
-} from "./chunk-GF4GEWLC.js";
-import "./chunk-Q4M4NLQD.js";
-import "./chunk-5WJUMO7X.js";
+} from "./chunk-HP5G5POF.js";
+import {
+  DomRendererFactory2,
+  HammerModule,
+  HttpClient,
+  HttpErrorResponse,
+  bootstrapApplication,
+  provideHttpClient
+} from "./chunk-ENTGQEHX.js";
 import {
   AsyncPipe,
   Location,
   NgTemplateOutlet,
   TitleCasePipe
-} from "./chunk-U34SFCSO.js";
+} from "./chunk-AL3DWPLK.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -216,7 +228,7 @@ import {
   ɵɵtextInterpolate2,
   ɵɵtextInterpolate3,
   ɵɵviewQuerySignal
-} from "./chunk-KM6KLH7M.js";
+} from "./chunk-UQVCVPTQ.js";
 import "./chunk-PZQLIUCM.js";
 import "./chunk-7YWLATDR.js";
 import {
@@ -2110,22 +2122,22 @@ var routes = [{
     },
     {
       path: "home",
-      loadComponent: () => import("./chunk-LZ7XHDBT.js").then((m) => m.ApplicationComponent)
+      loadComponent: () => import("./chunk-NRVTJGYR.js").then((m) => m.ApplicationComponent)
     },
     {
       path: "recipes",
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-O3KI3EUJ.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-AUYMA3TU.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-3HWEBXF7.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-3HWEBXF7.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2135,7 +2147,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-3HWEBXF7.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2145,7 +2157,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-6V7BZXFM.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-RDLPHYNI.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2158,15 +2170,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-43LWPDS4.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-TAHX23EX.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-3KPCDPBT.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-3KPCDPBT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2176,7 +2188,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-3KPCDPBT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2201,11 +2213,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-MSFYXQ4C.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-2XMQGSYK.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-KCN7KJNW.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-HRE6PC2S.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2235,7 +2247,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-R2M5LSWV.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-WXMS546C.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2245,15 +2257,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-GYJ2N4QP.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-M5Q47GMZ.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-5WJWYDIQ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-DAURA5GF.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-5WJWYDIQ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-DAURA5GF.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2262,15 +2274,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-EB544KQ6.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-JXPQVZSG.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-6AL4KDRF.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-J2Y3XS4D.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-6AL4KDRF.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-J2Y3XS4D.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2281,7 +2293,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-FWOATQUA.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-RPDRPE2T.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2289,25 +2301,25 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-AEYVJTOI.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-JNPDR5JB.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-MUQN6PG3.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-CXVUECDX.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
-          loadComponent: () => import("./chunk-EED6KCB6.js").then((m) => m.ArticleComponent)
+          loadComponent: () => import("./chunk-BHGG4NAD.js").then((m) => m.ArticleComponent)
         }
       ]
     },
     {
       path: "dev",
-      loadComponent: () => import("./chunk-IGQ64NXK.js").then((m) => m.ColorPaletteComponent)
+      loadComponent: () => import("./chunk-BWUHHQSI.js").then((m) => m.ColorPaletteComponent)
     },
     {
       path: "**",
-      loadComponent: () => import("./chunk-D2ZFKQYT.js").then((m) => m.ErrorPage404Component)
+      loadComponent: () => import("./chunk-XUMZHO7V.js").then((m) => m.ErrorPage404Component)
     }
   ]
 }];
@@ -2836,7 +2848,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-GUCW6BTY.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-PNL5P4BX.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
@@ -10819,6 +10831,7 @@ var appInitializer = () => {
   const categoryRepository = inject(CategoryProductsRepository);
   const recipeCategoryRepository = inject(CategoryRecipesRepository);
   const docsService = inject(DocsService);
+  const faqService = inject(FaqService);
   const settingsService = inject(SettingsService);
   const userService = inject(UserService);
   const demoService = inject(DemoService);
@@ -10830,10 +10843,14 @@ var appInitializer = () => {
   if (isDemoFromQueryParams) {
     demoService.switchOnDemoMode();
   }
+  const docsResources = [
+    faqService.init(),
+    docsService.init()
+  ];
   return Promise.all([
     categoryRepository.preloadCategories(),
     recipeCategoryRepository.preloadCategories(),
-    docsService.init().finally(() => indexDbService.initIndexes()),
+    Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     settingsService.loadSettings().then((settings) => {
       settingsService.changeLang(settings.getSetting("lang")?.data || "en");
       if (localStorage.getItem("logoBase64") === null) {
