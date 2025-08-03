@@ -1,39 +1,27 @@
 [
   {
     "type": "file",
-    "name": "01-main[en].md",
+    "name": "01-offline-and-installation[en].md",
     "language": "en",
-    "path": "01-main[en].md",
-    "title": "🧠 General",
+    "path": "01-offline-and-installation[en].md",
+    "title": "📶 Offline & Installation",
     "order": 0,
     "data": {
-      "title": "🧠 General"
+      "title": "📶 Offline & Installation"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Do I need an internet connection to use the app?</summary><div><p>No. The app works fully offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Does the app work on phones?</summary><div><p>Yes. It works like a regular app when installed.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What does it mean to install the app?</summary><div><p>You can install it as a PWA. It will behave like a normal app.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>Do I need an internet connection to use the app?</summary><div><p>No. The app works fully offline. Internet is only needed for updates, optional sync, or cloud storage.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What does it mean to “install as an app”?</summary><div><p>It means you&#39;re using a PWA — a Progressive Web App. It&#39;s installed directly from the site, runs like a native app, launches from your menu or home screen, and doesn&#39;t require an app store.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are there any technical differences from native apps?</summary><div><p>Minor differences mostly relate to background processes and system integration. For recipes and invoices, the experience is the same.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What happens if I lose internet while using the app?</summary><div><p>Nothing — the app continues working. It&#39;s built offline-first, so all functions remain available.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Why is the app so fast?</summary><div><p>Because everything is processed locally on your device. No network delays.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
-    "name": "01-main[pt].md",
+    "name": "01-offline-and-installation[pt].md",
     "language": "pt",
-    "path": "01-main[pt].md",
-    "title": "🧠 Geral",
+    "path": "01-offline-and-installation[pt].md",
+    "title": "📶 Offline e Instalação",
     "order": 0,
     "data": {
-      "title": "🧠 Geral"
+      "title": "📶 Offline e Instalação"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Preciso de internet para usar o aplicativo?</summary><div><p>Não. O aplicativo funciona totalmente offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Funciona no celular?</summary><div><p>Sim. Funciona como um app normal quando instalado.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que significa instalar o aplicativo?</summary><div><p>Você pode instalar como PWA. Ele funcionará como um app nativo.</p>\n</div></details>\n\n"
-  },
-  {
-    "type": "file",
-    "name": "01-main[ru].md",
-    "language": "ru",
-    "path": "01-main[ru].md",
-    "title": "🧠 Основное",
-    "order": 0,
-    "data": {
-      "title": "🧠 Основное"
-    },
-    "html": "<details class=\"lg-accordion\"><summary>Нужно ли подключение к интернету для работы?</summary><div><p>Нет. Приложение работает полностью офлайн.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Приложение работает на телефоне?</summary><div><p>Да. Оно работает как обычное приложение, если вы установите его.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что означает установка приложения?</summary><div><p>Вы можете установить приложение как PWA, и оно будет запускаться из меню, как любое другое.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>Preciso de internet para usar o app?</summary><div><p>Não. O aplicativo funciona totalmente offline. A internet só é necessária para atualizações ou sincronização opcional.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que significa “instalar como aplicativo”?</summary><div><p>Significa que você está usando um PWA — um aplicativo progressivo. Ele é instalado direto do site e funciona como um app nativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Existe alguma diferença técnica dos apps nativos?</summary><div><p>Algumas diferenças menores, como notificações ou processos em segundo plano. Na prática, funciona igual.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que acontece se a internet cair?</summary><div><p>Nada. O app continuará funcionando normalmente.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Por que o aplicativo é tão rápido?</summary><div><p>Tudo é processado localmente. Não depende de conexão com servidores.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
@@ -49,6 +37,30 @@
   },
   {
     "type": "file",
+    "name": "02-storage-and-safety[en].md",
+    "language": "en",
+    "path": "02-storage-and-safety[en].md",
+    "title": "💾 Data & Safety",
+    "order": 0,
+    "data": {
+      "title": "💾 Data & Safety"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Where is my data stored?</summary><div><p>Your data is stored locally on your device. If installed as a standalone app, data is kept with it — no server involved.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Will my data be lost if I clear browser data?</summary><div><p>If used in-browser, clearing cache or history may remove data. Installed apps store data separately.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What happens if I uninstall the app?</summary><div><p>Like any other app, uninstalling removes its local data. We recommend enabling sync or exporting backups.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is the app safe to use?</summary><div><p>Yes. It runs locally and doesn’t send anything to servers unless you choose to sync.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Who can access my data?</summary><div><p>Only you. Sync is encrypted and optional. Nothing is uploaded without your consent.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[pt].md",
+    "language": "pt",
+    "path": "02-storage-and-safety[pt].md",
+    "title": "💾 Armazenamento e Segurança",
+    "order": 0,
+    "data": {
+      "title": "💾 Armazenamento e Segurança"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Onde os dados são armazenados?</summary><div><p>Os dados ficam no seu dispositivo. Se o app estiver instalado, os dados ficam com ele — sem uso de servidores.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Perco os dados se limpar o navegador?</summary><div><p>Sim, se estiver usando no navegador. Mas apps instalados mantêm os dados separadamente.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que acontece ao desinstalar?</summary><div><p>Os dados locais são apagados, como em qualquer app. Recomendamos ativar backup ou sincronização.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>É seguro usar o app?</summary><div><p>Sim. Nada é enviado a servidores sem sua permissão.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Quem tem acesso aos meus dados?</summary><div><p>Só você. A sincronização é opcional e criptografada.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
     "name": "02-storage-and-safety[ru].md",
     "language": "ru",
     "path": "02-storage-and-safety[ru].md",
@@ -61,39 +73,27 @@
   },
   {
     "type": "file",
-    "name": "02-storage[en].md",
+    "name": "03-features-and-pricing[en].md",
     "language": "en",
-    "path": "02-storage[en].md",
-    "title": "💾 Data Storage",
+    "path": "03-features-and-pricing[en].md",
+    "title": "💰 Features & Pricing",
     "order": 0,
     "data": {
-      "title": "💾 Data Storage"
+      "title": "💰 Features & Pricing"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Where are my data stored?</summary><div><p>All data is stored locally on your device.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Will my data be lost if I clear the browser?</summary><div><p>Yes, unless installed. PWA stores data separately.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Who has access to my data?</summary><div><p>Only you. Data stays on your device unless synced.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>What features are free?</summary><div><p>All basic features — recipes, product management, cost calculation, invoice generation, offline access — are free.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What features are paid?</summary><div><p>Cloud sync, backups, PDF export with templates, analytics, team access and customization.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How much data can I store?</summary><div><p>Usually tens of megabytes — enough for hundreds of recipes and products. Installed PWAs are more persistent.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How often does the app update?</summary><div><p>Regularly. Installed apps auto-update when online.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What if development stops?</summary><div><p>You can still use the installed version — it doesn&#39;t rely on servers.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
-    "name": "02-storage[pt].md",
+    "name": "03-features-and-pricing[pt].md",
     "language": "pt",
-    "path": "02-storage[pt].md",
-    "title": "💾 Armazenamento",
+    "path": "03-features-and-pricing[pt].md",
+    "title": "💰 Recursos e Preços",
     "order": 0,
     "data": {
-      "title": "💾 Armazenamento"
+      "title": "💰 Recursos e Preços"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Onde meus dados são armazenados?</summary><div><p>Todos os dados ficam localmente no seu dispositivo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Se eu limpar o navegador, perco os dados?</summary><div><p>Sim, a menos que esteja instalado como PWA.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Quem tem acesso aos meus dados?</summary><div><p>Apenas você. Sem sincronização, os dados não saem do dispositivo.</p>\n</div></details>\n\n"
-  },
-  {
-    "type": "file",
-    "name": "02-storage[ru].md",
-    "language": "ru",
-    "path": "02-storage[ru].md",
-    "title": "💾 Хранение данных",
-    "order": 0,
-    "data": {
-      "title": "💾 Хранение данных"
-    },
-    "html": "<details class=\"lg-accordion\"><summary>Где хранятся мои данные?</summary><div><p>Данные хранятся локально на устройстве, без отправки на сервер.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Удалятся ли данные при очистке браузера?</summary><div><p>Да, если не установлено как приложение. PWA сохраняет данные отдельно.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Кто имеет доступ к моим данным?</summary><div><p>Только вы. Без синхронизации данные не покидают ваше устройство.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>Quais recursos são gratuitos?</summary><div><p>Tudo o que é essencial: receitas, produtos, cálculo de custo, faturas e uso offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que é pago?</summary><div><p>Sincronização, backups, exportação em PDF com modelos, relatórios, equipe e personalização.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Quanto posso armazenar?</summary><div><p>Várias dezenas de MB, o suficiente para centenas de receitas. PWAs instalados são mais persistentes.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Com que frequência há atualizações?</summary><div><p>O app atualiza regularmente. Versões instaladas se atualizam sozinhas.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>E se o app deixar de ser mantido?</summary><div><p>Você poderá continuar usando a versão instalada sem problemas.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
@@ -109,39 +109,27 @@
   },
   {
     "type": "file",
-    "name": "03-offline[en].md",
+    "name": "04-accounts-and-support[en].md",
     "language": "en",
-    "path": "03-offline[en].md",
-    "title": "⚡ Offline & Speed",
+    "path": "04-accounts-and-support[en].md",
+    "title": "🛠️ Accounts & Support",
     "order": 0,
     "data": {
-      "title": "⚡ Offline & Speed"
+      "title": "🛠️ Accounts & Support"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Does the app work offline?</summary><div><p>Yes. All features are available offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Why is the app so fast?</summary><div><p>Everything runs locally on your device.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What happens if I lose connection?</summary><div><p>Nothing. The app continues to work.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>Can I transfer my data to another device?</summary><div><p>Yes, by exporting manually or using cloud sync (paid feature).</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Can I use it on multiple devices?</summary><div><p>Yes, with sync enabled — changes are shared across devices.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is support available?</summary><div><p>Yes. We respond via email, Telegram, and in-app help.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are there plans for integrations?</summary><div><p>Yes — starting with PDF/Excel export, followed by accounting and payment system integrations.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
-    "name": "03-offline[pt].md",
+    "name": "04-accounts-and-support[pt].md",
     "language": "pt",
-    "path": "03-offline[pt].md",
-    "title": "⚡ Offline e Desempenho",
+    "path": "04-accounts-and-support[pt].md",
+    "title": "🛠️ Contas e Suporte",
     "order": 0,
     "data": {
-      "title": "⚡ Offline e Desempenho"
+      "title": "🛠️ Contas e Suporte"
     },
-    "html": "<details class=\"lg-accordion\"><summary>Funciona sem internet?</summary><div><p>Sim. Todos os recursos funcionam offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Por que é tão rápido?</summary><div><p>Tudo é processado localmente.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que acontece se a internet cair?</summary><div><p>Nada. O aplicativo continua funcionando.</p>\n</div></details>\n\n"
-  },
-  {
-    "type": "file",
-    "name": "03-offline[ru].md",
-    "language": "ru",
-    "path": "03-offline[ru].md",
-    "title": "⚡ Оффлайн и производительность",
-    "order": 0,
-    "data": {
-      "title": "⚡ Оффлайн и производительность"
-    },
-    "html": "<details class=\"lg-accordion\"><summary>Работает ли приложение без интернета?</summary><div><p>Да. Все функции доступны офлайн.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Почему приложение работает быстро?</summary><div><p>Потому что всё обрабатывается локально, без сервера.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что если интернет отключится во время работы?</summary><div><p>Ничего. Приложение продолжит работать.</p>\n</div></details>\n\n"
+    "html": "<details class=\"lg-accordion\"><summary>Posso transferir meus dados?</summary><div><p>Sim, exportando manualmente ou com sincronização (paga).</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Posso usar em vários dispositivos?</summary><div><p>Sim, com sincronização ativada, as mudanças são compartilhadas.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Existe suporte?</summary><div><p>Sim. Respondemos por e-mail, Telegram e dentro do app.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Planejam integrações?</summary><div><p>Sim — começando com exportação e depois integração com contabilidade e pagamentos.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
@@ -154,6 +142,30 @@
       "title": "🛠️ Учётные записи и поддержка"
     },
     "html": "<details class=\"lg-accordion\"><summary>Я смогу перенести данные на другое устройство?</summary><div><p>Да. Вы можете экспортировать их вручную или использовать облачную синхронизацию (в платной версии).</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Можно ли работать с несколькими устройствами?</summary><div><p>Да, с помощью синхронизации. Все изменения будут автоматически подхватываться, если устройство подключено к интернету.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Есть ли поддержка?</summary><div><p>Да. Мы отвечаем на все вопросы по электронной почте, через Telegram и через встроенную форму поддержки в приложении.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Планируется ли интеграция с другими сервисами (например, бухгалтерией)?</summary><div><p>Да, такие планы есть. Сначала — экспорт в PDF и Excel, затем — интеграции с онлайн-бухгалтериями и платёжными системами.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[en].md",
+    "language": "en",
+    "path": "05-how-to-install[en].md",
+    "title": "🧩 Installation Guide",
+    "order": 0,
+    "data": {
+      "title": "🧩 Installation Guide"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>📱 Android (Chrome, Samsung Internet)</summary><div><ol>\n<li>Open the site.\\n2. Tap the menu (⋮).\\n3. Select “Install app” or “Add to Home screen”.\\n4. Confirm.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 Android (Firefox)</summary><div><p>Firefox does not support PWA installation. Use Chrome instead.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 iOS (Safari)</summary><div><ol>\n<li>Open the site in Safari.\\n2. Tap “Share”.\\n3. Tap “Add to Home Screen”.\\n4. Confirm.\\n\\n📌 Chrome/Firefox on iOS do not support PWA.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Chrome, Edge)</summary><div><ol>\n<li>Open the site.\\n2. Click the “Install app” icon in the address bar.\\n3. Confirm.\\nApp will appear in Start menu.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Firefox)</summary><div><p>Firefox does not support PWA. Use Chrome or Edge.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Chrome)</summary><div><ol>\n<li>Open the site.\\n2. Click the “Install app” icon.\\n3. App launches separately and appears in Launchpad.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Safari, Firefox)</summary><div><p>Safari and Firefox on macOS do not support PWA installation. Use Chrome.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[pt].md",
+    "language": "pt",
+    "path": "05-how-to-install[pt].md",
+    "title": "🧩 Como Instalar",
+    "order": 0,
+    "data": {
+      "title": "🧩 Como Instalar"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>📱 Android (Chrome, Samsung Internet)</summary><div><ol>\n<li>Acesse o site.\\n2. Toque no menu (⋮).\\n3. Escolha “Instalar app” ou “Adicionar à tela inicial”.\\n4. Confirme.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 Android (Firefox)</summary><div><p>Firefox não suporta instalação de PWA. Use o Chrome.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 iOS (Safari)</summary><div><ol>\n<li>Acesse o site no Safari.\\n2. Toque em “Compartilhar”.\\n3. Escolha “Adicionar à Tela de Início”.\\n4. Confirme.\\n\\n📌 Chrome/Firefox no iOS não suportam PWA.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Chrome, Edge)</summary><div><ol>\n<li>Acesse o site.\\n2. Clique no ícone “Instalar app” na barra de endereços.\\n3. Confirme.\\nO app aparecerá no menu Iniciar.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Firefox)</summary><div><p>Firefox não suporta PWA. Use Chrome ou Edge.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Chrome)</summary><div><ol>\n<li>Acesse o site.\\n2. Clique em “Instalar app”.\\n3. O app será aberto e aparecerá no Launchpad.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Safari, Firefox)</summary><div><p>Safari e Firefox no macOS não suportam PWA. Use o Chrome.</p>\n</div></details>\n\n"
   },
   {
     "type": "file",
