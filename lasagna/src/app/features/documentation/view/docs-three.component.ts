@@ -190,7 +190,7 @@ export class DocsThreeComponent
         const height = rect.height;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-        this.placeholderHeight.set(height);
+        this.placeholderHeight.set(height + 32);
         this.position.set({
           top: rect.top + scrollTop,
           left: rect.left + scrollLeft,
