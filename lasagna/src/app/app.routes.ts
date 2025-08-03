@@ -235,13 +235,13 @@ export const routes: Routes = [{
 
     {
       path: 'docs',
-      loadComponent: () => import('./shared/view/documentation/documentation-container.component')
+      loadComponent: () => import('./features/documentation/view/documentation-container.component')
         .then(m => m.DocumentationContainerComponent),
       children: [
         {
           path: '**',
 
-          loadComponent: () => import('./shared/view/documentation/article.component')
+          loadComponent: () => import('./features/documentation/view/article.component')
             .then(m => m.ArticleComponent),
         }
       ]

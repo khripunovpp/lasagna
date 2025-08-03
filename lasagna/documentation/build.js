@@ -1,19 +1,14 @@
-// 📁 docs-generator/index.js
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 const {marked} = require('marked');
 
-const inputDir = '/markdowns';
-const outputDir = './public/docs';
-const treeOutput = path.join(__dirname, '..', outputDir, 'tree.json');
-const dataOutput = path.join(__dirname, '..', outputDir, 'data.json');
-const metaOutput = path.join(__dirname, '..', outputDir, 'meta.json');
+function parseLanguageFromName(name) {
+  const match = name.match(/\[([a-z]{2})\]/);
+  return match ? match[1] : 'en';
+}
 
-const tree = [];
-const docs = [];
-
-function walk(dir, base = '', treeRef) {
+function walkAndParse(dir, base = '', treeRef = [], docs = []) {
   const entries = fs.readdirSync(dir);
 
   entries.forEach(entry => {
@@ -24,11 +19,11 @@ function walk(dir, base = '', treeRef) {
     if (stat.isDirectory()) {
       const folderNode = {type: 'folder', name: entry, children: []};
       treeRef.push(folderNode);
-      walk(fullPath, relPath, folderNode.children);
+      walkAndParse(fullPath, relPath, folderNode.children, docs);
     } else if (entry.endsWith('.md')) {
       const raw = fs.readFileSync(fullPath, 'utf-8');
       const {data, content} = matter(raw);
-      const html = marked(content);
+      const html = marked.parse(content);
 
       const fileNode = {
         type: 'file',
@@ -50,17 +45,32 @@ function walk(dir, base = '', treeRef) {
   });
 }
 
-function parseLanguageFromName(name) {
-  // 'start-page[en].md' match exact en
-  const match = name.match(/\[([a-z]{2})\]/);
-  return match ? match[1] : 'en';
+function generateDocumentation({inputDir, outputDir}) {
+  const fullInputDir = path.join(__dirname, inputDir);
+  const fullOutputDir = path.join(__dirname, '..', outputDir);
+
+  const tree = [];
+  const docs = [];
+
+  fs.mkdirSync(fullOutputDir, {recursive: true});
+
+  walkAndParse(fullInputDir, '', tree, docs);
+
+  fs.writeFileSync(path.join(fullOutputDir, 'tree.json'), JSON.stringify(tree, null, 2));
+  fs.writeFileSync(path.join(fullOutputDir, 'data.json'), JSON.stringify(docs, null, 2));
+  fs.writeFileSync(path.join(fullOutputDir, 'meta.json'), JSON.stringify({updatedAt: Date.now()}, null, 2));
+
+  console.log(`✅ Сгенерировано: ${outputDir}`);
 }
 
-fs.mkdirSync(outputDir, {recursive: true});
-walk(__dirname + inputDir, '', tree);
+// Генерация для DOCS
+generateDocumentation({
+  inputDir: '/markdowns',
+  outputDir: './public/docs'
+});
 
-fs.writeFileSync(treeOutput, JSON.stringify(tree, null, 2));
-fs.writeFileSync(dataOutput, JSON.stringify(docs, null, 2));
-fs.writeFileSync(metaOutput, JSON.stringify({updatedAt: Date.now()}, null, 2));
-
-console.log('📘 Документация сгенерирована');
+// Генерация для FAQ
+generateDocumentation({
+  inputDir: '/faq',
+  outputDir: './public/faq'
+});

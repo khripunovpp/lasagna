@@ -1,0 +1,101 @@
+[
+  {
+    "type": "file",
+    "name": "01-main[en].md",
+    "language": "en",
+    "path": "01-main[en].md",
+    "title": "🧠 General",
+    "order": 0,
+    "data": {
+      "title": "🧠 General"
+    }
+  },
+  {
+    "type": "file",
+    "name": "01-main[pt].md",
+    "language": "pt",
+    "path": "01-main[pt].md",
+    "title": "🧠 Geral",
+    "order": 0,
+    "data": {
+      "title": "🧠 Geral"
+    }
+  },
+  {
+    "type": "file",
+    "name": "01-main[ru].md",
+    "language": "ru",
+    "path": "01-main[ru].md",
+    "title": "🧠 Основное",
+    "order": 0,
+    "data": {
+      "title": "🧠 Основное"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage[en].md",
+    "language": "en",
+    "path": "02-storage[en].md",
+    "title": "💾 Data Storage",
+    "order": 0,
+    "data": {
+      "title": "💾 Data Storage"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage[pt].md",
+    "language": "pt",
+    "path": "02-storage[pt].md",
+    "title": "💾 Armazenamento",
+    "order": 0,
+    "data": {
+      "title": "💾 Armazenamento"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage[ru].md",
+    "language": "ru",
+    "path": "02-storage[ru].md",
+    "title": "💾 Хранение данных",
+    "order": 0,
+    "data": {
+      "title": "💾 Хранение данных"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-offline[en].md",
+    "language": "en",
+    "path": "03-offline[en].md",
+    "title": "⚡ Offline & Speed",
+    "order": 0,
+    "data": {
+      "title": "⚡ Offline & Speed"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-offline[pt].md",
+    "language": "pt",
+    "path": "03-offline[pt].md",
+    "title": "⚡ Offline e Desempenho",
+    "order": 0,
+    "data": {
+      "title": "⚡ Offline e Desempenho"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-offline[ru].md",
+    "language": "ru",
+    "path": "03-offline[ru].md",
+    "title": "⚡ Оффлайн и производительность",
+    "order": 0,
+    "data": {
+      "title": "⚡ Оффлайн и производительность"
+    }
+  }
+]

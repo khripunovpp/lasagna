@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {DocsService} from '../../service/services/docs.service';
 import {defer, filter, map, startWith, switchMap} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
+import {USER_LANGUAGE} from '../../settings/service/providers/user-language.token';
+import {DocsService} from '../service/docs.service';
 
 @Component({
   selector: 'lg-article',

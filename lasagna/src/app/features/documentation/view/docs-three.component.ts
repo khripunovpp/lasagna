@@ -1,12 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Renderer2, signal, viewChild} from '@angular/core';
 import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
-import {DocsService} from '../../service/services';
 import {NavigationEnd, Router, RouterLink} from '@angular/router';
-import {ButtonComponent} from '../ui/layout/button.component';
-import {DropdownComponent} from '../ui/dropdown/dropdown.component';
 import {MatIcon} from '@angular/material/icon';
 import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
+import {DropdownComponent} from '../../../shared/view/ui/dropdown/dropdown.component';
+import {DocsService} from '../service/docs.service';
+
 
 @Component({
   selector: 'lg-docs-three',

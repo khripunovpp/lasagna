@@ -127,7 +127,6 @@ import {
   Directive,
   ElementRef,
   ErrorHandler,
-  HostBinding,
   HostListener,
   Inject,
   Injectable,
@@ -174,7 +173,6 @@ import {
   ɵsetClassDebugInfo,
   ɵɵProvidersFeature,
   ɵɵadvance,
-  ɵɵattribute,
   ɵɵclassProp,
   ɵɵconditional,
   ɵɵconditionalCreate,
@@ -10991,8 +10989,13 @@ function PwaInstallComponent_Conditional_0_Template(rf, ctx) {
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.installPWA());
     });
-    \u0275\u0275text(1, "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C PWA");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
     \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 1, "pwa.install"), " ");
   }
 }
 var PwaInstallComponent = class _PwaInstallComponent {
@@ -11024,25 +11027,29 @@ var PwaInstallComponent = class _PwaInstallComponent {
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PwaInstallComponent, selectors: [["lg-pwa-install"]], decls: 1, vars: 1, consts: [[3, "click"]], template: function PwaInstallComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275conditionalCreate(0, PwaInstallComponent_Conditional_0_Template, 2, 0, "button");
+      \u0275\u0275conditionalCreate(0, PwaInstallComponent_Conditional_0_Template, 3, 3, "button");
     }
     if (rf & 2) {
       \u0275\u0275conditional(ctx.showButton ? 0 : -1);
     }
-  }, styles: ["\n\nlg-pwa-install[_ngcontent-%COMP%] {\n  display: flex;\n}\nbutton[_ngcontent-%COMP%] {\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  width: 100%;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-color: #0056b3;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"] });
+  }, dependencies: [TranslatePipe], styles: ["\n\nlg-pwa-install[_ngcontent-%COMP%] {\n  display: flex;\n}\nbutton[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  position: fixed;\n  bottom: 15px;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  left: 0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PwaInstallComponent, [{
     type: Component,
     args: [{ selector: "lg-pwa-install", standalone: true, template: `
-      @if (showButton) {
-          <button (click)="installPWA()">\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C PWA</button>
-      }
-  `, styles: ["/* angular:styles/component:scss;073bcb037447a5e84d38a2f29c1f2c3ace41e5ab020445f244189f45e8846203;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/pwa-install.component.ts */\nlg-pwa-install {\n  display: flex;\n}\nbutton {\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  width: 100%;\n}\nbutton:hover {\n  background-color: #0056b3;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
+    @if (showButton) {
+      <button (click)="installPWA()">
+        {{ 'pwa.install' | translate }}
+      </button>
+    }
+  `, imports: [
+      TranslatePipe
+    ], styles: ["/* angular:styles/component:scss;4e82e46478bfd5c3f06c1e006fecead10876800e1b89369a3c574b96333a414a;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/pwa-install.component.ts */\nlg-pwa-install {\n  display: flex;\n}\nbutton {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  position: fixed;\n  bottom: 15px;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  left: 0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\nbutton:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 30 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 42 });
 })();
 
 // src/app/features/global-search/global-search.component.ts
@@ -11744,22 +11751,28 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
   today = /* @__PURE__ */ new Date();
   lastBackupDate = computed(() => this.storedBackupDate() ? new Date(this.storedBackupDate()) : void 0);
   showButton = computed(() => {
+    if (location.hostname === "localhost") {
+      return false;
+    }
     const sinceDate = this.userService.isUserFirstDate;
     if (!sinceDate) {
       return false;
     }
-    const sinceDateDays = Math.floor((this.today.getTime() - sinceDate.getTime()) / this.oneDayInMilliseconds);
-    if (sinceDateDays < 1) {
+    const todayTs = this.today.getTime();
+    const sinceDateTs = sinceDate.getTime();
+    const diffInMilliseconds = todayTs - sinceDateTs;
+    if (diffInMilliseconds < 0) {
+      return false;
+    }
+    if (diffInMilliseconds < this.oneDayInMilliseconds) {
       return false;
     }
     if (!this.lastBackupDate()) {
       return true;
     }
-    return this.today.getTime() - this.lastBackupDate().getTime() > this.oneDayInMilliseconds;
+    const lastBackupDateTs = this.lastBackupDate().getTime();
+    return lastBackupDateTs < sinceDateTs || lastBackupDateTs < todayTs - this.oneDayInMilliseconds;
   });
-  get hidden() {
-    return location.hostname === "localhost" ? "true" : void 0;
-  }
   hide() {
     this.storedBackupDate.set(null);
   }
@@ -11771,14 +11784,11 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
   static \u0275fac = function LastBackupInformerComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _LastBackupInformerComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LastBackupInformerComponent, selectors: [["lg-last-backup-informer"]], hostVars: 1, hostBindings: function LastBackupInformerComponent_HostBindings(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LastBackupInformerComponent, selectors: [["lg-last-backup-informer"]], hostBindings: function LastBackupInformerComponent_HostBindings(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275listener("click", function LastBackupInformerComponent_click_HostBindingHandler($event) {
         return ctx.onClick($event);
       });
-    }
-    if (rf & 2) {
-      \u0275\u0275attribute("hidden", ctx.hidden);
     }
   }, decls: 1, vars: 1, consts: [[3, "routerLink", "queryParams"], [3, "click", "routerLink", "queryParams"]], template: function LastBackupInformerComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -11792,7 +11802,7 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
     TitleCasePipe,
     RouterLink,
     TranslatePipe
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\na[_ngcontent-%COMP%] {\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  width: 100%;\n  text-align: center;\n  text-decoration: none;\n}\na[_ngcontent-%COMP%]:hover {\n  background-color: #0056b3;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  top: 50%;\n  left: 0;\n  right: 0;\n  transform: translateY(-50%);\n}\na[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\na[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LastBackupInformerComponent, [{
@@ -11814,17 +11824,14 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
       TitleCasePipe,
       RouterLink,
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;6ca3a7168828dcad4ff1b6548a1ea0135d4cfb434d722e2a021a0b422fc6665a;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/last-backup-informer.component.ts */\n:host {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\na {\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  width: 100%;\n  text-align: center;\n  text-decoration: none;\n}\na:hover {\n  background-color: #0056b3;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
-  }], () => [], { hidden: [{
-    type: HostBinding,
-    args: ["attr.hidden"]
-  }], onClick: [{
+    ], styles: ["/* angular:styles/component:scss;84d4116ee8dcfd8aea765278a9201fa37a73f09c9a692b5075c22f9596536d2d;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/last-backup-informer.component.ts */\n:host {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  top: 50%;\n  left: 0;\n  right: 0;\n  transform: translateY(-50%);\n}\na {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\na:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
+  }], () => [], { onClick: [{
     type: HostListener,
     args: ["click", ["$event"]]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/shared/view/ui/last-backup-informer.component.ts", lineNumber: 56 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/shared/view/ui/last-backup-informer.component.ts", lineNumber: 59 });
 })();
 
 // src/app/shared/view/ui/font-tester.component.ts

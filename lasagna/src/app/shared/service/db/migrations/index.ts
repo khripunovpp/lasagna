@@ -110,7 +110,7 @@ export const migrations: {
         // Добавляем флаг system к существующим категориям продуктов
         const productCategoriesTable = tx.table(Stores.PRODUCTS_CATEGORIES);
         const productCategories = await productCategoriesTable.toArray();
-        
+
         await Promise.all(productCategories.map((category: any) => {
           if (category.system === undefined) {
             return productCategoriesTable.update(category.uuid, { system: false });
@@ -121,7 +121,7 @@ export const migrations: {
         // Добавляем флаг system к существующим категориям рецептов
         const recipeCategoriesTable = tx.table(Stores.RECIPES_CATEGORIES);
         const recipeCategories = await recipeCategoriesTable.toArray();
-        
+
         await Promise.all(recipeCategories.map((category: any) => {
           if (category.system === undefined) {
             return recipeCategoriesTable.update(category.uuid, { system: false });
@@ -301,6 +301,23 @@ export const migrations: {
       [Stores.RECIPES_CATEGORIES]: '++uuid,name',
       [Stores.INDICES]: '++uuid',
       [Stores.DOCUMENTATION]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+      [Stores.SETTINGS]: '++key',
+      [Stores.INVOICES]: '++uuid',
+      [Stores.CREDENTIALS]: '++uuid,type',
+    },
+  },
+  {
+    version: 17,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
       [Stores.TAGS]: '++name',
       [Stores.TAXES]: '++uuid',
       [Stores.SETTINGS]: '++key',

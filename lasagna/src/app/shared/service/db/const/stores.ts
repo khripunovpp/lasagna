@@ -9,6 +9,7 @@ export enum Stores {
   RECIPES_CATEGORIES = 'categoryRecipesStore',
   INDICES = 'indicesStore',
   DOCUMENTATION = 'documentation',
+  FAQ = 'faq',
   TAGS = 'tags',
   TAXES = 'taxes',
   SETTINGS = 'settings',

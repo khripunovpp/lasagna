@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754235823736,
+  "timestamp": 1754238658087,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -329,12 +329,12 @@
     "https://khripunovpp.github.io/lasagna/img/icon.png": "5fdca579260077f794f4f05365060fa37cebac41",
     "https://khripunovpp.github.io/lasagna/index.html": "876ad931028c4df6fdcf2c9967854015b2d945fc",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
-    "https://khripunovpp.github.io/lasagna/main.js": "03ae8cd6e209414f45b244d1fbef9a22a612444c",
+    "https://khripunovpp.github.io/lasagna/main.js": "6df1387e23ae619fafe11743b301d951cff2c4f9",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8cd1c28d280a08d7ff10306717f454a84204da42",
     "https://khripunovpp.github.io/lasagna/media/Inter18pt-Regular.woff2": "8abdb806484fc4302000105048cc3ea60db94d53",
     "https://khripunovpp.github.io/lasagna/media/Inter24pt-Bold.woff2": "96536670addcbcf631f65a86d7e11d820621cbe9",
     "https://khripunovpp.github.io/lasagna/media/material-icons.woff2": "aaae93b146d97737fabe87a6bc741113e6899ad3",
-    "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js": "fe13366ba76ae6a389aa906a0ae4fb847ca38cb4",
+    "https://khripunovpp.github.io/lasagna/pwa-update-compoent.js": "5c2ac95d3fbb21e486ee34064f1ce3081dbd7ee3",
     "https://khripunovpp.github.io/lasagna/styles.css": "14ec2c564f8d651e095238681c0c5d087600ca8c"
   },
   "navigationUrls": [

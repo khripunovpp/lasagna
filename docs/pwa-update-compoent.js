@@ -5,7 +5,6 @@ function createUpdateButton() {
   button.style.color = 'var(--text-color)';
   button.style.border = 'none';
   button.style.padding = '10px 20px';
-  button.style.paddingBottom = 'env(safe-area-inset-bottom,10px)';
   button.style.cursor = 'pointer';
   button.style.width = '100%';
   button.addEventListener('click', () => {
@@ -66,11 +65,13 @@ function createUpdateBanner() {
   const banner = document.createElement('div');
   banner.id = 'pwa-update-banner';
   banner.style.display = 'none';
+  banner.style.backgroundColor = 'var(--active-color)';
   banner.style.position = 'fixed';
   banner.style.zIndex = '8';
   banner.style.bottom = '0';
   banner.style.left = '0';
   banner.style.width = '100%';
+  banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
 
   return banner;
 }
@@ -145,6 +146,7 @@ if ('serviceWorker' in navigator) {
       }
 
       updateTimeoutLabel.style.display = 'block';
+      updateAppButton.style.display = 'none';
 
       const interval = setInterval(() => {
         if (secondsLeft <= 0) {

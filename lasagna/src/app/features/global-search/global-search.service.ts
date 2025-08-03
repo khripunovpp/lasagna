@@ -6,7 +6,8 @@ import {RecipesRepository} from '../recipes/service/recipes.repository';
 import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
 import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
 import {InvoicesRepository} from '@invoices/service/Invoices.repository';
-import {DocFile, DocsService} from '../../shared/service/services/docs.service';
+import {DocsService} from '../documentation/service/docs.service';
+import {DocFile} from '../documentation/service/docs-loader.service';
 
 export enum SearchResultContext {
   PRODUCT = 'product',

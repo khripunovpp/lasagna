@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/shared/view/ui/last-backup-informer.component.ts"],
-  "sourcesContent": ["\n    :host {\n      display: flex;\n      position: fixed;\n      z-index: 8;\n      bottom: 0;\n      left: 0;\n      right: 0;\n    }\n\n    a {\n      background-color: #007bff;\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      cursor: pointer;\n      width: 100%;\n      text-align: center;\n      text-decoration: none;\n    }\n\n    a:hover {\n      background-color: #0056b3;\n    }\n  "],
-  "mappings": ";AACI;AACE,WAAA;AACA,YAAA;AACA,WAAA;AACA,UAAA;AACA,QAAA;AACA,SAAA;;AAGF;AACE,oBAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,SAAA;AACA,cAAA;AACA,mBAAA;;AAGF,CAAA;AACE,oBAAA;;",
+  "sourcesContent": ["\n    :host {\n      display: flex;\n      position: fixed;\n      z-index: 8;\n      top: 50%;\n      left: 0;\n      right: 0;\n      transform: translateY(-50%);\n    }\n\n    a {\n      background-image: linear-gradient(45deg, #de2c51, #fff400);\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      cursor: pointer;\n      text-align: center;\n      text-decoration: none;\n      border-radius: 0 16px 16px 0;\n      background-size: calc(100% + 70px) 100%;\n      transition: background-position 0.3s ease;\n    }\n\n    a:hover {\n      background-position: -70px 0;\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;AACA,YAAA;AACA,WAAA;AACA,OAAA;AACA,QAAA;AACA,SAAA;AACA,aAAA,WAAA;;AAGF;AACE;IAAA;MAAA,KAAA;MAAA,OAAA;MAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,cAAA;AACA,mBAAA;AACA,iBAAA,EAAA,KAAA,KAAA;AACA,mBAAA,KAAA,KAAA,EAAA,MAAA;AACA,cAAA,oBAAA,KAAA;;AAGF,CAAA;AACE,uBAAA,MAAA;;",
   "names": []
 }
