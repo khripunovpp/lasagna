@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {DocsService} from '../../service/services/docs.service';
-
-import {ActivatedRoute, RouterOutlet} from '@angular/router';
-import {ContainerComponent} from '../ui/layout/container/container.component';
+import {RouterOutlet} from '@angular/router';
 import {DocsThreeComponent} from './docs-three.component';
+import {FaqComponent} from './faq.component';
+import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
 
 
 @Component({
@@ -12,15 +11,17 @@ import {DocsThreeComponent} from './docs-three.component';
     <lg-container [compact]="true">
       <lg-docs-three></lg-docs-three>
 
+      <lg-faq></lg-faq>
+
       <div class="lg-documentation-container__content">
         <router-outlet></router-outlet>
       </div>
     </lg-container>
   `,
-  host:{
+  host: {
     class: 'lg-documentation-container',
   },
-  styles:[`
+  styles: [`
     .lg-documentation-container__content {
       margin-top: 32px;
 
@@ -33,7 +34,8 @@ import {DocsThreeComponent} from './docs-three.component';
     RouterOutlet,
     ContainerComponent,
     DocsThreeComponent,
-    ],
+    FaqComponent,
+  ],
 })
 export class DocumentationContainerComponent {
 
