@@ -15,6 +15,7 @@
     "backup.restore-failed": "Ошибка при восстановлении резервной копии.",
     "backup.flushed": "Кеш очищен.",
     "backup.flush-failed": "Ошибка при очистке кеша.",
+    "backup.creating": "Создание резервной копии...",
     "categories.products.link-label": "Категории продуктов",
     "categories.recipes.link-label": "Категории рецептов",
     "categories.settings-title": "Категории",
@@ -139,6 +140,7 @@
     "onboarding.product.description": "Добавьте первый ингредиент или продукт на склад",
     "onboarding.recipe.label": "Добавьте первый рецепт",
     "onboarding.recipe.description": "Добавьте первый рецепт для начала работы",
+    "onboarding.welcome": "Привет! Добро пожаловать в Lasagna! Чтобы лучше познакомиться с приложением, пожалуйста, выполните следующие шаги.",
     "recipe.added-informer": "Вы только что добавили новый рецепт",
     "recipe.added-informer.link": "Посмотреть?",
     "jelly.type.powder": "Порошок",
@@ -261,6 +263,11 @@
     "settings.taxes.no-changes": "Нет изменений",
     "settings.taxes.add-tax": "Добавить налог",
     "settings.taxes.saved-success": "Настройки налогов обновлены",
+    "settings.taxes.add": "Добавить налог",
+    "settings.taxes.delete": "Удалить налог",
+    "settings.taxes.save": "Сохранить налоги",
+    "settings.taxes.cancel": "Отмена",
+    "settings.taxes.no-taxes": "Нет зарегистрированных налогов",
     "settings.taxes.percentage": "Процент",
     "settings.language.english": "Английский",
     "settings.language.portuguese": "Португальский",
@@ -398,5 +405,9 @@
     "footer.privacy": "Политикой конфиденциальности",
     "footer.terms": "Условиями использования",
     "footer.cookie": "Политикой использования файлов cookie",
-    "footer.and": "и"
+    "footer.and": "и",
+    "faq.title": "FAQ",
+    "pwa.install": "Установить приложение",
+    "recipe.form.category.placeholder": "Категория",
+    "recipe.form.tags.placeholder": "Теги"
 }

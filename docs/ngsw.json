@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754251835455,
+  "timestamp": 1754345673744,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -291,12 +291,12 @@
     "https://khripunovpp.github.io/lasagna/docs/tree.json": "d1060e05a3c7e59b123bbc46c8b6fba4e2254783",
     "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://khripunovpp.github.io/lasagna/google-analytics-consent.js": "bb68e1c86b77cf8cc334720ebd04fe03d3470189",
-    "https://khripunovpp.github.io/lasagna/i18n/en.json": "febe6fa2e719a3bbc2917a7b41c5b7a11e42648b",
+    "https://khripunovpp.github.io/lasagna/i18n/en.json": "a9f23c93bab08c471df198442e56ae27ea20247b",
     "https://khripunovpp.github.io/lasagna/i18n/en.mo": "74fdeca15ea186779040b8792bb4145aa2b776eb",
     "https://khripunovpp.github.io/lasagna/i18n/en.po": "1549ef9c7b4fe423b68ec6363e2467438746bb02",
-    "https://khripunovpp.github.io/lasagna/i18n/pt.json": "6e4b8b7bcfd1fbeb768f5b05efec1307cce9d141",
+    "https://khripunovpp.github.io/lasagna/i18n/pt.json": "af5fd318e720ff0aa9e6d34e8e101a81bbc633df",
     "https://khripunovpp.github.io/lasagna/i18n/pt.po": "3cd9a6c01939d6aa5cd7244b52bc336c387cf233",
-    "https://khripunovpp.github.io/lasagna/i18n/ru.json": "16b30cda84730482542d9cfb2f697fd8420bbf32",
+    "https://khripunovpp.github.io/lasagna/i18n/ru.json": "8653ae75c867c28fe35f5be61a8baafac5c00426",
     "https://khripunovpp.github.io/lasagna/i18n/ru.mo": "21237d126bac9a77aa87c3c50b803e19a4b15add",
     "https://khripunovpp.github.io/lasagna/i18n/ru.po": "22637426af481fd0ef6702fe2d724290e22a32b1",
     "https://khripunovpp.github.io/lasagna/img/10.2__iPad_landscape.png": "30798d822eab675de1ad3cc59098a6283a6f4b03",
