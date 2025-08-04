@@ -52,8 +52,14 @@ export class AnalyticsService {
    */
   trackEvent(eventName: string, parameters: AnalyticsEvent): void {
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', eventName, parameters);
-      console.log('Analytics event tracked:', eventName, parameters);
+      // Check if analytics storage is granted
+      const consent = localStorage.getItem('cookie-consent');
+      if (consent === 'all' || consent === 'analytics') {
+        window.gtag('event', eventName, parameters);
+        console.log('Analytics event tracked:', eventName, parameters);
+      } else {
+        console.warn('Analytics consent not granted for event:', eventName);
+      }
     } else {
       console.warn('Google Analytics not available for event:', eventName);
     }
@@ -77,7 +83,7 @@ export class AnalyticsService {
       Object.assign(eventData, additionalData);
     }
 
-    this.trackEvent('goal_complete', eventData);
+    this.trackEvent('recipe_created', eventData);
   }
 
   /**
@@ -98,7 +104,7 @@ export class AnalyticsService {
       Object.assign(eventData, additionalData);
     }
 
-    this.trackEvent('goal_complete', eventData);
+    this.trackEvent('product_created', eventData);
   }
 
   /**
@@ -123,7 +129,7 @@ export class AnalyticsService {
       Object.assign(eventData, additionalData);
     }
 
-    this.trackEvent('goal_complete', eventData);
+    this.trackEvent('recipe_calculated', eventData);
   }
 
   /**
@@ -148,7 +154,7 @@ export class AnalyticsService {
       Object.assign(eventData, additionalData);
     }
 
-    this.trackEvent('goal_complete', eventData);
+    this.trackEvent('invoice_created', eventData);
   }
 
   /**
@@ -198,6 +204,37 @@ export class AnalyticsService {
    */
   getGoals(): Record<string, AnalyticsGoal> {
     return this.GOALS;
+  }
+
+  /**
+   * Check if analytics is available and consented
+   */
+  isAnalyticsAvailable(): boolean {
+    if (typeof window === 'undefined') return false;
+    
+    const consent = localStorage.getItem('cookie-consent');
+    const hasConsent = consent === 'all' || consent === 'analytics';
+    const hasGtag = typeof window.gtag === 'function';
+    
+    return hasConsent && hasGtag;
+  }
+
+  /**
+   * Get analytics status for debugging
+   */
+  getAnalyticsStatus(): { available: boolean; consent: string | null; gtag: boolean } {
+    if (typeof window === 'undefined') {
+      return { available: false, consent: null, gtag: false };
+    }
+    
+    const consent = localStorage.getItem('cookie-consent');
+    const hasGtag = typeof window.gtag === 'function';
+    
+    return {
+      available: (consent === 'all' || consent === 'analytics') && hasGtag,
+      consent,
+      gtag: hasGtag
+    };
   }
 }
 
