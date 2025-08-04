@@ -26,6 +26,7 @@ import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateService} from '@ngx-translate/core';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {AnalyticsService} from '../../../../shared/service/analytics.service';
 
 
 @Component({
@@ -175,6 +176,7 @@ export class AddInvoiceComponent
     private _invoicesRepository: InvoicesRepository,
     private _browserTabTrackingService: BrowserTabTrackingService,
     private _translateService: TranslateService,
+    private _analyticsService: AnalyticsService,
   ) {
   }
 
@@ -268,6 +270,14 @@ export class AddInvoiceComponent
       this.invoiceBuilderService.invoice()?.uuid!,
       this.invoiceBuilderService.invoice()!
     ).then(() => {
+      // Track invoice edit analytics
+      this._analyticsService.trackUserEngagement(
+        'edit_invoice',
+        'invoice',
+        this.invoiceBuilderService.invoice()?.name,
+        1
+      );
+
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success('Invoice edited');
 
@@ -282,6 +292,18 @@ export class AddInvoiceComponent
       this.invoiceBuilderService.invoice()?.uuid!,
       this.invoiceBuilderService.invoice()!
     ).then(() => {
+      // Track invoice creation analytics
+      this._analyticsService.trackInvoiceCreated(
+        this.invoiceBuilderService.invoice()?.invoice_number,
+        this.invoiceBuilderService.invoice()?.total,
+        {
+          invoice_uuid: this.invoiceBuilderService.invoice()?.uuid,
+          invoice_name: this.invoiceBuilderService.invoice()?.name,
+          items_count: this.invoiceBuilderService.invoice()?.rows?.length || 0,
+          state: this.invoiceBuilderService.invoice()?.state
+        }
+      );
+
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success('invoices.issued');
       this.generatePDF();
