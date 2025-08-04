@@ -3,9 +3,6 @@ import {
   ChipsListComponent
 } from "./chunk-TXOCH4AH.js";
 import {
-  AnalyticsService
-} from "./chunk-WLC74KBD.js";
-import {
   ControlsRowComponent
 } from "./chunk-GKQRENE7.js";
 import {
@@ -16,8 +13,9 @@ import {
   NgSelectComponent
 } from "./chunk-VJHRDQJI.js";
 import {
+  AnalyticsService,
   UnitSwitcherComponent
-} from "./chunk-4UT7CYQQ.js";
+} from "./chunk-ZEGLF54C.js";
 import {
   TextareaComponent
 } from "./chunk-KULBH3DU.js";
@@ -1659,4 +1657,4 @@ var AddRecipeComponent = class _AddRecipeComponent {
 export {
   AddRecipeComponent
 };
-//# sourceMappingURL=chunk-MTGDUX7R.js.map
+//# sourceMappingURL=chunk-T4F5ATAU.js.map
