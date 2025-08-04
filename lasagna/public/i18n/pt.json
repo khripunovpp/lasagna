@@ -245,13 +245,17 @@
     "settings.taxes.title": "Impostos",
     "settings.taxes.fees": "Taxas",
     "settings.taxes.name": "Nome do imposto",
+    "settings.taxes.description": "Descrição",
     "settings.taxes.value": "Valor",
     "settings.taxes.add": "Adicionar imposto",
     "settings.taxes.delete": "Excluir imposto",
     "settings.taxes.save": "Salvar impostos",
     "settings.taxes.cancel": "Cancelar",
+    "settings.taxes.save-changes": "Salvar alterações",
     "settings.taxes.no-changes": "Sem alterações",
     "settings.taxes.no-taxes": "Nenhum imposto cadastrado",
+    "settings.taxes.add-tax": "Adicionar imposto",
+    "settings.taxes.saved-success": "Configurações de impostos atualizadas",
     "settings.taxes.percentage": "Percentual",
     "backup.no-backup": "Ainda não há backup, clique para criar um",
     "backup.flush-informer": "Você pode limpar o cache do aplicativo.",
@@ -401,5 +405,9 @@
     "recipe.calculation.recalculate-for": "Recalcular para",
     "recipe.calculation.gram": "grama",
     "readonly.placeholder": "Digite o texto aqui",
-    "unsaved-changes-warning": "Você tem alterações não salvas. Salve ou descarte antes de sair."
+    "unsaved-changes-warning": "Você tem alterações não salvas. Salve ou descarte antes de sair.",
+    "faq.title": "FAQ",
+    "pwa.install": "Instalar App",
+    "recipe.form.category.placeholder": "Categoria",
+    "recipe.form.tags.placeholder": "Tags"
 }
