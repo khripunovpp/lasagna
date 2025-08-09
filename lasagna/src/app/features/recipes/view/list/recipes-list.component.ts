@@ -28,6 +28,7 @@ import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/catego
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
+import {JsonPipe} from '@angular/common';
 
 
 
@@ -35,7 +36,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
-    @if (!groupingTiles.empty) {
+    @if (!groupingTiles.empty()) {
       <lg-controls-bar>
         <lg-button [icon]="true"
                    [link]="'/recipes/add'"
@@ -77,7 +78,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        @if (!groupingTiles.empty) {
+        @if (!groupingTiles.empty()) {
           <lg-flex-column [size]="'medium'">
             <lg-grouping-sorting></lg-grouping-sorting>
 

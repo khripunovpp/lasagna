@@ -1,4 +1,4 @@
-import {Component, ContentChild, Input, Optional} from '@angular/core';
+import {Component, computed, ContentChild, input, Optional} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
 import {TitleComponent} from '../layout/title/title.component';
 import {GroupingTileDirective} from './grouping-tile.directive';
@@ -13,7 +13,7 @@ import {TranslateService} from '@ngx-translate/core';
   standalone: true,
   template: `
     <section class="grouping-tiles">
-      @for (group of sortResult?.groups; track group?.field) {
+      @for (group of sortResult()?.groups; track group?.field) {
         <section class="grouping-tiles__section">
           <header class="grouping-tiles__header">
             @if (groupingHeaderDirective) {
@@ -30,7 +30,7 @@ import {TranslateService} from '@ngx-translate/core';
           <div class="grouping-tiles__content">
             @for (tile of group?.items; track tile) {
               <div class="grouping-tiles__item">
-                @if (selectable) {
+                @if (selectable()) {
                   <lg-selectable-section [key]="tile.uuid">
                     <div class="grouping-tiles__item-inner">
                       <ng-container [ngTemplateOutlet]="groupingTileDirective!.templateRef"
@@ -102,11 +102,11 @@ export class GroupingTilesComponent {
   ) {
   }
 
-  @Input() sortResult!: SortResult<any> | undefined;
-  @Input() selectable: boolean = false;
-  get empty(){
-    return !this.sortResult || !this.sortResult.groups || this.sortResult.groups.length === 0;
-  }
+  sortResult = input<SortResult<any> | undefined>(undefined);
+  selectable = input<boolean>(false);
+  empty = computed(() => {
+    return !this.sortResult()?.groups.length;
+  });
 
   @ContentChild(GroupingTileDirective) groupingTileDirective!: GroupingTileDirective;
   @ContentChild(GroupingHeaderDirective) groupingHeaderDirective!: GroupingHeaderDirective;
