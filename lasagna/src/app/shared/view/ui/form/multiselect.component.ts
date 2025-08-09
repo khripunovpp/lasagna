@@ -1,6 +1,5 @@
 import {
   Component,
-  effect,
   forwardRef,
   Input,
   input,
@@ -16,6 +15,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
 
 
+
 export interface MultiselectItem {
   value: unknown
 }
@@ -29,9 +29,6 @@ export interface MultiselectItem {
                  (ngModelChange)="onChangeInput($event)"
                  [compareWith]="compareWith"
                  [items]="loadedList()"
-                 [clearable]="clearable()"
-                 [bindValue]="bindValue()"
-                 [bindLabel]="bindLabel()"
                  [appendTo]="appendTo()"
                  [multiple]="multi()"
                  [ngModel]="value"
@@ -51,7 +48,7 @@ export interface MultiselectItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-  ],
+    ],
   styles: [
     `
       lg-multiselect {
@@ -127,26 +124,14 @@ export class MultiselectComponent
   }
 
   @Input() placeholder: string = '';
-  readonly resource = input<string>('');
-  readonly appendTo = input<string>('');
-  readonly bindValue = input<string>('uuid');
-  readonly bindLabel = input<string>('name');
-  readonly autoLoad = input<boolean>(false);
-  readonly clearable = input<boolean>(true);
-  readonly multi = input<boolean>(false);
-  readonly staticItems = input<any[]>([]);
-  readonly loadedList = signal<unknown[]>([]);
+  resource = input<string>('');
+  appendTo = input<string>('');
+  autoLoad = input<boolean>(false);
+  multi = input<boolean>(false);
+  loadedList = signal([]);
   onSelected = output<unknown>();
   value?: unknown = null
-  readonly selectComponent = viewChild(NgSelectComponent);
-
-  // Эффект для обновления списка при изменении staticItems
-  private updateStaticItemsEffect = effect(() => {
-    const staticItems = this.staticItems();
-    if (staticItems.length > 0) {
-      this.loadedList.set(staticItems);
-    }
-  });
+  selectComponent = viewChild(NgSelectComponent);
 
   onChange: (value: unknown) => void = () => {
   };
@@ -163,12 +148,11 @@ export class MultiselectComponent
   compareWith = (a: MultiselectItem, b: MultiselectItem) => {
     const valA = a as any;
     const valB = b as any;
-    const field = this.bindValue();
 
-    return valA?.[field] === valB
+    return valA?.uuid === valB
       || valA === valB
-      || valA?.[field] === valB?.[field]
-      || valA === valB?.[field]
+      || valA?.uuid === valB?.uuid
+      || valA === valB?.uuid;
   }
 
   writeValue(value: unknown): void {
@@ -199,13 +183,6 @@ export class MultiselectComponent
   }
 
   ngOnInit() {
-    // Если есть статические элементы, используем их
-    if (this.staticItems().length > 0) {
-      this.loadedList.set(this.staticItems());
-      return;
-    }
-
-    // Иначе используем SelectResourcesService
     this._selectResourcesService.register(this.resource());
     if (this.autoLoad()) {
       this._selectResourcesService.load([this.resource()]);

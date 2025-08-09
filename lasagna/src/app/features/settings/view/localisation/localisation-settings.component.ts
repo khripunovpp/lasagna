@@ -1,15 +1,13 @@
-import {Component, computed, inject, model, Signal} from '@angular/core';
+import {Component, computed, model, Signal} from '@angular/core';
 import {SettingsService} from '../../service/services/settings.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FormsModule} from '@angular/forms';
 import {RadioComponent} from '../../../../shared/view/ui/form/radio.component';
-import {CurrencySelectComponent} from '../../../../shared/view/ui/form/currency-select.component';
+import {InputComponent} from '../../../../shared/view/ui/form/input.component';
+import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
-import {NotificationsService} from '../../../../shared/service/services';
-import {errorHandler} from '../../../../shared/helpers';
-import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
 
 
 @Component({
@@ -17,35 +15,37 @@ import {ControlComponent} from '../../../../shared/view/ui/form/control-item/con
   standalone: true,
   template: `
     <lg-flex-column size="medium">
-      <lg-control [label]="'language.settings.language-title' | translate">
-        <section class="language-settings">
-          <lg-flex-column [size]="'small'">
-            @for (lang of languages(); track lang.code; let i = $index) {
-              <lg-flex-row [center]="true"
-                           [mobileMode]="true"
-                           [size]="'small'">
-                <lg-radio [markOnHover]="true"
-                          [radio]="true"
-                          lgSelfStart
-                          [name]="'lang'"
-                          [value]="lang.code"
-                          [ngModel]="selectedLangModel()[i]"
-                          (change)="changeLang(lang.code)"
-                          [size]="'small'"
-                          [noMark]="true">
-                  {{ lang.name | translate }}
-                </lg-radio>
-              </lg-flex-row>
-            }
-          </lg-flex-column>
-        </section>
-      </lg-control>
+      <lg-title [level]="6">{{ 'language.settings.language-title'|translate }}</lg-title>
 
-      <lg-currency-select
-        (ngModelChange)="changeCurrency($event)"
-        [lang]="selectedLang()"
-        [ngModel]="currency()">
-      </lg-currency-select>
+      <section class="language-settings">
+        <lg-flex-column [size]="'small'">
+          @for (lang of languages(); track lang.code; let i = $index) {
+            <lg-flex-row [center]="true"
+                         [mobileMode]="true"
+                         [size]="'small'">
+              <lg-radio [markOnHover]="true"
+                        [radio]="true"
+                        lgSelfStart
+                        [name]="'lang'"
+                        [value]="lang.code"
+                        [ngModel]="selectedLangModel()[i]"
+                        (change)="changeLang(lang.code)"
+                        [size]="'small'"
+                        [noMark]="true">
+                {{ lang.name | translate }}
+              </lg-radio>
+            </lg-flex-row>
+          }
+        </lg-flex-column>
+      </section>
+
+      <lg-title [level]="6">
+        {{ 'language.settings.currency-title'|translate }}
+        (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
+      </lg-title>
+
+      <lg-input (ngModelChange)="changeCurrency($event)"
+                [(ngModel)]="currency"></lg-input>
     </lg-flex-column>
   `,
   styles: [``],
@@ -54,33 +54,35 @@ import {ControlComponent} from '../../../../shared/view/ui/form/control-item/con
     FlexColumnComponent,
     FormsModule,
     RadioComponent,
-    CurrencySelectComponent,
+    InputComponent,
+    TitleComponent,
     TranslatePipe,
     FlexColumnComponent,
-    SelfStartDirective,
-    ControlComponent
+    SelfStartDirective
   ]
 })
 export class LocalisationSettingsComponent {
-  constructor() {
+  constructor(
+    private _settingsService: SettingsService,
+  ) {
+    this.selectedLang = this._settingsService.lang;
+
     this.selectedLangModel.update(oldValue => {
-      return this._settingsService.languages.map((value => this._settingsService.settingsSignal()?.getSetting<string>('lang')?.data === value));
+      return this._settingsService.languages.map((value => this.selectedLang() === value));
     });
 
     this.currency.set(this._settingsService.settingsSignal()?.getSetting<string>('currency')?.data || 'USD');
   }
 
-  readonly currency = model('EUR');
-  readonly langsMap: Record<string, string> = {
+  currency = model('EUR');
+  langsMap: Record<string, string> = {
     'en': 'settings.language.english',
     'pt': 'settings.language.portuguese',
     'ru': 'settings.language.russian',
   };
-  readonly selectedLangModel = model<boolean[]>([]);
-  private readonly _notificationsService = inject(NotificationsService);
-  private readonly _settingsService = inject(SettingsService);
-  readonly selectedLang: Signal<string> = this._settingsService.lang;
-  readonly languages = computed(() => {
+  selectedLang: Signal<string>;
+  selectedLangModel = model<boolean[]>([]);
+  languages = computed(() => {
     return this._settingsService.languages
       .map((lang: string) => ({
         code: lang,
@@ -88,21 +90,11 @@ export class LocalisationSettingsComponent {
       }));
   });
 
-  async changeLang(lang: string) {
-    try {
-      await this._settingsService.changeLang(lang);
-      this._notificationsService.success('settings.language.changed');
-    } catch (error) {
-      this._notificationsService.error(errorHandler(error));
-    }
+  changeLang(lang: string): void {
+    this._settingsService.changeLang(lang);
   }
 
-  async changeCurrency(currency: string) {
-    try {
-      await this._settingsService.changeCurrency(String(currency).toUpperCase());
-      this._notificationsService.success('settings.currency.changed');
-    } catch (error) {
-      this._notificationsService.error(errorHandler(error));
-    }
+  changeCurrency(currency: string): void {
+    this._settingsService.changeCurrency(String(currency).toUpperCase());
   }
 }

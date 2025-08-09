@@ -4,7 +4,6 @@ import {LanguageService} from './language.service';
 import {Settings} from '../models/Settings';
 import {SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
-import {getEstimatedCurrency} from '../../../../shared/helpers/localization.helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -41,44 +40,26 @@ export class SettingsService {
     });
   }
 
-  async saveSettings() {
+  saveSettings() {
     if (this.settingsModel) {
       this.settingsSignal.set(this.settingsModel);
-      await this._settingsRepository.updateSettings(this.settingsModel);
-      this._logger.log('Settings saved', this.settingsModel);
-      return this.settingsModel;
+      return this._settingsRepository.updateSettings(this.settingsModel).then(() => {
+        this._logger.log('Settings saved', this.settingsModel);
+      });
     } else {
-      return Promise.resolve<undefined>(undefined)
+      return Promise.resolve()
     }
-  }
-
-  setDefaultSettings() {
-    let changed = false;
-    if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.lang)?.data) {
-      this.settingsModel?.addSetting(SettingsKeysConst.lang, this._localisationService.lang());
-      changed = true;
-    }
-    if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data) {
-      const currency = getEstimatedCurrency(this.settingsModel?.getSetting<string>(SettingsKeysConst.lang)?.data || this._localisationService.lang());
-      this.settingsModel?.addSetting(SettingsKeysConst.currency, currency[0].code);
-      changed = true;
-    }
-    if (!changed) {
-      this._logger.log('Default settings already set');
-      return Promise.resolve(this.settingsModel);
-    }
-    return this.saveSettings();
   }
 
   changeLang(lang: string) {
     this._localisationService.changeLang(lang);
     this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
-    return this.saveSettings();
+    this.saveSettings();
   }
 
   changeCurrency(currency: string) {
     this.settingsModel?.addSetting(SettingsKeysConst.currency, currency);
-    return this.saveSettings();
+    this.saveSettings();
   }
 
   getInvoicePrefix(): string | undefined {
