@@ -1,7 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {APP_VERSION} from '../../../service/tokens/app-version.token';
 
 @Component({
   selector: 'lg-footer',
@@ -14,7 +13,6 @@ import {APP_VERSION} from '../../../service/tokens/app-version.token';
         <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md" target="_blank">{{ 'footer.terms' | translate }}</a>,
         {{ 'footer.and' | translate }}
         <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md" target="_blank">{{ 'footer.cookie' | translate }}</a>.
-        <div class="lg-footer__version">v{{ appVersion }}</div>
       </footer>
     </lg-fade-in>
   `,
@@ -29,12 +27,6 @@ import {APP_VERSION} from '../../../service/tokens/app-version.token';
       padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);
     }
 
-    .lg-footer__version {
-      margin-top: 0.5em;
-      font-size: 0.8rem;
-      color: #888;
-      opacity: 0.7;
-    }
   `],
   imports: [
     FadeInComponent,
@@ -42,5 +34,8 @@ import {APP_VERSION} from '../../../service/tokens/app-version.token';
   ]
 })
 export class FooterComponent {
-  appVersion = inject(APP_VERSION);
+  constructor() {
+
+  }
+
 }
