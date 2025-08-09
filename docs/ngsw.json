@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754749908921,
+  "timestamp": 1754750213581,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -343,7 +343,7 @@
     "https://khripunovpp.github.io/lasagna/img/icon.png": "5fdca579260077f794f4f05365060fa37cebac41",
     "https://khripunovpp.github.io/lasagna/index.html": "4f4b62e444b3a5852abacd6a066df99c0ce50962",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
-    "https://khripunovpp.github.io/lasagna/main.js": "baea06de7d49e6b8ca142a20a5625e605e660b0a",
+    "https://khripunovpp.github.io/lasagna/main.js": "a2c29ec59f43c19d42028444f854bcaa0c7b82cc",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8cd1c28d280a08d7ff10306717f454a84204da42",
     "https://khripunovpp.github.io/lasagna/media/Inter18pt-Regular.woff2": "8abdb806484fc4302000105048cc3ea60db94d53",
     "https://khripunovpp.github.io/lasagna/media/Inter24pt-Bold.woff2": "96536670addcbcf631f65a86d7e11d820621cbe9",

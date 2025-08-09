@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {APP_VERSION} from '../../../service/tokens/app-version.token';
+import {VersionService} from '../../../service/services/version.service';
 
 @Component({
   selector: 'lg-footer',
@@ -10,11 +10,14 @@ import {APP_VERSION} from '../../../service/tokens/app-version.token';
     <lg-fade-in>
       <footer class="lg-footer">
         {{ 'footer.agree' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md" target="_blank">{{ 'footer.privacy' | translate }}</a>,
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md" target="_blank">{{ 'footer.terms' | translate }}</a>,
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md"
+           target="_blank">{{ 'footer.privacy' | translate }}</a>,
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md"
+           target="_blank">{{ 'footer.terms' | translate }}</a>,
         {{ 'footer.and' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md" target="_blank">{{ 'footer.cookie' | translate }}</a>.
-        <div class="lg-footer__version">v{{ appVersion }}</div>
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
+           target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        <div class="lg-footer__version">v{{ appVersion() }}</div>
       </footer>
     </lg-fade-in>
   `,
@@ -42,5 +45,6 @@ import {APP_VERSION} from '../../../service/tokens/app-version.token';
   ]
 })
 export class FooterComponent {
-  appVersion = inject(APP_VERSION);
+  private readonly versionService = inject(VersionService);
+  appVersion = this.versionService.version;
 }
