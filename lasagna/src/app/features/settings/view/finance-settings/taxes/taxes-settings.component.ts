@@ -37,7 +37,10 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
     <lg-flex-column>
       <ng-container [formGroup]="taxesForm">
         <ng-container formArrayName="rows">
-          {{ 'settings.taxes.title' | translate }}
+          @if (taxesAndFees().length) {
+            {{ 'settings.taxes.title' | translate }}
+          }
+
           @for (taxRow of taxesAndFees(); track (taxRow.name + taxRow.uuid + i); let i = $index, odd = $odd) {
             @let tacControl = taxesForm.controls.rows.controls[i];
 
@@ -115,30 +118,43 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
                 </lg-flex-row>
               </ng-template>
             </section>
+          } @empty {
+            <lg-flex-column position="center"
+                            size="medium">
+              {{ 'settings.taxes.empty-state.text'|translate }}
+
+              <lg-button [size]="'medium'"
+                         (click)="addTaxRow()"
+                         [style]="'success'">
+                {{ 'settings.taxes.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
           }
         </ng-container>
       </ng-container>
 
-      <lg-flex-row>
-        <lg-button (click)="saveTaxes()"
-                   [disabled]="!taxesForm.dirty"
-                   [style]="'success'"
-                   lgSelfCenter
-                   lgShrink>
-          @if (taxesForm.dirty) {
-            {{ 'settings.taxes.save-changes' | translate }}
-          } @else {
-            {{ 'settings.taxes.no-changes' | translate }}
-          }
-        </lg-button>
+      @if (taxesAndFees().length) {
+        <lg-flex-row>
+          <lg-button (click)="saveTaxes()"
+                     [disabled]="!taxesForm.dirty"
+                     [style]="'success'"
+                     lgSelfCenter
+                     lgShrink>
+            @if (taxesForm.dirty) {
+              {{ 'settings.taxes.save-changes' | translate }}
+            } @else {
+              {{ 'settings.taxes.no-changes' | translate }}
+            }
+          </lg-button>
 
-        <lg-button (click)="addTaxRow()"
-                   [style]="'warning'"
-                   lgSelfCenter
-                   lgShrink>
-          {{ 'settings.taxes.add-tax' | translate }}
-        </lg-button>
-      </lg-flex-row>
+          <lg-button (click)="addTaxRow()"
+                     [style]="'warning'"
+                     lgSelfCenter
+                     lgShrink>
+            {{ 'settings.taxes.add-tax' | translate }}
+          </lg-button>
+        </lg-flex-row>
+      }
     </lg-flex-column>
   `,
   styles: [``],

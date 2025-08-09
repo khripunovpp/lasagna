@@ -28,40 +28,43 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {DraftProductsListCompoent} from './draft-products-list.compoent';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 
 @Component({
   selector: 'lg-product-list',
   standalone: true,
   template: `
-    <lg-controls-bar>
-      <lg-button [icon]="true"
-                 [link]="'/products/add'"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
+    @if (products()?.length) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/products/add'"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
 
-      <lg-inline-separated-group>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportProducts(selectionZoneService.selected())"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-            {{ 'export-label'|translate }} products
-          </lg-button>
-        </ng-template>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-import (onDone)="loadProducts()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="ProductScheme"
-                     [storeName]="Stores.PRODUCTS">
-            <ng-template let-flow="flow" let-row lgImportRowTpl>
-              <span>{{ row?.name }}</span>
-            </ng-template>
-          </lg-import>
-        </ng-template>
-      </lg-inline-separated-group>
-    </lg-controls-bar>
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="exportProducts(selectionZoneService.selected())"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'info'">
+              {{ 'export-label'|translate }} products
+            </lg-button>
+          </ng-template>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-import (onDone)="loadProducts()"
+                       [label]="('import-label'|translate) + ' products'"
+                       [schema]="ProductScheme"
+                       [storeName]="Stores.PRODUCTS">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                <span>{{ row?.name }}</span>
+              </ng-template>
+            </lg-import>
+          </ng-template>
+        </lg-inline-separated-group>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -71,9 +74,11 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
 
         <lg-draft-products-list></lg-draft-products-list>
 
-        <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+        @if (products()?.length) {
+          <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+        }
 
-        @for (category of products(); track $index; let i = $index) {
+        @for (category of products(); track ic; let ic = $index) {
           <lg-title [level]="3">
             {{ category?.category || ('without-category-label'|translate) }}
           </lg-title>
@@ -83,7 +88,7 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
                         (onDeleteOne)="deleteProduct($event)"
                         [selectAll]="selectionZoneService.selectAll()"
                         [deselectAll]="selectionZoneService.deselectAll()">
-            @for (product of category.products; track (product.uuid ?? '')+$index; let i = $index) {
+            @for (product of category.products; track (product.uuid ?? '') + i; let i = $index) {
               <ng-template lgCardListItem [uuid]="product.uuid" type="product">
                 <lg-flex-row [center]="true">
                   <div class="expand">
@@ -109,11 +114,16 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
             }
           </lg-card-list>
         } @empty {
-          <lg-flex-row [center]="true">
-            <lg-title [level]="5">
-              {{ 'no-products'|translate }}
-            </lg-title>
-          </lg-flex-row>
+          <lg-flex-column position="center"
+                          size="medium">
+            {{ 'products.empty-state.text'|translate }}
+
+            <lg-button [link]="'/products/add'"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'products.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
         }
       </lg-container>
     </lg-fade-in>
@@ -138,7 +148,8 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
     DraftProductsListCompoent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    UserCurrencyPipe
+    UserCurrencyPipe,
+    FlexColumnComponent
   ],
   providers: [
     SelectionZoneService,

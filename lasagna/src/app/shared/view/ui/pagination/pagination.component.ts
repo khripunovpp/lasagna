@@ -1,4 +1,15 @@
-import {Component, Input, Output, EventEmitter, signal, computed, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  signal,
+  SimpleChanges
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ButtonComponent} from '../layout/button.component';
 import {FlexRowComponent} from '../layout/flex-row.component';
@@ -23,22 +34,22 @@ export interface PaginationConfig {
     @if (totalPages() > 1) {
       <div class="pagination">
         <lg-flex-row [center]="true">
-          <lg-button 
-            (click)="previousPage()" 
+          <lg-button
+            (click)="previousPage()"
             [disabled]="currentPage() === 1"
             class="pagination__btn">
             <span class="pagination__icon">◀</span>
             {{ 'pagination.previous' | translate }}
           </lg-button>
-          
+
           <div class="pagination__info">
             <span class="pagination__current">{{ currentPage() }}</span>
             <span class="pagination__separator">/</span>
             <span class="pagination__total">{{ totalPages() }}</span>
           </div>
-          
-          <lg-button 
-            (click)="nextPage()" 
+
+          <lg-button
+            (click)="nextPage()"
             [disabled]="currentPage() === totalPages()"
             class="pagination__btn">
             {{ 'pagination.next' | translate }}
@@ -95,9 +106,9 @@ export interface PaginationConfig {
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() config!: PaginationConfig;
   @Output() pageChange = new EventEmitter<number>();
-
   currentPage = signal(1);
   totalPages = signal(1);
+  @HostBinding('attr.hidden') hidden = computed(() => this.totalPages() ? null : true);
   totalItems = signal(0);
   itemsPerPage = signal(20);
 
@@ -135,4 +146,4 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.pageChange.emit(newPage);
     }
   }
-} 
+}
