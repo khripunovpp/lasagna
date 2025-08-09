@@ -552,7 +552,7 @@ var ApplicationComponent = class _ApplicationComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate1("!!!", \u0275\u0275pipeBind1(4, 7, "main.title"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 7, "main.title"));
       \u0275\u0275advance(2);
       \u0275\u0275conditional(!ctx.isOnboardingComplete() ? 5 : -1);
       \u0275\u0275advance();
@@ -593,7 +593,7 @@ var ApplicationComponent = class _ApplicationComponent {
       WidthDirective
     ], template: `<lg-fade-in>
   <lg-container>
-    <lg-title>!!!{{ 'main.title' | translate }}</lg-title>
+    <lg-title>{{ 'main.title' | translate }}</lg-title>
 
     @if (!isOnboardingComplete()) {
       <lg-card>
@@ -628,4 +628,4 @@ var ApplicationComponent = class _ApplicationComponent {
 export {
   ApplicationComponent
 };
-//# sourceMappingURL=chunk-BAXEKRGN.js.map
+//# sourceMappingURL=chunk-QBYXKD3L.js.map

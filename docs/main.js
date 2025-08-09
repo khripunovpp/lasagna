@@ -2121,7 +2121,7 @@ var routes = [{
     },
     {
       path: "home",
-      loadComponent: () => import("./chunk-BAXEKRGN.js").then((m) => m.ApplicationComponent)
+      loadComponent: () => import("./chunk-QBYXKD3L.js").then((m) => m.ApplicationComponent)
     },
     {
       path: "recipes",
@@ -10822,6 +10822,36 @@ var DemoService = class _DemoService {
   }], () => [{ type: HttpClient }, { type: DexieIndexDbService }], null);
 })();
 
+// src/app/shared/service/services/version.service.ts
+var VersionService = class _VersionService {
+  http;
+  versionSignal = signal("Unknown");
+  constructor(http) {
+    this.http = http;
+  }
+  get version() {
+    return this.versionSignal;
+  }
+  async load() {
+    try {
+      const env = await this.http.get("./env.json", { withCredentials: false }).toPromise();
+      this.versionSignal.set(env?.version ?? "Unknown");
+    } catch {
+      this.versionSignal.set("Unknown");
+    }
+  }
+  static \u0275fac = function VersionService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _VersionService)(\u0275\u0275inject(HttpClient));
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _VersionService, factory: _VersionService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(VersionService, [{
+    type: Injectable,
+    args: [{ providedIn: "root" }]
+  }], () => [{ type: HttpClient }], null);
+})();
+
 // src/app/app.initializer.ts
 var appInitializer = () => {
   const categoryRepository = inject(CategoryProductsRepository);
@@ -10832,6 +10862,7 @@ var appInitializer = () => {
   const userService = inject(UserService);
   const demoService = inject(DemoService);
   const indexDbService = inject(DexieIndexDbService);
+  const versionService = inject(VersionService);
   if (userService.isUserFirstTime) {
     userService.setUserFirstTime(false);
   }
@@ -10847,6 +10878,7 @@ var appInitializer = () => {
     categoryRepository.preloadCategories(),
     recipeCategoryRepository.preloadCategories(),
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
+    versionService.load(),
     settingsService.loadSettings().then((settings) => settingsService.setDefaultSettings()).then((settings) => settingsService.changeLang(settings?.getSetting("lang")?.data || "en"))
   ]);
 };
@@ -11883,12 +11915,12 @@ var FontTesterComponent = class _FontTesterComponent {
 
 // src/app/shared/view/ui/layout/footer.component.ts
 var FooterComponent = class _FooterComponent {
-  constructor() {
-  }
+  versionService = inject(VersionService);
+  appVersion = this.versionService.version;
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FooterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 17, vars: 15, consts: [[1, "lg-footer"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md", "target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 19, vars: 16, consts: [[1, "lg-footer"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md", "target", "_blank"], [1, "lg-footer__version"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 0);
       \u0275\u0275text(2);
@@ -11909,24 +11941,28 @@ var FooterComponent = class _FooterComponent {
       \u0275\u0275pipe(15, "translate");
       \u0275\u0275elementEnd();
       \u0275\u0275text(16, ". ");
-      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(17, "div", 4);
+      \u0275\u0275text(18);
+      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 5, "footer.agree"), " ");
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 6, "footer.agree"), " ");
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 7, "footer.privacy"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 8, "footer.privacy"));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 9, "footer.terms"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 10, "footer.terms"));
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(12, 11, "footer.and"), " ");
+      \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(12, 12, "footer.and"), " ");
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(15, 13, "footer.cookie"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(15, 14, "footer.cookie"));
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate1("v", ctx.appVersion());
     }
   }, dependencies: [
     FadeInComponent,
     TranslatePipe
-  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
+  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  font-size: 0.8rem;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FooterComponent, [{
@@ -11935,20 +11971,24 @@ var FooterComponent = class _FooterComponent {
     <lg-fade-in>
       <footer class="lg-footer">
         {{ 'footer.agree' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md" target="_blank">{{ 'footer.privacy' | translate }}</a>,
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md" target="_blank">{{ 'footer.terms' | translate }}</a>,
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md"
+           target="_blank">{{ 'footer.privacy' | translate }}</a>,
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md"
+           target="_blank">{{ 'footer.terms' | translate }}</a>,
         {{ 'footer.and' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md" target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
+           target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        <div class="lg-footer__version">v{{ appVersion() }}</div>
       </footer>
     </lg-fade-in>
   `, imports: [
       FadeInComponent,
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;fe3303559a3dcda388d1315c07b667db9645a2921c5106bb46127899ef8f79eb;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
-  }], () => [], null);
+    ], styles: ["/* angular:styles/component:scss;0a557be604e8e5fbd61f7db3b66877f05928f68cd025a18eb9b62d90ef4bd29b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  font-size: 0.8rem;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 36 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 47 });
 })();
 
 // src/app/shared/view/ui/demo-informer.component.ts
