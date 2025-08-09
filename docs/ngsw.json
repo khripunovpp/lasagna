@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754769387804,
+  "timestamp": 1754782039802,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -288,7 +288,7 @@
     "https://khripunovpp.github.io/lasagna/docs/data.json": "5eb3a572f3d0f6ff8abaca051f1e7b8d35b5a147",
     "https://khripunovpp.github.io/lasagna/docs/meta.json": "a816dd79a0e45d381a92bcce483d496a7358e40d",
     "https://khripunovpp.github.io/lasagna/docs/tree.json": "d1060e05a3c7e59b123bbc46c8b6fba4e2254783",
-    "https://khripunovpp.github.io/lasagna/env.json": "ff3123eb216f99f3f7481b4e0538ea09b7d3c39d",
+    "https://khripunovpp.github.io/lasagna/env.json": "608fd177677e5fe74db5679dca4e4b9302275303",
     "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://khripunovpp.github.io/lasagna/google-analytics-consent.js": "bb68e1c86b77cf8cc334720ebd04fe03d3470189",
     "https://khripunovpp.github.io/lasagna/i18n/en.json": "77fc6cd000e610310d46d7fab38298bbc87a8d06",
@@ -343,7 +343,7 @@
     "https://khripunovpp.github.io/lasagna/img/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png": "b969fdc1666e17c25be12d7a8d5ba79c21cc78be",
     "https://khripunovpp.github.io/lasagna/img/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png": "f1e2c6025618f3493d2223c504fbf53a2bbf616b",
     "https://khripunovpp.github.io/lasagna/img/icon.png": "5fdca579260077f794f4f05365060fa37cebac41",
-    "https://khripunovpp.github.io/lasagna/index.html": "1ca63ebd18327dddc3585a324bb95c7fac84ac7b",
+    "https://khripunovpp.github.io/lasagna/index.html": "070304f835342bbf7ae91558fca251427bc4a816",
     "https://khripunovpp.github.io/lasagna/logo.png": "d0ce34b05242a862695c3b4b66d4429d95f12791",
     "https://khripunovpp.github.io/lasagna/main.js": "329649de87c9bf4717dd6410c3e001f97c6a828d",
     "https://khripunovpp.github.io/lasagna/manifest.webmanifest": "8cd1c28d280a08d7ff10306717f454a84204da42",
