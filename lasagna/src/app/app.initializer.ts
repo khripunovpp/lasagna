@@ -5,6 +5,7 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {UserService} from './features/settings/service/services/user.service';
 import {DemoService} from './shared/service/services/demo.service';
 import {DexieIndexDbService} from './shared/service/db/dexie-index-db.service';
+import { VersionService } from './shared/service/services/version.service';
 import {DocsService} from './features/documentation/service/docs.service';
 import {FaqService} from './features/documentation/service/faq.service';
 
@@ -17,6 +18,7 @@ export const appInitializer = () => {
   const userService = inject(UserService);
   const demoService = inject(DemoService);
   const indexDbService = inject(DexieIndexDbService);
+  const versionService = inject(VersionService);
 
   if (userService.isUserFirstTime) {
     userService.setUserFirstTime(false);
@@ -36,6 +38,7 @@ export const appInitializer = () => {
     categoryRepository.preloadCategories(),
     recipeCategoryRepository.preloadCategories(),
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
+    versionService.load(),
     settingsService.loadSettings()
       .then((settings) => settingsService.setDefaultSettings())
       .then((settings) => settingsService.changeLang(settings?.getSetting<string>('lang')?.data || 'en')),
