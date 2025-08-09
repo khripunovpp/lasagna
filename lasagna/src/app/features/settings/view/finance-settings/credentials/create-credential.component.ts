@@ -120,30 +120,43 @@ import {TranslatePipe} from '@ngx-translate/core';
             @if (!last) {
               <hr color="#fafafa" lgExpand size="2"/>
             }
+          } @empty {
+            <lg-flex-column position="center"
+                            size="medium">
+              {{ 'settings.credentials.empty-state.text'|translate }}
+
+              <lg-button [size]="'medium'"
+                         (click)="addRow()"
+                         [style]="'success'">
+                {{ 'settings.credentials.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
           }
         </ng-container>
       </ng-container>
 
-      <lg-flex-row>
-        <lg-button (click)="save()"
-                   [disabled]="!form.dirty"
-                   [style]="'success'"
-                   lgSelfCenter
-                   lgShrink>
-          @if (form.dirty) {
-            {{ 'settings.credentials.save-changes'|translate }}
-          } @else {
-            {{ 'settings.credentials.no-changes'|translate }}
-          }
-        </lg-button>
+      @if (credentials().length) {
+        <lg-flex-row>
+          <lg-button (click)="save()"
+                     [disabled]="!form.dirty"
+                     [style]="'success'"
+                     lgSelfCenter
+                     lgShrink>
+            @if (form.dirty) {
+              {{ 'settings.credentials.save-changes'|translate }}
+            } @else {
+              {{ 'settings.credentials.no-changes'|translate }}
+            }
+          </lg-button>
 
-        <lg-button (click)="addRow()"
-                   [style]="'warning'"
-                   lgSelfCenter
-                   lgShrink>
-          {{ 'settings.credentials.add-row'|translate }}
-        </lg-button>
-      </lg-flex-row>
+          <lg-button (click)="addRow()"
+                     [style]="'warning'"
+                     lgSelfCenter
+                     lgShrink>
+            {{ 'settings.credentials.add-row'|translate }}
+          </lg-button>
+        </lg-flex-row>
+      }
     </lg-flex-column>
   `,
   styles: [``],

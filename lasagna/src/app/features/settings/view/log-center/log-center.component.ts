@@ -2,20 +2,20 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LogCenterService} from '../../service/services/log-center.service';
 import {LogEntryModel, LogLevel} from '../../service/models/LogEntry';
-import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {LogsByMinuteGroupingStrategy} from '../../service/providers/logs.grouping';
-import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/grouping-tails.component';
-import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
-import {GroupingHeaderDirective} from '../../../../shared/view/ui/grouping-tails/grouping-header.directive';
+import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
+import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
+import {GroupingHeaderDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-header.directive';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {PaginationComponent} from '../../../../shared/view/ui/pagination/pagination.component';
 import {PaginationService} from '../../../../shared/service/services/pagination.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {SelfEndDirective} from '../../../../shared/view/directives/self-end.directive';
 
 @Component({
   selector: 'lg-log-center',
@@ -23,30 +23,30 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
   imports: [
     CommonModule,
     ButtonComponent,
-    CardComponent,
     TranslatePipe,
-    GroupingTailsComponent,
-    GroupingTailDirective,
+    GroupingTilesComponent,
+    GroupingTileDirective,
     GroupingHeaderDirective,
     TitleComponent,
     PaginationComponent,
     TimeAgoPipe,
     FlexColumnComponent,
-    FlexRowComponent
+    FlexRowComponent,
+    SelfEndDirective
   ],
   template: `
     <div class="log-center">
       <lg-flex-column>
-        <div class="log-center__actions">
+        <lg-flex-row size="medium">
           <lg-button
             (click)="clearLogs()"
             [disabled]="stats().total === 0"
-            class="log-center__clear-btn">
+            size="small">
             {{ 'log-center.clear-all' | translate }}
           </lg-button>
-        </div>
+        </lg-flex-row>
 
-        <lg-flex-row [mobileMode]="true" [wrap]="true" size="medium">
+        <lg-flex-row [mobileMode]="true" size="medium">
           <ng-container *ngTemplateOutlet="statItemTemplate; context: {
           label: 'log-center.total',
           value: stats().total,
@@ -73,20 +73,19 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
 
         <div class="log-center__logs">
           @if (groupedLogs()?.groups?.length === 0) {
-            <div class="log-center__empty">
-              <div class="log-center__empty-icon">📋</div>
-              <div class="log-center__empty-title">{{ 'log-center.no-logs' | translate }}</div>
-              <div class="log-center__empty-subtitle">{{ 'log-center.no-logs-subtitle' | translate }}</div>
-            </div>
+            <lg-flex-column position="center"
+                            size="medium">
+              <span> {{ 'log-center.no-logs-subtitle' | translate }}</span>
+            </lg-flex-column>
           } @else {
-            <lg-grouping-tails [sortResult]="groupedLogs()" [selectable]="false">
+            <lg-grouping-tiles [sortResult]="groupedLogs()" [selectable]="false">
               <ng-template lgGroupingHeader let-field>
                 <lg-title [level]="3">
                   {{ field|timeAgo }}
                 </lg-title>
               </ng-template>
 
-              <ng-template lgGroupingTail let-log>
+              <ng-template lgGroupingTile let-log>
                 <div class="log-entry" [class]="'log-entry--' + log.level">
                   <div class="log-entry__header">
                     <div class="log-entry__level">
@@ -123,7 +122,7 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
                   }
                 </div>
               </ng-template>
-            </lg-grouping-tails>
+            </lg-grouping-tiles>
           }
         </div>
 
@@ -135,9 +134,10 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
     </div>
     <!-- Stat Item Template -->
     <ng-template #statItemTemplate let-label="label" let-type="type" let-value="value">
-      <span [class]="'log-center__stat--' + type" class="log-center__stat">
-        {{ label | translate }}: {{ value }}
-      </span>
+      <lg-flex-column size="tiny">
+        <span>{{ label | translate }}</span>
+        <b>{{ value }}</b>
+      </lg-flex-column>
     </ng-template>
   `,
   styles: [`
@@ -155,7 +155,6 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
       flex-wrap: wrap;
       gap: var(--spacing-md);
     }
-
 
 
     .log-center__stat {
@@ -181,15 +180,6 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
       margin-top: var(--spacing-md);
       padding-top: var(--spacing-md);
       border-top: 1px solid var(--color-border);
-    }
-
-    .log-center__clear-btn {
-      background: var(--color-error);
-      color: white;
-    }
-
-    .log-center__clear-btn:hover:not(:disabled) {
-      background: var(--color-error-dark);
     }
 
     .log-center__logs {
@@ -268,22 +258,22 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
     }
 
     .log-entry--error .log-entry__level-badge {
-      background: var(--color-error);
+      background: var(--color-error, #ff4d4d);
       color: white;
     }
 
     .log-entry--warning .log-entry__level-badge {
-      background: var(--color-warning);
+      background: var(--color-warning, #ffcc00);
       color: white;
     }
 
     .log-entry--info .log-entry__level-badge {
-      background: var(--color-info);
+      background: var(--color-info, #007bff);
       color: white;
     }
 
     .log-entry--success .log-entry__level-badge {
-      background: var(--color-success);
+      background: var(--color-success, #28a745);
       color: white;
     }
 
@@ -396,7 +386,7 @@ export class LogCenterComponent implements OnInit {
   groupedLogs = signal<any>(null);
   stats = signal<{ total: number; byLevel: Record<LogLevel, number> }>({
     total: 0,
-    byLevel: { info: 0, warning: 0, error: 0, success: 0 }
+    byLevel: {info: 0, warning: 0, error: 0, success: 0}
   });
 
   private readonly _logCenter = inject(LogCenterService);
@@ -424,13 +414,14 @@ export class LogCenterComponent implements OnInit {
     this.updatePaginatedAndGroupedLogs();
   }
 
-  updatePaginatedAndGroupedLogs() {
+  async updatePaginatedAndGroupedLogs() {
+    debugger
     const paginatedLogs = this.paginationService.paginatedItems();
     this.paginatedLogs.set(paginatedLogs);
 
     // Группируем пагинированные логи по минуте
     const groupingStrategy = new LogsByMinuteGroupingStrategy();
-    const grouped = this._groupSortService.groupItems(
+    const grouped = await this._groupSortService.groupItems(
       paginatedLogs,
       groupingStrategy,
       'desc', // новые группы сверху

@@ -1,10 +1,10 @@
 import {Directive, TemplateRef} from '@angular/core';
 
 @Directive({
-  selector: '[lgGroupingTail]',
+  selector: '[lgGroupingTile]',
   standalone: true
 })
-export class GroupingTailDirective {
+export class GroupingTileDirective {
   constructor(
     public templateRef: TemplateRef<any>,
   ) {

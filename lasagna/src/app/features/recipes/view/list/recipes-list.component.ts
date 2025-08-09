@@ -23,9 +23,9 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from './draft-recipes-list.component';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
-import {GroupingTailsComponent} from '../../../../shared/view/ui/grouping-tails/grouping-tails.component';
+import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
-import {GroupingTailDirective} from '../../../../shared/view/ui/grouping-tails/grouping-tail.directive';
+import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
@@ -35,35 +35,37 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
-    <lg-controls-bar>
-      <lg-button [icon]="true"
-                 [link]="'/recipes/add'"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
+    @if (!groupingTiles.empty) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/recipes/add'"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
 
-      <lg-inline-separated-group>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportRecipes(selectionZoneService.selected())"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-            {{ 'export-label'|translate }} recipes
-          </lg-button>
-        </ng-template>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-import (onDone)="loadRecipes()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="RecipeScheme"
-                     [storeName]="Stores.RECIPES">
-            <ng-template let-flow="flow" let-row lgImportRowTpl>
-              <span>{{ row?.name }}</span>
-            </ng-template>
-          </lg-import>
-        </ng-template>
-      </lg-inline-separated-group>
-    </lg-controls-bar>
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="exportRecipes(selectionZoneService.selected())"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'info'">
+              {{ 'export-label'|translate }} recipes
+            </lg-button>
+          </ng-template>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-import (onDone)="loadRecipes()"
+                       [label]="('import-label'|translate) + ' products'"
+                       [schema]="RecipeScheme"
+                       [storeName]="Stores.RECIPES">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                <span>{{ row?.name }}</span>
+              </ng-template>
+            </lg-import>
+          </ng-template>
+        </lg-inline-separated-group>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -75,34 +77,50 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        <lg-flex-column [size]="'medium'">
-          <lg-grouping-sorting></lg-grouping-sorting>
+        @if (!groupingTiles.empty) {
+          <lg-flex-column [size]="'medium'">
+            <lg-grouping-sorting></lg-grouping-sorting>
 
-          <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-        </lg-flex-column>
+            <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
+          </lg-flex-column>
+        }
 
-        <lg-grouping-tails [sortResult]="recipes()" [selectable]="true">
-          <ng-template lgGroupingTail let-recipe>
+        <lg-grouping-tiles #groupingTiles
+                           [selectable]="true"
+                           [sortResult]="recipes()">
+          <ng-template let-recipe lgGroupingTile>
             <lg-card>
               <lg-flex-column>
-              <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
-              <lg-flex-row>
-                <lg-button [style]="'primary'"
-                           [size]="'small'"
-                           [link]="'/recipes/calculate/' + recipe.uuid"
-                           [flat]="true">
-                  {{ 'recipes.calculate-btn'|translate }}
-                </lg-button>
+                <lg-flex-row>
+                  <lg-button [flat]="true"
+                             [link]="'/recipes/calculate/' + recipe.uuid"
+                             [size]="'small'"
+                             [style]="'primary'">
+                    {{ 'recipes.calculate-btn'|translate }}
+                  </lg-button>
 
-                <small class="text-muted text-cursive" lgPull>
-                  {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                </small>
-              </lg-flex-row>
-            </lg-flex-column>
+                  <small class="text-muted text-cursive" lgPull>
+                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                  </small>
+                </lg-flex-row>
+              </lg-flex-column>
             </lg-card>
           </ng-template>
-        </lg-grouping-tails>
+
+          <lg-flex-column empty-state
+                          position="center"
+                          size="medium">
+            {{ 'recipes.empty-state.text'|translate }}
+
+            <lg-button [link]="'/recipes/add'"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'recipes.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
+        </lg-grouping-tiles>
       </lg-container>
     </lg-fade-in>
   `,
@@ -128,8 +146,8 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     GroupingSortingComponent,
-    GroupingTailsComponent,
-    GroupingTailDirective,
+    GroupingTilesComponent,
+    GroupingTileDirective,
     FlexColumnComponent,
     CardComponent,
   ],

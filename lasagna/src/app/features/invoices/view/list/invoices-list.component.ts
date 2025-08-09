@@ -29,14 +29,16 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
   selector: 'lg-invoices-list',
   standalone: true,
   template: `
-    <lg-controls-bar>
-      <lg-button (click)="onAddInvoice()"
-                 [icon]="true"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
-    </lg-controls-bar>
+    @if (invoices()?.length) {
+      <lg-controls-bar>
+        <lg-button (click)="onAddInvoice()"
+                   [icon]="true"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -44,7 +46,9 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
           {{ 'invoices.list-title' | translate }}
         </lg-title>
 
-        <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+        @if (invoices()?.length) {
+          <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+        }
 
         @for (category of invoices(); track $index; let ic = $index) {
           <lg-title [level]="3">
@@ -82,7 +86,8 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
                     </div>
 
                     <div>
-                      {{ 'invoices.days-left' | translate }}: {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
+                      {{ 'invoices.days-left' | translate }}
+                      : {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
                     </div>
                   </lg-flex-row>
                 </lg-flex-column>
@@ -90,11 +95,16 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
             }
           </lg-card-list>
         } @empty {
-          <lg-flex-row [center]="true">
-            <lg-title [level]="5">
-              {{ 'no-invoices'|translate }}
-            </lg-title>
-          </lg-flex-row>
+          <lg-flex-column position="center"
+                          size="medium">
+            {{ 'invoices.empty-state.text'|translate }}
+
+            <lg-button (click)="onAddInvoice()"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'invoices.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
         }
       </lg-container>
     </lg-fade-in>
@@ -151,7 +161,7 @@ export class InvoicesListComponent
   stateLabels = computed(() => {
     // Добавляем зависимость от языка для реактивности
     this._userLang();
-    
+
     return this.invoices()?.map(prefixGroup => {
       return prefixGroup?.items?.map(invoice => {
         const state = invoice!.state;
