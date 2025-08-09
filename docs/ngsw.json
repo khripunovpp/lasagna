@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754766338163,
+  "timestamp": 1754767906355,
   "index": "https://khripunovpp.github.io/lasagna/index.html",
   "assetGroups": [
     {
@@ -288,15 +288,15 @@
     "https://khripunovpp.github.io/lasagna/docs/data.json": "5eb3a572f3d0f6ff8abaca051f1e7b8d35b5a147",
     "https://khripunovpp.github.io/lasagna/docs/meta.json": "a816dd79a0e45d381a92bcce483d496a7358e40d",
     "https://khripunovpp.github.io/lasagna/docs/tree.json": "d1060e05a3c7e59b123bbc46c8b6fba4e2254783",
-    "https://khripunovpp.github.io/lasagna/env.json": "89f5802341405c380f8c61933518f5640cc44b7f",
+    "https://khripunovpp.github.io/lasagna/env.json": "cfba6a55be6bde0100e5c88ae2fb59906fcdacae",
     "https://khripunovpp.github.io/lasagna/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://khripunovpp.github.io/lasagna/google-analytics-consent.js": "bb68e1c86b77cf8cc334720ebd04fe03d3470189",
-    "https://khripunovpp.github.io/lasagna/i18n/en.json": "17826735c05442fe8c094502d516fcd98364e287",
+    "https://khripunovpp.github.io/lasagna/i18n/en.json": "77fc6cd000e610310d46d7fab38298bbc87a8d06",
     "https://khripunovpp.github.io/lasagna/i18n/en.mo": "74fdeca15ea186779040b8792bb4145aa2b776eb",
     "https://khripunovpp.github.io/lasagna/i18n/en.po": "1549ef9c7b4fe423b68ec6363e2467438746bb02",
-    "https://khripunovpp.github.io/lasagna/i18n/pt.json": "f96ac9816137641522fe8a9064c07d687bd48ab3",
+    "https://khripunovpp.github.io/lasagna/i18n/pt.json": "c3b6d0084d5cf09bf212bccb99e0b55e01f6f4b0",
     "https://khripunovpp.github.io/lasagna/i18n/pt.po": "3cd9a6c01939d6aa5cd7244b52bc336c387cf233",
-    "https://khripunovpp.github.io/lasagna/i18n/ru.json": "1c5c2f08cb07362f0daf3a8081cccf6e7b470a52",
+    "https://khripunovpp.github.io/lasagna/i18n/ru.json": "bb838c01f5065fb3073c3631305f7eb2b43886b8",
     "https://khripunovpp.github.io/lasagna/i18n/ru.mo": "21237d126bac9a77aa87c3c50b803e19a4b15add",
     "https://khripunovpp.github.io/lasagna/i18n/ru.po": "22637426af481fd0ef6702fe2d724290e22a32b1",
     "https://khripunovpp.github.io/lasagna/img/10.2__iPad_landscape.png": "30798d822eab675de1ad3cc59098a6283a6f4b03",
