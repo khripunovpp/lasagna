@@ -5,8 +5,6 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {UserService} from './features/settings/service/services/user.service';
 import {DemoService} from './shared/service/services/demo.service';
 import {DexieIndexDbService} from './shared/service/db/dexie-index-db.service';
-import {logoBase64} from './shared/view/const/logoBase64';
-import {generateRandomInvoicePrefix} from './shared/helpers/pdf-generators/prefix-generator';
 import {DocsService} from './features/documentation/service/docs.service';
 import {FaqService} from './features/documentation/service/faq.service';
 
@@ -38,16 +36,8 @@ export const appInitializer = () => {
     categoryRepository.preloadCategories(),
     recipeCategoryRepository.preloadCategories(),
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
-    settingsService.loadSettings().then((settings) => {
-      settingsService.changeLang(settings.getSetting<string>('lang')?.data || 'en');
-      if (localStorage.getItem('logoBase64') === null) {
-        localStorage.setItem('logoBase64', logoBase64);
-      }
-
-      if (!settingsService.getInvoicePrefix()) {
-        settingsService.setInvoicePrefix(generateRandomInvoicePrefix());
-      }
-
-    }),
+    settingsService.loadSettings()
+      .then((settings) => settingsService.setDefaultSettings())
+      .then((settings) => settingsService.changeLang(settings?.getSetting<string>('lang')?.data || 'en')),
   ])
 };
