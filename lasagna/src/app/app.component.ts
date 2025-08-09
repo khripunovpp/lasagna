@@ -35,6 +35,5 @@ export class AppComponent
 
   async ngOnInit() {
     await this.demoService.loadDemoData();
-    console.log('AppComponent rendered');
   }
 }
