@@ -409,6 +409,7 @@
     "footer.and": "и",
     "faq.title": "FAQ",
     "pwa.install": "Установить приложение",
+  "quota.near-limit": "Память почти заполнена ({{ percent }}%)",
     "recipe.form.category.placeholder": "Категория",
     "recipe.form.tags.placeholder": "Теги"
 }

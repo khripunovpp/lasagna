@@ -33414,6 +33414,153 @@ var TransferDataService = class _TransferDataService {
   }], () => [{ type: DexieIndexDbService }, { type: CsvReaderService }], null);
 })();
 
+// src/app/shared/service/services/version.service.ts
+var VersionService = class _VersionService {
+  http;
+  versionSignal = signal("Unknown");
+  constructor(http) {
+    this.http = http;
+  }
+  get version() {
+    return this.versionSignal;
+  }
+  async load() {
+    try {
+      const env = await this.http.get("./env.json", { withCredentials: false }).toPromise();
+      this.versionSignal.set(env?.version ?? "Unknown");
+    } catch {
+      this.versionSignal.set("Unknown");
+    }
+  }
+  static \u0275fac = function VersionService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _VersionService)(\u0275\u0275inject(HttpClient));
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _VersionService, factory: _VersionService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(VersionService, [{
+    type: Injectable,
+    args: [{ providedIn: "root" }]
+  }], () => [{ type: HttpClient }], null);
+})();
+
+// src/app/shared/service/services/storage-quota.service.ts
+var StorageQuotaService = class _StorageQuotaService {
+  static DEFAULT_LOCAL_STORAGE_QUOTA_BYTES = 5 * 1024 * 1024;
+  // ~5MB
+  snapshotSignal = signal({
+    timestamp: Date.now(),
+    supported: {
+      storageEstimate: typeof navigator !== "undefined" && !!navigator.storage && !!navigator.storage.estimate,
+      indexedDB: typeof indexedDB !== "undefined",
+      localStorage: typeof localStorage !== "undefined"
+    },
+    total: { usageBytes: null, quotaBytes: null, availableBytes: null },
+    indexedDb: { usageBytes: null },
+    localStorage: {
+      usageBytes: 0,
+      quotaBytesApprox: _StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES,
+      availableBytesApprox: _StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES
+    }
+  });
+  constructor() {
+    this.refresh();
+  }
+  get snapshot() {
+    return this.snapshotSignal;
+  }
+  async refresh() {
+    await Promise.all([this.refreshEstimatePart(), this.refreshLocalStoragePart()]);
+  }
+  // No periodic tracking by design; call refresh() manually when needed
+  async refreshEstimatePart() {
+    const supportsEstimate = typeof navigator !== "undefined" && !!navigator.storage && !!navigator.storage.estimate;
+    if (!supportsEstimate) {
+      this.snapshotSignal.update((prev) => __spreadProps(__spreadValues({}, prev), {
+        timestamp: Date.now(),
+        supported: __spreadProps(__spreadValues({}, prev.supported), { storageEstimate: false }),
+        total: { usageBytes: null, quotaBytes: null, availableBytes: null },
+        indexedDb: { usageBytes: null }
+      }));
+      return;
+    }
+    try {
+      const estimate = await navigator.storage.estimate();
+      const usage = estimate.usage ?? null;
+      const quota = estimate.quota ?? null;
+      const usageDetails = estimate.usageDetails;
+      const idbUsage = usageDetails?.["indexedDB"] ?? null;
+      const available = usage != null && quota != null ? Math.max(quota - usage, 0) : null;
+      this.snapshotSignal.update((prev) => __spreadProps(__spreadValues({}, prev), {
+        timestamp: Date.now(),
+        supported: __spreadProps(__spreadValues({}, prev.supported), { storageEstimate: true }),
+        total: { usageBytes: usage, quotaBytes: quota, availableBytes: available },
+        indexedDb: { usageBytes: idbUsage }
+      }));
+    } catch {
+      this.snapshotSignal.update((prev) => __spreadProps(__spreadValues({}, prev), {
+        timestamp: Date.now(),
+        supported: __spreadProps(__spreadValues({}, prev.supported), { storageEstimate: true }),
+        total: { usageBytes: null, quotaBytes: null, availableBytes: null },
+        indexedDb: { usageBytes: null }
+      }));
+    }
+  }
+  refreshLocalStoragePart() {
+    const supportsLs = typeof localStorage !== "undefined";
+    if (!supportsLs) {
+      this.snapshotSignal.update((prev) => __spreadProps(__spreadValues({}, prev), {
+        timestamp: Date.now(),
+        supported: __spreadProps(__spreadValues({}, prev.supported), { localStorage: false }),
+        localStorage: {
+          usageBytes: 0,
+          quotaBytesApprox: _StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES,
+          availableBytesApprox: _StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES
+        }
+      }));
+      return;
+    }
+    const usageBytes = this.computeLocalStorageUsageBytesSafely();
+    const quotaBytesApprox = _StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES;
+    const availableBytesApprox = Math.max(quotaBytesApprox - usageBytes, 0);
+    this.snapshotSignal.update((prev) => __spreadProps(__spreadValues({}, prev), {
+      timestamp: Date.now(),
+      supported: __spreadProps(__spreadValues({}, prev.supported), { localStorage: true }),
+      localStorage: { usageBytes, quotaBytesApprox, availableBytesApprox }
+    }));
+  }
+  computeLocalStorageUsageBytesSafely() {
+    try {
+      const encoder = typeof TextEncoder !== "undefined" ? new TextEncoder() : null;
+      let bytes = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key)
+          continue;
+        const value = localStorage.getItem(key) ?? "";
+        if (encoder) {
+          bytes += encoder.encode(key).length + encoder.encode(value).length;
+        } else {
+          bytes += (key.length + value.length) * 2;
+        }
+      }
+      return bytes;
+    } catch {
+      return 0;
+    }
+  }
+  static \u0275fac = function StorageQuotaService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _StorageQuotaService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _StorageQuotaService, factory: _StorageQuotaService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StorageQuotaService, [{
+    type: Injectable,
+    args: [{ providedIn: "root" }]
+  }], () => [], null);
+})();
+
 // src/app/features/products/service/products.repository.ts
 var ProductsRepository = class _ProductsRepository {
   _indexDbService;
@@ -33845,7 +33992,9 @@ export {
   OpenFoodFactsService,
   SelectResourcesService,
   TransferDataService,
+  VersionService,
+  StorageQuotaService,
   ProductsRepository,
   RecipesRepository
 };
-//# sourceMappingURL=chunk-UQDYAEYU.js.map
+//# sourceMappingURL=chunk-NIPIUAKD.js.map

@@ -8,7 +8,7 @@ import {
   ProductScheme,
   UnitScheme,
   z
-} from "./chunk-OI7YA3YI.js";
+} from "./chunk-DIZVTS3O.js";
 import {
   ControlsBarComponent,
   SelectionToolsComponent
@@ -70,7 +70,7 @@ import {
 import {
   RecipesRepository,
   TransferDataService
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
@@ -1134,4 +1134,4 @@ var RecipesListComponent = class _RecipesListComponent {
 export {
   RecipesListComponent
 };
-//# sourceMappingURL=chunk-UL6GOIEZ.js.map
+//# sourceMappingURL=chunk-ZA7LTLJV.js.map

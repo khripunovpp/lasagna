@@ -19,14 +19,14 @@ import {
 import {
   AutocompleteComponent,
   ChipsListComponent
-} from "./chunk-VO7UEIMT.js";
+} from "./chunk-DCKBQZBZ.js";
 import {
   AnalyticsService,
   UnitSwitcherComponent
 } from "./chunk-FAUVFVNX.js";
 import {
   MultiselectComponent
-} from "./chunk-E5RM5ZA3.js";
+} from "./chunk-KMDJP5QC.js";
 import {
   ShrinkDirective
 } from "./chunk-4VYWNF2J.js";
@@ -83,7 +83,7 @@ import {
 import {
   ProductsRepository,
   SelectResourcesService
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
@@ -1308,4 +1308,4 @@ var AddProductComponent = class _AddProductComponent {
 export {
   AddProductComponent
 };
-//# sourceMappingURL=chunk-R3PHU6AT.js.map
+//# sourceMappingURL=chunk-L42YGB6H.js.map

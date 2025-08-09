@@ -6,7 +6,7 @@ import {
   ImportComponent,
   ImportRowTplDirective,
   ProductScheme
-} from "./chunk-OI7YA3YI.js";
+} from "./chunk-DIZVTS3O.js";
 import {
   ControlsBarComponent,
   SelectionToolsComponent
@@ -58,7 +58,7 @@ import {
   CategoryProductsRepository,
   ProductsRepository,
   TransferDataService
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
@@ -843,4 +843,4 @@ var ProductListComponent = class _ProductListComponent {
 export {
   ProductListComponent
 };
-//# sourceMappingURL=chunk-5U6A2KES.js.map
+//# sourceMappingURL=chunk-T45GP5GX.js.map

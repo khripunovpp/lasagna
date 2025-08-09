@@ -1,7 +1,7 @@
 import {
   AutocompleteComponent,
   ChipsListComponent
-} from "./chunk-VO7UEIMT.js";
+} from "./chunk-DCKBQZBZ.js";
 import {
   ControlsRowComponent
 } from "./chunk-GKQRENE7.js";
@@ -15,7 +15,7 @@ import {
   NgMultiLabelTemplateDirective,
   NgOptionTemplateDirective,
   NgSelectComponent
-} from "./chunk-E5RM5ZA3.js";
+} from "./chunk-KMDJP5QC.js";
 import {
   TextareaComponent
 } from "./chunk-XERQX5UD.js";
@@ -75,7 +75,7 @@ import {
 import {
   RecipesRepository,
   SelectResourcesService
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
@@ -1657,4 +1657,4 @@ var AddRecipeComponent = class _AddRecipeComponent {
 export {
   AddRecipeComponent
 };
-//# sourceMappingURL=chunk-3JLHYF5Z.js.map
+//# sourceMappingURL=chunk-FR5MHEQX.js.map

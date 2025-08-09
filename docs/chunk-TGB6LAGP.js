@@ -29,12 +29,13 @@ import {
   TitleComponent
 } from "./chunk-OZKYQV4U.js";
 import {
-  CategoryProductsRepository
-} from "./chunk-UQDYAEYU.js";
+  CategoryRecipesRepository,
+  SelectResourcesService
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
-  CategoryProduct,
+  CategoryRecipe,
   FormControl,
   FormControlName,
   FormGroup,
@@ -44,8 +45,8 @@ import {
   NotificationsService,
   ReactiveFormsModule,
   Validators,
-  categoryProductDTOFromFormValue,
-  categoryProductToFormValue,
+  categoryRecipeDTOFromFormValue,
+  categoryRecipeToFormValue,
   ɵNgNoValidate
 } from "./chunk-ZKFFSLQI.js";
 import "./chunk-Q4M4NLQD.js";
@@ -58,12 +59,14 @@ import {
 import "./chunk-Z6D6OJRN.js";
 import "./chunk-5WJUMO7X.js";
 import {
-  ActivatedRoute
+  ActivatedRoute,
+  Router
 } from "./chunk-HP5G5POF.js";
 import "./chunk-ENTGQEHX.js";
 import "./chunk-AL3DWPLK.js";
 import {
   Component,
+  Inject,
   effect,
   input,
   setClassMetadata,
@@ -93,8 +96,8 @@ import "./chunk-PZQLIUCM.js";
 import "./chunk-7YWLATDR.js";
 import "./chunk-46DXP6YY.js";
 
-// src/app/features/settings/view/categories/category-product/add-category/add-category-form.component.ts
-function AddCategoryFormComponent_Conditional_7_Conditional_1_Template(rf, ctx) {
+// src/app/features/settings/view/categories/category-recipe/add-category/add-category-recipe-form.component.ts
+function AddCategoryRecipeFormComponent_Conditional_7_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -103,7 +106,7 @@ function AddCategoryFormComponent_Conditional_7_Conditional_1_Template(rf, ctx) 
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.category.save"), " ");
   }
 }
-function AddCategoryFormComponent_Conditional_7_Conditional_2_Template(rf, ctx) {
+function AddCategoryRecipeFormComponent_Conditional_7_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -112,16 +115,16 @@ function AddCategoryFormComponent_Conditional_7_Conditional_2_Template(rf, ctx) 
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.category.no-changes"), " ");
   }
 }
-function AddCategoryFormComponent_Conditional_7_Template(rf, ctx) {
+function AddCategoryRecipeFormComponent_Conditional_7_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-button", 6);
-    \u0275\u0275listener("click", function AddCategoryFormComponent_Conditional_7_Template_lg_button_click_0_listener() {
+    \u0275\u0275listener("click", function AddCategoryRecipeFormComponent_Conditional_7_Template_lg_button_click_0_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.editCategory());
     });
-    \u0275\u0275conditionalCreate(1, AddCategoryFormComponent_Conditional_7_Conditional_1_Template, 2, 3)(2, AddCategoryFormComponent_Conditional_7_Conditional_2_Template, 2, 3);
+    \u0275\u0275conditionalCreate(1, AddCategoryRecipeFormComponent_Conditional_7_Conditional_1_Template, 2, 3)(2, AddCategoryRecipeFormComponent_Conditional_7_Conditional_2_Template, 2, 3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -131,7 +134,7 @@ function AddCategoryFormComponent_Conditional_7_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r1.form.dirty ? 1 : 2);
   }
 }
-function AddCategoryFormComponent_Conditional_8_Conditional_1_Template(rf, ctx) {
+function AddCategoryRecipeFormComponent_Conditional_8_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -140,7 +143,7 @@ function AddCategoryFormComponent_Conditional_8_Conditional_1_Template(rf, ctx) 
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.category.add"), " ");
   }
 }
-function AddCategoryFormComponent_Conditional_8_Conditional_2_Template(rf, ctx) {
+function AddCategoryRecipeFormComponent_Conditional_8_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -149,16 +152,16 @@ function AddCategoryFormComponent_Conditional_8_Conditional_2_Template(rf, ctx) 
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.category.enter-name"), " ");
   }
 }
-function AddCategoryFormComponent_Conditional_8_Template(rf, ctx) {
+function AddCategoryRecipeFormComponent_Conditional_8_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-button", 6);
-    \u0275\u0275listener("click", function AddCategoryFormComponent_Conditional_8_Template_lg_button_click_0_listener() {
+    \u0275\u0275listener("click", function AddCategoryRecipeFormComponent_Conditional_8_Template_lg_button_click_0_listener() {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.addCategory());
     });
-    \u0275\u0275conditionalCreate(1, AddCategoryFormComponent_Conditional_8_Conditional_1_Template, 2, 3)(2, AddCategoryFormComponent_Conditional_8_Conditional_2_Template, 2, 3);
+    \u0275\u0275conditionalCreate(1, AddCategoryRecipeFormComponent_Conditional_8_Conditional_1_Template, 2, 3)(2, AddCategoryRecipeFormComponent_Conditional_8_Conditional_2_Template, 2, 3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -168,11 +171,15 @@ function AddCategoryFormComponent_Conditional_8_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r1.form.dirty ? 1 : 2);
   }
 }
-var AddCategoryFormComponent = class _AddCategoryFormComponent {
+var AddCategoryRecipeFormComponent = class _AddCategoryRecipeFormComponent {
   _categoryRepository;
+  _selectResourcesService;
+  _router;
   _notificationsService;
-  constructor(_categoryRepository, _notificationsService) {
+  constructor(_categoryRepository, _selectResourcesService, _router, _notificationsService) {
     this._categoryRepository = _categoryRepository;
+    this._selectResourcesService = _selectResourcesService;
+    this._router = _router;
     this._notificationsService = _notificationsService;
   }
   form = new FormGroup({
@@ -182,28 +189,25 @@ var AddCategoryFormComponent = class _AddCategoryFormComponent {
   uuid = input("");
   uuidEffect = effect(() => {
     if (!this.uuid()) {
-      this.category.set(CategoryProduct.empty());
+      this.category.set(CategoryRecipe.empty());
       return;
     }
     this._categoryRepository.getOne(this.uuid()).then((category) => {
-      this.reset(category);
+      this.form.reset(categoryRecipeToFormValue(category));
+      this.category.set(category);
+      this.form.markAsPristine();
     });
   });
-  reset(category) {
-    this.form.reset(categoryProductToFormValue(category));
-    this.category.set(category);
-    this.form.markAsPristine();
-  }
   ngOnInit() {
     this.form.valueChanges.subscribe((values) => {
-      this.category()?.update(categoryProductDTOFromFormValue(values));
+      this.category()?.update(categoryRecipeDTOFromFormValue(values));
     });
   }
   addCategory() {
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.addOne(this.category()).then(() => {
+    return this._categoryRepository.addCategory(this.category()).then(() => {
       this.form.reset({
         name: ""
       });
@@ -215,7 +219,7 @@ var AddCategoryFormComponent = class _AddCategoryFormComponent {
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.updateOne(this.uuid(), this.category()).then(() => {
+    return this._categoryRepository.editCategory(this.uuid(), this.category()).then(() => {
       this._notificationsService.success("settings.category.edited");
       this.form.markAsPristine();
     });
@@ -227,21 +231,21 @@ var AddCategoryFormComponent = class _AddCategoryFormComponent {
       this.addCategory();
     }
   }
-  static \u0275fac = function AddCategoryFormComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AddCategoryFormComponent)(\u0275\u0275directiveInject(CategoryProductsRepository), \u0275\u0275directiveInject(NotificationsService));
+  static \u0275fac = function AddCategoryRecipeFormComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _AddCategoryRecipeFormComponent)(\u0275\u0275directiveInject(CategoryRecipesRepository), \u0275\u0275directiveInject(SelectResourcesService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(NotificationsService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AddCategoryFormComponent, selectors: [["lg-add-category-form"]], inputs: { uuid: [1, "uuid"] }, decls: 9, vars: 10, consts: [[3, "formGroup"], [3, "bottom", "mobileMode"], ["lgExpand", "", 3, "label"], ["formControlName", "name", 3, "onEnter", "placeholder"], ["lgNoWrap", ""], [3, "disabled"], [3, "click", "disabled"]], template: function AddCategoryFormComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AddCategoryRecipeFormComponent, selectors: [["lg-add-category-recipe-form"]], inputs: { uuid: [1, "uuid"] }, decls: 9, vars: 10, consts: [[3, "formGroup"], [3, "bottom", "mobileMode"], ["lgExpand", "", 3, "label"], ["formControlName", "name", 3, "onEnter", "placeholder"], ["lgNoWrap", ""], [3, "disabled"], [3, "click", "disabled"]], template: function AddCategoryRecipeFormComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "form", 0)(1, "lg-flex-row", 1)(2, "lg-control", 2);
       \u0275\u0275pipe(3, "translate");
       \u0275\u0275elementStart(4, "lg-input", 3);
       \u0275\u0275pipe(5, "translate");
-      \u0275\u0275listener("onEnter", function AddCategoryFormComponent_Template_lg_input_onEnter_4_listener() {
+      \u0275\u0275listener("onEnter", function AddCategoryRecipeFormComponent_Template_lg_input_onEnter_4_listener() {
         return ctx.onEnter();
       });
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(6, "div", 4);
-      \u0275\u0275conditionalCreate(7, AddCategoryFormComponent_Conditional_7_Template, 3, 2, "lg-button", 5)(8, AddCategoryFormComponent_Conditional_8_Template, 3, 2, "lg-button", 5);
+      \u0275\u0275conditionalCreate(7, AddCategoryRecipeFormComponent_Conditional_7_Template, 3, 2, "lg-button", 5)(8, AddCategoryRecipeFormComponent_Conditional_8_Template, 3, 2, "lg-button", 5);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
@@ -272,39 +276,39 @@ var AddCategoryFormComponent = class _AddCategoryFormComponent {
   ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AddCategoryFormComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AddCategoryRecipeFormComponent, [{
     type: Component,
-    args: [{ selector: "lg-add-category-form", standalone: true, template: `
-    <form [formGroup]="form">
-      <lg-flex-row [bottom]="true" [mobileMode]="true">
-        <lg-control [label]="'settings.category.name' | translate"
-                    lgExpand>
-          <lg-input (onEnter)="onEnter()"
-                    [placeholder]="'settings.category.placeholder' | translate"
-                    formControlName="name"></lg-input>
-        </lg-control>
+    args: [{ selector: "lg-add-category-recipe-form", standalone: true, template: `
+      <form [formGroup]="form">
+          <lg-flex-row [bottom]="true" [mobileMode]="true">
+              <lg-control [label]="'settings.category.name' | translate" lgExpand>
+                  <lg-input (onEnter)="onEnter()"
+                            [placeholder]="'settings.category.placeholder' | translate"
+                            formControlName="name"></lg-input>
+              </lg-control>
 
-        <div lgNoWrap>
-          @if (uuid()) {
-            <lg-button [disabled]="!form.dirty"
-                       (click)="editCategory()">
-              @if (form.dirty) {
-                {{ 'settings.category.save' | translate }}
-              } @else {
-                {{ 'settings.category.no-changes' | translate }}
-              }
-            </lg-button>
-          } @else {
-            <lg-button [disabled]="!form.dirty" (click)="addCategory()">
-              @if (form.dirty) {
-                {{ 'settings.category.add' | translate }}
-              } @else {
-                {{ 'settings.category.enter-name' | translate }}
-              }
-            </lg-button>
-          }</div>
-      </lg-flex-row>
-    </form>
+              <div lgNoWrap>
+                  @if (uuid()) {
+                      <lg-button [disabled]="!form.dirty"
+                                 (click)="editCategory()">
+                          @if (form.dirty) {
+                              {{ 'settings.category.save' | translate }}
+                          } @else {
+                              {{ 'settings.category.no-changes' | translate }}
+                          }
+                      </lg-button>
+                  } @else {
+                      <lg-button [disabled]="!form.dirty" (click)="addCategory()">
+                          @if (form.dirty) {
+                              {{ 'settings.category.add' | translate }}
+                          } @else {
+                              {{ 'settings.category.enter-name' | translate }}
+                          }
+                      </lg-button>
+                  }
+              </div>
+          </lg-flex-row>
+      </form>
   `, imports: [
       ReactiveFormsModule,
       InputComponent,
@@ -315,14 +319,17 @@ var AddCategoryFormComponent = class _AddCategoryFormComponent {
       NoWrapDirective,
       TranslatePipe
     ] }]
-  }], () => [{ type: CategoryProductsRepository }, { type: NotificationsService }], null);
+  }], () => [{ type: CategoryRecipesRepository }, { type: SelectResourcesService, decorators: [{
+    type: Inject,
+    args: [SelectResourcesService]
+  }] }, { type: Router }, { type: NotificationsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddCategoryFormComponent, { className: "AddCategoryFormComponent", filePath: "src/app/features/settings/view/categories/category-product/add-category/add-category-form.component.ts", lineNumber: 65 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddCategoryRecipeFormComponent, { className: "AddCategoryRecipeFormComponent", filePath: "src/app/features/settings/view/categories/category-recipe/add-category/add-category-recipe-form.component.ts", lineNumber: 66 });
 })();
 
-// src/app/features/settings/view/categories/category-product/add-category/add-category.component.ts
-var AddCategoryComponent = class _AddCategoryComponent {
+// src/app/features/settings/view/categories/category-recipe/add-category/add-category-recipe.component.ts
+var AddCategoryRecipeComponent = class _AddCategoryRecipeComponent {
   _aRoute;
   constructor(_aRoute) {
     this._aRoute = _aRoute;
@@ -333,10 +340,10 @@ var AddCategoryComponent = class _AddCategoryComponent {
       this.uuid.set(params["uuid"]);
     });
   }
-  static \u0275fac = function AddCategoryComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AddCategoryComponent)(\u0275\u0275directiveInject(ActivatedRoute));
+  static \u0275fac = function AddCategoryRecipeComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _AddCategoryRecipeComponent)(\u0275\u0275directiveInject(ActivatedRoute));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AddCategoryComponent, selectors: [["lg-add-category"]], decls: 9, vars: 7, consts: [[3, "center"], [3, "uuid"]], template: function AddCategoryComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AddCategoryRecipeComponent, selectors: [["lg-add-category-recipe"]], decls: 9, vars: 7, consts: [[3, "center"], [3, "uuid"]], template: function AddCategoryRecipeComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "lg-container")(2, "lg-flex-row", 0)(3, "lg-title");
       \u0275\u0275text(4);
@@ -344,47 +351,47 @@ var AddCategoryComponent = class _AddCategoryComponent {
       \u0275\u0275pipe(6, "translate");
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(7, "lg-card");
-      \u0275\u0275element(8, "lg-add-category-form", 1);
+      \u0275\u0275element(8, "lg-add-category-recipe-form", 1);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
       \u0275\u0275property("center", true);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate(ctx.uuid() ? \u0275\u0275pipeBind1(5, 3, "categories.edit-product") : \u0275\u0275pipeBind1(6, 5, "categories.add-product"));
+      \u0275\u0275textInterpolate(ctx.uuid() ? \u0275\u0275pipeBind1(5, 3, "categories.edit-recipe") : \u0275\u0275pipeBind1(6, 5, "categories.add-recipe"));
       \u0275\u0275advance(4);
       \u0275\u0275property("uuid", ctx.uuid());
     }
   }, dependencies: [
-    ContainerComponent,
-    CardComponent,
-    TitleComponent,
-    AddCategoryFormComponent,
-    FlexRowComponent,
     FadeInComponent,
+    ContainerComponent,
+    FlexRowComponent,
+    TitleComponent,
+    AddCategoryRecipeFormComponent,
+    CardComponent,
     TranslatePipe
   ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AddCategoryComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AddCategoryRecipeComponent, [{
     type: Component,
-    args: [{ selector: "lg-add-category", standalone: true, imports: [
-      ContainerComponent,
-      CardComponent,
-      TitleComponent,
-      AddCategoryFormComponent,
-      FlexRowComponent,
+    args: [{ selector: "lg-add-category-recipe", standalone: true, imports: [
       FadeInComponent,
+      ContainerComponent,
+      FlexRowComponent,
+      TitleComponent,
+      AddCategoryRecipeFormComponent,
+      CardComponent,
       TranslatePipe
     ], template: `
       <lg-fade-in>
           <lg-container>
               <lg-flex-row [center]="true">
-                  <lg-title>{{ uuid() ? ('categories.edit-product' | translate) : ('categories.add-product' | translate) }}</lg-title>
+                  <lg-title>{{ uuid() ? ('categories.edit-recipe' | translate) : ('categories.add-recipe' | translate) }}</lg-title>
               </lg-flex-row>
 
               <lg-card>
-                  <lg-add-category-form [uuid]="uuid()"></lg-add-category-form>
+                  <lg-add-category-recipe-form [uuid]="uuid()"></lg-add-category-recipe-form>
               </lg-card>
           </lg-container>
       </lg-fade-in>
@@ -392,9 +399,9 @@ var AddCategoryComponent = class _AddCategoryComponent {
   }], () => [{ type: ActivatedRoute }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddCategoryComponent, { className: "AddCategoryComponent", filePath: "src/app/features/settings/view/categories/category-product/add-category/add-category.component.ts", lineNumber: 41 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddCategoryRecipeComponent, { className: "AddCategoryRecipeComponent", filePath: "src/app/features/settings/view/categories/category-recipe/add-category/add-category-recipe.component.ts", lineNumber: 41 });
 })();
 export {
-  AddCategoryComponent
+  AddCategoryRecipeComponent
 };
-//# sourceMappingURL=chunk-XTPXD7ET.js.map
+//# sourceMappingURL=chunk-TGB6LAGP.js.map

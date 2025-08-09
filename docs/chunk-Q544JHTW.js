@@ -24,7 +24,7 @@ import {
 } from "./chunk-OZKYQV4U.js";
 import {
   CategoryRecipesRepository
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import "./chunk-IQVSZDRJ.js";
 import "./chunk-SB6NPMDM.js";
 import {
@@ -245,4 +245,4 @@ var CategoryRecipeListComponent = class _CategoryRecipeListComponent {
 export {
   CategoryRecipeListComponent
 };
-//# sourceMappingURL=chunk-CH6HA2MC.js.map
+//# sourceMappingURL=chunk-Q544JHTW.js.map

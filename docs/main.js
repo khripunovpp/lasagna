@@ -11,7 +11,7 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-H6M3TJ7Q.js";
+} from "./chunk-QCJE7TRH.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
@@ -57,8 +57,10 @@ import {
   FormTemplateService,
   GlobalSearchService,
   ProductsRepository,
-  RecipesRepository
-} from "./chunk-UQDYAEYU.js";
+  RecipesRepository,
+  StorageQuotaService,
+  VersionService
+} from "./chunk-NIPIUAKD.js";
 import {
   DocsService
 } from "./chunk-IQVSZDRJ.js";
@@ -205,6 +207,9 @@ import {
   ɵɵnextContext,
   ɵɵpipe,
   ɵɵpipeBind1,
+  ɵɵpipeBind2,
+  ɵɵprojection,
+  ɵɵprojectionDef,
   ɵɵproperty,
   ɵɵpureFunction0,
   ɵɵpureFunction1,
@@ -2121,22 +2126,22 @@ var routes = [{
     },
     {
       path: "home",
-      loadComponent: () => import("./chunk-QBYXKD3L.js").then((m) => m.ApplicationComponent)
+      loadComponent: () => import("./chunk-UFBL72H3.js").then((m) => m.ApplicationComponent)
     },
     {
       path: "recipes",
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-UL6GOIEZ.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-ZA7LTLJV.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-3JLHYF5Z.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-FR5MHEQX.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-3JLHYF5Z.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-FR5MHEQX.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2146,7 +2151,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-3JLHYF5Z.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-FR5MHEQX.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2156,7 +2161,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-YODP5CAD.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-EHAZAIHH.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2169,15 +2174,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-5U6A2KES.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-T45GP5GX.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-R3PHU6AT.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-L42YGB6H.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-R3PHU6AT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-L42YGB6H.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2187,7 +2192,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-R3PHU6AT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-L42YGB6H.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2216,7 +2221,7 @@ var routes = [{
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-KLTPKZK2.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-243X2NLA.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2246,7 +2251,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-5JGVBGQX.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-6Q2V24JL.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2256,15 +2261,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-L2SAC7J6.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-HV6B3YZU.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-XTPXD7ET.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-36LOHI4S.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-XTPXD7ET.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-36LOHI4S.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2273,15 +2278,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-CH6HA2MC.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-Q544JHTW.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-7HD334F7.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-TGB6LAGP.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-7HD334F7.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-TGB6LAGP.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2292,7 +2297,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-Y6W5MNMR.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-BRECF5CG.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2300,7 +2305,7 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-EW36GHW7.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-KCKAIZ2V.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
@@ -10822,36 +10827,6 @@ var DemoService = class _DemoService {
   }], () => [{ type: HttpClient }, { type: DexieIndexDbService }], null);
 })();
 
-// src/app/shared/service/services/version.service.ts
-var VersionService = class _VersionService {
-  http;
-  versionSignal = signal("Unknown");
-  constructor(http) {
-    this.http = http;
-  }
-  get version() {
-    return this.versionSignal;
-  }
-  async load() {
-    try {
-      const env = await this.http.get("./env.json", { withCredentials: false }).toPromise();
-      this.versionSignal.set(env?.version ?? "Unknown");
-    } catch {
-      this.versionSignal.set("Unknown");
-    }
-  }
-  static \u0275fac = function VersionService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _VersionService)(\u0275\u0275inject(HttpClient));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _VersionService, factory: _VersionService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(VersionService, [{
-    type: Injectable,
-    args: [{ providedIn: "root" }]
-  }], () => [{ type: HttpClient }], null);
-})();
-
 // src/app/app.initializer.ts
 var appInitializer = () => {
   const categoryRepository = inject(CategoryProductsRepository);
@@ -11069,7 +11044,7 @@ var PwaInstallComponent = class _PwaInstallComponent {
     if (rf & 2) {
       \u0275\u0275conditional(ctx.showButton ? 0 : -1);
     }
-  }, dependencies: [TranslatePipe], styles: ["\n\nlg-pwa-install[_ngcontent-%COMP%] {\n  display: flex;\n}\nbutton[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  position: fixed;\n  bottom: 15px;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  left: 0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"] });
+  }, dependencies: [TranslatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\nbutton[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PwaInstallComponent, [{
@@ -11082,11 +11057,11 @@ var PwaInstallComponent = class _PwaInstallComponent {
     }
   `, imports: [
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;4e82e46478bfd5c3f06c1e006fecead10876800e1b89369a3c574b96333a414a;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/pwa-install.component.ts */\nlg-pwa-install {\n  display: flex;\n}\nbutton {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  position: fixed;\n  bottom: 15px;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  left: 0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\nbutton:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;25b948535c624d82af95fda8121e85cb54bb6594e5ccc9bc881003a67efa58a1;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/pwa-install.component.ts */\n:host {\n  display: contents;\n}\nbutton {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 42 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 41 });
 })();
 
 // src/app/features/global-search/global-search.component.ts
@@ -11839,7 +11814,7 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
     TitleCasePipe,
     RouterLink,
     TranslatePipe
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  top: 50%;\n  left: 0;\n  right: 0;\n  transform: translateY(-50%);\n}\na[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\na[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\na[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  white-space: nowrap;\n}\na[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LastBackupInformerComponent, [{
@@ -11861,14 +11836,14 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
       TitleCasePipe,
       RouterLink,
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;84d4116ee8dcfd8aea765278a9201fa37a73f09c9a692b5075c22f9596536d2d;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/last-backup-informer.component.ts */\n:host {\n  display: flex;\n  position: fixed;\n  z-index: 8;\n  top: 50%;\n  left: 0;\n  right: 0;\n  transform: translateY(-50%);\n}\na {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n}\na:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;394b761ca9df344d04e068aad8d4094f72d16b67c69a501ffa5abbbf5ed5b672;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/last-backup-informer.component.ts */\n:host {\n  display: contents;\n}\na {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
   }], () => [], { onClick: [{
     type: HostListener,
     args: ["click", ["$event"]]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/shared/view/ui/last-backup-informer.component.ts", lineNumber: 59 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/shared/view/ui/last-backup-informer.component.ts", lineNumber: 52 });
 })();
 
 // src/app/shared/view/ui/font-tester.component.ts
@@ -12335,6 +12310,97 @@ var HeaderComponent = class _HeaderComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/shared/view/ui/layout/header.component.ts", lineNumber: 211 });
 })();
 
+// src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts
+var _c04 = ["*"];
+var OverlayActionsComponent = class _OverlayActionsComponent {
+  static \u0275fac = function OverlayActionsComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _OverlayActionsComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OverlayActionsComponent, selectors: [["lg-overlay-actions"]], ngContentSelectors: _c04, decls: 2, vars: 0, consts: [[1, "overlay-actions"]], template: function OverlayActionsComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275projectionDef();
+      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275projection(1);
+      \u0275\u0275elementEnd();
+    }
+  }, styles: ["/* angular:styles/component:scss;d4bccf7041aecf58d1dccce916233a9bc2c3eeb922d571d21a15bf3315eb6072;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  inset: auto 0 16px 0;\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(OverlayActionsComponent, [{
+    type: Component,
+    args: [{ selector: "lg-overlay-actions", standalone: true, encapsulation: ViewEncapsulation.None, template: `
+    <div class="overlay-actions">
+      <ng-content></ng-content>
+    </div>
+  `, styles: ["/* angular:styles/component:scss;d4bccf7041aecf58d1dccce916233a9bc2c3eeb922d571d21a15bf3315eb6072;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  inset: auto 0 16px 0;\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"] }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(OverlayActionsComponent, { className: "OverlayActionsComponent", filePath: "src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts", lineNumber: 41 });
+})();
+
+// src/app/shared/view/ui/storage-quota-warning.component.ts
+var _c05 = () => ({ tab: "backup" });
+var _c14 = () => ["/settings"];
+var _c22 = (a0) => ({ percent: a0 });
+function StorageQuotaWarningComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "a", 0);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("queryParams", \u0275\u0275pureFunction0(6, _c05))("routerLink", \u0275\u0275pureFunction0(7, _c14));
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(2, 3, "quota.near-limit", \u0275\u0275pureFunction1(8, _c22, ctx_r0.percentUsed())), " ");
+  }
+}
+var StorageQuotaWarningComponent = class _StorageQuotaWarningComponent {
+  quota = inject(StorageQuotaService).snapshot;
+  percentUsed = computed(() => {
+    const total = this.quota().total;
+    if (!total.quotaBytes || !total.usageBytes)
+      return 0;
+    return Math.round(total.usageBytes / total.quotaBytes * 100);
+  });
+  shouldShow = computed(() => {
+    const total = this.quota().total;
+    if (!total.quotaBytes || !total.usageBytes)
+      return false;
+    const percent = total.usageBytes / total.quotaBytes * 100;
+    return percent >= 85;
+  });
+  static \u0275fac = function StorageQuotaWarningComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _StorageQuotaWarningComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _StorageQuotaWarningComponent, selectors: [["lg-storage-quota-warning"]], decls: 1, vars: 1, consts: [[3, "queryParams", "routerLink"]], template: function StorageQuotaWarningComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275conditionalCreate(0, StorageQuotaWarningComponent_Conditional_0_Template, 3, 10, "a", 0);
+    }
+    if (rf & 2) {
+      \u0275\u0275conditional(ctx.shouldShow() ? 0 : -1);
+    }
+  }, dependencies: [RouterLink, TranslatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\na[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border: 0;\n  padding: 10px 16px;\n  cursor: pointer;\n  border-radius: 0 16px 16px 0;\n  color: var(--text-color-inverse);\n  background:\n    linear-gradient(\n      45deg,\n      #ff6b6b,\n      #ffd93d);\n  background-size: calc(100% + 70px) 100%;\n  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\na[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n.overlay-actions__item--danger[_ngcontent-%COMP%] {\n  background: var(--button-danger-bg);\n  color: var(--button-danger-text);\n}\n/*# sourceMappingURL=storage-quota-warning.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StorageQuotaWarningComponent, [{
+    type: Component,
+    args: [{ selector: "lg-storage-quota-warning", standalone: true, imports: [RouterLink, TranslatePipe], template: `
+    @if (shouldShow()) {
+      <a [queryParams]="{tab:'backup'}"
+         [routerLink]="['/settings']">
+        {{ 'quota.near-limit' | translate:{percent: percentUsed()} }}
+      </a>
+    }
+  `, styles: ["/* angular:styles/component:scss;6cb735ebd20f86c1d089947f4be4ca0e7abdb7b108e4ac113f168fe979f07758;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/storage-quota-warning.component.ts */\n:host {\n  display: contents;\n}\na {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border: 0;\n  padding: 10px 16px;\n  cursor: pointer;\n  border-radius: 0 16px 16px 0;\n  color: var(--text-color-inverse);\n  background:\n    linear-gradient(\n      45deg,\n      #ff6b6b,\n      #ffd93d);\n  background-size: calc(100% + 70px) 100%;\n  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n.overlay-actions__item--danger {\n  background: var(--button-danger-bg);\n  color: var(--button-danger-text);\n}\n/*# sourceMappingURL=storage-quota-warning.component.css.map */\n"] }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(StorageQuotaWarningComponent, { className: "StorageQuotaWarningComponent", filePath: "src/app/shared/view/ui/storage-quota-warning.component.ts", lineNumber: 50 });
+})();
+
 // src/app/app.component.ts
 var AppComponent = class _AppComponent {
   constructor() {
@@ -12347,16 +12413,19 @@ var AppComponent = class _AppComponent {
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AppComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], features: [\u0275\u0275ProvidersFeature([])], decls: 10, vars: 0, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], features: [\u0275\u0275ProvidersFeature([])], decls: 12, vars: 0, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275element(0, "lg-pwa-install")(1, "lg-global-search")(2, "lg-last-backup-informer")(3, "lg-font-tester");
-      \u0275\u0275elementStart(4, "main", 0);
-      \u0275\u0275element(5, "lg-header");
-      \u0275\u0275elementStart(6, "div", 1);
-      \u0275\u0275element(7, "router-outlet");
+      \u0275\u0275elementStart(0, "lg-overlay-actions");
+      \u0275\u0275element(1, "lg-pwa-install")(2, "lg-last-backup-informer")(3, "lg-storage-quota-warning");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "div", 2);
-      \u0275\u0275element(9, "lg-footer");
+      \u0275\u0275element(4, "lg-global-search")(5, "lg-font-tester");
+      \u0275\u0275elementStart(6, "main", 0);
+      \u0275\u0275element(7, "lg-header");
+      \u0275\u0275elementStart(8, "div", 1);
+      \u0275\u0275element(9, "router-outlet");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(10, "div", 2);
+      \u0275\u0275element(11, "lg-footer");
       \u0275\u0275elementEnd()();
     }
   }, dependencies: [
@@ -12367,7 +12436,9 @@ var AppComponent = class _AppComponent {
     LastBackupInformerComponent,
     TranslateModule,
     FontTesterComponent,
-    FooterComponent
+    FooterComponent,
+    OverlayActionsComponent,
+    StorageQuotaWarningComponent
   ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app[_ngcontent-%COMP%] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content[_ngcontent-%COMP%] {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n  padding-bottom: calc(32px + var(--controls-bar-space, 0px));\n}\n.app-footer[_ngcontent-%COMP%] {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 };
 (() => {
@@ -12381,12 +12452,14 @@ var AppComponent = class _AppComponent {
       LastBackupInformerComponent,
       TranslateModule,
       FontTesterComponent,
-      FooterComponent
-    ], standalone: true, providers: [], template: '<lg-pwa-install></lg-pwa-install>\n<lg-global-search></lg-global-search>\n<lg-last-backup-informer></lg-last-backup-informer>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n  padding-bottom: calc(32px + var(--controls-bar-space, 0px));\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
+      FooterComponent,
+      OverlayActionsComponent,
+      StorageQuotaWarningComponent
+    ], standalone: true, providers: [], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n  padding-bottom: calc(32px + var(--controls-bar-space, 0px));\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 29 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 33 });
 })();
 
 // src/main.ts

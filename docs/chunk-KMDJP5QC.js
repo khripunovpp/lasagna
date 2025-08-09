@@ -1,6 +1,6 @@
 import {
   SelectResourcesService
-} from "./chunk-UQDYAEYU.js";
+} from "./chunk-NIPIUAKD.js";
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
@@ -4725,4 +4725,4 @@ export {
   NgSelectComponent,
   MultiselectComponent
 };
-//# sourceMappingURL=chunk-E5RM5ZA3.js.map
+//# sourceMappingURL=chunk-KMDJP5QC.js.map

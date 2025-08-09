@@ -409,6 +409,7 @@
     "unsaved-changes-warning": "Você tem alterações não salvas. Salve ou descarte antes de sair.",
     "faq.title": "FAQ",
     "pwa.install": "Instalar App",
+  "quota.near-limit": "Armazenamento quase cheio ({{ percent }}%)",
     "recipe.form.category.placeholder": "Categoria",
     "recipe.form.tags.placeholder": "Tags"
 }
