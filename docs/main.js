@@ -12320,7 +12320,6 @@ var AppComponent = class _AppComponent {
   demoService = inject(DemoService);
   async ngOnInit() {
     await this.demoService.loadDemoData();
-    console.log("AppComponent rendered");
   }
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AppComponent)();
