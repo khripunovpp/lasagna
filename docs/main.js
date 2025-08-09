@@ -2122,7 +2122,7 @@ var routes = [{
     },
     {
       path: "home",
-      loadComponent: () => import("./chunk-NRVTJGYR.js").then((m) => m.ApplicationComponent)
+      loadComponent: () => import("./chunk-QVRQRI7U.js").then((m) => m.ApplicationComponent)
     },
     {
       path: "recipes",
@@ -2133,11 +2133,11 @@ var routes = [{
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-T4F5ATAU.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-T4F5ATAU.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2147,7 +2147,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-MTGDUX7R.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-T4F5ATAU.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2157,7 +2157,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-RDLPHYNI.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-WKK3Z324.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2174,11 +2174,11 @@ var routes = [{
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-GKSFBPG3.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-GKSFBPG3.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2188,7 +2188,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-7RNXKFVQ.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-GKSFBPG3.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2217,7 +2217,7 @@ var routes = [{
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-HRE6PC2S.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-QTOLDBNU.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
