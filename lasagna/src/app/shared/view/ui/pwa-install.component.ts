@@ -12,8 +12,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
   `,
   styles: [`
-    lg-pwa-install {
-      display: flex;
+    :host {
+      display: contents;
     }
 
     button {
@@ -22,13 +22,12 @@ import {TranslatePipe} from '@ngx-translate/core';
       border: none;
       padding: 10px 20px;
       cursor: pointer;
-      position: fixed;
-      bottom: 15px;
       box-shadow: -15px 6px 8px 0px #eed2f0;
-      left: 0;
       border-radius: 0 16px 16px 0;
       background-size: calc(100% + 70px) 100%;
       transition: background-position 0.3s ease;
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     button:hover {
