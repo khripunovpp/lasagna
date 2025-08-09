@@ -22,15 +22,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
   `,
   styles: [`
-    :host {
-      display: flex;
-      position: fixed;
-      z-index: 8;
-      top: 50%;
-      left: 0;
-      right: 0;
-      transform: translateY(-50%);
-    }
+    :host { display: contents; }
 
     a {
       background-image: linear-gradient(45deg, #de2c51, #fff400);
@@ -43,6 +35,7 @@ import {TranslatePipe} from '@ngx-translate/core';
       border-radius: 0 16px 16px 0;
       background-size: calc(100% + 70px) 100%;
       transition: background-position 0.3s ease;
+      white-space: nowrap;
     }
 
     a:hover {

@@ -8,6 +8,8 @@ import {FontTesterComponent} from './shared/view/ui/font-tester.component';
 import {DemoService} from './shared/service/services/demo.service';
 import {FooterComponent} from './shared/view/ui/layout/footer.component';
 import {HeaderComponent} from './shared/view/ui/layout/header.component';
+import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
+import {StorageQuotaWarningComponent} from './shared/view/ui/storage-quota-warning.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,8 @@ import {HeaderComponent} from './shared/view/ui/layout/header.component';
     TranslateModule,
     FontTesterComponent,
     FooterComponent,
+    OverlayActionsComponent,
+    StorageQuotaWarningComponent,
   ],
   templateUrl: './app.component.html',
   standalone: true,

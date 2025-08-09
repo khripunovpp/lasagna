@@ -409,6 +409,7 @@
     "footer.and": "and",
     "faq.title": "FAQ",
     "pwa.install": "Install App",
+  "quota.near-limit": "Storage nearly full ({{ percent }}%)",
     "recipe.form.category.placeholder": "Category",
     "recipe.form.tags.placeholder": "Tags"
 }

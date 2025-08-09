@@ -74,7 +74,7 @@ export class StorageQuotaService {
       const estimate = await navigator.storage.estimate();
       const usage = estimate.usage ?? null;
       const quota = estimate.quota ?? null;
-      const usageDetails: Record<string, number> | undefined = (estimate as any).usageDetails;
+      const usageDetails: any = (estimate as any).usageDetails;
       const idbUsage = usageDetails?.['indexedDB'] ?? null;
 
       const available = usage != null && quota != null ? Math.max(quota - usage, 0) : null;
