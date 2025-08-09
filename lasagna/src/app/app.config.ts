@@ -44,6 +44,8 @@ import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {appInitializer} from './app.initializer';
 import {SortStrategy} from './shared/service/types/sorting.types';
+import {APP_VERSION} from './shared/service/tokens/app-version.token';
+import {environment} from '../environments/environment';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -198,5 +200,9 @@ export const appConfig: ApplicationConfig = {
     },
     provideNativeDateAdapter(),
     ROUTER_MANAGER_PROVIDER,
+    {
+      provide: APP_VERSION,
+      useValue: environment.version,
+    },
   ]
 };
