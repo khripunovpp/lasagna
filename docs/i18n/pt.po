@@ -1,0 +1,356 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"POT-Creation-Date: 2025-05-23T22:24:04.172Z\n"
+"PO-Revision-Date: 2025-05-23T22:24:04.172Z\n"
+"Language: pt\n"
+
+msgid "add-label"
+msgstr "Adicionar"
+
+msgid "backup.last-label"
+msgstr "Último backup:"
+
+msgid "backup.make-btn"
+msgstr "Fazer backup"
+
+msgid "backup.restore-btn"
+msgstr "Restaurar cópia de segurança"
+
+msgid "backup.restore-informer"
+msgstr "Fique atento! Isto substituirá todos os seus dados!"
+
+msgid "backup.settings-title"
+msgstr "Backups"
+
+msgid "categories.products.link-label"
+msgstr "Categorias de produtos"
+
+msgid "categories.recipes.link-label"
+msgstr "Categorias de receitas"
+
+msgid "categories.settings-title"
+msgstr "Categorias"
+
+msgid "close-label"
+msgstr "Fechе"
+
+msgid "confirm-label"
+msgstr "Confirmar"
+
+msgid "delete-all-label"
+msgstr ""
+
+msgid "delete-selected-label"
+msgstr ""
+
+msgid "deselect-all-label"
+msgstr "Desmarcar tudo"
+
+msgid "draft.list-prefix.existing"
+msgstr "Alterações não guardadas"
+
+msgid "draft.list-prefix.new"
+msgstr "Rascunho"
+
+msgid "drafts-close-label"
+msgstr ""
+
+msgid "drafts-label"
+msgstr ""
+
+msgid "edit-label"
+msgstr "Editar"
+
+msgid "edited-at-label"
+msgstr "editado"
+
+msgid "export-label"
+msgstr "Exportar"
+
+msgid "from-location"
+msgstr "de"
+
+msgid "hide-selection-label"
+msgstr "Ocultar seleção"
+
+msgid "import-label"
+msgstr "Importar"
+
+msgid "just-now"
+msgstr "agora"
+
+msgid "language.settings-title"
+msgstr "Localização"
+
+msgid "language.settings.currency-title"
+msgstr ""
+
+msgid "language.settings.language-title"
+msgstr ""
+
+msgid "main.last-products"
+msgstr "Últimos produtos editados"
+
+msgid "main.last-recipes"
+msgstr "Últimas receitas editadas"
+
+msgid "main.products.button"
+msgstr ""
+
+msgid "main.recipes.button"
+msgstr ""
+
+msgid "main.title"
+msgstr "Oi"
+
+msgid "no-products"
+msgstr "Nenhum produto encontrado"
+
+msgid "no-recipes"
+msgstr "Nenhuma receita encontrada"
+
+msgid "no-results"
+msgstr "Nenhum resultado encontrado"
+
+msgid "product.form.amount.label"
+msgstr "Montante"
+
+msgid "product.form.amount.placeholder"
+msgstr "Peso em {{ unit }}"
+
+msgid "product.form.delete-btn"
+msgstr "Remover este produto"
+
+msgid "product.form.delete-draft-btn"
+msgstr "Remover este rascunho"
+
+msgid "product.form.name.label"
+msgstr "Nome"
+
+msgid "product.form.name.placeholder"
+msgstr "Nome"
+
+msgid "product.form.price.label"
+msgstr "Preço"
+
+msgid "product.form.price.placeholder"
+msgstr "Para todo o produto na sua moeda"
+
+msgid "product.form.save-btn.add.active"
+msgstr "Adicionar este produto"
+
+msgid "product.form.save-btn.add.disabled"
+msgstr "Introduza um nome"
+
+msgid "product.form.save-btn.edit.active"
+msgstr "Guardar alterações"
+
+msgid "product.form.save-btn.edit.disabled"
+msgstr "Nada mudou"
+
+msgid "product.form.source.label"
+msgstr "Fonte (supermarket, etc.)"
+
+msgid "product.form.source.placeholder"
+msgstr "Fonte (supermarket, etc.)"
+
+msgid "product.form.tags.label"
+msgstr "Etiquetas"
+
+msgid "product.form.tags.placeholder"
+msgstr "Etiquetas"
+
+msgid "product.form.title"
+msgstr "Adicionar novo produto"
+
+msgid "products.list-title"
+msgstr "Produtos"
+
+msgid "products.menu-label"
+msgstr "Produtos"
+
+msgid "recipe.calculate-btn"
+msgstr "Calcular"
+
+msgid "recipe.calculation.one-unit.label"
+msgstr ""
+
+msgid "recipe.calculation.outcome.label"
+msgstr ""
+
+msgid "recipe.calculation.price-chart"
+msgstr ""
+
+msgid "recipe.calculation.table.amount.title"
+msgstr ""
+
+msgid "recipe.calculation.table.name.title"
+msgstr ""
+
+msgid "recipe.calculation.table.price.title"
+msgstr ""
+
+msgid "recipe.calculation.table.total-row"
+msgstr ""
+
+msgid "recipe.calculation.table.total.title"
+msgstr ""
+
+msgid "recipe.calculation.table.unit.title"
+msgstr ""
+
+msgid "recipe.calculation.title.after-text"
+msgstr ""
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr ""
+
+msgid "recipe.calculation.total-price.label"
+msgstr ""
+
+msgid "recipe.calculation.weight-chart"
+msgstr ""
+
+msgid "recipe.form.delete-btn"
+msgstr "Remover este produto"
+
+msgid "recipe.form.delete-draft-btn"
+msgstr "Remover este rascunho"
+
+msgid "recipe.form.description.label"
+msgstr "Descrição"
+
+msgid "recipe.form.description.placeholder"
+msgstr "Descreva a sua receita, como a fazer, a que deve prestar atenção, etc."
+
+msgid "recipe.form.ingredients.add-btn"
+msgstr "Adicionar ingrediente"
+
+msgid "recipe.form.ingredients.amount.label"
+msgstr "Quantia"
+
+msgid "recipe.form.ingredients.amount.placeholder"
+msgstr "Em {{ unit }}"
+
+msgid "recipe.form.ingredients.label"
+msgstr "Ingredientes"
+
+msgid "recipe.form.ingredients.name.label"
+msgstr "Nome"
+
+msgid "recipe.form.ingredients.name.placeholder"
+msgstr "Aqui pode escrever o nome do ingrediente"
+
+msgid "recipe.form.ingredients.name.switch-label"
+msgstr "Como texto"
+
+msgid "recipe.form.name.label"
+msgstr "Nome"
+
+msgid "recipe.form.name.placeholder"
+msgstr ""
+
+msgid "recipe.form.save-btn.add.active"
+msgstr "Adicione esta receita"
+
+msgid "recipe.form.save-btn.add.disabled"
+msgstr "Introduza um nome"
+
+msgid "recipe.form.save-btn.edit.active"
+msgstr "Guardar alterações"
+
+msgid "recipe.form.save-btn.edit.disabled"
+msgstr "Nada mudou"
+
+msgid "recipe.form.title"
+msgstr "Adicionar nova receita"
+
+msgid "recipes.calculate-btn"
+msgstr "Calcular"
+
+msgid "recipes.list-title"
+msgstr "Receitas"
+
+msgid "recipes.menu-label"
+msgstr "Receitas"
+
+msgid "replace-duplicates-label"
+msgstr "Substitua tudo por novo"
+
+msgid "saved-draft-label"
+msgstr "guardado como rascunho"
+
+msgid "search.placeholder"
+msgstr "Procurar tudo..."
+
+msgid "search.product-categories.title"
+msgstr "Categorias de produtos"
+
+msgid "search.product.title"
+msgstr "Produtos"
+
+msgid "search.recipe-categories.title"
+msgstr "Categorias de receitas"
+
+msgid "search.recipes.title"
+msgstr "Receitas"
+
+msgid "select-all-label"
+msgstr "Selecionar tudo"
+
+msgid "select-many-label"
+msgstr "Selecione muitos"
+
+msgid "settings.title"
+msgstr "Configurações"
+
+msgid "skip-duplicates-label"
+msgstr "Ignorar todas as duplicatas"
+
+msgid "taxes.link-label"
+msgstr "Definir impostos"
+
+msgid "taxes.settings-title"
+msgstr "Impostos permitidos"
+
+msgid "unknown"
+msgstr "desconhecido"
+
+msgid "update-label"
+msgstr "Atualizar"
+
+msgid "without-category-label"
+msgstr "Sem categoria"
+
+msgctxt "id.label"
+msgid "product.form.category"
+msgstr "Categoria"
+
+msgctxt "id.label"
+msgid "recipe.form.category"
+msgstr "Categoria"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.product"
+msgstr "Produto"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.recipe"
+msgstr "Receita"
+
+msgctxt "id.placeholder"
+msgid "product.form.category"
+msgstr "Categoria"
+
+msgctxt "amount.label"
+msgid "recipe.form.outcome"
+msgstr "Valor do resultado"
+
+msgctxt "amount.placeholder"
+msgid "recipe.form.outcome"
+msgstr "Aqui pode escrever o valor do resultado (por exemplo, 100, 12, etc.)"

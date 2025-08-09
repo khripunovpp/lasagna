@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/pagination/pagination.component.ts"],
+  "sourcesContent": ["\n    .pagination {\n      margin-top: var(--spacing-lg);\n      padding-top: var(--spacing-lg);\n      border-top: 1px solid var(--color-border);\n    }\n\n    .pagination__info {\n      display: flex;\n      align-items: center;\n      gap: var(--spacing-xs);\n      padding: var(--spacing-sm) var(--spacing-lg);\n      background: var(--color-background-secondary);\n      border-radius: var(--border-radius-lg);\n      font-weight: 600;\n    }\n\n    .pagination__current {\n      color: var(--color-primary);\n    }\n\n    .pagination__separator {\n      color: var(--color-text-muted);\n    }\n\n    .pagination__total {\n      color: var(--color-text);\n    }\n\n    .pagination__btn {\n      display: flex;\n      align-items: center;\n      gap: var(--spacing-sm);\n      padding: var(--spacing-sm) var(--spacing-lg);\n      border-radius: var(--border-radius-lg);\n      font-weight: 600;\n      transition: all 0.3s ease;\n    }\n\n    .pagination__icon {\n      font-size: var(--font-size-sm);\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,cAAA,IAAA;AACA,eAAA,IAAA;AACA,cAAA,IAAA,MAAA,IAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA,IAAA;AACA,WAAA,IAAA,cAAA,IAAA;AACA,cAAA,IAAA;AACA,iBAAA,IAAA;AACA,eAAA;;AAGF,CAAA;AACE,SAAA,IAAA;;AAGF,CAAA;AACE,SAAA,IAAA;;AAGF,CAAA;AACE,SAAA,IAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA,IAAA;AACA,WAAA,IAAA,cAAA,IAAA;AACA,iBAAA,IAAA;AACA,eAAA;AACA,cAAA,IAAA,KAAA;;AAGF,CAAA;AACE,aAAA,IAAA;;",
+  "names": []
+}

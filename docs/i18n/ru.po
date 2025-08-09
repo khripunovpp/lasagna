@@ -1,0 +1,361 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"POT-Creation-Date: 2025-05-23T22:24:03.850Z\n"
+"PO-Revision-Date: 2025-05-23 23:24+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 "
+"&& (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"mime-version: 1.0\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "add-label"
+msgstr "Добавить"
+
+msgid "backup.last-label"
+msgstr "Последняя резервная копия:"
+
+msgid "backup.make-btn"
+msgstr "Сделать резервную копию"
+
+msgid "backup.restore-btn"
+msgstr "Восстановить резервную копию"
+
+msgid "backup.restore-informer"
+msgstr "Будьте осторожны! Это приведет к перезаписи всех ваших данных!"
+
+msgid "backup.settings-title"
+msgstr "Резервные копии"
+
+msgid "categories.products.link-label"
+msgstr "Категории продуктов"
+
+msgid "categories.recipes.link-label"
+msgstr "Категории рецептов"
+
+msgid "categories.settings-title"
+msgstr "Категории"
+
+msgid "close-label"
+msgstr "Закрыть"
+
+msgid "confirm-label"
+msgstr "Подтвердить"
+
+msgid "delete-all-label"
+msgstr "Удалить все"
+
+msgid "delete-selected-label"
+msgstr "Удалить выделенное"
+
+msgid "deselect-all-label"
+msgstr "Убрать выделение со всего"
+
+msgid "draft.list-prefix.existing"
+msgstr "Несохраненный изменения"
+
+msgid "draft.list-prefix.new"
+msgstr "Черонвик"
+
+msgid "drafts-close-label"
+msgstr "Закрыть"
+
+msgid "drafts-label"
+msgstr "У вас есть {{ length }} несохраненых изменений. Нажмите чтобы посмотреть"
+
+msgid "edit-label"
+msgstr "Редактирование"
+
+msgid "edited-at-label"
+msgstr "изменено"
+
+msgid "export-label"
+msgstr "Экспорт"
+
+msgid "from-location"
+msgstr "из"
+
+msgid "hide-selection-label"
+msgstr "Скрыть выбор"
+
+msgid "import-label"
+msgstr "Импортировать"
+
+msgid "just-now"
+msgstr "только что"
+
+msgid "language.settings-title"
+msgstr "Язык"
+
+msgid "language.settings.currency-title"
+msgstr "Валюта"
+
+msgid "language.settings.language-title"
+msgstr "Язык"
+
+msgid "main.last-products"
+msgstr "Последние измененые продукты"
+
+msgid "main.last-recipes"
+msgstr "Последние измененные рецепты"
+
+msgid "main.products.button"
+msgstr "Добавь свой твой первый продукт"
+
+msgid "main.recipes.button"
+msgstr "Добавь твой первый рецепт"
+
+msgid "main.title"
+msgstr "Привет"
+
+msgid "no-products"
+msgstr "Продуктов не найдено"
+
+msgid "no-recipes"
+msgstr "Рецепты не найдены"
+
+msgid "no-results"
+msgstr "Результатов не найдено"
+
+msgid "product.form.amount.label"
+msgstr "Количество"
+
+msgid "product.form.amount.placeholder"
+msgstr "Вес в  {{ unit }}"
+
+msgid "product.form.delete-btn"
+msgstr "Удалить этот продукт"
+
+msgid "product.form.delete-draft-btn"
+msgstr "Удалить этот черновик"
+
+msgid "product.form.name.label"
+msgstr "Название"
+
+msgid "product.form.name.placeholder"
+msgstr "Название"
+
+msgid "product.form.price.label"
+msgstr "Цена"
+
+msgid "product.form.price.placeholder"
+msgstr "За весь продукт в вашей валюте"
+
+msgid "product.form.save-btn.add.active"
+msgstr "Добавить этот продукт"
+
+msgid "product.form.save-btn.add.disabled"
+msgstr "Введите имя"
+
+msgid "product.form.save-btn.edit.active"
+msgstr "Сохранить изменения"
+
+msgid "product.form.save-btn.edit.disabled"
+msgstr "Ничего не изменилось"
+
+msgid "product.form.source.label"
+msgstr "Источник (супермаркет и т.п.)"
+
+msgid "product.form.source.placeholder"
+msgstr "Источник (супермаркет и т.п.)"
+
+msgid "product.form.tags.label"
+msgstr "Теги"
+
+msgid "product.form.tags.placeholder"
+msgstr "Теги"
+
+msgid "product.form.title"
+msgstr "Добавить новый продукт"
+
+msgid "products.list-title"
+msgstr "Продукты"
+
+msgid "products.menu-label"
+msgstr "Продукты"
+
+msgid "recipe.calculate-btn"
+msgstr "Рассчитать"
+
+msgid "recipe.calculation.one-unit.label"
+msgstr "За один"
+
+msgid "recipe.calculation.outcome.label"
+msgstr "Расчет для "
+
+msgid "recipe.calculation.price-chart"
+msgstr "Разбиение по цене"
+
+msgid "recipe.calculation.table.amount.title"
+msgstr "Количество"
+
+msgid "recipe.calculation.table.name.title"
+msgstr "Название"
+
+msgid "recipe.calculation.table.price.title"
+msgstr "Цена"
+
+msgid "recipe.calculation.table.total-row"
+msgstr "Общая стоимость (без надбавок)"
+
+msgid "recipe.calculation.table.total.title"
+msgstr "Стоимость"
+
+msgid "recipe.calculation.table.unit.title"
+msgstr "Единица измерения"
+
+msgid "recipe.calculation.title.after-text"
+msgstr "- расчет стоимости"
+
+msgid "recipe.calculation.total-price-taxes.label"
+msgstr "Общая стоимость с налогами"
+
+msgid "recipe.calculation.total-price.label"
+msgstr "Общая стоимость"
+
+msgid "recipe.calculation.weight-chart"
+msgstr "Разбиение по весу"
+
+msgid "recipe.form.delete-btn"
+msgstr "Удалить этот продукт"
+
+msgid "recipe.form.delete-draft-btn"
+msgstr "Удалить этот черновик"
+
+msgid "recipe.form.description.label"
+msgstr "Описание"
+
+msgid "recipe.form.description.placeholder"
+msgstr "Опишите свой рецепт, как его приготовить, на что обратить внимание и т. д."
+
+msgid "recipe.form.ingredients.add-btn"
+msgstr "Добавить ингредиент"
+
+msgid "recipe.form.ingredients.amount.label"
+msgstr "Количество"
+
+msgid "recipe.form.ingredients.amount.placeholder"
+msgstr "В {{ unit }}"
+
+msgid "recipe.form.ingredients.label"
+msgstr "Ингредиенты"
+
+msgid "recipe.form.ingredients.name.label"
+msgstr "Имя"
+
+msgid "recipe.form.ingredients.name.placeholder"
+msgstr "Здесь вы можете написать название ингредиента"
+
+msgid "recipe.form.ingredients.name.switch-label"
+msgstr "Как текст"
+
+msgid "recipe.form.name.label"
+msgstr "Имя"
+
+msgid "recipe.form.name.placeholder"
+msgstr "Название твоего рецепта"
+
+msgid "recipe.form.save-btn.add.active"
+msgstr "Добавить этот рецепт"
+
+msgid "recipe.form.save-btn.add.disabled"
+msgstr "Введите имя"
+
+msgid "recipe.form.save-btn.edit.active"
+msgstr "Сохранить изменения"
+
+msgid "recipe.form.save-btn.edit.disabled"
+msgstr "Ничего не изменилось"
+
+msgid "recipe.form.title"
+msgstr "Добавить новый рецепт"
+
+msgid "recipes.calculate-btn"
+msgstr "Рассчитать"
+
+msgid "recipes.list-title"
+msgstr "Рецепты"
+
+msgid "recipes.menu-label"
+msgstr "Рецепты"
+
+msgid "replace-duplicates-label"
+msgstr "Заменить все на новое"
+
+msgid "saved-draft-label"
+msgstr "сохранено как черновик"
+
+msgid "search.placeholder"
+msgstr "Найди все..."
+
+msgid "search.product-categories.title"
+msgstr "Категории продуктов"
+
+msgid "search.product.title"
+msgstr "Продукты"
+
+msgid "search.recipe-categories.title"
+msgstr "Категории рецептов"
+
+msgid "search.recipes.title"
+msgstr "Рецепты"
+
+msgid "select-all-label"
+msgstr "Выбрать все"
+
+msgid "select-many-label"
+msgstr "Выделение"
+
+msgid "settings.title"
+msgstr "Настройки"
+
+msgid "skip-duplicates-label"
+msgstr "Пропустить все дубликаты"
+
+msgid "taxes.link-label"
+msgstr "Выбрать доступные налоги"
+
+msgid "taxes.settings-title"
+msgstr "Налоги"
+
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "update-label"
+msgstr "Обновить"
+
+msgid "without-category-label"
+msgstr "Без категории"
+
+msgctxt "id.label"
+msgid "product.form.category"
+msgstr "Категория"
+
+msgctxt "id.label"
+msgid "recipe.form.category"
+msgstr "Категория"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.product"
+msgstr "Продукт"
+
+msgctxt "id.label"
+msgid "recipe.form.ingredients.recipe"
+msgstr "Рецепт"
+
+msgctxt "id.placeholder"
+msgid "product.form.category"
+msgstr "Категория"
+
+msgctxt "amount.label"
+msgid "recipe.form.outcome"
+msgstr "Сумма результата"
+
+msgctxt "amount.placeholder"
+msgid "recipe.form.outcome"
+msgstr "Здесь вы можете написать сумму результата (например, 100, 12 и т.д.)"

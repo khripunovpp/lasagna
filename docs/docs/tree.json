@@ -1,0 +1,392 @@
+[
+  {
+    "type": "folder",
+    "name": "getting-started",
+    "children": [
+      {
+        "type": "file",
+        "name": "header[ru].md",
+        "language": "ru",
+        "path": "getting-started/header[ru].md",
+        "title": "Шапка приложения",
+        "order": 1,
+        "data": {
+          "title": "Шапка приложения",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "hedaer[en].md",
+        "language": "en",
+        "path": "getting-started/hedaer[en].md",
+        "title": "Top Bar (Header)",
+        "order": 1,
+        "data": {
+          "title": "Top Bar (Header)",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "start-page[en].md",
+        "language": "en",
+        "path": "getting-started/start-page[en].md",
+        "title": "Home Page",
+        "order": 0,
+        "data": {
+          "title": "Home Page",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "start-page[ru].md",
+        "language": "ru",
+        "path": "getting-started/start-page[ru].md",
+        "title": "Главная страница",
+        "order": 0,
+        "data": {
+          "title": "Главная страница",
+          "order": 0
+        }
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "invoices",
+    "children": [
+      {
+        "type": "file",
+        "name": "creating-invoices[en].md",
+        "language": "en",
+        "path": "invoices/creating-invoices[en].md",
+        "title": "Invoice Editing Page",
+        "order": 1,
+        "data": {
+          "title": "Invoice Editing Page",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "creating-invoices[ru].md",
+        "language": "ru",
+        "path": "invoices/creating-invoices[ru].md",
+        "title": "Страница редактирования инвойса",
+        "order": 1,
+        "data": {
+          "title": "Страница редактирования инвойса",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "invoices-overview[en].md",
+        "language": "en",
+        "path": "invoices/invoices-overview[en].md",
+        "title": "What are invoices?",
+        "order": 0,
+        "data": {
+          "title": "What are invoices?",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "invoices-overview[ru].md",
+        "language": "ru",
+        "path": "invoices/invoices-overview[ru].md",
+        "title": "Что такое инвойсы?",
+        "order": 0,
+        "data": {
+          "title": "Что такое инвойсы?",
+          "order": 0
+        }
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "recipes",
+    "children": [
+      {
+        "type": "file",
+        "name": "adding-recipes[en].md",
+        "language": "en",
+        "path": "recipes/adding-recipes[en].md",
+        "title": "Creating and Editing a Recipe",
+        "order": 1,
+        "data": {
+          "title": "Creating and Editing a Recipe",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "adding-recipes[ru].md",
+        "language": "ru",
+        "path": "recipes/adding-recipes[ru].md",
+        "title": "Создание и редактирование рецепта",
+        "order": 1,
+        "data": {
+          "title": "Создание и редактирование рецепта",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "calculation[en].md",
+        "language": "en",
+        "path": "recipes/calculation[en].md",
+        "title": "Recipe Cost Calculation",
+        "order": 2,
+        "data": {
+          "title": "Recipe Cost Calculation",
+          "order": 2
+        }
+      },
+      {
+        "type": "file",
+        "name": "calculation[ru].md",
+        "language": "ru",
+        "path": "recipes/calculation[ru].md",
+        "title": "Расчёт стоимости рецепта",
+        "order": 2,
+        "data": {
+          "title": "Расчёт стоимости рецепта",
+          "order": 2
+        }
+      },
+      {
+        "type": "file",
+        "name": "recipes-overview[en].md",
+        "language": "en",
+        "path": "recipes/recipes-overview[en].md",
+        "title": "Recipes Overview",
+        "order": 0,
+        "data": {
+          "title": "Recipes Overview",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "recipes-overview[ru].md",
+        "language": "ru",
+        "path": "recipes/recipes-overview[ru].md",
+        "title": "Обзор рецептов",
+        "order": 0,
+        "data": {
+          "title": "Обзор рецептов",
+          "order": 0
+        }
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "settings",
+    "children": [
+      {
+        "type": "file",
+        "name": "buckups[en].md",
+        "language": "en",
+        "path": "settings/buckups[en].md",
+        "title": "Backups",
+        "order": 5,
+        "data": {
+          "title": "Backups",
+          "order": 5
+        }
+      },
+      {
+        "type": "file",
+        "name": "buckups[ru].md",
+        "language": "ru",
+        "path": "settings/buckups[ru].md",
+        "title": "Резервные копии",
+        "order": 5,
+        "data": {
+          "title": "Резервные копии",
+          "order": 5
+        }
+      },
+      {
+        "type": "file",
+        "name": "categories[en].md",
+        "language": "en",
+        "path": "settings/categories[en].md",
+        "title": "Category Management",
+        "order": 1,
+        "data": {
+          "title": "Category Management",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "categories[ru].md",
+        "language": "ru",
+        "path": "settings/categories[ru].md",
+        "title": "Управление категориями",
+        "order": 1,
+        "data": {
+          "title": "Управление категориями",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "credential-settings[en].md",
+        "language": "en",
+        "path": "settings/credential-settings[en].md",
+        "title": "Invoice Credentials",
+        "order": 3,
+        "data": {
+          "title": "Invoice Credentials",
+          "order": 3
+        }
+      },
+      {
+        "type": "file",
+        "name": "credential-settings[ru].md",
+        "language": "ru",
+        "path": "settings/credential-settings[ru].md",
+        "title": "Реквизиты для инвойсов",
+        "order": 3,
+        "data": {
+          "title": "Реквизиты для инвойсов",
+          "order": 3
+        }
+      },
+      {
+        "type": "file",
+        "name": "invoice-settings[en].md",
+        "language": "en",
+        "path": "settings/invoice-settings[en].md",
+        "title": "Invoice Settings",
+        "order": 2,
+        "data": {
+          "title": "Invoice Settings",
+          "order": 2
+        }
+      },
+      {
+        "type": "file",
+        "name": "invoice-settings[ru].md",
+        "language": "ru",
+        "path": "settings/invoice-settings[ru].md",
+        "title": "Настройки инвойсов",
+        "order": 2,
+        "data": {
+          "title": "Настройки инвойсов",
+          "order": 2
+        }
+      },
+      {
+        "type": "file",
+        "name": "language[en].md",
+        "language": "en",
+        "path": "settings/language[en].md",
+        "title": "Language Settings",
+        "order": 0,
+        "data": {
+          "title": "Language Settings",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "language[ru].md",
+        "language": "ru",
+        "path": "settings/language[ru].md",
+        "title": "Язык и валюта",
+        "order": 0,
+        "data": {
+          "title": "Язык и валюта",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "taxes-and-fees[en].md",
+        "language": "en",
+        "path": "settings/taxes-and-fees[en].md",
+        "title": "Taxes and Fees",
+        "order": 4,
+        "data": {
+          "title": "Taxes and Fees",
+          "order": 4
+        }
+      },
+      {
+        "type": "file",
+        "name": "taxes-and-fees[ru].md",
+        "language": "ru",
+        "path": "settings/taxes-and-fees[ru].md",
+        "title": "Налоги и надбавки",
+        "order": 4,
+        "data": {
+          "title": "Налоги и надбавки",
+          "order": 4
+        }
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "storage",
+    "children": [
+      {
+        "type": "file",
+        "name": "adding-and-editing[en].md",
+        "language": "en",
+        "path": "storage/adding-and-editing[en].md",
+        "title": "Creating and Editing a Product",
+        "order": 1,
+        "data": {
+          "title": "Creating and Editing a Product",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "adding-and-editing[ru].md",
+        "language": "ru",
+        "path": "storage/adding-and-editing[ru].md",
+        "title": "Создание и редактирование продукта",
+        "order": 1,
+        "data": {
+          "title": "Создание и редактирование продукта",
+          "order": 1
+        }
+      },
+      {
+        "type": "file",
+        "name": "storage-overview[en].md",
+        "language": "en",
+        "path": "storage/storage-overview[en].md",
+        "title": "Stock (Products Page)",
+        "order": 0,
+        "data": {
+          "title": "Stock (Products Page)",
+          "order": 0
+        }
+      },
+      {
+        "type": "file",
+        "name": "storage-overview[ru].md",
+        "language": "ru",
+        "path": "storage/storage-overview[ru].md",
+        "title": "Склад (страница продуктов)",
+        "order": 0,
+        "data": {
+          "title": "Склад (страница продуктов)",
+          "order": 0
+        }
+      }
+    ]
+  }
+]
