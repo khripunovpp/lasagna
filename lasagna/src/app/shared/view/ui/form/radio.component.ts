@@ -42,6 +42,7 @@ import {NgClass} from '@angular/common';
     `
       .lg-radio {
         display: flex;
+        align-items: center;
         border-radius: 12px;
         gap: 8px;
       }
