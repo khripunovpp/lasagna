@@ -21,11 +21,11 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
           const uuids = Object.keys(grouped).filter(uuid => uuid !== ''); // исключаем пустые категории
           const categories = await categoryRepository.getMany(uuids);
 
-          for (const category of categories) {
-            const products = grouped[category.uuid!];
+          for (const groupKey in grouped) {
+            const products = grouped[groupKey];
             if (products && products.length) {
               list.push({
-                category: category.toString(),
+                category: groupKey,
                 products: products,
               });
             }
