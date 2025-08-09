@@ -21,12 +21,14 @@ import {
   ChipsListComponent
 } from "./chunk-TXOCH4AH.js";
 import {
+  AnalyticsService
+} from "./chunk-WLC74KBD.js";
+import {
   MultiselectComponent
 } from "./chunk-VJHRDQJI.js";
 import {
-  AnalyticsService,
   UnitSwitcherComponent
-} from "./chunk-ZEGLF54C.js";
+} from "./chunk-4UT7CYQQ.js";
 import {
   ShrinkDirective
 } from "./chunk-4VYWNF2J.js";
@@ -1308,4 +1310,4 @@ var AddProductComponent = class _AddProductComponent {
 export {
   AddProductComponent
 };
-//# sourceMappingURL=chunk-GKSFBPG3.js.map
+//# sourceMappingURL=chunk-7RNXKFVQ.js.map

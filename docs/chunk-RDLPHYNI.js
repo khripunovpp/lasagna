@@ -15,9 +15,11 @@ import {
   WidthDirective
 } from "./chunk-F2QJ6SGJ.js";
 import {
-  AnalyticsService,
+  AnalyticsService
+} from "./chunk-WLC74KBD.js";
+import {
   UnitSwitcherComponent
-} from "./chunk-ZEGLF54C.js";
+} from "./chunk-4UT7CYQQ.js";
 import {
   NumberInputComponent,
   ParseMathDirective
@@ -1271,4 +1273,4 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
 export {
   CalculateRecipeComponent
 };
-//# sourceMappingURL=chunk-WKK3Z324.js.map
+//# sourceMappingURL=chunk-RDLPHYNI.js.map

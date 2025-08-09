@@ -51,9 +51,8 @@ import {
   MultiselectComponent
 } from "./chunk-VJHRDQJI.js";
 import {
-  AnalyticsService,
   UnitSwitcherComponent
-} from "./chunk-ZEGLF54C.js";
+} from "./chunk-4UT7CYQQ.js";
 import {
   TextareaComponent
 } from "./chunk-KULBH3DU.js";
@@ -17158,8 +17157,7 @@ var AddInvoiceComponent = class _AddInvoiceComponent {
   _invoicesRepository;
   _browserTabTrackingService;
   _translateService;
-  _analyticsService;
-  constructor(invoiceBuilderService, router, _aRoute, _notificationsService, _loggerService, _invoicesRepository, _browserTabTrackingService, _translateService, _analyticsService) {
+  constructor(invoiceBuilderService, router, _aRoute, _notificationsService, _loggerService, _invoicesRepository, _browserTabTrackingService, _translateService) {
     this.invoiceBuilderService = invoiceBuilderService;
     this.router = router;
     this._aRoute = _aRoute;
@@ -17168,7 +17166,6 @@ var AddInvoiceComponent = class _AddInvoiceComponent {
     this._invoicesRepository = _invoicesRepository;
     this._browserTabTrackingService = _browserTabTrackingService;
     this._translateService = _translateService;
-    this._analyticsService = _analyticsService;
   }
   uuid = signal(void 0);
   formComponent = viewChild("formComponent", { read: AddInvoiceFormComponent });
@@ -17246,7 +17243,6 @@ var AddInvoiceComponent = class _AddInvoiceComponent {
       return;
     }
     this._invoicesRepository.replaceOne(this.invoiceBuilderService.invoice()?.uuid, this.invoiceBuilderService.invoice()).then(() => {
-      this._analyticsService.trackUserEngagement("edit_invoice", "invoice", this.invoiceBuilderService.invoice()?.name, 1);
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success("Invoice edited");
       this.router.navigate(["/invoices", "edit", this.invoiceBuilderService.invoice()?.uuid]);
@@ -17257,19 +17253,13 @@ var AddInvoiceComponent = class _AddInvoiceComponent {
       return;
     this.invoiceBuilderService.issueInvoice();
     this._invoicesRepository.replaceOne(this.invoiceBuilderService.invoice()?.uuid, this.invoiceBuilderService.invoice()).then(() => {
-      this._analyticsService.trackInvoiceCreated(this.invoiceBuilderService.invoice()?.invoice_number, this.invoiceBuilderService.invoice()?.total, {
-        invoice_uuid: this.invoiceBuilderService.invoice()?.uuid,
-        invoice_name: this.invoiceBuilderService.invoice()?.name,
-        items_count: this.invoiceBuilderService.invoice()?.rows?.length || 0,
-        state: this.invoiceBuilderService.invoice()?.state
-      });
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success("invoices.issued");
       this.generatePDF();
     });
   }
   static \u0275fac = function AddInvoiceComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AddInvoiceComponent)(\u0275\u0275directiveInject(InvoiceBuilderService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(NotificationsService), \u0275\u0275directiveInject(LoggerService), \u0275\u0275directiveInject(InvoicesRepository), \u0275\u0275directiveInject(BrowserTabTrackingService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(AnalyticsService));
+    return new (__ngFactoryType__ || _AddInvoiceComponent)(\u0275\u0275directiveInject(InvoiceBuilderService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(NotificationsService), \u0275\u0275directiveInject(LoggerService), \u0275\u0275directiveInject(InvoicesRepository), \u0275\u0275directiveInject(BrowserTabTrackingService), \u0275\u0275directiveInject(TranslateService));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AddInvoiceComponent, selectors: [["app-add-invoice"]], viewQuery: function AddInvoiceComponent_Query(rf, ctx) {
     if (rf & 1) {
@@ -17487,12 +17477,12 @@ var AddInvoiceComponent = class _AddInvoiceComponent {
   `, providers: [
       CurrencyPipe
     ] }]
-  }], () => [{ type: InvoiceBuilderService }, { type: Router }, { type: ActivatedRoute }, { type: NotificationsService }, { type: LoggerService }, { type: InvoicesRepository }, { type: BrowserTabTrackingService }, { type: TranslateService }, { type: AnalyticsService }], null);
+  }], () => [{ type: InvoiceBuilderService }, { type: Router }, { type: ActivatedRoute }, { type: NotificationsService }, { type: LoggerService }, { type: InvoicesRepository }, { type: BrowserTabTrackingService }, { type: TranslateService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddInvoiceComponent, { className: "AddInvoiceComponent", filePath: "src/app/features/invoices/view/add-invoice/add-invoice.component.ts", lineNumber: 168 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddInvoiceComponent, { className: "AddInvoiceComponent", filePath: "src/app/features/invoices/view/add-invoice/add-invoice.component.ts", lineNumber: 167 });
 })();
 export {
   AddInvoiceComponent
 };
-//# sourceMappingURL=chunk-QTOLDBNU.js.map
+//# sourceMappingURL=chunk-HRE6PC2S.js.map
