@@ -1,3 +1,4 @@
+// ===== UI Elements =====
 function createUpdateButton() {
   const button = document.createElement('button');
   button.innerText = 'New version available! Click to update.';
@@ -14,6 +15,22 @@ function createUpdateButton() {
   return button;
 }
 
+function createUpdateBanner() {
+  const banner = document.createElement('div');
+  banner.id = 'pwa-update-banner';
+  banner.style.display = 'none';
+  banner.style.backgroundColor = 'var(--active-color)';
+  banner.style.position = 'fixed';
+  banner.style.zIndex = '9999';
+  banner.style.bottom = '0';
+  banner.style.left = '0';
+  banner.style.width = '100%';
+  banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
+
+  return banner;
+}
+
+// ===== Backup Logic (exactly как у тебя) =====
 function downloadBackupDirectlyIndexDB() {
   const dbName = 'lasagna-db';
   const request = indexedDB.open(dbName);
@@ -60,23 +77,9 @@ function downloadBackup(data) {
   a.click();
   URL.revokeObjectURL(url);
 }
+// ===== end backup =====
 
-function createUpdateBanner() {
-  const banner = document.createElement('div');
-  banner.id = 'pwa-update-banner';
-  banner.style.display = 'none';
-  banner.style.backgroundColor = 'var(--active-color)';
-  banner.style.position = 'fixed';
-  banner.style.zIndex = '8';
-  banner.style.bottom = '0';
-  banner.style.left = '0';
-  banner.style.width = '100%';
-  banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
-
-  return banner;
-}
-
-
+// ===== Dialog / banner setup =====
 const reloadTimeout = 5000;
 const reloadTimeoutInSeconds = reloadTimeout / 1000;
 let secondsLeft = reloadTimeoutInSeconds;
@@ -111,61 +114,63 @@ banner.appendChild(updateButton);
 const updateDialog = dialog();
 document.body.appendChild(updateDialog);
 
-
 const secondLeftContainer = updateDialog.querySelector('#seconds-left');
 const updateTimeoutLabel = updateDialog.querySelector('#update-timeout-label');
 
+// ===== Service Worker / update logic (independent от Angular) =====
 if ('serviceWorker' in navigator) {
-  let currentWorker = null;
+  let newWorker = null;
 
-  const updateController = () => {
-    const {controller} = navigator.serviceWorker;
-    if (controller === null) {
-      return;
+  navigator.serviceWorker.getRegistration().then(reg => {
+    if (!reg) return;
+
+    // Если воркер уже в состоянии waiting (уже установлен и ждёт активации),
+    // покажем баннер сразу
+    if (reg.waiting) {
+      banner.style.display = 'flex';
+      newWorker = reg.waiting;
     }
-    currentWorker = controller;
 
-    currentWorker.postMessage({
-      action: 'CHECK_FOR_UPDATES',
-      nonce: Math.random(),
-    })
-  };
-
-  const messageListener = (event) => {
-    const versionDetected = event?.data?.type === "VERSION_DETECTED";
-    if (!versionDetected) return;
-    banner.style.display = 'flex';
-
-    const updateAppButton = updateDialog.querySelector('#update-app');
-    updateAppButton.addEventListener('click', () => {
-      if (currentWorker) {
-        currentWorker.postMessage({
-          action: 'ACTIVATE_UPDATE',
-          nonce: Math.random(),
-        });
-      }
-
-      updateTimeoutLabel.style.display = 'block';
-      updateAppButton.style.display = 'none';
-
-      const interval = setInterval(() => {
-        if (secondsLeft <= 0) {
-          clearInterval(interval);
-          return;
+    // Ловим появление нового installing воркера
+    reg.addEventListener('updatefound', () => {
+      newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // new version installed and there's an active controller => show banner
+          banner.style.display = 'flex';
         }
-        secondLeftContainer.innerText = String(secondsLeft - 1);
-        secondsLeft -= 1;
-      }, 1000);
-
-      setTimeout(() => {
-        window.location.reload();
-      }, reloadTimeout);
+      });
     });
-  };
+  }).catch(() => {
+    // ignore registration errors here
+  });
 
-  navigator.serviceWorker.addEventListener('controllerchange', updateController);
-  updateController();
-  setInterval(() => updateController(), 60_000);
+  // Нажатие на "Update App without Backup"
+  updateDialog.querySelector('#update-app').addEventListener('click', () => {
+    if (newWorker) {
+      // Просим воркер активироваться прямо сейчас (ожидается ключ type)
+      newWorker.postMessage({ type: 'SKIP_WAITING' });
+    }
 
-  navigator.serviceWorker.addEventListener('message', messageListener);
+    updateTimeoutLabel.style.display = 'block';
+    updateDialog.querySelector('#update-app').style.display = 'none';
+
+    const interval = setInterval(() => {
+      if (secondsLeft <= 0) {
+        clearInterval(interval);
+        return;
+      }
+      secondsLeft -= 1;
+      secondLeftContainer.innerText = String(secondsLeft);
+    }, 1000);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, reloadTimeout);
+  });
+
+  // Когда контроллер поменялся — перезагружаем, чтобы загрузить новую версию
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
 }
