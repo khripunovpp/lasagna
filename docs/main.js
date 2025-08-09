@@ -2133,7 +2133,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-P4YSKJCA.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-CZK7WFAY.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
@@ -2174,7 +2174,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-T4AP3YBL.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-TWZT5EVA.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
@@ -2251,7 +2251,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-JOVDKRJJ.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-GVNQQAJE.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",

@@ -144,11 +144,11 @@ var CATEGORIZED_PRODUCTS_LIST = new InjectionToken("CategorizedProductsList", {
       const list = [];
       const uuids = Object.keys(grouped).filter((uuid) => uuid !== "");
       const categories = await categoryRepository.getMany(uuids);
-      for (const category of categories) {
-        const products2 = grouped[category.uuid];
+      for (const groupKey in grouped) {
+        const products2 = grouped[groupKey];
         if (products2 && products2.length) {
           list.push({
-            category: category.toString(),
+            category: groupKey,
             products: products2
           });
         }
@@ -880,4 +880,4 @@ var ProductListComponent = class _ProductListComponent {
 export {
   ProductListComponent
 };
-//# sourceMappingURL=chunk-T4AP3YBL.js.map
+//# sourceMappingURL=chunk-TWZT5EVA.js.map

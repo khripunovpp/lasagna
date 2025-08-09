@@ -34,10 +34,10 @@ import {
   ContentChild,
   ContentChildren,
   Directive,
-  Input,
   Optional,
   SkipSelf,
   TemplateRef,
+  computed,
   effect,
   input,
   setClassMetadata,
@@ -317,7 +317,7 @@ function GroupingTilesComponent_For_2_For_6_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.selectable ? 1 : 2);
+    \u0275\u0275conditional(ctx_r1.selectable() ? 1 : 2);
   }
 }
 function GroupingTilesComponent_For_2_Template(rf, ctx) {
@@ -350,11 +350,11 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
     this.selectionZoneService = selectionZoneService;
     this.translateService = translateService;
   }
-  sortResult;
-  selectable = false;
-  get empty() {
-    return !this.sortResult || !this.sortResult.groups || this.sortResult.groups.length === 0;
-  }
+  sortResult = input(void 0);
+  selectable = input(false);
+  empty = computed(() => {
+    return !this.sortResult()?.groups.length;
+  });
   groupingTileDirective;
   groupingHeaderDirective;
   static \u0275fac = function GroupingTilesComponent_Factory(__ngFactoryType__) {
@@ -370,7 +370,7 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupingTileDirective = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupingHeaderDirective = _t.first);
     }
-  }, inputs: { sortResult: "sortResult", selectable: "selectable" }, ngContentSelectors: _c1, decls: 4, vars: 1, consts: [[1, "grouping-tiles"], [1, "grouping-tiles__section"], [1, "grouping-tiles__header"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "level"], [1, "grouping-tiles__content"], [1, "grouping-tiles__item"], [3, "key"], [1, "grouping-tiles__item-inner"]], template: function GroupingTilesComponent_Template(rf, ctx) {
+  }, inputs: { sortResult: [1, "sortResult"], selectable: [1, "selectable"] }, ngContentSelectors: _c1, decls: 4, vars: 1, consts: [[1, "grouping-tiles"], [1, "grouping-tiles__section"], [1, "grouping-tiles__header"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "level"], [1, "grouping-tiles__content"], [1, "grouping-tiles__item"], [3, "key"], [1, "grouping-tiles__item-inner"]], template: function GroupingTilesComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275projectionDef(_c02);
       \u0275\u0275elementStart(0, "section", 0);
@@ -378,8 +378,9 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
+      let tmp_0_0;
       \u0275\u0275advance();
-      \u0275\u0275repeater(ctx.sortResult == null ? null : ctx.sortResult.groups);
+      \u0275\u0275repeater((tmp_0_0 = ctx.sortResult()) == null ? null : tmp_0_0.groups);
     }
   }, dependencies: [
     TitleComponent,
@@ -392,7 +393,7 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
     type: Component,
     args: [{ selector: "lg-grouping-tiles", standalone: true, template: `
     <section class="grouping-tiles">
-      @for (group of sortResult?.groups; track group?.field) {
+      @for (group of sortResult()?.groups; track group?.field) {
         <section class="grouping-tiles__section">
           <header class="grouping-tiles__header">
             @if (groupingHeaderDirective) {
@@ -409,7 +410,7 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
           <div class="grouping-tiles__content">
             @for (tile of group?.items; track tile) {
               <div class="grouping-tiles__item">
-                @if (selectable) {
+                @if (selectable()) {
                   <lg-selectable-section [key]="tile.uuid">
                     <div class="grouping-tiles__item-inner">
                       <ng-container [ngTemplateOutlet]="groupingTileDirective!.templateRef"
@@ -440,11 +441,7 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
     ], styles: ["/* angular:styles/component:scss;a86e54aaaa914338a19c36ccfdb5cd89cae4f0995514fabc01fc38a920457d27;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/grouping-tiles/grouping-tiles.component.ts */\n.grouping-tiles {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n.grouping-tiles__section {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.grouping-tiles__content {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.grouping-tiles__item {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n.grouping-tiles__item-inner {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n/*# sourceMappingURL=grouping-tiles.component.css.map */\n"] }]
   }], () => [{ type: SelectionZoneService, decorators: [{
     type: Optional
-  }] }, { type: TranslateService }], { sortResult: [{
-    type: Input
-  }], selectable: [{
-    type: Input
-  }], groupingTileDirective: [{
+  }] }, { type: TranslateService }], { groupingTileDirective: [{
     type: ContentChild,
     args: [GroupingTileDirective]
   }], groupingHeaderDirective: [{
@@ -461,4 +458,4 @@ export {
   GroupingHeaderDirective,
   GroupingTilesComponent
 };
-//# sourceMappingURL=chunk-LN5KWV4W.js.map
+//# sourceMappingURL=chunk-AWOESVYR.js.map

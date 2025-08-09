@@ -17,7 +17,7 @@ import "./chunk-IKAOX7AI.js";
 import {
   GroupingTileDirective,
   GroupingTilesComponent
-} from "./chunk-LN5KWV4W.js";
+} from "./chunk-AWOESVYR.js";
 import "./chunk-3LSKCD37.js";
 import {
   CardListComponent
@@ -1015,13 +1015,13 @@ var RecipesListComponent = class _RecipesListComponent {
     }
     if (rf & 2) {
       const groupingTiles_r6 = \u0275\u0275reference(10);
-      \u0275\u0275conditional(!groupingTiles_r6.empty ? 0 : -1);
+      \u0275\u0275conditional(!groupingTiles_r6.empty() ? 0 : -1);
       \u0275\u0275advance(3);
       \u0275\u0275property("center", true);
       \u0275\u0275advance(2);
       \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 12, "recipes.list-title"), " ");
       \u0275\u0275advance(3);
-      \u0275\u0275conditional(!groupingTiles_r6.empty ? 8 : -1);
+      \u0275\u0275conditional(!groupingTiles_r6.empty() ? 8 : -1);
       \u0275\u0275advance();
       \u0275\u0275property("selectable", true)("sortResult", ctx.recipes());
       \u0275\u0275advance(4);
@@ -1061,7 +1061,7 @@ var RecipesListComponent = class _RecipesListComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(RecipesListComponent, [{
     type: Component,
     args: [{ selector: "lg-recipes-list", standalone: true, template: `
-    @if (!groupingTiles.empty) {
+    @if (!groupingTiles.empty()) {
       <lg-controls-bar>
         <lg-button [icon]="true"
                    [link]="'/recipes/add'"
@@ -1103,7 +1103,7 @@ var RecipesListComponent = class _RecipesListComponent {
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        @if (!groupingTiles.empty) {
+        @if (!groupingTiles.empty()) {
           <lg-flex-column [size]="'medium'">
             <lg-grouping-sorting></lg-grouping-sorting>
 
@@ -1178,9 +1178,9 @@ var RecipesListComponent = class _RecipesListComponent {
   }], () => [{ type: RecipesRepository }, { type: NotificationsService }, { type: TransferDataService }, { type: SelectionZoneService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(RecipesListComponent, { className: "RecipesListComponent", filePath: "src/app/features/recipes/view/list/recipes-list.component.ts", lineNumber: 161 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(RecipesListComponent, { className: "RecipesListComponent", filePath: "src/app/features/recipes/view/list/recipes-list.component.ts", lineNumber: 162 });
 })();
 export {
   RecipesListComponent
 };
-//# sourceMappingURL=chunk-P4YSKJCA.js.map
+//# sourceMappingURL=chunk-CZK7WFAY.js.map
