@@ -72,22 +72,22 @@ import {
   ɵɵtextInterpolate1
 } from "./chunk-UQVCVPTQ.js";
 
-// src/app/shared/view/ui/grouping-tails/grouping-tail.directive.ts
-var GroupingTailDirective = class _GroupingTailDirective {
+// src/app/shared/view/ui/grouping-tiles/grouping-tile.directive.ts
+var GroupingTileDirective = class _GroupingTileDirective {
   templateRef;
   constructor(templateRef) {
     this.templateRef = templateRef;
   }
-  static \u0275fac = function GroupingTailDirective_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _GroupingTailDirective)(\u0275\u0275directiveInject(TemplateRef));
+  static \u0275fac = function GroupingTileDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _GroupingTileDirective)(\u0275\u0275directiveInject(TemplateRef));
   };
-  static \u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({ type: _GroupingTailDirective, selectors: [["", "lgGroupingTail", ""]] });
+  static \u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({ type: _GroupingTileDirective, selectors: [["", "lgGroupingTile", ""]] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(GroupingTailDirective, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(GroupingTileDirective, [{
     type: Directive,
     args: [{
-      selector: "[lgGroupingTail]",
+      selector: "[lgGroupingTile]",
       standalone: true
     }]
   }], () => [{ type: TemplateRef }], null);
@@ -231,7 +231,7 @@ var SelectableSectionComponent = class _SelectableSectionComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SelectableSectionComponent, { className: "SelectableSectionComponent", filePath: "src/app/shared/view/ui/selectable-section.component.ts", lineNumber: 61 });
 })();
 
-// src/app/shared/view/ui/grouping-tails/grouping-header.directive.ts
+// src/app/shared/view/ui/grouping-tiles/grouping-header.directive.ts
 var GroupingHeaderDirective = class _GroupingHeaderDirective {
   templateRef;
   constructor(templateRef) {
@@ -252,20 +252,22 @@ var GroupingHeaderDirective = class _GroupingHeaderDirective {
   }], () => [{ type: TemplateRef }], null);
 })();
 
-// src/app/shared/view/ui/grouping-tails/grouping-tails.component.ts
-var _c02 = (a0) => ({ $implicit: a0 });
+// src/app/shared/view/ui/grouping-tiles/grouping-tiles.component.ts
+var _c02 = [[["", "empty-state", ""]]];
+var _c1 = ["[empty-state]"];
+var _c2 = (a0) => ({ $implicit: a0 });
 var _forTrack0 = ($index, $item) => $item == null ? null : $item.field;
-function GroupingTailsComponent_For_2_Conditional_2_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0, 3);
   }
   if (rf & 2) {
     const group_r1 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingHeaderDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c02, group_r1 == null ? null : group_r1.field));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingHeaderDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c2, group_r1 == null ? null : group_r1.field));
   }
 }
-function GroupingTailsComponent_For_2_Conditional_3_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "lg-title", 4);
     \u0275\u0275text(1);
@@ -279,37 +281,37 @@ function GroupingTailsComponent_For_2_Conditional_3_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", (group_r1 == null ? null : group_r1.field) || ctx_r1.translateService.instant("unknown"), " ");
   }
 }
-function GroupingTailsComponent_For_2_For_6_Conditional_1_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_For_6_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "lg-selectable-section", 7)(1, "div", 8);
     \u0275\u0275elementContainer(2, 3);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const tail_r3 = \u0275\u0275nextContext().$implicit;
+    const tile_r3 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("key", tail_r3.uuid);
+    \u0275\u0275property("key", tile_r3.uuid);
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingTailDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c02, tail_r3));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingTileDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c2, tile_r3));
   }
 }
-function GroupingTailsComponent_For_2_For_6_Conditional_2_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_For_6_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 8);
     \u0275\u0275elementContainer(1, 3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const tail_r3 = \u0275\u0275nextContext().$implicit;
+    const tile_r3 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingTailDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c02, tail_r3));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.groupingTileDirective.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c2, tile_r3));
   }
 }
-function GroupingTailsComponent_For_2_For_6_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_For_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 6);
-    \u0275\u0275conditionalCreate(1, GroupingTailsComponent_For_2_For_6_Conditional_1_Template, 3, 5, "lg-selectable-section", 7)(2, GroupingTailsComponent_For_2_For_6_Conditional_2_Template, 2, 4, "div", 8);
+    \u0275\u0275conditionalCreate(1, GroupingTilesComponent_For_2_For_6_Conditional_1_Template, 3, 5, "lg-selectable-section", 7)(2, GroupingTilesComponent_For_2_For_6_Conditional_2_Template, 2, 4, "div", 8);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -318,13 +320,13 @@ function GroupingTailsComponent_For_2_For_6_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r1.selectable ? 1 : 2);
   }
 }
-function GroupingTailsComponent_For_2_Template(rf, ctx) {
+function GroupingTilesComponent_For_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "section", 1)(1, "header", 2);
-    \u0275\u0275conditionalCreate(2, GroupingTailsComponent_For_2_Conditional_2_Template, 1, 4, "ng-container", 3)(3, GroupingTailsComponent_For_2_Conditional_3_Template, 2, 2, "lg-title", 4);
+    \u0275\u0275conditionalCreate(2, GroupingTilesComponent_For_2_Conditional_2_Template, 1, 4, "ng-container", 3)(3, GroupingTilesComponent_For_2_Conditional_3_Template, 2, 2, "lg-title", 4);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(4, "div", 5);
-    \u0275\u0275repeaterCreate(5, GroupingTailsComponent_For_2_For_6_Template, 3, 1, "div", 6, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275repeaterCreate(5, GroupingTilesComponent_For_2_For_6_Template, 3, 1, "div", 6, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -336,7 +338,12 @@ function GroupingTailsComponent_For_2_Template(rf, ctx) {
     \u0275\u0275repeater(group_r1 == null ? null : group_r1.items);
   }
 }
-var GroupingTailsComponent = class _GroupingTailsComponent {
+function GroupingTilesComponent_ForEmpty_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275projection(0);
+  }
+}
+var GroupingTilesComponent = class _GroupingTilesComponent {
   selectionZoneService;
   translateService;
   constructor(selectionZoneService, translateService) {
@@ -345,25 +352,29 @@ var GroupingTailsComponent = class _GroupingTailsComponent {
   }
   sortResult;
   selectable = false;
-  groupingTailDirective;
+  get empty() {
+    return !this.sortResult || !this.sortResult.groups || this.sortResult.groups.length === 0;
+  }
+  groupingTileDirective;
   groupingHeaderDirective;
-  static \u0275fac = function GroupingTailsComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _GroupingTailsComponent)(\u0275\u0275directiveInject(SelectionZoneService, 8), \u0275\u0275directiveInject(TranslateService));
+  static \u0275fac = function GroupingTilesComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _GroupingTilesComponent)(\u0275\u0275directiveInject(SelectionZoneService, 8), \u0275\u0275directiveInject(TranslateService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _GroupingTailsComponent, selectors: [["lg-grouping-tails"]], contentQueries: function GroupingTailsComponent_ContentQueries(rf, ctx, dirIndex) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _GroupingTilesComponent, selectors: [["lg-grouping-tiles"]], contentQueries: function GroupingTilesComponent_ContentQueries(rf, ctx, dirIndex) {
     if (rf & 1) {
-      \u0275\u0275contentQuery(dirIndex, GroupingTailDirective, 5);
+      \u0275\u0275contentQuery(dirIndex, GroupingTileDirective, 5);
       \u0275\u0275contentQuery(dirIndex, GroupingHeaderDirective, 5);
     }
     if (rf & 2) {
       let _t;
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupingTailDirective = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupingTileDirective = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupingHeaderDirective = _t.first);
     }
-  }, inputs: { sortResult: "sortResult", selectable: "selectable" }, decls: 3, vars: 0, consts: [[1, "grouping-tails"], [1, "grouping-tails__section"], [1, "grouping-tails__header"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "level"], [1, "grouping-tails__content"], [1, "grouping-tails__item"], [3, "key"], [1, "grouping-tails__item-inner"]], template: function GroupingTailsComponent_Template(rf, ctx) {
+  }, inputs: { sortResult: "sortResult", selectable: "selectable" }, ngContentSelectors: _c1, decls: 4, vars: 1, consts: [[1, "grouping-tiles"], [1, "grouping-tiles__section"], [1, "grouping-tiles__header"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "level"], [1, "grouping-tiles__content"], [1, "grouping-tiles__item"], [3, "key"], [1, "grouping-tiles__item-inner"]], template: function GroupingTilesComponent_Template(rf, ctx) {
     if (rf & 1) {
+      \u0275\u0275projectionDef(_c02);
       \u0275\u0275elementStart(0, "section", 0);
-      \u0275\u0275repeaterCreate(1, GroupingTailsComponent_For_2_Template, 7, 1, "section", 1, _forTrack0);
+      \u0275\u0275repeaterCreate(1, GroupingTilesComponent_For_2_Template, 7, 1, "section", 1, _forTrack0, false, GroupingTilesComponent_ForEmpty_3_Template, 1, 0);
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
@@ -374,16 +385,16 @@ var GroupingTailsComponent = class _GroupingTailsComponent {
     TitleComponent,
     NgTemplateOutlet,
     SelectableSectionComponent
-  ], styles: ["\n\n.grouping-tails[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n.grouping-tails__section[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.grouping-tails__content[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.grouping-tails__item[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n.grouping-tails__item-inner[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n/*# sourceMappingURL=grouping-tails.component.css.map */"] });
+  ], styles: ["\n\n.grouping-tiles[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n.grouping-tiles__section[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.grouping-tiles__content[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.grouping-tiles__item[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n.grouping-tiles__item-inner[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n/*# sourceMappingURL=grouping-tiles.component.css.map */"] });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(GroupingTailsComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(GroupingTilesComponent, [{
     type: Component,
-    args: [{ selector: "lg-grouping-tails", standalone: true, template: `
-    <section class="grouping-tails">
+    args: [{ selector: "lg-grouping-tiles", standalone: true, template: `
+    <section class="grouping-tiles">
       @for (group of sortResult?.groups; track group?.field) {
-        <section class="grouping-tails__section">
-          <header class="grouping-tails__header">
+        <section class="grouping-tiles__section">
+          <header class="grouping-tiles__header">
             @if (groupingHeaderDirective) {
               <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
                             [ngTemplateOutletContext]="{ $implicit: group?.field }">
@@ -395,21 +406,21 @@ var GroupingTailsComponent = class _GroupingTailsComponent {
             }
           </header>
 
-          <div class="grouping-tails__content">
-            @for (tail of group?.items; track tail) {
-              <div class="grouping-tails__item">
+          <div class="grouping-tiles__content">
+            @for (tile of group?.items; track tile) {
+              <div class="grouping-tiles__item">
                 @if (selectable) {
-                  <lg-selectable-section [key]="tail.uuid">
-                    <div class="grouping-tails__item-inner">
-                      <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
-                                    [ngTemplateOutletContext]="{ $implicit: tail }">
+                  <lg-selectable-section [key]="tile.uuid">
+                    <div class="grouping-tiles__item-inner">
+                      <ng-container [ngTemplateOutlet]="groupingTileDirective!.templateRef"
+                                    [ngTemplateOutletContext]="{ $implicit: tile }">
                       </ng-container>
                     </div>
                   </lg-selectable-section>
                 } @else {
-                  <div class="grouping-tails__item-inner">
-                    <ng-container [ngTemplateOutlet]="groupingTailDirective!.templateRef"
-                                  [ngTemplateOutletContext]="{ $implicit: tail }">
+                  <div class="grouping-tiles__item-inner">
+                    <ng-container [ngTemplateOutlet]="groupingTileDirective!.templateRef"
+                                  [ngTemplateOutletContext]="{ $implicit: tile }">
                     </ng-container>
                   </div>
                 }
@@ -417,34 +428,37 @@ var GroupingTailsComponent = class _GroupingTailsComponent {
             }
           </div>
         </section>
+      } @empty {
+        <ng-content select="[empty-state]">
+        </ng-content>
       }
     </section>
   `, imports: [
       TitleComponent,
       NgTemplateOutlet,
       SelectableSectionComponent
-    ], styles: ["/* angular:styles/component:scss;6d134fb20b02b6ded791a50593fe101963a13a2dd9d81d54ac81d990a3b36126;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/grouping-tails/grouping-tails.component.ts */\n.grouping-tails {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n.grouping-tails__section {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.grouping-tails__content {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.grouping-tails__item {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n.grouping-tails__item-inner {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n/*# sourceMappingURL=grouping-tails.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;a86e54aaaa914338a19c36ccfdb5cd89cae4f0995514fabc01fc38a920457d27;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/grouping-tiles/grouping-tiles.component.ts */\n.grouping-tiles {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n}\n.grouping-tiles__section {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n}\n.grouping-tiles__content {\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.grouping-tiles__item {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n.grouping-tiles__item-inner {\n  display: flex;\n  align-items: stretch;\n  width: 100%;\n}\n/*# sourceMappingURL=grouping-tiles.component.css.map */\n"] }]
   }], () => [{ type: SelectionZoneService, decorators: [{
     type: Optional
   }] }, { type: TranslateService }], { sortResult: [{
     type: Input
   }], selectable: [{
     type: Input
-  }], groupingTailDirective: [{
+  }], groupingTileDirective: [{
     type: ContentChild,
-    args: [GroupingTailDirective]
+    args: [GroupingTileDirective]
   }], groupingHeaderDirective: [{
     type: ContentChild,
     args: [GroupingHeaderDirective]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GroupingTailsComponent, { className: "GroupingTailsComponent", filePath: "src/app/shared/view/ui/grouping-tails/grouping-tails.component.ts", lineNumber: 95 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GroupingTilesComponent, { className: "GroupingTilesComponent", filePath: "src/app/shared/view/ui/grouping-tiles/grouping-tiles.component.ts", lineNumber: 98 });
 })();
 
 export {
-  GroupingTailDirective,
+  GroupingTileDirective,
   GroupingHeaderDirective,
-  GroupingTailsComponent
+  GroupingTilesComponent
 };
-//# sourceMappingURL=chunk-NI4HGMVL.js.map
+//# sourceMappingURL=chunk-LN5KWV4W.js.map

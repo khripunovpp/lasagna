@@ -190,7 +190,16 @@ var SelfEndDirective = class _SelfEndDirective {
 
 // src/app/features/settings/view/finance-settings/taxes/taxes-settings.component.ts
 var _forTrack0 = ($index, $item) => $item.name + $item.uuid + $index;
-function TaxesSettingsComponent_For_6_Conditional_0_Template(rf, ctx) {
+function TaxesSettingsComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "translate");
+  }
+  if (rf & 2) {
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.taxes.title"), " ");
+  }
+}
+function TaxesSettingsComponent_For_5_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -199,99 +208,99 @@ function TaxesSettingsComponent_For_6_Conditional_0_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.taxes.fees"), " ");
   }
 }
-function TaxesSettingsComponent_For_6_Conditional_2_ng_container_2_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_Conditional_2_ng_container_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0);
   }
 }
-function TaxesSettingsComponent_For_6_Conditional_2_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-control-box")(1, "lg-flex-column", 7);
-    \u0275\u0275template(2, TaxesSettingsComponent_For_6_Conditional_2_ng_container_2_Template, 1, 0, "ng-container", 8);
+    \u0275\u0275elementStart(0, "lg-control-box")(1, "lg-flex-column", 6);
+    \u0275\u0275template(2, TaxesSettingsComponent_For_5_Conditional_2_ng_container_2_Template, 1, 0, "ng-container", 7);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     \u0275\u0275nextContext();
-    const rowTpl_r1 = \u0275\u0275reference(5);
+    const rowTpl_r3 = \u0275\u0275reference(5);
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", rowTpl_r1);
+    \u0275\u0275property("ngTemplateOutlet", rowTpl_r3);
   }
 }
-function TaxesSettingsComponent_For_6_Conditional_3_ng_container_1_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_Conditional_3_ng_container_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0);
   }
 }
-function TaxesSettingsComponent_For_6_Conditional_3_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 9);
-    \u0275\u0275template(1, TaxesSettingsComponent_For_6_Conditional_3_ng_container_1_Template, 1, 0, "ng-container", 8);
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275template(1, TaxesSettingsComponent_For_5_Conditional_3_ng_container_1_Template, 1, 0, "ng-container", 7);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const \u0275$index_9_r2 = \u0275\u0275nextContext().$index;
-    const rowTpl_r1 = \u0275\u0275reference(5);
-    \u0275\u0275classProp("taxes__row--odd", \u0275$index_9_r2 % 2 !== 0);
+    const \u0275$index_10_r4 = \u0275\u0275nextContext().$index;
+    const rowTpl_r3 = \u0275\u0275reference(5);
+    \u0275\u0275classProp("taxes__row--odd", \u0275$index_10_r4 % 2 !== 0);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", rowTpl_r1);
+    \u0275\u0275property("ngTemplateOutlet", rowTpl_r3);
   }
 }
-function TaxesSettingsComponent_For_6_ng_template_4_Conditional_14_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_ng_template_4_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Delete this row ");
   }
 }
-function TaxesSettingsComponent_For_6_ng_template_4_Conditional_15_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_ng_template_4_Conditional_15_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "mat-icon", 19);
+    \u0275\u0275element(0, "mat-icon", 18);
   }
 }
-function TaxesSettingsComponent_For_6_ng_template_4_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_ng_template_4_Template(rf, ctx) {
   if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-flex-row", 10)(1, "lg-control", 11);
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-row", 9)(1, "lg-control", 10);
     \u0275\u0275pipe(2, "translate");
-    \u0275\u0275element(3, "lg-input", 12);
+    \u0275\u0275element(3, "lg-input", 11);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "lg-control", 11);
+    \u0275\u0275elementStart(4, "lg-control", 10);
     \u0275\u0275pipe(5, "translate");
-    \u0275\u0275element(6, "lg-textarea", 13);
+    \u0275\u0275element(6, "lg-textarea", 12);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "lg-control", 14);
+    \u0275\u0275elementStart(7, "lg-control", 13);
     \u0275\u0275pipe(8, "translate");
-    \u0275\u0275elementStart(9, "lg-checkbox", 15);
-    \u0275\u0275listener("onCheckboxChanged", function TaxesSettingsComponent_For_6_ng_template_4_Template_lg_checkbox_onCheckboxChanged_9_listener() {
-      \u0275\u0275restoreView(_r3);
-      const \u0275$index_9_r2 = \u0275\u0275nextContext().$index;
-      const ctx_r3 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r3.onTaxValueChange(\u0275$index_9_r2));
+    \u0275\u0275elementStart(9, "lg-checkbox", 14);
+    \u0275\u0275listener("onCheckboxChanged", function TaxesSettingsComponent_For_5_ng_template_4_Template_lg_checkbox_onCheckboxChanged_9_listener() {
+      \u0275\u0275restoreView(_r5);
+      const \u0275$index_10_r4 = \u0275\u0275nextContext().$index;
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onTaxValueChange(\u0275$index_10_r4));
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "lg-control", 16);
+    \u0275\u0275elementStart(10, "lg-control", 15);
     \u0275\u0275pipe(11, "translate");
-    \u0275\u0275elementStart(12, "lg-number-input", 17);
-    \u0275\u0275listener("onInputChange", function TaxesSettingsComponent_For_6_ng_template_4_Template_lg_number_input_onInputChange_12_listener() {
-      \u0275\u0275restoreView(_r3);
-      const \u0275$index_9_r2 = \u0275\u0275nextContext().$index;
-      const ctx_r3 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r3.onTaxValueChange(\u0275$index_9_r2));
+    \u0275\u0275elementStart(12, "lg-number-input", 16);
+    \u0275\u0275listener("onInputChange", function TaxesSettingsComponent_For_5_ng_template_4_Template_lg_number_input_onInputChange_12_listener() {
+      \u0275\u0275restoreView(_r5);
+      const \u0275$index_10_r4 = \u0275\u0275nextContext().$index;
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onTaxValueChange(\u0275$index_10_r4));
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(13, "lg-button", 18);
-    \u0275\u0275listener("click", function TaxesSettingsComponent_For_6_ng_template_4_Template_lg_button_click_13_listener() {
-      \u0275\u0275restoreView(_r3);
-      const \u0275$index_9_r2 = \u0275\u0275nextContext().$index;
-      const ctx_r3 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r3.deleteTxRow(\u0275$index_9_r2));
+    \u0275\u0275elementStart(13, "lg-button", 17);
+    \u0275\u0275listener("click", function TaxesSettingsComponent_For_5_ng_template_4_Template_lg_button_click_13_listener() {
+      \u0275\u0275restoreView(_r5);
+      const \u0275$index_10_r4 = \u0275\u0275nextContext().$index;
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.deleteTxRow(\u0275$index_10_r4));
     });
-    \u0275\u0275conditionalCreate(14, TaxesSettingsComponent_For_6_ng_template_4_Conditional_14_Template, 1, 0)(15, TaxesSettingsComponent_For_6_ng_template_4_Conditional_15_Template, 1, 0, "mat-icon", 19);
+    \u0275\u0275conditionalCreate(14, TaxesSettingsComponent_For_5_ng_template_4_Conditional_14_Template, 1, 0)(15, TaxesSettingsComponent_For_5_ng_template_4_Conditional_15_Template, 1, 0, "mat-icon", 18);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const ctx_r4 = \u0275\u0275nextContext();
-    const taxRow_r6 = ctx_r4.$implicit;
-    const \u0275$index_9_r2 = ctx_r4.$index;
-    const ctx_r3 = \u0275\u0275nextContext();
+    const ctx_r5 = \u0275\u0275nextContext();
+    const taxRow_r7 = ctx_r5.$implicit;
+    const \u0275$index_10_r4 = ctx_r5.$index;
+    const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("fit", true)("mobileMode", true)("top", true);
     \u0275\u0275advance();
     \u0275\u0275property("label", \u0275\u0275pipeBind1(2, 15, "settings.taxes.name"));
@@ -302,36 +311,62 @@ function TaxesSettingsComponent_For_6_ng_template_4_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275property("label", \u0275\u0275pipeBind1(8, 19, "settings.taxes.percentage"));
     \u0275\u0275advance(2);
-    \u0275\u0275property("customMark", "%")("name", taxRow_r6.name + \u0275$index_9_r2);
+    \u0275\u0275property("customMark", "%")("name", taxRow_r7.name + \u0275$index_10_r4);
     \u0275\u0275advance();
     \u0275\u0275property("label", \u0275\u0275pipeBind1(11, 21, "settings.taxes.value"));
     \u0275\u0275advance(3);
     \u0275\u0275styleMap("danger");
-    \u0275\u0275property("icon", !ctx_r3.isMobile())("size", "tiny");
+    \u0275\u0275property("icon", !ctx_r1.isMobile())("size", "tiny");
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r3.isMobile() ? 14 : 15);
+    \u0275\u0275conditional(ctx_r1.isMobile() ? 14 : 15);
   }
 }
-function TaxesSettingsComponent_For_6_Template(rf, ctx) {
+function TaxesSettingsComponent_For_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275conditionalCreate(0, TaxesSettingsComponent_For_6_Conditional_0_Template, 2, 3);
-    \u0275\u0275elementStart(1, "section", 5);
-    \u0275\u0275conditionalCreate(2, TaxesSettingsComponent_For_6_Conditional_2_Template, 3, 1, "lg-control-box")(3, TaxesSettingsComponent_For_6_Conditional_3_Template, 2, 3, "div", 6);
-    \u0275\u0275template(4, TaxesSettingsComponent_For_6_ng_template_4_Template, 16, 23, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+    \u0275\u0275conditionalCreate(0, TaxesSettingsComponent_For_5_Conditional_0_Template, 2, 3);
+    \u0275\u0275elementStart(1, "section", 4);
+    \u0275\u0275conditionalCreate(2, TaxesSettingsComponent_For_5_Conditional_2_Template, 3, 1, "lg-control-box")(3, TaxesSettingsComponent_For_5_Conditional_3_Template, 2, 3, "div", 5);
+    \u0275\u0275template(4, TaxesSettingsComponent_For_5_ng_template_4_Template, 16, 23, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const \u0275$index_9_r2 = ctx.$index;
-    const ctx_r3 = \u0275\u0275nextContext();
-    ctx_r3.taxesForm.controls.rows.controls[\u0275$index_9_r2];
-    \u0275\u0275conditional(ctx_r3.feesIndex() === \u0275$index_9_r2 ? 0 : -1);
+    const \u0275$index_10_r4 = ctx.$index;
+    const ctx_r1 = \u0275\u0275nextContext();
+    ctx_r1.taxesForm.controls.rows.controls[\u0275$index_10_r4];
+    \u0275\u0275conditional(ctx_r1.feesIndex() === \u0275$index_10_r4 ? 0 : -1);
     \u0275\u0275advance();
-    \u0275\u0275property("formGroupName", \u0275$index_9_r2);
+    \u0275\u0275property("formGroupName", \u0275$index_10_r4);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r3.isMobile() ? 2 : 3);
+    \u0275\u0275conditional(ctx_r1.isMobile() ? 2 : 3);
   }
 }
-function TaxesSettingsComponent_Conditional_9_Template(rf, ctx) {
+function TaxesSettingsComponent_ForEmpty_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-column", 3);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(3, "lg-button", 19);
+    \u0275\u0275listener("click", function TaxesSettingsComponent_ForEmpty_6_Template_lg_button_click_3_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.addTaxRow());
+    });
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 5, "settings.taxes.empty-state.text"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("size", "medium");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 7, "settings.taxes.empty-state.btn"), " ");
+  }
+}
+function TaxesSettingsComponent_Conditional_7_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -340,13 +375,47 @@ function TaxesSettingsComponent_Conditional_9_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.taxes.save-changes"), " ");
   }
 }
-function TaxesSettingsComponent_Conditional_10_Template(rf, ctx) {
+function TaxesSettingsComponent_Conditional_7_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
   }
   if (rf & 2) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.taxes.no-changes"), " ");
+  }
+}
+function TaxesSettingsComponent_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-row")(1, "lg-button", 20);
+    \u0275\u0275listener("click", function TaxesSettingsComponent_Conditional_7_Template_lg_button_click_1_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.saveTaxes());
+    });
+    \u0275\u0275conditionalCreate(2, TaxesSettingsComponent_Conditional_7_Conditional_2_Template, 2, 3)(3, TaxesSettingsComponent_Conditional_7_Conditional_3_Template, 2, 3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "lg-button", 21);
+    \u0275\u0275listener("click", function TaxesSettingsComponent_Conditional_7_Template_lg_button_click_4_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.addTaxRow());
+    });
+    \u0275\u0275text(5);
+    \u0275\u0275pipe(6, "translate");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("disabled", !ctx_r1.taxesForm.dirty);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.taxesForm.dirty ? 2 : 3);
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("warning");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 7, "settings.taxes.add-tax"), " ");
   }
 }
 var TaxesSettingsComponent = class _TaxesSettingsComponent {
@@ -424,44 +493,25 @@ var TaxesSettingsComponent = class _TaxesSettingsComponent {
   static \u0275fac = function TaxesSettingsComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _TaxesSettingsComponent)(\u0275\u0275directiveInject(TaxesRepository), \u0275\u0275directiveInject(NotificationsService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TaxesSettingsComponent, selectors: [["lg-taxes-settings"]], decls: 14, vars: 13, consts: [["rowTpl", ""], [3, "formGroup"], ["formArrayName", "rows"], ["lgSelfCenter", "", "lgShrink", "", 3, "click", "disabled"], ["lgSelfCenter", "", "lgShrink", "", 3, "click"], [1, "taxes", 3, "formGroupName"], [1, "taxes__row", 3, "taxes__row--odd"], [2, "--control-bg", "white"], [4, "ngTemplateOutlet"], [1, "taxes__row"], [3, "fit", "mobileMode", "top"], ["lgShrink", "", "lgWidth", "35%", 3, "label"], ["formControlName", "name", "placeholder", ""], ["formControlName", "description", "placeholder", "", 3, "rows"], ["lgShrink", "", "lgWidth", "15%", 3, "label"], ["formControlName", "percentage", 3, "onCheckboxChanged", "customMark", "name"], ["lgWidth", "15%", 3, "label"], ["formControlName", "value", "lgParseMath", "", "placeholder", "", 3, "onInputChange"], ["lgSelfEnd", "", "lgShrink", "", 3, "click", "icon", "size"], ["aria-hidden", "false", "aria-label", "Example home icon", "fontIcon", "close"]], template: function TaxesSettingsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TaxesSettingsComponent, selectors: [["lg-taxes-settings"]], decls: 8, vars: 4, consts: [["rowTpl", ""], [3, "formGroup"], ["formArrayName", "rows"], ["position", "center", "size", "medium"], [1, "taxes", 3, "formGroupName"], [1, "taxes__row", 3, "taxes__row--odd"], [2, "--control-bg", "white"], [4, "ngTemplateOutlet"], [1, "taxes__row"], [3, "fit", "mobileMode", "top"], ["lgShrink", "", "lgWidth", "35%", 3, "label"], ["formControlName", "name", "placeholder", ""], ["formControlName", "description", "placeholder", "", 3, "rows"], ["lgShrink", "", "lgWidth", "15%", 3, "label"], ["formControlName", "percentage", 3, "onCheckboxChanged", "customMark", "name"], ["lgWidth", "15%", 3, "label"], ["formControlName", "value", "lgParseMath", "", "placeholder", "", 3, "onInputChange"], ["lgSelfEnd", "", "lgShrink", "", 3, "click", "icon", "size"], ["aria-hidden", "false", "aria-label", "Example home icon", "fontIcon", "close"], [3, "click", "size"], ["lgSelfCenter", "", "lgShrink", "", 3, "click", "disabled"], ["lgSelfCenter", "", "lgShrink", "", 3, "click"]], template: function TaxesSettingsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-flex-column");
       \u0275\u0275elementContainerStart(1, 1)(2, 2);
-      \u0275\u0275text(3);
-      \u0275\u0275pipe(4, "translate");
-      \u0275\u0275repeaterCreate(5, TaxesSettingsComponent_For_6_Template, 6, 3, null, null, _forTrack0);
+      \u0275\u0275conditionalCreate(3, TaxesSettingsComponent_Conditional_3_Template, 2, 3);
+      \u0275\u0275repeaterCreate(4, TaxesSettingsComponent_For_5_Template, 6, 3, null, null, _forTrack0, false, TaxesSettingsComponent_ForEmpty_6_Template, 6, 9, "lg-flex-column", 3);
       \u0275\u0275elementContainerEnd()();
-      \u0275\u0275elementStart(7, "lg-flex-row")(8, "lg-button", 3);
-      \u0275\u0275listener("click", function TaxesSettingsComponent_Template_lg_button_click_8_listener() {
-        return ctx.saveTaxes();
-      });
-      \u0275\u0275conditionalCreate(9, TaxesSettingsComponent_Conditional_9_Template, 2, 3)(10, TaxesSettingsComponent_Conditional_10_Template, 2, 3);
+      \u0275\u0275conditionalCreate(7, TaxesSettingsComponent_Conditional_7_Template, 7, 9, "lg-flex-row");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(11, "lg-button", 4);
-      \u0275\u0275listener("click", function TaxesSettingsComponent_Template_lg_button_click_11_listener() {
-        return ctx.addTaxRow();
-      });
-      \u0275\u0275text(12);
-      \u0275\u0275pipe(13, "translate");
-      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance();
       \u0275\u0275property("formGroup", ctx.taxesForm);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(4, 9, "settings.taxes.title"), " ");
-      \u0275\u0275advance(2);
+      \u0275\u0275conditional(ctx.taxesAndFees().length ? 3 : -1);
+      \u0275\u0275advance();
       \u0275\u0275repeater(ctx.taxesAndFees());
       \u0275\u0275advance(3);
-      \u0275\u0275styleMap("success");
-      \u0275\u0275property("disabled", !ctx.taxesForm.dirty);
-      \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.taxesForm.dirty ? 9 : 10);
-      \u0275\u0275advance(2);
-      \u0275\u0275styleMap("warning");
-      \u0275\u0275advance();
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(13, 11, "settings.taxes.add-tax"), " ");
+      \u0275\u0275conditional(ctx.taxesAndFees().length ? 7 : -1);
     }
   }, dependencies: [
     FlexRowComponent,
@@ -498,7 +548,10 @@ var TaxesSettingsComponent = class _TaxesSettingsComponent {
     <lg-flex-column>
       <ng-container [formGroup]="taxesForm">
         <ng-container formArrayName="rows">
-          {{ 'settings.taxes.title' | translate }}
+          @if (taxesAndFees().length) {
+            {{ 'settings.taxes.title' | translate }}
+          }
+
           @for (taxRow of taxesAndFees(); track (taxRow.name + taxRow.uuid + i); let i = $index, odd = $odd) {
             @let tacControl = taxesForm.controls.rows.controls[i];
 
@@ -576,30 +629,43 @@ var TaxesSettingsComponent = class _TaxesSettingsComponent {
                 </lg-flex-row>
               </ng-template>
             </section>
+          } @empty {
+            <lg-flex-column position="center"
+                            size="medium">
+              {{ 'settings.taxes.empty-state.text'|translate }}
+
+              <lg-button [size]="'medium'"
+                         (click)="addTaxRow()"
+                         [style]="'success'">
+                {{ 'settings.taxes.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
           }
         </ng-container>
       </ng-container>
 
-      <lg-flex-row>
-        <lg-button (click)="saveTaxes()"
-                   [disabled]="!taxesForm.dirty"
-                   [style]="'success'"
-                   lgSelfCenter
-                   lgShrink>
-          @if (taxesForm.dirty) {
-            {{ 'settings.taxes.save-changes' | translate }}
-          } @else {
-            {{ 'settings.taxes.no-changes' | translate }}
-          }
-        </lg-button>
+      @if (taxesAndFees().length) {
+        <lg-flex-row>
+          <lg-button (click)="saveTaxes()"
+                     [disabled]="!taxesForm.dirty"
+                     [style]="'success'"
+                     lgSelfCenter
+                     lgShrink>
+            @if (taxesForm.dirty) {
+              {{ 'settings.taxes.save-changes' | translate }}
+            } @else {
+              {{ 'settings.taxes.no-changes' | translate }}
+            }
+          </lg-button>
 
-        <lg-button (click)="addTaxRow()"
-                   [style]="'warning'"
-                   lgSelfCenter
-                   lgShrink>
-          {{ 'settings.taxes.add-tax' | translate }}
-        </lg-button>
-      </lg-flex-row>
+          <lg-button (click)="addTaxRow()"
+                     [style]="'warning'"
+                     lgSelfCenter
+                     lgShrink>
+            {{ 'settings.taxes.add-tax' | translate }}
+          </lg-button>
+        </lg-flex-row>
+      }
     </lg-flex-column>
   `, imports: [
       FlexRowComponent,
@@ -637,7 +703,7 @@ var TaxesSettingsComponent = class _TaxesSettingsComponent {
   }], () => [{ type: TaxesRepository }, { type: NotificationsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TaxesSettingsComponent, { className: "TaxesSettingsComponent", filePath: "src/app/features/settings/view/finance-settings/taxes/taxes-settings.component.ts", lineNumber: 179 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TaxesSettingsComponent, { className: "TaxesSettingsComponent", filePath: "src/app/features/settings/view/finance-settings/taxes/taxes-settings.component.ts", lineNumber: 195 });
 })();
 
 export {
@@ -646,4 +712,4 @@ export {
   SelfEndDirective,
   TaxesSettingsComponent
 };
-//# sourceMappingURL=chunk-4PDZT2TY.js.map
+//# sourceMappingURL=chunk-VWE45SWY.js.map

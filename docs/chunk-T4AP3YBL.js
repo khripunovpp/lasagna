@@ -45,7 +45,9 @@ import {
 import {
   TimeAgoPipe
 } from "./chunk-ZNRV6A27.js";
-import "./chunk-ZIFIR5EQ.js";
+import {
+  FlexColumnComponent
+} from "./chunk-ZIFIR5EQ.js";
 import "./chunk-R64U7JLD.js";
 import {
   FadeInComponent
@@ -493,13 +495,13 @@ var DraftProductsListCompoent = class _DraftProductsListCompoent {
 // src/app/features/products/view/list/product-list.component.ts
 var _c02 = () => ["product"];
 var _forTrack02 = ($index, $item) => ($item.uuid ?? "") + $index;
-function ProductListComponent_ng_template_4_Template(rf, ctx) {
+function ProductListComponent_Conditional_0_ng_template_4_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-button", 5);
-    \u0275\u0275listener("click", function ProductListComponent_ng_template_4_Template_lg_button_click_0_listener() {
+    \u0275\u0275listener("click", function ProductListComponent_Conditional_0_ng_template_4_Template_lg_button_click_0_listener() {
       \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
+      const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.exportProducts(ctx_r1.selectionZoneService.selected()));
     });
     \u0275\u0275text(1);
@@ -513,7 +515,7 @@ function ProductListComponent_ng_template_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 5, "export-label"), " products ");
   }
 }
-function ProductListComponent_ng_template_5_ng_template_2_Template(rf, ctx) {
+function ProductListComponent_Conditional_0_ng_template_5_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span");
     \u0275\u0275text(1);
@@ -525,34 +527,57 @@ function ProductListComponent_ng_template_5_ng_template_2_Template(rf, ctx) {
     \u0275\u0275textInterpolate(row_r4 == null ? null : row_r4.name);
   }
 }
-function ProductListComponent_ng_template_5_Template(rf, ctx) {
+function ProductListComponent_Conditional_0_ng_template_5_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-import", 6);
     \u0275\u0275pipe(1, "translate");
-    \u0275\u0275listener("onDone", function ProductListComponent_ng_template_5_Template_lg_import_onDone_0_listener() {
+    \u0275\u0275listener("onDone", function ProductListComponent_Conditional_0_ng_template_5_Template_lg_import_onDone_0_listener() {
       \u0275\u0275restoreView(_r3);
-      const ctx_r1 = \u0275\u0275nextContext();
+      const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.loadProducts());
     });
-    \u0275\u0275template(2, ProductListComponent_ng_template_5_ng_template_2_Template, 2, 1, "ng-template", 7);
+    \u0275\u0275template(2, ProductListComponent_Conditional_0_ng_template_5_ng_template_2_Template, 2, 1, "ng-template", 7);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
+    const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275property("label", \u0275\u0275pipeBind1(1, 3, "import-label") + " products")("schema", ctx_r1.ProductScheme)("storeName", ctx_r1.Stores.PRODUCTS);
   }
 }
-function ProductListComponent_For_14_For_5_ng_template_0_Template(rf, ctx) {
+function ProductListComponent_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-flex-row", 4)(1, "div", 11)(2, "lg-flex-row", 4)(3, "lg-flex-row", 12)(4, "a", 13);
+    \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 2);
+    \u0275\u0275element(2, "mat-icon", 3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "lg-inline-separated-group");
+    \u0275\u0275template(4, ProductListComponent_Conditional_0_ng_template_4_Template, 3, 7, "ng-template", 4)(5, ProductListComponent_Conditional_0_ng_template_5_Template, 3, 5, "ng-template", 4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("icon", true)("link", "/products/add")("size", "medium");
+  }
+}
+function ProductListComponent_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "lg-selection-tools", 0);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(1, _c02));
+  }
+}
+function ProductListComponent_For_9_For_5_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "lg-flex-row", 11)(1, "div", 12)(2, "lg-flex-row", 11)(3, "lg-flex-row", 13)(4, "a", 14);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "div");
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "userCurrency");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(9, "small", 14);
+    \u0275\u0275elementStart(9, "small", 15);
     \u0275\u0275text(10);
     \u0275\u0275pipe(11, "translate");
     \u0275\u0275pipe(12, "timeAgo");
@@ -575,16 +600,16 @@ function ProductListComponent_For_14_For_5_ng_template_0_Template(rf, ctx) {
     \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(11, 13, "edited-at-label"), " ", \u0275\u0275pipeBind1(12, 15, (product_r6 == null ? null : product_r6.updatedAt) || (product_r6 == null ? null : product_r6.createdAt)), " ");
   }
 }
-function ProductListComponent_For_14_For_5_Template(rf, ctx) {
+function ProductListComponent_For_9_For_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, ProductListComponent_For_14_For_5_ng_template_0_Template, 13, 17, "ng-template", 10);
+    \u0275\u0275template(0, ProductListComponent_For_9_For_5_ng_template_0_Template, 13, 17, "ng-template", 10);
   }
   if (rf & 2) {
     const product_r6 = ctx.$implicit;
     \u0275\u0275property("uuid", product_r6.uuid);
   }
 }
-function ProductListComponent_For_14_Template(rf, ctx) {
+function ProductListComponent_For_9_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-title", 8);
@@ -592,16 +617,16 @@ function ProductListComponent_For_14_Template(rf, ctx) {
     \u0275\u0275pipe(2, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "lg-card-list", 9);
-    \u0275\u0275listener("onSelected", function ProductListComponent_For_14_Template_lg_card_list_onSelected_3_listener($event) {
+    \u0275\u0275listener("onSelected", function ProductListComponent_For_9_Template_lg_card_list_onSelected_3_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.selectionZoneService.putSelected($event));
-    })("onDeleteOne", function ProductListComponent_For_14_Template_lg_card_list_onDeleteOne_3_listener($event) {
+    })("onDeleteOne", function ProductListComponent_For_9_Template_lg_card_list_onDeleteOne_3_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.deleteProduct($event));
     });
-    \u0275\u0275repeaterCreate(4, ProductListComponent_For_14_For_5_Template, 1, 1, null, 10, _forTrack02);
+    \u0275\u0275repeaterCreate(4, ProductListComponent_For_9_For_5_Template, 1, 1, null, 10, _forTrack02);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -616,19 +641,24 @@ function ProductListComponent_For_14_Template(rf, ctx) {
     \u0275\u0275repeater(category_r7.products);
   }
 }
-function ProductListComponent_ForEmpty_15_Template(rf, ctx) {
+function ProductListComponent_ForEmpty_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-flex-row", 4)(1, "lg-title", 8);
-    \u0275\u0275text(2);
-    \u0275\u0275pipe(3, "translate");
+    \u0275\u0275elementStart(0, "lg-flex-column", 1);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(3, "lg-button", 16);
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    \u0275\u0275property("center", true);
     \u0275\u0275advance();
-    \u0275\u0275property("level", 5);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 6, "products.empty-state.text"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("link", "/products/add")("size", "medium");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 3, "no-products"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 8, "products.empty-state.btn"), " ");
   }
 }
 var ProductListComponent = class _ProductListComponent {
@@ -672,30 +702,26 @@ var ProductListComponent = class _ProductListComponent {
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ProductListComponent, selectors: [["lg-product-list"]], features: [\u0275\u0275ProvidersFeature([
     SelectionZoneService,
     CurrencyPipe
-  ])], decls: 16, vars: 11, consts: [[3, "icon", "link", "size"], ["aria-hidden", "false", "fontIcon", "add"], ["lgInlineSeparatedGroup", ""], [3, "selectionTypes"], [3, "center"], [3, "click", "flat", "size"], [3, "onDone", "label", "schema", "storeName"], ["lgImportRowTpl", ""], [3, "level"], [3, "onSelected", "onDeleteOne", "mode", "selectAll", "deselectAll"], ["lgCardListItem", "", "type", "product", 3, "uuid"], [1, "expand"], ["lgExpand", "", 3, "center"], [3, "routerLink"], [1, "text-muted", "text-cursive"]], template: function ProductListComponent_Template(rf, ctx) {
+  ])], decls: 11, vars: 6, consts: [[3, "selectionTypes"], ["position", "center", "size", "medium"], [3, "icon", "link", "size"], ["aria-hidden", "false", "fontIcon", "add"], ["lgInlineSeparatedGroup", ""], [3, "click", "flat", "size"], [3, "onDone", "label", "schema", "storeName"], ["lgImportRowTpl", ""], [3, "level"], [3, "onSelected", "onDeleteOne", "mode", "selectAll", "deselectAll"], ["lgCardListItem", "", "type", "product", 3, "uuid"], [3, "center"], [1, "expand"], ["lgExpand", "", 3, "center"], [3, "routerLink"], [1, "text-muted", "text-cursive"], [3, "link", "size"]], template: function ProductListComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 0);
-      \u0275\u0275element(2, "mat-icon", 1);
+      \u0275\u0275conditionalCreate(0, ProductListComponent_Conditional_0_Template, 6, 5, "lg-controls-bar");
+      \u0275\u0275elementStart(1, "lg-fade-in")(2, "lg-container")(3, "lg-title");
+      \u0275\u0275text(4);
+      \u0275\u0275pipe(5, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(3, "lg-inline-separated-group");
-      \u0275\u0275template(4, ProductListComponent_ng_template_4_Template, 3, 7, "ng-template", 2)(5, ProductListComponent_ng_template_5_Template, 3, 5, "ng-template", 2);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(6, "lg-fade-in")(7, "lg-container")(8, "lg-title");
-      \u0275\u0275text(9);
-      \u0275\u0275pipe(10, "translate");
-      \u0275\u0275elementEnd();
-      \u0275\u0275element(11, "lg-draft-products-list")(12, "lg-selection-tools", 3);
-      \u0275\u0275repeaterCreate(13, ProductListComponent_For_14_Template, 6, 7, null, null, \u0275\u0275repeaterTrackByIndex, false, ProductListComponent_ForEmpty_15_Template, 4, 5, "lg-flex-row", 4);
+      \u0275\u0275element(6, "lg-draft-products-list");
+      \u0275\u0275conditionalCreate(7, ProductListComponent_Conditional_7_Template, 1, 2, "lg-selection-tools", 0);
+      \u0275\u0275repeaterCreate(8, ProductListComponent_For_9_Template, 6, 7, null, null, \u0275\u0275repeaterTrackByIndex, false, ProductListComponent_ForEmpty_10_Template, 6, 10, "lg-flex-column", 1);
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
-      \u0275\u0275advance();
-      \u0275\u0275styleMap("success");
-      \u0275\u0275property("icon", true)("link", "/products/add")("size", "medium");
-      \u0275\u0275advance(8);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 8, "products.list-title"), " ");
+      let tmp_0_0;
+      let tmp_2_0;
+      \u0275\u0275conditional(((tmp_0_0 = ctx.products()) == null ? null : tmp_0_0.length) ? 0 : -1);
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 4, "products.list-title"), " ");
       \u0275\u0275advance(3);
-      \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(10, _c02));
+      \u0275\u0275conditional(((tmp_2_0 = ctx.products()) == null ? null : tmp_2_0.length) ? 7 : -1);
       \u0275\u0275advance();
       \u0275\u0275repeater(ctx.products());
     }
@@ -719,42 +745,45 @@ var ProductListComponent = class _ProductListComponent {
     DraftProductsListCompoent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    UserCurrencyPipe
+    UserCurrencyPipe,
+    FlexColumnComponent
   ], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=product-list.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ProductListComponent, [{
     type: Component,
     args: [{ selector: "lg-product-list", standalone: true, template: `
-    <lg-controls-bar>
-      <lg-button [icon]="true"
-                 [link]="'/products/add'"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
+    @if (products()?.length) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/products/add'"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
 
-      <lg-inline-separated-group>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportProducts(selectionZoneService.selected())"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-            {{ 'export-label'|translate }} products
-          </lg-button>
-        </ng-template>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-import (onDone)="loadProducts()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="ProductScheme"
-                     [storeName]="Stores.PRODUCTS">
-            <ng-template let-flow="flow" let-row lgImportRowTpl>
-              <span>{{ row?.name }}</span>
-            </ng-template>
-          </lg-import>
-        </ng-template>
-      </lg-inline-separated-group>
-    </lg-controls-bar>
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="exportProducts(selectionZoneService.selected())"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'info'">
+              {{ 'export-label'|translate }} products
+            </lg-button>
+          </ng-template>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-import (onDone)="loadProducts()"
+                       [label]="('import-label'|translate) + ' products'"
+                       [schema]="ProductScheme"
+                       [storeName]="Stores.PRODUCTS">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                <span>{{ row?.name }}</span>
+              </ng-template>
+            </lg-import>
+          </ng-template>
+        </lg-inline-separated-group>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -764,9 +793,11 @@ var ProductListComponent = class _ProductListComponent {
 
         <lg-draft-products-list></lg-draft-products-list>
 
-        <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+        @if (products()?.length) {
+          <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+        }
 
-        @for (category of products(); track $index; let i = $index) {
+        @for (category of products(); track ic; let ic = $index) {
           <lg-title [level]="3">
             {{ category?.category || ('without-category-label'|translate) }}
           </lg-title>
@@ -776,7 +807,7 @@ var ProductListComponent = class _ProductListComponent {
                         (onDeleteOne)="deleteProduct($event)"
                         [selectAll]="selectionZoneService.selectAll()"
                         [deselectAll]="selectionZoneService.deselectAll()">
-            @for (product of category.products; track (product.uuid ?? '')+$index; let i = $index) {
+            @for (product of category.products; track (product.uuid ?? '') + i; let i = $index) {
               <ng-template lgCardListItem [uuid]="product.uuid" type="product">
                 <lg-flex-row [center]="true">
                   <div class="expand">
@@ -802,11 +833,16 @@ var ProductListComponent = class _ProductListComponent {
             }
           </lg-card-list>
         } @empty {
-          <lg-flex-row [center]="true">
-            <lg-title [level]="5">
-              {{ 'no-products'|translate }}
-            </lg-title>
-          </lg-flex-row>
+          <lg-flex-column position="center"
+                          size="medium">
+            {{ 'products.empty-state.text'|translate }}
+
+            <lg-button [link]="'/products/add'"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'products.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
         }
       </lg-container>
     </lg-fade-in>
@@ -830,7 +866,8 @@ var ProductListComponent = class _ProductListComponent {
       DraftProductsListCompoent,
       InlineSeparatedGroupComponent,
       InlineSeparatedGroupDirective,
-      UserCurrencyPipe
+      UserCurrencyPipe,
+      FlexColumnComponent
     ], providers: [
       SelectionZoneService,
       CurrencyPipe
@@ -838,9 +875,9 @@ var ProductListComponent = class _ProductListComponent {
   }], () => [{ type: ProductsRepository }, { type: TransferDataService }, { type: NotificationsService }, { type: SelectionZoneService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProductListComponent, { className: "ProductListComponent", filePath: "src/app/features/products/view/list/product-list.component.ts", lineNumber: 154 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProductListComponent, { className: "ProductListComponent", filePath: "src/app/features/products/view/list/product-list.component.ts", lineNumber: 165 });
 })();
 export {
   ProductListComponent
 };
-//# sourceMappingURL=chunk-T45GP5GX.js.map
+//# sourceMappingURL=chunk-T4AP3YBL.js.map

@@ -2133,7 +2133,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-ZA7LTLJV.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-P4YSKJCA.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
@@ -2174,7 +2174,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-T45GP5GX.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-T4AP3YBL.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
@@ -2217,7 +2217,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-EQDSME6N.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-FLGUT3BY.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
@@ -2251,7 +2251,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-6Q2V24JL.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-JOVDKRJJ.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2297,7 +2297,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-BRECF5CG.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-SMTVH6O4.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }

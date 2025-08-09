@@ -84,6 +84,8 @@ import {
   ɵɵProvidersFeature,
   ɵɵadvance,
   ɵɵattribute,
+  ɵɵconditional,
+  ɵɵconditionalCreate,
   ɵɵdefineComponent,
   ɵɵdirectiveInject,
   ɵɵelement,
@@ -140,21 +142,47 @@ var CATEGORIZED_INVOICES_LIST = new InjectionToken("CategorizedInvoicesList", {
 // src/app/features/invoices/view/list/invoices-list.component.ts
 var _c0 = () => ["invoice"];
 var _forTrack0 = ($index, $item) => ($item.uuid ?? "") + $index;
-function InvoicesListComponent_For_10_For_5_ng_template_0_Template(rf, ctx) {
+function InvoicesListComponent_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-flex-column", 7)(1, "lg-flex-row", 3)(2, "lg-flex-row", 8)(3, "a", 9);
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 2);
+    \u0275\u0275listener("click", function InvoicesListComponent_Conditional_0_Template_lg_button_click_1_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onAddInvoice());
+    });
+    \u0275\u0275element(2, "mat-icon", 3);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("icon", true)("size", "medium");
+  }
+}
+function InvoicesListComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "lg-selection-tools", 0);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(1, _c0));
+  }
+}
+function InvoicesListComponent_For_8_For_5_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "lg-flex-column", 7)(1, "lg-flex-row", 8)(2, "lg-flex-row", 9)(3, "a", 10);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "div", 10);
+    \u0275\u0275elementStart(5, "div", 11);
     \u0275\u0275text(6);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "small", 11);
+    \u0275\u0275elementStart(7, "small", 12);
     \u0275\u0275pipe(8, "date");
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "translate");
     \u0275\u0275pipe(11, "timeAgo");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "lg-flex-row", 3)(13, "div");
+    \u0275\u0275elementStart(12, "lg-flex-row", 8)(13, "div");
     \u0275\u0275text(14);
     \u0275\u0275pipe(15, "translate");
     \u0275\u0275pipe(16, "date");
@@ -168,10 +196,10 @@ function InvoicesListComponent_For_10_For_5_ng_template_0_Template(rf, ctx) {
   if (rf & 2) {
     let tmp_28_0;
     let tmp_29_0;
-    const ctx_r2 = \u0275\u0275nextContext();
-    const invoice_r4 = ctx_r2.$implicit;
-    const \u0275$index_24_r5 = ctx_r2.$index;
-    const \u0275$index_17_r6 = \u0275\u0275nextContext().$index;
+    const ctx_r4 = \u0275\u0275nextContext();
+    const invoice_r6 = ctx_r4.$implicit;
+    const \u0275$index_26_r7 = ctx_r4.$index;
+    const \u0275$index_19_r8 = \u0275\u0275nextContext().$index;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("size", "medium");
     \u0275\u0275advance();
@@ -179,79 +207,90 @@ function InvoicesListComponent_For_10_For_5_ng_template_0_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275property("center", true);
     \u0275\u0275advance();
-    \u0275\u0275property("routerLink", "/invoices/edit/" + invoice_r4.uuid);
+    \u0275\u0275property("routerLink", "/invoices/edit/" + invoice_r6.uuid);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate3(" #", invoice_r4.prefix, "/", invoice_r4.invoice_number, " - ", invoice_r4.name, " ");
+    \u0275\u0275textInterpolate3(" #", invoice_r6.prefix, "/", invoice_r6.invoice_number, " - ", invoice_r6.name, " ");
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", (tmp_28_0 = ctx_r1.stateBadgeClasses()) == null ? null : tmp_28_0[\u0275$index_17_r6] == null ? null : tmp_28_0[\u0275$index_17_r6][\u0275$index_24_r5]);
+    \u0275\u0275property("ngClass", (tmp_28_0 = ctx_r1.stateBadgeClasses()) == null ? null : tmp_28_0[\u0275$index_19_r8] == null ? null : tmp_28_0[\u0275$index_19_r8][\u0275$index_26_r7]);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", (tmp_29_0 = ctx_r1.stateLabels()) == null ? null : tmp_29_0[\u0275$index_17_r6] == null ? null : tmp_29_0[\u0275$index_17_r6][\u0275$index_24_r5], " ");
+    \u0275\u0275textInterpolate1(" ", (tmp_29_0 = ctx_r1.stateLabels()) == null ? null : tmp_29_0[\u0275$index_19_r8] == null ? null : tmp_29_0[\u0275$index_19_r8][\u0275$index_26_r7], " ");
     \u0275\u0275advance();
-    \u0275\u0275attribute("title", \u0275\u0275pipeBind2(8, 17, (invoice_r4 == null ? null : invoice_r4.updatedAt) || (invoice_r4 == null ? null : invoice_r4.createdAt), "short"));
+    \u0275\u0275attribute("title", \u0275\u0275pipeBind2(8, 17, (invoice_r6 == null ? null : invoice_r6.updatedAt) || (invoice_r6 == null ? null : invoice_r6.createdAt), "short"));
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(10, 20, "edited-at-label"), " ", \u0275\u0275pipeBind1(11, 22, (invoice_r4 == null ? null : invoice_r4.updatedAt) || (invoice_r4 == null ? null : invoice_r4.createdAt)), " ");
+    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(10, 20, "edited-at-label"), " ", \u0275\u0275pipeBind1(11, 22, (invoice_r6 == null ? null : invoice_r6.updatedAt) || (invoice_r6 == null ? null : invoice_r6.createdAt)), " ");
     \u0275\u0275advance(3);
     \u0275\u0275property("center", true);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(15, 24, "invoices.date-due"), ": ", \u0275\u0275pipeBind2(16, 26, invoice_r4.date_due, "shortDate"), " ");
+    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(15, 24, "invoices.date-due"), ": ", \u0275\u0275pipeBind2(16, 26, invoice_r6.date_due, "shortDate"), " ");
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(19, 29, "invoices.days-left"), ": ", \u0275\u0275pipeBind2(20, 31, (invoice_r4.date_due - ctx_r1.nowDate) / (1e3 * 60 * 60 * 24), "1.0-0"), " ");
+    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(19, 29, "invoices.days-left"), " : ", \u0275\u0275pipeBind2(20, 31, (invoice_r6.date_due - ctx_r1.nowDate) / (1e3 * 60 * 60 * 24), "1.0-0"), " ");
   }
 }
-function InvoicesListComponent_For_10_For_5_Template(rf, ctx) {
+function InvoicesListComponent_For_8_For_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, InvoicesListComponent_For_10_For_5_ng_template_0_Template, 21, 34, "ng-template", 6);
+    \u0275\u0275template(0, InvoicesListComponent_For_8_For_5_ng_template_0_Template, 21, 34, "ng-template", 6);
   }
   if (rf & 2) {
-    const invoice_r4 = ctx.$implicit;
-    \u0275\u0275property("uuid", invoice_r4.uuid);
+    const invoice_r6 = ctx.$implicit;
+    \u0275\u0275property("uuid", invoice_r6.uuid);
   }
 }
-function InvoicesListComponent_For_10_Template(rf, ctx) {
+function InvoicesListComponent_For_8_Template(rf, ctx) {
   if (rf & 1) {
-    const _r1 = \u0275\u0275getCurrentView();
+    const _r4 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "lg-title", 4);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "lg-card-list", 5);
-    \u0275\u0275listener("onSelected", function InvoicesListComponent_For_10_Template_lg_card_list_onSelected_3_listener($event) {
-      \u0275\u0275restoreView(_r1);
+    \u0275\u0275listener("onSelected", function InvoicesListComponent_For_8_Template_lg_card_list_onSelected_3_listener($event) {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.selectionZoneService.putSelected($event));
-    })("onDeleteOne", function InvoicesListComponent_For_10_Template_lg_card_list_onDeleteOne_3_listener($event) {
-      \u0275\u0275restoreView(_r1);
+    })("onDeleteOne", function InvoicesListComponent_For_8_Template_lg_card_list_onDeleteOne_3_listener($event) {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.deleteOne($event));
     });
-    \u0275\u0275repeaterCreate(4, InvoicesListComponent_For_10_For_5_Template, 1, 1, null, 6, _forTrack0);
+    \u0275\u0275repeaterCreate(4, InvoicesListComponent_For_8_For_5_Template, 1, 1, null, 6, _forTrack0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const category_r7 = ctx.$implicit;
+    const category_r9 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("level", 3);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", (category_r7 == null ? null : category_r7.group_key) || \u0275\u0275pipeBind1(2, 5, "without-category-label"), " ");
+    \u0275\u0275textInterpolate1(" ", (category_r9 == null ? null : category_r9.group_key) || \u0275\u0275pipeBind1(2, 5, "without-category-label"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275property("mode", ctx_r1.selectionZoneService.selectionMode())("selectAll", ctx_r1.selectionZoneService.selectAll())("deselectAll", ctx_r1.selectionZoneService.deselectAll());
     \u0275\u0275advance();
-    \u0275\u0275repeater(category_r7.items);
+    \u0275\u0275repeater(category_r9.items);
   }
 }
-function InvoicesListComponent_ForEmpty_11_Template(rf, ctx) {
+function InvoicesListComponent_ForEmpty_9_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-flex-row", 3)(1, "lg-title", 4);
-    \u0275\u0275text(2);
-    \u0275\u0275pipe(3, "translate");
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-column", 1);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(3, "lg-button", 13);
+    \u0275\u0275listener("click", function InvoicesListComponent_ForEmpty_9_Template_lg_button_click_3_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onAddInvoice());
+    });
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    \u0275\u0275property("center", true);
     \u0275\u0275advance();
-    \u0275\u0275property("level", 5);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 5, "invoices.empty-state.text"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("size", "medium");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 3, "no-invoices"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 7, "invoices.empty-state.btn"), " ");
   }
 }
 var InvoicesListComponent = class _InvoicesListComponent {
@@ -315,30 +354,25 @@ var InvoicesListComponent = class _InvoicesListComponent {
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _InvoicesListComponent, selectors: [["lg-invoices-list"]], features: [\u0275\u0275ProvidersFeature([
     SelectionZoneService,
     CurrencyPipe
-  ])], decls: 12, vars: 10, consts: [[3, "click", "icon", "size"], ["aria-hidden", "false", "fontIcon", "add"], [3, "selectionTypes"], [3, "center"], [3, "level"], [3, "onSelected", "onDeleteOne", "mode", "selectAll", "deselectAll"], ["lgCardListItem", "", "type", "invoice", 3, "uuid"], [3, "size"], ["lgExpand", "", 3, "center"], [3, "routerLink"], [3, "ngClass"], [1, "text-muted", "text-cursive"]], template: function InvoicesListComponent_Template(rf, ctx) {
+  ])], decls: 10, vars: 6, consts: [[3, "selectionTypes"], ["position", "center", "size", "medium"], [3, "click", "icon", "size"], ["aria-hidden", "false", "fontIcon", "add"], [3, "level"], [3, "onSelected", "onDeleteOne", "mode", "selectAll", "deselectAll"], ["lgCardListItem", "", "type", "invoice", 3, "uuid"], [3, "size"], [3, "center"], ["lgExpand", "", 3, "center"], [3, "routerLink"], [3, "ngClass"], [1, "text-muted", "text-cursive"], [3, "click", "size"]], template: function InvoicesListComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 0);
-      \u0275\u0275listener("click", function InvoicesListComponent_Template_lg_button_click_1_listener() {
-        return ctx.onAddInvoice();
-      });
-      \u0275\u0275element(2, "mat-icon", 1);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(3, "lg-fade-in")(4, "lg-container")(5, "lg-title");
-      \u0275\u0275text(6);
-      \u0275\u0275pipe(7, "translate");
+      \u0275\u0275conditionalCreate(0, InvoicesListComponent_Conditional_0_Template, 3, 4, "lg-controls-bar");
+      \u0275\u0275elementStart(1, "lg-fade-in")(2, "lg-container")(3, "lg-title");
+      \u0275\u0275text(4);
+      \u0275\u0275pipe(5, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275element(8, "lg-selection-tools", 2);
-      \u0275\u0275repeaterCreate(9, InvoicesListComponent_For_10_Template, 6, 7, null, null, \u0275\u0275repeaterTrackByIndex, false, InvoicesListComponent_ForEmpty_11_Template, 4, 5, "lg-flex-row", 3);
+      \u0275\u0275conditionalCreate(6, InvoicesListComponent_Conditional_6_Template, 1, 2, "lg-selection-tools", 0);
+      \u0275\u0275repeaterCreate(7, InvoicesListComponent_For_8_Template, 6, 7, null, null, \u0275\u0275repeaterTrackByIndex, false, InvoicesListComponent_ForEmpty_9_Template, 6, 9, "lg-flex-column", 1);
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
-      \u0275\u0275advance();
-      \u0275\u0275styleMap("success");
-      \u0275\u0275property("icon", true)("size", "medium");
-      \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 7, "invoices.list-title"), " ");
+      let tmp_0_0;
+      let tmp_2_0;
+      \u0275\u0275conditional(((tmp_0_0 = ctx.invoices()) == null ? null : tmp_0_0.length) ? 0 : -1);
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 4, "invoices.list-title"), " ");
       \u0275\u0275advance(2);
-      \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(9, _c0));
+      \u0275\u0275conditional(((tmp_2_0 = ctx.invoices()) == null ? null : tmp_2_0.length) ? 6 : -1);
       \u0275\u0275advance();
       \u0275\u0275repeater(ctx.invoices());
     }
@@ -367,14 +401,16 @@ var InvoicesListComponent = class _InvoicesListComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(InvoicesListComponent, [{
     type: Component,
     args: [{ selector: "lg-invoices-list", standalone: true, template: `
-    <lg-controls-bar>
-      <lg-button (click)="onAddInvoice()"
-                 [icon]="true"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
-    </lg-controls-bar>
+    @if (invoices()?.length) {
+      <lg-controls-bar>
+        <lg-button (click)="onAddInvoice()"
+                   [icon]="true"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -382,7 +418,9 @@ var InvoicesListComponent = class _InvoicesListComponent {
           {{ 'invoices.list-title' | translate }}
         </lg-title>
 
-        <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+        @if (invoices()?.length) {
+          <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+        }
 
         @for (category of invoices(); track $index; let ic = $index) {
           <lg-title [level]="3">
@@ -420,7 +458,8 @@ var InvoicesListComponent = class _InvoicesListComponent {
                     </div>
 
                     <div>
-                      {{ 'invoices.days-left' | translate }}: {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
+                      {{ 'invoices.days-left' | translate }}
+                      : {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
                     </div>
                   </lg-flex-row>
                 </lg-flex-column>
@@ -428,11 +467,16 @@ var InvoicesListComponent = class _InvoicesListComponent {
             }
           </lg-card-list>
         } @empty {
-          <lg-flex-row [center]="true">
-            <lg-title [level]="5">
-              {{ 'no-invoices'|translate }}
-            </lg-title>
-          </lg-flex-row>
+          <lg-flex-column position="center"
+                          size="medium">
+            {{ 'invoices.empty-state.text'|translate }}
+
+            <lg-button (click)="onAddInvoice()"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'invoices.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
         }
       </lg-container>
     </lg-fade-in>
@@ -462,9 +506,9 @@ var InvoicesListComponent = class _InvoicesListComponent {
   }], () => [{ type: NotificationsService }, { type: SelectionZoneService }, { type: InvoicesRepository }, { type: Router }, { type: TranslateService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(InvoicesListComponent, { className: "InvoicesListComponent", filePath: "src/app/features/invoices/view/list/invoices-list.component.ts", lineNumber: 133 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(InvoicesListComponent, { className: "InvoicesListComponent", filePath: "src/app/features/invoices/view/list/invoices-list.component.ts", lineNumber: 143 });
 })();
 export {
   InvoicesListComponent
 };
-//# sourceMappingURL=chunk-EQDSME6N.js.map
+//# sourceMappingURL=chunk-FLGUT3BY.js.map

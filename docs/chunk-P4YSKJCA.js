@@ -15,9 +15,9 @@ import {
 } from "./chunk-ULKYNLJB.js";
 import "./chunk-IKAOX7AI.js";
 import {
-  GroupingTailDirective,
-  GroupingTailsComponent
-} from "./chunk-NI4HGMVL.js";
+  GroupingTileDirective,
+  GroupingTilesComponent
+} from "./chunk-LN5KWV4W.js";
 import "./chunk-3LSKCD37.js";
 import {
   CardListComponent
@@ -136,6 +136,7 @@ import {
   ɵɵpureFunction0,
   ɵɵpureFunction1,
   ɵɵqueryRefresh,
+  ɵɵreference,
   ɵɵrepeater,
   ɵɵrepeaterCreate,
   ɵɵresetView,
@@ -836,13 +837,13 @@ var GroupingSortingComponent = class _GroupingSortingComponent {
 
 // src/app/features/recipes/view/list/recipes-list.component.ts
 var _c02 = () => ["recipe"];
-function RecipesListComponent_ng_template_4_Template(rf, ctx) {
+function RecipesListComponent_Conditional_0_ng_template_4_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-button", 8);
-    \u0275\u0275listener("click", function RecipesListComponent_ng_template_4_Template_lg_button_click_0_listener() {
+    \u0275\u0275elementStart(0, "lg-button", 10);
+    \u0275\u0275listener("click", function RecipesListComponent_Conditional_0_ng_template_4_Template_lg_button_click_0_listener() {
       \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
+      const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.exportRecipes(ctx_r1.selectionZoneService.selected()));
     });
     \u0275\u0275text(1);
@@ -856,7 +857,7 @@ function RecipesListComponent_ng_template_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 5, "export-label"), " recipes ");
   }
 }
-function RecipesListComponent_ng_template_5_ng_template_2_Template(rf, ctx) {
+function RecipesListComponent_Conditional_0_ng_template_5_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span");
     \u0275\u0275text(1);
@@ -868,34 +869,61 @@ function RecipesListComponent_ng_template_5_ng_template_2_Template(rf, ctx) {
     \u0275\u0275textInterpolate(row_r4 == null ? null : row_r4.name);
   }
 }
-function RecipesListComponent_ng_template_5_Template(rf, ctx) {
+function RecipesListComponent_Conditional_0_ng_template_5_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-import", 9);
+    \u0275\u0275elementStart(0, "lg-import", 11);
     \u0275\u0275pipe(1, "translate");
-    \u0275\u0275listener("onDone", function RecipesListComponent_ng_template_5_Template_lg_import_onDone_0_listener() {
+    \u0275\u0275listener("onDone", function RecipesListComponent_Conditional_0_ng_template_5_Template_lg_import_onDone_0_listener() {
       \u0275\u0275restoreView(_r3);
-      const ctx_r1 = \u0275\u0275nextContext();
+      const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.loadRecipes());
     });
-    \u0275\u0275template(2, RecipesListComponent_ng_template_5_ng_template_2_Template, 2, 1, "ng-template", 10);
+    \u0275\u0275template(2, RecipesListComponent_Conditional_0_ng_template_5_ng_template_2_Template, 2, 1, "ng-template", 12);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
+    const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275property("label", \u0275\u0275pipeBind1(1, 3, "import-label") + " products")("schema", ctx_r1.RecipeScheme)("storeName", ctx_r1.Stores.RECIPES);
   }
 }
-function RecipesListComponent_ng_template_17_Template(rf, ctx) {
+function RecipesListComponent_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-card")(1, "lg-flex-column")(2, "a", 11);
+    \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 7);
+    \u0275\u0275element(2, "mat-icon", 8);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "lg-inline-separated-group");
+    \u0275\u0275template(4, RecipesListComponent_Conditional_0_ng_template_4_Template, 3, 7, "ng-template", 9)(5, RecipesListComponent_Conditional_0_ng_template_5_Template, 3, 5, "ng-template", 9);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("icon", true)("link", "/recipes/add")("size", "medium");
+  }
+}
+function RecipesListComponent_Conditional_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "lg-flex-column", 2);
+    \u0275\u0275element(1, "lg-grouping-sorting")(2, "lg-selection-tools", 13);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275property("size", "medium");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(2, _c02));
+  }
+}
+function RecipesListComponent_ng_template_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "lg-card")(1, "lg-flex-column")(2, "a", 14);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "lg-flex-row")(5, "lg-button", 12);
+    \u0275\u0275elementStart(4, "lg-flex-row")(5, "lg-button", 15);
     \u0275\u0275text(6);
     \u0275\u0275pipe(7, "translate");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "small", 13);
+    \u0275\u0275elementStart(8, "small", 16);
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "translate");
     \u0275\u0275pipe(11, "timeAgo");
@@ -909,7 +937,7 @@ function RecipesListComponent_ng_template_17_Template(rf, ctx) {
     \u0275\u0275textInterpolate(recipe_r5.name);
     \u0275\u0275advance(2);
     \u0275\u0275styleMap("primary");
-    \u0275\u0275property("size", "small")("link", "/recipes/calculate/" + recipe_r5.uuid)("flat", true);
+    \u0275\u0275property("flat", true)("link", "/recipes/calculate/" + recipe_r5.uuid)("size", "small");
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 10, "recipes.calculate-btn"), " ");
     \u0275\u0275advance(3);
@@ -966,40 +994,43 @@ var RecipesListComponent = class _RecipesListComponent {
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _RecipesListComponent, selectors: [["lg-recipes-list"]], features: [\u0275\u0275ProvidersFeature([
     SelectionZoneService
-  ])], decls: 18, vars: 14, consts: [[3, "icon", "link", "size"], ["aria-hidden", "false", "fontIcon", "add"], ["lgInlineSeparatedGroup", ""], [3, "center"], [3, "size"], [3, "selectionTypes"], [3, "sortResult", "selectable"], ["lgGroupingTail", ""], [3, "click", "flat", "size"], [3, "onDone", "label", "schema", "storeName"], ["lgImportRowTpl", ""], [3, "routerLink"], [3, "size", "link", "flat"], ["lgPull", "", 1, "text-muted", "text-cursive"]], template: function RecipesListComponent_Template(rf, ctx) {
+  ])], decls: 18, vars: 18, consts: [["groupingTiles", ""], [3, "center"], [3, "size"], [3, "selectable", "sortResult"], ["lgGroupingTile", ""], ["empty-state", "", "position", "center", "size", "medium"], [3, "link", "size"], [3, "icon", "link", "size"], ["aria-hidden", "false", "fontIcon", "add"], ["lgInlineSeparatedGroup", ""], [3, "click", "flat", "size"], [3, "onDone", "label", "schema", "storeName"], ["lgImportRowTpl", ""], [3, "selectionTypes"], [3, "routerLink"], [3, "flat", "link", "size"], ["lgPull", "", 1, "text-muted", "text-cursive"]], template: function RecipesListComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "lg-controls-bar")(1, "lg-button", 0);
-      \u0275\u0275element(2, "mat-icon", 1);
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(3, "lg-inline-separated-group");
-      \u0275\u0275template(4, RecipesListComponent_ng_template_4_Template, 3, 7, "ng-template", 2)(5, RecipesListComponent_ng_template_5_Template, 3, 5, "ng-template", 2);
+      \u0275\u0275conditionalCreate(0, RecipesListComponent_Conditional_0_Template, 6, 5, "lg-controls-bar");
+      \u0275\u0275elementStart(1, "lg-fade-in")(2, "lg-container")(3, "lg-flex-row", 1)(4, "lg-title");
+      \u0275\u0275text(5);
+      \u0275\u0275pipe(6, "translate");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(6, "lg-fade-in")(7, "lg-container")(8, "lg-flex-row", 3)(9, "lg-title");
-      \u0275\u0275text(10);
-      \u0275\u0275pipe(11, "translate");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275element(12, "lg-draft-recipes-list");
-      \u0275\u0275elementStart(13, "lg-flex-column", 4);
-      \u0275\u0275element(14, "lg-grouping-sorting")(15, "lg-selection-tools", 5);
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(16, "lg-grouping-tails", 6);
-      \u0275\u0275template(17, RecipesListComponent_ng_template_17_Template, 12, 16, "ng-template", 7);
-      \u0275\u0275elementEnd()()();
+      \u0275\u0275element(7, "lg-draft-recipes-list");
+      \u0275\u0275conditionalCreate(8, RecipesListComponent_Conditional_8_Template, 3, 3, "lg-flex-column", 2);
+      \u0275\u0275elementStart(9, "lg-grouping-tiles", 3, 0);
+      \u0275\u0275template(11, RecipesListComponent_ng_template_11_Template, 12, 16, "ng-template", 4);
+      \u0275\u0275elementStart(12, "lg-flex-column", 5);
+      \u0275\u0275text(13);
+      \u0275\u0275pipe(14, "translate");
+      \u0275\u0275elementStart(15, "lg-button", 6);
+      \u0275\u0275text(16);
+      \u0275\u0275pipe(17, "translate");
+      \u0275\u0275elementEnd()()()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance();
-      \u0275\u0275styleMap("success");
-      \u0275\u0275property("icon", true)("link", "/recipes/add")("size", "medium");
-      \u0275\u0275advance(7);
+      const groupingTiles_r6 = \u0275\u0275reference(10);
+      \u0275\u0275conditional(!groupingTiles_r6.empty ? 0 : -1);
+      \u0275\u0275advance(3);
       \u0275\u0275property("center", true);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(11, 11, "recipes.list-title"), " ");
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 12, "recipes.list-title"), " ");
       \u0275\u0275advance(3);
-      \u0275\u0275property("size", "medium");
-      \u0275\u0275advance(2);
-      \u0275\u0275property("selectionTypes", \u0275\u0275pureFunction0(13, _c02));
+      \u0275\u0275conditional(!groupingTiles_r6.empty ? 8 : -1);
       \u0275\u0275advance();
-      \u0275\u0275property("sortResult", ctx.recipes())("selectable", true);
+      \u0275\u0275property("selectable", true)("sortResult", ctx.recipes());
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(14, 14, "recipes.empty-state.text"), " ");
+      \u0275\u0275advance(2);
+      \u0275\u0275styleMap("success");
+      \u0275\u0275property("link", "/recipes/add")("size", "medium");
+      \u0275\u0275advance();
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(17, 16, "recipes.empty-state.btn"), " ");
     }
   }, dependencies: [
     FlexRowComponent,
@@ -1020,8 +1051,8 @@ var RecipesListComponent = class _RecipesListComponent {
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     GroupingSortingComponent,
-    GroupingTailsComponent,
-    GroupingTailDirective,
+    GroupingTilesComponent,
+    GroupingTileDirective,
     FlexColumnComponent,
     CardComponent
   ], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=recipes-list.component.css.map */"] });
@@ -1030,35 +1061,37 @@ var RecipesListComponent = class _RecipesListComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(RecipesListComponent, [{
     type: Component,
     args: [{ selector: "lg-recipes-list", standalone: true, template: `
-    <lg-controls-bar>
-      <lg-button [icon]="true"
-                 [link]="'/recipes/add'"
-                 [size]="'medium'"
-                 [style]="'success'">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-      </lg-button>
+    @if (!groupingTiles.empty) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/recipes/add'"
+                   [size]="'medium'"
+                   [style]="'success'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
 
-      <lg-inline-separated-group>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="exportRecipes(selectionZoneService.selected())"
-                     [flat]="true"
-                     [size]="'small'"
-                     [style]="'info'">
-            {{ 'export-label'|translate }} recipes
-          </lg-button>
-        </ng-template>
-        <ng-template lgInlineSeparatedGroup>
-          <lg-import (onDone)="loadRecipes()"
-                     [label]="('import-label'|translate) + ' products'"
-                     [schema]="RecipeScheme"
-                     [storeName]="Stores.RECIPES">
-            <ng-template let-flow="flow" let-row lgImportRowTpl>
-              <span>{{ row?.name }}</span>
-            </ng-template>
-          </lg-import>
-        </ng-template>
-      </lg-inline-separated-group>
-    </lg-controls-bar>
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="exportRecipes(selectionZoneService.selected())"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'info'">
+              {{ 'export-label'|translate }} recipes
+            </lg-button>
+          </ng-template>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-import (onDone)="loadRecipes()"
+                       [label]="('import-label'|translate) + ' products'"
+                       [schema]="RecipeScheme"
+                       [storeName]="Stores.RECIPES">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                <span>{{ row?.name }}</span>
+              </ng-template>
+            </lg-import>
+          </ng-template>
+        </lg-inline-separated-group>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -1070,34 +1103,50 @@ var RecipesListComponent = class _RecipesListComponent {
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        <lg-flex-column [size]="'medium'">
-          <lg-grouping-sorting></lg-grouping-sorting>
+        @if (!groupingTiles.empty) {
+          <lg-flex-column [size]="'medium'">
+            <lg-grouping-sorting></lg-grouping-sorting>
 
-          <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-        </lg-flex-column>
+            <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
+          </lg-flex-column>
+        }
 
-        <lg-grouping-tails [sortResult]="recipes()" [selectable]="true">
-          <ng-template lgGroupingTail let-recipe>
+        <lg-grouping-tiles #groupingTiles
+                           [selectable]="true"
+                           [sortResult]="recipes()">
+          <ng-template let-recipe lgGroupingTile>
             <lg-card>
               <lg-flex-column>
-              <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
-              <lg-flex-row>
-                <lg-button [style]="'primary'"
-                           [size]="'small'"
-                           [link]="'/recipes/calculate/' + recipe.uuid"
-                           [flat]="true">
-                  {{ 'recipes.calculate-btn'|translate }}
-                </lg-button>
+                <lg-flex-row>
+                  <lg-button [flat]="true"
+                             [link]="'/recipes/calculate/' + recipe.uuid"
+                             [size]="'small'"
+                             [style]="'primary'">
+                    {{ 'recipes.calculate-btn'|translate }}
+                  </lg-button>
 
-                <small class="text-muted text-cursive" lgPull>
-                  {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                </small>
-              </lg-flex-row>
-            </lg-flex-column>
+                  <small class="text-muted text-cursive" lgPull>
+                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                  </small>
+                </lg-flex-row>
+              </lg-flex-column>
             </lg-card>
           </ng-template>
-        </lg-grouping-tails>
+
+          <lg-flex-column empty-state
+                          position="center"
+                          size="medium">
+            {{ 'recipes.empty-state.text'|translate }}
+
+            <lg-button [link]="'/recipes/add'"
+                       [size]="'medium'"
+                       [style]="'success'">
+              {{ 'recipes.empty-state.btn'|translate }}
+            </lg-button>
+          </lg-flex-column>
+        </lg-grouping-tiles>
       </lg-container>
     </lg-fade-in>
   `, providers: [
@@ -1121,17 +1170,17 @@ var RecipesListComponent = class _RecipesListComponent {
       InlineSeparatedGroupComponent,
       InlineSeparatedGroupDirective,
       GroupingSortingComponent,
-      GroupingTailsComponent,
-      GroupingTailDirective,
+      GroupingTilesComponent,
+      GroupingTileDirective,
       FlexColumnComponent,
       CardComponent
     ], styles: ["/* angular:styles/component:scss;01c1eed413cbcab17b345a4da1b468b4e2a0a4e51bc2f6ee57d46c1ca65a67bb;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/recipes/view/list/recipes-list.component.ts */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=recipes-list.component.css.map */\n"] }]
   }], () => [{ type: RecipesRepository }, { type: NotificationsService }, { type: TransferDataService }, { type: SelectionZoneService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(RecipesListComponent, { className: "RecipesListComponent", filePath: "src/app/features/recipes/view/list/recipes-list.component.ts", lineNumber: 143 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(RecipesListComponent, { className: "RecipesListComponent", filePath: "src/app/features/recipes/view/list/recipes-list.component.ts", lineNumber: 161 });
 })();
 export {
   RecipesListComponent
 };
-//# sourceMappingURL=chunk-ZA7LTLJV.js.map
+//# sourceMappingURL=chunk-P4YSKJCA.js.map

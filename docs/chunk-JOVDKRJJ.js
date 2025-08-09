@@ -7,7 +7,7 @@ import {
   SelfCenterDirective,
   SelfEndDirective,
   TaxesSettingsComponent
-} from "./chunk-4PDZT2TY.js";
+} from "./chunk-VWE45SWY.js";
 import {
   matchMediaSignal,
   mobileBreakpoint
@@ -25,9 +25,9 @@ import {
 import "./chunk-F2QJ6SGJ.js";
 import {
   GroupingHeaderDirective,
-  GroupingTailDirective,
-  GroupingTailsComponent
-} from "./chunk-NI4HGMVL.js";
+  GroupingTileDirective,
+  GroupingTilesComponent
+} from "./chunk-LN5KWV4W.js";
 import {
   UploadComponent
 } from "./chunk-3LSKCD37.js";
@@ -138,6 +138,7 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
+  HostBinding,
   HostListener,
   Injectable,
   Input,
@@ -1251,15 +1252,15 @@ function CreateCredentialComponent_For_4_Conditional_1_ng_container_2_Template(r
 }
 function CreateCredentialComponent_For_4_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-control-box")(1, "lg-flex-column", 8);
-    \u0275\u0275template(2, CreateCredentialComponent_For_4_Conditional_1_ng_container_2_Template, 1, 0, "ng-container", 9);
+    \u0275\u0275elementStart(0, "lg-control-box")(1, "lg-flex-column", 7);
+    \u0275\u0275template(2, CreateCredentialComponent_For_4_Conditional_1_ng_container_2_Template, 1, 0, "ng-container", 8);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     \u0275\u0275nextContext();
-    const rowTpl_r1 = \u0275\u0275reference(4);
+    const rowTpl_r3 = \u0275\u0275reference(4);
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", rowTpl_r1);
+    \u0275\u0275property("ngTemplateOutlet", rowTpl_r3);
   }
 }
 function CreateCredentialComponent_For_4_Conditional_2_ng_container_2_Template(rf, ctx) {
@@ -1269,18 +1270,18 @@ function CreateCredentialComponent_For_4_Conditional_2_ng_container_2_Template(r
 }
 function CreateCredentialComponent_For_4_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 10)(1, "lg-flex-row", 11);
-    \u0275\u0275template(2, CreateCredentialComponent_For_4_Conditional_2_ng_container_2_Template, 1, 0, "ng-container", 9);
+    \u0275\u0275elementStart(0, "div", 9)(1, "lg-flex-row", 10);
+    \u0275\u0275template(2, CreateCredentialComponent_For_4_Conditional_2_ng_container_2_Template, 1, 0, "ng-container", 8);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const \u0275$index_7_r2 = \u0275\u0275nextContext().$index;
-    const rowTpl_r1 = \u0275\u0275reference(4);
-    \u0275\u0275classProp("credentials__row--odd", \u0275$index_7_r2 % 2 !== 0);
+    const \u0275$index_7_r4 = \u0275\u0275nextContext().$index;
+    const rowTpl_r3 = \u0275\u0275reference(4);
+    \u0275\u0275classProp("credentials__row--odd", \u0275$index_7_r4 % 2 !== 0);
     \u0275\u0275advance();
     \u0275\u0275property("bottom", true);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", rowTpl_r1);
+    \u0275\u0275property("ngTemplateOutlet", rowTpl_r3);
   }
 }
 function CreateCredentialComponent_For_4_ng_template_3_Conditional_27_Template(rf, ctx) {
@@ -1294,52 +1295,52 @@ function CreateCredentialComponent_For_4_ng_template_3_Conditional_27_Template(r
 }
 function CreateCredentialComponent_For_4_ng_template_3_Conditional_28_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "mat-icon", 24);
+    \u0275\u0275element(0, "mat-icon", 23);
   }
 }
 function CreateCredentialComponent_For_4_ng_template_3_Template(rf, ctx) {
   if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-flex-column", 12)(1, "lg-flex-row", 13)(2, "lg-control", 14);
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-column", 11)(1, "lg-flex-row", 12)(2, "lg-control", 13);
     \u0275\u0275pipe(3, "translate");
-    \u0275\u0275element(4, "lg-input", 15);
+    \u0275\u0275element(4, "lg-input", 14);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "lg-flex-row", 16)(6, "lg-control", 14);
+    \u0275\u0275elementStart(5, "lg-flex-row", 15)(6, "lg-control", 13);
     \u0275\u0275pipe(7, "translate");
-    \u0275\u0275element(8, "lg-input", 17);
+    \u0275\u0275element(8, "lg-input", 16);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "lg-control", 14);
+    \u0275\u0275elementStart(9, "lg-control", 13);
     \u0275\u0275pipe(10, "translate");
-    \u0275\u0275element(11, "lg-input", 18);
+    \u0275\u0275element(11, "lg-input", 17);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "lg-flex-row", 16)(13, "lg-control", 14);
+    \u0275\u0275elementStart(12, "lg-flex-row", 15)(13, "lg-control", 13);
     \u0275\u0275pipe(14, "translate");
-    \u0275\u0275element(15, "lg-input", 19);
+    \u0275\u0275element(15, "lg-input", 18);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(16, "lg-control", 14);
+    \u0275\u0275elementStart(16, "lg-control", 13);
     \u0275\u0275pipe(17, "translate");
-    \u0275\u0275element(18, "lg-input", 20);
+    \u0275\u0275element(18, "lg-input", 19);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(19, "lg-flex-row", 16)(20, "lg-control", 14);
+    \u0275\u0275elementStart(19, "lg-flex-row", 15)(20, "lg-control", 13);
     \u0275\u0275pipe(21, "translate");
-    \u0275\u0275element(22, "lg-input", 21);
+    \u0275\u0275element(22, "lg-input", 20);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(23, "lg-control", 14);
+    \u0275\u0275elementStart(23, "lg-control", 13);
     \u0275\u0275pipe(24, "translate");
-    \u0275\u0275element(25, "lg-input", 22);
+    \u0275\u0275element(25, "lg-input", 21);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(26, "lg-button", 23);
+    \u0275\u0275elementStart(26, "lg-button", 22);
     \u0275\u0275listener("click", function CreateCredentialComponent_For_4_ng_template_3_Template_lg_button_click_26_listener() {
-      \u0275\u0275restoreView(_r3);
-      const \u0275$index_7_r2 = \u0275\u0275nextContext().$index;
-      const ctx_r3 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r3.deleteRow(\u0275$index_7_r2));
+      \u0275\u0275restoreView(_r5);
+      const \u0275$index_7_r4 = \u0275\u0275nextContext().$index;
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.deleteRow(\u0275$index_7_r4));
     });
-    \u0275\u0275conditionalCreate(27, CreateCredentialComponent_For_4_ng_template_3_Conditional_27_Template, 2, 3)(28, CreateCredentialComponent_For_4_ng_template_3_Conditional_28_Template, 1, 0, "mat-icon", 24);
+    \u0275\u0275conditionalCreate(27, CreateCredentialComponent_For_4_ng_template_3_Conditional_27_Template, 2, 3)(28, CreateCredentialComponent_For_4_ng_template_3_Conditional_28_Template, 1, 0, "mat-icon", 23);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const ctx_r3 = \u0275\u0275nextContext(2);
+    const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
     \u0275\u0275property("mobileMode", true);
     \u0275\u0275advance();
@@ -1364,37 +1365,63 @@ function CreateCredentialComponent_For_4_ng_template_3_Template(rf, ctx) {
     \u0275\u0275property("label", \u0275\u0275pipeBind1(24, 31, "settings.credentials.email"));
     \u0275\u0275advance(3);
     \u0275\u0275styleMap("danger");
-    \u0275\u0275property("icon", !ctx_r3.isMobile())("size", "tiny");
+    \u0275\u0275property("icon", !ctx_r1.isMobile())("size", "tiny");
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r3.isMobile() ? 27 : 28);
+    \u0275\u0275conditional(ctx_r1.isMobile() ? 27 : 28);
   }
 }
 function CreateCredentialComponent_For_4_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "hr", 7);
+    \u0275\u0275element(0, "hr", 6);
   }
 }
 function CreateCredentialComponent_For_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "section", 5);
-    \u0275\u0275conditionalCreate(1, CreateCredentialComponent_For_4_Conditional_1_Template, 3, 1, "lg-control-box")(2, CreateCredentialComponent_For_4_Conditional_2_Template, 3, 4, "div", 6);
+    \u0275\u0275elementStart(0, "section", 4);
+    \u0275\u0275conditionalCreate(1, CreateCredentialComponent_For_4_Conditional_1_Template, 3, 1, "lg-control-box")(2, CreateCredentialComponent_For_4_Conditional_2_Template, 3, 4, "div", 5);
     \u0275\u0275template(3, CreateCredentialComponent_For_4_ng_template_3_Template, 29, 33, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
     \u0275\u0275elementEnd();
-    \u0275\u0275conditionalCreate(5, CreateCredentialComponent_For_4_Conditional_5_Template, 1, 0, "hr", 7);
+    \u0275\u0275conditionalCreate(5, CreateCredentialComponent_For_4_Conditional_5_Template, 1, 0, "hr", 6);
   }
   if (rf & 2) {
-    const \u0275$index_7_r2 = ctx.$index;
-    const \u0275$count_7_r5 = ctx.$count;
-    const ctx_r3 = \u0275\u0275nextContext();
-    ctx_r3.form.controls.rows.controls[\u0275$index_7_r2];
-    \u0275\u0275property("formGroupName", \u0275$index_7_r2);
+    const \u0275$index_7_r4 = ctx.$index;
+    const \u0275$count_7_r6 = ctx.$count;
+    const ctx_r1 = \u0275\u0275nextContext();
+    ctx_r1.form.controls.rows.controls[\u0275$index_7_r4];
+    \u0275\u0275property("formGroupName", \u0275$index_7_r4);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r3.isMobile() ? 1 : 2);
+    \u0275\u0275conditional(ctx_r1.isMobile() ? 1 : 2);
     \u0275\u0275advance(4);
-    \u0275\u0275conditional(!(\u0275$index_7_r2 === \u0275$count_7_r5 - 1) ? 5 : -1);
+    \u0275\u0275conditional(!(\u0275$index_7_r4 === \u0275$count_7_r6 - 1) ? 5 : -1);
   }
 }
-function CreateCredentialComponent_Conditional_7_Template(rf, ctx) {
+function CreateCredentialComponent_ForEmpty_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-column", 3);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(3, "lg-button", 24);
+    \u0275\u0275listener("click", function CreateCredentialComponent_ForEmpty_5_Template_lg_button_click_3_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.addRow());
+    });
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 5, "settings.credentials.empty-state.text"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("size", "medium");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 7, "settings.credentials.empty-state.btn"), " ");
+  }
+}
+function CreateCredentialComponent_Conditional_6_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
@@ -1403,13 +1430,47 @@ function CreateCredentialComponent_Conditional_7_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.credentials.save-changes"), " ");
   }
 }
-function CreateCredentialComponent_Conditional_8_Template(rf, ctx) {
+function CreateCredentialComponent_Conditional_6_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
     \u0275\u0275pipe(1, "translate");
   }
   if (rf & 2) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, "settings.credentials.no-changes"), " ");
+  }
+}
+function CreateCredentialComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "lg-flex-row")(1, "lg-button", 25);
+    \u0275\u0275listener("click", function CreateCredentialComponent_Conditional_6_Template_lg_button_click_1_listener() {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.save());
+    });
+    \u0275\u0275conditionalCreate(2, CreateCredentialComponent_Conditional_6_Conditional_2_Template, 2, 3)(3, CreateCredentialComponent_Conditional_6_Conditional_3_Template, 2, 3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "lg-button", 26);
+    \u0275\u0275listener("click", function CreateCredentialComponent_Conditional_6_Template_lg_button_click_4_listener() {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.addRow());
+    });
+    \u0275\u0275text(5);
+    \u0275\u0275pipe(6, "translate");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275styleMap("success");
+    \u0275\u0275property("disabled", !ctx_r1.form.dirty);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.form.dirty ? 2 : 3);
+    \u0275\u0275advance(2);
+    \u0275\u0275styleMap("warning");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 7, "settings.credentials.add-row"), " ");
   }
 }
 var CreateCredentialComponent = class _CreateCredentialComponent {
@@ -1503,25 +1564,14 @@ var CreateCredentialComponent = class _CreateCredentialComponent {
   static \u0275fac = function CreateCredentialComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _CreateCredentialComponent)(\u0275\u0275directiveInject(CredentialsRepository), \u0275\u0275directiveInject(NotificationsService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CreateCredentialComponent, selectors: [["lg-create-credential"]], inputs: { type: [1, "type"] }, decls: 12, vars: 10, consts: [["rowTpl", ""], [3, "formGroup"], ["formArrayName", "rows"], ["lgSelfCenter", "", "lgShrink", "", 3, "click", "disabled"], ["lgSelfCenter", "", "lgShrink", "", 3, "click"], [1, "credentials", 3, "formGroupName"], [1, "credentials__row", 3, "credentials__row--odd"], ["color", "#fafafa", "lgExpand", "", "size", "2"], [2, "--control-bg", "white"], [4, "ngTemplateOutlet"], [1, "credentials__row"], [3, "bottom"], ["size", "small", "lgExpand", ""], [3, "mobileMode"], [3, "label"], ["placeholder", "", "formControlName", "privateName"], ["size", "small", 3, "equal", "mobileMode"], ["formControlName", "name", "placeholder", ""], ["formControlName", "taxId", "placeholder", ""], ["formControlName", "country", "placeholder", ""], ["formControlName", "address", "placeholder", ""], ["formControlName", "phone", "placeholder", ""], ["formControlName", "email", "placeholder", ""], ["lgSelfEnd", "", "lgShrink", "", 3, "click", "icon", "size"], ["aria-hidden", "false", "aria-label", "Example home icon", "fontIcon", "close"]], template: function CreateCredentialComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CreateCredentialComponent, selectors: [["lg-create-credential"]], inputs: { type: [1, "type"] }, decls: 7, vars: 3, consts: [["rowTpl", ""], [3, "formGroup"], ["formArrayName", "rows"], ["position", "center", "size", "medium"], [1, "credentials", 3, "formGroupName"], [1, "credentials__row", 3, "credentials__row--odd"], ["color", "#fafafa", "lgExpand", "", "size", "2"], [2, "--control-bg", "white"], [4, "ngTemplateOutlet"], [1, "credentials__row"], [3, "bottom"], ["size", "small", "lgExpand", ""], [3, "mobileMode"], [3, "label"], ["placeholder", "", "formControlName", "privateName"], ["size", "small", 3, "equal", "mobileMode"], ["formControlName", "name", "placeholder", ""], ["formControlName", "taxId", "placeholder", ""], ["formControlName", "country", "placeholder", ""], ["formControlName", "address", "placeholder", ""], ["formControlName", "phone", "placeholder", ""], ["formControlName", "email", "placeholder", ""], ["lgSelfEnd", "", "lgShrink", "", 3, "click", "icon", "size"], ["aria-hidden", "false", "aria-label", "Example home icon", "fontIcon", "close"], [3, "click", "size"], ["lgSelfCenter", "", "lgShrink", "", 3, "click", "disabled"], ["lgSelfCenter", "", "lgShrink", "", 3, "click"]], template: function CreateCredentialComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-flex-column");
       \u0275\u0275elementContainerStart(1, 1)(2, 2);
-      \u0275\u0275repeaterCreate(3, CreateCredentialComponent_For_4_Template, 6, 3, null, null, _forTrack02);
+      \u0275\u0275repeaterCreate(3, CreateCredentialComponent_For_4_Template, 6, 3, null, null, _forTrack02, false, CreateCredentialComponent_ForEmpty_5_Template, 6, 9, "lg-flex-column", 3);
       \u0275\u0275elementContainerEnd()();
-      \u0275\u0275elementStart(5, "lg-flex-row")(6, "lg-button", 3);
-      \u0275\u0275listener("click", function CreateCredentialComponent_Template_lg_button_click_6_listener() {
-        return ctx.save();
-      });
-      \u0275\u0275conditionalCreate(7, CreateCredentialComponent_Conditional_7_Template, 2, 3)(8, CreateCredentialComponent_Conditional_8_Template, 2, 3);
+      \u0275\u0275conditionalCreate(6, CreateCredentialComponent_Conditional_6_Template, 7, 9, "lg-flex-row");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(9, "lg-button", 4);
-      \u0275\u0275listener("click", function CreateCredentialComponent_Template_lg_button_click_9_listener() {
-        return ctx.addRow();
-      });
-      \u0275\u0275text(10);
-      \u0275\u0275pipe(11, "translate");
-      \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance();
@@ -1529,14 +1579,7 @@ var CreateCredentialComponent = class _CreateCredentialComponent {
       \u0275\u0275advance(2);
       \u0275\u0275repeater(ctx.credentials());
       \u0275\u0275advance(3);
-      \u0275\u0275styleMap("success");
-      \u0275\u0275property("disabled", !ctx.form.dirty);
-      \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.form.dirty ? 7 : 8);
-      \u0275\u0275advance(2);
-      \u0275\u0275styleMap("warning");
-      \u0275\u0275advance();
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(11, 8, "settings.credentials.add-row"), " ");
+      \u0275\u0275conditional(ctx.credentials().length ? 6 : -1);
     }
   }, dependencies: [
     FlexRowComponent,
@@ -1660,30 +1703,43 @@ var CreateCredentialComponent = class _CreateCredentialComponent {
             @if (!last) {
               <hr color="#fafafa" lgExpand size="2"/>
             }
+          } @empty {
+            <lg-flex-column position="center"
+                            size="medium">
+              {{ 'settings.credentials.empty-state.text'|translate }}
+
+              <lg-button [size]="'medium'"
+                         (click)="addRow()"
+                         [style]="'success'">
+                {{ 'settings.credentials.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
           }
         </ng-container>
       </ng-container>
 
-      <lg-flex-row>
-        <lg-button (click)="save()"
-                   [disabled]="!form.dirty"
-                   [style]="'success'"
-                   lgSelfCenter
-                   lgShrink>
-          @if (form.dirty) {
-            {{ 'settings.credentials.save-changes'|translate }}
-          } @else {
-            {{ 'settings.credentials.no-changes'|translate }}
-          }
-        </lg-button>
+      @if (credentials().length) {
+        <lg-flex-row>
+          <lg-button (click)="save()"
+                     [disabled]="!form.dirty"
+                     [style]="'success'"
+                     lgSelfCenter
+                     lgShrink>
+            @if (form.dirty) {
+              {{ 'settings.credentials.save-changes'|translate }}
+            } @else {
+              {{ 'settings.credentials.no-changes'|translate }}
+            }
+          </lg-button>
 
-        <lg-button (click)="addRow()"
-                   [style]="'warning'"
-                   lgSelfCenter
-                   lgShrink>
-          {{ 'settings.credentials.add-row'|translate }}
-        </lg-button>
-      </lg-flex-row>
+          <lg-button (click)="addRow()"
+                     [style]="'warning'"
+                     lgSelfCenter
+                     lgShrink>
+            {{ 'settings.credentials.add-row'|translate }}
+          </lg-button>
+        </lg-flex-row>
+      }
     </lg-flex-column>
   `, imports: [
       FlexRowComponent,
@@ -1712,7 +1768,7 @@ var CreateCredentialComponent = class _CreateCredentialComponent {
   }], () => [{ type: CredentialsRepository }, { type: NotificationsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CreateCredentialComponent, { className: "CreateCredentialComponent", filePath: "src/app/features/settings/view/finance-settings/credentials/create-credential.component.ts", lineNumber: 175 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CreateCredentialComponent, { className: "CreateCredentialComponent", filePath: "src/app/features/settings/view/finance-settings/credentials/create-credential.component.ts", lineNumber: 188 });
 })();
 
 // src/app/features/settings/view/finance-settings/credentials/credential-settings.component.ts
@@ -1884,6 +1940,7 @@ var PaginationComponent = class _PaginationComponent {
   pageChange = new EventEmitter();
   currentPage = signal(1);
   totalPages = signal(1);
+  hidden = computed(() => this.totalPages() ? null : true);
   totalItems = signal(0);
   itemsPerPage = signal(20);
   ngOnInit() {
@@ -1919,7 +1976,11 @@ var PaginationComponent = class _PaginationComponent {
   static \u0275fac = function PaginationComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _PaginationComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PaginationComponent, selectors: [["lg-pagination"]], inputs: { config: "config" }, outputs: { pageChange: "pageChange" }, features: [\u0275\u0275NgOnChangesFeature], decls: 1, vars: 1, consts: [[1, "pagination"], [3, "center"], [1, "pagination__btn", 3, "click", "disabled"], [1, "pagination__icon"], [1, "pagination__info"], [1, "pagination__current"], [1, "pagination__separator"], [1, "pagination__total"]], template: function PaginationComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PaginationComponent, selectors: [["lg-pagination"]], hostVars: 1, hostBindings: function PaginationComponent_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      \u0275\u0275attribute("hidden", ctx.hidden);
+    }
+  }, inputs: { config: "config" }, outputs: { pageChange: "pageChange" }, features: [\u0275\u0275NgOnChangesFeature], decls: 1, vars: 1, consts: [[1, "pagination"], [3, "center"], [1, "pagination__btn", 3, "click", "disabled"], [1, "pagination__icon"], [1, "pagination__info"], [1, "pagination__current"], [1, "pagination__separator"], [1, "pagination__total"]], template: function PaginationComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275conditionalCreate(0, PaginationComponent_Conditional_0_Template, 19, 11, "div", 0);
     }
@@ -1945,22 +2006,22 @@ var PaginationComponent = class _PaginationComponent {
     @if (totalPages() > 1) {
       <div class="pagination">
         <lg-flex-row [center]="true">
-          <lg-button 
-            (click)="previousPage()" 
+          <lg-button
+            (click)="previousPage()"
             [disabled]="currentPage() === 1"
             class="pagination__btn">
             <span class="pagination__icon">\u25C0</span>
             {{ 'pagination.previous' | translate }}
           </lg-button>
-          
+
           <div class="pagination__info">
             <span class="pagination__current">{{ currentPage() }}</span>
             <span class="pagination__separator">/</span>
             <span class="pagination__total">{{ totalPages() }}</span>
           </div>
-          
-          <lg-button 
-            (click)="nextPage()" 
+
+          <lg-button
+            (click)="nextPage()"
             [disabled]="currentPage() === totalPages()"
             class="pagination__btn">
             {{ 'pagination.next' | translate }}
@@ -1974,10 +2035,13 @@ var PaginationComponent = class _PaginationComponent {
     type: Input
   }], pageChange: [{
     type: Output
+  }], hidden: [{
+    type: HostBinding,
+    args: ["attr.hidden"]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PaginationComponent, { className: "PaginationComponent", filePath: "src/app/shared/view/ui/pagination/pagination.component.ts", lineNumber: 95 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PaginationComponent, { className: "PaginationComponent", filePath: "src/app/shared/view/ui/pagination/pagination.component.ts", lineNumber: 106 });
 })();
 
 // src/app/shared/service/services/pagination.service.ts
@@ -2133,28 +2197,19 @@ function LogCenterComponent_Conditional_10_Template(rf, ctx) {
 }
 function LogCenterComponent_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 7)(1, "div", 10);
-    \u0275\u0275text(2, "\u{1F4CB}");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 11);
-    \u0275\u0275text(4);
-    \u0275\u0275pipe(5, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 12);
-    \u0275\u0275text(7);
-    \u0275\u0275pipe(8, "translate");
+    \u0275\u0275elementStart(0, "lg-flex-column", 7)(1, "span");
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "translate");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 2, "log-center.no-logs"));
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 4, "log-center.no-logs-subtitle"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, "log-center.no-logs-subtitle"));
   }
 }
 function LogCenterComponent_Conditional_13_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-title", 15);
+    \u0275\u0275elementStart(0, "lg-title", 12);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "timeAgo");
     \u0275\u0275elementEnd();
@@ -2168,7 +2223,7 @@ function LogCenterComponent_Conditional_13_ng_template_1_Template(rf, ctx) {
 }
 function LogCenterComponent_Conditional_13_ng_template_2_Conditional_11_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 22)(1, "span", 27);
+    \u0275\u0275elementStart(0, "div", 19)(1, "span", 24);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "translate");
     \u0275\u0275elementEnd();
@@ -2185,11 +2240,11 @@ function LogCenterComponent_Conditional_13_ng_template_2_Conditional_11_Template
 }
 function LogCenterComponent_Conditional_13_ng_template_2_Conditional_17_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 25)(1, "span", 28);
+    \u0275\u0275elementStart(0, "div", 22)(1, "span", 25);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "translate");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 29);
+    \u0275\u0275elementStart(4, "span", 26);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd()();
   }
@@ -2203,7 +2258,7 @@ function LogCenterComponent_Conditional_13_ng_template_2_Conditional_17_Template
 }
 function LogCenterComponent_Conditional_13_ng_template_2_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 26)(1, "details")(2, "summary");
+    \u0275\u0275elementStart(0, "div", 23)(1, "details")(2, "summary");
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "translate");
     \u0275\u0275elementEnd();
@@ -2222,26 +2277,26 @@ function LogCenterComponent_Conditional_13_ng_template_2_Conditional_18_Template
 }
 function LogCenterComponent_Conditional_13_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 16)(1, "div", 17)(2, "div", 18)(3, "span", 19);
+    \u0275\u0275elementStart(0, "div", 13)(1, "div", 14)(2, "div", 15)(3, "span", 16);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "div", 20)(6, "span", 21);
+    \u0275\u0275elementStart(5, "div", 17)(6, "span", 18);
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "date");
     \u0275\u0275elementEnd();
-    \u0275\u0275conditionalCreate(11, LogCenterComponent_Conditional_13_ng_template_2_Conditional_11_Template, 5, 4, "div", 22);
+    \u0275\u0275conditionalCreate(11, LogCenterComponent_Conditional_13_ng_template_2_Conditional_11_Template, 5, 4, "div", 19);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(12, "div", 23)(13, "span", 24);
+    \u0275\u0275elementStart(12, "div", 20)(13, "span", 21);
     \u0275\u0275text(14);
     \u0275\u0275pipe(15, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(16);
     \u0275\u0275elementEnd();
-    \u0275\u0275conditionalCreate(17, LogCenterComponent_Conditional_13_ng_template_2_Conditional_17_Template, 6, 4, "div", 25);
-    \u0275\u0275conditionalCreate(18, LogCenterComponent_Conditional_13_ng_template_2_Conditional_18_Template, 7, 4, "div", 26);
+    \u0275\u0275conditionalCreate(17, LogCenterComponent_Conditional_13_ng_template_2_Conditional_17_Template, 6, 4, "div", 22);
+    \u0275\u0275conditionalCreate(18, LogCenterComponent_Conditional_13_ng_template_2_Conditional_18_Template, 7, 4, "div", 23);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -2268,8 +2323,8 @@ function LogCenterComponent_Conditional_13_ng_template_2_Template(rf, ctx) {
 }
 function LogCenterComponent_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-grouping-tails", 8);
-    \u0275\u0275template(1, LogCenterComponent_Conditional_13_ng_template_1_Template, 3, 4, "ng-template", 13)(2, LogCenterComponent_Conditional_13_ng_template_2_Template, 19, 17, "ng-template", 14);
+    \u0275\u0275elementStart(0, "lg-grouping-tiles", 8);
+    \u0275\u0275template(1, LogCenterComponent_Conditional_13_ng_template_1_Template, 3, 4, "ng-template", 10)(2, LogCenterComponent_Conditional_13_ng_template_2_Template, 19, 17, "ng-template", 11);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -2279,18 +2334,21 @@ function LogCenterComponent_Conditional_13_Template(rf, ctx) {
 }
 function LogCenterComponent_ng_template_15_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 30);
-    \u0275\u0275text(1);
-    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(0, "lg-flex-column", 27)(1, "span");
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "translate");
     \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "b");
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const label_r6 = ctx.label;
-    const type_r7 = ctx.type;
-    const value_r8 = ctx.value;
-    \u0275\u0275classMap("log-center__stat--" + type_r7);
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(2, 4, label_r6), ": ", value_r8, " ");
+    const value_r7 = ctx.value;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 2, label_r6));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(value_r7);
   }
 }
 var LogCenterComponent = class _LogCenterComponent {
@@ -2316,11 +2374,12 @@ var LogCenterComponent = class _LogCenterComponent {
     this.paginationService.setItemsPerPage(10);
     this.updatePaginatedAndGroupedLogs();
   }
-  updatePaginatedAndGroupedLogs() {
+  async updatePaginatedAndGroupedLogs() {
+    debugger;
     const paginatedLogs = this.paginationService.paginatedItems();
     this.paginatedLogs.set(paginatedLogs);
     const groupingStrategy = new LogsByMinuteGroupingStrategy();
-    const grouped = this._groupSortService.groupItems(
+    const grouped = await this._groupSortService.groupItems(
       paginatedLogs,
       groupingStrategy,
       "desc",
@@ -2351,10 +2410,10 @@ var LogCenterComponent = class _LogCenterComponent {
   static \u0275fac = function LogCenterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _LogCenterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LogCenterComponent, selectors: [["lg-log-center"]], decls: 17, vars: 21, consts: [["statItemTemplate", ""], [1, "log-center"], [1, "log-center__actions"], [1, "log-center__clear-btn", 3, "click", "disabled"], ["size", "medium", 3, "mobileMode", "wrap"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "log-center__logs"], [1, "log-center__empty"], [3, "sortResult", "selectable"], [3, "pageChange", "config"], [1, "log-center__empty-icon"], [1, "log-center__empty-title"], [1, "log-center__empty-subtitle"], ["lgGroupingHeader", ""], ["lgGroupingTail", ""], [3, "level"], [1, "log-entry"], [1, "log-entry__header"], [1, "log-entry__level"], [1, "log-entry__level-badge"], [1, "log-entry__time"], [1, "log-entry__time-label"], [1, "log-entry__source"], [1, "log-entry__message"], [1, "log-entry__message-label"], [1, "log-entry__url"], [1, "log-entry__data"], [1, "log-entry__source-label"], [1, "log-entry__url-label"], [1, "log-entry__url-value"], [1, "log-center__stat"]], template: function LogCenterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LogCenterComponent, selectors: [["lg-log-center"]], decls: 17, vars: 20, consts: [["statItemTemplate", ""], [1, "log-center"], ["size", "medium"], ["size", "small", 3, "click", "disabled"], ["size", "medium", 3, "mobileMode"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "log-center__logs"], ["position", "center", "size", "medium"], [3, "sortResult", "selectable"], [3, "pageChange", "config"], ["lgGroupingHeader", ""], ["lgGroupingTile", ""], [3, "level"], [1, "log-entry"], [1, "log-entry__header"], [1, "log-entry__level"], [1, "log-entry__level-badge"], [1, "log-entry__time"], [1, "log-entry__time-label"], [1, "log-entry__source"], [1, "log-entry__message"], [1, "log-entry__message-label"], [1, "log-entry__url"], [1, "log-entry__data"], [1, "log-entry__source-label"], [1, "log-entry__url-label"], [1, "log-entry__url-value"], ["size", "tiny"]], template: function LogCenterComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
-      \u0275\u0275elementStart(0, "div", 1)(1, "lg-flex-column")(2, "div", 2)(3, "lg-button", 3);
+      \u0275\u0275elementStart(0, "div", 1)(1, "lg-flex-column")(2, "lg-flex-row", 2)(3, "lg-button", 3);
       \u0275\u0275listener("click", function LogCenterComponent_Template_lg_button_click_3_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.clearLogs());
@@ -2367,7 +2426,7 @@ var LogCenterComponent = class _LogCenterComponent {
       \u0275\u0275conditionalCreate(10, LogCenterComponent_Conditional_10_Template, 1, 4, "ng-container");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(11, "div", 6);
-      \u0275\u0275conditionalCreate(12, LogCenterComponent_Conditional_12_Template, 9, 6, "div", 7)(13, LogCenterComponent_Conditional_13_Template, 3, 2, "lg-grouping-tails", 8);
+      \u0275\u0275conditionalCreate(12, LogCenterComponent_Conditional_12_Template, 4, 3, "lg-flex-column", 7)(13, LogCenterComponent_Conditional_13_Template, 3, 2, "lg-grouping-tiles", 8);
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(14, "lg-pagination", 9);
       \u0275\u0275listener("pageChange", function LogCenterComponent_Template_lg_pagination_pageChange_14_listener($event) {
@@ -2375,27 +2434,27 @@ var LogCenterComponent = class _LogCenterComponent {
         return \u0275\u0275resetView(ctx.onPageChange($event));
       });
       \u0275\u0275elementEnd()()();
-      \u0275\u0275template(15, LogCenterComponent_ng_template_15_Template, 3, 6, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+      \u0275\u0275template(15, LogCenterComponent_ng_template_15_Template, 6, 4, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
     }
     if (rf & 2) {
-      let tmp_12_0;
+      let tmp_11_0;
       const statItemTemplate_r3 = \u0275\u0275reference(16);
       \u0275\u0275advance(3);
       \u0275\u0275property("disabled", ctx.stats().total === 0);
       \u0275\u0275advance();
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 13, "log-center.clear-all"), " ");
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 12, "log-center.clear-all"), " ");
       \u0275\u0275advance(2);
-      \u0275\u0275property("mobileMode", true)("wrap", true);
+      \u0275\u0275property("mobileMode", true);
       \u0275\u0275advance();
-      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(15, _c03, ctx.stats().total));
+      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(14, _c03, ctx.stats().total));
       \u0275\u0275advance();
-      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(17, _c12, ctx.stats().byLevel.error));
+      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(16, _c12, ctx.stats().byLevel.error));
       \u0275\u0275advance();
-      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(19, _c22, ctx.stats().byLevel.warning));
+      \u0275\u0275property("ngTemplateOutlet", statItemTemplate_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(18, _c22, ctx.stats().byLevel.warning));
       \u0275\u0275advance();
       \u0275\u0275conditional(ctx.paginationService.totalPages() > 1 ? 10 : -1);
       \u0275\u0275advance(2);
-      \u0275\u0275conditional(((tmp_12_0 = ctx.groupedLogs()) == null ? null : tmp_12_0.groups == null ? null : tmp_12_0.groups.length) === 0 ? 12 : 13);
+      \u0275\u0275conditional(((tmp_11_0 = ctx.groupedLogs()) == null ? null : tmp_11_0.groups == null ? null : tmp_11_0.groups.length) === 0 ? 12 : 13);
       \u0275\u0275advance(2);
       \u0275\u0275property("config", ctx.paginationService.config());
     }
@@ -2405,15 +2464,15 @@ var LogCenterComponent = class _LogCenterComponent {
     DatePipe,
     ButtonComponent,
     TranslatePipe,
-    GroupingTailsComponent,
-    GroupingTailDirective,
+    GroupingTilesComponent,
+    GroupingTileDirective,
     GroupingHeaderDirective,
     TitleComponent,
     PaginationComponent,
     TimeAgoPipe,
     FlexColumnComponent,
     FlexRowComponent
-  ], styles: ["\n\n.log-center[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: var(--spacing-md);\n  overflow: hidden;\n}\n.log-center__header[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: var(--spacing-md);\n}\n.log-center__stat[_ngcontent-%COMP%] {\n  font-size: var(--font-size-sm);\n}\n.log-center__stat--error[_ngcontent-%COMP%] {\n  color: var(--color-error);\n  font-weight: bold;\n}\n.log-center__stat--warning[_ngcontent-%COMP%] {\n  color: var(--color-warning);\n  font-weight: bold;\n}\n.log-center__stat--info[_ngcontent-%COMP%] {\n  color: var(--color-info);\n  font-weight: bold;\n}\n.log-center__actions[_ngcontent-%COMP%] {\n  margin-top: var(--spacing-md);\n  padding-top: var(--spacing-md);\n  border-top: 1px solid var(--color-border);\n}\n.log-center__clear-btn[_ngcontent-%COMP%] {\n  background: var(--color-error);\n  color: white;\n}\n.log-center__clear-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  background: var(--color-error-dark);\n}\n.log-center__logs[_ngcontent-%COMP%] {\n  overflow-y: auto;\n}\n.log-center__empty[_ngcontent-%COMP%] {\n  text-align: center;\n  padding: var(--spacing-xl);\n  color: var(--color-text-muted);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: var(--spacing-md);\n}\n.log-center__empty-icon[_ngcontent-%COMP%] {\n  font-size: 3rem;\n  opacity: 0.5;\n}\n.log-center__empty-title[_ngcontent-%COMP%] {\n  font-size: var(--font-size-lg);\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-center__empty-subtitle[_ngcontent-%COMP%] {\n  font-size: var(--font-size-sm);\n  color: var(--color-text-muted);\n  opacity: 0.8;\n}\n.log-entry[_ngcontent-%COMP%] {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius);\n  padding: var(--spacing-md);\n  background: var(--color-background);\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry--error[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-error);\n}\n.log-entry--warning[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-warning);\n}\n.log-entry--info[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-info);\n}\n.log-entry--success[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-success);\n}\n.log-entry__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-md);\n  margin-bottom: var(--spacing-sm);\n  flex-wrap: wrap;\n}\n.log-entry__level[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n}\n.log-entry__level-badge[_ngcontent-%COMP%] {\n  padding: var(--spacing-xs) var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  font-size: var(--font-size-xs);\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.log-entry--error[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-error);\n  color: white;\n}\n.log-entry--warning[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-warning);\n  color: white;\n}\n.log-entry--info[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-info);\n  color: white;\n}\n.log-entry--success[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-success);\n  color: white;\n}\n.log-entry__time[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__time-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__source[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  font-style: italic;\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__source-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__message[_ngcontent-%COMP%] {\n  margin-bottom: var(--spacing-sm);\n  word-break: break-word;\n  display: flex;\n  align-items: flex-start;\n  gap: var(--spacing-xs);\n}\n.log-entry__message-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n  flex-shrink: 0;\n  margin-top: 2px;\n}\n.log-entry__url[_ngcontent-%COMP%] {\n  margin-bottom: var(--spacing-sm);\n  font-size: var(--font-size-sm);\n}\n.log-entry__url-label[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  margin-right: var(--spacing-xs);\n}\n.log-entry__url-value[_ngcontent-%COMP%] {\n  color: var(--color-primary);\n  word-break: break-all;\n}\n.log-entry__data[_ngcontent-%COMP%] {\n  margin-top: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   details[_ngcontent-%COMP%] {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius-sm);\n  padding: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   summary[_ngcontent-%COMP%] {\n  cursor: pointer;\n  color: var(--color-primary);\n  font-weight: bold;\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%] {\n  background: var(--color-background-secondary);\n  padding: var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  overflow-x: auto;\n  font-size: var(--font-size-sm);\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n@media (max-width: 768px) {\n  .log-center__header[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n  .log-center__stats[_ngcontent-%COMP%] {\n    gap: var(--spacing-md);\n  }\n  .log-entry__header[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: var(--spacing-sm);\n  }\n}\n/*# sourceMappingURL=log-center.component.css.map */"] });
+  ], styles: ["\n\n.log-center[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: var(--spacing-md);\n  overflow: hidden;\n}\n.log-center__header[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: var(--spacing-md);\n}\n.log-center__stat[_ngcontent-%COMP%] {\n  font-size: var(--font-size-sm);\n}\n.log-center__stat--error[_ngcontent-%COMP%] {\n  color: var(--color-error);\n  font-weight: bold;\n}\n.log-center__stat--warning[_ngcontent-%COMP%] {\n  color: var(--color-warning);\n  font-weight: bold;\n}\n.log-center__stat--info[_ngcontent-%COMP%] {\n  color: var(--color-info);\n  font-weight: bold;\n}\n.log-center__actions[_ngcontent-%COMP%] {\n  margin-top: var(--spacing-md);\n  padding-top: var(--spacing-md);\n  border-top: 1px solid var(--color-border);\n}\n.log-center__logs[_ngcontent-%COMP%] {\n  overflow-y: auto;\n}\n.log-center__empty[_ngcontent-%COMP%] {\n  text-align: center;\n  padding: var(--spacing-xl);\n  color: var(--color-text-muted);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: var(--spacing-md);\n}\n.log-center__empty-icon[_ngcontent-%COMP%] {\n  font-size: 3rem;\n  opacity: 0.5;\n}\n.log-center__empty-title[_ngcontent-%COMP%] {\n  font-size: var(--font-size-lg);\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-center__empty-subtitle[_ngcontent-%COMP%] {\n  font-size: var(--font-size-sm);\n  color: var(--color-text-muted);\n  opacity: 0.8;\n}\n.log-entry[_ngcontent-%COMP%] {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius);\n  padding: var(--spacing-md);\n  background: var(--color-background);\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry--error[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-error);\n}\n.log-entry--warning[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-warning);\n}\n.log-entry--info[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-info);\n}\n.log-entry--success[_ngcontent-%COMP%] {\n  border-left: 4px solid var(--color-success);\n}\n.log-entry__header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-md);\n  margin-bottom: var(--spacing-sm);\n  flex-wrap: wrap;\n}\n.log-entry__level[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n}\n.log-entry__level-badge[_ngcontent-%COMP%] {\n  padding: var(--spacing-xs) var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  font-size: var(--font-size-xs);\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.log-entry--error[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-error, #ff4d4d);\n  color: white;\n}\n.log-entry--warning[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-warning, #ffcc00);\n  color: white;\n}\n.log-entry--info[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-info, #007bff);\n  color: white;\n}\n.log-entry--success[_ngcontent-%COMP%]   .log-entry__level-badge[_ngcontent-%COMP%] {\n  background: var(--color-success, #28a745);\n  color: white;\n}\n.log-entry__time[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__time-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__source[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  font-style: italic;\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__source-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__message[_ngcontent-%COMP%] {\n  margin-bottom: var(--spacing-sm);\n  word-break: break-word;\n  display: flex;\n  align-items: flex-start;\n  gap: var(--spacing-xs);\n}\n.log-entry__message-label[_ngcontent-%COMP%] {\n  font-weight: bold;\n  color: var(--color-text-muted);\n  flex-shrink: 0;\n  margin-top: 2px;\n}\n.log-entry__url[_ngcontent-%COMP%] {\n  margin-bottom: var(--spacing-sm);\n  font-size: var(--font-size-sm);\n}\n.log-entry__url-label[_ngcontent-%COMP%] {\n  color: var(--color-text-muted);\n  margin-right: var(--spacing-xs);\n}\n.log-entry__url-value[_ngcontent-%COMP%] {\n  color: var(--color-primary);\n  word-break: break-all;\n}\n.log-entry__data[_ngcontent-%COMP%] {\n  margin-top: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   details[_ngcontent-%COMP%] {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius-sm);\n  padding: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   summary[_ngcontent-%COMP%] {\n  cursor: pointer;\n  color: var(--color-primary);\n  font-weight: bold;\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry__data[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%] {\n  background: var(--color-background-secondary);\n  padding: var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  overflow-x: auto;\n  font-size: var(--font-size-sm);\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n@media (max-width: 768px) {\n  .log-center__header[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n  .log-center__stats[_ngcontent-%COMP%] {\n    gap: var(--spacing-md);\n  }\n  .log-entry__header[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: var(--spacing-sm);\n  }\n}\n/*# sourceMappingURL=log-center.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LogCenterComponent, [{
@@ -2421,29 +2480,29 @@ var LogCenterComponent = class _LogCenterComponent {
     args: [{ selector: "lg-log-center", standalone: true, imports: [
       CommonModule,
       ButtonComponent,
-      CardComponent,
       TranslatePipe,
-      GroupingTailsComponent,
-      GroupingTailDirective,
+      GroupingTilesComponent,
+      GroupingTileDirective,
       GroupingHeaderDirective,
       TitleComponent,
       PaginationComponent,
       TimeAgoPipe,
       FlexColumnComponent,
-      FlexRowComponent
+      FlexRowComponent,
+      SelfEndDirective
     ], template: `
     <div class="log-center">
       <lg-flex-column>
-        <div class="log-center__actions">
+        <lg-flex-row size="medium">
           <lg-button
             (click)="clearLogs()"
             [disabled]="stats().total === 0"
-            class="log-center__clear-btn">
+            size="small">
             {{ 'log-center.clear-all' | translate }}
           </lg-button>
-        </div>
+        </lg-flex-row>
 
-        <lg-flex-row [mobileMode]="true" [wrap]="true" size="medium">
+        <lg-flex-row [mobileMode]="true" size="medium">
           <ng-container *ngTemplateOutlet="statItemTemplate; context: {
           label: 'log-center.total',
           value: stats().total,
@@ -2470,20 +2529,19 @@ var LogCenterComponent = class _LogCenterComponent {
 
         <div class="log-center__logs">
           @if (groupedLogs()?.groups?.length === 0) {
-            <div class="log-center__empty">
-              <div class="log-center__empty-icon">\u{1F4CB}</div>
-              <div class="log-center__empty-title">{{ 'log-center.no-logs' | translate }}</div>
-              <div class="log-center__empty-subtitle">{{ 'log-center.no-logs-subtitle' | translate }}</div>
-            </div>
+            <lg-flex-column position="center"
+                            size="medium">
+              <span> {{ 'log-center.no-logs-subtitle' | translate }}</span>
+            </lg-flex-column>
           } @else {
-            <lg-grouping-tails [sortResult]="groupedLogs()" [selectable]="false">
+            <lg-grouping-tiles [sortResult]="groupedLogs()" [selectable]="false">
               <ng-template lgGroupingHeader let-field>
                 <lg-title [level]="3">
                   {{ field|timeAgo }}
                 </lg-title>
               </ng-template>
 
-              <ng-template lgGroupingTail let-log>
+              <ng-template lgGroupingTile let-log>
                 <div class="log-entry" [class]="'log-entry--' + log.level">
                   <div class="log-entry__header">
                     <div class="log-entry__level">
@@ -2520,7 +2578,7 @@ var LogCenterComponent = class _LogCenterComponent {
                   }
                 </div>
               </ng-template>
-            </lg-grouping-tails>
+            </lg-grouping-tiles>
           }
         </div>
 
@@ -2532,15 +2590,16 @@ var LogCenterComponent = class _LogCenterComponent {
     </div>
     <!-- Stat Item Template -->
     <ng-template #statItemTemplate let-label="label" let-type="type" let-value="value">
-      <span [class]="'log-center__stat--' + type" class="log-center__stat">
-        {{ label | translate }}: {{ value }}
-      </span>
+      <lg-flex-column size="tiny">
+        <span>{{ label | translate }}</span>
+        <b>{{ value }}</b>
+      </lg-flex-column>
     </ng-template>
-  `, styles: ["/* angular:styles/component:scss;435b86feeec95733009b730f9ffe429e7d1863dbdcbadde0df2b701b4520b843;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/settings/view/log-center/log-center.component.ts */\n.log-center {\n  display: flex;\n  flex-direction: column;\n  gap: var(--spacing-md);\n  overflow: hidden;\n}\n.log-center__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: var(--spacing-md);\n}\n.log-center__stat {\n  font-size: var(--font-size-sm);\n}\n.log-center__stat--error {\n  color: var(--color-error);\n  font-weight: bold;\n}\n.log-center__stat--warning {\n  color: var(--color-warning);\n  font-weight: bold;\n}\n.log-center__stat--info {\n  color: var(--color-info);\n  font-weight: bold;\n}\n.log-center__actions {\n  margin-top: var(--spacing-md);\n  padding-top: var(--spacing-md);\n  border-top: 1px solid var(--color-border);\n}\n.log-center__clear-btn {\n  background: var(--color-error);\n  color: white;\n}\n.log-center__clear-btn:hover:not(:disabled) {\n  background: var(--color-error-dark);\n}\n.log-center__logs {\n  overflow-y: auto;\n}\n.log-center__empty {\n  text-align: center;\n  padding: var(--spacing-xl);\n  color: var(--color-text-muted);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: var(--spacing-md);\n}\n.log-center__empty-icon {\n  font-size: 3rem;\n  opacity: 0.5;\n}\n.log-center__empty-title {\n  font-size: var(--font-size-lg);\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-center__empty-subtitle {\n  font-size: var(--font-size-sm);\n  color: var(--color-text-muted);\n  opacity: 0.8;\n}\n.log-entry {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius);\n  padding: var(--spacing-md);\n  background: var(--color-background);\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry--error {\n  border-left: 4px solid var(--color-error);\n}\n.log-entry--warning {\n  border-left: 4px solid var(--color-warning);\n}\n.log-entry--info {\n  border-left: 4px solid var(--color-info);\n}\n.log-entry--success {\n  border-left: 4px solid var(--color-success);\n}\n.log-entry__header {\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-md);\n  margin-bottom: var(--spacing-sm);\n  flex-wrap: wrap;\n}\n.log-entry__level {\n  flex-shrink: 0;\n}\n.log-entry__level-badge {\n  padding: var(--spacing-xs) var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  font-size: var(--font-size-xs);\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.log-entry--error .log-entry__level-badge {\n  background: var(--color-error);\n  color: white;\n}\n.log-entry--warning .log-entry__level-badge {\n  background: var(--color-warning);\n  color: white;\n}\n.log-entry--info .log-entry__level-badge {\n  background: var(--color-info);\n  color: white;\n}\n.log-entry--success .log-entry__level-badge {\n  background: var(--color-success);\n  color: white;\n}\n.log-entry__time {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__time-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__source {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  font-style: italic;\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__source-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__message {\n  margin-bottom: var(--spacing-sm);\n  word-break: break-word;\n  display: flex;\n  align-items: flex-start;\n  gap: var(--spacing-xs);\n}\n.log-entry__message-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n  flex-shrink: 0;\n  margin-top: 2px;\n}\n.log-entry__url {\n  margin-bottom: var(--spacing-sm);\n  font-size: var(--font-size-sm);\n}\n.log-entry__url-label {\n  color: var(--color-text-muted);\n  margin-right: var(--spacing-xs);\n}\n.log-entry__url-value {\n  color: var(--color-primary);\n  word-break: break-all;\n}\n.log-entry__data {\n  margin-top: var(--spacing-sm);\n}\n.log-entry__data details {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius-sm);\n  padding: var(--spacing-sm);\n}\n.log-entry__data summary {\n  cursor: pointer;\n  color: var(--color-primary);\n  font-weight: bold;\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry__data pre {\n  background: var(--color-background-secondary);\n  padding: var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  overflow-x: auto;\n  font-size: var(--font-size-sm);\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n@media (max-width: 768px) {\n  .log-center__header {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n  .log-center__stats {\n    gap: var(--spacing-md);\n  }\n  .log-entry__header {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: var(--spacing-sm);\n  }\n}\n/*# sourceMappingURL=log-center.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;6c7832472bd2a1d240b02c4afcd1de1951a29f430ee70f840d61076a2fe8818d;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/settings/view/log-center/log-center.component.ts */\n.log-center {\n  display: flex;\n  flex-direction: column;\n  gap: var(--spacing-md);\n  overflow: hidden;\n}\n.log-center__header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n  gap: var(--spacing-md);\n}\n.log-center__stat {\n  font-size: var(--font-size-sm);\n}\n.log-center__stat--error {\n  color: var(--color-error);\n  font-weight: bold;\n}\n.log-center__stat--warning {\n  color: var(--color-warning);\n  font-weight: bold;\n}\n.log-center__stat--info {\n  color: var(--color-info);\n  font-weight: bold;\n}\n.log-center__actions {\n  margin-top: var(--spacing-md);\n  padding-top: var(--spacing-md);\n  border-top: 1px solid var(--color-border);\n}\n.log-center__logs {\n  overflow-y: auto;\n}\n.log-center__empty {\n  text-align: center;\n  padding: var(--spacing-xl);\n  color: var(--color-text-muted);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: var(--spacing-md);\n}\n.log-center__empty-icon {\n  font-size: 3rem;\n  opacity: 0.5;\n}\n.log-center__empty-title {\n  font-size: var(--font-size-lg);\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-center__empty-subtitle {\n  font-size: var(--font-size-sm);\n  color: var(--color-text-muted);\n  opacity: 0.8;\n}\n.log-entry {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius);\n  padding: var(--spacing-md);\n  background: var(--color-background);\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry--error {\n  border-left: 4px solid var(--color-error);\n}\n.log-entry--warning {\n  border-left: 4px solid var(--color-warning);\n}\n.log-entry--info {\n  border-left: 4px solid var(--color-info);\n}\n.log-entry--success {\n  border-left: 4px solid var(--color-success);\n}\n.log-entry__header {\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-md);\n  margin-bottom: var(--spacing-sm);\n  flex-wrap: wrap;\n}\n.log-entry__level {\n  flex-shrink: 0;\n}\n.log-entry__level-badge {\n  padding: var(--spacing-xs) var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  font-size: var(--font-size-xs);\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.log-entry--error .log-entry__level-badge {\n  background: var(--color-error, #ff4d4d);\n  color: white;\n}\n.log-entry--warning .log-entry__level-badge {\n  background: var(--color-warning, #ffcc00);\n  color: white;\n}\n.log-entry--info .log-entry__level-badge {\n  background: var(--color-info, #007bff);\n  color: white;\n}\n.log-entry--success .log-entry__level-badge {\n  background: var(--color-success, #28a745);\n  color: white;\n}\n.log-entry__time {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__time-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__source {\n  color: var(--color-text-muted);\n  font-size: var(--font-size-sm);\n  font-style: italic;\n  display: flex;\n  align-items: center;\n  gap: var(--spacing-xs);\n}\n.log-entry__source-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n}\n.log-entry__message {\n  margin-bottom: var(--spacing-sm);\n  word-break: break-word;\n  display: flex;\n  align-items: flex-start;\n  gap: var(--spacing-xs);\n}\n.log-entry__message-label {\n  font-weight: bold;\n  color: var(--color-text-muted);\n  flex-shrink: 0;\n  margin-top: 2px;\n}\n.log-entry__url {\n  margin-bottom: var(--spacing-sm);\n  font-size: var(--font-size-sm);\n}\n.log-entry__url-label {\n  color: var(--color-text-muted);\n  margin-right: var(--spacing-xs);\n}\n.log-entry__url-value {\n  color: var(--color-primary);\n  word-break: break-all;\n}\n.log-entry__data {\n  margin-top: var(--spacing-sm);\n}\n.log-entry__data details {\n  border: 1px solid var(--color-border);\n  border-radius: var(--border-radius-sm);\n  padding: var(--spacing-sm);\n}\n.log-entry__data summary {\n  cursor: pointer;\n  color: var(--color-primary);\n  font-weight: bold;\n  margin-bottom: var(--spacing-sm);\n}\n.log-entry__data pre {\n  background: var(--color-background-secondary);\n  padding: var(--spacing-sm);\n  border-radius: var(--border-radius-sm);\n  overflow-x: auto;\n  font-size: var(--font-size-sm);\n  white-space: pre-wrap;\n  word-break: break-word;\n}\n@media (max-width: 768px) {\n  .log-center__header {\n    flex-direction: column;\n    align-items: flex-start;\n  }\n  .log-center__stats {\n    gap: var(--spacing-md);\n  }\n  .log-entry__header {\n    flex-direction: column;\n    align-items: flex-start;\n    gap: var(--spacing-sm);\n  }\n}\n/*# sourceMappingURL=log-center.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LogCenterComponent, { className: "LogCenterComponent", filePath: "src/app/features/settings/view/log-center/log-center.component.ts", lineNumber: 392 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LogCenterComponent, { className: "LogCenterComponent", filePath: "src/app/features/settings/view/log-center/log-center.component.ts", lineNumber: 382 });
 })();
 
 // src/app/features/settings/view/log-center/log-center-page.component.ts
@@ -2766,4 +2825,4 @@ var SettingsComponent = class _SettingsComponent {
 export {
   SettingsComponent
 };
-//# sourceMappingURL=chunk-6Q2V24JL.js.map
+//# sourceMappingURL=chunk-JOVDKRJJ.js.map
