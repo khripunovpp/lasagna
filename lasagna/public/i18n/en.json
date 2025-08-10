@@ -432,5 +432,19 @@
     "product.edited": "Changes saved",
     "invoice.added": "Invoice created!",
     "invoice.edited": "Changes saved!",
-    "drafts.deleted": "Drafts deleted"
+    "drafts.deleted": "Drafts deleted",
+    "satisfaction.back-button": "Back",
+    "satisfaction.submit-button": "Send",
+    "satisfaction.submitting": "Sending...",
+    "satisfaction.thank-you.title": "Thank you!",
+    "satisfaction.thank-you.description": "Your feedback is very important to us",
+    "satisfaction.feedback-form.title": "What can we improve?",
+    "satisfaction.feedback-form.description": "Tell us what bothers you (up to 300 characters)",
+    "satisfaction.feedback-form.placeholder": "Your feedback...",
+    "satisfaction.rating.title": "How do you like our service?",
+    "satisfaction.rating.description": "Help us get better — share your opinion",
+    "satisfaction.rating.positive-button": "Satisfied",
+    "satisfaction.rating.negative-button": "Not satisfied",
+    "satisfaction.notifications.success": "Thank you for your feedback!",
+    "satisfaction.notifications.error": "Could not send feedback. Please try again later."
 }

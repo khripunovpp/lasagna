@@ -432,5 +432,19 @@
     "product.edited": "Alterações salvas!",
     "invoice.added": "Fatura criada!",
     "invoice.edited": "Alterações salvas!",
-    "drafts.deleted": "Rascunhos removidos"
+    "drafts.deleted": "Rascunhos removidos",
+    "satisfaction.back-button": "Voltar",
+    "satisfaction.submit-button": "Enviar",
+    "satisfaction.submitting": "Enviando...",
+    "satisfaction.thank-you.title": "Obrigado!",
+    "satisfaction.thank-you.description": "Seu feedback é muito importante para nós",
+    "satisfaction.feedback-form.title": "O que podemos melhorar?",
+    "satisfaction.feedback-form.description": "Descreva o que incomoda você (até 300 caracteres)",
+    "satisfaction.feedback-form.placeholder": "Seu feedback...",
+    "satisfaction.rating.title": "Como você avalia nosso serviço?",
+    "satisfaction.rating.description": "Ajude-nos a melhorar — compartilhe sua opinião",
+    "satisfaction.rating.positive-button": "Satisfeito",
+    "satisfaction.rating.negative-button": "Não satisfeito",
+    "satisfaction.notifications.success": "Obrigado pelo seu feedback!",
+    "satisfaction.notifications.error": "Não foi possível enviar o feedback. Tente novamente mais tarde."
 }

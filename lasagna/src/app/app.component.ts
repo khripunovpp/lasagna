@@ -10,6 +10,7 @@ import {FooterComponent} from './shared/view/ui/layout/footer.component';
 import {HeaderComponent} from './shared/view/ui/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
 import {StorageQuotaWarningComponent} from './shared/view/ui/storage-quota-warning.component';
+import {SatisfactionPopupComponent} from './shared/view/ui/satisfaction-popup.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,8 @@ import {StorageQuotaWarningComponent} from './shared/view/ui/storage-quota-warni
     FooterComponent,
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
+    SatisfactionPopupComponent,
+
   ],
   templateUrl: './app.component.html',
   standalone: true,
@@ -35,10 +38,9 @@ export class AppComponent
   constructor() {
   }
 
-  demoService = inject(DemoService);
+  private readonly demoService = inject(DemoService);
 
   async ngOnInit() {
     await this.demoService.loadDemoData();
-    console.log('AppComponent rendered');
   }
 }
