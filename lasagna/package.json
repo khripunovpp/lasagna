@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --no-hmr",
+    "start": "ng serve --no-hmr --configuration local",
     "start-prod": "ng serve --no-hmr --configuration production",
     "start-host": "ng serve --no-hmr --host 192.168.1.163 --port 4200 --disable-host-check",
     "prebuild": "node scripts/generate-ver.js",
@@ -11,7 +11,7 @@
     "build-vercel": "npm run config && ng build --configuration production",
     "config": "node scripts/set-env.js",
     "cleanup": "ng generate @angular/core:cleanup-unused-imports",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration local",
     "test": "ng test",
     "po:import:ru": "i18next-conv -l ru -s public/i18n/ru.json -t public/i18n/ru.po",
     "po:import:pt": "i18next-conv -l pt -s public/i18n/pt.json -t public/i18n/pt.po",
