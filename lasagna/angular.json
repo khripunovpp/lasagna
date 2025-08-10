@@ -75,6 +75,21 @@
                 "input": "src/index.dev.html",
                 "output": "index.html"
               }
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.dev.html",
+                "output": "index.html"
+              }
             }
           },
           "defaultConfiguration": "production"
@@ -87,6 +102,9 @@
             },
             "development": {
               "buildTarget": "lasagna:build:development"
+            },
+            "local": {
+              "buildTarget": "lasagna:build:local"
             }
           },
           "defaultConfiguration": "development"
