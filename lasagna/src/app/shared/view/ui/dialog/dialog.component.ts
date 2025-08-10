@@ -130,11 +130,12 @@ export class DialogComponent {
   closeButton = input(true);
   cancelButtonText = input('Cancel');
   confirmButtonText = input('Confirm');
+  closeOnConfirm = input(true);
   displayFooter = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
   readonly #_bodyLocker = inject(BODY_LOCKER);
-  displayedEffect= effect(() => {
+  displayedEffect = effect(() => {
     if (this.displayed()) {
       this.#_bodyLocker.lock();
     } else {
@@ -154,6 +155,7 @@ export class DialogComponent {
 
   onConfirmClick() {
     this.onConfirm.emit();
+    if (!this.closeOnConfirm()) return;
     this.close();
   }
 

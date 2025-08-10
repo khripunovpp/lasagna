@@ -1,6 +1,5 @@
 import {Component, inject} from '@angular/core';
 import {ContainerComponent} from '../ui/layout/container/container.component';
-
 import {CardComponent} from '../ui/card/card.component';
 import {TitleComponent} from '../ui/layout/title/title.component';
 import {FadeInComponent} from '../ui/fade-in.component';
@@ -10,11 +9,8 @@ import {FlexRowComponent} from '../ui/layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ProductsRepository, RecipesRepository} from '../../service/repositories';
 import {AsyncPipe} from '@angular/common';
-import {ButtonComponent} from '../ui/layout/button.component';
-import {FontTesterComponent} from '../ui/font-tester.component';
 import {OnboardingComponent} from '../../../features/onboarding/onboarding.component';
 import {OnboardingService} from '../../../features/onboarding/onboarding.service';
-import {WidthDirective} from '../directives/width.directive';
 
 
 @Component({
@@ -32,18 +28,14 @@ import {WidthDirective} from '../directives/width.directive';
     FlexRowComponent,
     TranslatePipe,
     AsyncPipe,
-    ButtonComponent,
-    OnboardingComponent,
-    WidthDirective
+    OnboardingComponent
   ]
 })
 export class ApplicationComponent {
   title = 'lasagna';
-
-  private _onboardingService = inject(OnboardingService);
   recipes = inject(RecipesRepository).length;
   products = inject(ProductsRepository).length;
-
+  private _onboardingService = inject(OnboardingService);
   // Используем сигнал из сервиса напрямую
   isOnboardingComplete = this._onboardingService.isOnboardingComplete;
 }

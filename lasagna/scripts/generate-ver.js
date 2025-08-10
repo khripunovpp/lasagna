@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/ver node
 
 const fs = require('fs');
 const path = require('path');
@@ -14,10 +14,10 @@ function generateVersion() {
 }
 
 function writeEnvJson(targetDir, version) {
-  const envPath = path.join(targetDir, 'env.json');
+  const verPath = path.join(targetDir, 'ver.json');
   const data = JSON.stringify({ version }, null, 2);
-  fs.writeFileSync(envPath, data, 'utf8');
-  return envPath;
+  fs.writeFileSync(verPath, data, 'utf8');
+  return verPath;
 }
 
 function main() {
@@ -29,7 +29,7 @@ function main() {
   }
   const version = generateVersion();
   const output = writeEnvJson(publicDir, version);
-  console.log(`env.json written at ${output} with version ${version}`);
+  console.log(`ver.json written at ${output} with version ${version}`);
 }
 
 if (require.main === module) {

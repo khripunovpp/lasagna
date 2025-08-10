@@ -432,5 +432,19 @@
     "product.edited": "Изменения сохранены!",
     "invoice.added": "Счёт создан!",
     "invoice.edited": "Изменения сохранены!",
-    "drafts.deleted": "Черновики удалены!"
+ё    "drafts.deleted": "Черновики удалены!",
+    "satisfaction.back-button": "Назад",
+    "satisfaction.submit-button": "Отправить",
+    "satisfaction.submitting": "Отправляем...",
+    "satisfaction.thank-you.title": "Спасибо!",
+    "satisfaction.thank-you.description": "Ваш отзыв очень важен для нас",
+    "satisfaction.feedback-form.title": "Что можно улучшить?",
+    "satisfaction.feedback-form.description": "Опишите, что вас не устраивает (до 300 символов)",
+    "satisfaction.feedback-form.placeholder": "Ваш отзыв...",
+    "satisfaction.rating.title": "Как вам наш сервис?",
+    "satisfaction.rating.description": "Помогите нам стать лучше — поделитесь своим мнением",
+    "satisfaction.rating.positive-button": "Доволен",
+    "satisfaction.rating.negative-button": "Не доволен",
+    "satisfaction.notifications.success": "Спасибо за отзыв!",
+    "satisfaction.notifications.error": "Не удалось отправить отзыв. Попробуйте позже."
 }

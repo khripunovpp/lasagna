@@ -7,14 +7,15 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     '[class.readonly]': 'readOnly()'
   },
   template: `
-      <textarea #input
-                (input)="onChangeInput($event)"
-                [attr.rows]="rows()"
-                [placeholder]="placeholder()"
-                [value]="value"
-                [readonly]="readOnly()"
-                class="textarea"
-      ></textarea>
+    <textarea #input
+              (input)="onChangeInput($event)"
+              [attr.rows]="rows()"
+              [maxLength]="maxlength()"
+              [placeholder]="placeholder()"
+              [readonly]="readOnly()"
+              [value]="value"
+              class="textarea"
+    ></textarea>
   `,
   styles: [
     `
@@ -86,6 +87,7 @@ export class TextareaComponent
   value: string = '';
   placeholder = input('Enter text here');
   readOnly = input<boolean>(false);
+  maxlength = input<number | null>(null);
 
   onChange: (value: string) => void = () => {
   };
