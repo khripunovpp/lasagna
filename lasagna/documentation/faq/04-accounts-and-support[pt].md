@@ -3,7 +3,7 @@ title: 🛠️ Contas e Suporte
 ---
 
 :::accordion Posso transferir meus dados?
-Sim, exportando manualmente ou com sincronização (paga).
+Sim, exportando manualmente ou com <span class="badge badge--success">Em Breve</span> sincronização.
 :::
 
 :::accordion Posso usar em vários dispositivos?

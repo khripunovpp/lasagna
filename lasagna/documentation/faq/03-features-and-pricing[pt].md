@@ -7,7 +7,7 @@ Tudo o que é essencial: receitas, produtos, cálculo de custo, faturas e uso of
 :::
 
 :::accordion O que é pago?
-Sincronização, backups, exportação em PDF com modelos, relatórios, equipe e personalização.
+<span class="badge badge--success">Em Breve</span> Sincronização, <span class="badge badge--success">Em Breve</span> backups, <span class="badge badge--success">Em Breve</span> exportação em PDF com modelos, <span class="badge badge--success">Em Breve</span> relatórios, <span class="badge badge--success">Em Breve</span> equipe e <span class="badge badge--success">Em Breve</span> personalização.
 :::
 
 :::accordion Quanto posso armazenar?

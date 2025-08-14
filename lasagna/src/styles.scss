@@ -60,8 +60,8 @@
   --category-indigo: #7f81fb;
   --category-light-blue: #7fc3fb;
   --category-light-green: #7fdb7f;
-  --overlay-bg: rgba(255,255,255,0.7);
-  --overlay-bg-strong: rgba(255,255,255,0.8);
+  --overlay-bg: rgba(255, 255, 255, 0.7);
+  --overlay-bg-strong: rgba(255, 255, 255, 0.8);
   --overlay-bg-dark: rgba(31, 31, 31, 0.7);
   --part-color-1: rgba(248, 157, 150, var(--part-color-opacity, 0.5));
   --part-color-2: rgba(108, 190, 108, var(--part-color-opacity, 0.5));
@@ -276,4 +276,21 @@ a {
 
 video {
   max-width: 100%;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #0a0a0a;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.375rem;
+
+  &--success {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 45%, #059669 70%, #22c55e 100%);
+  }
 }
