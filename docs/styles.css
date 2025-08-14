@@ -18337,6 +18337,11 @@ body {
   position: relative;
   background-color: var(--background-color);
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 .text-inverse {
   color: var(--text-color-inverse);
 }

@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/shared/view/ui/layout/footer.component.ts"],
-  "sourcesContent": ["\n    .lg-footer {\n      text-align: center;\n      font-size: 0.9rem;\n      color: #555;\n      padding: 1em;\n      line-height: 1.6;\n      padding-top: 100px;\n      padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n    }\n\n    .lg-footer__version {\n      margin-top: 0.5em;\n      font-size: 0.8rem;\n      color: #888;\n      opacity: 0.7;\n    }\n  "],
-  "mappings": ";AACI,CAAA;AACE,cAAA;AACA,aAAA;AACA,SAAA;AACA,WAAA;AACA,eAAA;AACA,eAAA;AACA,kBAAA,KAAA,IAAA,oBAAA,EAAA,KAAA,EAAA;;AAGF,CAAA;AACE,cAAA;AACA,aAAA;AACA,SAAA;AACA,WAAA;;",
+  "sourcesContent": ["\n    .lg-footer {\n      text-align: center;\n      font-size: 12px;\n      color: #555;\n      padding: 1em;\n      line-height: 1.6;\n      padding-top: 100px;\n    }\n\n    .lg-footer__version {\n      margin-top: 0.5em;\n      color: #888;\n      opacity: 0.7;\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,cAAA;AACA,aAAA;AACA,SAAA;AACA,WAAA;AACA,eAAA;AACA,eAAA;;AAGF,CAAA;AACE,cAAA;AACA,SAAA;AACA,WAAA;;",
   "names": []
 }

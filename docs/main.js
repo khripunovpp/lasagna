@@ -1,6 +1,6 @@
 import {
   FaqService
-} from "./chunk-C3DGGACW.js";
+} from "./chunk-CMFTX3RW.js";
 import {
   provideCharts,
   withDefaultRegisterables
@@ -11,14 +11,14 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-7GPDIPXU.js";
+} from "./chunk-PSYOKWTM.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
-import "./chunk-QCFUMQR3.js";
+import "./chunk-ZTK5DNJX.js";
 import {
   InputComponent
-} from "./chunk-543DSF3Y.js";
+} from "./chunk-KKRFUBKC.js";
 import {
   CATEGORIZED_RECIPES_LIST
 } from "./chunk-YVI4JC4E.js";
@@ -29,30 +29,30 @@ import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-CL2INUX5.js";
+} from "./chunk-EQRVR3HN.js";
 import {
   ROUTER_MANAGER_PROVIDER
-} from "./chunk-H2M3LVXP.js";
+} from "./chunk-7TJPVZHL.js";
 import {
   AnalyticsService
 } from "./chunk-NZSJQP4U.js";
 import {
   TextareaComponent
-} from "./chunk-KIDNPV5G.js";
+} from "./chunk-5Z3ALLX6.js";
 import "./chunk-KX57H5F3.js";
 import {
   ExpandDirective
 } from "./chunk-OCPTIUJK.js";
 import {
   MatIcon
-} from "./chunk-2S7K7J4C.js";
-import "./chunk-QPE4CQHK.js";
+} from "./chunk-GES6PLRM.js";
+import "./chunk-C7YIU4ER.js";
 import {
   TimeAgoPipe
-} from "./chunk-XR37TFP4.js";
+} from "./chunk-LT77KUDU.js";
 import {
   FlexColumnComponent
-} from "./chunk-ZIFIR5EQ.js";
+} from "./chunk-WKEFA3OS.js";
 import "./chunk-R64U7JLD.js";
 import {
   FadeInComponent
@@ -60,7 +60,7 @@ import {
 import "./chunk-HNJAQDA3.js";
 import {
   TitleComponent
-} from "./chunk-OZKYQV4U.js";
+} from "./chunk-LKA4ZC5L.js";
 import {
   CalculateRecipeService,
   CategoryProductsRepository,
@@ -71,11 +71,11 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-NURQUQIJ.js";
+} from "./chunk-MRTVK6QQ.js";
 import {
   DocsService
-} from "./chunk-IQVSZDRJ.js";
-import "./chunk-SB6NPMDM.js";
+} from "./chunk-MNQEASKP.js";
+import "./chunk-5CZXSK24.js";
 import {
   FormControl,
   FormControlDirective,
@@ -93,12 +93,13 @@ import {
   injectQueryParams,
   marker,
   provideHotToastConfig,
-  toObservable
-} from "./chunk-RRJNJAOU.js";
+  toObservable,
+  toSignal
+} from "./chunk-VLBWNIZN.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
-} from "./chunk-UXLMBQY2.js";
+} from "./chunk-DWISDMQU.js";
 import {
   TranslateLoader,
   TranslateModule,
@@ -128,7 +129,7 @@ import {
   RouterOutlet,
   provideRouter,
   withInMemoryScrolling
-} from "./chunk-HP5G5POF.js";
+} from "./chunk-GZS6VQSL.js";
 import {
   DomRendererFactory2,
   HammerModule,
@@ -136,14 +137,15 @@ import {
   HttpErrorResponse,
   bootstrapApplication,
   provideHttpClient
-} from "./chunk-ENTGQEHX.js";
+} from "./chunk-3RLD5GXV.js";
 import {
   AsyncPipe,
   CommonModule,
+  JsonPipe,
   Location,
   NgTemplateOutlet,
   TitleCasePipe
-} from "./chunk-AL3DWPLK.js";
+} from "./chunk-76JI64DZ.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -203,6 +205,7 @@ import {
   ɵsetClassDebugInfo,
   ɵɵProvidersFeature,
   ɵɵadvance,
+  ɵɵattribute,
   ɵɵclassProp,
   ɵɵconditional,
   ɵɵconditionalCreate,
@@ -240,6 +243,7 @@ import {
   ɵɵresetView,
   ɵɵresolveDocument,
   ɵɵrestoreView,
+  ɵɵsanitizeUrl,
   ɵɵstoreLet,
   ɵɵtemplate,
   ɵɵtemplateRefExtractor,
@@ -2146,22 +2150,30 @@ var routes = [{
     },
     {
       path: "home",
-      loadComponent: () => import("./chunk-YWNRGWEQ.js").then((m) => m.ApplicationComponent)
+      children: [
+        {
+          path: "",
+          loadComponent: () => import("./chunk-NTNDHU55.js").then((m) => m.ApplicationComponent),
+          data: {
+            canSeePolicies: true
+          }
+        }
+      ]
     },
     {
       path: "recipes",
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-ULHC5KMH.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-KVC3TTH7.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-LBJ5S4DT.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-LBJ5S4DT.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2171,7 +2183,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-LBJ5S4DT.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2181,7 +2193,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-APTFKV5W.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-4CGG7ASH.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2194,15 +2206,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-7SPQ27VA.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-ACQRSOGH.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-T4RGVVN4.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-T4RGVVN4.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2212,7 +2224,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-T4RGVVN4.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2237,11 +2249,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-E57AKBDB.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-W26F7QTY.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-ZGHEYOES.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-D3IN4KTV.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2271,7 +2283,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-6FNVZDON.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-CEEZDVO2.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2281,15 +2293,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-4Q5FSF3X.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-55PUH3NW.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-6DQOX4R2.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-26ZNPZAJ.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-6DQOX4R2.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-26ZNPZAJ.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2298,15 +2310,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-UXKLLROP.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-AUJM5TRW.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-JML34KRV.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-TCVGAXFD.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-JML34KRV.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-TCVGAXFD.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2317,7 +2329,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-FGFG4CXC.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-AM6ZT4IC.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2325,25 +2337,25 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-JYIGXIT4.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-DYGJLEZG.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-MK5B2GKF.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-XBN6FJ2X.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
-          loadComponent: () => import("./chunk-PPMLQ44K.js").then((m) => m.ArticleComponent)
+          loadComponent: () => import("./chunk-YCLDRMBJ.js").then((m) => m.ArticleComponent)
         }
       ]
     },
     {
       path: "dev",
-      loadComponent: () => import("./chunk-BWUHHQSI.js").then((m) => m.ColorPaletteComponent)
+      loadComponent: () => import("./chunk-MOJ2AD5J.js").then((m) => m.ColorPaletteComponent)
     },
     {
       path: "**",
-      loadComponent: () => import("./chunk-XUMZHO7V.js").then((m) => m.ErrorPage404Component)
+      loadComponent: () => import("./chunk-3H4M5BZ3.js").then((m) => m.ErrorPage404Component)
     }
   ]
 }];
@@ -11908,56 +11920,135 @@ var FontTesterComponent = class _FontTesterComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FontTesterComponent, { className: "FontTesterComponent", filePath: "src/app/shared/view/ui/font-tester.component.ts", lineNumber: 8 });
 })();
 
+// src/environments/environment.ts
+var environment = {
+  production: true,
+  googleSheets: {
+    appsScriptUrl: ""
+  },
+  policies: {
+    privacyPolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md",
+    termsOfServiceUrl: "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md",
+    cookiePolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
+  },
+  version: "0.0.0"
+};
+
 // src/app/shared/view/ui/layout/footer.component.ts
+function FooterComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "translate");
+    \u0275\u0275elementStart(2, "a", 2);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(5, ", ");
+    \u0275\u0275elementStart(6, "a", 2);
+    \u0275\u0275text(7);
+    \u0275\u0275pipe(8, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(9);
+    \u0275\u0275pipe(10, "translate");
+    \u0275\u0275elementStart(11, "a", 2);
+    \u0275\u0275text(12);
+    \u0275\u0275pipe(13, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(14, ". ");
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 8, "footer.agree"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275attribute("href", ctx_r0.environment.policies.privacyPolicyUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.privacy"));
+    \u0275\u0275advance(3);
+    \u0275\u0275attribute("href", ctx_r0.environment.policies.termsOfServiceUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 12, "footer.terms"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(10, 14, "footer.and"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275attribute("href", ctx_r0.environment.policies.cookiePolicyUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.cookie"));
+  }
+}
 var FooterComponent = class _FooterComponent {
+  environment = environment;
   versionService = inject(VersionService);
   appVersion = this.versionService.version;
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  debugData = toSignal(this.router.events.pipe(
+    filter((event) => event instanceof NavigationEnd),
+    startWith(null),
+    // Для первоначальной загрузки
+    switchMap(() => {
+      const findRouteData = (route) => {
+        let currentRoute = route;
+        while (currentRoute) {
+          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
+            return currentRoute.snapshot.data;
+          }
+          if (currentRoute.firstChild) {
+            currentRoute = currentRoute.firstChild;
+          } else {
+            break;
+          }
+        }
+        return {};
+      };
+      const routeData = findRouteData(this.activatedRoute);
+      return [routeData];
+    })
+  ));
+  canSeePolicies = toSignal(this.router.events.pipe(
+    filter((event) => event instanceof NavigationEnd),
+    startWith(null),
+    // Для первоначальной загрузки
+    switchMap(() => {
+      const findRouteData = (route) => {
+        let currentRoute = route;
+        while (currentRoute) {
+          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
+            return currentRoute.snapshot.data;
+          }
+          if (currentRoute.firstChild) {
+            currentRoute = currentRoute.firstChild;
+          } else {
+            break;
+          }
+        }
+        return {};
+      };
+      const routeData = findRouteData(this.activatedRoute);
+      return [routeData];
+    }),
+    map((data) => data?.canSeePolicies || false)
+  ));
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FooterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 19, vars: 16, consts: [[1, "lg-footer"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md", "target", "_blank"], ["href", "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md", "target", "_blank"], [1, "lg-footer__version"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 5, vars: 2, consts: [[1, "lg-footer"], [1, "lg-footer__version"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 0);
-      \u0275\u0275text(2);
-      \u0275\u0275pipe(3, "translate");
-      \u0275\u0275elementStart(4, "a", 1);
-      \u0275\u0275text(5);
-      \u0275\u0275pipe(6, "translate");
-      \u0275\u0275elementEnd();
-      \u0275\u0275text(7, ", ");
-      \u0275\u0275elementStart(8, "a", 2);
-      \u0275\u0275text(9);
-      \u0275\u0275pipe(10, "translate");
-      \u0275\u0275elementEnd();
-      \u0275\u0275text(11);
-      \u0275\u0275pipe(12, "translate");
-      \u0275\u0275elementStart(13, "a", 3);
-      \u0275\u0275text(14);
-      \u0275\u0275pipe(15, "translate");
-      \u0275\u0275elementEnd();
-      \u0275\u0275text(16, ". ");
-      \u0275\u0275elementStart(17, "div", 4);
-      \u0275\u0275text(18);
+      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 15, 18);
+      \u0275\u0275elementStart(3, "div", 1);
+      \u0275\u0275text(4);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 6, "footer.agree"), " ");
-      \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 8, "footer.privacy"));
-      \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 10, "footer.terms"));
+      \u0275\u0275conditional(ctx.canSeePolicies() ? 2 : -1);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(12, 12, "footer.and"), " ");
-      \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(15, 14, "footer.cookie"));
-      \u0275\u0275advance(4);
       \u0275\u0275textInterpolate1("v", ctx.appVersion());
     }
   }, dependencies: [
     FadeInComponent,
     TranslatePipe
-  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  font-size: 0.8rem;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
+  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FooterComponent, [{
@@ -11965,25 +12056,28 @@ var FooterComponent = class _FooterComponent {
     args: [{ selector: "lg-footer", standalone: true, template: `
     <lg-fade-in>
       <footer class="lg-footer">
-        {{ 'footer.agree' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md"
-           target="_blank">{{ 'footer.privacy' | translate }}</a>,
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md"
-           target="_blank">{{ 'footer.terms' | translate }}</a>,
-        {{ 'footer.and' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
-           target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        @if (canSeePolicies()) {
+          {{ 'footer.agree' | translate }}
+          <a [attr.href]="environment.policies.privacyPolicyUrl"
+             target="_blank">{{ 'footer.privacy' | translate }}</a>,
+          <a [attr.href]="environment.policies.termsOfServiceUrl"
+             target="_blank">{{ 'footer.terms' | translate }}</a>,
+          {{ 'footer.and' | translate }}
+          <a [attr.href]="environment.policies.cookiePolicyUrl"
+             target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        }
         <div class="lg-footer__version">v{{ appVersion() }}</div>
       </footer>
     </lg-fade-in>
   `, imports: [
       FadeInComponent,
-      TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;0a557be604e8e5fbd61f7db3b66877f05928f68cd025a18eb9b62d90ef4bd29b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 0.9rem;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n  padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  font-size: 0.8rem;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
+      TranslatePipe,
+      JsonPipe
+    ], styles: ["/* angular:styles/component:scss;87ba87fa9af64e165bb4f6dfaf4a32d225bc476d70d0c8303c894dd3e945148a;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 47 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 54 });
 })();
 
 // src/app/shared/view/ui/demo-informer.component.ts
@@ -12729,15 +12823,6 @@ var UserSatisfactionService = class _UserSatisfactionService {
   }], null, null);
 })();
 
-// src/environments/environment.ts
-var environment = {
-  production: true,
-  googleSheets: {
-    appsScriptUrl: ""
-  },
-  version: "0.0.0"
-};
-
 // src/app/shared/view/ui/satisfaction-popup.component.ts
 function SatisfactionPopupComponent_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
@@ -13076,7 +13161,7 @@ var AppComponent = class _AppComponent {
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app[_ngcontent-%COMP%] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content[_ngcontent-%COMP%] {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n  padding-bottom: calc(32px + var(--controls-bar-space, 0px));\n}\n.app-footer[_ngcontent-%COMP%] {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app[_ngcontent-%COMP%] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content[_ngcontent-%COMP%] {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer[_ngcontent-%COMP%] {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AppComponent, [{
@@ -13093,7 +13178,7 @@ var AppComponent = class _AppComponent {
       OverlayActionsComponent,
       StorageQuotaWarningComponent,
       SatisfactionPopupComponent
-    ], standalone: true, providers: [], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n  padding-bottom: calc(32px + var(--controls-bar-space, 0px));\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
+    ], standalone: true, providers: [], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
