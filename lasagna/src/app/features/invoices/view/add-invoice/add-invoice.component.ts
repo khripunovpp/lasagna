@@ -279,7 +279,7 @@ export class AddInvoiceComponent
       );
 
       this._browserTabTrackingService.disableProtection();
-      this._notificationsService.success('Invoice edited');
+      this._notificationsService.success('notifications.invoice.edited');
 
       this.router.navigate(['/invoices', 'edit', this.invoiceBuilderService.invoice()?.uuid]);
     });

@@ -46,7 +46,7 @@ export class BarcodeReaderService {
         }
       );
     } else {
-      console.error('Нет видеоустройств');
+      console.error('No video devices available');
     }
   }
 

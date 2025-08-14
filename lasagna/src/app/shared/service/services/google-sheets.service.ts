@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 export interface GoogleSheetsConfig {
   appsScriptUrl: string;
@@ -26,6 +27,8 @@ export interface AppsScriptResponse {
   providedIn: 'root'
 })
 export class GoogleSheetsService {
+  private readonly translateService = inject(TranslateService);
+
   constructor(private http: HttpClient) {
   }
 
@@ -59,25 +62,25 @@ export class GoogleSheetsService {
     error: any,
   ): Observable<never> {
 
-    let errorMessage = 'Произошла ошибка при работе с Google Таблицами';
+    let errorMessage = this.translateService.instant('errors.google-sheets.general');
 
     if (error.error?.error) {
       const googleError = error.error.error;
       switch (googleError.code) {
         case 400:
-          errorMessage = 'Неверные параметры запроса';
+          errorMessage = this.translateService.instant('errors.google-sheets.invalid-parameters');
           break;
         case 401:
-          errorMessage = 'Ошибка авторизации. Проверьте API ключ или токен доступа';
+          errorMessage = this.translateService.instant('errors.google-sheets.authorization');
           break;
         case 403:
-          errorMessage = 'Нет доступа к таблице. Проверьте права доступа';
+          errorMessage = this.translateService.instant('errors.google-sheets.no-access');
           break;
         case 404:
-          errorMessage = 'Таблица или диапазон не найдены';
+          errorMessage = this.translateService.instant('errors.google-sheets.not-found');
           break;
         case 429:
-          errorMessage = 'Превышен лимит запросов. Попробуйте позже';
+          errorMessage = this.translateService.instant('errors.google-sheets.rate-limit');
           break;
         default:
           errorMessage = googleError.message || errorMessage;

@@ -36,6 +36,11 @@ export class SettingsService {
     return this._settingsRepository.getAll().then((settings) => {
       this.settingsModel = settings;
       this.settingsSignal.set(settings);
+      // Sync language to localStorage for JavaScript files
+      const lang = settings?.getSetting<string>(SettingsKeysConst.lang)?.data;
+      if (lang) {
+        localStorage.setItem('lang', lang);
+      }
       this._logger.log('Settings loaded', settings);
       return settings;
     });
@@ -55,7 +60,10 @@ export class SettingsService {
   setDefaultSettings() {
     let changed = false;
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.lang)?.data) {
-      this.settingsModel?.addSetting(SettingsKeysConst.lang, this._localisationService.lang());
+      const defaultLang = this._localisationService.lang();
+      this.settingsModel?.addSetting(SettingsKeysConst.lang, defaultLang);
+      // Store language in localStorage for JavaScript files
+      localStorage.setItem('lang', defaultLang);
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data) {
@@ -73,6 +81,8 @@ export class SettingsService {
   changeLang(lang: string) {
     this._localisationService.changeLang(lang);
     this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
+    // Store language in localStorage for JavaScript files
+    localStorage.setItem('lang', lang);
     return this.saveSettings();
   }
 

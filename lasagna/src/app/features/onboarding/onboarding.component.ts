@@ -69,11 +69,20 @@ interface OnboardingStep {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
       background: var(--color-bg-secondary, var(--onboarding-bg-secondary));
       border-radius: 0.5rem;
       padding: 1rem;
       border: 1px solid var(--onboarding-border);
       transition: background 0.2s;
+
+      @media screen and (max-width: 600px) {
+        flex-direction: column;
+
+        lg-button {
+          align-self: flex-end;
+        }
+      }
     }
 
     .onboarding__step--done {
@@ -101,7 +110,7 @@ interface OnboardingStep {
       font-size: 0.95rem;
       color: var(--color-text-secondary, var(--onboarding-text-secondary));
     }
-  `
+    `
   ]
 })
 export class OnboardingComponent {

@@ -1,168 +1,184 @@
+
+// START TRANSLATIONS
+
+// Auto-generated translations - DO NOT EDIT MANUALLY
+function getTranslation(key, params = {}) {
+  const TRANSLATIONS = {
+  "en": {
+    "pwa.update.banner-text": "New version available! Click to update.",
+    "pwa.update.dialog.title": "New version available!",
+    "pwa.update.dialog.description": "We recommend to save a backup of your data before updating.",
+    "pwa.update.dialog.save-backup": "Save Backup",
+    "pwa.update.dialog.update-without-backup": "Update App without Backup",
+    "pwa.update.dialog.timeout": "Will be updated in {seconds} seconds"
+  },
+  "ru": {
+    "pwa.update.banner-text": "Доступна новая версия! Нажмите для обновления.",
+    "pwa.update.dialog.title": "Доступна новая версия!",
+    "pwa.update.dialog.description": "Рекомендуем сохранить резервную копию данных перед обновлением.",
+    "pwa.update.dialog.save-backup": "Сохранить резервную копию",
+    "pwa.update.dialog.update-without-backup": "Обновить без резервной копии",
+    "pwa.update.dialog.timeout": "Обновление через {seconds} секунд"
+  },
+  "pt": {
+    "pwa.update.banner-text": "Nova versão disponível! Clique para atualizar.",
+    "pwa.update.dialog.title": "Nova versão disponível!",
+    "pwa.update.dialog.description": "Recomendamos salvar um backup dos seus dados antes de atualizar.",
+    "pwa.update.dialog.save-backup": "Salvar Backup",
+    "pwa.update.dialog.update-without-backup": "Atualizar sem Backup",
+    "pwa.update.dialog.timeout": "Será atualizado em {seconds} segundos"
+  }
+};
+  
+  // Get language with fallback chain
+  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage) 
+    ? window.getCurrentLanguage()
+    : (localStorage.getItem('lang') || 'en');
+    
+  const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
+  
+  // Replace parameters in translation
+  let result = translation;
+  Object.keys(params).forEach(param => {
+    result = result.replace(new RegExp(`{${param}}`, 'g'), params[param]);
+  });
+  
+  return result;
+}
+// END TRANSLATIONS
+
 function createUpdateButton() {
-    const button = document.createElement('button');
-    button.innerText = 'New version available! Click to update.';
-    button.style.backgroundColor = 'var(--active-color)';
-    button.style.color = 'var(--text-color)';
-    button.style.border = 'none';
-    button.style.padding = '10px 20px';
-    button.style.cursor = 'pointer';
-    button.style.width = '100%';
-    button.addEventListener('click', () => {
-        updateDialog.showModal();
-    });
-
-    return button;
+  const button = document.createElement('button');
+  button.innerText = getTranslation('pwa.update.banner-text');
+  button.style.backgroundColor = 'var(--active-color)';
+  button.style.color = 'var(--text-color)';
+  button.style.border = 'none';
+  button.style.padding = '10px 20px';
+  button.style.cursor = 'pointer';
+  button.style.width = '100%';
+  button.addEventListener('click', () => {
+    updateDialog.showModal();
+  });
+  return button;
 }
-
 function downloadBackupDirectlyIndexDB() {
-    const dbName = 'lasagna-db';
-    const request = indexedDB.open(dbName);
-    request.onsuccess = function (event) {
-        const db = event.target.result;
-
-        const storeNames = Array.from(db.objectStoreNames).filter(store => store !== 'indicesStore');
-        const transaction = db.transaction(storeNames, 'readonly');
-        const backup = {};
-
-        storeNames.forEach(store => {
-            const objectStore = transaction.objectStore(store);
-            const getAllRequest = objectStore.getAll();
-
-            getAllRequest.onsuccess = function (event) {
-                backup[store] = {
-                    data: event.target.result,
-                    version: db.version,
-                    createdAt: Date.now(),
-                    store: store
-                };
-
-                if (Object.keys(backup).length === storeNames.length) {
-                    downloadBackup(backup);
-                    setLastBackupDate();
-                }
-            };
-        });
-    };
+  const dbName = 'lasagna-db';
+  const request = indexedDB.open(dbName);
+  request.onsuccess = function (event) {
+    const db = event.target.result;
+    const storeNames = Array.from(db.objectStoreNames).filter(store => store !== 'indicesStore');
+    const transaction = db.transaction(storeNames, 'readonly');
+    const backup = {};
+    storeNames.forEach(store => {
+      const objectStore = transaction.objectStore(store);
+      const getAllRequest = objectStore.getAll();
+      getAllRequest.onsuccess = function (event) {
+        backup[store] = {
+          data: event.target.result,
+          version: db.version,
+          createdAt: Date.now(),
+          store: store
+        };
+        if (Object.keys(backup).length === storeNames.length) {
+          downloadBackup(backup);
+          setLastBackupDate();
+        }
+      };
+    });
+  };
 }
-
 function setLastBackupDate() {
-    const lastBackupDate = Date.now()
-    localStorage.setItem('lastBackupDate', String(lastBackupDate));
+  const lastBackupDate = Date.now()
+  localStorage.setItem('lastBackupDate', String(lastBackupDate));
 }
-
 function downloadBackup(data) {
-    const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.download = 'backup.json';
-    a.href = url;
-    a.click();
-    URL.revokeObjectURL(url);
+  const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.download = 'backup.json';
+  a.href = url;
+  a.click();
+  URL.revokeObjectURL(url);
 }
-
 function createUpdateBanner() {
-    const banner = document.createElement('div');
-    banner.id = 'pwa-update-banner';
-    banner.style.display = 'none';
-    banner.style.backgroundColor = 'var(--active-color)';
-    banner.style.position = 'fixed';
-    banner.style.zIndex = '8';
-    banner.style.bottom = '0';
-    banner.style.left = '0';
-    banner.style.width = '100%';
-    banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
-
-    return banner;
+  const banner = document.createElement('div');
+  banner.id = 'pwa-update-banner';
+  banner.style.display = 'none';
+  banner.style.backgroundColor = 'var(--active-color)';
+  banner.style.position = 'fixed';
+  banner.style.zIndex = '8';
+  banner.style.bottom = '0';
+  banner.style.left = '0';
+  banner.style.width = '100%';
+  banner.style.paddingBottom = 'env(safe-area-inset-bottom)';
+  return banner;
 }
-
-
 const reloadTimeout = 5000;
 const reloadTimeoutInSeconds = reloadTimeout / 1000;
 let secondsLeft = reloadTimeoutInSeconds;
-
 function dialog() {
-    const dialog = document.createElement('dialog');
-    dialog.innerHTML = `
-    <p>New version available!</p>
-    <p>We recommend to save a backup of your data before updating.</p>
-    <button id="save-backup">Save Backup</button>
-    <button id="update-app">Update App without Backup</button>
-
-    <p id="update-timeout-label" style="display: none">Will be updated in <span id="seconds-left">${reloadTimeoutInSeconds}</span> seconds</p>
+  const dialog = document.createElement('dialog');
+  dialog.innerHTML = `
+    <p>${getTranslation('pwa.update.dialog.title')}</p>
+    <p>${getTranslation('pwa.update.dialog.description')}</p>
+    <button id="save-backup">${getTranslation('pwa.update.dialog.save-backup')}</button>
+    <button id="update-app">${getTranslation('pwa.update.dialog.update-without-backup')}</button>
+    <p id="update-timeout-label" style="display: none">${getTranslation('pwa.update.dialog.timeout', {seconds: '<span id="seconds-left">' + reloadTimeoutInSeconds + '</span>'})}</p>
   `;
-    document.body.appendChild(dialog);
-
-    const saveBackupButton = dialog.querySelector('#save-backup');
-
-    saveBackupButton.addEventListener('click', (e) => {
-        downloadBackupDirectlyIndexDB();
-    });
-
-    return dialog;
+  document.body.appendChild(dialog);
+  const saveBackupButton = dialog.querySelector('#save-backup');
+  saveBackupButton.addEventListener('click', (e) => {
+    downloadBackupDirectlyIndexDB();
+  });
+  return dialog;
 }
-
 const banner = createUpdateBanner();
 document.body.appendChild(banner);
-
 const updateButton = createUpdateButton();
 banner.appendChild(updateButton);
-
 const updateDialog = dialog();
 document.body.appendChild(updateDialog);
-
-
 const secondLeftContainer = updateDialog.querySelector('#seconds-left');
 const updateTimeoutLabel = updateDialog.querySelector('#update-timeout-label');
-
 if ('serviceWorker' in navigator) {
-    let currentWorker = null;
-
-    const updateController = () => {
-        const {controller} = navigator.serviceWorker;
-        if (controller === null) {
-            return;
+  let currentWorker = null;
+  const updateController = () => {
+    const {controller} = navigator.serviceWorker;
+    if (controller === null) {
+      return;
+    }
+    currentWorker = controller;
+    currentWorker.postMessage({
+      action: 'CHECK_FOR_UPDATES',
+      nonce: Math.random(),
+    })
+  };
+  const messageListener = (event) => {
+    const versionDetected = event?.data?.type === "VERSION_DETECTED";
+    if (!versionDetected) return;
+    banner.style.display = 'flex';
+    const updateAppButton = updateDialog.querySelector('#update-app');
+    updateAppButton.addEventListener('click', () => {
+      if (currentWorker) {
+        currentWorker.postMessage({type: 'SKIP_WAITING'});
+      }
+      updateTimeoutLabel.style.display = 'block';
+      updateAppButton.style.display = 'none';
+      const interval = setInterval(() => {
+        if (secondsLeft <= 0) {
+          clearInterval(interval);
+          return;
         }
-        currentWorker = controller;
-
-        currentWorker.postMessage({
-            action: 'CHECK_FOR_UPDATES',
-            nonce: Math.random(),
-        })
-    };
-
-    const messageListener = (event) => {
-        const versionDetected = event?.data?.type === "VERSION_DETECTED";
-        if (!versionDetected) return;
-        banner.style.display = 'flex';
-
-        const updateAppButton = updateDialog.querySelector('#update-app');
-        updateAppButton.addEventListener('click', () => {
-            if (currentWorker) {
-                currentWorker.postMessage({type: 'SKIP_WAITING'});
-            }
-
-            updateTimeoutLabel.style.display = 'block';
-            updateAppButton.style.display = 'none';
-
-            const interval = setInterval(() => {
-                if (secondsLeft <= 0) {
-                    clearInterval(interval);
-                    return;
-                }
-                secondLeftContainer.innerText = String(secondsLeft - 1);
-                secondsLeft -= 1;
-            }, 1000);
-
-            setTimeout(() => {
-                window.location.reload();
-            }, reloadTimeout);
-        });
-    };
-
-    navigator.serviceWorker.addEventListener('controllerchange', updateController);
-    updateController();
-    setInterval(() => updateController(), 60_000);
-
-    navigator.serviceWorker.addEventListener('message', messageListener);
+        secondLeftContainer.innerText = String(secondsLeft - 1);
+        secondsLeft -= 1;
+      }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, reloadTimeout);
+    });
+  };
+  navigator.serviceWorker.addEventListener('controllerchange', updateController);
+  updateController();
+  setInterval(() => updateController(), 60_000);
+  navigator.serviceWorker.addEventListener('message', messageListener);
 }

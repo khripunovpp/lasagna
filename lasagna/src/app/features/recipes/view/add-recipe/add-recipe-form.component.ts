@@ -193,7 +193,7 @@ export class AddRecipeFormComponent
         this.recipe()?.update(this.form.getRawValue());
         const hasCycledRecipe = this.checkCycleRecipe(this.form.getRawValue().ingredients, this.uuid());
         if (hasCycledRecipe) {
-          this._notificationsService.error('You cannot add a recipe to itself');
+          this._notificationsService.error('notifications.recipe.cycle-error');
         }
       }
     });

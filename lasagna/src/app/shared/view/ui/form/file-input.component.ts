@@ -1,12 +1,13 @@
-import {Component, ElementRef, forwardRef, input, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, input, signal, ViewChild, inject} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {ButtonComponent, ButtonStyle} from '../layout/button.component';
+import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-file-input',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, TranslatePipe],
   template: `
       <div [class.contrast]="theme() === 'contrast'" class="lg-file-input">
           <input #fileInput
@@ -21,7 +22,7 @@ import {ButtonComponent, ButtonStyle} from '../layout/button.component';
                      [disabled]="disable()"
                      [style]="buttonStyle()"
                      size="small">
-              {{ buttonText() }}
+              {{ buttonText() | translate }}
           </lg-button>
 
           <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'" class="lg-file-input__after">
@@ -70,6 +71,7 @@ import {ButtonComponent, ButtonStyle} from '../layout/button.component';
   }]
 })
 export class FileInputComponent implements ControlValueAccessor {
+  private readonly translateService = inject(TranslateService);
   @ViewChild('fileInput', {static: true}) fileInput!: ElementRef<HTMLInputElement>;
 
   accept = input<string>(''); // image/*, .pdf и т.п.
@@ -78,7 +80,7 @@ export class FileInputComponent implements ControlValueAccessor {
   theme = input<'default' | 'contrast'>('default');
   base64Mode = input<boolean>(false);
   buttonStyle = input<ButtonStyle>('default'); // стиль lg-button
-  buttonText = input<string>('Загрузить файл'); // текст на кнопке
+  buttonText = input<string>('file-input.upload-file'); // button text translation key
   fileSizeLimitMb = input<number>(2); // Лимит по умолчанию: 2MB
   noAfter = signal(false);
   errorMessage = signal<string | null>(null);
@@ -105,7 +107,7 @@ export class FileInputComponent implements ControlValueAccessor {
 
     const overLimitFiles = Array.from(files).filter(file => file.size > this.fileSizeLimitMb() * 1024 * 1024);
     if (overLimitFiles.length > 0) {
-      this.errorMessage.set(`Файл превышает ${this.fileSizeLimitMb()}MB`);
+      this.errorMessage.set(this.translateService.instant('errors.file-input.size-exceeded', { limit: this.fileSizeLimitMb() }));
       this.onChange(null);
       return;
     } else {

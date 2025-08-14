@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
+import {AnalyticsService} from '../../service/analytics.service';
 
 @Component({
   selector: 'lg-pwa-install',
@@ -39,6 +40,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   ]
 })
 export class PwaInstallComponent implements OnInit {
+  private readonly analyticsService = inject(AnalyticsService);
   deferredPrompt: any = null;
   showButton = false;
 
@@ -58,9 +60,11 @@ export class PwaInstallComponent implements OnInit {
     const {outcome} = await this.deferredPrompt.userChoice;
     if (outcome === 'accepted') {
       this.showButton = false;
-      console.log('PWA установлена!');
+      console.log('PWA installed!');
+      this.analyticsService.trackPwaInstallAccepted();
     } else {
-      console.log('Пользователь отказался от установки');
+      console.log('User declined installation');
+      this.analyticsService.trackPwaInstallDeclined();
     }
 
     this.deferredPrompt = null;

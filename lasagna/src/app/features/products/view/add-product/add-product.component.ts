@@ -230,7 +230,7 @@ export class AddProductComponent
       return;
     }
     this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
-      this._notificationsService.success('Product deleted');
+      this._notificationsService.success('notifications.product.deleted');
       this._routerManager.navigate(['products']);
     });
   }
@@ -246,7 +246,7 @@ export class AddProductComponent
       });
 
       this.formComponent()?.resetForm();
-      this._notificationsService.success('Product added');
+      this._notificationsService.success('notifications.product.added');
       this.product.set(null);
 
       if (this.draftRef()) {
@@ -264,7 +264,7 @@ export class AddProductComponent
     let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
     this._productsRepository.updateOne(productUUID as string, product).then(() => {
       this.formComponent()?.resetForm(product);
-      this._notificationsService.success('Product edited');
+      this._notificationsService.success('notifications.product.edited');
 
       if (this.draftRef()) {
         this._removeDraft();

@@ -21,6 +21,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FlexColumnComponent } from '../layout/flex-column.component';
 import { TitleComponent } from '../layout/title/title.component';
 import { MultiselectComponent } from './multiselect.component';
+import {ControlComponent} from './control-item/control.component';
+import {WidthDirective} from '../../directives/width.directive';
+import {ExpandDirective} from '../../directives/expand.directive';
 
 interface CurrencyOption {
   code: string;
@@ -32,13 +35,16 @@ interface CurrencyOption {
   selector: 'lg-currency-select',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
     MultiselectComponent,
     FlexColumnComponent,
-    TitleComponent
+    TitleComponent,
+    ControlComponent,
+    WidthDirective,
+    ExpandDirective
   ],
   providers: [
     {
@@ -48,20 +54,16 @@ interface CurrencyOption {
     },
   ],
   template: `
-    <lg-flex-column [size]="'small'">
-      <lg-title [level]="6">
-        {{ 'language.settings.currency-title' | translate }}
-        (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
-      </lg-title>
-
+    <lg-control [label]="'language.settings.currency-title' | translate"
+                lgExpand>
       <lg-multiselect
-        [placeholder]="'currency.select-placeholder' | translate"
-        [staticItems]="displayedCurrencies()"
-        [multi]="false"
         (onSelected)="onCurrencySelected($event)"
-        [(ngModel)]="selectedCurrency">
+        [(ngModel)]="selectedCurrency"
+        [multi]="false"
+        [placeholder]="'currency.select-placeholder' | translate"
+        [staticItems]="displayedCurrencies()">
       </lg-multiselect>
-    </lg-flex-column>
+    </lg-control>
   `,
   styles: [`
     :host {
@@ -111,7 +113,7 @@ export class CurrencySelectComponent implements ControlValueAccessor {
   writeValue(obj: string): void {
     const currencyCode = obj || 'USD';
     this.selectedCurrency.set(currencyCode);
-    
+
     // Найти объект валюты в списке
     const currencies = this.displayedCurrencies();
     const foundCurrency = currencies.find(c => c.code === currencyCode);
@@ -139,4 +141,4 @@ export class CurrencySelectComponent implements ControlValueAccessor {
     this.onChange(currencyCode);
     this.onTouched();
   }
-} 
+}

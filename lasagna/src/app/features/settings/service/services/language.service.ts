@@ -43,5 +43,7 @@ export class LanguageService {
     if (!this.languages.includes(lang)) return;
     this.translate.use(lang);
     this._lang.set(lang);
+    // Store language in localStorage for JavaScript files
+    localStorage.setItem('lang', lang);
   }
 }
