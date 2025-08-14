@@ -68,9 +68,7 @@ import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
     }
 
     .dialog__container {
-      max-width: 80%;
-      min-width: 300px;
-      width: 100%;
+      width: clamp(300px, 100%, 800px);
       height: 100%;
     }
 
