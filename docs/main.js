@@ -11,14 +11,14 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-PSYOKWTM.js";
+} from "./chunk-XSZJJJ6N.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
-import "./chunk-ZTK5DNJX.js";
+import "./chunk-6NUER3GL.js";
 import {
   InputComponent
-} from "./chunk-KKRFUBKC.js";
+} from "./chunk-T52QPKPY.js";
 import {
   CATEGORIZED_RECIPES_LIST
 } from "./chunk-YVI4JC4E.js";
@@ -29,16 +29,16 @@ import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-EQRVR3HN.js";
+} from "./chunk-N7DQJQSL.js";
 import {
   ROUTER_MANAGER_PROVIDER
 } from "./chunk-7TJPVZHL.js";
 import {
   AnalyticsService
-} from "./chunk-NZSJQP4U.js";
+} from "./chunk-ISQPAQQ3.js";
 import {
   TextareaComponent
-} from "./chunk-5Z3ALLX6.js";
+} from "./chunk-OUS3SQ6M.js";
 import "./chunk-KX57H5F3.js";
 import {
   ExpandDirective
@@ -49,7 +49,7 @@ import {
 import "./chunk-C7YIU4ER.js";
 import {
   TimeAgoPipe
-} from "./chunk-LT77KUDU.js";
+} from "./chunk-CMSWEX5C.js";
 import {
   FlexColumnComponent
 } from "./chunk-WKEFA3OS.js";
@@ -71,7 +71,7 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-MRTVK6QQ.js";
+} from "./chunk-CND3ZXGP.js";
 import {
   DocsService
 } from "./chunk-MNQEASKP.js";
@@ -95,7 +95,7 @@ import {
   provideHotToastConfig,
   toObservable,
   toSignal
-} from "./chunk-VLBWNIZN.js";
+} from "./chunk-OOSA4LBM.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
@@ -2153,7 +2153,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-NTNDHU55.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-FKSTEZ36.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2165,15 +2165,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-KVC3TTH7.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-O4J7DOFN.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-JAGKN4WE.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-JAGKN4WE.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2183,7 +2183,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-6R65VOHX.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-JAGKN4WE.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2193,7 +2193,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-4CGG7ASH.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-X2ZGJREV.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2206,15 +2206,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-ACQRSOGH.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-RXIP2SKB.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-UIQHBCNI.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-UIQHBCNI.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2224,7 +2224,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-EXCUG43J.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-UIQHBCNI.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2249,11 +2249,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-W26F7QTY.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-XPU4P52P.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-D3IN4KTV.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-72TDQ47Z.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2283,7 +2283,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-CEEZDVO2.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-EFC6FC5Q.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2293,15 +2293,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-55PUH3NW.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-VCBO3RGC.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-26ZNPZAJ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-SQGGTJUU.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-26ZNPZAJ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-SQGGTJUU.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2310,15 +2310,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-AUJM5TRW.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-6QFRVC7U.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-TCVGAXFD.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-2H3GEVGK.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-TCVGAXFD.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-2H3GEVGK.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2329,7 +2329,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-AM6ZT4IC.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-YL7BXLUP.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2337,7 +2337,7 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-DYGJLEZG.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-4UUSN455.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
@@ -11043,6 +11043,7 @@ function PwaInstallComponent_Conditional_0_Template(rf, ctx) {
   }
 }
 var PwaInstallComponent = class _PwaInstallComponent {
+  analyticsService = inject(AnalyticsService);
   deferredPrompt = null;
   showButton = false;
   ngOnInit() {
@@ -11059,9 +11060,11 @@ var PwaInstallComponent = class _PwaInstallComponent {
     const { outcome } = await this.deferredPrompt.userChoice;
     if (outcome === "accepted") {
       this.showButton = false;
-      console.log("PWA \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430!");
+      console.log("PWA installed!");
+      this.analyticsService.trackPwaInstallAccepted();
     } else {
-      console.log("\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u043E\u0442\u043A\u0430\u0437\u0430\u043B\u0441\u044F \u043E\u0442 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438");
+      console.log("User declined installation");
+      this.analyticsService.trackPwaInstallDeclined();
     }
     this.deferredPrompt = null;
     this.showButton = false;
@@ -11093,7 +11096,7 @@ var PwaInstallComponent = class _PwaInstallComponent {
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 41 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 42 });
 })();
 
 // src/app/features/global-search/global-search.component.ts
@@ -11937,42 +11940,58 @@ var environment = {
 // src/app/shared/view/ui/layout/footer.component.ts
 function FooterComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275text(0);
-    \u0275\u0275pipe(1, "translate");
-    \u0275\u0275elementStart(2, "a", 2);
+    \u0275\u0275elementStart(0, "p", 2);
+    \u0275\u0275text(1, " \u{1F468}\u200D\u{1F4BB} ");
+    \u0275\u0275elementStart(2, "span", 3);
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "translate");
     \u0275\u0275elementEnd();
-    \u0275\u0275text(5, ", ");
-    \u0275\u0275elementStart(6, "a", 2);
+    \u0275\u0275text(5, " \u2022 \u{1FA84}\xA0");
+    \u0275\u0275elementStart(6, "span", 3);
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "translate");
-    \u0275\u0275elementEnd();
+    \u0275\u0275elementEnd()();
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "translate");
-    \u0275\u0275elementStart(11, "a", 2);
+    \u0275\u0275elementStart(11, "a", 4);
     \u0275\u0275text(12);
     \u0275\u0275pipe(13, "translate");
     \u0275\u0275elementEnd();
-    \u0275\u0275text(14, ". ");
+    \u0275\u0275text(14, ", ");
+    \u0275\u0275elementStart(15, "a", 4);
+    \u0275\u0275text(16);
+    \u0275\u0275pipe(17, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(18);
+    \u0275\u0275pipe(19, "translate");
+    \u0275\u0275elementStart(20, "a", 4);
+    \u0275\u0275text(21);
+    \u0275\u0275pipe(22, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(23, ". ");
   }
   if (rf & 2) {
     const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 8, "footer.agree"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.credit.developed"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 12, "footer.credit.inspired"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 14, "footer.agree"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275attribute("href", ctx_r0.environment.policies.privacyPolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.privacy"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.privacy"));
     \u0275\u0275advance(3);
     \u0275\u0275attribute("href", ctx_r0.environment.policies.termsOfServiceUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 12, "footer.terms"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(17, 18, "footer.terms"));
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(10, 14, "footer.and"), " ");
+    \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(19, 20, "footer.and"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275attribute("href", ctx_r0.environment.policies.cookiePolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.cookie"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(22, 22, "footer.cookie"));
   }
 }
 var FooterComponent = class _FooterComponent {
@@ -12031,10 +12050,10 @@ var FooterComponent = class _FooterComponent {
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FooterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 5, vars: 2, consts: [[1, "lg-footer"], [1, "lg-footer__version"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 5, vars: 2, consts: [[1, "lg-footer"], [1, "lg-footer__version"], [1, "footer-credit"], [1, "gradient-text"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 0);
-      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 15, 18);
+      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 24, 24);
       \u0275\u0275elementStart(3, "div", 1);
       \u0275\u0275text(4);
       \u0275\u0275elementEnd()()();
@@ -12048,7 +12067,7 @@ var FooterComponent = class _FooterComponent {
   }, dependencies: [
     FadeInComponent,
     TranslatePipe
-  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
+  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FooterComponent, [{
@@ -12057,6 +12076,11 @@ var FooterComponent = class _FooterComponent {
     <lg-fade-in>
       <footer class="lg-footer">
         @if (canSeePolicies()) {
+          <p class="footer-credit">
+            \u{1F468}\u200D\u{1F4BB} <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
+            \u2022 \u{1FA84}&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
+          </p>
+
           {{ 'footer.agree' | translate }}
           <a [attr.href]="environment.policies.privacyPolicyUrl"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
@@ -12073,11 +12097,11 @@ var FooterComponent = class _FooterComponent {
       FadeInComponent,
       TranslatePipe,
       JsonPipe
-    ], styles: ["/* angular:styles/component:scss;87ba87fa9af64e165bb4f6dfaf4a32d225bc476d70d0c8303c894dd3e945148a;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;3ae1138e553f3e94c4d703cd827dca2fc1e216812b4b779c542b3166161407c2;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n.footer-credit {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 54 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 71 });
 })();
 
 // src/app/shared/view/ui/demo-informer.component.ts
@@ -12518,6 +12542,7 @@ var StorageQuotaWarningComponent = class _StorageQuotaWarningComponent {
 // src/app/shared/service/services/google-sheets.service.ts
 var GoogleSheetsService = class _GoogleSheetsService {
   http;
+  translateService = inject(TranslateService);
   constructor(http) {
     this.http = http;
   }
@@ -12539,24 +12564,24 @@ var GoogleSheetsService = class _GoogleSheetsService {
     return this.http.get(url).pipe(catchError(this._handleError));
   }
   _handleError(error) {
-    let errorMessage = "\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0440\u0430\u0431\u043E\u0442\u0435 \u0441 Google \u0422\u0430\u0431\u043B\u0438\u0446\u0430\u043C\u0438";
+    let errorMessage = this.translateService.instant("errors.google-sheets.general");
     if (error.error?.error) {
       const googleError = error.error.error;
       switch (googleError.code) {
         case 400:
-          errorMessage = "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0437\u0430\u043F\u0440\u043E\u0441\u0430";
+          errorMessage = this.translateService.instant("errors.google-sheets.invalid-parameters");
           break;
         case 401:
-          errorMessage = "\u041E\u0448\u0438\u0431\u043A\u0430 \u0430\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0438. \u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 API \u043A\u043B\u044E\u0447 \u0438\u043B\u0438 \u0442\u043E\u043A\u0435\u043D \u0434\u043E\u0441\u0442\u0443\u043F\u0430";
+          errorMessage = this.translateService.instant("errors.google-sheets.authorization");
           break;
         case 403:
-          errorMessage = "\u041D\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u043A \u0442\u0430\u0431\u043B\u0438\u0446\u0435. \u041F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043F\u0440\u0430\u0432\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u0430";
+          errorMessage = this.translateService.instant("errors.google-sheets.no-access");
           break;
         case 404:
-          errorMessage = "\u0422\u0430\u0431\u043B\u0438\u0446\u0430 \u0438\u043B\u0438 \u0434\u0438\u0430\u043F\u0430\u0437\u043E\u043D \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u044B";
+          errorMessage = this.translateService.instant("errors.google-sheets.not-found");
           break;
         case 429:
-          errorMessage = "\u041F\u0440\u0435\u0432\u044B\u0448\u0435\u043D \u043B\u0438\u043C\u0438\u0442 \u0437\u0430\u043F\u0440\u043E\u0441\u043E\u0432. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043F\u043E\u0437\u0436\u0435";
+          errorMessage = this.translateService.instant("errors.google-sheets.rate-limit");
           break;
         default:
           errorMessage = googleError.message || errorMessage;
@@ -12616,7 +12641,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
         observer.next();
         observer.complete();
       }).catch((error) => {
-        console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0435 \u043E\u0442\u0437\u044B\u0432\u0430:", error);
+        console.error("Error sending feedback:", error);
         observer.error(error);
       });
     });
@@ -12701,7 +12726,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
       const daysAgo = Math.floor(timeDiff / (24 * 60 * 60 * 1e3));
       return timeDiff < weekInMs;
     } catch (error) {
-      console.error("\u274C \u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0447\u0442\u0435\u043D\u0438\u0438 isUserFirstTime:", error);
+      console.error("\u274C Error reading isUserFirstTime:", error);
       return false;
     }
   }
@@ -12738,7 +12763,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
   }
   async sendToGoogleSheets(satisfied, feedback) {
     if (!this.config) {
-      throw new Error("\u0421\u0435\u0440\u0432\u0438\u0441 \u043D\u0435 \u0438\u043D\u0438\u0446\u0438\u0430\u043B\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D");
+      throw new Error("Service not initialized");
     }
     const feedbackData = {
       timestamp: (/* @__PURE__ */ new Date()).toISOString(),
@@ -12751,7 +12776,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
     try {
       await this.googleSheetsService.sendFeedback(this.config.googleSheets, feedbackData).toPromise();
     } catch (error) {
-      console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0435 \u0434\u0430\u043D\u043D\u044B\u0445 \u0432 Google \u0422\u0430\u0431\u043B\u0438\u0446\u044B:", error);
+      console.error("Error sending data to Google Sheets:", error);
       throw error;
     }
   }
@@ -12763,7 +12788,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
         value: 1
       });
     } catch (error) {
-      console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0435 \u0446\u0435\u043B\u0438 \u0432 Analytics:", error);
+      console.error("Error sending goal to Analytics:", error);
     }
   }
   getStorageData() {
@@ -12799,7 +12824,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(data));
     } catch (error) {
-      console.error("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0438 \u0434\u0430\u043D\u043D\u044B\u0445 \u0432 localStorage:", error);
+      console.error("Error saving data to localStorage:", error);
     }
   }
   getUserId() {

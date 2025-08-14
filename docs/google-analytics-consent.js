@@ -1,24 +1,66 @@
+
+// START TRANSLATIONS
+
+// Auto-generated translations - DO NOT EDIT MANUALLY
+function getTranslation(key, params = {}) {
+  const TRANSLATIONS = {
+  "en": {
+    "cookies.banner.text": "We use cookies to enhance your experience. Please choose your preferences:",
+    "cookies.banner.accept-all": "Accept All",
+    "cookies.banner.analytics-only": "Analytics Only",
+    "cookies.banner.reject-all": "Reject All"
+  },
+  "ru": {
+    "cookies.banner.text": "Мы используем файлы cookie для улучшения вашего опыта. Пожалуйста, выберите ваши предпочтения:",
+    "cookies.banner.accept-all": "Принять все",
+    "cookies.banner.analytics-only": "Только аналитика",
+    "cookies.banner.reject-all": "Отклонить все"
+  },
+  "pt": {
+    "cookies.banner.text": "Usamos cookies para melhorar sua experiência. Por favor, escolha suas preferências:",
+    "cookies.banner.accept-all": "Aceitar Todos",
+    "cookies.banner.analytics-only": "Apenas Análises",
+    "cookies.banner.reject-all": "Rejeitar Todos"
+  }
+};
+  
+  // Get language with fallback chain
+  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage) 
+    ? window.getCurrentLanguage()
+    : (localStorage.getItem('lang') || 'en');
+    
+  const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
+  
+  // Replace parameters in translation
+  let result = translation;
+  Object.keys(params).forEach(param => {
+    result = result.replace(new RegExp(`{${param}}`, 'g'), params[param]);
+  });
+  
+  return result;
+}
+// END TRANSLATIONS
+
 // Google Analytics Configuration
 const GA_TRACKING_ID = 'G-GWN769JKRP';
 let gtagLoaded = false;
-
 // Dynamic Google Analytics loader
 function loadGoogleAnalytics(
-  callback = () => { }
+  callback = () => {
+  }
 ) {
   if (gtagLoaded) return;
-
   // Create and load gtag script
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-
-  script.onload = function() {
+  script.onload = function () {
     // Initialize gtag after script loads
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() {
+      dataLayer.push(arguments);
+    }
     window.gtag = gtag;
-
     // Set default consent to 'denied'
     gtag('consent', 'default', {
       'ad_storage': 'denied',
@@ -26,22 +68,17 @@ function loadGoogleAnalytics(
       'ad_personalization': 'denied',
       'analytics_storage': 'denied'
     });
-
     gtag('js', new Date());
     gtag('config', GA_TRACKING_ID);
-
     gtagLoaded = true;
     console.log('Google Analytics loaded dynamically');
-
     // Execute callback after GA is fully initialized
     if (typeof callback === 'function') {
       callback();
     }
   };
-
   document.head.appendChild(script);
 }
-
 // Google Analytics Consent Management Functions
 function consentGrantedAdStorage() {
   if (!gtagLoaded) {
@@ -56,7 +93,6 @@ function consentGrantedAdStorage() {
     });
   }
 }
-
 function consentGrantedAdUserData() {
   if (!gtagLoaded) {
     loadGoogleAnalytics(() => {
@@ -70,7 +106,6 @@ function consentGrantedAdUserData() {
     });
   }
 }
-
 function consentGrantedAdPersonalization() {
   if (!gtagLoaded) {
     loadGoogleAnalytics(() => {
@@ -84,7 +119,6 @@ function consentGrantedAdPersonalization() {
     });
   }
 }
-
 function consentGrantedAnalyticsStorage() {
   if (!gtagLoaded) {
     loadGoogleAnalytics(() => {
@@ -98,7 +132,6 @@ function consentGrantedAnalyticsStorage() {
     });
   }
 }
-
 function consentGrantedAll() {
   if (!gtagLoaded) {
     loadGoogleAnalytics(() => {
@@ -118,10 +151,8 @@ function consentGrantedAll() {
     });
   }
 }
-
 function consentDeniedAll() {
 }
-
 // Restore consent state on page load
 function restoreConsentState() {
   const consent = localStorage.getItem('cookie-consent');
@@ -145,7 +176,6 @@ function restoreConsentState() {
     }
   }
 }
-
 // Make functions globally available
 window.consentGrantedAdStorage = consentGrantedAdStorage;
 window.consentGrantedAdUserData = consentGrantedAdUserData;
@@ -154,7 +184,6 @@ window.consentGrantedAnalyticsStorage = consentGrantedAnalyticsStorage;
 window.consentGrantedAll = consentGrantedAll;
 window.consentDeniedAll = consentDeniedAll;
 window.loadGoogleAnalytics = loadGoogleAnalytics;
-
 // Cookie Consent Banner Management
 function createConsentButton(text, onClick, className = '') {
   const button = document.createElement('button');
@@ -173,7 +202,6 @@ function createConsentButton(text, onClick, className = '') {
   button.addEventListener('click', onClick);
   return button;
 }
-
 function createConsentBanner() {
   const banner = document.createElement('div');
   banner.id = 'cookie-consent-banner';
@@ -187,7 +215,6 @@ function createConsentBanner() {
   banner.style.color = 'var(--cookie-noty-text-color)';
   banner.style.borderTop = '1px solid var(--border-color)';
   banner.style.boxShadow = '0 -2px 10px rgba(0,0,0,0.1)';
-
   const content = document.createElement('div');
   content.style.display = 'flex';
   content.style.justifyContent = 'space-between';
@@ -195,71 +222,57 @@ function createConsentBanner() {
   content.style.flexWrap = 'wrap';
   content.style.padding = '20px';
   content.style.gap = '10px';
-
   const textDiv = document.createElement('div');
-  textDiv.innerHTML = '<p style="margin: 0;">We use cookies to enhance your experience. Please choose your preferences:</p>';
-
+  textDiv.innerHTML = `<p style="margin: 0;">${getTranslation('cookies.banner.text')}</p>`;
   const buttonsDiv = document.createElement('div');
   buttonsDiv.style.display = 'flex';
   buttonsDiv.style.gap = '10px';
   buttonsDiv.style.flexWrap = 'wrap';
-
-  const acceptAllBtn = createConsentButton('Accept All', () => {
+  const acceptAllBtn = createConsentButton(getTranslation('cookies.banner.accept-all'), () => {
     consentGrantedAll();
     localStorage.setItem('cookie-consent', 'all');
     hideConsentBanner();
   }, 'accept-all');
-
-  const analyticsOnlyBtn = createConsentButton('Analytics Only', () => {
+  const analyticsOnlyBtn = createConsentButton(getTranslation('cookies.banner.analytics-only'), () => {
     consentGrantedAnalyticsStorage();
     localStorage.setItem('cookie-consent', 'analytics');
     hideConsentBanner();
   }, 'accept-analytics');
-
-  const rejectAllBtn = createConsentButton('Reject All', () => {
+  const rejectAllBtn = createConsentButton(getTranslation('cookies.banner.reject-all'), () => {
     consentDeniedAll();
     localStorage.setItem('cookie-consent', 'none');
     hideConsentBanner();
   }, 'reject-all');
-
   buttonsDiv.appendChild(acceptAllBtn);
   buttonsDiv.appendChild(analyticsOnlyBtn);
   buttonsDiv.appendChild(rejectAllBtn);
-
   content.appendChild(textDiv);
   content.appendChild(buttonsDiv);
   banner.appendChild(content);
-
   return banner;
 }
-
 function hasUserConsented() {
   const consent = localStorage.getItem('cookie-consent');
   // Show banner again if user rejected (consent === 'none') or hasn't made a choice
   return consent !== null && consent !== 'none';
 }
-
 function showConsentBanner() {
   const banner = document.getElementById('cookie-consent-banner');
   if (banner) {
     banner.style.display = 'block';
   }
 }
-
 function hideConsentBanner() {
   const banner = document.getElementById('cookie-consent-banner');
   if (banner) {
     banner.style.display = 'none';
   }
 }
-
 // Initialize consent banner
 const consentBanner = createConsentBanner();
 document.body.appendChild(consentBanner);
-
 // Restore consent state if user has already consented
 restoreConsentState();
-
 // Show banner if user hasn't consented yet
 if (!hasUserConsented()) {
   // Show banner after a short delay to ensure page is loaded
