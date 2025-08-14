@@ -198,7 +198,7 @@ export class ProductListComponent
       return;
     }
     this._productsRepository.deleteProduct(event!.uuid).then(() => {
-      this._notificationsService.success('Product deleted');
+      this._notificationsService.success('notifications.product.deleted');
       this.loadProducts();
     });
   }

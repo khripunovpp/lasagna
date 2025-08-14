@@ -65,7 +65,7 @@ export class UserSatisfactionService {
           observer.complete();
         })
         .catch(error => {
-          console.error('Ошибка при отправке отзыва:', error);
+          console.error('Error sending feedback:', error);
           observer.error(error);
         });
     });
@@ -167,7 +167,7 @@ export class UserSatisfactionService {
 
       return timeDiff < weekInMs;
     } catch (error) {
-      console.error('❌ Ошибка при чтении isUserFirstTime:', error);
+      console.error('❌ Error reading isUserFirstTime:', error);
       return false;
     }
   }
@@ -211,7 +211,7 @@ export class UserSatisfactionService {
 
   private async sendToGoogleSheets(satisfied: boolean, feedback?: string): Promise<void> {
     if (!this.config) {
-      throw new Error('Сервис не инициализирован');
+      throw new Error('Service not initialized');
     }
 
     const feedbackData: FeedbackData = {
@@ -229,7 +229,7 @@ export class UserSatisfactionService {
         feedbackData
       ).toPromise();
     } catch (error) {
-      console.error('Ошибка при отправке данных в Google Таблицы:', error);
+      console.error('Error sending data to Google Sheets:', error);
       throw error;
     }
   }
@@ -242,7 +242,7 @@ export class UserSatisfactionService {
         value: 1
       });
     } catch (error) {
-      console.error('Ошибка при отправке цели в Analytics:', error);
+      console.error('Error sending goal to Analytics:', error);
     }
   }
 
@@ -295,7 +295,7 @@ export class UserSatisfactionService {
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(data));
     } catch (error) {
-      console.error('Ошибка при сохранении данных в localStorage:', error);
+      console.error('Error saving data to localStorage:', error);
     }
   }
 

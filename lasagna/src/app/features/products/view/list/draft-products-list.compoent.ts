@@ -143,7 +143,7 @@ export class DraftProductsListCompoent
   deleteAllDrafts() {
     this._productsRepository.removeDraftMany(this.drafts().map((item) => item.uuid)).then(() => {
       this.drafts.set([]);
-      this._notificationsService.success('Drafts deleted');
+      this._notificationsService.success('notifications.drafts.deleted');
     })
   }
 
@@ -154,7 +154,7 @@ export class DraftProductsListCompoent
       this.drafts.update((drafts) => {
         return drafts.filter((item) => !selected.has(item.uuid));
       });
-      this._notificationsService.success('Drafts deleted');
+      this._notificationsService.success('notifications.drafts.deleted');
     })
   }
 

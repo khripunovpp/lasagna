@@ -16,6 +16,11 @@ import {map, switchMap, startWith, filter} from 'rxjs';
     <lg-fade-in>
       <footer class="lg-footer">
         @if (canSeePolicies()) {
+          <p class="footer-credit">
+            👨‍💻 <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
+            • 🪄&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
+          </p>
+
           {{ 'footer.agree' | translate }}
           <a [attr.href]="environment.policies.privacyPolicyUrl"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
@@ -43,6 +48,18 @@ import {map, switchMap, startWith, filter} from 'rxjs';
       margin-top: 0.5em;
       color: #888;
       opacity: 0.7;
+    }
+
+    .footer-credit {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #9C27B0, #E91E63);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   `],
   imports: [

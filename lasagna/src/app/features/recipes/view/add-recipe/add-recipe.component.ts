@@ -240,7 +240,7 @@ export class AddRecipeComponent
       return;
     }
     this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
-      this._notificationsService.success('Recipe deleted');
+      this._notificationsService.success('notifications.recipe.deleted');
       this._routerManager.navigate(['recipes']);
     });
   }
@@ -257,7 +257,7 @@ export class AddRecipeComponent
       });
 
       this.formComponent()?.resetForm();
-      this._notificationsService.success('Recipe added');
+      this._notificationsService.success('notifications.recipe.added');
       this.recipe.set(undefined);
 
       if (this.draftRef()) {
@@ -276,7 +276,7 @@ export class AddRecipeComponent
     let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
     return this._recipesRepository.editRecipe(recipeUUID as string, recipe).then(() => {
       this.formComponent()?.resetForm(recipe);
-      this._notificationsService.success('Recipe edited');
+      this._notificationsService.success('notifications.recipe.edited');
 
       if (this.draftRef()) {
         this._removeDraft();

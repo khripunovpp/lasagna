@@ -195,7 +195,7 @@ export class RecipesListComponent {
       return;
     }
     this._recipesRepository.deleteOne(uuid).then(() => {
-      this._notificationsService.success('Recipe deleted');
+      this._notificationsService.success('recipe.deleted');
       this.loadRecipes();
     });
   }

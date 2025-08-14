@@ -42,6 +42,18 @@ export class AnalyticsService {
       goal_name: 'Invoice Created', 
       event_category: 'invoice',
       event_label: 'invoice_creation'
+    },
+    PWA_INSTALL_ACCEPTED: {
+      goal_id: 'pwa_install_accepted',
+      goal_name: 'PWA Install Accepted',
+      event_category: 'pwa',
+      event_label: 'install_accepted'
+    },
+    PWA_INSTALL_DECLINED: {
+      goal_id: 'pwa_install_declined',
+      goal_name: 'PWA Install Declined',
+      event_category: 'pwa',
+      event_label: 'install_declined'
     }
   };
 
@@ -180,6 +192,40 @@ export class AnalyticsService {
       action: action,
       value: value
     });
+  }
+
+  /**
+   * Track PWA install acceptance
+   */
+  trackPwaInstallAccepted(additionalData?: any): void {
+    const eventData: AnalyticsEvent = {
+      event_category: this.GOALS.PWA_INSTALL_ACCEPTED.event_category,
+      event_label: this.GOALS.PWA_INSTALL_ACCEPTED.event_label,
+      value: 1
+    };
+
+    if (additionalData) {
+      Object.assign(eventData, additionalData);
+    }
+
+    this.trackEvent('pwa_install_accepted', eventData);
+  }
+
+  /**
+   * Track PWA install decline
+   */
+  trackPwaInstallDeclined(additionalData?: any): void {
+    const eventData: AnalyticsEvent = {
+      event_category: this.GOALS.PWA_INSTALL_DECLINED.event_category,
+      event_label: this.GOALS.PWA_INSTALL_DECLINED.event_label,
+      value: 1
+    };
+
+    if (additionalData) {
+      Object.assign(eventData, additionalData);
+    }
+
+    this.trackEvent('pwa_install_declined', eventData);
   }
 
   /**

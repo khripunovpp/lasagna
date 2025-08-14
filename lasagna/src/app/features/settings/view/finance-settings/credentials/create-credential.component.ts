@@ -248,7 +248,7 @@ export class CreateCredentialComponent {
     try {
       await this._credentialsRepository
         .updateMany(this._formValueToCredentials());
-      this._notificationService.success('Credentials saved successfully');
+      this._notificationService.success('notifications.credentials.saved');
       this.form.markAsPristine();
     } catch (e) {
       this._notificationService.error(errorHandler(e));
