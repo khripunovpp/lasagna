@@ -3,6 +3,7 @@ import {HotToastService} from '@ngxpert/hot-toast';
 import {FormArray, FormGroup} from '@angular/forms';
 import {LogLevel} from '../../../features/settings/service/models/LogEntry';
 import {LogCenterService} from '../../../features/settings/service/services/log-center.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,47 +11,51 @@ import {LogCenterService} from '../../../features/settings/service/services/log-
 export class NotificationsService {
   constructor(
     private _toast: HotToastService,
-    private _logCenter: LogCenterService
+    private _logCenter: LogCenterService,
+    private _translate: TranslateService
   ) {
   }
 
+  private _withTranslation(message: string): string {
+    return this._translate.instant(message);
+  }
   success(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.success(message);
+    this._toast.success(this._withTranslation(message));
     if (logToCenter) {
-      this._logCenter.addLog(LogLevel.SUCCESS, message, undefined, source);
+      this._logCenter.addLog(LogLevel.SUCCESS, this._withTranslation(message), undefined, source);
     }
   }
 
   error(message: string, logToCenter: boolean = true, source?: string) {
-    this._toast.error(message);
+    this._toast.error(this._withTranslation(message));
     if (logToCenter) {
-      this._logCenter.addLog(LogLevel.ERROR, message, undefined, source);
+      this._logCenter.addLog(LogLevel.ERROR, this._withTranslation(message), undefined, source);
     }
   }
 
   warning(message: string, logToCenter: boolean = true, source?: string) {
-    this._toast.warning(message);
+    this._toast.warning(this._withTranslation(message));
     if (logToCenter) {
-      this._logCenter.addLog(LogLevel.WARNING, message, undefined, source);
+      this._logCenter.addLog(LogLevel.WARNING, this._withTranslation(message), undefined, source);
     }
   }
 
   info(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.info(message);
+    this._toast.info(this._withTranslation(message));
     if (logToCenter) {
-      this._logCenter.addLog(LogLevel.INFO, message, undefined, source);
+      this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
   }
 
   show(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.show(message);
+    this._toast.show(this._withTranslation(message));
     if (logToCenter) {
-      this._logCenter.addLog(LogLevel.INFO, message, undefined, source);
+      this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
   }
 
   loading(message: string) {
-    return this._toast.loading(message);
+    return this._toast.loading(this._withTranslation(message));
   }
 
   showJsonErrors(
@@ -61,7 +66,7 @@ export class NotificationsService {
   ) {
     const errorMessages = errors.map((error) => {
       if (typeof error === 'string') {
-        return error;
+        return this._withTranslation(error);
       } else if (typeof error === 'object' && error !== null) {
         return JSON.stringify(error, null, 2);
       }
@@ -113,20 +118,19 @@ export class NotificationsService {
     return errors;
   }
 
-  // Методы для прямого логирования в лог-центр
   logInfo(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.INFO, message, data, source);
+    this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), data, source);
   }
 
   logWarning(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.WARNING, message, data, source);
+    this._logCenter.addLog(LogLevel.WARNING, this._withTranslation(message), data, source);
   }
 
   logError(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.ERROR, message, data, source);
+    this._logCenter.addLog(LogLevel.ERROR, this._withTranslation(message), data, source);
   }
 
   logSuccess(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.SUCCESS, message, data, source);
+    this._logCenter.addLog(LogLevel.SUCCESS, this._withTranslation(message), data, source);
   }
 }
