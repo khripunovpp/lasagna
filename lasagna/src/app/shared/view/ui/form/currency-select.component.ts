@@ -1,11 +1,26 @@
-import {Component, forwardRef, input, model,} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule,} from '@angular/forms';
-import {TranslatePipe} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../layout/flex-column.component';
-import {MultiselectComponent} from './multiselect.component';
-import {currencyList} from '../../../helpers/localization.helpers';
-import {ControlComponent} from './control-item/control.component';
+import {
+  Component,
+  Signal,
+  input,
+  effect,
+  signal,
+  inject,
+  computed,
+  forwardRef,
+  ViewEncapsulation,
+  model,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { FlexColumnComponent } from '../layout/flex-column.component';
+import { TitleComponent } from '../layout/title/title.component';
+import { MultiselectComponent } from './multiselect.component';
 
 interface CurrencyOption {
   code: string;
@@ -17,13 +32,13 @@ interface CurrencyOption {
   selector: 'lg-currency-select',
   standalone: true,
   imports: [
-    CommonModule,
+    CommonModule, 
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
     MultiselectComponent,
     FlexColumnComponent,
-    ControlComponent
+    TitleComponent
   ],
   providers: [
     {
@@ -34,18 +49,18 @@ interface CurrencyOption {
   ],
   template: `
     <lg-flex-column [size]="'small'">
-      <lg-control [label]="'language.settings.currency-title' | translate">
-        <lg-multiselect
-          (onSelected)="onCurrencySelected($event)"
-          [clearable]="false"
-          [multi]="false"
-          [ngModel]="selectedCurrency()"
-          [placeholder]="'currency.select-placeholder' | translate"
-          [staticItems]="currencyList"
-          bindLabel="label"
-          bindValue="code">
-        </lg-multiselect>
-      </lg-control>
+      <lg-title [level]="6">
+        {{ 'language.settings.currency-title' | translate }}
+        (<a href="https://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217</a>)
+      </lg-title>
+
+      <lg-multiselect
+        [placeholder]="'currency.select-placeholder' | translate"
+        [staticItems]="displayedCurrencies()"
+        [multi]="false"
+        (onSelected)="onCurrencySelected($event)"
+        [(ngModel)]="selectedCurrency">
+      </lg-multiselect>
     </lg-flex-column>
   `,
   styles: [`
@@ -56,18 +71,54 @@ interface CurrencyOption {
   `],
 })
 export class CurrencySelectComponent implements ControlValueAccessor {
-  readonly lang = input<string>('en');
-  readonly selectedCurrency = model({
-    code: 'USD',
+  // Язык передаётся через input-сигнал
+  lang = input<string>('en');
+
+  private currencyList: CurrencyOption[] = [
+    { code: 'USD', label: 'US Dollar', name: 'US Dollar' },
+    { code: 'EUR', label: 'Euro', name: 'Euro' },
+    { code: 'RUB', label: 'Russian Ruble', name: 'Russian Ruble' },
+    { code: 'BRL', label: 'Brazilian Real', name: 'Brazilian Real' },
+    { code: 'GBP', label: 'British Pound', name: 'British Pound' },
+    { code: 'JPY', label: 'Japanese Yen', name: 'Japanese Yen' },
+    { code: 'CNY', label: 'Chinese Yuan', name: 'Chinese Yuan' },
+    { code: 'INR', label: 'Indian Rupee', name: 'Indian Rupee' },
+    { code: 'KZT', label: 'Kazakhstani Tenge', name: 'Kazakhstani Tenge' },
+    { code: 'UAH', label: 'Ukrainian Hryvnia', name: 'Ukrainian Hryvnia' },
+    { code: 'PLN', label: 'Polish Zloty', name: 'Polish Zloty' },
+    { code: 'TRY', label: 'Turkish Lira', name: 'Turkish Lira' },
+  ];
+
+  private langPopularMap: Record<string, string[]> = {
+    en: ['USD', 'EUR', 'GBP', 'JPY'],
+    ru: ['RUB', 'USD', 'EUR', 'UAH', 'KZT'],
+    pt: ['EUR', 'BRL', 'USD'],
+  };
+
+  selectedCurrency = model<string | CurrencyOption>('USD');
+
+  // Популярные валюты для текущего языка
+  displayedCurrencies = computed(() => {
+    const popularCodes = this.langPopularMap[this.lang()] || ['USD', 'EUR'];
+    const codes = new Set([...popularCodes, 'USD', 'EUR']); // Всегда включаем USD и EUR
+
+    return this.currencyList.filter((c) => codes.has(c.code));
   });
-  readonly currencyList = currencyList;
+
+  private onChange = (val: string) => {};
+  private onTouched = () => {};
 
   writeValue(obj: string): void {
     const currencyCode = obj || 'USD';
-
-    this.selectedCurrency.set({
-      code: currencyCode
-    });
+    this.selectedCurrency.set(currencyCode);
+    
+    // Найти объект валюты в списке
+    const currencies = this.displayedCurrencies();
+    const foundCurrency = currencies.find(c => c.code === currencyCode);
+    if (foundCurrency) {
+      // Установить объект валюты вместо кода
+      this.selectedCurrency.set(foundCurrency);
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -84,14 +135,8 @@ export class CurrencySelectComponent implements ControlValueAccessor {
 
   onCurrencySelected(currency: any) {
     const currencyCode = typeof currency === 'string' ? currency : currency?.code;
-    this.selectedCurrency.set(currencyCode);
+    this.selectedCurrency.set(currency);
     this.onChange(currencyCode);
     this.onTouched();
   }
-
-  private onChange = (val: string) => {
-  };
-
-  private onTouched = () => {
-  };
-}
+} 

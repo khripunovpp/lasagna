@@ -1,6 +1,5 @@
 import {
   Component,
-  effect,
   forwardRef,
   Input,
   input,
@@ -9,11 +8,13 @@ import {
   output,
   signal,
   viewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  effect
 } from '@angular/core';
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../service/services/select-resources.service';
+
 
 
 export interface MultiselectItem {
@@ -29,9 +30,6 @@ export interface MultiselectItem {
                  (ngModelChange)="onChangeInput($event)"
                  [compareWith]="compareWith"
                  [items]="loadedList()"
-                 [clearable]="clearable()"
-                 [bindValue]="bindValue()"
-                 [bindLabel]="bindLabel()"
                  [appendTo]="appendTo()"
                  [multiple]="multi()"
                  [ngModel]="value"
@@ -127,18 +125,15 @@ export class MultiselectComponent
   }
 
   @Input() placeholder: string = '';
-  readonly resource = input<string>('');
-  readonly appendTo = input<string>('');
-  readonly bindValue = input<string>('uuid');
-  readonly bindLabel = input<string>('name');
-  readonly autoLoad = input<boolean>(false);
-  readonly clearable = input<boolean>(true);
-  readonly multi = input<boolean>(false);
-  readonly staticItems = input<any[]>([]);
-  readonly loadedList = signal<unknown[]>([]);
+  resource = input<string>('');
+  appendTo = input<string>('');
+  autoLoad = input<boolean>(false);
+  multi = input<boolean>(false);
+  staticItems = input<unknown[]>([]);
+  loadedList = signal<unknown[]>([]);
   onSelected = output<unknown>();
   value?: unknown = null
-  readonly selectComponent = viewChild(NgSelectComponent);
+  selectComponent = viewChild(NgSelectComponent);
 
   // Эффект для обновления списка при изменении staticItems
   private updateStaticItemsEffect = effect(() => {
@@ -163,12 +158,13 @@ export class MultiselectComponent
   compareWith = (a: MultiselectItem, b: MultiselectItem) => {
     const valA = a as any;
     const valB = b as any;
-    const field = this.bindValue();
 
-    return valA?.[field] === valB
+    return valA?.uuid === valB
       || valA === valB
-      || valA?.[field] === valB?.[field]
-      || valA === valB?.[field]
+      || valA?.uuid === valB?.uuid
+      || valA === valB?.uuid
+      || valA?.code === valB
+      || valA?.code === valB?.code;
   }
 
   writeValue(value: unknown): void {

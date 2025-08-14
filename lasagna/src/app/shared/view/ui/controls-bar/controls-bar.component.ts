@@ -1,21 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostBinding,
-  inject,
-  OnDestroy,
-  Renderer2,
-  viewChild
-} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, OnDestroy} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'lg-controls-bar',
   template: `
-    <div @fromLeft
-         (@fromLeft.done)="setHeight()"
-         #bar
+    <div #bar
+         @fromLeft
          class="lg-controls-bar">
       <div class="lg-controls-bar__content">
         <ng-content></ng-content>
@@ -30,15 +20,16 @@ import {animate, style, transition, trigger} from '@angular/animations';
         right: 50%;
         bottom: var(--controls-bar-shift, 0);
         transform: translateX(50%);
+        max-width: 90%;
+        width: max-content;
         display: flex;
-        gap: 8px;
+        gap: 6px;
         border-radius: 100px;
         backdrop-filter: blur(4px);
         background-color: rgba(255, 255, 255, 0.8);
-        padding: 12px;
+        padding: 10px 12px;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
       .lg-controls-bar__content {
@@ -67,25 +58,14 @@ import {animate, style, transition, trigger} from '@angular/animations';
 })
 export class ControlsBarComponent
   implements AfterViewInit, OnDestroy {
-  elementRef = viewChild<ElementRef<HTMLDivElement>>('bar');
-  renderer = inject(Renderer2);
-  @HostBinding('style.--controls-bar-shift') bottomPosition = '10px';
+  @HostBinding('style.--controls-bar-shift') bottomPosition = '40px';
 
 
   ngAfterViewInit() {
   }
 
-  setHeight() {
-    const height = this.elementRef()?.nativeElement?.offsetHeight;
-    const shift = parseInt(this.bottomPosition) + (height || 0);
-
-    const copyStyleAttribute = document.body.getAttribute('style') || '';
-    this.renderer.setAttribute(document.body, 'style', `--controls-bar-space:${shift || 0}px; ${copyStyleAttribute}`);
-  }
 
   ngOnDestroy() {
-    const oldStyle = document.body.getAttribute('style') || '';
-    const newStyle = oldStyle.replace(/--controls-bar-space:\d+px;/, '').trim();
-    this.renderer.setAttribute(document.body, 'style', newStyle);
+
   }
 }

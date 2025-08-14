@@ -49,12 +49,12 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
                        [flat]="true"
                        [size]="'small'"
                        [style]="'info'">
-              {{ 'export-label'|translate }} products
+              {{ 'export-label'|translate }}
             </lg-button>
           </ng-template>
           <ng-template lgInlineSeparatedGroup>
             <lg-import (onDone)="loadProducts()"
-                       [label]="('import-label'|translate) + ' products'"
+                       [label]="('import-label'|translate)"
                        [schema]="ProductScheme"
                        [storeName]="Stores.PRODUCTS">
               <ng-template let-flow="flow" let-row lgImportRowTpl>

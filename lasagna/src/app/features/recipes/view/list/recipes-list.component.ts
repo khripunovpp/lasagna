@@ -51,12 +51,12 @@ import {JsonPipe} from '@angular/common';
                        [flat]="true"
                        [size]="'small'"
                        [style]="'info'">
-              {{ 'export-label'|translate }} recipes
+              {{ 'export-label'|translate }}
             </lg-button>
           </ng-template>
           <ng-template lgInlineSeparatedGroup>
             <lg-import (onDone)="loadRecipes()"
-                       [label]="('import-label'|translate) + ' products'"
+                       [label]="('import-label'|translate)"
                        [schema]="RecipeScheme"
                        [storeName]="Stores.RECIPES">
               <ng-template let-flow="flow" let-row lgImportRowTpl>
