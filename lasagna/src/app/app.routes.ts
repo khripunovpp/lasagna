@@ -23,8 +23,16 @@ export const routes: Routes = [{
     },
     {
       path: 'home',
-      loadComponent: () => import('./shared/view/application/application.component')
-        .then(m => m.ApplicationComponent)
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./shared/view/application/application.component')
+            .then(m => m.ApplicationComponent),
+          data: {
+            canSeePolicies: true,
+          }
+        }
+      ]
     },
     {
       path: 'recipes',

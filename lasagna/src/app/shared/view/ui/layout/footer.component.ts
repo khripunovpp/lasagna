@@ -1,7 +1,13 @@
 import {Component, inject} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {JsonPipe} from '@angular/common';
 import {VersionService} from '../../../service/services/version.service';
+import {environment} from '../../../../../environments/environment';
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {map, switchMap, startWith, filter} from 'rxjs';
+
 
 @Component({
   selector: 'lg-footer',
@@ -9,14 +15,16 @@ import {VersionService} from '../../../service/services/version.service';
   template: `
     <lg-fade-in>
       <footer class="lg-footer">
-        {{ 'footer.agree' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md"
-           target="_blank">{{ 'footer.privacy' | translate }}</a>,
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md"
-           target="_blank">{{ 'footer.terms' | translate }}</a>,
-        {{ 'footer.and' | translate }}
-        <a href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
-           target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        @if (canSeePolicies()) {
+          {{ 'footer.agree' | translate }}
+          <a [attr.href]="environment.policies.privacyPolicyUrl"
+             target="_blank">{{ 'footer.privacy' | translate }}</a>,
+          <a [attr.href]="environment.policies.termsOfServiceUrl"
+             target="_blank">{{ 'footer.terms' | translate }}</a>,
+          {{ 'footer.and' | translate }}
+          <a [attr.href]="environment.policies.cookiePolicyUrl"
+             target="_blank">{{ 'footer.cookie' | translate }}</a>.
+        }
         <div class="lg-footer__version">v{{ appVersion() }}</div>
       </footer>
     </lg-fade-in>
@@ -24,27 +32,90 @@ import {VersionService} from '../../../service/services/version.service';
   styles: [`
     .lg-footer {
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 12px;
       color: #555;
       padding: 1em;
       line-height: 1.6;
       padding-top: 100px;
-      padding-bottom: calc(var(--controls-bar-space, 0px) + 1em);
     }
 
     .lg-footer__version {
       margin-top: 0.5em;
-      font-size: 0.8rem;
       color: #888;
       opacity: 0.7;
     }
   `],
   imports: [
     FadeInComponent,
-    TranslatePipe
+    TranslatePipe,
+    JsonPipe
   ]
 })
 export class FooterComponent {
+  readonly environment = environment;
   private readonly versionService = inject(VersionService);
-  appVersion = this.versionService.version;
+  readonly appVersion = this.versionService.version;
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  readonly debugData = toSignal(this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    startWith(null), // Для первоначальной загрузки
+    switchMap(() => {
+      // Функция для поиска данных в дереве маршрутов
+      const findRouteData = (route: ActivatedRoute): any => {
+        let currentRoute = route;
+
+        // Идем по всему дереву маршрутов и собираем все данные
+        while (currentRoute) {
+          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
+            return currentRoute.snapshot.data;
+          }
+
+          // Переходим к дочернему маршруту
+          if (currentRoute.firstChild) {
+            currentRoute = currentRoute.firstChild;
+          } else {
+            break;
+          }
+        }
+
+        return {};
+      };
+
+      const routeData = findRouteData(this.activatedRoute);
+      return [routeData];
+    })
+  ));
+
+  readonly canSeePolicies = toSignal(this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    startWith(null), // Для первоначальной загрузки
+    switchMap(() => {
+      // Функция для поиска данных в дереве маршрутов
+      const findRouteData = (route: ActivatedRoute): any => {
+        let currentRoute = route;
+
+        // Идем по всему дереву маршрутов и собираем все данные
+        while (currentRoute) {
+          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
+            return currentRoute.snapshot.data;
+          }
+
+          // Переходим к дочернему маршруту
+          if (currentRoute.firstChild) {
+            currentRoute = currentRoute.firstChild;
+          } else {
+            break;
+          }
+        }
+
+        return {};
+      };
+
+      const routeData = findRouteData(this.activatedRoute);
+      return [routeData];
+    }),
+    map(data => data?.canSeePolicies || false)
+  ));
 }
