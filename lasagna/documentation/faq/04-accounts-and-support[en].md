@@ -3,7 +3,7 @@ title: 🛠️ Accounts & Support
 ---
 
 :::accordion Can I transfer my data to another device?
-Yes, by exporting manually or using cloud sync (paid feature).
+Yes, by exporting manually or using <span class="badge badge--success">Coming Soon</span> cloud sync.
 :::
 
 :::accordion Can I use it on multiple devices?

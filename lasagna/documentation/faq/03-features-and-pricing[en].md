@@ -7,7 +7,7 @@ All basic features — recipes, product management, cost calculation, invoice ge
 :::
 
 :::accordion What features are paid?
-Cloud sync, backups, PDF export with templates, analytics, team access and customization.
+<span class="badge badge--success">Coming Soon</span> Cloud sync, <span class="badge badge--success">Coming Soon</span> backups, <span class="badge badge--success">Coming Soon</span> PDF export with templates, <span class="badge badge--success">Coming Soon</span> analytics, <span class="badge badge--success">Coming Soon</span> team access and <span class="badge badge--success">Coming Soon</span> customization.
 :::
 
 :::accordion How much data can I store?
