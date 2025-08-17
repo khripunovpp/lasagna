@@ -74,6 +74,11 @@ import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 })
 export class CalculationPriceModifiersComponent
   implements ControlValueAccessor {
+  constructor() {
+    this.recipePriceAdditionsForm.valueChanges.subscribe(v=>{
+      console.log('Form value changed:', v);
+    });
+  }
   recipePriceAdditionsForm = new FormGroup({
     action: new FormControl<'add' | 'round'>('add'),
     value: new FormControl<number | string>(0),
