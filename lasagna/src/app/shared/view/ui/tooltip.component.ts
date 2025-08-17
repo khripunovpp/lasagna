@@ -8,7 +8,8 @@ import {
   output,
   Renderer2,
   signal,
-  viewChild, ViewEncapsulation
+  viewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import {NgClass} from '@angular/common';
 import {PortalComponent} from './layout/portal.component';
@@ -17,26 +18,26 @@ import {PortalComponent} from './layout/portal.component';
   selector: 'lg-tooltip',
   standalone: true,
   template: `
-      <div [class.fullscreen]="full()"
-           [ngClass]="position()"
-           [style.--gap.px]="gap()"
-           class="tooltip">
-          <div class="tooltip__anchor">
-              <div (click)="toggle($event)">
-                  <ng-content></ng-content>
-              </div>
-              @if (displayed()) {
-                  <div class="tooltip__content" #element>
-                      <ng-content select="content"></ng-content>
-                  </div>
-                  <lg-portal [appendTarget]="'body'"
-                             [targetElement]="element"
-                             [wrapClass]="'tooltip tooltip--ejected'">
-                  </lg-portal>
-              }
-
+    <div [class.fullscreen]="full()"
+         [ngClass]="position()"
+         [style.--gap.px]="gap()"
+         class="tooltip">
+      <div class="tooltip__anchor">
+        <div (click)="toggle($event)">
+          <ng-content></ng-content>
+        </div>
+        @if (displayed()) {
+          <div class="tooltip__content" #element>
+            <ng-content select="content"></ng-content>
           </div>
+          <lg-portal [appendTarget]="'body'"
+                     [targetElement]="element"
+                     [wrapClass]="'tooltip tooltip--ejected'">
+          </lg-portal>
+        }
+
       </div>
+    </div>
   `,
   imports: [
     NgClass,
@@ -49,28 +50,21 @@ import {PortalComponent} from './layout/portal.component';
         flex: 1;
         display: flex;
       }
+
       .tooltip {
         display: inline-block;
       }
 
       .tooltip--ejected {
-        position: fixed;
-        z-index: 6;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
 
         .tooltip__content {
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
+          top: calc(var(--tooltip-y) + 16px);
+          left: calc(var(--tooltip-x) + 16px);
           position: fixed;
+          z-index: 6;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding-top: calc(var(--header-height) + 12px + 16px + 16px);
         }
       }
 
@@ -131,6 +125,9 @@ import {PortalComponent} from './layout/portal.component';
 
 export class TooltipComponent {
   constructor() {
+    setInterval(() => {
+      this._calculateBoundaries();
+    }, 500);
   }
 
   renderer = inject(Renderer2);
@@ -143,12 +140,18 @@ export class TooltipComponent {
   element = viewChild<ElementRef>('element');
   onClose = output<void>();
   coordinates = signal<{ x: number, y: number }>({x: 0, y: 0});
+  maxWidth = signal<number>(0);
   coordinatesEffect = effect(() => {
 
     // [style.--tooltip-x]="coordinates().x"
     // [style.--tooltip-y]="coordinates().y"
 
-    this.renderer.setProperty(document.body, 'style', `--tooltip-x: ${this.coordinates().x}px;--tooltip-y: ${this.coordinates().y}px;`);
+    this.renderer.setProperty(document.body, 'style',
+      `
+      --tooltip-x: ${this.coordinates().x}px;
+      --tooltip-y: ${this.coordinates().y}px;
+      --tooltip-width: ${this.maxWidth()}px;
+      `);
   });
 
   toggle(
@@ -165,28 +168,8 @@ export class TooltipComponent {
 
       console.log('x', x, 'y', y);
       setTimeout(() => {
-        const tooltip = this.element()?.nativeElement;
-        const tooltipRect = tooltip?.getBoundingClientRect();
-        const tooltipWidth = tooltipRect?.width;
-        const tooltipHeight = tooltipRect?.height;
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-        const offset = 16;
-        let newX = x;
-        let newY = y;
-        if (x + tooltipWidth + offset > screenWidth) {
-          newX = screenWidth - tooltipWidth - offset;
-        }
-        if (y + tooltipHeight + offset > screenHeight) {
-          newY = screenHeight - tooltipHeight - offset;
-        }
-        if (x - tooltipWidth - offset < 0) {
-          newX = offset;
-        }
-        if (y - tooltipHeight - offset < 0) {
-          newY = offset;
-        }
-        this.coordinates.set({x: newX, y: newY});
+        this.coordinates.set({x, y});
+        this._calculateBoundaries();
       })
     }
   }
@@ -219,5 +202,38 @@ export class TooltipComponent {
   onScroll(event: Event) {
     this.displayed.set(false);
     this.onClose.emit();
+  }
+
+  private _calculateBoundaries() {
+    const tooltip = this.element()?.nativeElement;
+    if (!tooltip) return;
+
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const tooltipWidth = tooltipRect.width;
+    const tooltipHeight = tooltipRect.height;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const offset = 16;
+
+    let newX = this.coordinates().x;
+    let newY = this.coordinates().y;
+    console.log({
+      newX, newY, tooltipWidth, tooltipHeight, screenWidth, screenHeight
+    })
+
+    if (newX + tooltipWidth + offset > screenWidth) {
+      newX = screenWidth - tooltipWidth - offset;
+    }
+    if (newY + tooltipHeight + offset > screenHeight) {
+      newY = screenHeight - tooltipHeight - offset;
+    }
+    if (newX - tooltipWidth - offset < 0) {
+      newX = offset;
+    }
+    if (newY - tooltipHeight - offset < 0) {
+      newY = offset;
+    }
+
+    this.coordinates.set({x: newX, y: newY});
   }
 }

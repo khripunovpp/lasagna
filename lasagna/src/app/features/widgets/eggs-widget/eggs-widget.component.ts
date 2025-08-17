@@ -1,8 +1,8 @@
 import {Component, computed, model, output, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {InputComponent} from '../../ui/form/input.component';
-import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
+import {InputComponent} from '../../../shared/view/ui/form/input.component';
+import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
+import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 
@@ -10,47 +10,29 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-eggs-widget',
   standalone: true,
   template: `
-      <lg-flex-column [size]="'medium'">
-          <lg-title>
-              {{ 'widgets.eggs.convert-title' | translate }}
-          </lg-title>
+    <lg-flex-column [size]="'medium'">
+      <lg-title>
+        {{ 'widgets.eggs.convert-title' | translate }}
+      </lg-title>
 
-          <lg-input [(ngModel)]="eggs"
-                    (ngModelChange)="changed.emit(calculated())"
-                    [placeholder]="'widgets.eggs.placeholder' | translate"
-                    [theme]="'contrast'"></lg-input>
-          <div class="eggs-widget__eggs">
-              <div (click)="onChooseEggSize('small')"
-                   [class.selected]="selected() === 'small'"
-                   class="eggs-widget__egg">
-                  <img alt="Egg" src="img/egg.svg">
-                  {{ 'widgets.eggs.size.small' | translate }}
-                  @if (selected() === 'small' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
-                  }
-              </div>
-              <div (click)="onChooseEggSize('medium')"
-                   [class.selected]="selected() === 'medium'"
-                   class="eggs-widget__egg">
-                  <img alt="Egg" src="img/egg.svg">
-                  {{ 'widgets.eggs.size.medium' | translate }}
-
-                  @if (selected() === 'medium' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
-                  }
-              </div>
-              <div (click)="onChooseEggSize('large')"
-                   [class.selected]="selected() === 'large'"
-                   class="eggs-widget__egg">
-                  <img alt="Egg" src="img/egg.svg">
-                  {{ 'widgets.eggs.size.large' | translate }}
-
-                  @if (selected() === 'large' && calculated()) {
-                      ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}
-                  }
-              </div>
+      <lg-input (ngModelChange)="changed.emit(calculated())"
+                [(ngModel)]="eggs"
+                [placeholder]="'widgets.eggs.placeholder' | translate"
+                [theme]="'contrast'"></lg-input>
+      <div class="eggs-widget__eggs">
+        @for (z of sizes; track z; ) {
+          <div (click)="onChooseEggSize(z)"
+               [class.selected]="selected() === z"
+               class="eggs-widget__egg">
+            <img alt="Egg" src="img/egg.svg">
+            <span>{{ labels[z] | translate }}</span>
+            @if (selected() === z && calculated()) {
+              <span> ~ {{ calculated() | number: '1.' }} {{ 'widgets.eggs.grams' | translate }}</span>
+            }
           </div>
-      </lg-flex-column>
+        }
+      </div>
+    </lg-flex-column>
   `,
   imports: [
     FormsModule,
@@ -79,6 +61,7 @@ import {TranslatePipe} from '@ngx-translate/core';
       display: flex;
       align-items: flex-end;
       gap: 8px;
+      max-width: 100vw;
     }
 
     .eggs-widget__eggs img {
@@ -122,6 +105,12 @@ import {TranslatePipe} from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class EggsWidgetComponent {
+  readonly sizes = ['small', 'medium', 'large'] as const;
+  readonly labels = {
+    small: 'widgets.eggs.size.small',
+    medium: 'widgets.eggs.size.medium',
+    large: 'widgets.eggs.size.large'
+  };
   eggs = model<string | null>(null);
   selected = signal<string>('small');
   calculated = computed(() => {
