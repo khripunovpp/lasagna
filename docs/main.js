@@ -1,6 +1,6 @@
 import {
   FaqService
-} from "./chunk-CMFTX3RW.js";
+} from "./chunk-4UJMQVOX.js";
 import {
   provideCharts,
   withDefaultRegisterables
@@ -11,14 +11,14 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-H276IPQ6.js";
+} from "./chunk-JRDSYKVM.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
-import "./chunk-VDIZPF2X.js";
+import "./chunk-MKXKQUV7.js";
 import {
   InputComponent
-} from "./chunk-ARWQZVW6.js";
+} from "./chunk-VKE3MAAA.js";
 import {
   CATEGORIZED_RECIPES_LIST
 } from "./chunk-YVI4JC4E.js";
@@ -29,27 +29,33 @@ import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-N7DQJQSL.js";
+} from "./chunk-5WGFG7NC.js";
 import {
   ROUTER_MANAGER_PROVIDER
-} from "./chunk-7TJPVZHL.js";
+} from "./chunk-OSEKBNO7.js";
+import {
+  ControlsRowComponent
+} from "./chunk-GKQRENE7.js";
 import {
   AnalyticsService
-} from "./chunk-ISQPAQQ3.js";
+} from "./chunk-5JBPEQZK.js";
 import {
   TextareaComponent
-} from "./chunk-G26ORRBA.js";
+} from "./chunk-XYWQS3K2.js";
+import {
+  ControlComponent
+} from "./chunk-USUFS2HF.js";
 import "./chunk-KX57H5F3.js";
 import {
   ExpandDirective
 } from "./chunk-OCPTIUJK.js";
 import {
   MatIcon
-} from "./chunk-GES6PLRM.js";
+} from "./chunk-DHMDFBEO.js";
 import "./chunk-C7YIU4ER.js";
 import {
   TimeAgoPipe
-} from "./chunk-YNFQJC6Q.js";
+} from "./chunk-OA7HI7DD.js";
 import {
   FlexColumnComponent
 } from "./chunk-WKEFA3OS.js";
@@ -71,35 +77,41 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-JZN46BJD.js";
+} from "./chunk-UQTF3S52.js";
 import {
   DocsService
-} from "./chunk-MNQEASKP.js";
-import "./chunk-5CZXSK24.js";
+} from "./chunk-GXVTZL2A.js";
+import "./chunk-BRL4AJWI.js";
 import {
+  FormBuilder,
   FormControl,
   FormControlDirective,
+  FormControlName,
+  FormGroupDirective,
   FormsModule,
   LanguageService,
   MaxLengthValidator,
   NgControlStatus,
+  NgControlStatusGroup,
   NgModel,
   NotificationsService,
   ReactiveFormsModule,
   Recipe,
   SETTINGS,
   SettingsService,
+  Validators,
   groupBy,
   injectQueryParams,
   marker,
   provideHotToastConfig,
   toObservable,
-  toSignal
-} from "./chunk-IKG6OJTJ.js";
+  toSignal,
+  ɵNgNoValidate
+} from "./chunk-CT7N7LGE.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
-} from "./chunk-DWISDMQU.js";
+} from "./chunk-PTCGLHTR.js";
 import {
   TranslateLoader,
   TranslateModule,
@@ -129,15 +141,16 @@ import {
   RouterOutlet,
   provideRouter,
   withInMemoryScrolling
-} from "./chunk-GZS6VQSL.js";
+} from "./chunk-JRXEEUAD.js";
 import {
   DomRendererFactory2,
   HammerModule,
   HttpClient,
   HttpErrorResponse,
+  HttpHeaders,
   bootstrapApplication,
   provideHttpClient
-} from "./chunk-3RLD5GXV.js";
+} from "./chunk-5MLLJAOM.js";
 import {
   AsyncPipe,
   CommonModule,
@@ -149,6 +162,7 @@ import {
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
+  BehaviorSubject,
   ChangeDetectionScheduler,
   ChangeDetectionStrategy,
   Component,
@@ -2153,7 +2167,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-IWN6XAYF.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-CJAOXHMN.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2165,15 +2179,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-3Q57HK5P.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-OULK7M23.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-OQMGJDK3.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-5GV3PA3X.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-OQMGJDK3.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-5GV3PA3X.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2183,7 +2197,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-OQMGJDK3.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-5GV3PA3X.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2193,7 +2207,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-4UGDQYLL.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-5WQZKU5S.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2206,15 +2220,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-W6ICOWGC.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-AZJMGUHN.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-2NOSEID2.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-PHY3L5HN.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-2NOSEID2.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-PHY3L5HN.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2224,7 +2238,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-2NOSEID2.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-PHY3L5HN.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2249,11 +2263,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-G6YNME3Z.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-IT32YQQ7.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-SA2DXVZI.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-WRQ3RI2Q.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2283,7 +2297,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-P7JQ4IAW.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-P5AYJTUV.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2293,15 +2307,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-KJMGT5WJ.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-DVNFQWWW.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-YLNI2KOJ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-RIC4Y2A5.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-YLNI2KOJ.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-RIC4Y2A5.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2310,15 +2324,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-NF6IQDMH.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-B6QKPMCG.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-P4BFMBQO.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-MHQGVNB5.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-P4BFMBQO.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-MHQGVNB5.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2329,7 +2343,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-ZUHQILWA.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-YZE4QCJB.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2337,15 +2351,15 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-O2LUCTX4.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-KUFBV6KJ.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-XBN6FJ2X.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-WAHCSECW.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
-          loadComponent: () => import("./chunk-YCLDRMBJ.js").then((m) => m.ArticleComponent)
+          loadComponent: () => import("./chunk-F3MZRWSR.js").then((m) => m.ArticleComponent)
         }
       ]
     },
@@ -10402,6 +10416,380 @@ var recipeInnerSortFunction = (a, b, direction = "asc", field = "name") => {
   return 0;
 };
 
+// src/app/shared/service/services/sendpulse.service.ts
+var SendPulseService = class _SendPulseService {
+  httpClient = inject(HttpClient);
+  logger = inject(LoggerService).withContext({
+    color: "#4CAF50",
+    label: "SendPulse"
+  });
+  baseUrl = "";
+  get tokenEndpoint() {
+    return `${this.baseUrl}/oauth/access_token`;
+  }
+  get emailEndpoint() {
+    return `${this.baseUrl}/smtp/emails`;
+  }
+  apiKey = "";
+  apiSecret = "";
+  accessToken$ = new BehaviorSubject(null);
+  tokenExpiryTime = 0;
+  /**
+   * Initialize SendPulse service with API credentials
+   */
+  initialize(config) {
+    this.apiKey = config.apiKey;
+    this.apiSecret = config.apiSecret;
+    this.baseUrl = config.domain;
+    this.logger.log("SendPulse service initialized");
+  }
+  /**
+   * Send email through SendPulse API
+   */
+  sendEmail(emailData) {
+    if (!this.apiKey || !this.apiSecret) {
+      this.logger.error("SendPulse API credentials not configured");
+      return throwError(() => new Error("SendPulse API credentials not configured"));
+    }
+    return this.sendEmailDirect(emailData);
+  }
+  /**
+   * Send email directly through SendPulse API
+   */
+  sendEmailDirect(emailData) {
+    return this.getValidAccessToken().pipe(switchMap((token) => {
+      const payload = {
+        template: {
+          id: emailData.templateId,
+          variables: {
+            clientName: emailData.clientName || "",
+            clientEmail: emailData.clientEmail || "",
+            message: emailData.message.replace(/\n/g, "<br>")
+            // Replace newlines with <br> for HTML
+          }
+        },
+        subject: emailData.subject,
+        from: {
+          name: emailData.from.name ?? "Lasagna App Support",
+          email: emailData.from.email
+        },
+        to: [
+          {
+            name: emailData.to.name ?? "Support Team",
+            email: emailData.to.email
+          }
+        ]
+      };
+      const headers = new HttpHeaders({
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      });
+      this.logger.log("Sending email via direct API", { payload });
+      return this.httpClient.post(this.emailEndpoint, { email: payload }, { headers }).pipe(tap((response) => {
+        this.logger.log("Email sent successfully via direct API", response);
+      }), switchMap(() => [{
+        success: true,
+        message: "Email sent successfully"
+      }]), catchError((error) => {
+        this.logger.error("Failed to send email via direct API", error);
+        return throwError(() => error);
+      }));
+    }));
+  }
+  /**
+   * Format email content as HTML
+   */
+  formatEmailContent(emailData) {
+    const clientEmailHtml = emailData.clientEmail ? `<p><strong>Email:</strong> <a href="mailto:${emailData.clientEmail}">${emailData.clientEmail}</a></p>` : "";
+    const clientNameHtml = emailData.clientName ? `<p><strong>From:</strong> ${emailData.clientName}</p>` : "";
+    const messageHtml = emailData.message ? emailData.message.replace(/\n/g, "<br>") : "";
+    return `
+    <html>
+      <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #333; border-bottom: 2px solid #e1e1e1; padding-bottom: 10px;">
+          ${emailData.subject}
+        </h2>
+
+        ${clientNameHtml}
+        ${clientEmailHtml}
+
+        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          ${messageHtml}
+        </div>
+
+        <footer style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e1e1; font-size: 12px; color: #666;">
+          <p>This message was sent through Lasagna App support system.</p>
+        </footer>
+      </body>
+    </html>
+  `;
+  }
+  /**
+   * Get valid access token, refresh if needed
+   */
+  getValidAccessToken() {
+    const now = Date.now();
+    const currentToken = this.accessToken$.value;
+    if (currentToken && now < this.tokenExpiryTime) {
+      return this.accessToken$.asObservable().pipe(switchMap((token) => token ? [token] : this.fetchNewAccessToken()));
+    }
+    return this.fetchNewAccessToken();
+  }
+  /**
+   * Fetch new access token from SendPulse API
+   */
+  fetchNewAccessToken() {
+    const body = new URLSearchParams();
+    body.set("grant_type", "client_credentials");
+    body.set("client_id", this.apiKey);
+    body.set("client_secret", this.apiSecret);
+    const headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    });
+    this.logger.log("Fetching new access token");
+    return this.httpClient.post(this.tokenEndpoint, body.toString(), { headers }).pipe(tap((response) => {
+      this.logger.log("Access token received", { expires_in: response.expires_in });
+      this.tokenExpiryTime = Date.now() + (response.expires_in - 60) * 1e3;
+      this.accessToken$.next(response.access_token);
+    }), switchMap((response) => [response.access_token]), catchError((error) => {
+      this.logger.error("Failed to get access token", error);
+      return throwError(() => error);
+    }));
+  }
+  static \u0275fac = function SendPulseService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SendPulseService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _SendPulseService, factory: _SendPulseService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SendPulseService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/shared/service/services/support.service.ts
+var SupportService = class _SupportService {
+  sendPulseService = inject(SendPulseService);
+  analyticsService = inject(AnalyticsService);
+  logger = inject(LoggerService).withContext({
+    color: "#2196F3",
+    label: "Support"
+  });
+  // Rate limiting: max 3 messages per 5 minutes
+  maxMessages = 3;
+  timeWindowMs = 5 * 60 * 1e3;
+  // 5 minutes
+  rateLimitKey = "support_rate_limit";
+  // Signals for tracking state
+  isInitialized = signal(false);
+  supportEmail = signal("");
+  supportFromEmail = signal("");
+  /**
+   * Initialize support service with SendPulse configuration
+   */
+  initialize(config) {
+    this.sendPulseService.initialize(config.smtp);
+    if (config.smtp.supportEmail) {
+      this.supportEmail.set(config.smtp.supportEmail);
+    }
+    if (config.smtp.senderEmail) {
+      this.supportFromEmail.set(config.smtp.senderEmail);
+    }
+    this.isInitialized.set(true);
+    this.logger.log("Support service initialized", {
+      supportEmail: this.supportEmail(),
+      senderEmail: this.supportFromEmail()
+    });
+  }
+  /**
+   * Send support message with rate limiting
+   */
+  sendSupportMessage(messageData) {
+    if (!this.isInitialized()) {
+      this.logger.error("Support service not initialized");
+      return throwError(() => new Error("Support service not initialized"));
+    }
+    const rateLimitCheck = this.checkRateLimit();
+    if (!rateLimitCheck.allowed) {
+      this.logger.warn("Rate limit exceeded", {
+        currentCount: rateLimitCheck.currentCount,
+        timeRemaining: rateLimitCheck.timeUntilReset
+      });
+      return of({
+        success: false,
+        message: `Too many messages sent. Please wait ${Math.ceil(rateLimitCheck.timeUntilReset / 6e4)} minutes before sending another message.`,
+        rateLimited: true
+      });
+    }
+    const emailData = {
+      templateId: 39092,
+      to: {
+        email: this.supportEmail()
+      },
+      from: {
+        email: this.supportFromEmail()
+      },
+      subject: `Support Request: ${messageData.subject}`,
+      message: messageData.message,
+      clientName: messageData.name,
+      clientEmail: messageData.email
+    };
+    this.logger.log("Sending support message", {
+      name: messageData.name,
+      email: messageData.email,
+      subject: messageData.subject
+    });
+    return this.sendPulseService.sendEmail(emailData).pipe(map((response) => {
+      this.recordMessageSent();
+      this.sendAnalyticsEvent();
+      this.logger.log("Support message sent successfully");
+      return {
+        success: true,
+        message: "Your support message has been sent successfully. We will get back to you soon!"
+      };
+    }), catchError((error) => {
+      this.logger.error("Error sending support message", error);
+      return of({
+        success: false,
+        message: "An error occurred while sending your message. Please try again later."
+      });
+    }));
+  }
+  /**
+   * Check if user can send a message (rate limiting)
+   */
+  checkRateLimit() {
+    const now = Date.now();
+    const rateLimitData = this.getRateLimitData();
+    const validEntries = rateLimitData.filter((entry) => now - entry.timestamp < this.timeWindowMs);
+    this.saveRateLimitData(validEntries);
+    const currentCount = validEntries.length;
+    const allowed = currentCount < this.maxMessages;
+    let timeUntilReset = 0;
+    if (!allowed && validEntries.length > 0) {
+      const oldestEntry = validEntries[0];
+      timeUntilReset = this.timeWindowMs - (now - oldestEntry.timestamp);
+    }
+    return {
+      allowed,
+      currentCount,
+      timeUntilReset: Math.max(0, timeUntilReset)
+    };
+  }
+  /**
+   * Get remaining messages count
+   */
+  getRemainingMessages() {
+    const rateLimitCheck = this.checkRateLimit();
+    return Math.max(0, this.maxMessages - rateLimitCheck.currentCount);
+  }
+  /**
+   * Clear rate limit data (for testing purposes)
+   */
+  clearRateLimit() {
+    localStorage.removeItem(this.rateLimitKey);
+    this.logger.log("Rate limit data cleared");
+  }
+  /**
+   * Send analytics event for support message
+   * @param additionalData Дополнительные данные для события
+   * */
+  sendAnalyticsEvent(additionalData) {
+    if (!this.analyticsService.isAnalyticsAvailable()) {
+      this.logger.warn("Analytics not available, skipping event tracking");
+      return;
+    }
+    this.analyticsService.trackSupportMessageSent(additionalData);
+    this.logger.log("Analytics event sent for support message", { additionalData });
+  }
+  /**
+   * Record that a message was sent
+   */
+  recordMessageSent() {
+    const rateLimitData = this.getRateLimitData();
+    rateLimitData.push({
+      timestamp: Date.now(),
+      count: 1
+    });
+    this.saveRateLimitData(rateLimitData);
+  }
+  /**
+   * Get rate limit data from localStorage
+   */
+  getRateLimitData() {
+    try {
+      const data = localStorage.getItem(this.rateLimitKey);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      this.logger.error("Failed to parse rate limit data", error);
+      return [];
+    }
+  }
+  /**
+   * Save rate limit data to localStorage
+   */
+  saveRateLimitData(data) {
+    try {
+      localStorage.setItem(this.rateLimitKey, JSON.stringify(data));
+    } catch (error) {
+      this.logger.error("Failed to save rate limit data", error);
+    }
+  }
+  static \u0275fac = function SupportService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SupportService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _SupportService, factory: _SupportService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SupportService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/environments/environment.ts
+var environment = {
+  production: true,
+  googleSheets: {
+    appsScriptUrl: ""
+  },
+  policies: {
+    privacyPolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md",
+    termsOfServiceUrl: "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md",
+    cookiePolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
+  },
+  smtp: {
+    apiKey: "",
+    apiSecret: "",
+    domain: "",
+    supportEmail: "",
+    senderEmail: "",
+    senderName: ""
+  },
+  version: "0.0.0"
+};
+
+// src/app/shared/service/initializers/support.initializer.ts
+var supportInitializer = () => {
+  const supportService = inject(SupportService);
+  supportService.initialize({
+    smtp: {
+      apiKey: environment.smtp?.apiKey || "",
+      apiSecret: environment.smtp?.apiSecret || "",
+      domain: environment.smtp?.domain || "",
+      supportEmail: environment.smtp?.supportEmail || "",
+      senderEmail: environment.smtp?.senderEmail || "",
+      senderName: environment.smtp?.senderName || ""
+    }
+  });
+  return Promise.resolve();
+};
+
 // node_modules/@angular/material/fesm2022/core.mjs
 var VERSION2 = new Version("20.0.3");
 var ISO_8601_REGEX = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|(?:(?:\+|-)\d{2}:\d{2}))?)?$/;
@@ -10902,6 +11290,7 @@ var appConfig = {
     provideHttpClient(),
     provideAnimationsAsync(),
     provideAppInitializer(appInitializer),
+    provideAppInitializer(supportInitializer),
     provideServiceWorker("ngsw-worker.js", {
       enabled: !isDevMode(),
       registrationStrategy: "registerWhenStable:30000"
@@ -11923,55 +12312,538 @@ var FontTesterComponent = class _FontTesterComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FontTesterComponent, { className: "FontTesterComponent", filePath: "src/app/shared/view/ui/font-tester.component.ts", lineNumber: 8 });
 })();
 
-// src/environments/environment.ts
-var environment = {
-  production: true,
-  googleSheets: {
-    appsScriptUrl: ""
-  },
-  policies: {
-    privacyPolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md",
-    termsOfServiceUrl: "https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md",
-    cookiePolicyUrl: "https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md"
-  },
-  version: "0.0.0"
+// src/app/shared/view/ui/support-popup.component.ts
+var _c03 = (a0) => ({ count: a0 });
+function SupportPopupComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 3);
+    \u0275\u0275text(1, "\u{1F4E7}");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "lg-title", 4);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "p", 5);
+    \u0275\u0275text(6);
+    \u0275\u0275pipe(7, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275property("level", 2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(4, 3, "support.thank-you.title"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 5, "support.thank-you.description"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 3);
+    \u0275\u0275text(1, "\u23F0");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "lg-title", 4);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "p", 5);
+    \u0275\u0275text(6);
+    \u0275\u0275pipe(7, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275property("level", 2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(4, 3, "support.rate-limited.title"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 5, "support.rate-limited.description"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_26_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 14);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(2, 1, "support.form.remaining-messages", \u0275\u0275pureFunction1(4, _c03, ctx_r1.remainingMessages())), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_27_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 1, "support.form.errors.email-required"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_27_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 1, "support.form.errors.email-invalid"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_27_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 1, "support.form.errors.message-required"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_27_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 1, "support.form.errors.message-min-length"), " ");
+  }
+}
+function SupportPopupComponent_Conditional_6_Conditional_27_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 15);
+    \u0275\u0275conditionalCreate(1, SupportPopupComponent_Conditional_6_Conditional_27_Conditional_1_Template, 3, 3, "div", 16);
+    \u0275\u0275conditionalCreate(2, SupportPopupComponent_Conditional_6_Conditional_27_Conditional_2_Template, 3, 3, "div", 16);
+    \u0275\u0275conditionalCreate(3, SupportPopupComponent_Conditional_6_Conditional_27_Conditional_3_Template, 3, 3, "div", 16);
+    \u0275\u0275conditionalCreate(4, SupportPopupComponent_Conditional_6_Conditional_27_Conditional_4_Template, 3, 3, "div", 16);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_3_0;
+    let tmp_4_0;
+    let tmp_5_0;
+    let tmp_6_0;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(((tmp_3_0 = ctx_r1.supportForm.get("email")) == null ? null : tmp_3_0.hasError("required")) && ((tmp_3_0 = ctx_r1.supportForm.get("email")) == null ? null : tmp_3_0.touched) ? 1 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(((tmp_4_0 = ctx_r1.supportForm.get("email")) == null ? null : tmp_4_0.hasError("email")) && ((tmp_4_0 = ctx_r1.supportForm.get("email")) == null ? null : tmp_4_0.touched) ? 2 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(((tmp_5_0 = ctx_r1.supportForm.get("message")) == null ? null : tmp_5_0.hasError("required")) && ((tmp_5_0 = ctx_r1.supportForm.get("message")) == null ? null : tmp_5_0.touched) ? 3 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(((tmp_6_0 = ctx_r1.supportForm.get("message")) == null ? null : tmp_6_0.hasError("minlength")) && ((tmp_6_0 = ctx_r1.supportForm.get("message")) == null ? null : tmp_6_0.touched) ? 4 : -1);
+  }
+}
+function SupportPopupComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "lg-title", 4);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p", 5);
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "form", 6)(7, "lg-controls-row", 7)(8, "lg-control", 8);
+    \u0275\u0275pipe(9, "translate");
+    \u0275\u0275element(10, "lg-input", 9);
+    \u0275\u0275pipe(11, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(12, "lg-control", 8);
+    \u0275\u0275pipe(13, "translate");
+    \u0275\u0275element(14, "lg-input", 10);
+    \u0275\u0275pipe(15, "translate");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(16, "lg-control", 8);
+    \u0275\u0275pipe(17, "translate");
+    \u0275\u0275element(18, "lg-input", 11);
+    \u0275\u0275pipe(19, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(20, "lg-control", 8);
+    \u0275\u0275pipe(21, "translate");
+    \u0275\u0275element(22, "lg-textarea", 12);
+    \u0275\u0275pipe(23, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(24, "div", 13);
+    \u0275\u0275text(25);
+    \u0275\u0275elementEnd();
+    \u0275\u0275conditionalCreate(26, SupportPopupComponent_Conditional_6_Conditional_26_Template, 3, 6, "div", 14);
+    \u0275\u0275conditionalCreate(27, SupportPopupComponent_Conditional_6_Conditional_27_Template, 5, 4, "div", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("level", 2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 18, "support.form.title"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 20, "support.form.description"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("formGroup", ctx_r1.supportForm);
+    \u0275\u0275advance();
+    \u0275\u0275property("mobileMode", true);
+    \u0275\u0275advance();
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(9, 22, "support.form.name"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("placeholder", \u0275\u0275pipeBind1(11, 24, "support.form.name-placeholder"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(13, 26, "support.form.email"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("placeholder", \u0275\u0275pipeBind1(15, 28, "support.form.email-placeholder"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(17, 30, "support.form.subject"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("placeholder", \u0275\u0275pipeBind1(19, 32, "support.form.subject-placeholder"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(21, 34, "support.form.message"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("rows", 4)("maxlength", 500)("placeholder", \u0275\u0275pipeBind1(23, 36, "support.form.message-placeholder"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.messageLength(), "/500 ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.remainingMessages() !== null ? 26 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.hasFormErrors() ? 27 : -1);
+  }
+}
+var SupportPopupComponent = class _SupportPopupComponent {
+  formBuilder = inject(FormBuilder);
+  supportService = inject(SupportService);
+  notificationsService = inject(NotificationsService);
+  translateService = inject(TranslateService);
+  dialog = viewChild(DialogComponent);
+  showForm = signal(true);
+  showThankYou = signal(false);
+  showRateLimited = signal(false);
+  isSubmitting = signal(false);
+  remainingMessages = signal(null);
+  supportForm = this.formBuilder.group({
+    name: [""],
+    email: ["", [Validators.required, Validators.email]],
+    subject: [""],
+    message: ["", [Validators.required, Validators.minLength(10)]]
+  });
+  formValueChanges = toSignal(this.supportForm.valueChanges, { initialValue: this.supportForm.value });
+  messageLength = computed(() => {
+    return this.formValueChanges().message ? this.formValueChanges().message.length : 0;
+  });
+  hasFormErrors = computed(() => {
+    const form = this.supportForm;
+    return form.get("email")?.invalid && form.get("email")?.touched || form.get("message")?.invalid && form.get("message")?.touched;
+  });
+  /**
+   * Open support popup
+   */
+  open() {
+    this.resetForm();
+    this.updateRemainingMessages();
+    this.dialog()?.open();
+  }
+  /**
+   * Handle cancel button click
+   */
+  onCancel() {
+    this.dialog()?.close();
+  }
+  /**
+   * Handle form submission
+   */
+  onSubmitMessage() {
+    if (this.isSubmitting())
+      return;
+    this.supportForm.markAllAsTouched();
+    if (this.supportForm.invalid) {
+      this.notificationsService.error(this.translateService.instant("support.notifications.validation-error"));
+      return;
+    }
+    this.isSubmitting.set(true);
+    const formValue = this.supportForm.value;
+    const messageData = {
+      name: formValue.name || "Anonymous",
+      email: formValue.email,
+      subject: formValue.subject || "Support Request",
+      message: formValue.message
+    };
+    this.supportService.sendSupportMessage(messageData).subscribe({
+      next: (result) => {
+        this.isSubmitting.set(false);
+        if (result.success) {
+          this.showForm.set(false);
+          this.showThankYou.set(true);
+          this.updateRemainingMessages();
+          setTimeout(() => {
+            this.dialog()?.close();
+          }, 3e3);
+        } else if (result.rateLimited) {
+          this.showForm.set(false);
+          this.showRateLimited.set(true);
+          setTimeout(() => {
+            this.dialog()?.close();
+          }, 5e3);
+        } else {
+          this.notificationsService.error(result.message);
+        }
+      },
+      error: (error) => {
+        this.isSubmitting.set(false);
+        this.notificationsService.error(this.translateService.instant("support.notifications.send-error"));
+      }
+    });
+  }
+  /**
+   * Get confirm button text based on current state
+   */
+  getConfirmButtonText() {
+    if (this.isSubmitting()) {
+      return this.translateService.instant("support.form.sending");
+    }
+    return this.translateService.instant("support.form.send-button");
+  }
+  /**
+   * Update remaining messages count
+   */
+  updateRemainingMessages() {
+    const remaining = this.supportService.getRemainingMessages();
+    this.remainingMessages.set(remaining);
+  }
+  /**
+   * Reset form and component state
+   */
+  resetForm() {
+    this.supportForm.reset();
+    this.showForm.set(true);
+    this.showThankYou.set(false);
+    this.showRateLimited.set(false);
+    this.isSubmitting.set(false);
+  }
+  static \u0275fac = function SupportPopupComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SupportPopupComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SupportPopupComponent, selectors: [["lg-support-popup"]], viewQuery: function SupportPopupComponent_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuerySignal(ctx.dialog, DialogComponent, 5);
+    }
+    if (rf & 2) {
+      \u0275\u0275queryAdvance();
+    }
+  }, decls: 7, vars: 8, consts: [["dialog", ""], [3, "onCancel", "onConfirm", "cancelButtonText", "closeButton", "closeOnConfirm", "confirmButtonText", "displayFooter"], ["position", "center", "size", "medium"], [1, "support-content__icon"], [3, "level"], [1, "support-content__description"], [1, "support-content__form", 3, "formGroup"], [3, "mobileMode"], [3, "label"], ["formControlName", "name", 3, "placeholder"], ["formControlName", "email", 3, "placeholder"], ["formControlName", "subject", 3, "placeholder"], ["formControlName", "message", 3, "rows", "maxlength", "placeholder"], [1, "support-content__char-count"], [1, "support-content__rate-info"], [1, "support-content__errors"], [1, "support-content__error"]], template: function SupportPopupComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "lg-dialog", 1, 0);
+      \u0275\u0275pipe(2, "translate");
+      \u0275\u0275listener("onCancel", function SupportPopupComponent_Template_lg_dialog_onCancel_0_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onCancel());
+      })("onConfirm", function SupportPopupComponent_Template_lg_dialog_onConfirm_0_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onSubmitMessage());
+      });
+      \u0275\u0275elementStart(3, "lg-flex-column", 2);
+      \u0275\u0275conditionalCreate(4, SupportPopupComponent_Conditional_4_Template, 8, 7)(5, SupportPopupComponent_Conditional_5_Template, 8, 7)(6, SupportPopupComponent_Conditional_6_Template, 28, 38);
+      \u0275\u0275elementEnd()();
+    }
+    if (rf & 2) {
+      \u0275\u0275property("cancelButtonText", \u0275\u0275pipeBind1(2, 6, "support.cancel-button"))("closeButton", !ctx.showThankYou() && !ctx.isSubmitting())("closeOnConfirm", false)("confirmButtonText", ctx.getConfirmButtonText())("displayFooter", ctx.showForm());
+      \u0275\u0275advance(4);
+      \u0275\u0275conditional(ctx.showThankYou() ? 4 : ctx.showRateLimited() ? 5 : 6);
+    }
+  }, dependencies: [
+    ReactiveFormsModule,
+    \u0275NgNoValidate,
+    NgControlStatus,
+    NgControlStatusGroup,
+    MaxLengthValidator,
+    FormGroupDirective,
+    FormControlName,
+    DialogComponent,
+    TranslatePipe,
+    TitleComponent,
+    FlexColumnComponent,
+    ControlComponent,
+    InputComponent,
+    TextareaComponent,
+    ControlsRowComponent
+  ], styles: ["\n\n.support-content[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.support-content__description[_ngcontent-%COMP%] {\n  margin: 0 0 24px 0;\n  color: var(--text-secondary-color, #666);\n  line-height: 1.5;\n}\n.support-content__form[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.support-content__char-count[_ngcontent-%COMP%] {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999);\n  margin-top: 4px;\n}\n.support-content__rate-info[_ngcontent-%COMP%] {\n  background-color: var(--info-light-color, #e3f2fd);\n  border: 1px solid var(--info-color, #2196f3);\n  border-radius: 8px;\n  padding: 12px;\n  font-size: 14px;\n  color: var(--info-dark-color, #1565c0);\n  text-align: center;\n}\n.support-content__errors[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.support-content__error[_ngcontent-%COMP%] {\n  background-color: var(--error-light-color, #ffebee);\n  border: 1px solid var(--error-color, #f44336);\n  border-radius: 8px;\n  padding: 8px 12px;\n  font-size: 14px;\n  color: var(--error-dark-color, #c62828);\n}\n.support-content__icon[_ngcontent-%COMP%] {\n  font-size: 48px;\n  line-height: 1;\n  margin-bottom: 16px;\n  display: block;\n}\n@media (max-width: 480px) {\n  .support-content__form[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n  .support-content__icon[_ngcontent-%COMP%] {\n    font-size: 40px;\n  }\n}\n/*# sourceMappingURL=support-popup.component.css.map */"] });
 };
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SupportPopupComponent, [{
+    type: Component,
+    args: [{ selector: "lg-support-popup", standalone: true, imports: [
+      ReactiveFormsModule,
+      DialogComponent,
+      TranslatePipe,
+      TitleComponent,
+      FlexColumnComponent,
+      ControlComponent,
+      InputComponent,
+      TextareaComponent,
+      ControlsRowComponent
+    ], template: `
+    <lg-dialog #dialog
+               (onCancel)="onCancel()"
+               (onConfirm)="onSubmitMessage()"
+               [cancelButtonText]="'support.cancel-button' | translate"
+               [closeButton]="!showThankYou() && !isSubmitting()"
+               [closeOnConfirm]="false"
+               [confirmButtonText]="getConfirmButtonText()"
+               [displayFooter]="showForm()">
+
+      <lg-flex-column position="center"
+                      size="medium">
+        @if (showThankYou()) {
+          <span class="support-content__icon">\u{1F4E7}</span>
+
+          <lg-title [level]="2">
+            {{ 'support.thank-you.title' | translate }}
+          </lg-title>
+
+          <p class="support-content__description">
+            {{ 'support.thank-you.description' | translate }}
+          </p>
+        } @else if (showRateLimited()) {
+          <span class="support-content__icon">\u23F0</span>
+
+          <lg-title [level]="2">
+            {{ 'support.rate-limited.title' | translate }}
+          </lg-title>
+
+          <p class="support-content__description">
+            {{ 'support.rate-limited.description' | translate }}
+          </p>
+        } @else {
+          <lg-title [level]="2">
+            {{ 'support.form.title' | translate }}
+          </lg-title>
+
+          <p class="support-content__description">
+            {{ 'support.form.description' | translate }}
+          </p>
+
+          <form [formGroup]="supportForm" class="support-content__form">
+            <lg-controls-row [mobileMode]="true">
+              <lg-control [label]="'support.form.name' | translate">
+                <lg-input
+                  formControlName="name"
+                  [placeholder]="'support.form.name-placeholder' | translate">
+                </lg-input>
+              </lg-control>
+
+              <lg-control [label]="'support.form.email' | translate">
+                <lg-input
+                  formControlName="email"
+                  [placeholder]="'support.form.email-placeholder' | translate">
+                </lg-input>
+              </lg-control>
+            </lg-controls-row>
+
+            <lg-control [label]="'support.form.subject' | translate">
+              <lg-input
+                formControlName="subject"
+                [placeholder]="'support.form.subject-placeholder' | translate">
+              </lg-input>
+            </lg-control>
+
+            <lg-control [label]="'support.form.message' | translate">
+              <lg-textarea
+                formControlName="message"
+                [rows]="4"
+                [maxlength]="500"
+                [placeholder]="'support.form.message-placeholder' | translate">
+              </lg-textarea>
+            </lg-control>
+
+            <div class="support-content__char-count">
+              {{ messageLength() }}/500
+            </div>
+
+            @if (remainingMessages() !== null) {
+              <div class="support-content__rate-info">
+                {{ 'support.form.remaining-messages' | translate: {count: remainingMessages()} }}
+              </div>
+            }
+
+            @if (hasFormErrors()) {
+              <div class="support-content__errors">
+                @if (supportForm.get('email')?.hasError('required') && supportForm.get('email')?.touched) {
+                  <div class="support-content__error">
+                    {{ 'support.form.errors.email-required' | translate }}
+                  </div>
+                }
+                @if (supportForm.get('email')?.hasError('email') && supportForm.get('email')?.touched) {
+                  <div class="support-content__error">
+                    {{ 'support.form.errors.email-invalid' | translate }}
+                  </div>
+                }
+                @if (supportForm.get('message')?.hasError('required') && supportForm.get('message')?.touched) {
+                  <div class="support-content__error">
+                    {{ 'support.form.errors.message-required' | translate }}
+                  </div>
+                }
+                @if (supportForm.get('message')?.hasError('minlength') && supportForm.get('message')?.touched) {
+                  <div class="support-content__error">
+                    {{ 'support.form.errors.message-min-length' | translate }}
+                  </div>
+                }
+              </div>
+            }
+          </form>
+        }
+      </lg-flex-column>
+    </lg-dialog>
+  `, styles: ["/* angular:styles/component:scss;81e0bd55176842e8e441408f01db9b4020f857ae889d914d22416d9a8cced6a4;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/support-popup.component.ts */\n.support-content {\n  text-align: center;\n}\n.support-content__description {\n  margin: 0 0 24px 0;\n  color: var(--text-secondary-color, #666);\n  line-height: 1.5;\n}\n.support-content__form {\n  width: 100%;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.support-content__char-count {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999);\n  margin-top: 4px;\n}\n.support-content__rate-info {\n  background-color: var(--info-light-color, #e3f2fd);\n  border: 1px solid var(--info-color, #2196f3);\n  border-radius: 8px;\n  padding: 12px;\n  font-size: 14px;\n  color: var(--info-dark-color, #1565c0);\n  text-align: center;\n}\n.support-content__errors {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.support-content__error {\n  background-color: var(--error-light-color, #ffebee);\n  border: 1px solid var(--error-color, #f44336);\n  border-radius: 8px;\n  padding: 8px 12px;\n  font-size: 14px;\n  color: var(--error-dark-color, #c62828);\n}\n.support-content__icon {\n  font-size: 48px;\n  line-height: 1;\n  margin-bottom: 16px;\n  display: block;\n}\n@media (max-width: 480px) {\n  .support-content__form {\n    gap: 12px;\n  }\n  .support-content__icon {\n    font-size: 40px;\n  }\n}\n/*# sourceMappingURL=support-popup.component.css.map */\n"] }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SupportPopupComponent, { className: "SupportPopupComponent", filePath: "src/app/shared/view/ui/support-popup.component.ts", lineNumber: 213 });
+})();
 
 // src/app/shared/view/ui/layout/footer.component.ts
 function FooterComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 2);
+    \u0275\u0275elementStart(0, "p", 5);
     \u0275\u0275text(1, " \u{1F468}\u200D\u{1F4BB} ");
-    \u0275\u0275elementStart(2, "span", 3);
+    \u0275\u0275elementStart(2, "span", 6);
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(5, " \u2022 \u{1FA84}\xA0");
-    \u0275\u0275elementStart(6, "span", 3);
+    \u0275\u0275elementStart(6, "span", 6);
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "translate");
     \u0275\u0275elementEnd()();
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "translate");
-    \u0275\u0275elementStart(11, "a", 4);
+    \u0275\u0275elementStart(11, "a", 7);
     \u0275\u0275text(12);
     \u0275\u0275pipe(13, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(14, ", ");
-    \u0275\u0275elementStart(15, "a", 4);
+    \u0275\u0275elementStart(15, "a", 7);
     \u0275\u0275text(16);
     \u0275\u0275pipe(17, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(18);
     \u0275\u0275pipe(19, "translate");
-    \u0275\u0275elementStart(20, "a", 4);
+    \u0275\u0275elementStart(20, "a", 7);
     \u0275\u0275text(21);
     \u0275\u0275pipe(22, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275text(23, ". ");
   }
   if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
+    const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.credit.developed"));
     \u0275\u0275advance(4);
@@ -11979,17 +12851,17 @@ function FooterComponent_Conditional_2_Template(rf, ctx) {
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 14, "footer.agree"), " ");
     \u0275\u0275advance(2);
-    \u0275\u0275attribute("href", ctx_r0.environment.policies.privacyPolicyUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275attribute("href", ctx_r1.environment.policies.privacyPolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.privacy"));
     \u0275\u0275advance(3);
-    \u0275\u0275attribute("href", ctx_r0.environment.policies.termsOfServiceUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275attribute("href", ctx_r1.environment.policies.termsOfServiceUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(17, 18, "footer.terms"));
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(19, 20, "footer.and"), " ");
     \u0275\u0275advance(2);
-    \u0275\u0275attribute("href", ctx_r0.environment.policies.cookiePolicyUrl, \u0275\u0275sanitizeUrl);
+    \u0275\u0275attribute("href", ctx_r1.environment.policies.cookiePolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(22, 22, "footer.cookie"));
   }
@@ -12000,6 +12872,7 @@ var FooterComponent = class _FooterComponent {
   appVersion = this.versionService.version;
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  supportPopup = viewChild(SupportPopupComponent);
   debugData = toSignal(this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     startWith(null),
@@ -12047,27 +12920,53 @@ var FooterComponent = class _FooterComponent {
     }),
     map((data) => data?.canSeePolicies || false)
   ));
+  /**
+   * Open support popup
+   */
+  openSupport() {
+    this.supportPopup()?.open();
+  }
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FooterComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], decls: 5, vars: 2, consts: [[1, "lg-footer"], [1, "lg-footer__version"], [1, "footer-credit"], [1, "gradient-text"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["lg-footer"]], viewQuery: function FooterComponent_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 0);
+      \u0275\u0275viewQuerySignal(ctx.supportPopup, SupportPopupComponent, 5);
+    }
+    if (rf & 2) {
+      \u0275\u0275queryAdvance();
+    }
+  }, decls: 11, vars: 5, consts: [["supportPopup", ""], [1, "lg-footer"], [1, "lg-footer__bottom"], ["type", "button", 1, "lg-footer__support-link", 3, "click"], [1, "lg-footer__version"], [1, "footer-credit"], [1, "gradient-text"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 1);
       \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 24, 24);
-      \u0275\u0275elementStart(3, "div", 1);
-      \u0275\u0275text(4);
-      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(3, "div", 2)(4, "button", 3);
+      \u0275\u0275listener("click", function FooterComponent_Template_button_click_4_listener() {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.openSupport());
+      });
+      \u0275\u0275text(5);
+      \u0275\u0275pipe(6, "translate");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(7, "div", 4);
+      \u0275\u0275text(8);
+      \u0275\u0275elementEnd()()()();
+      \u0275\u0275element(9, "lg-support-popup", null, 0);
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
       \u0275\u0275conditional(ctx.canSeePolicies() ? 2 : -1);
-      \u0275\u0275advance(2);
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 3, "footer.support"), " ");
+      \u0275\u0275advance(3);
       \u0275\u0275textInterpolate1("v", ctx.appVersion());
     }
   }, dependencies: [
     FadeInComponent,
-    TranslatePipe
-  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
+    TranslatePipe,
+    SupportPopupComponent
+  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link[_ngcontent-%COMP%] {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link[_ngcontent-%COMP%]:hover {\n  opacity: 1;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FooterComponent, [{
@@ -12090,18 +12989,28 @@ var FooterComponent = class _FooterComponent {
           <a [attr.href]="environment.policies.cookiePolicyUrl"
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
-        <div class="lg-footer__version">v{{ appVersion() }}</div>
+        <div class="lg-footer__bottom">
+          <button type="button" 
+                  class="lg-footer__support-link"
+                  (click)="openSupport()">
+            {{ 'footer.support' | translate }}
+          </button>
+          <div class="lg-footer__version">v{{ appVersion() }}</div>
+        </div>
       </footer>
     </lg-fade-in>
+    
+    <lg-support-popup #supportPopup></lg-support-popup>
   `, imports: [
       FadeInComponent,
       TranslatePipe,
-      JsonPipe
-    ], styles: ["/* angular:styles/component:scss;3ae1138e553f3e94c4d703cd827dca2fc1e216812b4b779c542b3166161407c2;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__version {\n  margin-top: 0.5em;\n  color: #888;\n  opacity: 0.7;\n}\n.footer-credit {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
+      JsonPipe,
+      SupportPopupComponent
+    ], styles: ["/* angular:styles/component:scss;e2a7dd1fa08939401add8eb3c290788106ecb65cc9d5b5cb98a6834eea2779f5;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link:hover {\n  opacity: 1;\n}\n.footer-credit {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 71 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 105 });
 })();
 
 // src/app/shared/view/ui/demo-informer.component.ts
@@ -12238,7 +13147,7 @@ var DemoInformerComponent = class _DemoInformerComponent {
 })();
 
 // src/app/shared/view/ui/layout/header.component.ts
-var _c03 = () => ({ exact: false });
+var _c04 = () => ({ exact: false });
 var _c13 = () => ["route-active"];
 var _forTrack02 = ($index, $item) => $item.label;
 function HeaderComponent_Conditional_3_Template(rf, ctx) {
@@ -12263,7 +13172,7 @@ function HeaderComponent_For_13_Template(rf, ctx) {
   }
   if (rf & 2) {
     const item_r3 = ctx.$implicit;
-    \u0275\u0275property("routerLink", item_r3.link)("routerLinkActive", \u0275\u0275pureFunction0(6, _c13))("routerLinkActiveOptions", \u0275\u0275pureFunction0(7, _c03));
+    \u0275\u0275property("routerLink", item_r3.link)("routerLinkActive", \u0275\u0275pureFunction0(6, _c13))("routerLinkActiveOptions", \u0275\u0275pureFunction0(7, _c04));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 4, item_r3.label), " ");
   }
@@ -12344,15 +13253,15 @@ var HeaderComponent = class _HeaderComponent {
       \u0275\u0275advance(3);
       \u0275\u0275conditional(ctx.window.history.state && ctx.window.history.length > 1 ? 3 : -1);
       \u0275\u0275advance(3);
-      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(13, _c03))("routerLinkActive", \u0275\u0275pureFunction0(14, _c13))("routerLink", "/home");
+      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(13, _c04))("routerLinkActive", \u0275\u0275pureFunction0(14, _c13))("routerLink", "/home");
       \u0275\u0275advance(6);
       \u0275\u0275repeater(ctx.items());
       \u0275\u0275advance(3);
-      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(15, _c03))("routerLinkActive", \u0275\u0275pureFunction0(16, _c13))("routerLink", "/settings");
+      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(15, _c04))("routerLinkActive", \u0275\u0275pureFunction0(16, _c13))("routerLink", "/settings");
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(17, _c03))("routerLinkActive", \u0275\u0275pureFunction0(18, _c13))("routerLink", "/widgets");
+      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(17, _c04))("routerLinkActive", \u0275\u0275pureFunction0(18, _c13))("routerLink", "/widgets");
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(19, _c03))("routerLinkActive", \u0275\u0275pureFunction0(20, _c13))("routerLink", "/docs");
+      \u0275\u0275property("routerLinkActiveOptions", \u0275\u0275pureFunction0(19, _c04))("routerLinkActive", \u0275\u0275pureFunction0(20, _c13))("routerLink", "/docs");
     }
   }, dependencies: [
     RouterLink,
@@ -12449,12 +13358,12 @@ var HeaderComponent = class _HeaderComponent {
 })();
 
 // src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts
-var _c04 = ["*"];
+var _c05 = ["*"];
 var OverlayActionsComponent = class _OverlayActionsComponent {
   static \u0275fac = function OverlayActionsComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _OverlayActionsComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OverlayActionsComponent, selectors: [["lg-overlay-actions"]], ngContentSelectors: _c04, decls: 2, vars: 0, consts: [[1, "overlay-actions"]], template: function OverlayActionsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OverlayActionsComponent, selectors: [["lg-overlay-actions"]], ngContentSelectors: _c05, decls: 2, vars: 0, consts: [[1, "overlay-actions"]], template: function OverlayActionsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275projectionDef();
       \u0275\u0275elementStart(0, "div", 0);
@@ -12478,7 +13387,7 @@ var OverlayActionsComponent = class _OverlayActionsComponent {
 })();
 
 // src/app/shared/view/ui/storage-quota-warning.component.ts
-var _c05 = () => ({ tab: "backup" });
+var _c06 = () => ({ tab: "backup" });
 var _c14 = () => ["/settings"];
 var _c22 = (a0) => ({ percent: a0 });
 function StorageQuotaWarningComponent_Conditional_0_Template(rf, ctx) {
@@ -12490,7 +13399,7 @@ function StorageQuotaWarningComponent_Conditional_0_Template(rf, ctx) {
   }
   if (rf & 2) {
     const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275property("queryParams", \u0275\u0275pureFunction0(6, _c05))("routerLink", \u0275\u0275pureFunction0(7, _c14));
+    \u0275\u0275property("queryParams", \u0275\u0275pureFunction0(6, _c06))("routerLink", \u0275\u0275pureFunction0(7, _c14));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(2, 3, "quota.near-limit", \u0275\u0275pureFunction1(8, _c22, ctx_r0.percentUsed())), " ");
   }

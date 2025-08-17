@@ -1,6 +1,78 @@
 [
   {
     "type": "file",
+    "name": "00-beta-version[en].md",
+    "language": "en",
+    "path": "00-beta-version[en].md",
+    "title": "🚧 Beta Version",
+    "order": -2,
+    "data": {
+      "title": "🚧 Beta Version",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[pt].md",
+    "language": "pt",
+    "path": "00-beta-version[pt].md",
+    "title": "🚧 Versão Beta",
+    "order": -2,
+    "data": {
+      "title": "🚧 Versão Beta",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[ru].md",
+    "language": "ru",
+    "path": "00-beta-version[ru].md",
+    "title": "🚧 Бета версия",
+    "order": -2,
+    "data": {
+      "title": "🚧 Бета версия",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[en].md",
+    "language": "en",
+    "path": "00-browser-recommendations[en].md",
+    "title": "🌐 Browser Recommendations",
+    "order": -1,
+    "data": {
+      "title": "🌐 Browser Recommendations",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[pt].md",
+    "language": "pt",
+    "path": "00-browser-recommendations[pt].md",
+    "title": "🌐 Recomendações de Navegador",
+    "order": -1,
+    "data": {
+      "title": "🌐 Recomendações de Navegador",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[ru].md",
+    "language": "ru",
+    "path": "00-browser-recommendations[ru].md",
+    "title": "🌐 Рекомендации по браузерам",
+    "order": -1,
+    "data": {
+      "title": "🌐 Рекомендации по браузерам",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
     "name": "01-offline-and-installation[en].md",
     "language": "en",
     "path": "01-offline-and-installation[en].md",
