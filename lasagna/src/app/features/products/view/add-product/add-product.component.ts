@@ -24,7 +24,7 @@ import {
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
-import {AnalyticsService} from '../../../../shared/service/analytics.service';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 
 @Component({

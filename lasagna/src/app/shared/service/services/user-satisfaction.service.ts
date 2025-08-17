@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {FeedbackData, GoogleSheetsConfig, GoogleSheetsService} from './google-sheets.service';
-import {AnalyticsService} from '../analytics.service';
+import {AnalyticsService} from './analytics.service';
 import {VersionService} from './version.service';
 
 export interface SatisfactionData {

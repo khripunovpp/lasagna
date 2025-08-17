@@ -38,6 +38,7 @@ import {
 import {injectQueryParams} from './shared/helpers';
 import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
+import {supportInitializer} from './shared/service/initializers/support.initializer';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {SettingsService} from './features/settings/service/services/settings.service';
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
@@ -61,6 +62,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideAnimationsAsync(),
     provideAppInitializer(appInitializer),
+    provideAppInitializer(supportInitializer),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'

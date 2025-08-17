@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, viewChild} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {JsonPipe} from '@angular/common';
@@ -7,6 +7,7 @@ import {environment} from '../../../../../environments/environment';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map, switchMap, startWith, filter} from 'rxjs';
+import {SupportPopupComponent} from '../support-popup.component';
 
 
 @Component({
@@ -30,9 +31,18 @@ import {map, switchMap, startWith, filter} from 'rxjs';
           <a [attr.href]="environment.policies.cookiePolicyUrl"
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
-        <div class="lg-footer__version">v{{ appVersion() }}</div>
+        <div class="lg-footer__bottom">
+          <button type="button" 
+                  class="lg-footer__support-link"
+                  (click)="openSupport()">
+            {{ 'footer.support' | translate }}
+          </button>
+          <div class="lg-footer__version">v{{ appVersion() }}</div>
+        </div>
       </footer>
     </lg-fade-in>
+    
+    <lg-support-popup #supportPopup></lg-support-popup>
   `,
   styles: [`
     .lg-footer {
@@ -44,10 +54,33 @@ import {map, switchMap, startWith, filter} from 'rxjs';
       padding-top: 100px;
     }
 
-    .lg-footer__version {
+    .lg-footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
       margin-top: 0.5em;
+    }
+
+    .lg-footer__version {
       color: #888;
       opacity: 0.7;
+    }
+
+    .lg-footer__support-link {
+      background: none;
+      border: none;
+      color: #888;
+      font-family: inherit;
+      font-size: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    .lg-footer__support-link:hover {
+      opacity: 1;
     }
 
     .footer-credit {
@@ -65,7 +98,8 @@ import {map, switchMap, startWith, filter} from 'rxjs';
   imports: [
     FadeInComponent,
     TranslatePipe,
-    JsonPipe
+    JsonPipe,
+    SupportPopupComponent
   ]
 })
 export class FooterComponent {
@@ -74,6 +108,7 @@ export class FooterComponent {
   readonly appVersion = this.versionService.version;
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
+  readonly supportPopup = viewChild(SupportPopupComponent);
 
   readonly debugData = toSignal(this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
@@ -135,4 +170,12 @@ export class FooterComponent {
     }),
     map(data => data?.canSeePolicies || false)
   ));
+
+  /**
+   * Open support popup
+   */
+  openSupport(): void {
+    this.supportPopup()?.open();
+  }
 }
+

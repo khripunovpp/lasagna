@@ -26,7 +26,7 @@ import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateService} from '@ngx-translate/core';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
-import {AnalyticsService} from '../../../../shared/service/analytics.service';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 
 @Component({

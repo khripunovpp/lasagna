@@ -1,6 +1,6 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
-import {AnalyticsService} from '../../service/analytics.service';
+import {AnalyticsService} from '../../service/services/analytics.service';
 
 @Component({
   selector: 'lg-pwa-install',
