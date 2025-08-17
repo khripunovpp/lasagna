@@ -168,8 +168,8 @@
         }
       </ng-template>
 
-      <lg-table-card>
-        @if (result()) {
+      @if (result()?.calculation?.ingredients?.length) {
+        <lg-table-card>
           <table>
             <colgroup>
               <col span="1" style="width: 1%;">
@@ -219,9 +219,19 @@
               }
             </tbody>
           </table>
-        } @else {
-        }
-      </lg-table-card>
+        </lg-table-card>
+      } @else {
+        <lg-flex-column position="start"
+                        size="medium">
+          To calculate a recipe, you need to add ingredients first.
+
+          <lg-button [size]="'medium'"
+                     [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
+                     [style]="'success'">
+            Edit Recipe
+          </lg-button>
+        </lg-flex-column>
+      }
     </lg-flex-column>
   </lg-container>
 </lg-fade-in>

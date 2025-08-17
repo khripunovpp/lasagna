@@ -40,15 +40,10 @@ export class DexieIndexDbService extends Dexie {
     color: '#7f81fb',
     label: 'IndexDB'
   });
-  cacheLogger = this._loggerClass.withContext({
-    color: '#7fc3fb',
-    label: 'IndexDB:Cache'
-  });
   indexLogger = this._loggerClass.withContext({
     color: '#7fdb7f',
     label: 'IndexDB:Index'
   });
-  private _cache = new Map<string, Map<string, any>>();
   readonly #_fieldsMap: Partial<Record<string, string[]>> = {
     [Stores.INVOICES]: [
       'uuid',
@@ -188,21 +183,10 @@ export class DexieIndexDbService extends Dexie {
   async getOne<T = any>(
     storeKey: Stores,
     uuid: string,
-    useCache = true
   ): Promise<T> {
-    if (useCache) {
-      const cache = this._getCache(storeKey, uuid);
-      if (cache) {
-        this.cacheLogger.log(storeKey, 'Got one item from cache:', {uuid, cache});
-        return cache as T;
-      }
-    }
     // @ts-ignore
     const response = await (this[storeKey] as Table<any>).get(uuid);
     this.logger.log(storeKey, 'Got one item from store:', {response});
-    if (useCache) {
-      this._putCache(storeKey, uuid, response);
-    }
     return response
   }
 
@@ -296,7 +280,6 @@ export class DexieIndexDbService extends Dexie {
       } catch (error) {
         this.logger.error(`Error saving index for ${storeKey}:`, error);
       }
-      this._putCache(storeKey, uuid, value);
       return uuid;
     } catch (error) {
       throw error;
@@ -305,11 +288,6 @@ export class DexieIndexDbService extends Dexie {
 
   async replaceData<T = any>(storeKey: Stores, uuid: string, value: T): Promise<void> {
     const obj = {...value, uuid};
-    const cache = this._getCache(storeKey, uuid);
-    if (cache) {
-      this.cacheLogger.log(storeKey, 'Flushing cache for item:', {uuid, cache});
-      this._removeCache(storeKey, uuid);
-    }
     // @ts-ignore
     await (this[storeKey] as Table<any>).put(obj);
     if (storeKey === Stores.INDICES) {
@@ -322,7 +300,6 @@ export class DexieIndexDbService extends Dexie {
     } catch (error) {
       this.logger.error(`Error saving index for ${storeKey}:`, error);
     }
-    this._putCache(storeKey, uuid, value);
   }
 
   async replaceManyData<T = any>(storeKey: Stores, values: T[]): Promise<void> {
@@ -338,7 +315,6 @@ export class DexieIndexDbService extends Dexie {
     }
     for (const value of valuesWithUuid) {
       await this.flexsearchIndexService.addToIndex(storeKey, value);
-      this._putCache(storeKey, value.uuid, value);
     }
     // Сохраняем индекс только если есть данные
     if (valuesWithUuid.length > 0) {
@@ -380,15 +356,10 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async remove(storeKey: Stores, uuid: string): Promise<void> {
-    const cache = this._getCache(storeKey, uuid);
     // @ts-ignore
     await (this[storeKey] as Table<any>).delete(uuid);
     if (storeKey === Stores.INDICES) {
       return;
-    }
-    if (cache) {
-      this.cacheLogger.log(storeKey, 'Flushing cache for item:', {uuid, cache});
-      this._removeCache(storeKey, uuid);
     }
     await this.flexsearchIndexService.removeFromIndex(storeKey, uuid);
     // Сохраняем индекс только если есть данные
@@ -406,9 +377,6 @@ export class DexieIndexDbService extends Dexie {
     if (storeKey === Stores.INDICES) {
       return;
     }
-    for (const uuid of uuids) {
-      this._removeCache(storeKey, uuid);
-    }
     await this.flexsearchIndexService.removeFromIndex(storeKey, uuids);
     // Сохраняем индекс только если есть данные
     if (uuids.length > 0) {
@@ -423,7 +391,7 @@ export class DexieIndexDbService extends Dexie {
   async clear(storeKey: Stores): Promise<void> {
     // @ts-ignore
     await (this[storeKey] as Table<any>).clear();
-    this._dropCache(storeKey);
+
     if (storeKey !== Stores.INDICES) {
       await this._resetIndex(storeKey);
     }
@@ -447,7 +415,6 @@ export class DexieIndexDbService extends Dexie {
     this.logger.log(`Adding ${valuesWithUuid.length} items to index for ${storeKey}`);
     for (const value of valuesWithUuid) {
       await this.flexsearchIndexService.addToIndex(storeKey, value);
-      this._putCache(storeKey, value.uuid, value);
     }
     // Сохраняем индекс только если есть данные
     if (valuesWithUuid.length > 0) {
@@ -487,16 +454,10 @@ export class DexieIndexDbService extends Dexie {
     } catch (error) {
       this.logger.error('Error initializing indexes after restore:', error);
     }
-    // Не вызываем flushCache, чтобы избежать рекурсии
-    // await this.flushCache();
   }
 
   async flushCache(): Promise<void> {
-    this._cache.clear();
     await this.clear(Stores.INDICES);
-    // Не пересоздаем индексы здесь, чтобы избежать рекурсии
-    // await this.initIndexes();
-    this.cacheLogger.log('Cache flushed');
   }
 
   private async _collectRelations(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {
@@ -554,49 +515,6 @@ export class DexieIndexDbService extends Dexie {
     await this.flexsearchIndexService.clearIndex(storeKey);
     // Не сохраняем пустой индекс
     // await this.saveIndex(storeKey);
-  }
-
-  private _putCache(storeKey: Stores, uuid: string, value: any): void {
-    if (storeKey === Stores.INDICES) return;
-    if (!this._cache.has(storeKey)) {
-      this._cache.set(storeKey, new Map<string, any>());
-    }
-    const cache = this._cache.get(storeKey);
-    if (cache) {
-      cache.set(uuid, value);
-      this.cacheLogger.log(storeKey, 'Put item in cache:', {uuid, value});
-    } else {
-      this.cacheLogger.warn(storeKey, 'Cache not initialized for store:', storeKey);
-    }
-  }
-
-  private _getCache(storeKey: Stores, uuid: string): any | undefined {
-    const cache = this._cache.get(storeKey);
-    if (cache?.has(uuid)) {
-      this.cacheLogger.log(storeKey, 'Got item from cache:', {uuid});
-      return cache.get(uuid);
-    }
-    this.cacheLogger.warn(storeKey, 'Item not found in cache:', {uuid});
-    return undefined;
-  }
-
-  private _removeCache(storeKey: Stores, uuid: string): void {
-    const cache = this._cache.get(storeKey);
-    if (cache) {
-      if (cache.has(uuid)) {
-        cache.delete(uuid);
-        this.cacheLogger.log(storeKey, 'Removed item from cache:', {uuid});
-      }
-    }
-  }
-
-  private _dropCache(storeKey: Stores): void {
-    if (this._cache.has(storeKey)) {
-      this._cache.delete(storeKey);
-      this.cacheLogger.log(storeKey, 'Cache dropped for store:', storeKey);
-    } else {
-      this.cacheLogger.warn(storeKey, 'Cache not found for store:', storeKey);
-    }
   }
 
   private _parseRelations(string: string) {
