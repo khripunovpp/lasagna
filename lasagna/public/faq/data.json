@@ -1,6 +1,84 @@
 [
   {
     "type": "file",
+    "name": "00-beta-version[en].md",
+    "language": "en",
+    "path": "00-beta-version[en].md",
+    "title": "🚧 Beta Version",
+    "order": -2,
+    "data": {
+      "title": "🚧 Beta Version",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>What does beta version mean?</summary><div><p>The app is in active development. Core functionality is stable and ready for use, but new features and improvements may appear. We don&#39;t make drastic changes that would break your data or workflow.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is my data safe in the beta version?</summary><div><p>Yes, completely. All data is stored locally on your device, and we have backup systems in place. We take data stability very seriously.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What might change?</summary><div><p>We may add new features, improve the interface, or optimize performance. All changes are aimed at improving the user experience.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How will I know about updates?</summary><div><p>The app automatically checks for updates when launched. If a new version is available, you&#39;ll see a notification with the option to update.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[pt].md",
+    "language": "pt",
+    "path": "00-beta-version[pt].md",
+    "title": "🚧 Versão Beta",
+    "order": -2,
+    "data": {
+      "title": "🚧 Versão Beta",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>O que significa versão beta?</summary><div><p>O aplicativo está em desenvolvimento ativo. A funcionalidade principal é estável e pronta para uso, mas novos recursos e melhorias podem aparecer. Não fazemos mudanças drásticas que quebrariam seus dados ou fluxo de trabalho.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Meus dados estão seguros na versão beta?</summary><div><p>Sim, completamente. Todos os dados são armazenados localmente em seu dispositivo, e temos sistemas de backup. Levamos a estabilidade dos dados muito a sério.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que pode mudar?</summary><div><p>Podemos adicionar novos recursos, melhorar a interface ou otimizar o desempenho. Todas as mudanças visam melhorar a experiência do usuário.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Como saberei sobre atualizações?</summary><div><p>O aplicativo verifica automaticamente por atualizações quando iniciado. Se uma nova versão estiver disponível, você verá uma notificação com a opção de atualizar.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[ru].md",
+    "language": "ru",
+    "path": "00-beta-version[ru].md",
+    "title": "🚧 Бета версия",
+    "order": -2,
+    "data": {
+      "title": "🚧 Бета версия",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Что означает бета версия?</summary><div><p>Приложение находится в активной разработке. Основной функционал стабилен и готов к использованию, но могут появляться новые возможности и улучшения. Мы не вносим кардинальных изменений, которые нарушили бы ваши данные или рабочий процесс.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Безопасны ли мои данные в бета версии?</summary><div><p>Да, полностью. Все данные хранятся локально на вашем устройстве, и у нас есть система резервного копирования. Мы очень серьёзно относимся к стабильности данных.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что может измениться?</summary><div><p>Мы можем добавлять новые функции, улучшать интерфейс или оптимизировать производительность. Все изменения направлены на улучшение пользовательского опыта.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Как я узнаю об обновлениях?</summary><div><p>При запуске приложения автоматически проверяются обновления. Если доступна новая версия, вы увидите уведомление с возможностью обновить.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[en].md",
+    "language": "en",
+    "path": "00-browser-recommendations[en].md",
+    "title": "🌐 Browser Recommendations",
+    "order": -1,
+    "data": {
+      "title": "🌐 Browser Recommendations",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Which browser should I use?</summary><div><p>For the best experience, we recommend modern browsers: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+), or Opera (74+). These browsers fully support all app features.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Why is it important to keep my browser updated?</summary><div><p>New browser versions include performance improvements, security updates, and support for modern web technologies. This ensures more stable and faster app performance.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What if my browser is outdated?</summary><div><p>Update your browser to the latest version. If that&#39;s not possible, try another modern browser. The app may work on older versions, but some features might be unavailable.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are mobile browsers supported?</summary><div><p>Yes, the app works excellently in mobile browsers: Safari on iOS (14+), Chrome on Android (88+), Samsung Internet (13+), and other modern mobile browsers.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Can I use the app in private/incognito mode?</summary><div><p>Yes, but note that in private mode, data may not persist between sessions. For full functionality, we recommend using normal browser mode.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[pt].md",
+    "language": "pt",
+    "path": "00-browser-recommendations[pt].md",
+    "title": "🌐 Recomendações de Navegador",
+    "order": -1,
+    "data": {
+      "title": "🌐 Recomendações de Navegador",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Qual navegador devo usar?</summary><div><p>Para a melhor experiência, recomendamos navegadores modernos: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+) ou Opera (74+). Estes navegadores suportam completamente todos os recursos do aplicativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Por que é importante manter meu navegador atualizado?</summary><div><p>Novas versões dos navegadores incluem melhorias de desempenho, atualizações de segurança e suporte para tecnologias web modernas. Isso garante um desempenho mais estável e rápido do aplicativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>E se meu navegador estiver desatualizado?</summary><div><p>Atualize seu navegador para a versão mais recente. Se isso não for possível, tente outro navegador moderno. O aplicativo pode funcionar em versões mais antigas, mas alguns recursos podem não estar disponíveis.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Navegadores móveis são suportados?</summary><div><p>Sim, o aplicativo funciona excelentemente em navegadores móveis: Safari no iOS (14+), Chrome no Android (88+), Samsung Internet (13+) e outros navegadores móveis modernos.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Posso usar o aplicativo no modo privado/incógnito?</summary><div><p>Sim, mas note que no modo privado, os dados podem não persistir entre sessões. Para funcionalidade completa, recomendamos usar o modo normal do navegador.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[ru].md",
+    "language": "ru",
+    "path": "00-browser-recommendations[ru].md",
+    "title": "🌐 Рекомендации по браузерам",
+    "order": -1,
+    "data": {
+      "title": "🌐 Рекомендации по браузерам",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Какой браузер лучше использовать?</summary><div><p>Для наилучшего опыта рекомендуем использовать современные браузеры: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+) или Opera (74+). Эти браузеры полностью поддерживают все функции приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Почему важно обновлять браузер?</summary><div><p>Новые версии браузеров содержат улучшения производительности, безопасности и поддержку современных веб-технологий. Это обеспечивает более стабильную и быструю работу приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что делать, если браузер устарел?</summary><div><p>Обновите браузер до последней версии. Если это невозможно, попробуйте другой современный браузер. Приложение может работать на старых версиях, но некоторые функции могут быть недоступны.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Поддерживаются ли мобильные браузеры?</summary><div><p>Да, приложение отлично работает в мобильных браузерах: Safari на iOS (14+), Chrome на Android (88+), Samsung Internet (13+) и других современных мобильных браузерах.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Можно ли использовать приложение в приватном режиме?</summary><div><p>Да, но учтите, что в приватном режиме данные могут не сохраняться между сессиями. Для полноценной работы рекомендуем обычный режим браузера.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
     "name": "01-offline-and-installation[en].md",
     "language": "en",
     "path": "01-offline-and-installation[en].md",
