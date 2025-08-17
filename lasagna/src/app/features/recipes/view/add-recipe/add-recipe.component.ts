@@ -15,7 +15,10 @@ import {Recipe} from '../../service/models/Recipe';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '../../../../shared/helpers';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
@@ -42,97 +45,98 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
   ],
   template: `
 
-      <lg-fade-in>
-          <lg-container>
-              <lg-flex-column size="medium">
-                  @if (addedRecipeInformerUUID();as uuid) {
-                      <p>
-                        {{ 'recipe.added-informer' | translate }} <a routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
-                      </p>
-                  }
-                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-flex-row [mobileMode]="true" [center]="true">
-                          <lg-title lgSelfStart>
-                              <span class="text-active">{{ recipe()?.name }}</span>
-                          </lg-title>
-                      </lg-flex-row>
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-column size="medium">
+          @if (addedRecipeInformerUUID(); as uuid) {
+            <p>
+              {{ 'recipe.added-informer' | translate }} <a
+              routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
+            </p>
+          }
+          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+            <lg-flex-row [mobileMode]="true" [center]="true">
+              <lg-title lgSelfStart>
+                <span class="text-active">{{ recipe()?.name }}</span>
+              </lg-title>
+            </lg-flex-row>
 
-                      <lg-inline-separated-group>
-                          <ng-template lgInlineSeparatedGroup>
-                              <lg-button [flat]="true"
-                                         [link]="'/recipes/calculate/' + recipe()?.uuid"
-                                         [size]="'small'"
-                                         [style]="'primary'">
-                                  {{ 'recipe.calculate-btn'|translate }}
-                              </lg-button>
-                          </ng-template>
+            <lg-inline-separated-group>
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button [flat]="true"
+                           [link]="'/recipes/calculate/' + recipe()?.uuid"
+                           [size]="'small'"
+                           [style]="'primary'">
+                  {{ 'recipe.calculate-btn'|translate }}
+                </lg-button>
+              </ng-template>
 
-                          @if (draftRef() && formComponent()?.form?.dirty) {
-                              <ng-template lgInlineSeparatedGroup>
-                                  <lg-fade-in>
-                                      {{ 'saved-draft-label'|translate }}
-                                  </lg-fade-in>
-                              </ng-template>
-                          }
+              @if (draftRef() && formComponent()?.form?.dirty) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-fade-in>
+                    {{ 'saved-draft-label'|translate }}
+                  </lg-fade-in>
+                </ng-template>
+              }
 
-                          <ng-template lgInlineSeparatedGroup>
-                              @if (isDraftRoute()) {
-                                  <lg-button lgShrink [style]="'danger'"
-                                             [flat]="true"
-                                             (click)="onRemoveDraft()">
-                                      {{ 'recipe.form.delete-draft-btn'|translate }}
-                                  </lg-button>
-                              } @else if (recipe()?.uuid) {
-                                  <lg-button lgShrink [style]="'danger'"
-                                             [flat]="true"
-                                             (click)="onDeleteRecipe()">
-                                      {{ 'recipe.form.delete-btn'|translate }}
-                                  </lg-button>
-                              }
-                          </ng-template>
-                      </lg-inline-separated-group>
+              <ng-template lgInlineSeparatedGroup>
+                @if (isDraftRoute()) {
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onRemoveDraft()">
+                    {{ 'recipe.form.delete-draft-btn'|translate }}
+                  </lg-button>
+                } @else if (recipe()?.uuid) {
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onDeleteRecipe()">
+                    {{ 'recipe.form.delete-btn'|translate }}
+                  </lg-button>
+                }
+              </ng-template>
+            </lg-inline-separated-group>
 
-                      @if (recipe()?.updatedAt) {
-                          <small class="text-muted text-cursive">
-                              {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
-                          </small>
-                      }
-                  } @else {
-                      <lg-title>
-                          {{ 'recipe.form.title'|translate }}
-                      </lg-title>
-                  }
-              </lg-flex-column>
+            @if (recipe()?.updatedAt) {
+              <small class="text-muted text-cursive">
+                {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
+              </small>
+            }
+          } @else {
+            <lg-title>
+              {{ 'recipe.form.title'|translate }}
+            </lg-title>
+          }
+        </lg-flex-column>
 
-              <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
+        <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
 
-              <lg-flex-row [mobileMode]="true" [relaxed]="true">
-                  @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                                 lgShrink
-                                 (click)="onEditRecipe()">
-                          @if (formComponent()?.form?.dirty || draftRef()) {
-                              {{ 'recipe.form.save-btn.edit.active'|translate }}
-                          } @else {
-                              {{ 'recipe.form.save-btn.edit.disabled'|translate }}
-                          }
-                      </lg-button>
-                  } @else {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                                 lgShrink
-                                 (click)="onAddRecipe()">
-                          @if (formComponent()?.form?.dirty || draftRef()) {
-                              {{ 'recipe.form.save-btn.add.active'|translate }}
-                          } @else {
-                              {{ 'recipe.form.save-btn.add.disabled'|translate }}
-                          }
-                      </lg-button>
-                  }
+        <lg-flex-row [mobileMode]="true" [relaxed]="true">
+          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onEditRecipe()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'recipe.form.save-btn.edit.active'|translate }}
+              } @else {
+                {{ 'recipe.form.save-btn.edit.disabled'|translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onAddRecipe()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'recipe.form.save-btn.add.active'|translate }}
+              } @else {
+                {{ 'recipe.form.save-btn.add.disabled'|translate }}
+              }
+            </lg-button>
+          }
 
 
-              </lg-flex-row>
-          </lg-container>
-      </lg-fade-in>
+        </lg-flex-row>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `
@@ -154,7 +158,7 @@ export class AddRecipeComponent
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
   draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
   draftByExistingRecipe = computed(() => {
-    return this.draftRef()!.meta?.['uuid'];
+    return this.draftRef()?.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
   draftRecipeModel?: Recipe;
@@ -224,10 +228,10 @@ export class AddRecipeComponent
 
   async onEditRecipe() {
     if (!this.formComponent()?.validateForm()
-        || !this.recipe()) {
-        return;
-      }
-      await this._editRecipe(this.recipe()!);
+      || !this.recipe()) {
+      return;
+    }
+    await this._editRecipe(this.recipe()!);
   }
 
   onRemoveDraft() {
@@ -245,8 +249,9 @@ export class AddRecipeComponent
     });
   }
 
-  private _addRecipe(recipe: Recipe) {
-    return this._recipesRepository.addRecipe(recipe).then((newUUID) => {
+  private async _addRecipe(recipe: Recipe) {
+    try {
+      const newUUID = await this._recipesRepository.addRecipe(recipe);
       // Track recipe creation analytics
       this._analyticsService.trackRecipeCreated(recipe.name, {
         recipe_uuid: newUUID,
@@ -258,23 +263,29 @@ export class AddRecipeComponent
 
       this.formComponent()?.resetForm();
       this._notificationsService.success('notifications.recipe.added');
-      this.recipe.set(undefined);
 
       if (this.draftRef()) {
         this._removeDraft();
       }
 
-      this._routerManager.navigateWithReset(['recipes', 'edit', newUUID]);
+
+      await this._routerManager.replace(['recipes', 'edit', newUUID]);
+
+      await this._loadRecipe(newUUID);
       return newUUID;
-    });
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+      return null;
+    }
   }
 
-  private _editRecipe(recipe: Recipe) {
+  private async _editRecipe(recipe: Recipe) {
     if (!this.draftOrRecipeUUID()) {
       return Promise.resolve();
     }
     let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
-    return this._recipesRepository.editRecipe(recipeUUID as string, recipe).then(() => {
+    try {
+      await this._recipesRepository.editRecipe(recipeUUID as string, recipe);
       this.formComponent()?.resetForm(recipe);
       this._notificationsService.success('notifications.recipe.edited');
 
@@ -282,8 +293,10 @@ export class AddRecipeComponent
         this._removeDraft();
       }
 
-      this._routerManager.navigateWithReset(['recipes', 'edit', recipeUUID]);
-    });
+      this._routerManager.replace(['recipes', 'edit', recipeUUID]);
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   private _removeDraft() {
@@ -296,9 +309,9 @@ export class AddRecipeComponent
 
   private _loadRecipe(uuid?: string) {
     if (!uuid) {
-      return;
+      return Promise.resolve();
     }
-    this._recipesRepository.getOne(uuid).then(recipe => {
+    return this._recipesRepository.getOne(uuid).then(recipe => {
       if (!recipe) {
         return;
       }

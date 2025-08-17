@@ -253,7 +253,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      this._routerManager.navigateWithReset(['products/edit/' + newUUID]);
+      this._routerManager.replace(['products/edit/' + newUUID]);
     });
   }
 
@@ -270,7 +270,7 @@ export class AddProductComponent
         this._removeDraft();
       }
 
-      this._routerManager.navigateWithReset(['products', 'edit', productUUID]);
+      this._routerManager.replace(['products', 'edit', productUUID]);
     });
   }
 

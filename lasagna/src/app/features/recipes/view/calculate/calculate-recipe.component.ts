@@ -14,7 +14,7 @@ import {ContainerComponent} from '../../../../shared/view/ui/layout/container/co
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe.service';
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
-import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
+import {CurrencyPipe, DecimalPipe, JsonPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 
@@ -80,6 +80,7 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
     ReactiveFormsModule,
     CalculationPriceModifiersComponent,
     SelfStartDirective,
+    JsonPipe,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
