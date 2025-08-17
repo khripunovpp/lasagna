@@ -1,22 +1,22 @@
 import {AfterViewInit, Component, computed, input, OnDestroy, output, resource, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {FlexColumnComponent} from '../../ui/layout/flex-column.component';
-import {InputComponent} from '../../ui/form/input.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
-import {ButtonComponent} from '../../ui/layout/button.component';
+import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
+import {InputComponent} from '../../../shared/view/ui/form/input.component';
+import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
+import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
 
-import {ExpandDirective} from '../../directives/expand.directive';
-import {ParseMathDirective} from '../../directives/parse-math.directive';
-import {FlexRowComponent} from '../../ui/layout/flex-row.component';
-import {NumberInputComponent} from '../../ui/form/number-input.component';
-import {ControlComponent} from '../../ui/form/control-item/control.component';
-import {OpenFoodFactsService} from '../../../service/services/openfoodfacts.service';
-import {ShrinkDirective} from '../../directives/shrink.directive';
-import {BarcodeReaderService} from '../../../service/services/barcode-reader.service';
-import {ProductsRepository} from '../../../../features/products/service/products.repository';
-import {NotificationsService} from '../../../service/services/notifications.service';
-import {Product} from '../../../../features/products/service/Product';
+import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
+import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';
+import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
+import {NumberInputComponent} from '../../../shared/view/ui/form/number-input.component';
+import {ControlComponent} from '../../../shared/view/ui/form/control-item/control.component';
+import {OpenFoodFactsService} from '../../../shared/service/services/openfoodfacts.service';
+import {ShrinkDirective} from '../../../shared/view/directives/shrink.directive';
+import {BarcodeReaderService} from '../../../shared/service/services/barcode-reader.service';
+import {ProductsRepository} from '../../products/service/products.repository';
+import {NotificationsService} from '../../../shared/service/services/notifications.service';
+import {Product} from '../../products/service/Product';
 import {TranslatePipe} from '@ngx-translate/core';
 
 

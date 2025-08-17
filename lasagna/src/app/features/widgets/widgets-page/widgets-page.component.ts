@@ -2,16 +2,16 @@ import {Component} from '@angular/core';
 import {EggsWidgetComponent} from '../eggs-widget/eggs-widget.component';
 
 
-import {ContainerComponent} from '../../ui/layout/container/container.component';
-import {FlexRowComponent} from '../../ui/layout/flex-row.component';
-import {TitleComponent} from '../../ui/layout/title/title.component';
+import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
+import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
+import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 
 
 import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
-import {FadeInComponent} from '../../ui/fade-in.component';
+import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
 
-import {TabDirective} from '../../ui/tabs/tab.directive';
-import {TabsComponent} from '../../ui/tabs/tabs.component';
+import {TabDirective} from '../../../shared/view/ui/tabs/tab.directive';
+import {TabsComponent} from '../../../shared/view/ui/tabs/tabs.component';
 
 import {JellyWidgetComponent} from '../jelly-widget/jelly-widget.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -37,9 +37,9 @@ import {TranslatePipe} from '@ngx-translate/core';
              <lg-eggs-widget></lg-eggs-widget>
           </ng-template>
 
-          <ng-template [label]="'widgets.page.barcode-seeker' | translate" alias="barcode-seeker" lgTab>
-              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>
-          </ng-template>
+<!--          <ng-template [label]="'widgets.page.barcode-seeker' | translate" alias="barcode-seeker" lgTab>-->
+<!--              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>-->
+<!--          </ng-template>-->
         </lg-tabs>
       </lg-container>
     </lg-fade-in>

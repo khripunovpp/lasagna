@@ -237,7 +237,7 @@ export const routes: Routes = [{
 
     {
       path: 'widgets',
-      loadComponent: () => import('./shared/view/widgets/widgets-page/widgets-page.component')
+      loadComponent: () => import('./features/widgets/widgets-page/widgets-page.component')
         .then(m => m.WidgetsPageComponent)
     },
 

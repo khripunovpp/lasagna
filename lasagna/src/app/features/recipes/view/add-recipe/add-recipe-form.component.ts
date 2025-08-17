@@ -17,7 +17,7 @@ import {ExpandDirective} from '../../../../shared/view/directives/expand.directi
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
-import {ProductWidgetsComponent} from '../../../../shared/view/widgets/product-widgets.component';
+import {ProductWidgetsComponent} from '../../../widgets/product-widgets.component';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
 import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
 import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';

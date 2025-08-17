@@ -10,7 +10,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
     <textarea #input
               (input)="onChangeInput($event)"
               [attr.rows]="rows()"
-              [maxLength]="maxlength()"
+              [attr.maxlength]="maxlength() || null"
               [placeholder]="placeholder()"
               [readonly]="readOnly()"
               [value]="value"

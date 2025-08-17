@@ -18,7 +18,7 @@ import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
 import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
-import {AmountWidgetsComponent} from '../../../../shared/view/widgets/amount-widgets.component';
+import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
