@@ -55,7 +55,6 @@ import {
 } from "./chunk-LKA4ZC5L.js";
 import {
   CalculateRecipeService,
-  FormTemplateService,
   SelectResourcesService
 } from "./chunk-HOV4BABQ.js";
 import "./chunk-HLCLXN3F.js";
@@ -93,20 +92,17 @@ import "./chunk-CTLQRZYU.js";
 import "./chunk-5WJUMO7X.js";
 import {
   ActivatedRoute,
-  Router,
   RouterLink
 } from "./chunk-JRXEEUAD.js";
 import "./chunk-5MLLJAOM.js";
 import {
   CurrencyPipe,
   DecimalPipe,
-  JsonPipe,
   NgClass,
   NgTemplateOutlet
 } from "./chunk-76JI64DZ.js";
 import {
   Component,
-  Injector,
   ViewChild,
   ViewEncapsulation,
   computed,
@@ -253,6 +249,11 @@ function CalculationPriceModifiersComponent_Conditional_4_Template(rf, ctx) {
   }
 }
 var CalculationPriceModifiersComponent = class _CalculationPriceModifiersComponent {
+  constructor() {
+    this.recipePriceAdditionsForm.valueChanges.subscribe((v) => {
+      console.log("Form value changed:", v);
+    });
+  }
   recipePriceAdditionsForm = new FormGroup({
     action: new FormControl("add"),
     value: new FormControl(0),
@@ -416,7 +417,7 @@ var CalculationPriceModifiersComponent = class _CalculationPriceModifiersCompone
         multi: true
       }
     ], styles: ["/* angular:styles/component:scss;14e881af935180b22b68ccc68b4f13155618549aaf92cd70df292b3324465246;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/recipes/view/calculate/calculation-price-modifiers/calculation-price-modifiers.component.ts */\n:host {\n  width: 100%;\n}\n/*# sourceMappingURL=calculation-price-modifiers.component.css.map */\n"] }]
-  }], null, null);
+  }], () => [], null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CalculationPriceModifiersComponent, { className: "CalculationPriceModifiersComponent", filePath: "src/app/features/recipes/view/calculate/calculation-price-modifiers/calculation-price-modifiers.component.ts", lineNumber: 75 });
@@ -797,17 +798,11 @@ function CalculateRecipeComponent_Conditional_14_Template(rf, ctx) {
 var CalculateRecipeComponent = class _CalculateRecipeComponent {
   _aRoute;
   _calculateRecipeService;
-  _formTemplateService;
-  _injector;
-  _router;
   _notificationService;
   _analyticsService;
-  constructor(_aRoute, _calculateRecipeService, _formTemplateService, _injector, _router, _notificationService, _analyticsService) {
+  constructor(_aRoute, _calculateRecipeService, _notificationService, _analyticsService) {
     this._aRoute = _aRoute;
     this._calculateRecipeService = _calculateRecipeService;
-    this._formTemplateService = _formTemplateService;
-    this._injector = _injector;
-    this._router = _router;
     this._notificationService = _notificationService;
     this._analyticsService = _analyticsService;
     this._aRoute.data.pipe(takeUntilDestroyed()).subscribe((data) => {
@@ -823,10 +818,10 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
       }
       const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
       this.recipePriceAdditionsForm.patchValue({
-        action: recipePriceModifiers?.action || "add",
-        unit: recipePriceModifiers?.unit || "gram",
-        value: recipePriceModifiers?.value || 0,
-        type: recipePriceModifiers?.type || "per_unit"
+        action: recipePriceModifiers?.action,
+        unit: recipePriceModifiers?.unit,
+        value: recipePriceModifiers?.value,
+        type: recipePriceModifiers?.type
       });
     });
   }
@@ -907,7 +902,9 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
     return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
   });
   totalPriceDifference = computed(() => {
-    return (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
+    const diff = (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
+    const threshold = 1e-6;
+    return Math.abs(diff) < threshold ? 0 : diff;
   });
   totalPriceWithAdditions = computed(() => {
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
@@ -943,7 +940,7 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
     }
   }
   static \u0275fac = function CalculateRecipeComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CalculateRecipeComponent)(\u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(CalculateRecipeService), \u0275\u0275directiveInject(FormTemplateService), \u0275\u0275directiveInject(Injector), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(NotificationsService), \u0275\u0275directiveInject(AnalyticsService));
+    return new (__ngFactoryType__ || _CalculateRecipeComponent)(\u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(CalculateRecipeService), \u0275\u0275directiveInject(NotificationsService), \u0275\u0275directiveInject(AnalyticsService));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CalculateRecipeComponent, selectors: [["lg-calculate-recipe"]], viewQuery: function CalculateRecipeComponent_Query(rf, ctx) {
     if (rf & 1) {
@@ -1042,8 +1039,7 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
       TranslatePipe,
       ReactiveFormsModule,
       CalculationPriceModifiersComponent,
-      SelfStartDirective,
-      JsonPipe
+      SelfStartDirective
     ], encapsulation: ViewEncapsulation.None, providers: [
       SelectResourcesService,
       CurrencyPipe
@@ -1285,7 +1281,7 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
   </lg-container>
 </lg-fade-in>
 `, styles: ["/* angular:styles/component:scss;064d551d6d109f516da0bcfcbc4ae8e532f8260293a0d6b1d530d78dc0fca352;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/recipes/view/calculate/calculate-recipe.component.ts */\nlg-number-input .lg-number-input {\n  width: 100px;\n}\n/*# sourceMappingURL=calculate-recipe.component.css.map */\n"] }]
-  }], () => [{ type: ActivatedRoute }, { type: CalculateRecipeService }, { type: FormTemplateService }, { type: Injector }, { type: Router }, { type: NotificationsService }, { type: AnalyticsService }], { chartPrices: [{
+  }], () => [{ type: ActivatedRoute }, { type: CalculateRecipeService }, { type: NotificationsService }, { type: AnalyticsService }], { chartPrices: [{
     type: ViewChild,
     args: ["priceChart", { read: BaseChartDirective }]
   }], chartWeight: [{
@@ -1294,9 +1290,9 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CalculateRecipeComponent, { className: "CalculateRecipeComponent", filePath: "src/app/features/recipes/view/calculate/calculate-recipe.component.ts", lineNumber: 97 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CalculateRecipeComponent, { className: "CalculateRecipeComponent", filePath: "src/app/features/recipes/view/calculate/calculate-recipe.component.ts", lineNumber: 85 });
 })();
 export {
   CalculateRecipeComponent
 };
-//# sourceMappingURL=chunk-HCKBU5G4.js.map
+//# sourceMappingURL=chunk-UQXUIVJG.js.map

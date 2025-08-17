@@ -2207,7 +2207,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-HCKBU5G4.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-UQXUIVJG.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
