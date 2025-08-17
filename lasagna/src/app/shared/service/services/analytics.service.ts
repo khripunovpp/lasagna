@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 export interface AnalyticsEvent {
   event_category: string;
   event_label?: string;
   value?: number;
+
   [key: string]: any;
 }
 
@@ -26,7 +27,7 @@ export class AnalyticsService {
       event_label: 'recipe_creation'
     },
     PRODUCT_CREATED: {
-      goal_id: 'product_created', 
+      goal_id: 'product_created',
       goal_name: 'Product Created',
       event_category: 'product',
       event_label: 'product_creation'
@@ -39,7 +40,7 @@ export class AnalyticsService {
     },
     INVOICE_CREATED: {
       goal_id: 'invoice_created',
-      goal_name: 'Invoice Created', 
+      goal_name: 'Invoice Created',
       event_category: 'invoice',
       event_label: 'invoice_creation'
     },
@@ -54,10 +55,17 @@ export class AnalyticsService {
       goal_name: 'PWA Install Declined',
       event_category: 'pwa',
       event_label: 'install_declined'
+    },
+    SUPPORT_MESSAGE_SENT: {
+      goal_id: 'support_message_sent',
+      goal_name: 'Support Message Sent',
+      event_category: 'support',
+      event_label: 'message_sent'
     }
   };
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Track a custom event
@@ -229,6 +237,23 @@ export class AnalyticsService {
   }
 
   /**
+   * Track support message sent
+   */
+  trackSupportMessageSent(additionalData?: any): void {
+    const eventData: AnalyticsEvent = {
+      event_category: this.GOALS.SUPPORT_MESSAGE_SENT.event_category,
+      event_label: this.GOALS.SUPPORT_MESSAGE_SENT.event_label,
+      value: 1,
+    };
+
+    if (additionalData) {
+      Object.assign(eventData, additionalData);
+    }
+
+    this.trackEvent('support_message_sent', eventData);
+  }
+
+  /**
    * Track error events
    */
   trackError(errorType: string, errorMessage: string, additionalData?: any): void {
@@ -257,11 +282,11 @@ export class AnalyticsService {
    */
   isAnalyticsAvailable(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     const consent = localStorage.getItem('cookie-consent');
     const hasConsent = consent === 'all' || consent === 'analytics';
     const hasGtag = typeof window.gtag === 'function';
-    
+
     return hasConsent && hasGtag;
   }
 
@@ -270,12 +295,12 @@ export class AnalyticsService {
    */
   getAnalyticsStatus(): { available: boolean; consent: string | null; gtag: boolean } {
     if (typeof window === 'undefined') {
-      return { available: false, consent: null, gtag: false };
+      return {available: false, consent: null, gtag: false};
     }
-    
+
     const consent = localStorage.getItem('cookie-consent');
     const hasGtag = typeof window.gtag === 'function';
-    
+
     return {
       available: (consent === 'all' || consent === 'analytics') && hasGtag,
       consent,
@@ -289,4 +314,4 @@ declare global {
   interface Window {
     gtag: (...args: any[]) => void;
   }
-} 
+}

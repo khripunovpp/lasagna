@@ -20,7 +20,7 @@ const setEnv = () => {
   let envLoaded = false;
   for (const envPath of envPaths) {
     try {
-      const result = require('dotenv').config({ path: envPath });
+      const result = require('dotenv').config({path: envPath});
       if (!result.error) {
         console.log(colors.green(`Loaded .env from: ${envPath}`));
         envLoaded = true;
@@ -37,18 +37,26 @@ const setEnv = () => {
 
   // `environment.ts` file structure
   const envConfigFile = `export const environment = {
-  production: true,
-  googleSheets: {
-    appsScriptUrl: '${process.env['NG_APP_APPS_SCRIPT_URL'] || ''}'
-  },
-  policies: {
-    privacyPolicyUrl: '${process.env['PRIVACY_POLICY_URL'] || ''}',
-    termsOfServiceUrl: '${process.env['TERMS_OF_SERVICE_URL'] || ''}',
-    cookiePolicyUrl: '${process.env['COOKIE_POLICY_URL'] || ''}'
-  },
-  version: '${appVersion}'
-};
-`;
+    production: true,
+    googleSheets: {
+      appsScriptUrl: '${process.env['NG_APP_APPS_SCRIPT_URL'] || ''}'
+    },
+    policies: {
+      privacyPolicyUrl: '${process.env['PRIVACY_POLICY_URL'] || ''}',
+      termsOfServiceUrl: '${process.env['TERMS_OF_SERVICE_URL'] || ''}',
+      cookiePolicyUrl: '${process.env['COOKIE_POLICY_URL'] || ''}'
+    },
+    smtp: {
+      apiKey: '${process.env['SEND_PULSE_API_KEY'] || ''}',
+      apiSecret: '${process.env['SEND_PULSE_API_SECRET'] || ''}',
+      domain: '${process.env['SEND_PULSE_DOMAIN'] || ''}',
+      supportEmail: '${process.env['SUPPORT_EMAIL']}',
+      senderEmail: '${process.env['SENDER_EMAIL']}',
+      senderName: '${process.env['SENDER_NAME']}'
+    },
+    version: '${appVersion}'
+  };
+  `;
 
   console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
   console.log(colors.cyan(envConfigFile));
