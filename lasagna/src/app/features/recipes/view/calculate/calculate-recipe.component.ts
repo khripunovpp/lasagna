@@ -1,7 +1,7 @@
 import {
+  AfterViewInit,
   Component,
   computed,
-  Injector,
   model,
   OnInit,
   Provider,
@@ -9,44 +9,32 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe.service';
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
-import {CurrencyPipe, DecimalPipe, JsonPipe, NgClass, NgTemplateOutlet} from '@angular/common';
+import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
-
-
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {FormTemplateService} from '../../../../shared/service/services/form-templates.service';
-
-
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
-
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {BaseChartDirective} from 'ng2-charts';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
-
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {randomRGB} from '../../../../shared/helpers/color.helper';
 import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {TranslatePipe} from '@ngx-translate/core';
-
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
-
-
 import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
@@ -80,7 +68,7 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
     ReactiveFormsModule,
     CalculationPriceModifiersComponent,
     SelfStartDirective,
-    JsonPipe,
+
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -95,13 +83,10 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
   ]
 })
 export class CalculateRecipeComponent
-  implements OnInit {
+  implements OnInit, AfterViewInit {
   constructor(
     private _aRoute: ActivatedRoute,
     private _calculateRecipeService: CalculateRecipeService,
-    private _formTemplateService: FormTemplateService,
-    private _injector: Injector,
-    private _router: Router,
     private _notificationService: NotificationsService,
     private _analyticsService: AnalyticsService,
   ) {
@@ -128,10 +113,10 @@ export class CalculateRecipeComponent
       const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
 
       this.recipePriceAdditionsForm.patchValue({
-        action: recipePriceModifiers?.action || 'add',
-        unit: recipePriceModifiers?.unit || 'gram',
-        value: recipePriceModifiers?.value || 0,
-        type: recipePriceModifiers?.type || 'per_unit',
+        action: recipePriceModifiers?.action,
+        unit: recipePriceModifiers?.unit,
+        value: recipePriceModifiers?.value,
+        type: recipePriceModifiers?.type,
       })
     });
   }
@@ -228,7 +213,9 @@ export class CalculateRecipeComponent
   });
 
   totalPriceDifference = computed(() => {
-    return (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
+    const diff = (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
+    const threshold = 0.000001
+    return Math.abs(diff) < threshold ? 0 : diff;
   });
 
   totalPriceWithAdditions = computed(() => {
