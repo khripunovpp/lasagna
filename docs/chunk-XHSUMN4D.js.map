@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/service/providers/router-manager.provider.ts"],
+  "sourcesContent": ["import {InjectionToken} from '@angular/core';\nimport {Router} from '@angular/router';\n\nexport const ROUTER_MANAGER = new InjectionToken<{\n  replace: (command: any[] | any) => Promise<any>\n  navigateWithReset: (command: any[] | any) => void\n  navigate: (command: any[] | any) => void\n}>('RouterManager');\n\nexport const ROUTER_MANAGER_PROVIDER = {\n  provide: ROUTER_MANAGER,\n  useFactory: (\n    router: Router\n  ) => {\n    return {\n      navigateWithReset: async function (command: any[] | any) {\n        this.navigate(command);\n        this.replace(command);\n      },\n      replace: function (command: any[] | any) {\n        return router.navigateByUrl('/', {skipLocationChange: true}).then(() => {\n          return router.navigate([router.createUrlTree(command).toString()]);\n        });\n      },\n      navigate: function (command: any[] | any) {\n        router.navigate(command);\n      }\n    }\n  },\n  deps: [\n    Router\n  ]\n};\n"],
+  "mappings": ";;;;;;;;AAGO,IAAM,iBAAiB,IAAI,eAI/B,eAAe;AAEX,IAAM,0BAA0B;EACrC,SAAS;EACT,YAAY,CACV,WACE;AACF,WAAO;MACL,mBAAmB,eAAgB,SAAoB;AACrD,aAAK,SAAS,OAAO;AACrB,aAAK,QAAQ,OAAO;MACtB;MACA,SAAS,SAAU,SAAoB;AACrC,eAAO,OAAO,cAAc,KAAK,EAAC,oBAAoB,KAAI,CAAC,EAAE,KAAK,MAAK;AACrE,iBAAO,OAAO,SAAS,CAAC,OAAO,cAAc,OAAO,EAAE,SAAQ,CAAE,CAAC;QACnE,CAAC;MACH;MACA,UAAU,SAAU,SAAoB;AACtC,eAAO,SAAS,OAAO;MACzB;;EAEJ;EACA,MAAM;IACJ;;;",
+  "names": []
+}
