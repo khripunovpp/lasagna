@@ -30,7 +30,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 
 
 @Component({
-  selector: 'app-add-invoice',
+  selector: 'lg-add-invoice',
   standalone: true,
   imports: [
     ContainerComponent,

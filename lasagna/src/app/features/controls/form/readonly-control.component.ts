@@ -27,6 +27,7 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
         display: flex;
         user-select: none;
         pointer-events: none;
+        width: 100%;
       }
 
       .lg-readonly-control {
