@@ -67,9 +67,9 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
             @if (product()?.pricePerUnit) {
               <span
                 lgSelfStart>
-                (<span [translate]="'per-unit.label'"
-                       [translateParams]="{unit:product()?.unit | unitString | translate}"></span>
-                {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
+                ({{ product()?.pricePerUnit | userCurrency:'1.0-5' }}
+                <span [translate]="'per-unit.label'"
+                       [translateParams]="{unit:product()?.unit | unitString | translate}"></span>)
               </span>
             }
           </lg-flex-row>

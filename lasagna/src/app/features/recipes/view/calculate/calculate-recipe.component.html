@@ -223,12 +223,12 @@
       } @else {
         <lg-flex-column position="start"
                         size="medium">
-          To calculate a recipe, you need to add ingredients first.
+          {{ 'recipe.calculation.empty-state.text' | translate }}
 
           <lg-button [size]="'medium'"
                      [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
                      [style]="'success'">
-            Edit Recipe
+            {{ 'recipe.calculation.empty-state.btn' | translate }}
           </lg-button>
         </lg-flex-column>
       }
