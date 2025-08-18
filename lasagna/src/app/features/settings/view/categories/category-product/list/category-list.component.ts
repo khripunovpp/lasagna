@@ -48,7 +48,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                                          [size]="'tiny'"
                                          [icon]="true"
                                          (click)="deleteCategory(category)">
-                                  <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                  <mat-icon aria-hidden="false" aria-label="Delete"
                                             fontIcon="close"></mat-icon>
                               </lg-button>
                           </lg-flex-row>

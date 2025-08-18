@@ -20,6 +20,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../shared/service/services/select-resources.service';
 import {debounceTime, of, Subject, switchMap} from 'rxjs';
 import {MultiselectItem} from './multiselect.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 export interface autocompleteItem {
@@ -45,7 +46,7 @@ export interface autocompleteItem {
                  [placeholder]="placeholder"
                  [searchFn]="searchFn"
                  bindLabel="name"
-                 notFoundText="Start typing to search">
+                 [notFoundText]="'search.not-found' | translate">
         <ng-template let-item="item" ng-label-tmp>
           {{ item?.name ?? item?.value ?? item }}
         </ng-template>
@@ -63,7 +64,8 @@ export interface autocompleteItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
-    NgTagTemplateDirective
+    NgTagTemplateDirective,
+    TranslatePipe
   ],
   styles: [
     `

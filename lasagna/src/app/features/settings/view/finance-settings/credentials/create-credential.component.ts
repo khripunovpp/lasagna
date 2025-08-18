@@ -110,7 +110,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                   @if (isMobile()) {
                     {{ 'settings.credentials.delete-row'|translate }}
                   } @else {
-                    <mat-icon aria-hidden="false" aria-label="Example home icon"
+                    <mat-icon aria-hidden="false" aria-label="Delete"
                               fontIcon="close"></mat-icon>
                   }
                 </lg-button>

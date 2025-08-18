@@ -1,5 +1,6 @@
 import {Component, Input, signal} from '@angular/core';
 import {FlexColumnComponent} from './layout/flex-column.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-expander',
@@ -10,7 +11,7 @@ import {FlexColumnComponent} from './layout/flex-column.component';
       @if (opened()) {
         <div class="expander__header">
           <div (click)="toggle()" class="expander__close">
-            {{ closeLabel }}
+            {{ 'close-label' | translate }}
           </div>
         </div>
 
@@ -22,14 +23,15 @@ import {FlexColumnComponent} from './layout/flex-column.component';
       } @else {
         <div class="expander__header">
           <div (click)="toggle()" class="expander__trigger">
-            {{ openLabel }}
+            {{ 'open-label' | translate }}
           </div>
         </div>
       }
     </div>
   `,
   imports: [
-    FlexColumnComponent
+    FlexColumnComponent,
+    TranslatePipe
   ],
   styles: [
     `

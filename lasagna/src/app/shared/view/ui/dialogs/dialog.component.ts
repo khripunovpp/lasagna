@@ -3,6 +3,7 @@ import {CardComponent} from '../card/card.component';
 import {ButtonComponent} from '../layout/button.component';
 import {FocusTrapDirective} from '../../directives/focus-trap.directive';
 import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-dialog',
@@ -16,7 +17,7 @@ import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
             @if (closeButton()) {
               <button class="dialog__close-button"
                       aria-label="Close dialog">
-                Close
+                {{ 'close-label' | translate }}
               </button>
             }
             <lg-card (click)="$event.stopPropagation()">
@@ -50,7 +51,8 @@ import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
   imports: [
     CardComponent,
     ButtonComponent,
-    FocusTrapDirective
+    FocusTrapDirective,
+    TranslatePipe
   ],
   styles: [`
     .dialog {
