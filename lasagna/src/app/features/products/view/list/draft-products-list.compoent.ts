@@ -14,7 +14,7 @@ import {DraftForm, NotificationsService, SelectionZoneService} from '../../../..
 import {ProductsRepository} from '../../../../shared/service/repositories';
 import {Product} from '../../service/Product';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {CATEGORIZED_PRODUCTS_LIST} from '../../../../shared/service/tokens/categorized-products-list.token';
+import {CATEGORIZED_PRODUCTS_LIST} from '../../service/categorized-products-list.token';
 import {ProductDTO, ProductScheme} from '../../service/Product.scheme';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 

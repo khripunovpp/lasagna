@@ -26,7 +26,7 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./shared/view/application/application.component')
+          loadComponent: () => import('./features/home/view/application/application.component')
             .then(m => m.ApplicationComponent),
           data: {
             canSeePolicies: true,

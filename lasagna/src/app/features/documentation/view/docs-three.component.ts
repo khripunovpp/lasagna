@@ -5,7 +5,7 @@ import {MatIcon} from '@angular/material/icon';
 import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
-import {DropdownComponent} from '../../../shared/view/ui/dropdown/dropdown.component';
+import {DropdownComponent} from '../../controls/dropdown/dropdown.component';
 import {DocsService} from '../service/docs.service';
 
 

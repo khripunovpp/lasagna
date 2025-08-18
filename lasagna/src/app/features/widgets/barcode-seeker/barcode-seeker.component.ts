@@ -2,15 +2,15 @@ import {AfterViewInit, Component, computed, input, OnDestroy, output, resource, 
 import {FormsModule} from '@angular/forms';
 
 import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
-import {InputComponent} from '../../../shared/view/ui/form/input.component';
+import {InputComponent} from '../../controls/form/input.component';
 import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
 
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
-import {NumberInputComponent} from '../../../shared/view/ui/form/number-input.component';
-import {ControlComponent} from '../../../shared/view/ui/form/control-item/control.component';
+import {NumberInputComponent} from '../../controls/form/number-input.component';
+import {ControlComponent} from '../../controls/form/control-item/control.component';
 import {OpenFoodFactsService} from '../../../shared/service/services/openfoodfacts.service';
 import {ShrinkDirective} from '../../../shared/view/directives/shrink.directive';
 import {BarcodeReaderService} from '../../../shared/service/services/barcode-reader.service';

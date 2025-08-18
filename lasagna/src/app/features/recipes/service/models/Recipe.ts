@@ -5,7 +5,7 @@ import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
 import {estimateColor, isColorString, parseFloatingNumber} from '../../../../shared/helpers';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
-import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
+import {RecipePriceModifier} from '../PriceModifier';
 
 export class Recipe {
   constructor(

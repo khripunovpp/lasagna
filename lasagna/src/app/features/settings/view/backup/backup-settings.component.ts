@@ -5,7 +5,7 @@ import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.compo
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {UploadComponent} from '../../../../shared/view/ui/form/upload.component';
+import {UploadComponent} from '../../../controls/form/upload.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {injectQueryParams} from '../../../../shared/helpers';
 import {NotificationsService, TransferDataService} from '../../../../shared/service/services';

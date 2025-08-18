@@ -1,5 +1,5 @@
 import {Component, effect, input, output, signal, viewChild} from '@angular/core';
-import {DialogComponent} from '../../../../../shared/view/ui/dialog/dialog.component';
+import {DialogComponent} from '../../../../../shared/view/ui/dialogs/dialog.component';
 import {CredentialsType} from '../../../../settings/service/types/credentials.types';
 import {CredentialsRepository} from '../../../../settings/service/repositories/credentials.repository';
 import {NotificationsService} from '../../../../../shared/service/services';

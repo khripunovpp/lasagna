@@ -17,7 +17,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
-import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
+import {TextareaComponent} from '../../../../controls/form/textarea.component';
 import {Credential} from '../../../../settings/service/models/Credential';
 import {TranslatePipe} from '@ngx-translate/core';
 

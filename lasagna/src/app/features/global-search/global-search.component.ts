@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, computed, effect, HostListener, inject} from '@angular/core';
-import {InputComponent} from '../../shared/view/ui/form/input.component';
+import {InputComponent} from '../controls/form/input.component';
 import {GlobalSearchService, SearchResultContext} from './global-search.service';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {combineLatestWith, debounceTime, from, Observable, of, startWith, switchMap, tap} from 'rxjs';
 import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {FadeInComponent} from '../../shared/view/ui/fade-in.component';
-import {FocusTrapDirective} from '../../shared/view/ui/focus-trap.directive';
+import {FocusTrapDirective} from '../../shared/view/directives/focus-trap.directive';
 import {groupBy} from '../../shared/helpers/grouping.helper';
 import {TitleComponent} from '../../shared/view/ui/layout/title/title.component';
 import {TranslatePipe} from '@ngx-translate/core';

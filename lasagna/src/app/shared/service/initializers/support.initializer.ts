@@ -1,5 +1,5 @@
 import {inject} from '@angular/core';
-import {SupportService} from '../services/support.service';
+import {SupportService} from '../../../features/home/service/support.service';
 import {environment} from '../../../../environments/environment';
 
 /**

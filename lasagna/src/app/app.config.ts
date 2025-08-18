@@ -24,7 +24,7 @@ import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
 import {SETTINGS} from './features/settings/service/providers/settings.token';
-import {CATEGORIZED_RECIPES_LIST} from './shared/service/tokens/categorized-recipes-list.token';
+import {CATEGORIZED_RECIPES_LIST} from './features/recipes/service/categorized-recipes-list.token';
 import {from, map, shareReplay, switchMap} from 'rxjs';
 import {Recipe} from './features/recipes/service/models/Recipe';
 import {RecipeDTO} from './features/recipes/service/Recipe.scheme';

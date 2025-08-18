@@ -1,16 +1,16 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {PwaInstallComponent} from './shared/view/ui/pwa-install.component';
+import {PwaInstallComponent} from './features/home/view/pwa-install.component';
 import {GlobalSearchComponent} from './features/global-search/global-search.component';
-import {LastBackupInformerComponent} from './shared/view/ui/last-backup-informer.component';
+import {LastBackupInformerComponent} from './features/home/view/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {FontTesterComponent} from './shared/view/ui/font-tester.component';
+import {FontTesterComponent} from './features/home/view/font-tester.component';
 import {DemoService} from './shared/service/services/demo.service';
 import {FooterComponent} from './shared/view/ui/layout/footer.component';
 import {HeaderComponent} from './shared/view/ui/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
-import {StorageQuotaWarningComponent} from './shared/view/ui/storage-quota-warning.component';
-import {SatisfactionPopupComponent} from './shared/view/ui/satisfaction-popup.component';
+import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
+import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
 
 @Component({
   selector: 'app-root',

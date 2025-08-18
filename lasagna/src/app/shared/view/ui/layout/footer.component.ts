@@ -7,7 +7,7 @@ import {environment} from '../../../../../environments/environment';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map, switchMap, startWith, filter} from 'rxjs';
-import {SupportPopupComponent} from '../support-popup.component';
+import {SupportPopupComponent} from '../../../../features/home/view/support-popup.component';
 
 
 @Component({
@@ -32,7 +32,7 @@ import {SupportPopupComponent} from '../support-popup.component';
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
         <div class="lg-footer__bottom">
-          <button type="button" 
+          <button type="button"
                   class="lg-footer__support-link"
                   (click)="openSupport()">
             {{ 'footer.support' | translate }}
@@ -41,7 +41,7 @@ import {SupportPopupComponent} from '../support-popup.component';
         </div>
       </footer>
     </lg-fade-in>
-    
+
     <lg-support-popup #supportPopup></lg-support-popup>
   `,
   styles: [`

@@ -5,10 +5,10 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
 
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 
-import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
-import {TextareaComponent} from '../../../../../shared/view/ui/form/textarea.component';
-import {CheckboxComponent} from '../../../../../shared/view/ui/form/chckbox.component';
-import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
+import {InputComponent} from '../../../../controls/form/input.component';
+import {TextareaComponent} from '../../../../controls/form/textarea.component';
+import {CheckboxComponent} from '../../../../controls/form/chckbox.component';
+import {NumberInputComponent} from '../../../../controls/form/number-input.component';
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 
@@ -21,12 +21,12 @@ import {Tax} from '../../../service/models/Tax';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
+import {ControlComponent} from '../../../../controls/form/control-item/control.component';
 import {SelfStartDirective} from '../../../../../shared/view/directives/self-start.directive';
 import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
-import {ControlBoxComponent} from '../../../../../shared/view/ui/form/control-box.component';
+import {ControlBoxComponent} from '../../../../controls/form/control-box.component';
 import {NgTemplateOutlet} from '@angular/common';
 import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.directive';
 

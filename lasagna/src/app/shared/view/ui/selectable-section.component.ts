@@ -1,7 +1,7 @@
 import {Component, ContentChildren, effect, input, Optional, output, QueryList, SkipSelf} from '@angular/core';
 import {CardListItemDirective} from './card/card-list-item.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {CheckboxComponent} from './form/chckbox.component';
+import {CheckboxComponent} from '../../../features/controls/form/chckbox.component';
 import {ButtonComponent} from './layout/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {SelectionZoneService} from '../../service/services';
