@@ -11,17 +11,17 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-DDTEGC6D.js";
+} from "./chunk-ZSPSGRGF.js";
 import {
   UserCurrencyPipe
-} from "./chunk-V55IKGEM.js";
+} from "./chunk-MTFF6LZJ.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
-import "./chunk-HFOJUAWS.js";
+import "./chunk-DC7OXWQA.js";
 import {
   InputComponent
-} from "./chunk-CIBUGNJD.js";
+} from "./chunk-24GIFUTY.js";
 import {
   CATEGORIZED_RECIPES_LIST
 } from "./chunk-O3UDK5TJ.js";
@@ -32,7 +32,7 @@ import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-ZCQS34BO.js";
+} from "./chunk-JSK3IVZN.js";
 import {
   ROUTER_MANAGER_PROVIDER
 } from "./chunk-XHSUMN4D.js";
@@ -44,7 +44,7 @@ import {
 } from "./chunk-5JBPEQZK.js";
 import {
   TextareaComponent
-} from "./chunk-FTNOIBWW.js";
+} from "./chunk-2JOH5Z5B.js";
 import {
   ControlComponent
 } from "./chunk-PCNJOXTY.js";
@@ -58,7 +58,7 @@ import {
 import "./chunk-C7YIU4ER.js";
 import {
   TimeAgoPipe
-} from "./chunk-BQCFSJSJ.js";
+} from "./chunk-VGY5V7FI.js";
 import {
   FlexColumnComponent
 } from "./chunk-WKEFA3OS.js";
@@ -80,7 +80,7 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-ZB7BR4U5.js";
+} from "./chunk-TANJAAUF.js";
 import {
   DocsService
 } from "./chunk-HLCLXN3F.js";
@@ -110,7 +110,7 @@ import {
   toObservable,
   toSignal,
   ɵNgNoValidate
-} from "./chunk-3FS5QDEG.js";
+} from "./chunk-FGMQFOLX.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
@@ -2171,7 +2171,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-OGFWTUCW.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-YJNZGB4D.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2183,15 +2183,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-KFSVAA7I.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-WBRN2MDF.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-BH4WVEDK.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-BH4WVEDK.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2201,7 +2201,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-BH4WVEDK.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2211,7 +2211,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-7W75KG6Q.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-TMDNNN7Y.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2224,15 +2224,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-4OMWGW3T.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-C2YP6FAV.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-JEA6QRWV.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-JEA6QRWV.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2242,7 +2242,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-JEA6QRWV.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2267,11 +2267,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-XYLVIPB6.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-FY2EKYJL.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-4UAV3XFO.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-337UQJIR.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2301,7 +2301,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-25S76JM6.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-MPWLZ6KE.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2311,15 +2311,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-SVUJKWS2.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-XCKA6EI3.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-XORYCU7E.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-FRVJPBHG.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-XORYCU7E.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-FRVJPBHG.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2328,15 +2328,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-LVVVLMCF.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-M4PKLUXV.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-2625L3ZI.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-7AJIXZVG.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-2625L3ZI.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-7AJIXZVG.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2347,7 +2347,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-J5LQA5QF.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-JTS6B4WP.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2355,11 +2355,11 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-CRBZZUPY.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-ZBBSDLEE.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-AJK7IVSR.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-CMCVDEOS.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
