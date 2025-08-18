@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/pipes/userCurrency.pipe.ts"],
+  "sourcesContent": ["import {DecimalPipe} from '@angular/common';\nimport {inject, Pipe} from '@angular/core';\nimport {SETTINGS} from '../../../features/settings/service/providers/settings.token';\nimport {currencyStringToSymbol} from '../../helpers/assets/currency.helper';\n\n@Pipe({\n  name: 'userCurrency',\n  standalone: true,\n})\nexport class UserCurrencyPipe {\n  decimalPipe = inject(DecimalPipe);\n  userSettings = inject(SETTINGS);\n\n  transform(value?: string | number, digitInfo: string = '1.0-0') {\n    const currency: string = this.userSettings()['currency'] || 'USD';\n    const currencySymbol = currencyStringToSymbol(currency);\n\n    return this.decimalPipe.transform(value, digitInfo) + ' ' + currencySymbol;\n\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;AASM,IAAO,mBAAP,MAAO,kBAAgB;EAC3B,cAAc,OAAO,WAAW;EAChC,eAAe,OAAO,QAAQ;EAE9B,UAAU,OAAyB,YAAoB,SAAO;AAC5D,UAAM,WAAmB,KAAK,aAAY,EAAG,UAAU,KAAK;AAC5D,UAAM,iBAAiB,uBAAuB,QAAQ;AAEtD,WAAO,KAAK,YAAY,UAAU,OAAO,SAAS,IAAI,MAAM;EAE9D;;qCAVW,mBAAgB;EAAA;2FAAhB,mBAAgB,MAAA,KAAA,CAAA;;;sEAAhB,kBAAgB,CAAA;UAJ5B;WAAK;MACJ,MAAM;MACN,YAAY;KACb;;;",
+  "names": []
+}

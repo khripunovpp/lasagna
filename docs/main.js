@@ -11,17 +11,20 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-OC65FULW.js";
+} from "./chunk-RJRNZ3WI.js";
+import {
+  UserCurrencyPipe
+} from "./chunk-7Y6GLMQD.js";
 import {
   GroupSortService
 } from "./chunk-KBVHATZI.js";
-import "./chunk-NZCFNOA5.js";
+import "./chunk-5CQRNPJI.js";
 import {
   InputComponent
-} from "./chunk-4H75HVAQ.js";
+} from "./chunk-I3JUUYW6.js";
 import {
   CATEGORIZED_RECIPES_LIST
-} from "./chunk-YVI4JC4E.js";
+} from "./chunk-O3UDK5TJ.js";
 import {
   PortalComponent
 } from "./chunk-OAK3DILL.js";
@@ -29,23 +32,23 @@ import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-5WGFG7NC.js";
+} from "./chunk-ZCQS34BO.js";
 import {
   ROUTER_MANAGER_PROVIDER
 } from "./chunk-XHSUMN4D.js";
 import {
   ControlsRowComponent
-} from "./chunk-GKQRENE7.js";
+} from "./chunk-UHHJ4AUW.js";
 import {
   AnalyticsService
 } from "./chunk-5JBPEQZK.js";
 import {
   TextareaComponent
-} from "./chunk-GJB5OQQ6.js";
+} from "./chunk-LSGDE2OU.js";
 import {
   ControlComponent
-} from "./chunk-USUFS2HF.js";
-import "./chunk-KX57H5F3.js";
+} from "./chunk-PCNJOXTY.js";
+import "./chunk-222CPMRQ.js";
 import {
   ExpandDirective
 } from "./chunk-OCPTIUJK.js";
@@ -55,7 +58,7 @@ import {
 import "./chunk-C7YIU4ER.js";
 import {
   TimeAgoPipe
-} from "./chunk-VW7UVYKG.js";
+} from "./chunk-RWMTLK2E.js";
 import {
   FlexColumnComponent
 } from "./chunk-WKEFA3OS.js";
@@ -77,7 +80,7 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-HOV4BABQ.js";
+} from "./chunk-P4V7CRMQ.js";
 import {
   DocsService
 } from "./chunk-HLCLXN3F.js";
@@ -107,7 +110,7 @@ import {
   toObservable,
   toSignal,
   ɵNgNoValidate
-} from "./chunk-ZBHDZDKU.js";
+} from "./chunk-44YNW6NC.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
@@ -154,6 +157,7 @@ import {
 import {
   AsyncPipe,
   CommonModule,
+  DecimalPipe,
   JsonPipe,
   Location,
   NgTemplateOutlet,
@@ -2167,7 +2171,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-3MQWE2IF.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-7HATIORI.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2179,15 +2183,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-7PIQEVIZ.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-E6J6EWQP.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-WPPIOW2J.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-TAB6TAKN.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-WPPIOW2J.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-TAB6TAKN.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2197,7 +2201,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-WPPIOW2J.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-TAB6TAKN.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2207,7 +2211,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-UQXUIVJG.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-ZUYY6SVN.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2220,15 +2224,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-PSRHT3Q2.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-NREPJMS5.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-VOOZK2OK.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-AB65T5HG.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-VOOZK2OK.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-AB65T5HG.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2238,7 +2242,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-VOOZK2OK.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-AB65T5HG.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2263,11 +2267,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-QME626CC.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-M3H2PCS7.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-P7NPZOAQ.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-AQSSTXVU.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2297,7 +2301,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-CTARJ7US.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-O72PUMQC.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2307,15 +2311,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-YDZOXYU6.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-SX6CZODX.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-3D4TPN3O.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-MI64ZMSK.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-3D4TPN3O.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-MI64ZMSK.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2324,15 +2328,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-RXSDQDMV.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-YAU6EF2G.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-ILSHIR53.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-57FHGTVI.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-ILSHIR53.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-57FHGTVI.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2343,7 +2347,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-2LA5TRNB.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-TVHBGWES.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2351,11 +2355,11 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-WQKDXMOB.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-OR3X6MLF.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-UAFC5ZK3.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-NZLMPMJL.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
@@ -10570,7 +10574,7 @@ var SendPulseService = class _SendPulseService {
   }], null, null);
 })();
 
-// src/app/shared/service/services/support.service.ts
+// src/app/features/home/service/support.service.ts
 var SupportService = class _SupportService {
   sendPulseService = inject(SendPulseService);
   analyticsService = inject(AnalyticsService);
@@ -11412,7 +11416,7 @@ var appConfig = {
   ]
 };
 
-// src/app/shared/view/ui/pwa-install.component.ts
+// src/app/features/home/view/pwa-install.component.ts
 function PwaInstallComponent_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -11481,11 +11485,11 @@ var PwaInstallComponent = class _PwaInstallComponent {
     }
   `, imports: [
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;25b948535c624d82af95fda8121e85cb54bb6594e5ccc9bc881003a67efa58a1;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/pwa-install.component.ts */\n:host {\n  display: contents;\n}\nbutton {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;25b948535c624d82af95fda8121e85cb54bb6594e5ccc9bc881003a67efa58a1;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/pwa-install.component.ts */\n:host {\n  display: contents;\n}\nbutton {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/shared/view/ui/pwa-install.component.ts", lineNumber: 42 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/features/home/view/pwa-install.component.ts", lineNumber: 42 });
 })();
 
 // src/app/features/global-search/global-search.component.ts
@@ -12136,7 +12140,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GlobalSearchComponent, { className: "GlobalSearchComponent", filePath: "src/app/features/global-search/global-search.component.ts", lineNumber: 258 });
 })();
 
-// src/app/shared/view/ui/last-backup-informer.component.ts
+// src/app/features/home/view/last-backup-informer.component.ts
 var _c02 = () => ["/settings"];
 var _c12 = () => ({ download_backup: true, tab: "backup" });
 function LastBackupInformerComponent_Conditional_0_Conditional_1_Template(rf, ctx) {
@@ -12260,17 +12264,17 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
       TitleCasePipe,
       RouterLink,
       TranslatePipe
-    ], styles: ["/* angular:styles/component:scss;394b761ca9df344d04e068aad8d4094f72d16b67c69a501ffa5abbbf5ed5b672;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/last-backup-informer.component.ts */\n:host {\n  display: contents;\n}\na {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;394b761ca9df344d04e068aad8d4094f72d16b67c69a501ffa5abbbf5ed5b672;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/last-backup-informer.component.ts */\n:host {\n  display: contents;\n}\na {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */\n"] }]
   }], () => [], { onClick: [{
     type: HostListener,
     args: ["click", ["$event"]]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/shared/view/ui/last-backup-informer.component.ts", lineNumber: 52 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LastBackupInformerComponent, { className: "LastBackupInformerComponent", filePath: "src/app/features/home/view/last-backup-informer.component.ts", lineNumber: 52 });
 })();
 
-// src/app/shared/view/ui/font-tester.component.ts
+// src/app/features/home/view/font-tester.component.ts
 var FontTesterComponent = class _FontTesterComponent {
   route;
   renderer;
@@ -12309,10 +12313,10 @@ var FontTesterComponent = class _FontTesterComponent {
   }], () => [{ type: ActivatedRoute }, { type: Renderer2 }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FontTesterComponent, { className: "FontTesterComponent", filePath: "src/app/shared/view/ui/font-tester.component.ts", lineNumber: 8 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FontTesterComponent, { className: "FontTesterComponent", filePath: "src/app/features/home/view/font-tester.component.ts", lineNumber: 8 });
 })();
 
-// src/app/shared/view/ui/support-popup.component.ts
+// src/app/features/home/view/support-popup.component.ts
 var _c03 = (a0) => ({ count: a0 });
 function SupportPopupComponent_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
@@ -12802,11 +12806,11 @@ var SupportPopupComponent = class _SupportPopupComponent {
         }
       </lg-flex-column>
     </lg-dialog>
-  `, styles: ["/* angular:styles/component:scss;81e0bd55176842e8e441408f01db9b4020f857ae889d914d22416d9a8cced6a4;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/support-popup.component.ts */\n.support-content {\n  text-align: center;\n}\n.support-content__description {\n  margin: 0 0 24px 0;\n  color: var(--text-secondary-color, #666);\n  line-height: 1.5;\n}\n.support-content__form {\n  width: 100%;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.support-content__char-count {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999);\n  margin-top: 4px;\n}\n.support-content__rate-info {\n  background-color: var(--info-light-color, #e3f2fd);\n  border: 1px solid var(--info-color, #2196f3);\n  border-radius: 8px;\n  padding: 12px;\n  font-size: 14px;\n  color: var(--info-dark-color, #1565c0);\n  text-align: center;\n}\n.support-content__errors {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.support-content__error {\n  background-color: var(--error-light-color, #ffebee);\n  border: 1px solid var(--error-color, #f44336);\n  border-radius: 8px;\n  padding: 8px 12px;\n  font-size: 14px;\n  color: var(--error-dark-color, #c62828);\n}\n.support-content__icon {\n  font-size: 48px;\n  line-height: 1;\n  margin-bottom: 16px;\n  display: block;\n}\n@media (max-width: 480px) {\n  .support-content__form {\n    gap: 12px;\n  }\n  .support-content__icon {\n    font-size: 40px;\n  }\n}\n/*# sourceMappingURL=support-popup.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;81e0bd55176842e8e441408f01db9b4020f857ae889d914d22416d9a8cced6a4;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/support-popup.component.ts */\n.support-content {\n  text-align: center;\n}\n.support-content__description {\n  margin: 0 0 24px 0;\n  color: var(--text-secondary-color, #666);\n  line-height: 1.5;\n}\n.support-content__form {\n  width: 100%;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.support-content__char-count {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999);\n  margin-top: 4px;\n}\n.support-content__rate-info {\n  background-color: var(--info-light-color, #e3f2fd);\n  border: 1px solid var(--info-color, #2196f3);\n  border-radius: 8px;\n  padding: 12px;\n  font-size: 14px;\n  color: var(--info-dark-color, #1565c0);\n  text-align: center;\n}\n.support-content__errors {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.support-content__error {\n  background-color: var(--error-light-color, #ffebee);\n  border: 1px solid var(--error-color, #f44336);\n  border-radius: 8px;\n  padding: 8px 12px;\n  font-size: 14px;\n  color: var(--error-dark-color, #c62828);\n}\n.support-content__icon {\n  font-size: 48px;\n  line-height: 1;\n  margin-bottom: 16px;\n  display: block;\n}\n@media (max-width: 480px) {\n  .support-content__form {\n    gap: 12px;\n  }\n  .support-content__icon {\n    font-size: 40px;\n  }\n}\n/*# sourceMappingURL=support-popup.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SupportPopupComponent, { className: "SupportPopupComponent", filePath: "src/app/shared/view/ui/support-popup.component.ts", lineNumber: 213 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SupportPopupComponent, { className: "SupportPopupComponent", filePath: "src/app/features/home/view/support-popup.component.ts", lineNumber: 213 });
 })();
 
 // src/app/shared/view/ui/layout/footer.component.ts
@@ -12990,7 +12994,7 @@ var FooterComponent = class _FooterComponent {
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
         <div class="lg-footer__bottom">
-          <button type="button" 
+          <button type="button"
                   class="lg-footer__support-link"
                   (click)="openSupport()">
             {{ 'footer.support' | translate }}
@@ -12999,7 +13003,7 @@ var FooterComponent = class _FooterComponent {
         </div>
       </footer>
     </lg-fade-in>
-    
+
     <lg-support-popup #supportPopup></lg-support-popup>
   `, imports: [
       FadeInComponent,
@@ -13013,7 +13017,7 @@ var FooterComponent = class _FooterComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 105 });
 })();
 
-// src/app/shared/view/ui/demo-informer.component.ts
+// src/app/features/home/view/demo-informer.component.ts
 function DemoInformerComponent_Conditional_0_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
@@ -13109,7 +13113,7 @@ var DemoInformerComponent = class _DemoInformerComponent {
   }, dependencies: [
     PortalComponent,
     TranslatePipe
-  ], styles: ["/* angular:styles/component:scss;761bf4882936eea7cbb7833f44b21a1cbd79af6d3ce4fe0ea9b5895ad9f0de6b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/demo-informer.component.ts */\n.lg-demo-informer__btn {\n  display: flex;\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  appearance: none;\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: 400;\n  line-height: 1;\n  border-radius: 50px;\n  position: relative;\n  animation: shineDemoBtn 2s infinite;\n}\n.lg-demo-informer__btn:hover {\n  background-color: #007bff;\n}\n.lg-demo-informer-tooltip span {\n  background-color: #007bff;\n  color: white;\n  padding: 10px;\n  border-radius: 8px;\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n  text-wrap: balance;\n  text-align: center;\n}\n@keyframes shineDemoBtn {\n  0% {\n    background-color: #007bff;\n  }\n  50% {\n    background-color: #0056b3;\n  }\n  100% {\n    background-color: #007bff;\n  }\n}\n/*# sourceMappingURL=demo-informer.component.css.map */\n"], encapsulation: 2, changeDetection: 0 });
+  ], styles: ["/* angular:styles/component:scss;761bf4882936eea7cbb7833f44b21a1cbd79af6d3ce4fe0ea9b5895ad9f0de6b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/demo-informer.component.ts */\n.lg-demo-informer__btn {\n  display: flex;\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  appearance: none;\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: 400;\n  line-height: 1;\n  border-radius: 50px;\n  position: relative;\n  animation: shineDemoBtn 2s infinite;\n}\n.lg-demo-informer__btn:hover {\n  background-color: #007bff;\n}\n.lg-demo-informer-tooltip span {\n  background-color: #007bff;\n  color: white;\n  padding: 10px;\n  border-radius: 8px;\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n  text-wrap: balance;\n  text-align: center;\n}\n@keyframes shineDemoBtn {\n  0% {\n    background-color: #007bff;\n  }\n  50% {\n    background-color: #0056b3;\n  }\n  100% {\n    background-color: #007bff;\n  }\n}\n/*# sourceMappingURL=demo-informer.component.css.map */\n"], encapsulation: 2, changeDetection: 0 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DemoInformerComponent, [{
@@ -13136,14 +13140,14 @@ var DemoInformerComponent = class _DemoInformerComponent {
   `, imports: [
       PortalComponent,
       TranslatePipe
-    ], changeDetection: ChangeDetectionStrategy.OnPush, styles: ["/* angular:styles/component:scss;761bf4882936eea7cbb7833f44b21a1cbd79af6d3ce4fe0ea9b5895ad9f0de6b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/demo-informer.component.ts */\n.lg-demo-informer__btn {\n  display: flex;\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  appearance: none;\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: 400;\n  line-height: 1;\n  border-radius: 50px;\n  position: relative;\n  animation: shineDemoBtn 2s infinite;\n}\n.lg-demo-informer__btn:hover {\n  background-color: #007bff;\n}\n.lg-demo-informer-tooltip span {\n  background-color: #007bff;\n  color: white;\n  padding: 10px;\n  border-radius: 8px;\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n  text-wrap: balance;\n  text-align: center;\n}\n@keyframes shineDemoBtn {\n  0% {\n    background-color: #007bff;\n  }\n  50% {\n    background-color: #0056b3;\n  }\n  100% {\n    background-color: #007bff;\n  }\n}\n/*# sourceMappingURL=demo-informer.component.css.map */\n"] }]
+    ], changeDetection: ChangeDetectionStrategy.OnPush, styles: ["/* angular:styles/component:scss;761bf4882936eea7cbb7833f44b21a1cbd79af6d3ce4fe0ea9b5895ad9f0de6b;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/demo-informer.component.ts */\n.lg-demo-informer__btn {\n  display: flex;\n  background-color: #007bff;\n  color: white;\n  border: none;\n  padding: 10px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  appearance: none;\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: 400;\n  line-height: 1;\n  border-radius: 50px;\n  position: relative;\n  animation: shineDemoBtn 2s infinite;\n}\n.lg-demo-informer__btn:hover {\n  background-color: #007bff;\n}\n.lg-demo-informer-tooltip span {\n  background-color: #007bff;\n  color: white;\n  padding: 10px;\n  border-radius: 8px;\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n  text-wrap: balance;\n  text-align: center;\n}\n@keyframes shineDemoBtn {\n  0% {\n    background-color: #007bff;\n  }\n  50% {\n    background-color: #0056b3;\n  }\n  100% {\n    background-color: #007bff;\n  }\n}\n/*# sourceMappingURL=demo-informer.component.css.map */\n"] }]
   }], () => [], { onDocumentClick: [{
     type: HostListener,
     args: ["document:click", ["$event"]]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DemoInformerComponent, { className: "DemoInformerComponent", filePath: "src/app/shared/view/ui/demo-informer.component.ts", lineNumber: 88 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DemoInformerComponent, { className: "DemoInformerComponent", filePath: "src/app/features/home/view/demo-informer.component.ts", lineNumber: 88 });
 })();
 
 // src/app/shared/view/ui/layout/header.component.ts
@@ -13386,7 +13390,7 @@ var OverlayActionsComponent = class _OverlayActionsComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(OverlayActionsComponent, { className: "OverlayActionsComponent", filePath: "src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts", lineNumber: 41 });
 })();
 
-// src/app/shared/view/ui/storage-quota-warning.component.ts
+// src/app/features/home/view/storage-quota-warning.component.ts
 var _c06 = () => ({ tab: "backup" });
 var _c14 = () => ["/settings"];
 var _c22 = (a0) => ({ percent: a0 });
@@ -13441,11 +13445,11 @@ var StorageQuotaWarningComponent = class _StorageQuotaWarningComponent {
         {{ 'quota.near-limit' | translate:{percent: percentUsed()} }}
       </a>
     }
-  `, styles: ["/* angular:styles/component:scss;6cb735ebd20f86c1d089947f4be4ca0e7abdb7b108e4ac113f168fe979f07758;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/storage-quota-warning.component.ts */\n:host {\n  display: contents;\n}\na {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border: 0;\n  padding: 10px 16px;\n  cursor: pointer;\n  border-radius: 0 16px 16px 0;\n  color: var(--text-color-inverse);\n  background:\n    linear-gradient(\n      45deg,\n      #ff6b6b,\n      #ffd93d);\n  background-size: calc(100% + 70px) 100%;\n  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n.overlay-actions__item--danger {\n  background: var(--button-danger-bg);\n  color: var(--button-danger-text);\n}\n/*# sourceMappingURL=storage-quota-warning.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;6cb735ebd20f86c1d089947f4be4ca0e7abdb7b108e4ac113f168fe979f07758;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/storage-quota-warning.component.ts */\n:host {\n  display: contents;\n}\na {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  border: 0;\n  padding: 10px 16px;\n  cursor: pointer;\n  border-radius: 0 16px 16px 0;\n  color: var(--text-color-inverse);\n  background:\n    linear-gradient(\n      45deg,\n      #ff6b6b,\n      #ffd93d);\n  background-size: calc(100% + 70px) 100%;\n  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\na:hover {\n  background-position: -70px 0;\n}\n.overlay-actions__item--danger {\n  background: var(--button-danger-bg);\n  color: var(--button-danger-text);\n}\n/*# sourceMappingURL=storage-quota-warning.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(StorageQuotaWarningComponent, { className: "StorageQuotaWarningComponent", filePath: "src/app/shared/view/ui/storage-quota-warning.component.ts", lineNumber: 50 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(StorageQuotaWarningComponent, { className: "StorageQuotaWarningComponent", filePath: "src/app/features/home/view/storage-quota-warning.component.ts", lineNumber: 50 });
 })();
 
 // src/app/shared/service/services/google-sheets.service.ts
@@ -13512,7 +13516,7 @@ var GoogleSheetsService = class _GoogleSheetsService {
   }], () => [{ type: HttpClient }], null);
 })();
 
-// src/app/shared/service/services/user-satisfaction.service.ts
+// src/app/features/home/service/user-satisfaction.service.ts
 var UserSatisfactionService = class _UserSatisfactionService {
   googleSheetsService = inject(GoogleSheetsService);
   analyticsService = inject(AnalyticsService);
@@ -13757,7 +13761,7 @@ var UserSatisfactionService = class _UserSatisfactionService {
   }], null, null);
 })();
 
-// src/app/shared/view/ui/satisfaction-popup.component.ts
+// src/app/features/home/view/satisfaction-popup.component.ts
 function SatisfactionPopupComponent_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 3);
@@ -14050,11 +14054,11 @@ var SatisfactionPopupComponent = class _SatisfactionPopupComponent {
         }
       </lg-flex-column>
     </lg-dialog>
-  `, styles: ["/* angular:styles/component:scss;155ae9681d39903f2e8f2607a4beea96f45431c824cab904345798ce51332f05;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/satisfaction-popup.component.ts */\n.satisfaction-content {\n  text-align: center;\n}\n.satisfaction-content__buttons {\n  display: flex;\n  gap: 16px;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.satisfaction-content__button {\n  background: var(--surface-secondary-color, #f8f9fa);\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 12px;\n  padding: 16px 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  min-width: 120px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n}\n.satisfaction-content__button:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.satisfaction-content__button:focus {\n  outline: 2px solid var(--primary-color, #007bff);\n  outline-offset: 2px;\n}\n.satisfaction-content__button--positive:hover {\n  border-color: var(--success-color, #28a745);\n  background-color: var(--success-light-color, #d4edda);\n}\n.satisfaction-content__button--negative:hover {\n  border-color: var(--warning-color, #ffc107);\n  background-color: var(--warning-light-color, #fff3cd);\n}\n.satisfaction-content__emoji {\n  font-size: 32px;\n  line-height: 1;\n}\n.satisfaction-content__button-text {\n  font-size: 14px;\n  font-weight: 500;\n  color: var(--text-primary-color, #333333);\n}\n.satisfaction-content__form {\n  text-align: left;\n}\n.satisfaction-content__textarea {\n  width: 100%;\n  padding: 12px;\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 8px;\n  font-size: 14px;\n  font-family: inherit;\n  resize: vertical;\n  min-height: 100px;\n  transition: border-color 0.2s ease;\n  box-sizing: border-box;\n}\n.satisfaction-content__textarea:focus {\n  outline: none;\n  border-color: var(--primary-color, #007bff);\n}\n.satisfaction-content__textarea::placeholder {\n  color: var(--text-tertiary-color, #999999);\n}\n.satisfaction-content__char-count {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999999);\n  margin-top: 4px;\n}\n.satisfaction-content__thank-you {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 16px;\n  padding: 20px 0;\n}\n.satisfaction-content__heart {\n  font-size: 48px;\n  line-height: 48px;\n  animation: heartBeat 1.5s ease-in-out infinite;\n}\n@keyframes heartBeat {\n  0% {\n    transform: scale(1);\n  }\n  14% {\n    transform: scale(1.1);\n  }\n  28% {\n    transform: scale(1);\n  }\n  42% {\n    transform: scale(1.1);\n  }\n  70% {\n    transform: scale(1);\n  }\n}\n@media (max-width: 480px) {\n  .satisfaction-content__buttons {\n    gap: 12px;\n  }\n  .satisfaction-content__button {\n    min-width: 100px;\n    padding: 14px 16px;\n  }\n  .satisfaction-content__emoji {\n    font-size: 28px;\n  }\n  .satisfaction-content__button-text {\n    font-size: 13px;\n  }\n}\n/*# sourceMappingURL=satisfaction-popup.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;155ae9681d39903f2e8f2607a4beea96f45431c824cab904345798ce51332f05;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/home/view/satisfaction-popup.component.ts */\n.satisfaction-content {\n  text-align: center;\n}\n.satisfaction-content__buttons {\n  display: flex;\n  gap: 16px;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.satisfaction-content__button {\n  background: var(--surface-secondary-color, #f8f9fa);\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 12px;\n  padding: 16px 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  min-width: 120px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n}\n.satisfaction-content__button:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.satisfaction-content__button:focus {\n  outline: 2px solid var(--primary-color, #007bff);\n  outline-offset: 2px;\n}\n.satisfaction-content__button--positive:hover {\n  border-color: var(--success-color, #28a745);\n  background-color: var(--success-light-color, #d4edda);\n}\n.satisfaction-content__button--negative:hover {\n  border-color: var(--warning-color, #ffc107);\n  background-color: var(--warning-light-color, #fff3cd);\n}\n.satisfaction-content__emoji {\n  font-size: 32px;\n  line-height: 1;\n}\n.satisfaction-content__button-text {\n  font-size: 14px;\n  font-weight: 500;\n  color: var(--text-primary-color, #333333);\n}\n.satisfaction-content__form {\n  text-align: left;\n}\n.satisfaction-content__textarea {\n  width: 100%;\n  padding: 12px;\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 8px;\n  font-size: 14px;\n  font-family: inherit;\n  resize: vertical;\n  min-height: 100px;\n  transition: border-color 0.2s ease;\n  box-sizing: border-box;\n}\n.satisfaction-content__textarea:focus {\n  outline: none;\n  border-color: var(--primary-color, #007bff);\n}\n.satisfaction-content__textarea::placeholder {\n  color: var(--text-tertiary-color, #999999);\n}\n.satisfaction-content__char-count {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999999);\n  margin-top: 4px;\n}\n.satisfaction-content__thank-you {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 16px;\n  padding: 20px 0;\n}\n.satisfaction-content__heart {\n  font-size: 48px;\n  line-height: 48px;\n  animation: heartBeat 1.5s ease-in-out infinite;\n}\n@keyframes heartBeat {\n  0% {\n    transform: scale(1);\n  }\n  14% {\n    transform: scale(1.1);\n  }\n  28% {\n    transform: scale(1);\n  }\n  42% {\n    transform: scale(1.1);\n  }\n  70% {\n    transform: scale(1);\n  }\n}\n@media (max-width: 480px) {\n  .satisfaction-content__buttons {\n    gap: 12px;\n  }\n  .satisfaction-content__button {\n    min-width: 100px;\n    padding: 14px 16px;\n  }\n  .satisfaction-content__emoji {\n    font-size: 28px;\n  }\n  .satisfaction-content__button-text {\n    font-size: 13px;\n  }\n}\n/*# sourceMappingURL=satisfaction-popup.component.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SatisfactionPopupComponent, { className: "SatisfactionPopupComponent", filePath: "src/app/shared/view/ui/satisfaction-popup.component.ts", lineNumber: 227 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SatisfactionPopupComponent, { className: "SatisfactionPopupComponent", filePath: "src/app/features/home/view/satisfaction-popup.component.ts", lineNumber: 227 });
 })();
 
 // src/app/app.component.ts
@@ -14068,7 +14072,9 @@ var AppComponent = class _AppComponent {
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AppComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], features: [\u0275\u0275ProvidersFeature([])], decls: 13, vars: 0, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], features: [\u0275\u0275ProvidersFeature([
+    DecimalPipe
+  ])], decls: 13, vars: 0, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-overlay-actions");
       \u0275\u0275element(1, "lg-pwa-install")(2, "lg-last-backup-informer")(3, "lg-storage-quota-warning");
@@ -14111,12 +14117,15 @@ var AppComponent = class _AppComponent {
       FooterComponent,
       OverlayActionsComponent,
       StorageQuotaWarningComponent,
-      SatisfactionPopupComponent
-    ], standalone: true, providers: [], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
+      SatisfactionPopupComponent,
+      UserCurrencyPipe
+    ], standalone: true, providers: [
+      DecimalPipe
+    ], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 36 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 40 });
 })();
 
 // src/main.ts
