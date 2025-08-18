@@ -109,9 +109,9 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
                              lgSelfEnd
                              lgShrink>
                     @if (isMobile()) {
-                      Delete this row
+                      {{ 'settings.taxes.delete'|translate }}
                     } @else {
-                      <mat-icon aria-hidden="false" aria-label="Example home icon"
+                      <mat-icon aria-hidden="false" aria-label="Delete"
                                 fontIcon="close"></mat-icon>
                     }
                   </lg-button>

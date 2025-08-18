@@ -33,28 +33,28 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingToLabel['category'] }}
+            {{ groupingToLabel['category']  | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'tag'})"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingToLabel['tag'] }}
+            {{ groupingToLabel['tag']  | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'createdAt'})"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingToLabel['createdAt'] }}
+            {{ groupingToLabel['createdAt'] | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'alphabetical'})"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingToLabel['alphabetical'] }}
+            {{ groupingToLabel['alphabetical'] | translate }}
           </lg-button>
         </lg-flex-column>
       </lg-dropdown>
@@ -93,14 +93,14 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingDirectionToLabel['asc'] }}
+            {{ groupingDirectionToLabel['asc'] | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({direction: 'desc'})"
                      [flat]="true"
                      [size]="'small'"
                      [style]="'warning'">
-            {{ groupingDirectionToLabel['desc'] }}
+            {{ groupingDirectionToLabel['desc']  | translate }}
           </lg-button>
         </lg-flex-column>
       </lg-dropdown>
