@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  Component, computed,
+  Component,
+  computed,
   effect,
   forwardRef,
   inject,
@@ -27,6 +28,8 @@ import {Invoice} from '@invoices/service/Inovice/Invoice';
 import {ControlsRowComponent} from '../../../../controls/form/controls-row.component';
 import {NgTemplateOutlet} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
+import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
+import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 
 @Component({
   selector: 'lg-invoice-taxes-and-fees',
@@ -97,15 +100,9 @@ import {TranslatePipe} from '@ngx-translate/core';
           <lg-readonly-control [value]="tax.amount"
                                lgWidth="30%"
                                placeholder="">
-            <div ngProjectAs="after">{{ tax.percentage ? '%' : '$' }}</div>
+            <div ngProjectAs="after">{{ tax.percentage ? '%' : userSettings()['currency']|currencySymbol }}</div>
           </lg-readonly-control>
 
-          <!--              <lg-readonly-control [value]="tax.amount"-->
-          <!--                                   lgWidth="15%"-->
-          <!--                                   placeholder="">-->
-
-          <!--                <div ngProjectAs="after">$</div>-->
-          <!--              </lg-readonly-control>-->
           @if (canBeUpdated) {
             <ng-container ngProjectAs="rowActions">
               <lg-button [style]="'danger'"
@@ -189,6 +186,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     ControlsRowComponent,
     NgTemplateOutlet,
     TranslatePipe,
+    CurrencySymbolPipe,
   ],
   providers: [
     {
@@ -201,6 +199,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 })
 export class InvoiceTaxesAndFeesComponent
   implements ControlValueAccessor {
+  userSettings = inject(SETTINGS);
   invoice = input<Invoice | undefined>(undefined);
   taxesAndFees = signal<Tax[]>([]);
   taxes = computed(() => this.taxesAndFees().filter(t => t.percentage));

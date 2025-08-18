@@ -12,6 +12,7 @@ import {RecipeCost} from '../../../service/models/RecipeCost';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
+import {currencyStringToSymbol} from '../../../../../shared/helpers/assets/currency.helper';
 
 @Component({
   selector: 'lg-calculation-price-modifiers',
@@ -75,9 +76,6 @@ import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 export class CalculationPriceModifiersComponent
   implements ControlValueAccessor {
   constructor() {
-    this.recipePriceAdditionsForm.valueChanges.subscribe(v=>{
-      console.log('Form value changed:', v);
-    });
   }
   recipePriceAdditionsForm = new FormGroup({
     action: new FormControl<'add' | 'round'>('add'),
@@ -90,7 +88,7 @@ export class CalculationPriceModifiersComponent
   userSettings = inject(SETTINGS);
   additionalPriceUnit: UnitGroupItem[] = [
     {
-      label: '$',
+      label: currencyStringToSymbol(this.userSettings()['currency'] || 'USD'),
       value: 'currency',
       style: 'secondary',
     },
