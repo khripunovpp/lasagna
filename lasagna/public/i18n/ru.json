@@ -331,6 +331,8 @@
   "recipe.calculation.price-modifiers.title": "Модификатор цены",
   "recipe.calculation.recalculate-for": "Пересчитать для",
   "recipe.calculation.gram": "грамм",
+  "recipe.calculation.empty-state.text": "Чтобы рассчитать рецепт, нужно сначала добавить ингредиенты.",
+  "recipe.calculation.empty-state.btn": "Редактировать рецепт",
   "grouping.title": "Группировка",
   "grouping.direction.title": "Направление группировки",
   "grouping.by-category": "По категории",
@@ -515,5 +517,5 @@
   "price-modifier.per-unit": "За единицу",
   "price-modifier.total": "Всего",
   "price-modifier.placeholder": "надбавка",
-  "per-unit.label": "за {{ unit }}"
+  "per-unit.label": "/{{ unit }}"
 }

@@ -411,6 +411,8 @@
   "recipe.calculation.price-modifiers.title": "Modificador de preço",
   "recipe.calculation.recalculate-for": "Recalcular para",
   "recipe.calculation.gram": "grama",
+  "recipe.calculation.empty-state.text": "Para calcular uma receita, você precisa adicionar ingredientes primeiro.",
+  "recipe.calculation.empty-state.btn": "Editar Receita",
   "readonly.placeholder": "Digite o texto aqui",
   "unsaved-changes-warning": "Você tem alterações não salvas. Salve ou descarte antes de sair.",
   "faq.title": "Perguntas e Respostas",
@@ -516,5 +518,5 @@
   "price-modifier.per-unit": "Por unidade",
   "price-modifier.total": "Total",
   "price-modifier.placeholder": "custo extra",
-  "per-unit.label": "por {{ unit }}"
+  "per-unit.label": "/{{ unit }}"
 }

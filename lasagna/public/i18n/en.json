@@ -404,6 +404,8 @@
   "recipe.calculation.price-modifiers.title": "Price modifier",
   "recipe.calculation.recalculate-for": "Recalculate for",
   "recipe.calculation.gram": "gram",
+  "recipe.calculation.empty-state.text": "To calculate a recipe, you need to add ingredients first.",
+  "recipe.calculation.empty-state.btn": "Edit Recipe",
   "unsaved-changes-warning": "You have unsaved changes. Please save or discard them before leaving.",
   "onboarding.welcome": "Let's set up the app for you — just a couple of steps to make everything easy and clear.",
   "onboarding.done": "Done",
@@ -516,5 +518,5 @@
   "price-modifier.per-unit": "Per unit",
   "price-modifier.total": "Total",
   "price-modifier.placeholder": "extra cost",
-  "per-unit.label": "for {{ unit }}"
+  "per-unit.label": "/{{ unit }}"
 }
