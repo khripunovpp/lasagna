@@ -2211,7 +2211,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-TMDNNN7Y.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-NAY5MA36.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2228,11 +2228,11 @@ var routes = [{
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2242,7 +2242,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-I26YTBQW.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },

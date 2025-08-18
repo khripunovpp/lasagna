@@ -859,22 +859,22 @@ function AddProductComponent_Conditional_5_Template(rf, ctx) {
 function AddProductComponent_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 2);
-    \u0275\u0275text(1, " (");
-    \u0275\u0275element(2, "span", 8);
-    \u0275\u0275pipe(3, "unitString");
-    \u0275\u0275pipe(4, "translate");
-    \u0275\u0275text(5);
-    \u0275\u0275pipe(6, "userCurrency");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "userCurrency");
+    \u0275\u0275element(3, "span", 8);
+    \u0275\u0275pipe(4, "unitString");
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275text(6, ") ");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    let tmp_2_0;
+    let tmp_1_0;
     let tmp_3_0;
     const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" (", \u0275\u0275pipeBind2(2, 3, (tmp_1_0 = ctx_r0.product()) == null ? null : tmp_1_0.pricePerUnit, "1.0-5"), " ");
     \u0275\u0275advance(2);
-    \u0275\u0275property("translate", "per-unit.label")("translateParams", \u0275\u0275pureFunction1(10, _c03, \u0275\u0275pipeBind1(4, 5, \u0275\u0275pipeBind1(3, 3, (tmp_2_0 = ctx_r0.product()) == null ? null : tmp_2_0.unit))));
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(6, 7, (tmp_3_0 = ctx_r0.product()) == null ? null : tmp_3_0.pricePerUnit, "1.0-5"), ") ");
+    \u0275\u0275property("translate", "per-unit.label")("translateParams", \u0275\u0275pureFunction1(10, _c03, \u0275\u0275pipeBind1(5, 8, \u0275\u0275pipeBind1(4, 6, (tmp_3_0 = ctx_r0.product()) == null ? null : tmp_3_0.unit))));
   }
 }
 function AddProductComponent_Conditional_8_ng_template_0_Template(rf, ctx) {
@@ -1275,9 +1275,9 @@ var AddProductComponent = class _AddProductComponent {
             @if (product()?.pricePerUnit) {
               <span
                 lgSelfStart>
-                (<span [translate]="'per-unit.label'"
-                       [translateParams]="{unit:product()?.unit | unitString | translate}"></span>
-                {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
+                ({{ product()?.pricePerUnit | userCurrency:'1.0-5' }}
+                <span [translate]="'per-unit.label'"
+                       [translateParams]="{unit:product()?.unit | unitString | translate}"></span>)
               </span>
             }
           </lg-flex-row>
@@ -1353,4 +1353,4 @@ var AddProductComponent = class _AddProductComponent {
 export {
   AddProductComponent
 };
-//# sourceMappingURL=chunk-I26YTBQW.js.map
+//# sourceMappingURL=chunk-747DJEAY.js.map

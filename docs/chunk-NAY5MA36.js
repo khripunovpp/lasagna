@@ -794,17 +794,23 @@ function CalculateRecipeComponent_Conditional_13_Template(rf, ctx) {
 function CalculateRecipeComponent_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "lg-flex-column", 6);
-    \u0275\u0275text(1, " To calculate a recipe, you need to add ingredients first. ");
-    \u0275\u0275elementStart(2, "lg-button", 28);
-    \u0275\u0275text(3, " Edit Recipe ");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementStart(3, "lg-button", 28);
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    let tmp_4_0;
+    let tmp_5_0;
     const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(2, 6, "recipe.calculation.empty-state.text"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275styleMap("success");
-    \u0275\u0275property("size", "medium")("routerLink", "/recipes/edit/" + ((tmp_4_0 = ctx_r2.result()) == null ? null : tmp_4_0.calculation == null ? null : tmp_4_0.calculation.recipeUuid));
+    \u0275\u0275property("size", "medium")("routerLink", "/recipes/edit/" + ((tmp_5_0 = ctx_r2.result()) == null ? null : tmp_5_0.calculation == null ? null : tmp_5_0.calculation.recipeUuid));
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 8, "recipe.calculation.empty-state.btn"), " ");
   }
 }
 var CalculateRecipeComponent = class _CalculateRecipeComponent {
@@ -979,7 +985,7 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
       \u0275\u0275elementEnd()();
       \u0275\u0275conditionalCreate(10, CalculateRecipeComponent_Conditional_10_Template, 57, 66, "lg-flex-row", 5);
       \u0275\u0275template(11, CalculateRecipeComponent_ng_template_11_Template, 2, 1, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
-      \u0275\u0275conditionalCreate(13, CalculateRecipeComponent_Conditional_13_Template, 31, 15, "lg-table-card")(14, CalculateRecipeComponent_Conditional_14_Template, 4, 4, "lg-flex-column", 6);
+      \u0275\u0275conditionalCreate(13, CalculateRecipeComponent_Conditional_13_Template, 31, 15, "lg-table-card")(14, CalculateRecipeComponent_Conditional_14_Template, 6, 10, "lg-flex-column", 6);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
@@ -1282,12 +1288,12 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
       } @else {
         <lg-flex-column position="start"
                         size="medium">
-          To calculate a recipe, you need to add ingredients first.
+          {{ 'recipe.calculation.empty-state.text' | translate }}
 
           <lg-button [size]="'medium'"
                      [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
                      [style]="'success'">
-            Edit Recipe
+            {{ 'recipe.calculation.empty-state.btn' | translate }}
           </lg-button>
         </lg-flex-column>
       }
@@ -1309,4 +1315,4 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
 export {
   CalculateRecipeComponent
 };
-//# sourceMappingURL=chunk-TMDNNN7Y.js.map
+//# sourceMappingURL=chunk-NAY5MA36.js.map
