@@ -45,6 +45,7 @@ import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {appInitializer} from './app.initializer';
 import {SortStrategy} from './shared/service/types/sorting.types';
+import {UserCurrencyPipe} from './shared/view/pipes/userCurrency.pipe';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');

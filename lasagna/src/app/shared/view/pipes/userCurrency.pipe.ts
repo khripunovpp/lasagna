@@ -1,19 +1,21 @@
-import {CurrencyPipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 import {inject, Pipe} from '@angular/core';
-import {USER_CURRENCY} from '../../../features/settings/service/providers/user-currency.token';
 import {SETTINGS} from '../../../features/settings/service/providers/settings.token';
+import {currencyStringToSymbol} from '../../helpers/assets/currency.helper';
 
 @Pipe({
   name: 'userCurrency',
   standalone: true,
 })
 export class UserCurrencyPipe {
-  currencyPipe = inject(CurrencyPipe);
+  decimalPipe = inject(DecimalPipe);
   userSettings = inject(SETTINGS);
 
   transform(value?: string | number, digitInfo: string = '1.0-0') {
     const currency: string = this.userSettings()['currency'] || 'USD';
-    return this.currencyPipe.transform(value, currency, 'symbol-narrow', digitInfo);
+    const currencySymbol = currencyStringToSymbol(currency);
+
+    return this.decimalPipe.transform(value, digitInfo) + ' ' + currencySymbol;
 
   }
 }
