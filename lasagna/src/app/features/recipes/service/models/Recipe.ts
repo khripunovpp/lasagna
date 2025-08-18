@@ -78,10 +78,6 @@ export class Recipe {
     return this.totalIngredientsWeight;
   }
 
-  get perUnitLabel() {
-    return !this.outcome_unit || this.outcome_unit === UnitValue.GRAM ? 'per gram' : `per ${this.outcome_unit}`;
-  }
-
   get pricePerUnit() {
     if (this.ingredients.length === 0) {
       return 0;

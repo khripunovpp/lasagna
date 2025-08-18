@@ -19,6 +19,8 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../shared/service/services/select-resources.service';
 import {NgStyle} from '@angular/common';
 import {Tag} from '../../settings/service/models/Tag';
+import {marker} from '@colsen1991/ngx-translate-extract-marker';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 export interface TagsItem {
@@ -29,37 +31,38 @@ export interface TagsItem {
   selector: 'lg-tags-control',
   standalone: true,
   template: `
-      <div class="tags-control">
-          <ng-select (change)="onChangeSelect($event)"
-                     (ngModelChange)="onChangeInput($event)"
-                     [addTag]="addTagFn"
-                     [appendTo]="'body'"
-                     [compareWith]="compareWith"
-                     [items]="loadedList()"
-                     [multiple]="multi()"
-                     [ngModel]="value"
-                     [placeholder]="placeholder"
-                     [searchFn]="searchFn">
-              <ng-template let-item="item" ng-label-tmp>
-                  {{ $any(item)?.name ?? $any(item)?.label ?? item }}
-              </ng-template>
-              <ng-template let-item="item" ng-option-tmp>
-                  {{ $any(item)?.name ?? $any(item)?.label ?? item }}
-              </ng-template>
-              <ng-template let-clear="clear" let-items="items" ng-multi-label-tmp>
-                  @for (item of items;track $any(item)?.name ?? $any(item)?.label ?? item) {
-                      <div class="ng-value"
-                           [ngStyle]="{background: $any(item)?.color ? $any(item)?.color : null}">
+    <div class="tags-control">
+      <ng-select (change)="onChangeSelect($event)"
+                 (ngModelChange)="onChangeInput($event)"
+                 [addTagText]="addTagText | translate"
+                 [addTag]="addTagFn"
+                 [appendTo]="'body'"
+                 [compareWith]="compareWith"
+                 [items]="loadedList()"
+                 [multiple]="multi()"
+                 [ngModel]="value"
+                 [placeholder]="placeholder | translate"
+                 [searchFn]="searchFn">
+        <ng-template let-item="item" ng-label-tmp>
+          {{ $any(item)?.name ?? $any(item)?.label ?? item }}
+        </ng-template>
+        <ng-template let-item="item" ng-option-tmp>
+          {{ $any(item)?.name ?? $any(item)?.label ?? item }}
+        </ng-template>
+        <ng-template let-clear="clear" let-items="items" ng-multi-label-tmp>
+          @for (item of items; track $any(item)?.name ?? $any(item)?.label ?? item) {
+            <div class="ng-value"
+                 [ngStyle]="{background: $any(item)?.color ? $any(item)?.color : null}">
                           <span class="ng-value-label">
                               {{ $any(item)?.name ?? $any(item)?.label ?? item }}
                           </span>
-                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                      </div>
-                  }
+              <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+            </div>
+          }
 
-              </ng-template>
-          </ng-select>
-      </div>
+        </ng-template>
+      </ng-select>
+    </div>
   `,
   imports: [
     NgSelectComponent,
@@ -67,8 +70,9 @@ export interface TagsItem {
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
     NgMultiLabelTemplateDirective,
-    NgStyle
-],
+    NgStyle,
+    TranslatePipe
+  ],
   styles: [
     `
       lg-tags-control {
@@ -133,6 +137,7 @@ export class TagsControlComponent
   }
 
   @Input() placeholder: string = '';
+  @Input() addTagText: string = marker('tags.add-tag-text');
   resource = input<string>('');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);

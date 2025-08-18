@@ -24,11 +24,15 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Product} from '../../service/Product';
 import {ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftProductsListCompoent} from './draft-products-list.compoent';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 
 @Component({
   selector: 'lg-product-list',
@@ -100,7 +104,8 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
 
                         <div>
                           {{ $any(product).pricePerUnit | userCurrency:'1.0-5' }}
-                          {{ $any(product).perUnitLabel }}
+                          <span [translate]="'per-unit.label'"
+                                [translateParams]="{unit:$any(product)?.unit | unitString | translate}"></span>
                         </div>
                       </lg-flex-row>
 
@@ -149,7 +154,9 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     UserCurrencyPipe,
-    FlexColumnComponent
+    FlexColumnComponent,
+    UnitStringPipe,
+    TranslateDirective
   ],
   providers: [
     SelectionZoneService,

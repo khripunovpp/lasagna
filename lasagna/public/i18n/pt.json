@@ -115,7 +115,7 @@
   "without-category-label": "Sem categoria",
   "product.form.category_id.label": "Categoria",
   "recipe.form.category_id.label": "Categoria",
-  "recipe.form.ingredients.product_id.label": "Produto do armazenamento",
+  "recipe.form.ingredients.product_id.label": "Produto",
   "recipe.form.ingredients.recipe_id.label": "Receita",
   "product.form.category_id.placeholder": "Categoria",
   "recipe.form.outcome_amount.label": "Quantidade de resultado",
@@ -403,7 +403,7 @@
   "demo.title": "DEMO",
   "demo.message": "Você está no modo demo. Algumas funcionalidades estão desabilitadas e os dados podem ser perdidos ao alterar a URL do demo.",
   "demo.switch-off": "Clique aqui para sair do modo demo",
-  "recipe.calculation.price-modifiers.title": "Modificadores de preço",
+  "recipe.calculation.price-modifiers.title": "Modificador de preço",
   "recipe.calculation.recalculate-for": "Recalcular para",
   "recipe.calculation.gram": "grama",
   "readonly.placeholder": "Digite o texto aqui",
@@ -503,6 +503,13 @@
   "support.rate-limited.description": "Você atingiu o limite de 3 mensagens por 5 minutos. Por favor, aguarde antes de enviar outra mensagem.",
   "support.notifications.validation-error": "Por favor, verifique o formulário para erros",
   "support.notifications.send-error": "Falha ao enviar mensagem. Tente novamente mais tarde.",
-  "unit.gram": "g",
-  "unit.piece": "uns"
+  "unit.gram": "g.",
+  "unit.piece": "uns.",
+  "tags.add-tag-text": "Adicionar nova tag",
+  "price-modifier.add": "Adicionar",
+  "price-modifier.round": "Arredondar",
+  "price-modifier.per-unit": "Por unidade",
+  "price-modifier.total": "Total",
+  "price-modifier.placeholder": "custo extra",
+  "per-unit.label": "por {{ unit }}"
 }

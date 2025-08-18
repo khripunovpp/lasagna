@@ -126,7 +126,7 @@
   "without-category-label": "Uncategorized",
   "product.form.category_id.label": "Category",
   "recipe.form.category_id.label": "Category",
-  "recipe.form.ingredients.product_id.label": "Product from storage",
+  "recipe.form.ingredients.product_id.label": "Product",
   "recipe.form.ingredients.recipe_id.label": "Recipe",
   "product.form.category_id.placeholder": "Category",
   "recipe.form.outcome_amount.label": "Amount of the outcome",
@@ -396,7 +396,7 @@
   "demo.title": "DEMO",
   "demo.message": "You are in demo mode. Some features are disabled and data may be lost when changing the demo URL.",
   "demo.switch-off": "Click here to exit demo mode",
-  "recipe.calculation.price-modifiers.title": "Price modifiers",
+  "recipe.calculation.price-modifiers.title": "Price modifier",
   "recipe.calculation.recalculate-for": "Recalculate for",
   "recipe.calculation.gram": "gram",
   "unsaved-changes-warning": "You have unsaved changes. Please save or discard them before leaving.",
@@ -504,5 +504,12 @@
   "support.notifications.validation-error": "Please check your form for errors",
   "support.notifications.send-error": "Failed to send message. Please try again later.",
   "unit.gram": "gr.",
-  "unit.piece": "pcs."
+  "unit.piece": "pcs.",
+  "tags.add-tag-text": "Add tag",
+  "price-modifier.add": "Add",
+  "price-modifier.round": "Round",
+  "price-modifier.per-unit": "Per unit",
+  "price-modifier.total": "Total",
+  "price-modifier.placeholder": "extra cost",
+  "per-unit.label": "for {{ unit }}"
 }

@@ -126,7 +126,7 @@
   "without-category-label": "Без категории",
   "product.form.category_id.label": "Категория",
   "recipe.form.category_id.label": "Категория",
-  "recipe.form.ingredients.product_id.label": "Продукт со склада",
+  "recipe.form.ingredients.product_id.label": "Продукт",
   "recipe.form.ingredients.recipe_id.label": "Рецепт",
   "product.form.category_id.placeholder": "Категория",
   "recipe.form.outcome_amount.label": "Сумма результата",
@@ -326,7 +326,7 @@
   "demo.title": "ДЕМО",
   "demo.message": "Вы в демо-режиме. Некоторые функции отключены, и данные могут быть потеряны при изменении демо-URL.",
   "demo.switch-off": "Нажмите здесь, чтобы выйти из демо-режима",
-  "recipe.calculation.price-modifiers.title": "Модификаторы цены",
+  "recipe.calculation.price-modifiers.title": "Модификатор цены",
   "recipe.calculation.recalculate-for": "Пересчитать для",
   "recipe.calculation.gram": "грамм",
   "grouping.title": "Группировка",
@@ -502,6 +502,13 @@
   "support.rate-limited.description": "Вы достигли лимита в 3 сообщения за 5 минут. Пожалуйста, подождите перед отправкой следующего сообщения.",
   "support.notifications.validation-error": "Пожалуйста, проверьте форму на наличие ошибок",
   "support.notifications.send-error": "Не удалось отправить сообщение. Пожалуйста, попробуйте позже.",
-  "unit.gram": "г",
-  "unit.piece": "шт"
+  "unit.gram": "г.",
+  "unit.piece": "шт.",
+  "tags.add-tag-text": "Добавить тег",
+  "price-modifier.add": "Добавить",
+  "price-modifier.round": "Округлить",
+  "price-modifier.per-unit": "За единицу",
+  "price-modifier.total": "Всего",
+  "price-modifier.placeholder": "надбавка",
+  "per-unit.label": "за {{ unit }}"
 }
