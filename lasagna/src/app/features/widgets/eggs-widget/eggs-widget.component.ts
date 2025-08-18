@@ -1,6 +1,6 @@
 import {Component, computed, model, output, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {InputComponent} from '../../../shared/view/ui/form/input.component';
+import {InputComponent} from '../../controls/form/input.component';
 import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
 import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 import {DecimalPipe} from '@angular/common';

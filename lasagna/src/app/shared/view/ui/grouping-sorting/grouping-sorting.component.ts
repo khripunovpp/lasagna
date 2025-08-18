@@ -1,7 +1,7 @@
 import {Component, ContentChild, effect, EventEmitter, inject, Output, signal} from '@angular/core';
 import {FlexRowComponent} from '../layout/flex-row.component';
 import {ButtonComponent} from '../layout/button.component';
-import {DropdownComponent} from '../dropdown/dropdown.component';
+import {DropdownComponent} from '../../../../features/controls/dropdown/dropdown.component';
 import {FlexColumnComponent} from '../layout/flex-column.component';
 import {GroupingSortingContainerComponent} from './grouping-sorting.directive';
 import {ActivatedRoute, Router} from '@angular/router';

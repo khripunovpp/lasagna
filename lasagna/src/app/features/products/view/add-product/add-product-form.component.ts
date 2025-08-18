@@ -15,16 +15,16 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
 import {ProductsRepository} from '../../service/products.repository';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {Router} from '@angular/router';
-import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
-import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
+import {MultiselectComponent} from '../../../controls/form/multiselect.component';
+import {NumberInputComponent} from '../../../controls/form/number-input.component';
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
-import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
+import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
-import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
+import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
 import {productToFormValue} from '../../../../shared/helpers/product.helpers';
 import {debounceTime, tap} from 'rxjs';
@@ -40,9 +40,9 @@ import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.
 import {smaller} from 'mathjs';
 
 
-import {InputComponent} from '../../../../shared/view/ui/form/input.component';
-import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
-import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
+import {InputComponent} from '../../../controls/form/input.component';
+import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
+import {ControlComponent} from '../../../controls/form/control-item/control.component';
 
 
 

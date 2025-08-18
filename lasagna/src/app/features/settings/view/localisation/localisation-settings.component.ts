@@ -4,12 +4,12 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {FormsModule} from '@angular/forms';
-import {RadioComponent} from '../../../../shared/view/ui/form/radio.component';
-import {CurrencySelectComponent} from '../../../../shared/view/ui/form/currency-select.component';
+import {RadioComponent} from '../../../controls/form/radio.component';
+import {CurrencySelectComponent} from '../../../controls/form/currency-select.component';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
-import {ControlComponent} from '../../../../shared/view/ui/form/control-item/control.component';
+import {ControlComponent} from '../../../controls/form/control-item/control.component';
 
 
 @Component({

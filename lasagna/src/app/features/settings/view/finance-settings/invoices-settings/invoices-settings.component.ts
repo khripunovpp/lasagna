@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, DestroyRef, inject, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
-import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
+import {InputComponent} from '../../../../controls/form/input.component';
 import {TitleComponent} from '../../../../../shared/view/ui/layout/title/title.component';
 
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {SettingsService} from '../../../service/services/settings.service';
 
-import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
-import {FileInputComponent} from '../../../../../shared/view/ui/form/file-input.component';
+import {NumberInputComponent} from '../../../../controls/form/number-input.component';
+import {FileInputComponent} from '../../../../controls/form/file-input.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {debounceTime} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';

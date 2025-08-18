@@ -36,7 +36,7 @@ import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
 import {difference} from 'lodash';
-import {RecipePriceModifier} from '../../../price-modifiers/service/PriceModifier';
+import {RecipePriceModifier} from '../../service/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';

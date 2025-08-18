@@ -7,7 +7,7 @@ import {GlobalSearchService} from '../../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
 import {LanguageService} from '../../../../features/settings/service/services/language.service';
-import {DemoInformerComponent} from '../demo-informer.component';
+import {DemoInformerComponent} from '../../../../features/home/view/demo-informer.component';
 import {FadeInComponent} from '../fade-in.component';
 
 @Component({

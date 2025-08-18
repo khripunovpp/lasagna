@@ -2,7 +2,7 @@ import {Component, ContentChildren, effect, input, output, QueryList, ViewEncaps
 
 import {CardListItemDirective} from './card-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
-import {CheckboxComponent} from '../form/chckbox.component';
+import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonComponent} from '../layout/button.component';
 import {MatIcon} from '@angular/material/icon';

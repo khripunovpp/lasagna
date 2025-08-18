@@ -14,7 +14,7 @@ import {NotificationsService} from '../../../../shared/service/services/notifica
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
-import {SelectionToolsComponent} from '../../../../shared/view/ui/form/selection-tools.component';
+import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';

@@ -1,10 +1,10 @@
 import {Component, computed, effect, forwardRef, inject, input, output} from '@angular/core';
-import {RecipePriceModifier} from '../../../../price-modifiers/service/PriceModifier';
-import {NumberInputComponent} from '../../../../../shared/view/ui/form/number-input.component';
+import {RecipePriceModifier} from '../../../service/PriceModifier';
+import {NumberInputComponent} from '../../../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
 import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {UnitGroupItem, UnitSwitcherComponent} from '../../../../../shared/view/ui/unit-switcher.component';
-import {ControlExtraTemplateDirective} from '../../../../../shared/view/ui/form/control-extra-template.directive';
+import {ControlExtraTemplateDirective} from '../../../../controls/form/control-extra-template.directive';
 import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';

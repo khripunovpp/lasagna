@@ -3,15 +3,15 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular
 import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
 
 import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
-import {ButtonGroupItem, ButtonsGroupComponent} from '../../../shared/view/ui/form/buttons-group.component';
+import {ButtonGroupItem, ButtonsGroupComponent} from '../../controls/form/buttons-group.component';
 import {JellyCalculationModel} from './jelly-calculation.model';
 import {DecimalPipe} from '@angular/common';
 import {ShrinkDirective} from '../../../shared/view/directives/shrink.directive';
-import {RangeComponent} from '../../../shared/view/ui/form/range.component';
+import {RangeComponent} from '../../controls/form/range.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {NumberInputComponent} from '../../../shared/view/ui/form/number-input.component';
+import {NumberInputComponent} from '../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';
-import {ControlExtraTemplateDirective} from '../../../shared/view/ui/form/control-extra-template.directive';
+import {ControlExtraTemplateDirective} from '../../controls/form/control-extra-template.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 
 

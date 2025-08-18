@@ -2,7 +2,7 @@ import {Component, effect, input, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
-import {InputComponent} from '../../../../../shared/view/ui/form/input.component';
+import {InputComponent} from '../../../../controls/form/input.component';
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
@@ -14,11 +14,11 @@ import {ExpandDirective} from '../../../../../shared/view/directives/expand.dire
 import {CredentialsRepository} from '../../../service/repositories/credentials.repository';
 import {Credential} from '../../../service/models/Credential';
 import {CredentialsType} from '../../../service/types/credentials.types';
-import {ControlComponent} from '../../../../../shared/view/ui/form/control-item/control.component';
+import {ControlComponent} from '../../../../controls/form/control-item/control.component';
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 import {NgTemplateOutlet} from '@angular/common';
-import {ControlBoxComponent} from '../../../../../shared/view/ui/form/control-box.component';
+import {ControlBoxComponent} from '../../../../controls/form/control-box.component';
 import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 

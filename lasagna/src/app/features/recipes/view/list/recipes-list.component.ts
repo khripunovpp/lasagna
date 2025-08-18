@@ -14,7 +14,7 @@ import {TransferDataService} from '../../../../shared/service/services/transfer-
 import {ImportRowTplDirective} from '../../../../shared/view/ui/import/import-row-tpl.directive';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
-import {SelectionToolsComponent} from '../../../../shared/view/ui/form/selection-tools.component';
+import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {RecipeScheme} from '../../service/Recipe.scheme';
@@ -24,7 +24,7 @@ import {DraftRecipesListComponent} from './draft-recipes-list.component';
 import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
 import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {CATEGORIZED_RECIPES_LIST} from '../../../../shared/service/tokens/categorized-recipes-list.token';
+import {CATEGORIZED_RECIPES_LIST} from '../../service/categorized-recipes-list.token';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';

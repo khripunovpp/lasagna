@@ -1,12 +1,12 @@
 import {Component, contentChild, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
 
-import {UploadComponent} from '../form/upload.component';
+import {UploadComponent} from '../../../../features/controls/form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
 import {ZodObject} from 'zod';
 import {Stores} from '../../../service/db/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
-import {DialogComponent} from '../dialog/dialog.component';
+import {DialogComponent} from '../dialogs/dialog.component';
 import {AsyncPipe, NgClass, NgTemplateOutlet} from '@angular/common';
 import {FlexRowComponent} from '../layout/flex-row.component';
 import {FlexColumnComponent} from '../layout/flex-column.component';

@@ -2,25 +2,25 @@ import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, view
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 
-import {ControlGroupComponent} from '../../../../shared/view/ui/form/control-group.component';
+import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {TextareaComponent} from '../../../../shared/view/ui/form/textarea.component';
+import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/recipes.repository';
-import {MultiselectComponent} from '../../../../shared/view/ui/form/multiselect.component';
+import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NumberInputComponent} from '../../../../shared/view/ui/form/number-input.component';
-import {ControlsRowComponent} from '../../../../shared/view/ui/form/controls-row.component';
+import {NumberInputComponent} from '../../../controls/form/number-input.component';
+import {ControlsRowComponent} from '../../../controls/form/controls-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
 import {ProductWidgetsComponent} from '../../../widgets/product-widgets.component';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
-import {ChipsListComponent} from '../../../../shared/view/ui/form/chips-list.component';
-import {AutocompleteComponent} from '../../../../shared/view/ui/form/autocomplete.component';
+import {ChipsListComponent} from '../../../controls/form/chips-list.component';
+import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
 
@@ -31,10 +31,10 @@ import {TranslatePipe} from "@ngx-translate/core";
 
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {ControlExtraTemplateDirective} from "../../../../shared/view/ui/form/control-extra-template.directive";
-import {TagsControlComponent} from '../../../../shared/view/ui/form/tags-control.component';
+import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
+import {TagsControlComponent} from '../../../controls/form/tags-control.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ControlComponent} from "../../../../shared/view/ui/form/control-item/control.component";
+import {ControlComponent} from "../../../controls/form/control-item/control.component";
 
 
 @Component({

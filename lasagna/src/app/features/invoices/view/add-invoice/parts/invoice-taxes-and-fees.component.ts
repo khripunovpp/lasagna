@@ -13,18 +13,18 @@ import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-col
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {Tax} from '../../../../settings/service/models/Tax';
-import {DialogComponent} from '../../../../../shared/view/ui/dialog/dialog.component';
+import {DialogComponent} from '../../../../../shared/view/ui/dialogs/dialog.component';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {errorHandler} from '../../../../../shared/helpers';
 import {TaxesRepository} from '../../../../settings/service/repositories/taxes.repository';
 import {NotificationsService} from '../../../../../shared/service/services';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {ExpandDirective} from '../../../../../shared/view/directives/expand.directive';
-import {ReadonlyControlComponent} from '../../../../../shared/view/ui/form/readonly-control.component';
+import {ReadonlyControlComponent} from '../../../../controls/form/readonly-control.component';
 import {WidthDirective} from '../../../../../shared/view/directives/width.directive';
 import {Invoice} from '@invoices/service/Inovice/Invoice';
 
-import {ControlsRowComponent} from '../../../../../shared/view/ui/form/controls-row.component';
+import {ControlsRowComponent} from '../../../../controls/form/controls-row.component';
 import {NgTemplateOutlet} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 
