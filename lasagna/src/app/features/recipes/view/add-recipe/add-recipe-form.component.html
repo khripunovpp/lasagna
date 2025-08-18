@@ -85,7 +85,7 @@
                     <lg-number-input #amount
                                      lgParseMath
                                      (onKeydown)="addLast()"
-                                     [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:(form.value.ingredients?.[i]?.unit || 'gram')}"
+                                     [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:(form.value.ingredients?.[i]?.unit || UnitValue.GRAM)}"
                                      formControlName="amount">
                       <ng-template lgExtraTpl place="after">
                         <lg-unit-switcher formControlName="unit">

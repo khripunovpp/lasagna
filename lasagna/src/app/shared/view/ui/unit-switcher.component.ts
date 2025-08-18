@@ -1,6 +1,9 @@
 import {Component, effect, forwardRef, input, Input, signal, ViewEncapsulation} from '@angular/core';
 import {ButtonSizes, ButtonStyle} from './layout/button.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {UnitValue} from '../const/units.const';
+import {TranslatePipe} from '@ngx-translate/core';
+import {marker} from '@colsen1991/ngx-translate-extract-marker';
 
 export interface UnitGroupItem {
   label: string
@@ -22,7 +25,7 @@ export interface UnitGroupItem {
                       [class.active]="activeIndex() == index"
                       class="unit-switcher__item"
                       [class.unit-switcher__item--active]="activeIndex() == index">
-                  {{ item.label }}
+                  {{ item.label | translate }}
               </button>@if (!last) {
                   <span class="unit-switcher__item-separator">/</span>
               }
@@ -70,7 +73,9 @@ export interface UnitGroupItem {
 
     `
   ],
-  imports: [],
+  imports: [
+    TranslatePipe
+  ],
   encapsulation: ViewEncapsulation.None,
   providers: [
     {
@@ -85,13 +90,13 @@ export class UnitSwitcherComponent implements ControlValueAccessor {
   @Input() disable = false;
   items = input<UnitGroupItem[]>([
     {
-      label: 'gr.',
-      value: 'gram',
+      label:  marker('unit.gram'),
+      value: UnitValue.GRAM,
       style: 'secondary',
     },
     {
-      label: 'pc.',
-      value: 'piece',
+      label:  marker('unit.piece'),
+      value: UnitValue.PIECE,
       style: 'secondary',
     },
   ]);

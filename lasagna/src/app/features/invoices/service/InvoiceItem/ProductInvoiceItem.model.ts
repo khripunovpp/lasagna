@@ -6,13 +6,14 @@ import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Tax} from '../../../settings/service/models/Tax';
 import {undefined} from 'zod';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class ProductInvoiceItem
   extends InvoiceItemBase {
   constructor(
     public product: Product,
     public amount: number = 0,
-    public unit: string = 'gram',
+    public unit: string = UnitValue.GRAM,
     public pinnedDto: InvoiceItemDTO['pinnedDto'],
   ) {
     super();

@@ -5,6 +5,7 @@ import {Product} from '../../../products/service/Product';
 import {Recipe} from './Recipe';
 import {RecipeDTO} from '../Recipe.scheme';
 import {deepClone} from '../../../../shared/helpers/objects.helper';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class Ingredient {
   constructor(
@@ -42,7 +43,7 @@ export class Ingredient {
   }
 
   get totalWeightGram() {
-    if (this.unit !== 'gram') {
+    if (this.unit !== UnitValue.GRAM) {
       if (this.recipe_id) {
         const weightPerUnit = this.recipe_id.totalIngredientsWeight / this.recipe_id.outcome_amount;
         return weightPerUnit * this.amount;
@@ -53,7 +54,7 @@ export class Ingredient {
   }
 
   get pricePerUnit() {
-    if (this.product_id && this.product_id.unit !== 'gram') {
+    if (this.product_id && this.product_id.unit !== UnitValue.GRAM) {
       return this.product_id?.pricePerUnit;
     }
 
@@ -71,7 +72,7 @@ export class Ingredient {
   get totalPrice() {
     let total = 0;
     if (this.product_id) {
-      if (this.product_id.unit !== 'gram') {
+      if (this.product_id.unit !== UnitValue.GRAM) {
         total += this.product_id.pricePerUnit * this.amount;
       } else {
         total += this.product_id.pricePerUnit * this.totalWeightGram;
@@ -129,7 +130,7 @@ export class Ingredient {
       amount: 0,
       product_id: undefined,
       recipe_id: undefined,
-      unit: 'gram',
+      unit: UnitValue.GRAM,
     });
   }
 
@@ -139,7 +140,7 @@ export class Ingredient {
       amount: parseFloatingNumber(this.amount),
       product_id: this.product_id?.uuid,
       recipe_id: this.recipe_id?.uuid,
-      unit: this.unit || 'gram',
+      unit: this.unit || UnitValue.GRAM,
     };
   }
 

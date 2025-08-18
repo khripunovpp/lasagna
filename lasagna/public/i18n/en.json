@@ -502,5 +502,7 @@
   "support.rate-limited.title": "Too Many Messages",
   "support.rate-limited.description": "You've reached the limit of 3 messages per 5 minutes. Please wait before sending another message.",
   "support.notifications.validation-error": "Please check your form for errors",
-  "support.notifications.send-error": "Failed to send message. Please try again later."
+  "support.notifications.send-error": "Failed to send message. Please try again later.",
+  "unit.gram": "gr.",
+  "unit.piece": "pcs."
 }

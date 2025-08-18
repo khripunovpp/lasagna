@@ -25,7 +25,7 @@
 
                 <b>
                   {{ result()?.calculation?.outcomeAmount | number: '1.0-2' }}
-                  {{ result()?.calculation?.outcomeUnit }}
+                  {{ result()?.calculation?.outcomeUnit | unitString | translate }}
                 </b>
               </lg-flex-row>
 
@@ -37,7 +37,7 @@
                 <lg-flex-row [size]="'small'" [relaxed]="true">
                   <div>
                     {{ 'recipe.calculation.one-unit.label' | translate }} <b>
-                    {{ result()?.calculation?.outcomeUnit }}
+                    {{ result()?.calculation?.outcomeUnit | unitString | translate }}
                   </b>
                   </div>
 
@@ -210,7 +210,7 @@
 
                   <td>{{ row.amount | number: '1.0-2' }}</td>
 
-                  <td>{{ row.unit }}</td>
+                  <td>{{ row.unit | unitString | translate }}</td>
 
                   <td>{{ row.price_per_gram | userCurrency: '1.2-5' }}</td>
 

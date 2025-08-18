@@ -501,5 +501,7 @@
   "support.rate-limited.title": "Слишком много сообщений",
   "support.rate-limited.description": "Вы достигли лимита в 3 сообщения за 5 минут. Пожалуйста, подождите перед отправкой следующего сообщения.",
   "support.notifications.validation-error": "Пожалуйста, проверьте форму на наличие ошибок",
-  "support.notifications.send-error": "Не удалось отправить сообщение. Пожалуйста, попробуйте позже."
+  "support.notifications.send-error": "Не удалось отправить сообщение. Пожалуйста, попробуйте позже.",
+  "unit.gram": "г",
+  "unit.piece": "шт"
 }

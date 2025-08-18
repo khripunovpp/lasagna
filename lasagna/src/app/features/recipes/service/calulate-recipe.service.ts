@@ -6,6 +6,7 @@ import {RecipeCost} from './models/RecipeCost';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {RecipeDTO} from './Recipe.scheme';
+import {UnitValue} from '../../../shared/view/const/units.const';
 
 export interface Calculation {
   calculation: RecipeCost
@@ -116,7 +117,7 @@ export class CalculateRecipeService {
       price_per_gram: params.price_per_gram ?? 0,
       amount: params.amount,
       total: params.total ?? 0,
-      unit: params.unit || 'gram',
+      unit: params.unit || UnitValue.GRAM,
       indent: params.indent ?? 0,
       type: params.type || 'row',
       uuid: params.uuid,
@@ -130,7 +131,7 @@ export class CalculateRecipeService {
     return {
       name: _('recipe.calculation.table.total-row'),
       amount: totalWeight,
-      unit: 'gram',
+      unit: UnitValue.GRAM,
       price_per_gram: parseFloatingNumber(total / totalWeight),
       total: total,
       indent: 0,
