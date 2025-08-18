@@ -78,14 +78,13 @@ import {TranslateService} from '@ngx-translate/core';
 
     .grouping-tiles__content {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 16px;
     }
 
     .grouping-tiles__item {
       display: flex;
       align-items: stretch;
-      width: 100%;
     }
 
     .grouping-tiles__item-inner {

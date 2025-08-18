@@ -19,7 +19,8 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     TranslatePipe
   ],
   template: `
-    <lg-flex-row>
+    <lg-flex-row size="medium"
+                 [mobileMode]="true">
       <lg-dropdown>
         <lg-button [size]="'small'" lgDropdownAnchor>
           {{ getGroupingLabel(sorting().group) }}

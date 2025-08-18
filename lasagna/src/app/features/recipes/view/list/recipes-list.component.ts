@@ -91,7 +91,7 @@ import {JsonPipe} from '@angular/common';
                            [sortResult]="recipes()">
           <ng-template let-recipe lgGroupingTile>
             <lg-card>
-              <lg-flex-column>
+              <lg-flex-column size="medium">
                 <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
 
                 <lg-flex-row>
