@@ -9,6 +9,7 @@ import {Credential} from '../../../settings/service/models/Credential';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {Tax} from '../../../settings/service/models/Tax';
 import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class Invoice {
   constructor(
@@ -202,7 +203,7 @@ export class Invoice {
         }
 
         targetItem.setAmount((currentRow.amount ?? targetItem.amount) ?? 0);
-        targetItem.setUnit(currentRow.unit || targetItem.unit || 'gram');
+        targetItem.setUnit(currentRow.unit || targetItem.unit || UnitValue.GRAM);
       } else if (currentRow.product_id || currentRow.recipe_id) {
         const newItem = factory.fromDTO(currentRow);
 

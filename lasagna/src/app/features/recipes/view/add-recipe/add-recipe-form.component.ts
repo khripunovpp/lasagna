@@ -35,6 +35,7 @@ import {ControlExtraTemplateDirective} from "../../../controls/form/control-extr
 import {TagsControlComponent} from '../../../controls/form/tags-control.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ControlComponent} from "../../../controls/form/control-item/control.component";
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 
 @Component({
@@ -233,7 +234,7 @@ export class AddRecipeFormComponent
         ...acc,
         [field]: null
       }), {}) : {[clearField]: null}),
-      unit: value.product_id?.unit || value.recipe_id?.unit || 'gram'
+      unit: value.product_id?.unit || value.recipe_id?.unit || UnitValue.GRAM
     });
   }
 
@@ -294,7 +295,7 @@ export class AddRecipeFormComponent
       amount: new FormControl(ingredient?.amount?.toString() ?? null),
       product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
       recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
-      unit: new FormControl(ingredient?.unit ?? 'gram'),
+      unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
     }, (group) => {
       const ingredient = Ingredient.fromRaw(group.value);
       if (ingredient.allEmpty) {
@@ -318,4 +319,6 @@ export class AddRecipeFormComponent
       return null;
     });
   }
+
+  protected readonly UnitValue = UnitValue;
 }

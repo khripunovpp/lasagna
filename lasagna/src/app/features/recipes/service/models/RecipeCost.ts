@@ -1,5 +1,6 @@
 import {Recipe} from './Recipe';
 import {CalculationTableParams} from '../calulate-recipe.service';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class RecipeCost {
   constructor(
@@ -60,10 +61,10 @@ export class RecipeCost {
 
   get outcomeUnit(): string {
     if (!this.recipe) {
-      return 'gram';
+      return UnitValue.GRAM;
     }
 
-    return this.recipe.outcome_unit || 'gram';
+    return this.recipe.outcome_unit || UnitValue.GRAM;
   }
 
   get totalPriceDifference(): number {

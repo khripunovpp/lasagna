@@ -42,6 +42,8 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -68,6 +70,7 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
     ReactiveFormsModule,
     CalculationPriceModifiersComponent,
     SelfStartDirective,
+    UnitStringPipe,
 
   ],
   templateUrl: './calculate-recipe.component.html',
@@ -197,7 +200,7 @@ export class CalculateRecipeComponent
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
   recalculateTotalsModel = model(0);
   notInGrams = computed(() => {
-    return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== 'gram'
+    return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== UnitValue.GRAM
   });
   recipePriceAdditionsForm = new FormControl();
   values = toSignal(this.recipePriceAdditionsForm.valueChanges);

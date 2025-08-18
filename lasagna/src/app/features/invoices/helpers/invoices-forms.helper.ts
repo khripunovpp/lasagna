@@ -7,10 +7,11 @@ import {InvoiceItemBase} from '../service/InvoiceItem/InvoiceItemBase.abstract';
 import {ProductInvoiceItem} from '../service/InvoiceItem/ProductInvoiceItem.model';
 import {RecipeInvoiceItem} from '@invoices/service/InvoiceItem/RecipeInvoiceItem.model';
 import {Credential} from '../../settings/service/models/Credential';
+import {UnitValue} from '../../../shared/view/const/units.const';
 
 export const invoiceItemFormShape = {
   amount: new FormControl<string | null>(null, Validators.required),
-  unit: new FormControl<string>('gram', Validators.required),
+  unit: new FormControl<string>(UnitValue.GRAM, Validators.required),
   activeTab: new FormControl<'recipe' | 'product' | 'custom'>('recipe'),
   recipe_id: new FormControl<{
     uuid: string
@@ -72,7 +73,7 @@ export const makeInvoiceItemFormGroup = (
 
   return new FormGroup({
     amount: new FormControl(item?.amount || null, Validators.required),
-    unit: new FormControl(item?.unit ?? 'gram', Validators.required),
+    unit: new FormControl(item?.unit ?? UnitValue.GRAM, Validators.required),
     activeTab: new FormControl(item?.type || 'recipe'),
     recipe_id: new FormControl(recipeId),
     product_id: new FormControl(productId),
@@ -90,7 +91,7 @@ export const fromFormToDTO = (
     rows: formValue.rows?.map((item) => {
       return {
         amount: parseFloat(item.amount || '0'),
-        unit: item.unit || 'gram',
+        unit: item.unit || UnitValue.GRAM,
         type: (item.activeTab || 'recipe') as InvoiceItemDTO['type'],
         recipe_id: item.recipe_id?.uuid || null,
         product_id: item.product_id?.uuid || null,
@@ -128,7 +129,7 @@ export const fromInvoiceToFormValue = (
 
       return {
         amount: item.amount?.toString() || null,
-        unit: item.unit || 'gram',
+        unit: item.unit || UnitValue.GRAM,
         activeTab: item.type as 'recipe' | 'product' | 'custom',
         product_id: productId,
         recipe_id: recipeId,

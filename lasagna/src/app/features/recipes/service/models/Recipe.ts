@@ -6,6 +6,7 @@ import {estimateColor, isColorString, parseFloatingNumber} from '../../../../sha
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from '../PriceModifier';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class Recipe {
   constructor(
@@ -18,7 +19,7 @@ export class Recipe {
   description: string = '';
   ingredients: Ingredient[] = [];
   outcome_amount: number = 0;
-  outcome_unit: Unit = 'gram';
+  outcome_unit: Unit = UnitValue.GRAM;
   uuid?: string | undefined = undefined;
   taxTemplateName?: string | undefined;
   category_id?: CategoryRecipe;
@@ -78,14 +79,14 @@ export class Recipe {
   }
 
   get perUnitLabel() {
-    return !this.outcome_unit || this.outcome_unit === 'gram' ? 'per gram' : `per ${this.outcome_unit}`;
+    return !this.outcome_unit || this.outcome_unit === UnitValue.GRAM ? 'per gram' : `per ${this.outcome_unit}`;
   }
 
   get pricePerUnit() {
     if (this.ingredients.length === 0) {
       return 0;
     }
-    if (this.outcome_unit && this.outcome_unit !== 'gram') {
+    if (this.outcome_unit && this.outcome_unit !== UnitValue.GRAM) {
       return this.totalPrice / this.outcome_amount;
     }
     return this.pricePerGram;
@@ -109,7 +110,7 @@ export class Recipe {
   }
 
   get weightForUnit(): number {
-    if (!this.outcome_unit || this.outcome_unit === 'gram') {
+    if (!this.outcome_unit || this.outcome_unit === UnitValue.GRAM) {
       return this.totalIngredientsWeight;
     }
     return this.totalIngredientsWeight / this.outcome_amount;
@@ -122,7 +123,7 @@ export class Recipe {
         description: '',
         ingredients: [],
         outcome_amount: 0,
-        outcome_unit: 'gram',
+        outcome_unit: UnitValue.GRAM,
       });
     }
 
@@ -131,7 +132,7 @@ export class Recipe {
       description: dto?.description || '',
       ingredients: dto?.ingredients || [],
       outcome_amount: dto?.outcome_amount || 0,
-      outcome_unit: dto?.outcome_unit || 'gram',
+      outcome_unit: dto?.outcome_unit || UnitValue.GRAM,
       uuid: dto?.uuid,
       taxTemplateName: dto?.taxTemplateName,
       category_id: dto?.category_id,
@@ -157,7 +158,7 @@ export class Recipe {
       description: '',
       ingredients: [],
       outcome_amount: 0,
-      outcome_unit: 'gram',
+      outcome_unit: UnitValue.GRAM,
       uuid: undefined,
       taxTemplateName: undefined,
       category_id: null,
