@@ -13,6 +13,8 @@ import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.co
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 import {currencyStringToSymbol} from '../../../../../shared/helpers/assets/currency.helper';
+import {marker} from '@colsen1991/ngx-translate-extract-marker';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-calculation-price-modifiers',
@@ -23,14 +25,15 @@ import {currencyStringToSymbol} from '../../../../../shared/helpers/assets/curre
     UnitSwitcherComponent,
     ControlExtraTemplateDirective,
     CurrencySymbolPipe,
-    FlexRowComponent
+    FlexRowComponent,
+    TranslatePipe
   ],
   template: `
     <lg-flex-row [formGroup]="recipePriceAdditionsForm">
       <lg-number-input [moveBeforeAbove]="isMobile()"
                        formControlName="value"
                        lgParseMath
-                       placeholder="extra price">
+                       [placeholder]="'price-modifier.placeholder' | translate">
         <ng-template lgExtraTpl place="before">
           <lg-unit-switcher [items]="additionalPriceType"
                             formControlName="type">
@@ -100,24 +103,24 @@ export class CalculationPriceModifiersComponent
   ];
   additionalPriceAction: UnitGroupItem[] = [
     {
-      label: 'Add',
+      label: marker('price-modifier.add'),
       value: 'add',
       style: 'secondary',
     },
     {
-      label: 'Round to',
+      label: marker('price-modifier.round'),
       value: 'round',
       style: 'secondary',
     },
   ];
   additionalPriceType: UnitGroupItem[] = [
     {
-      label: 'Per unit',
+      label: marker('price-modifier.per-unit'),
       value: 'per_unit',
       style: 'secondary',
     },
     {
-      label: 'Total',
+      label: marker('price-modifier.total'),
       value: 'total',
       style: 'secondary',
     },

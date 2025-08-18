@@ -48,10 +48,6 @@ export class Product {
     return parseFloatingNumber(this.price) / parseFloatingNumber(this.amount);
   }
 
-  get perUnitLabel() {
-    return !this.unit || this.unit === 'gram' ? 'per gram' : `per ${this.unit}`;
-  }
-
   static fromRaw(dto: any) {
     if (typeof dto === 'string') {
       return new Product({

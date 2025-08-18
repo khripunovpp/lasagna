@@ -16,7 +16,7 @@ import {CurrencyPipe} from '@angular/common';
 import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {
@@ -26,6 +26,7 @@ import {
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 
 @Component({
   selector: 'app-add-recipe',
@@ -44,88 +45,95 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
     UserCurrencyPipe,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    SelfStartDirective
+    SelfStartDirective,
+    UnitStringPipe,
+    TranslateDirective
   ],
   template: `
-      <lg-fade-in>
-          <lg-container>
-              <lg-flex-column size="medium">
-                  <lg-flex-row [center]="true" [mobileMode]="true">
-                      @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                          <lg-title lgSelfStart>
-                              {{ product()?.name }}
-                          </lg-title>
-                      } @else {
-                          <lg-title lgSelfStart>
-                              {{ 'product.form.title'|translate }}
-                          </lg-title>
-                      }
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-column size="medium">
+          <lg-flex-row [center]="true" [mobileMode]="true">
+            @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+              <lg-title lgSelfStart>
+                {{ product()?.name }}
+              </lg-title>
+            } @else {
+              <lg-title lgSelfStart>
+                {{ 'product.form.title'|translate }}
+              </lg-title>
+            }
 
-                      @if (product()?.pricePerUnit) {
-                          <span lgSelfStart>({{ product()?.perUnitLabel }} {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})</span>
-                      }
-                  </lg-flex-row>
+            @if (product()?.pricePerUnit) {
+              <span
+                lgSelfStart>
+                (<span [translate]="'per-unit.label'"
+                       [translateParams]="{unit:product()?.unit | unitString | translate}"></span>
+                {{ product()?.pricePerUnit | userCurrency:'1.0-5' }})
+              </span>
+            }
+          </lg-flex-row>
 
-                  <lg-inline-separated-group>
-                      @if (draftRef() && formComponent()?.form?.dirty) {
-                          <ng-template lgInlineSeparatedGroup>
-                              <span>{{ 'saved-draft-label'|translate }}</span>
-                          </ng-template>
-                      }
+          <lg-inline-separated-group>
+            @if (draftRef() && formComponent()?.form?.dirty) {
+              <ng-template lgInlineSeparatedGroup>
+                <span>{{ 'saved-draft-label'|translate }}</span>
+              </ng-template>
+            }
 
-                      <ng-template lgInlineSeparatedGroup>
-                          @if (isDraftRoute()) {
-                              <lg-button lgShrink [style]="'danger'"
-                                         [flat]="true"
-                                         (click)="onRemoveDraft()">
-                                  {{ 'product.form.delete-draft-btn'|translate }}
-                              </lg-button>
-                          } @else if (product()?.uuid) {
-                              <lg-button lgShrink [style]="'danger'"
-                                         [flat]="true"
-                                         (click)="onDeleteProduct()">
-                                  {{ 'product.form.delete-btn'|translate }}
-                              </lg-button>
-                          }
-                      </ng-template>
-                  </lg-inline-separated-group>
+            <ng-template lgInlineSeparatedGroup>
+              @if (isDraftRoute()) {
+                <lg-button lgShrink [style]="'danger'"
+                           [flat]="true"
+                           (click)="onRemoveDraft()">
+                  {{ 'product.form.delete-draft-btn'|translate }}
+                </lg-button>
+              } @else if (product()?.uuid) {
+                <lg-button lgShrink [style]="'danger'"
+                           [flat]="true"
+                           (click)="onDeleteProduct()">
+                  {{ 'product.form.delete-btn'|translate }}
+                </lg-button>
+              }
+            </ng-template>
+          </lg-inline-separated-group>
 
-                  @if (product()?.updatedAt) {
-                      <small class="text-muted text-cursive">
-                          {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
-                      </small>
-                  }
+          @if (product()?.updatedAt) {
+            <small class="text-muted text-cursive">
+              {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
+            </small>
+          }
 
-              </lg-flex-column>
+        </lg-flex-column>
 
-              <lg-add-product-form [product]="product()"></lg-add-product-form>
+        <lg-add-product-form [product]="product()"></lg-add-product-form>
 
-              <lg-flex-row [mobileMode]="true" [relaxed]="true">
-                  @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-                      <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                                 lgShrink
-                                 (click)="onEditProduct()">
-                          @if (formComponent()?.form?.dirty || draftRef()) {
-                              {{ 'product.form.save-btn.edit.active'|translate }}
-                          } @else {
-                              {{ 'product.form.save-btn.edit.disabled'|translate }}
-                          }
-                      </lg-button>
-                  } @else {
-                      <lg-button lgShrink
-                                 [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                                 (click)="onAddProduct()">
-                          @if (formComponent()?.form?.dirty || draftRef()) {
-                              {{ 'product.form.save-btn.add.active'|translate }}
-                          } @else {
-                              {{ 'product.form.save-btn.add.disabled'|translate }}
-                          }
-                      </lg-button>
-                  }
+        <lg-flex-row [mobileMode]="true" [relaxed]="true">
+          @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       lgShrink
+                       (click)="onEditProduct()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.edit.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.edit.disabled'|translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button lgShrink
+                       [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       (click)="onAddProduct()">
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.add.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.add.disabled'|translate }}
+              }
+            </lg-button>
+          }
 
-              </lg-flex-row>
-          </lg-container>
-      </lg-fade-in>
+        </lg-flex-row>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `
