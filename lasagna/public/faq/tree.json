@@ -235,5 +235,38 @@
     "data": {
       "title": "🧩 Как установить приложение"
     }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[en].md",
+    "language": "en",
+    "path": "06-fraud-warning[en].md",
+    "title": "⚠️ Fraud Warning",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Fraud Warning"
+    }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[pt].md",
+    "language": "pt",
+    "path": "06-fraud-warning[pt].md",
+    "title": "⚠️ Aviso de Fraude",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Aviso de Fraude"
+    }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[ru].md",
+    "language": "ru",
+    "path": "06-fraud-warning[ru].md",
+    "title": "⚠️ Предупреждение о мошенничестве",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Предупреждение о мошенничестве"
+    }
   }
 ]
