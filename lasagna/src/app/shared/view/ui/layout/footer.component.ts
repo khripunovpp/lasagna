@@ -1,4 +1,4 @@
-import {Component, inject, viewChild} from '@angular/core';
+import {Component, computed, inject, viewChild} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {JsonPipe} from '@angular/common';
@@ -16,12 +16,13 @@ import {SupportPopupComponent} from '../../../../features/home/view/support-popu
   template: `
     <lg-fade-in>
       <footer class="lg-footer">
-        @if (canSeePolicies()) {
+        @if (canSeeAuthors()) {
           <p class="footer-credit">
             👨‍💻 <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
             • 🪄&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
           </p>
-
+        }
+        @if (canSeePolicies()) {
           {{ 'footer.agree' | translate }}
           <a [attr.href]="environment.policies.privacyPolicyUrl"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
@@ -32,9 +33,9 @@ import {SupportPopupComponent} from '../../../../features/home/view/support-popu
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
         <div class="lg-footer__bottom">
-          <button type="button"
+          <button (click)="openSupport()"
                   class="lg-footer__support-link"
-                  (click)="openSupport()">
+                  type="button">
             {{ 'footer.support' | translate }}
           </button>
           <div class="lg-footer__version">v{{ appVersion() }}</div>
@@ -110,7 +111,7 @@ export class FooterComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   readonly supportPopup = viewChild(SupportPopupComponent);
 
-  readonly debugData = toSignal(this.router.events.pipe(
+  readonly routeData = toSignal(this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null), // Для первоначальной загрузки
     switchMap(() => {
@@ -140,36 +141,8 @@ export class FooterComponent {
     })
   ));
 
-  readonly canSeePolicies = toSignal(this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd),
-    startWith(null), // Для первоначальной загрузки
-    switchMap(() => {
-      // Функция для поиска данных в дереве маршрутов
-      const findRouteData = (route: ActivatedRoute): any => {
-        let currentRoute = route;
-
-        // Идем по всему дереву маршрутов и собираем все данные
-        while (currentRoute) {
-          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
-            return currentRoute.snapshot.data;
-          }
-
-          // Переходим к дочернему маршруту
-          if (currentRoute.firstChild) {
-            currentRoute = currentRoute.firstChild;
-          } else {
-            break;
-          }
-        }
-
-        return {};
-      };
-
-      const routeData = findRouteData(this.activatedRoute);
-      return [routeData];
-    }),
-    map(data => data?.canSeePolicies || false)
-  ));
+  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
+  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
 
   /**
    * Open support popup
