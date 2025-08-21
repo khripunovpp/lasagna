@@ -12,4 +12,5 @@ export class CardListItemDirective {
 
   @Input() uuid: string | undefined | null = '';
   @Input() type: string = '';
+  @Input() bgColor: string = '';
 }

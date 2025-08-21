@@ -518,5 +518,7 @@
   "price-modifier.per-unit": "Por unidade",
   "price-modifier.total": "Total",
   "price-modifier.placeholder": "custo extra",
-  "per-unit.label": "/{{ unit }}"
+  "per-unit.label": "/{{ unit }}",
+  "invoices.copy.prefix": "cópia",
+  "invoices.days-left.overdue": "Atrasado"
 }

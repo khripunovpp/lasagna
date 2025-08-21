@@ -73,20 +73,20 @@
       <lg-control [label]="'invoices.company-details' | translate" lgExpand>
         <lg-credential-field (deleted)="onCredentialDeleted('system')"
                              (selected)="onCredentialSelected($event)"
+                             [placeholder]="'invoices.company-placeholder' | translate"
                              [readonly]="!canBeUpdated"
                              [type]="CredentialsType.system"
-                             formControlName="credential_from"
-                             [placeholder]="'invoices.company-placeholder' | translate">
+                             formControlName="credential_from">
         </lg-credential-field>
       </lg-control>
 
       <lg-control [label]="'invoices.customer-details' | translate" lgExpand>
         <lg-credential-field (deleted)="onCredentialDeleted('customer')"
                              (selected)="onCredentialSelected($event)"
+                             [placeholder]="'invoices.customer-placeholder' | translate"
                              [readonly]="!canBeUpdated"
                              [type]="CredentialsType.customer"
-                             formControlName="credential_to"
-                             [placeholder]="'invoices.customer-placeholder' | translate">
+                             formControlName="credential_to">
         </lg-credential-field>
       </lg-control>
     </lg-flex-row>
@@ -112,6 +112,8 @@
         @for (control of rows.controls; track (control.value.amount + i + 1); let i = $index, last = $last) {
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
+            @let isRecipe = item?.type === 'recipe';
+            @let isProduct = item?.type === 'product';
             <lg-controls-row [mobileMode]="true" [equal]="true">
 
               @if (canBeUpdated) {
@@ -193,10 +195,15 @@
 
               @let taxAmount = item?.calculateTaxesAndFeesAmount(invoice?.taxesAndFees ?? []) ?? 0;
 
-              <lg-readonly-control [placeholder]="'0'"
-                                   [value]="taxAmount | userCurrency: '1.2-4'"
-                                   lgWidth="12.5%">
-              </lg-readonly-control>
+              @if (isRecipe) {
+                <lg-readonly-control [placeholder]="'0'"
+                                     [value]="taxAmount | userCurrency: '1.2-4'"
+                                     lgWidth="12.5%">
+                </lg-readonly-control>
+              } @else {
+                <div lgWidth="12.5%"></div>
+              }
+
 
               @if (invoice?.taxesAlreadyIncluded) {
                 <lg-number-input lgParseMath
@@ -250,17 +257,17 @@
                                [invoice]="invoiceBuilderService.invoice()"
                                formControlName="taxes_and_fees"></lg-invoice-taxes-and-fees>
 
-<!--    <lg-flex-row [mobileMode]="true" [relaxed]="true">-->
-<!--      <lg-control-box lgShrink>-->
-<!--        <lg-control flow="row-reverse"-->
-<!--                    label="Include taxes in total"-->
-<!--                    labelFor="taxesIncluded-">-->
-<!--          <lg-checkbox formControlName="taxesIncluded"-->
-<!--                       name="taxesIncluded"-->
-<!--                       size="small"></lg-checkbox>-->
-<!--        </lg-control>-->
-<!--      </lg-control-box>-->
-<!--    </lg-flex-row>-->
+    <!--    <lg-flex-row [mobileMode]="true" [relaxed]="true">-->
+    <!--      <lg-control-box lgShrink>-->
+    <!--        <lg-control flow="row-reverse"-->
+    <!--                    label="Include taxes in total"-->
+    <!--                    labelFor="taxesIncluded-">-->
+    <!--          <lg-checkbox formControlName="taxesIncluded"-->
+    <!--                       name="taxesIncluded"-->
+    <!--                       size="small"></lg-checkbox>-->
+    <!--        </lg-control>-->
+    <!--      </lg-control-box>-->
+    <!--    </lg-flex-row>-->
 
     <hr color="#fafafa" lgExpand size="2"/>
 

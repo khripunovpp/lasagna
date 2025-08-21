@@ -1,7 +1,7 @@
 import {Component, ContentChildren, effect, input, output, QueryList, ViewEncapsulation} from '@angular/core';
 
 import {CardListItemDirective} from './card-list-item.directive';
-import {NgTemplateOutlet} from '@angular/common';
+import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonComponent} from '../layout/button.component';
@@ -17,6 +17,7 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     ButtonComponent,
     MatIcon,
+    NgClass,
   ],
   template: `
     <section [formGroup]="selected" class="lg-card-list">
@@ -30,7 +31,8 @@ import {MatIcon} from '@angular/material/icon';
                            [value]="buildValueString(i, item)"
                            (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
             }
-            <div class="lg-card-list__item__inner">
+            <div [style.--card-list-bg]="item.bgColor"
+              class="lg-card-list__item__inner">
               <ng-container [ngTemplateOutlet]="item.template"></ng-container>
             </div>
             @if (mode() === 'selection') {

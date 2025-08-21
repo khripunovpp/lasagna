@@ -91,6 +91,18 @@ export class Invoice {
     }, 0);
   }
 
+  get daysLeft(): number {
+    if (!this.date_due){
+      return 0;
+    }
+
+    return Math.ceil((this.date_due - Date.now()) / (1000 * 60 * 60 * 24));
+  }
+
+  get overdue(): boolean {
+    return this.daysLeft < 0;
+  }
+
   static fromRaw(
     raw: any,
     factory: InvoiceItemFactory
@@ -102,7 +114,6 @@ export class Invoice {
     value: boolean
   ) {
     if (!this.canBeUpdated) return;
-    console.log('Setting taxes already included:', value);
     this.taxesAlreadyIncluded = value;
     if (this.taxesAlreadyIncluded) {
       for (let idx = 0; idx < this.rows.length; idx++) {

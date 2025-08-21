@@ -517,5 +517,7 @@
   "price-modifier.per-unit": "За единицу",
   "price-modifier.total": "Всего",
   "price-modifier.placeholder": "надбавка",
-  "per-unit.label": "/{{ unit }}"
+  "per-unit.label": "/{{ unit }}",
+  "invoices.copy.prefix": "копия",
+  "invoices.days-left.overdue": "Просрочено"
 }
