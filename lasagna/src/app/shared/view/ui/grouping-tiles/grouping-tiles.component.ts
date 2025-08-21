@@ -22,7 +22,7 @@ import {TranslateService} from '@ngx-translate/core';
               </ng-container>
             } @else {
               <lg-title [level]="3">
-                {{ group?.field || translateService.instant('unknown') }}
+                {{ group?.field || translateService.instant('without-category-label') }}
               </lg-title>
             }
           </header>
