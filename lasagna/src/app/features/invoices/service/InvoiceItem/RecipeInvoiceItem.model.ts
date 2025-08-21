@@ -27,6 +27,9 @@ export class RecipeInvoiceItem
     if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
+    if (!this.recipe.totalPriceModified) {
+      return 0;
+    }
     // для иновйса подгоняем цену юнит исходя из тотала
     return this.recipe.totalPriceModified / this.recipe.outcomeAmount
   }

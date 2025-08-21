@@ -122,11 +122,7 @@ export class AddInvoiceFormComponent
   }
 
   ngOnInit() {
-    console.log('ngOnInit', {
-      invoice: this.invoiceBuilderService.invoice(),
-    })
     this.fillForm(this.invoiceBuilderService.invoice());
-    console.log(this.invoiceBuilderService.invoice()?.getRowTaxAmount(0));
     if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
       return
     }

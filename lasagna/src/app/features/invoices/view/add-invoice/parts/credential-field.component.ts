@@ -193,6 +193,10 @@ export class CredentialFieldComponent
   ) {
     this.form.patchValue(value as any);
     this.onChange(this.form.value);
-    this.displayedCredentialValue = this.form.value.id?.name || '';
+    const strings = [
+      this.form.value.id?.privateName,
+      this.form.value.id?.name,
+    ];
+    this.displayedCredentialValue = strings.filter(Boolean).join(' - ');
   }
 }

@@ -5,6 +5,7 @@ import {
   importProvidersFrom,
   inject,
   isDevMode,
+  LOCALE_ID,
   provideAppInitializer,
   provideZonelessChangeDetection
 } from '@angular/core';
@@ -45,7 +46,12 @@ import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {appInitializer} from './app.initializer';
 import {SortStrategy} from './shared/service/types/sorting.types';
-import {UserCurrencyPipe} from './shared/view/pipes/userCurrency.pipe';
+import localeRu from '@angular/common/locales/ru';
+import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+
+registerLocaleData(localeRu, 'ru-RU');
+registerLocaleData(localePt, 'pt-PT');
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -189,6 +195,18 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     {
       provide: MAT_DATE_LOCALE,
+      useFactory: () => {
+        const userLanguage = inject(USER_LANGUAGE);
+        const langToLocaleMap: Record<string, string> = {
+          'en': 'en-US',
+          'ru': 'ru-RU',
+          'pt': 'pt-PT',
+        }
+        return langToLocaleMap[userLanguage()] || 'en-US';
+      }
+    },
+    {
+      provide: LOCALE_ID,
       useFactory: () => {
         const userLanguage = inject(USER_LANGUAGE);
         const langToLocaleMap: Record<string, string> = {

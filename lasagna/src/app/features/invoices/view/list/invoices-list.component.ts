@@ -61,7 +61,10 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
                         [selectAll]="selectionZoneService.selectAll()"
                         [deselectAll]="selectionZoneService.deselectAll()">
             @for (invoice of category.items; track (invoice.uuid ?? '') + $index; let i = $index) {
-              <ng-template lgCardListItem [uuid]="invoice.uuid" type="invoice">
+              <ng-template lgCardListItem
+                           [uuid]="invoice.uuid"
+                           [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
+                           type="invoice">
                 <lg-flex-column [size]="'medium'">
                   <lg-flex-row [center]="true">
                     <lg-flex-row [center]="true" lgExpand>
@@ -86,8 +89,12 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
                     </div>
 
                     <div>
-                      {{ 'invoices.days-left' | translate }}
-                      : {{ (invoice.date_due - nowDate) / (1000 * 60 * 60 * 24) | number:'1.0-0' }}
+                      {{ 'invoices.days-left' | translate }}:
+                      @if (invoice.overdue) {
+                        {{ 'invoices.days-left.overdue' | translate }}
+                      } @else {
+                        {{ invoice.daysLeft }}
+                      }
                     </div>
                   </lg-flex-row>
                 </lg-flex-column>

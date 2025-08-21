@@ -5,11 +5,11 @@ import {Subject} from 'rxjs';
 import {generateRandomInvoicePrefix} from '../../../shared/helpers/pdf-generators/prefix-generator';
 import {INVOICE_FACTORY} from './Inovice/NewInvoice.factory';
 import {PdfGeneratorService} from '../../../shared/service/services/pdf-generator.service';
-import {ProductsRepository, RecipesRepository} from '../../../shared/service/repositories';
 import {Invoice} from './Inovice/Invoice';
 import {InvoiceItemFactory} from './InvoiceItem/InvoiceItem.factory';
 import {InvoiceDTO} from './Inovice/Invoice.scheme';
 import {SettingsService} from '../../settings/service/services/settings.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,14 @@ export class InvoicesRepository {
     public _indexDbService: DexieIndexDbService,
     private _pdfGenerator: PdfGeneratorService,
     private _settingsService: SettingsService,
+    private _translate: TranslateService,
   ) {
+    this._copyPrefix = this._translate.instant('invoices.copy.prefix');
   }
 
   invoiceFactory = inject(INVOICE_FACTORY);
   private _stream$ = new Subject<Invoice[]>();
+  private readonly _copyPrefix: string;
 
   get items$() {
     return this._stream$.asObservable();
@@ -43,6 +46,7 @@ export class InvoicesRepository {
   ) {
     const invoiceTpl = this.invoiceFactory();
     const copy = invoice.clone();
+    copy.name = this._copyPrefix + ' ' + invoiceTpl.name;
     copy.invoice_number = invoiceTpl.invoice_number;
     copy.uuid = invoiceTpl.uuid;
     return this.addOne(copy).then(() => copy.uuid);
