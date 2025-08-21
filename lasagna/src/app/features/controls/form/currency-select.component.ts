@@ -60,6 +60,7 @@ interface CurrencyOption {
         (onSelected)="onCurrencySelected($event)"
         [(ngModel)]="selectedCurrency"
         [multi]="false"
+        compareField="code"
         [placeholder]="'currency.select-placeholder' | translate"
         [staticItems]="displayedCurrencies()">
       </lg-multiselect>

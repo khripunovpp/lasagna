@@ -146,6 +146,7 @@ export class SelectResourcesService {
       } else {
         cfg.lists = result as Record<string, T[]>;
       }
+
       cfg.updatedAt = Date.now();
     })).then(() => {
       return keys.reduce((acc, key) => {

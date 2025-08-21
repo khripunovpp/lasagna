@@ -3,7 +3,6 @@ import {Stores} from '../db/const/stores';
 export interface SelectResourcesConfig {
   name: string
   loaderConfig?: IndexDbSelectLoaderConfig | LocalstorageSelectLoaderConfig
-  transform?: (data: any) => any
 }
 
 export interface IndexDbSelectLoaderConfig {
@@ -38,7 +37,7 @@ export const resources: Record<string, SelectResourcesConfig> = {
     loaderConfig: {
       name: 'indexDb',
       storeName: Stores.RECIPES_CATEGORIES,
-    }
+    },
   },
   recipes: {
     name: 'recipes',
@@ -83,18 +82,5 @@ export const resources: Record<string, SelectResourcesConfig> = {
       name: 'indexDb',
       storeName: Stores.TAGS,
     },
-  },
-  taxTemplates: {
-    name: 'taxTemplates',
-    loaderConfig: {
-      name: 'localStorage',
-      key: 'template-tax',
-    },
-    transform: (data: any) => {
-      if (data) {
-        return data;
-      }
-      return [];
-    }
   },
 }

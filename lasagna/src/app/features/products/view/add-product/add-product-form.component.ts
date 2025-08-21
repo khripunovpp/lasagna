@@ -43,6 +43,7 @@ import {smaller} from 'mathjs';
 import {InputComponent} from '../../../controls/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
+import {ControlTemplateDirective} from "../../../controls/form/control-template.directive";
 
 
 
@@ -72,6 +73,7 @@ import {ControlComponent} from '../../../controls/form/control-item/control.comp
     InputComponent,
     ControlExtraTemplateDirective,
     ControlComponent,
+    ControlTemplateDirective,
   ],
   styles: [
     `
