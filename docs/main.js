@@ -1,75 +1,75 @@
 import {
   FaqService
-} from "./chunk-AT3RADLN.js";
+} from "./chunk-L3OGPP6U.js";
 import {
   provideCharts,
   withDefaultRegisterables
-} from "./chunk-CQ6QXFFO.js";
+} from "./chunk-ZODO7AL2.js";
 import {
   BrowserTabTrackingService,
   DateAdapter,
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-CFA223CR.js";
+} from "./chunk-NNJGJB3X.js";
 import {
   UserCurrencyPipe
-} from "./chunk-MTFF6LZJ.js";
+} from "./chunk-36PVMZQC.js";
 import {
   GroupSortService
-} from "./chunk-KBVHATZI.js";
-import "./chunk-DC7OXWQA.js";
+} from "./chunk-R3XUMN4L.js";
+import "./chunk-PTFKCVPY.js";
 import {
   InputComponent
-} from "./chunk-24GIFUTY.js";
+} from "./chunk-BEOO26FI.js";
 import {
   CATEGORIZED_RECIPES_LIST
-} from "./chunk-O3UDK5TJ.js";
+} from "./chunk-4UPQAEW5.js";
 import {
   PortalComponent
-} from "./chunk-OAK3DILL.js";
+} from "./chunk-7BUCXCEO.js";
 import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-JSK3IVZN.js";
+} from "./chunk-NCI2AXMM.js";
 import {
   ROUTER_MANAGER_PROVIDER
-} from "./chunk-XHSUMN4D.js";
+} from "./chunk-OBLG76QB.js";
 import {
   ControlsRowComponent
-} from "./chunk-UHHJ4AUW.js";
+} from "./chunk-CVDG6MR4.js";
 import {
   AnalyticsService
-} from "./chunk-5JBPEQZK.js";
+} from "./chunk-ZSRRFY7V.js";
 import {
   TextareaComponent
-} from "./chunk-2JOH5Z5B.js";
+} from "./chunk-25VVVZZW.js";
 import {
   ControlComponent
-} from "./chunk-PCNJOXTY.js";
-import "./chunk-222CPMRQ.js";
+} from "./chunk-L6LNU7WI.js";
+import "./chunk-RSTLHIV7.js";
 import {
   ExpandDirective
-} from "./chunk-OCPTIUJK.js";
+} from "./chunk-RDIOWZFB.js";
 import {
   MatIcon
-} from "./chunk-DHMDFBEO.js";
-import "./chunk-C7YIU4ER.js";
+} from "./chunk-XSNVK4IA.js";
+import "./chunk-KWEJJNRF.js";
 import {
   TimeAgoPipe
-} from "./chunk-VGY5V7FI.js";
+} from "./chunk-YTRTB3GK.js";
 import {
   FlexColumnComponent
-} from "./chunk-WKEFA3OS.js";
+} from "./chunk-MVKV245R.js";
 import "./chunk-R64U7JLD.js";
 import {
   FadeInComponent
-} from "./chunk-GKY6K6EK.js";
-import "./chunk-HNJAQDA3.js";
+} from "./chunk-TFPBWSA6.js";
+import "./chunk-R4FNXVZE.js";
 import {
   TitleComponent
-} from "./chunk-LKA4ZC5L.js";
+} from "./chunk-S3LHKJVR.js";
 import {
   CalculateRecipeService,
   CategoryProductsRepository,
@@ -80,11 +80,11 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-7DS6BZJV.js";
+} from "./chunk-MUCTVFUK.js";
 import {
   DocsService
-} from "./chunk-HLCLXN3F.js";
-import "./chunk-UFXGBGSU.js";
+} from "./chunk-CDODNEUR.js";
+import "./chunk-A44TAXVW.js";
 import {
   FormBuilder,
   FormControl,
@@ -110,17 +110,17 @@ import {
   toObservable,
   toSignal,
   ɵNgNoValidate
-} from "./chunk-FGMQFOLX.js";
+} from "./chunk-2XO3IHHJ.js";
 import "./chunk-Q4M4NLQD.js";
 import {
   ButtonComponent
-} from "./chunk-PTCGLHTR.js";
+} from "./chunk-T3BLSHK3.js";
 import {
   TranslateLoader,
   TranslateModule,
   TranslatePipe,
   TranslateService
-} from "./chunk-BW4AJP7C.js";
+} from "./chunk-K2AXQEJL.js";
 import {
   DB_NAME,
   DISABLE_LOGGER,
@@ -128,7 +128,7 @@ import {
   LOGGER_CONTEXT,
   LoggerService,
   USER_LANGUAGE
-} from "./chunk-CTLQRZYU.js";
+} from "./chunk-HL3YEUI2.js";
 import "./chunk-5WJUMO7X.js";
 import {
   ActivatedRoute,
@@ -144,7 +144,7 @@ import {
   RouterOutlet,
   provideRouter,
   withInMemoryScrolling
-} from "./chunk-JRXEEUAD.js";
+} from "./chunk-O3OB56H2.js";
 import {
   DomRendererFactory2,
   HammerModule,
@@ -153,7 +153,7 @@ import {
   HttpHeaders,
   bootstrapApplication,
   provideHttpClient
-} from "./chunk-5MLLJAOM.js";
+} from "./chunk-GCNVZWZ6.js";
 import {
   AsyncPipe,
   CommonModule,
@@ -162,7 +162,7 @@ import {
   Location,
   NgTemplateOutlet,
   TitleCasePipe
-} from "./chunk-76JI64DZ.js";
+} from "./chunk-3W3KDUL6.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -234,6 +234,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject,
+  ɵɵdomElementEnd,
+  ɵɵdomElementStart,
+  ɵɵdomListener,
   ɵɵelement,
   ɵɵelementContainer,
   ɵɵelementEnd,
@@ -274,7 +277,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuerySignal
-} from "./chunk-UQVCVPTQ.js";
+} from "./chunk-S2UUPSJN.js";
 import "./chunk-PZQLIUCM.js";
 import "./chunk-7YWLATDR.js";
 import {
@@ -2171,7 +2174,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-Q2SY2MUT.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-HSRK6TFP.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2183,15 +2186,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-B5SD4DKY.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-7FZ46NLQ.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2201,7 +2204,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2211,7 +2214,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-Y2UYQKKI.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-AK7GVDKC.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2224,15 +2227,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-W72XZSO5.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-N7WGWE7M.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2242,7 +2245,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2267,11 +2270,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-FY2EKYJL.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-Y6U6TECC.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-RFTTSXDK.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-X75DQNXG.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2301,7 +2304,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-4D4LOUTG.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-I2F445VY.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2311,15 +2314,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-S6VV55EO.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-LD567FWK.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-KRWXP5H5.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-QKTKKT32.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-KRWXP5H5.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-QKTKKT32.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2328,15 +2331,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-ITBYBO6D.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-QVHUK7G5.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-L2GVDBDA.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-G3DV5ICO.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-L2GVDBDA.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-G3DV5ICO.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2347,7 +2350,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-3QMUSFLR.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-4J6FJBGO.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2355,15 +2358,15 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-OM5EXKZK.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-OZXABXLL.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-CMCVDEOS.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-M5VNPWJK.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
-          loadComponent: () => import("./chunk-MWJ2U674.js").then((m) => m.ArticleComponent)
+          loadComponent: () => import("./chunk-OXAQ4QM2.js").then((m) => m.ArticleComponent)
         }
       ],
       data: {
@@ -2372,11 +2375,11 @@ var routes = [{
     },
     {
       path: "dev",
-      loadComponent: () => import("./chunk-MOJ2AD5J.js").then((m) => m.ColorPaletteComponent)
+      loadComponent: () => import("./chunk-ZJJXY4TP.js").then((m) => m.ColorPaletteComponent)
     },
     {
       path: "**",
-      loadComponent: () => import("./chunk-3H4M5BZ3.js").then((m) => m.ErrorPage404Component)
+      loadComponent: () => import("./chunk-LEKZHLKU.js").then((m) => m.ErrorPage404Component)
     }
   ]
 }];
@@ -2413,7 +2416,12 @@ var NgswCommChannel = class {
       };
       serviceWorker.addEventListener("controllerchange", updateController);
       updateController();
-      this.registration = this.worker.pipe(switchMap(() => serviceWorker.getRegistration()));
+      this.registration = this.worker.pipe(switchMap(() => serviceWorker.getRegistration().then((registration) => {
+        if (!registration) {
+          throw new RuntimeError(5601, (typeof ngDevMode === "undefined" || ngDevMode) && ERR_SW_NOT_SUPPORTED);
+        }
+        return registration;
+      })));
       const _events = new Subject();
       this.events = _events.asObservable();
       const messageListener = (event) => {
@@ -2500,6 +2508,33 @@ var SwPush = class _SwPush {
    */
   notificationClicks;
   /**
+   * Emits the payloads of notifications that were closed, along with the action (if any)
+   * associated with the close event. If no action was used, the `action` property contains
+   * an empty string `''`.
+   *
+   * Note that the `notification` property does **not** contain a
+   * [Notification][Mozilla Notification] object but rather a
+   * [NotificationOptions](https://notifications.spec.whatwg.org/#dictdef-notificationoptions)
+   * object that also includes the `title` of the [Notification][Mozilla Notification] object.
+   *
+   * [Mozilla Notification]: https://developer.mozilla.org/en-US/docs/Web/API/Notification
+   */
+  notificationCloses;
+  /**
+   * Emits updates to the push subscription, including both the previous (`oldSubscription`)
+   * and current (`newSubscription`) values. Either subscription may be `null`, depending on
+   * the context:
+   *
+   * - `oldSubscription` is `null` if no previous subscription existed.
+   * - `newSubscription` is `null` if the subscription was invalidated and not replaced.
+   *
+   * This stream allows clients to react to automatic changes in push subscriptions,
+   * such as those triggered by browser expiration or key rotation.
+   *
+   * [Push API]: https://w3c.github.io/push-api
+   */
+  pushSubscriptionChanges;
+  /**
    * Emits the currently active
    * [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
    * associated to the Service Worker registration or `null` if there is no subscription.
@@ -2519,11 +2554,15 @@ var SwPush = class _SwPush {
     if (!sw.isEnabled) {
       this.messages = NEVER;
       this.notificationClicks = NEVER;
+      this.notificationCloses = NEVER;
+      this.pushSubscriptionChanges = NEVER;
       this.subscription = NEVER;
       return;
     }
     this.messages = this.sw.eventsOfType("PUSH").pipe(map((message) => message.data));
     this.notificationClicks = this.sw.eventsOfType("NOTIFICATION_CLICK").pipe(map((message) => message.data));
+    this.notificationCloses = this.sw.eventsOfType("NOTIFICATION_CLOSE").pipe(map((message) => message.data));
+    this.pushSubscriptionChanges = this.sw.eventsOfType("PUSH_SUBSCRIPTION_CHANGE").pipe(map((message) => message.data));
     this.pushManager = this.sw.registration.pipe(map((registration) => registration.pushManager));
     const workerDrivenSubscriptions = this.pushManager.pipe(switchMap((pm) => pm.getSubscription()));
     this.subscription = new Observable((subscriber) => {
@@ -2644,7 +2683,7 @@ var SwUpdate = class _SwUpdate {
       this.unrecoverable = NEVER;
       return;
     }
-    this.versionUpdates = this.sw.eventsOfType(["VERSION_DETECTED", "VERSION_INSTALLATION_FAILED", "VERSION_READY", "NO_NEW_VERSION_DETECTED"]);
+    this.versionUpdates = this.sw.eventsOfType(["VERSION_DETECTED", "VERSION_INSTALLATION_FAILED", "VERSION_READY", "NO_NEW_VERSION_DETECTED", "VERSION_FAILED"]);
     this.unrecoverable = this.sw.eventsOfType("UNRECOVERABLE_STATE");
   }
   /**
@@ -2769,7 +2808,9 @@ function ngswAppInitializer() {
         return;
       }
       navigator.serviceWorker.register(script, {
-        scope: options.scope
+        scope: options.scope,
+        updateViaCache: options.updateViaCache,
+        type: options.type
       }).catch((err) => console.error(formatRuntimeError(5604, (typeof ngDevMode === "undefined" || ngDevMode) && "Service worker registration failed with: " + err)));
     });
   });
@@ -2789,6 +2830,21 @@ var SwRegistrationOptions = class {
    * Default: true
    */
   enabled;
+  /**
+   * The value of the setting used to determine the circumstances in which the browser
+   * will consult the HTTP cache when it tries to update the service worker or any scripts that are imported via importScripts().
+   * [ServiceWorkerRegistration.updateViaCache](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/updateViaCache)
+   */
+  updateViaCache;
+  /**
+   * The type of the ServiceWorker script to register.
+   * [ServiceWorkerRegistration#type](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register#type)
+   * - `classic`: Registers the script as a classic worker. ES module features such as `import` and `export` are NOT allowed in the script.
+   * - `module`: Registers the script as an ES module. Allows use of `import`/`export` syntax and module features.
+   *
+   * @default 'classic'
+   */
+  type;
   /**
    * A URL that defines the ServiceWorker's registration scope; that is, what range of URLs it can
    * control. It will be used when calling
@@ -2905,7 +2961,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-PNL5P4BX.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-KYTSJGET.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
@@ -7653,7 +7709,7 @@ function addBreadcrumb(breadcrumb, hint) {
 var originalFunctionToString;
 var INTEGRATION_NAME = "FunctionToString";
 var SETUP_CLIENTS = /* @__PURE__ */ new WeakMap();
-var _functionToStringIntegration = () => {
+var _functionToStringIntegration = (() => {
   return {
     name: INTEGRATION_NAME,
     setupOnce() {
@@ -7671,7 +7727,7 @@ var _functionToStringIntegration = () => {
       SETUP_CLIENTS.set(client, true);
     }
   };
-};
+});
 var functionToStringIntegration = defineIntegration(_functionToStringIntegration);
 
 // node_modules/@sentry/core/build/esm/integrations/eventFilters.js
@@ -7715,11 +7771,11 @@ var eventFiltersIntegration = defineIntegration((options = {}) => {
     }
   };
 });
-var inboundFiltersIntegration = defineIntegration((options = {}) => {
+var inboundFiltersIntegration = defineIntegration(((options = {}) => {
   return __spreadProps(__spreadValues({}, eventFiltersIntegration(options)), {
     name: "InboundFilters"
   });
-});
+}));
 function _mergeOptions(internalOptions = {}, clientOptions = {}) {
   return {
     allowUrls: [...internalOptions.allowUrls || [], ...clientOptions.allowUrls || []],
@@ -7949,7 +8005,7 @@ function severityLevelFromString(level) {
 
 // node_modules/@sentry/core/build/esm/integrations/dedupe.js
 var INTEGRATION_NAME3 = "Dedupe";
-var _dedupeIntegration = () => {
+var _dedupeIntegration = (() => {
   let previousEvent;
   return {
     name: INTEGRATION_NAME3,
@@ -7967,7 +8023,7 @@ var _dedupeIntegration = () => {
       return previousEvent = currentEvent;
     }
   };
-};
+});
 var dedupeIntegration = defineIntegration(_dedupeIntegration);
 function _shouldDropEvent2(currentEvent, previousEvent) {
   if (!previousEvent) {
@@ -9108,7 +9164,7 @@ var DEBUG_BUILD3 = typeof __SENTRY_DEBUG__ === "undefined" || __SENTRY_DEBUG__;
 // node_modules/@sentry/browser/build/npm/esm/integrations/breadcrumbs.js
 var MAX_ALLOWED_STRING_LENGTH = 1024;
 var INTEGRATION_NAME4 = "Breadcrumbs";
-var _breadcrumbsIntegration = (options = {}) => {
+var _breadcrumbsIntegration = ((options = {}) => {
   const _options = __spreadValues({
     console: true,
     dom: true,
@@ -9140,7 +9196,7 @@ var _breadcrumbsIntegration = (options = {}) => {
       }
     }
   };
-};
+});
 var breadcrumbsIntegration = defineIntegration(_breadcrumbsIntegration);
 function _getSentryBreadcrumbHandler(client) {
   return function addSentryBreadcrumb(event) {
@@ -9387,7 +9443,7 @@ var DEFAULT_EVENT_TARGET = [
   "XMLHttpRequestUpload"
 ];
 var INTEGRATION_NAME5 = "BrowserApiErrors";
-var _browserApiErrorsIntegration = (options = {}) => {
+var _browserApiErrorsIntegration = ((options = {}) => {
   const _options = __spreadValues({
     XMLHttpRequest: true,
     eventTarget: true,
@@ -9420,7 +9476,7 @@ var _browserApiErrorsIntegration = (options = {}) => {
       }
     }
   };
-};
+});
 var browserApiErrorsIntegration = defineIntegration(_browserApiErrorsIntegration);
 function _wrapTimeFunction(original) {
   return function(...args) {
@@ -9568,7 +9624,7 @@ var browserSessionIntegration = defineIntegration(() => {
 
 // node_modules/@sentry/browser/build/npm/esm/integrations/globalhandlers.js
 var INTEGRATION_NAME6 = "GlobalHandlers";
-var _globalHandlersIntegration = (options = {}) => {
+var _globalHandlersIntegration = ((options = {}) => {
   const _options = __spreadValues({
     onerror: true,
     onunhandledrejection: true
@@ -9589,7 +9645,7 @@ var _globalHandlersIntegration = (options = {}) => {
       }
     }
   };
-};
+});
 var globalHandlersIntegration = defineIntegration(_globalHandlersIntegration);
 function _installGlobalOnErrorHandler(client) {
   addGlobalErrorInstrumentationHandler((data) => {
@@ -9713,7 +9769,7 @@ var httpContextIntegration = defineIntegration(() => {
 var DEFAULT_KEY = "cause";
 var DEFAULT_LIMIT = 5;
 var INTEGRATION_NAME7 = "LinkedErrors";
-var _linkedErrorsIntegration = (options = {}) => {
+var _linkedErrorsIntegration = ((options = {}) => {
   const limit = options.limit || DEFAULT_LIMIT;
   const key = options.key || DEFAULT_KEY;
   return {
@@ -9731,7 +9787,7 @@ var _linkedErrorsIntegration = (options = {}) => {
       );
     }
   };
-};
+});
 var linkedErrorsIntegration = defineIntegration(_linkedErrorsIntegration);
 
 // node_modules/@sentry/browser/build/npm/esm/utils/detectBrowserExtension.js
@@ -10591,9 +10647,9 @@ var SupportService = class _SupportService {
   // 5 minutes
   rateLimitKey = "support_rate_limit";
   // Signals for tracking state
-  isInitialized = signal(false);
-  supportEmail = signal("");
-  supportFromEmail = signal("");
+  isInitialized = signal(false, ...ngDevMode ? [{ debugName: "isInitialized" }] : []);
+  supportEmail = signal("", ...ngDevMode ? [{ debugName: "supportEmail" }] : []);
+  supportFromEmail = signal("", ...ngDevMode ? [{ debugName: "supportFromEmail" }] : []);
   /**
    * Initialize support service with SendPulse configuration
    */
@@ -10798,7 +10854,7 @@ var supportInitializer = () => {
 };
 
 // node_modules/@angular/material/fesm2022/core.mjs
-var VERSION2 = new Version("20.0.3");
+var VERSION2 = new Version("20.2.0");
 var ISO_8601_REGEX = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|(?:(?:\+|-)\d{2}:\d{2}))?)?$/;
 var TIME_REGEX = /^(\d?\d)[:.](\d?\d)(?:[:.](\d?\d))?\s*(AM|PM)?$/i;
 function range(length, valueFunction) {
@@ -11423,15 +11479,15 @@ var appConfig = {
 function PwaInstallComponent_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 0);
-    \u0275\u0275listener("click", function PwaInstallComponent_Conditional_0_Template_button_click_0_listener() {
+    \u0275\u0275domElementStart(0, "button", 0);
+    \u0275\u0275domListener("click", function PwaInstallComponent_Conditional_0_Template_button_click_0_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.installPWA());
     });
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "translate");
-    \u0275\u0275elementEnd();
+    \u0275\u0275domElementEnd();
   }
   if (rf & 2) {
     \u0275\u0275advance();
@@ -11835,7 +11891,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
   constructor(_globalSearchService) {
     this._globalSearchService = _globalSearchService;
   }
-  showBar = computed(() => this._globalSearchService.displayBar());
+  showBar = computed(() => this._globalSearchService.displayBar(), ...ngDevMode ? [{ debugName: "showBar" }] : []);
   searchQueryParams = injectQueryParams("search");
   searchControl = new FormControl("");
   // Используем signal для хранения состояния поиска
@@ -11858,7 +11914,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
     } else {
       this._globalSearchService.hideBar();
     }
-  });
+  }, ...ngDevMode ? [{ debugName: "searchQueryEffect" }] : []);
   #_query$ = toObservable(this.searchQueryParams);
   results$ = this.searchChanges$.pipe(combineLatestWith(this.#_query$), tap((resp) => {
     this.#_replaceSearchQueryParams(resp[0]?.toString().trim());
@@ -11887,7 +11943,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
     } else {
       this.#_bodyLocker.unlock();
     }
-  });
+  }, ...ngDevMode ? [{ debugName: "#_displayedEffect" }] : []);
   hideBar() {
     this._globalSearchService.hideBar();
     this.searchControl.setValue("");
@@ -11947,16 +12003,16 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
     FormsModule,
     NgControlStatus,
     RouterLink,
-    AsyncPipe,
     FadeInComponent,
     ReactiveFormsModule,
     FormControlDirective,
     FocusTrapDirective,
     TitleComponent,
-    TranslatePipe,
-    TimeAgoPipe,
     FlexColumnComponent,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    AsyncPipe,
+    TranslatePipe,
+    TimeAgoPipe
   ], styles: ["\n\n.lg-global-search[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(31, 31, 31, 0.7);\n  -webkit-backdrop-filter: blur(10px);\n  backdrop-filter: blur(10px);\n  z-index: 10000;\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lg-global-search__inner[_ngcontent-%COMP%] {\n  width: 100%;\n  max-width: 600px;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n.lg-global-search__search[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n.lg-global-search__no-results[_ngcontent-%COMP%] {\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n  max-height: 400px;\n  overflow-y: auto;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%]   .lg-global-search__language-badge[_ngcontent-%COMP%] {\n  font-size: 0.8em;\n  color: var(--text-muted);\n  font-style: italic;\n}\n.lg-global-search--expanded[_ngcontent-%COMP%] {\n  align-items: flex-start;\n}\n.lg-global-search__results__list[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n/*# sourceMappingURL=global-search.component.css.map */"], changeDetection: 0 });
 };
 (() => {
@@ -12190,9 +12246,9 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
   }
   oneDayInMilliseconds = 24 * 60 * 60 * 1e3;
   userService = inject(UserService);
-  storedBackupDate = signal(localStorage.getItem("lastBackupDate"));
+  storedBackupDate = signal(localStorage.getItem("lastBackupDate"), ...ngDevMode ? [{ debugName: "storedBackupDate" }] : []);
   today = /* @__PURE__ */ new Date();
-  lastBackupDate = computed(() => this.storedBackupDate() ? new Date(this.storedBackupDate()) : void 0);
+  lastBackupDate = computed(() => this.storedBackupDate() ? new Date(this.storedBackupDate()) : void 0, ...ngDevMode ? [{ debugName: "lastBackupDate" }] : []);
   showButton = computed(() => {
     if (location.hostname === "localhost") {
       return false;
@@ -12215,7 +12271,7 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
     }
     const lastBackupDateTs = this.lastBackupDate().getTime();
     return lastBackupDateTs < sinceDateTs || lastBackupDateTs < todayTs - this.oneDayInMilliseconds;
-  });
+  }, ...ngDevMode ? [{ debugName: "showButton" }] : []);
   hide() {
     this.storedBackupDate.set(null);
   }
@@ -12241,9 +12297,9 @@ var LastBackupInformerComponent = class _LastBackupInformerComponent {
       \u0275\u0275conditional(ctx.showButton() ? 0 : -1);
     }
   }, dependencies: [
+    RouterLink,
     TimeAgoPipe,
     TitleCasePipe,
-    RouterLink,
     TranslatePipe
   ], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\na[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #de2c51,\n      #fff400);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  text-align: center;\n  text-decoration: none;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  white-space: nowrap;\n}\na[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=last-backup-informer.component.css.map */"] });
 };
@@ -12530,12 +12586,12 @@ var SupportPopupComponent = class _SupportPopupComponent {
   supportService = inject(SupportService);
   notificationsService = inject(NotificationsService);
   translateService = inject(TranslateService);
-  dialog = viewChild(DialogComponent);
-  showForm = signal(true);
-  showThankYou = signal(false);
-  showRateLimited = signal(false);
-  isSubmitting = signal(false);
-  remainingMessages = signal(null);
+  dialog = viewChild(DialogComponent, ...ngDevMode ? [{ debugName: "dialog" }] : []);
+  showForm = signal(true, ...ngDevMode ? [{ debugName: "showForm" }] : []);
+  showThankYou = signal(false, ...ngDevMode ? [{ debugName: "showThankYou" }] : []);
+  showRateLimited = signal(false, ...ngDevMode ? [{ debugName: "showRateLimited" }] : []);
+  isSubmitting = signal(false, ...ngDevMode ? [{ debugName: "isSubmitting" }] : []);
+  remainingMessages = signal(null, ...ngDevMode ? [{ debugName: "remainingMessages" }] : []);
   supportForm = this.formBuilder.group({
     name: [""],
     email: ["", [Validators.required, Validators.email]],
@@ -12545,11 +12601,11 @@ var SupportPopupComponent = class _SupportPopupComponent {
   formValueChanges = toSignal(this.supportForm.valueChanges, { initialValue: this.supportForm.value });
   messageLength = computed(() => {
     return this.formValueChanges().message ? this.formValueChanges().message.length : 0;
-  });
+  }, ...ngDevMode ? [{ debugName: "messageLength" }] : []);
   hasFormErrors = computed(() => {
     const form = this.supportForm;
     return form.get("email")?.invalid && form.get("email")?.touched || form.get("message")?.invalid && form.get("message")?.touched;
-  });
+  }, ...ngDevMode ? [{ debugName: "hasFormErrors" }] : []);
   /**
    * Open support popup
    */
@@ -12675,13 +12731,13 @@ var SupportPopupComponent = class _SupportPopupComponent {
     FormGroupDirective,
     FormControlName,
     DialogComponent,
-    TranslatePipe,
     TitleComponent,
     FlexColumnComponent,
     ControlComponent,
     InputComponent,
     TextareaComponent,
-    ControlsRowComponent
+    ControlsRowComponent,
+    TranslatePipe
   ], styles: ["\n\n.support-content[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.support-content__description[_ngcontent-%COMP%] {\n  margin: 0 0 24px 0;\n  color: var(--text-secondary-color, #666);\n  line-height: 1.5;\n}\n.support-content__form[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: left;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.support-content__char-count[_ngcontent-%COMP%] {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999);\n  margin-top: 4px;\n}\n.support-content__rate-info[_ngcontent-%COMP%] {\n  background-color: var(--info-light-color, #e3f2fd);\n  border: 1px solid var(--info-color, #2196f3);\n  border-radius: 8px;\n  padding: 12px;\n  font-size: 14px;\n  color: var(--info-dark-color, #1565c0);\n  text-align: center;\n}\n.support-content__errors[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.support-content__error[_ngcontent-%COMP%] {\n  background-color: var(--error-light-color, #ffebee);\n  border: 1px solid var(--error-color, #f44336);\n  border-radius: 8px;\n  padding: 8px 12px;\n  font-size: 14px;\n  color: var(--error-dark-color, #c62828);\n}\n.support-content__icon[_ngcontent-%COMP%] {\n  font-size: 48px;\n  line-height: 1;\n  margin-bottom: 16px;\n  display: block;\n}\n@media (max-width: 480px) {\n  .support-content__form[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n  .support-content__icon[_ngcontent-%COMP%] {\n    font-size: 40px;\n  }\n}\n/*# sourceMappingURL=support-popup.component.css.map */"] });
 };
 (() => {
@@ -12884,7 +12940,7 @@ var FooterComponent = class _FooterComponent {
   appVersion = this.versionService.version;
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
-  supportPopup = viewChild(SupportPopupComponent);
+  supportPopup = viewChild(SupportPopupComponent, ...ngDevMode ? [{ debugName: "supportPopup" }] : []);
   routeData = toSignal(this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     startWith(null),
@@ -12908,8 +12964,8 @@ var FooterComponent = class _FooterComponent {
       return [routeData];
     })
   ));
-  canSeePolicies = computed(() => this.routeData()?.["canSeePolicies"] ?? false);
-  canSeeAuthors = computed(() => this.routeData()?.["canSeeAuthors"] ?? false);
+  canSeePolicies = computed(() => this.routeData()?.["canSeePolicies"] ?? false, ...ngDevMode ? [{ debugName: "canSeePolicies" }] : []);
+  canSeeAuthors = computed(() => this.routeData()?.["canSeeAuthors"] ?? false, ...ngDevMode ? [{ debugName: "canSeeAuthors" }] : []);
   /**
    * Open support popup
    */
@@ -12957,8 +13013,8 @@ var FooterComponent = class _FooterComponent {
     }
   }, dependencies: [
     FadeInComponent,
-    TranslatePipe,
-    SupportPopupComponent
+    SupportPopupComponent,
+    TranslatePipe
   ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link[_ngcontent-%COMP%] {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link[_ngcontent-%COMP%]:hover {\n  opacity: 1;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
 };
 (() => {
@@ -13070,7 +13126,7 @@ var DemoInformerComponent = class _DemoInformerComponent {
   }
   isDemoMode = inject(DEMO_MODE);
   demoService = inject(DemoService);
-  visible = signal(false);
+  visible = signal(false, ...ngDevMode ? [{ debugName: "visible" }] : []);
   toggle() {
     this.visible.set(!this.visible());
   }
@@ -13192,11 +13248,11 @@ var HeaderComponent = class _HeaderComponent {
         label: marker("invoices.menu-label"),
         link: "/invoices"
       }
-    ]);
+    ], ...ngDevMode ? [{ debugName: "items" }] : []);
   }
   items;
-  activeIndex = signal(0);
-  links = viewChildren(ButtonComponent);
+  activeIndex = signal(0, ...ngDevMode ? [{ debugName: "activeIndex" }] : []);
+  links = viewChildren(ButtonComponent, ...ngDevMode ? [{ debugName: "links" }] : []);
   window = window;
   document = document;
   setActive(index) {
@@ -13261,9 +13317,9 @@ var HeaderComponent = class _HeaderComponent {
     RouterLink,
     RouterLinkActive,
     MatIcon,
-    TranslatePipe,
     DemoInformerComponent,
-    FadeInComponent
+    FadeInComponent,
+    TranslatePipe
   ], styles: ["\n\n[_nghost-%COMP%] {\n  position: fixed;\n  z-index: 3;\n  left: 50%;\n  right: 0;\n  top: 12px;\n  transform: translateX(-50%);\n  max-width: var(--container-width);\n  width: calc(100% - 32px);\n}\n@media (max-width: 768px) {\n  [_nghost-%COMP%] {\n    width: 100%;\n  }\n}\n.lg-header[_ngcontent-%COMP%] {\n  height: var(--header-height);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  overflow: hidden;\n  overflow-x: auto;\n  white-space: nowrap;\n  padding: 0 16px;\n}\n@media (max-width: 768px) {\n  .lg-header[_ngcontent-%COMP%] {\n    justify-content: normal;\n    scroll-snap-type: both mandatory;\n    overscroll-behavior-x: contain;\n    scrollbar-width: none;\n  }\n}\n.lg-header__left[_ngcontent-%COMP%], \n.lg-header__right[_ngcontent-%COMP%], \n.lg-header__leftToMiddle[_ngcontent-%COMP%], \n.lg-header__rightToMiddle[_ngcontent-%COMP%], \n.lg-header__middle[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  gap: 8px;\n  min-width: 40px;\n}\n@media (max-width: 768px) {\n  .lg-header__left[_ngcontent-%COMP%], \n   .lg-header__right[_ngcontent-%COMP%], \n   .lg-header__leftToMiddle[_ngcontent-%COMP%], \n   .lg-header__rightToMiddle[_ngcontent-%COMP%], \n   .lg-header__middle[_ngcontent-%COMP%] {\n    flex: 0 0 auto;\n    min-width: 0;\n  }\n}\n.lg-header__leftToMiddle[_ngcontent-%COMP%] {\n  margin-left: auto;\n}\n.lg-header__rightToMiddle[_ngcontent-%COMP%] {\n  margin-right: auto;\n}\n.lg-header__inner[_ngcontent-%COMP%] {\n  display: flex;\n  border-radius: 35px;\n  padding: 8px;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__link[_ngcontent-%COMP%] {\n  font-size: 1rem;\n  font-family: inherit;\n  text-decoration: none;\n  padding: 8px 24px;\n  border-radius: 32px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  transition: all 0.3s ease-in-out;\n  appearance: none;\n}\n.lg-header__link.route-active[_ngcontent-%COMP%] {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n.lg-header__icon[_ngcontent-%COMP%] {\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  cursor: pointer;\n  scroll-snap-align: center;\n  border: none;\n  appearance: none;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__icon.route-active[_ngcontent-%COMP%] {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
 };
 (() => {
@@ -13360,9 +13416,9 @@ var OverlayActionsComponent = class _OverlayActionsComponent {
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _OverlayActionsComponent, selectors: [["lg-overlay-actions"]], ngContentSelectors: _c05, decls: 2, vars: 0, consts: [[1, "overlay-actions"]], template: function OverlayActionsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275projectionDef();
-      \u0275\u0275elementStart(0, "div", 0);
+      \u0275\u0275domElementStart(0, "div", 0);
       \u0275\u0275projection(1);
-      \u0275\u0275elementEnd();
+      \u0275\u0275domElementEnd();
     }
   }, styles: ["/* angular:styles/component:scss;d4bccf7041aecf58d1dccce916233a9bc2c3eeb922d571d21a15bf3315eb6072;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  inset: auto 0 16px 0;\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"], encapsulation: 2 });
 };
@@ -13405,14 +13461,14 @@ var StorageQuotaWarningComponent = class _StorageQuotaWarningComponent {
     if (!total.quotaBytes || !total.usageBytes)
       return 0;
     return Math.round(total.usageBytes / total.quotaBytes * 100);
-  });
+  }, ...ngDevMode ? [{ debugName: "percentUsed" }] : []);
   shouldShow = computed(() => {
     const total = this.quota().total;
     if (!total.quotaBytes || !total.usageBytes)
       return false;
     const percent = total.usageBytes / total.quotaBytes * 100;
     return percent >= 85;
-  });
+  }, ...ngDevMode ? [{ debugName: "shouldShow" }] : []);
   static \u0275fac = function StorageQuotaWarningComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _StorageQuotaWarningComponent)();
   };
@@ -13860,11 +13916,11 @@ function SatisfactionPopupComponent_Conditional_8_Template(rf, ctx) {
 var SatisfactionPopupComponent = class _SatisfactionPopupComponent {
   constructor() {
   }
-  dialog = viewChild(DialogComponent);
-  showFeedbackForm = signal(false);
-  showThankYou = signal(false);
-  feedbackText = signal("");
-  isSubmitting = signal(false);
+  dialog = viewChild(DialogComponent, ...ngDevMode ? [{ debugName: "dialog" }] : []);
+  showFeedbackForm = signal(false, ...ngDevMode ? [{ debugName: "showFeedbackForm" }] : []);
+  showThankYou = signal(false, ...ngDevMode ? [{ debugName: "showThankYou" }] : []);
+  feedbackText = signal("", ...ngDevMode ? [{ debugName: "feedbackText" }] : []);
+  isSubmitting = signal(false, ...ngDevMode ? [{ debugName: "isSubmitting" }] : []);
   satisfactionService = inject(UserSatisfactionService);
   notificationsService = inject(NotificationsService);
   translateService = inject(TranslateService);
@@ -13975,7 +14031,7 @@ var SatisfactionPopupComponent = class _SatisfactionPopupComponent {
       \u0275\u0275advance(6);
       \u0275\u0275conditional(ctx.showThankYou() ? 6 : ctx.showFeedbackForm() ? 7 : 8);
     }
-  }, dependencies: [CommonModule, FormsModule, NgControlStatus, MaxLengthValidator, NgModel, DialogComponent, TranslatePipe, TitleComponent, FlexColumnComponent, ExpandDirective, TextareaComponent], styles: ["\n\n.satisfaction-content[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.satisfaction-content__buttons[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 16px;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.satisfaction-content__button[_ngcontent-%COMP%] {\n  background: var(--surface-secondary-color, #f8f9fa);\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 12px;\n  padding: 16px 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  min-width: 120px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n}\n.satisfaction-content__button[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.satisfaction-content__button[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--primary-color, #007bff);\n  outline-offset: 2px;\n}\n.satisfaction-content__button--positive[_ngcontent-%COMP%]:hover {\n  border-color: var(--success-color, #28a745);\n  background-color: var(--success-light-color, #d4edda);\n}\n.satisfaction-content__button--negative[_ngcontent-%COMP%]:hover {\n  border-color: var(--warning-color, #ffc107);\n  background-color: var(--warning-light-color, #fff3cd);\n}\n.satisfaction-content__emoji[_ngcontent-%COMP%] {\n  font-size: 32px;\n  line-height: 1;\n}\n.satisfaction-content__button-text[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 500;\n  color: var(--text-primary-color, #333333);\n}\n.satisfaction-content__form[_ngcontent-%COMP%] {\n  text-align: left;\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%] {\n  width: 100%;\n  padding: 12px;\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 8px;\n  font-size: 14px;\n  font-family: inherit;\n  resize: vertical;\n  min-height: 100px;\n  transition: border-color 0.2s ease;\n  box-sizing: border-box;\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%]:focus {\n  outline: none;\n  border-color: var(--primary-color, #007bff);\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%]::placeholder {\n  color: var(--text-tertiary-color, #999999);\n}\n.satisfaction-content__char-count[_ngcontent-%COMP%] {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999999);\n  margin-top: 4px;\n}\n.satisfaction-content__thank-you[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 16px;\n  padding: 20px 0;\n}\n.satisfaction-content__heart[_ngcontent-%COMP%] {\n  font-size: 48px;\n  line-height: 48px;\n  animation: _ngcontent-%COMP%_heartBeat 1.5s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_heartBeat {\n  0% {\n    transform: scale(1);\n  }\n  14% {\n    transform: scale(1.1);\n  }\n  28% {\n    transform: scale(1);\n  }\n  42% {\n    transform: scale(1.1);\n  }\n  70% {\n    transform: scale(1);\n  }\n}\n@media (max-width: 480px) {\n  .satisfaction-content__buttons[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n  .satisfaction-content__button[_ngcontent-%COMP%] {\n    min-width: 100px;\n    padding: 14px 16px;\n  }\n  .satisfaction-content__emoji[_ngcontent-%COMP%] {\n    font-size: 28px;\n  }\n  .satisfaction-content__button-text[_ngcontent-%COMP%] {\n    font-size: 13px;\n  }\n}\n/*# sourceMappingURL=satisfaction-popup.component.css.map */"] });
+  }, dependencies: [CommonModule, FormsModule, NgControlStatus, MaxLengthValidator, NgModel, DialogComponent, TitleComponent, FlexColumnComponent, ExpandDirective, TextareaComponent, TranslatePipe], styles: ["\n\n.satisfaction-content[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.satisfaction-content__buttons[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 16px;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n.satisfaction-content__button[_ngcontent-%COMP%] {\n  background: var(--surface-secondary-color, #f8f9fa);\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 12px;\n  padding: 16px 20px;\n  cursor: pointer;\n  transition: all 0.2s ease;\n  min-width: 120px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 8px;\n}\n.satisfaction-content__button[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n}\n.satisfaction-content__button[_ngcontent-%COMP%]:focus {\n  outline: 2px solid var(--primary-color, #007bff);\n  outline-offset: 2px;\n}\n.satisfaction-content__button--positive[_ngcontent-%COMP%]:hover {\n  border-color: var(--success-color, #28a745);\n  background-color: var(--success-light-color, #d4edda);\n}\n.satisfaction-content__button--negative[_ngcontent-%COMP%]:hover {\n  border-color: var(--warning-color, #ffc107);\n  background-color: var(--warning-light-color, #fff3cd);\n}\n.satisfaction-content__emoji[_ngcontent-%COMP%] {\n  font-size: 32px;\n  line-height: 1;\n}\n.satisfaction-content__button-text[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 500;\n  color: var(--text-primary-color, #333333);\n}\n.satisfaction-content__form[_ngcontent-%COMP%] {\n  text-align: left;\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%] {\n  width: 100%;\n  padding: 12px;\n  border: 2px solid var(--border-color, #e9ecef);\n  border-radius: 8px;\n  font-size: 14px;\n  font-family: inherit;\n  resize: vertical;\n  min-height: 100px;\n  transition: border-color 0.2s ease;\n  box-sizing: border-box;\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%]:focus {\n  outline: none;\n  border-color: var(--primary-color, #007bff);\n}\n.satisfaction-content__textarea[_ngcontent-%COMP%]::placeholder {\n  color: var(--text-tertiary-color, #999999);\n}\n.satisfaction-content__char-count[_ngcontent-%COMP%] {\n  text-align: right;\n  font-size: 12px;\n  color: var(--text-tertiary-color, #999999);\n  margin-top: 4px;\n}\n.satisfaction-content__thank-you[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 16px;\n  padding: 20px 0;\n}\n.satisfaction-content__heart[_ngcontent-%COMP%] {\n  font-size: 48px;\n  line-height: 48px;\n  animation: _ngcontent-%COMP%_heartBeat 1.5s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_heartBeat {\n  0% {\n    transform: scale(1);\n  }\n  14% {\n    transform: scale(1.1);\n  }\n  28% {\n    transform: scale(1);\n  }\n  42% {\n    transform: scale(1.1);\n  }\n  70% {\n    transform: scale(1);\n  }\n}\n@media (max-width: 480px) {\n  .satisfaction-content__buttons[_ngcontent-%COMP%] {\n    gap: 12px;\n  }\n  .satisfaction-content__button[_ngcontent-%COMP%] {\n    min-width: 100px;\n    padding: 14px 16px;\n  }\n  .satisfaction-content__emoji[_ngcontent-%COMP%] {\n    font-size: 28px;\n  }\n  .satisfaction-content__button-text[_ngcontent-%COMP%] {\n    font-size: 13px;\n  }\n}\n/*# sourceMappingURL=satisfaction-popup.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SatisfactionPopupComponent, [{
@@ -14137,7 +14193,7 @@ hammerjs/hammer.js:
 
 @angular/service-worker/fesm2022/service-worker.mjs:
   (**
-   * @license Angular v20.0.3
+   * @license Angular v20.2.1
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
    *)
@@ -14151,7 +14207,7 @@ hammerjs/hammer.js:
 
 @angular/platform-browser/fesm2022/animations/async.mjs:
   (**
-   * @license Angular v20.0.3
+   * @license Angular v20.2.1
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
    *)
