@@ -252,7 +252,10 @@ export const routes: Routes = [{
           loadComponent: () => import('./features/documentation/view/article.component')
             .then(m => m.ArticleComponent),
         }
-      ]
+      ],
+      data:{
+        canSeeAuthors: true,
+      }
     },
 
     {
