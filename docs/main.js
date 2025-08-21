@@ -2190,11 +2190,11 @@ var routes = [{
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2204,7 +2204,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-UQZOMLJF.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2231,11 +2231,11 @@ var routes = [{
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2245,7 +2245,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-PGK4V5ZT.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },

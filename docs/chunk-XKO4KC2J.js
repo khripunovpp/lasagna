@@ -1124,9 +1124,6 @@ var AddProductComponent = class _AddProductComponent {
         this._productsRepository.updateDraftProduct(this.draftRef().uuid, this.product(), this.draftRef().meta?.["uuid"]);
       } else if (this.product()) {
         this.draftRef.set(this._productsRepository.saveDraftProduct(this.product(), this.draftOrProductUUID() ?? ""));
-        if (!this.isDraftRoute()) {
-          this._routerManager.replace(["products/draft/" + this.draftRef().uuid]);
-        }
       }
     });
   }
@@ -1390,4 +1387,4 @@ var AddProductComponent = class _AddProductComponent {
 export {
   AddProductComponent
 };
-//# sourceMappingURL=chunk-PGK4V5ZT.js.map
+//# sourceMappingURL=chunk-XKO4KC2J.js.map

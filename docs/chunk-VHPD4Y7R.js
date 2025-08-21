@@ -1450,9 +1450,6 @@ var AddRecipeComponent = class _AddRecipeComponent {
         this._recipesRepository.updateDraftRecipe(this.draftRef().uuid, this.recipe(), this.draftRef().meta?.["uuid"]);
       } else if (this.recipe()) {
         this.draftRef.set(this._recipesRepository.saveDraftRecipe(this.recipe(), this.draftOrRecipeUUID() ?? ""));
-        if (!this.isDraftRoute()) {
-          this._routerManager.replace(["recipes/draft/" + this.draftRef().uuid]);
-        }
       }
     });
   }
@@ -1626,6 +1623,7 @@ var AddRecipeComponent = class _AddRecipeComponent {
               routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
             </p>
           }
+
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-flex-row [mobileMode]="true" [center]="true">
               <lg-title lgSelfStart>
@@ -1713,9 +1711,9 @@ var AddRecipeComponent = class _AddRecipeComponent {
   }], () => [{ type: ActivatedRoute }, { type: RecipesRepository }, { type: NotificationsService }, { type: AnalyticsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddRecipeComponent, { className: "AddRecipeComponent", filePath: "src/app/features/recipes/view/add-recipe/add-recipe.component.ts", lineNumber: 146 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddRecipeComponent, { className: "AddRecipeComponent", filePath: "src/app/features/recipes/view/add-recipe/add-recipe.component.ts", lineNumber: 147 });
 })();
 export {
   AddRecipeComponent
 };
-//# sourceMappingURL=chunk-UQZOMLJF.js.map
+//# sourceMappingURL=chunk-VHPD4Y7R.js.map
