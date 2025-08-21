@@ -126,7 +126,14 @@
                           [resource]="'recipes-categories'"
                           appendTo="body"
                           formControlName="category_id"
-                          lgExpand></lg-multiselect>
+                          lgExpand>
+            <ng-template let-item lgControlTpl type="label">
+              <span>{{ item.system ? (('category.recipe.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+            <ng-template let-item lgControlTpl type="option">
+              <span>{{ item.system ? (('category.recipe.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+          </lg-multiselect>
 
           @if (topCategories().length) {
             <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>

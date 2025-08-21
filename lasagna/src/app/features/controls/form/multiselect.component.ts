@@ -1,5 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  computed,
+  contentChildren,
+  effect,
   forwardRef,
   Input,
   input,
@@ -8,13 +12,14 @@ import {
   output,
   signal,
   viewChild,
-  ViewEncapsulation,
-  effect
+  ViewEncapsulation
 } from '@angular/core';
 import {NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent} from '@ng-select/ng-select';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {SelectResourcesService} from '../../../shared/service/services/select-resources.service';
-
+import {TranslatePipe} from '@ngx-translate/core';
+import {ControlTemplateDirective} from './control-template.directive';
+import {NgTemplateOutlet} from '@angular/common';
 
 
 export interface MultiselectItem {
@@ -36,10 +41,19 @@ export interface MultiselectItem {
                  [placeholder]="placeholder"
                  [searchFn]="searchFn">
         <ng-template let-item="item" ng-label-tmp>
-          {{ item?.name ?? item?.value ?? item }}
+          @if (labelTemplate()) {
+            <ng-container *ngTemplateOutlet="labelTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
+          } @else {
+            {{ (item?.name ?? item?.value ?? item) | translate }}
+          }
         </ng-template>
         <ng-template let-item="item" ng-option-tmp>
-          {{ item?.name ?? item?.value ?? item }}
+          @if (optionTemplate()) {
+            <ng-container
+              *ngTemplateOutlet="optionTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
+          } @else {
+            {{ (item?.name ?? item?.value ?? item) | translate }}
+          }
         </ng-template>
       </ng-select>
     </div>
@@ -49,6 +63,8 @@ export interface MultiselectItem {
     FormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
+    TranslatePipe,
+    NgTemplateOutlet,
   ],
   styles: [
     `
@@ -115,7 +131,8 @@ export interface MultiselectItem {
       multi: true
     }
   ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiselectComponent
   implements ControlValueAccessor, OnInit {
@@ -127,6 +144,7 @@ export class MultiselectComponent
   @Input() placeholder: string = '';
   resource = input<string>('');
   appendTo = input<string>('');
+  compareField = input<string>('uuid');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);
   staticItems = input<unknown[]>([]);
@@ -134,6 +152,9 @@ export class MultiselectComponent
   onSelected = output<unknown>();
   value?: unknown = null
   selectComponent = viewChild(NgSelectComponent);
+  templates = contentChildren(ControlTemplateDirective);
+  labelTemplate = computed(() => this.templates().find(t => t.type() === 'label'));
+  optionTemplate = computed(() => this.templates().find(t => t.type() === 'option'));
 
   // Эффект для обновления списка при изменении staticItems
   private updateStaticItemsEffect = effect(() => {
@@ -151,6 +172,7 @@ export class MultiselectComponent
 
   searchFn = (term: string, item: MultiselectItem) => {
     const val = item as any;
+
     return val.name?.toLowerCase().includes(term.toLowerCase())
       || val?.toString().toLowerCase().includes(term.toLowerCase())
   }
@@ -159,12 +181,10 @@ export class MultiselectComponent
     const valA = a as any;
     const valB = b as any;
 
-    return valA?.uuid === valB
+    return valA?.[this.compareField()] === valB
       || valA === valB
-      || valA?.uuid === valB?.uuid
-      || valA === valB?.uuid
-      || valA?.code === valB
-      || valA?.code === valB?.code;
+      || valA?.[this.compareField()] === valB?.[this.compareField()]
+      || valA === valB?.[this.compareField()]
   }
 
   writeValue(value: unknown): void {

@@ -36,6 +36,8 @@ import {TagsControlComponent} from '../../../controls/form/tags-control.componen
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ControlComponent} from "../../../controls/form/control-item/control.component";
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
@@ -63,7 +65,9 @@ import {UnitValue} from '../../../../shared/view/const/units.const';
     ControlExtraTemplateDirective,
     TagsControlComponent,
     FlexRowComponent,
-    ControlComponent
+    ControlComponent,
+    ControlTemplateDirective,
+    JsonPipe
   ],
   providers: [
     {
@@ -135,7 +139,6 @@ export class AddRecipeFormComponent
     if (!recipe) {
       return;
     }
-    console.log('newformValue', recipeToFormValue(recipe));
     this.form.reset({
       ...recipeToFormValue(recipe),
       ingredients: [],
