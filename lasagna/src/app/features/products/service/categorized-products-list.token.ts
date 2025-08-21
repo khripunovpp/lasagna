@@ -24,8 +24,9 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
           for (const groupKey in grouped) {
             const products = grouped[groupKey];
             if (products && products.length) {
+              const category = categories.find(c => c.uuid === groupKey);
               list.push({
-                category: groupKey,
+                category: category?.name || '',
                 products: products,
               });
             }
