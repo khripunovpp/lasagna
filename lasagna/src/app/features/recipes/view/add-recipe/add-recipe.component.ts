@@ -54,6 +54,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
               routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
             </p>
           }
+
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-flex-row [mobileMode]="true" [center]="true">
               <lg-title lgSelfStart>
@@ -206,9 +207,9 @@ export class AddRecipeComponent
           this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));
 
-        if (!this.isDraftRoute()) {
-          this._routerManager.replace(['recipes/draft/' + this.draftRef()!.uuid]);
-        }
+        // if (!this.isDraftRoute()) {
+        //   this._routerManager.replace(['recipes/draft/' + this.draftRef()!.uuid]);
+        // }
       }
     });
   }
