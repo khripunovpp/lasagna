@@ -9,7 +9,7 @@ import {
   ImportComponent,
   ImportRowTplDirective,
   ProductScheme
-} from "./chunk-HSIXXWKF.js";
+} from "./chunk-64CCJ7DD.js";
 import {
   ControlsBarComponent,
   SelectionToolsComponent
@@ -62,7 +62,7 @@ import {
   CategoryProductsRepository,
   ProductsRepository,
   TransferDataService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -150,8 +150,9 @@ var CATEGORIZED_PRODUCTS_LIST = new InjectionToken("CategorizedProductsList", {
       for (const groupKey in grouped) {
         const products2 = grouped[groupKey];
         if (products2 && products2.length) {
+          const category = categories.find((c) => c.uuid === groupKey);
           list.push({
-            category: groupKey,
+            category: category?.name || "",
             products: products2
           });
         }
@@ -894,4 +895,4 @@ var ProductListComponent = class _ProductListComponent {
 export {
   ProductListComponent
 };
-//# sourceMappingURL=chunk-C2YP6FAV.js.map
+//# sourceMappingURL=chunk-W72XZSO5.js.map

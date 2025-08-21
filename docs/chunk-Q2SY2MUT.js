@@ -28,7 +28,7 @@ import {
   OnboardingService,
   ProductsRepository,
   RecipesRepository
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import "./chunk-FGMQFOLX.js";
@@ -623,4 +623,4 @@ var ApplicationComponent = class _ApplicationComponent {
 export {
   ApplicationComponent
 };
-//# sourceMappingURL=chunk-YJNZGB4D.js.map
+//# sourceMappingURL=chunk-Q2SY2MUT.js.map

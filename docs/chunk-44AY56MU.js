@@ -1,12 +1,15 @@
 import {
   SelectResourcesService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
   NgControlStatus,
   NgModel
 } from "./chunk-FGMQFOLX.js";
+import {
+  TranslatePipe
+} from "./chunk-BW4AJP7C.js";
 import {
   NgClass,
   NgTemplateOutlet
@@ -41,11 +44,14 @@ import {
   asapScheduler,
   auditTime,
   booleanAttribute,
+  computed,
+  contentChildren,
   debounceTime,
   effect,
   filter,
   forwardRef,
   fromEvent,
+  inject,
   input,
   map,
   merge,
@@ -67,6 +73,7 @@ import {
   ɵɵconditional,
   ɵɵconditionalCreate,
   ɵɵcontentQuery,
+  ɵɵcontentQuerySignal,
   ɵɵdefineComponent,
   ɵɵdefineDirective,
   ɵɵdefineInjectable,
@@ -85,6 +92,8 @@ import {
   ɵɵlistener,
   ɵɵloadQuery,
   ɵɵnextContext,
+  ɵɵpipe,
+  ɵɵpipeBind1,
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵproperty,
@@ -110,6 +119,24 @@ import {
 import {
   __spreadValues
 } from "./chunk-46DXP6YY.js";
+
+// src/app/features/controls/form/control-template.directive.ts
+var ControlTemplateDirective = class _ControlTemplateDirective {
+  type = input();
+  templateRef = inject(TemplateRef);
+  static \u0275fac = function ControlTemplateDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ControlTemplateDirective)();
+  };
+  static \u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({ type: _ControlTemplateDirective, selectors: [["", "lgControlTpl", ""]], inputs: { type: [1, "type"] } });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ControlTemplateDirective, [{
+    type: Directive,
+    args: [{
+      selector: "[lgControlTpl]"
+    }]
+  }], null, null);
+})();
 
 // node_modules/@ng-select/ng-select/fesm2022/ng-select-ng-select.mjs
 var _c0 = ["content"];
@@ -4535,22 +4562,75 @@ var NgSelectModule = _NgSelectModule;
 })();
 
 // src/app/features/controls/form/multiselect.component.ts
-function MultiselectComponent_ng_template_2_Template(rf, ctx) {
+var _c02 = (a0) => ({ $implicit: a0 });
+function MultiselectComponent_ng_template_2_Conditional_0_ng_container_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275text(0);
+    \u0275\u0275elementContainer(0);
+  }
+}
+function MultiselectComponent_ng_template_2_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, MultiselectComponent_ng_template_2_Conditional_0_ng_container_0_Template, 1, 0, "ng-container", 4);
   }
   if (rf & 2) {
-    const item_r1 = ctx.item;
-    \u0275\u0275textInterpolate1(" ", (item_r1 == null ? null : item_r1.name) ?? (item_r1 == null ? null : item_r1.value) ?? item_r1, " ");
+    let tmp_3_0;
+    const item_r1 = \u0275\u0275nextContext().item;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", (tmp_3_0 = ctx_r1.labelTemplate()) == null ? null : tmp_3_0.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c02, item_r1));
+  }
+}
+function MultiselectComponent_ng_template_2_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "translate");
+  }
+  if (rf & 2) {
+    const item_r1 = \u0275\u0275nextContext().item;
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, (item_r1 == null ? null : item_r1.name) ?? (item_r1 == null ? null : item_r1.value) ?? item_r1), " ");
+  }
+}
+function MultiselectComponent_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275conditionalCreate(0, MultiselectComponent_ng_template_2_Conditional_0_Template, 1, 4, "ng-container")(1, MultiselectComponent_ng_template_2_Conditional_1_Template, 2, 3);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275conditional(ctx_r1.labelTemplate() ? 0 : 1);
+  }
+}
+function MultiselectComponent_ng_template_3_Conditional_0_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function MultiselectComponent_ng_template_3_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, MultiselectComponent_ng_template_3_Conditional_0_ng_container_0_Template, 1, 0, "ng-container", 4);
+  }
+  if (rf & 2) {
+    let tmp_3_0;
+    const item_r3 = \u0275\u0275nextContext().item;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", (tmp_3_0 = ctx_r1.optionTemplate()) == null ? null : tmp_3_0.templateRef)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c02, item_r3));
+  }
+}
+function MultiselectComponent_ng_template_3_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "translate");
+  }
+  if (rf & 2) {
+    const item_r3 = \u0275\u0275nextContext().item;
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 1, (item_r3 == null ? null : item_r3.name) ?? (item_r3 == null ? null : item_r3.value) ?? item_r3), " ");
   }
 }
 function MultiselectComponent_ng_template_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275text(0);
+    \u0275\u0275conditionalCreate(0, MultiselectComponent_ng_template_3_Conditional_0_Template, 1, 4, "ng-container")(1, MultiselectComponent_ng_template_3_Conditional_1_Template, 2, 3);
   }
   if (rf & 2) {
-    const item_r2 = ctx.item;
-    \u0275\u0275textInterpolate1(" ", (item_r2 == null ? null : item_r2.name) ?? (item_r2 == null ? null : item_r2.value) ?? item_r2, " ");
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275conditional(ctx_r1.optionTemplate() ? 0 : 1);
   }
 }
 var MultiselectComponent = class _MultiselectComponent {
@@ -4561,6 +4641,7 @@ var MultiselectComponent = class _MultiselectComponent {
   placeholder = "";
   resource = input("");
   appendTo = input("");
+  compareField = input("uuid");
   autoLoad = input(false);
   multi = input(false);
   staticItems = input([]);
@@ -4568,6 +4649,9 @@ var MultiselectComponent = class _MultiselectComponent {
   onSelected = output();
   value = null;
   selectComponent = viewChild(NgSelectComponent);
+  templates = contentChildren(ControlTemplateDirective);
+  labelTemplate = computed(() => this.templates().find((t) => t.type() === "label"));
+  optionTemplate = computed(() => this.templates().find((t) => t.type() === "option"));
   // Эффект для обновления списка при изменении staticItems
   updateStaticItemsEffect = effect(() => {
     const staticItems = this.staticItems();
@@ -4586,7 +4670,7 @@ var MultiselectComponent = class _MultiselectComponent {
   compareWith = (a, b) => {
     const valA = a;
     const valB = b;
-    return valA?.uuid === valB || valA === valB || valA?.uuid === valB?.uuid || valA === valB?.uuid || valA?.code === valB || valA?.code === valB?.code;
+    return valA?.[this.compareField()] === valB || valA === valB || valA?.[this.compareField()] === valB?.[this.compareField()] || valA === valB?.[this.compareField()];
   };
   writeValue(value) {
     this.change(value);
@@ -4629,20 +4713,27 @@ var MultiselectComponent = class _MultiselectComponent {
   static \u0275fac = function MultiselectComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MultiselectComponent)(\u0275\u0275directiveInject(SelectResourcesService, 8));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MultiselectComponent, selectors: [["lg-multiselect"]], viewQuery: function MultiselectComponent_Query(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MultiselectComponent, selectors: [["lg-multiselect"]], contentQueries: function MultiselectComponent_ContentQueries(rf, ctx, dirIndex) {
+    if (rf & 1) {
+      \u0275\u0275contentQuerySignal(dirIndex, ctx.templates, ControlTemplateDirective, 4);
+    }
+    if (rf & 2) {
+      \u0275\u0275queryAdvance();
+    }
+  }, viewQuery: function MultiselectComponent_Query(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275viewQuerySignal(ctx.selectComponent, NgSelectComponent, 5);
     }
     if (rf & 2) {
       \u0275\u0275queryAdvance();
     }
-  }, inputs: { placeholder: "placeholder", resource: [1, "resource"], appendTo: [1, "appendTo"], autoLoad: [1, "autoLoad"], multi: [1, "multi"], staticItems: [1, "staticItems"] }, outputs: { onSelected: "onSelected" }, features: [\u0275\u0275ProvidersFeature([
+  }, inputs: { placeholder: "placeholder", resource: [1, "resource"], appendTo: [1, "appendTo"], compareField: [1, "compareField"], autoLoad: [1, "autoLoad"], multi: [1, "multi"], staticItems: [1, "staticItems"] }, outputs: { onSelected: "onSelected" }, features: [\u0275\u0275ProvidersFeature([
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => _MultiselectComponent),
       multi: true
     }
-  ])], decls: 4, vars: 7, consts: [[1, "multiselect"], [3, "change", "ngModelChange", "compareWith", "items", "appendTo", "multiple", "ngModel", "placeholder", "searchFn"], ["ng-label-tmp", ""], ["ng-option-tmp", ""]], template: function MultiselectComponent_Template(rf, ctx) {
+  ])], decls: 4, vars: 7, consts: [[1, "multiselect"], [3, "change", "ngModelChange", "compareWith", "items", "appendTo", "multiple", "ngModel", "placeholder", "searchFn"], ["ng-label-tmp", ""], ["ng-option-tmp", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"]], template: function MultiselectComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "ng-select", 1);
       \u0275\u0275listener("change", function MultiselectComponent_Template_ng_select_change_1_listener($event) {
@@ -4650,7 +4741,7 @@ var MultiselectComponent = class _MultiselectComponent {
       })("ngModelChange", function MultiselectComponent_Template_ng_select_ngModelChange_1_listener($event) {
         return ctx.onChangeInput($event);
       });
-      \u0275\u0275template(2, MultiselectComponent_ng_template_2_Template, 1, 1, "ng-template", 2)(3, MultiselectComponent_ng_template_3_Template, 1, 1, "ng-template", 3);
+      \u0275\u0275template(2, MultiselectComponent_ng_template_2_Template, 2, 1, "ng-template", 2)(3, MultiselectComponent_ng_template_3_Template, 2, 1, "ng-template", 3);
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
@@ -4663,8 +4754,10 @@ var MultiselectComponent = class _MultiselectComponent {
     NgControlStatus,
     NgModel,
     NgOptionTemplateDirective,
-    NgLabelTemplateDirective
-  ], styles: ["/* angular:styles/component:scss;2571290d8fe82599a2692b7f827bba3593d94c9c09e2a6cb5f6ae589769e9213;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/controls/form/multiselect.component.ts */\nlg-multiselect {\n  display: flex;\n  flex: 1;\n  min-width: 150px;\n}\n.multiselect {\n  flex: 1;\n  width: 100%;\n}\n.multiselect .ng-select.ng-select-focused .ng-select-container {\n  outline: none;\n  box-shadow: var(--focus-shadow);\n  border-radius: 12px;\n}\n.multiselect .ng-select.ng-select-single .ng-select-container {\n  height: 51px;\n}\n.multiselect .ng-select .ng-select-container {\n  border: none;\n  border-radius: 12px;\n  background-color: var(--control-bg);\n}\n.multiselect .ng-select .ng-select-container .ng-input {\n  top: 16px !important;\n}\n.multiselect .ng-select .ng-select-container .ng-input > input {\n  color: var(--text);\n  font-family: inherit;\n  font-size: inherit;\n}\n.multiselect .ng-dropdown-panel {\n  border: none;\n  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);\n  border-radius: 12px;\n  overflow: hidden;\n}\n.multiselect .ng-dropdown-panel .ng-option {\n  padding: 16px;\n  border-radius: 12px;\n}\n/*# sourceMappingURL=multiselect.component.css.map */\n"], encapsulation: 2 });
+    NgLabelTemplateDirective,
+    TranslatePipe,
+    NgTemplateOutlet
+  ], styles: ["/* angular:styles/component:scss;2571290d8fe82599a2692b7f827bba3593d94c9c09e2a6cb5f6ae589769e9213;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/controls/form/multiselect.component.ts */\nlg-multiselect {\n  display: flex;\n  flex: 1;\n  min-width: 150px;\n}\n.multiselect {\n  flex: 1;\n  width: 100%;\n}\n.multiselect .ng-select.ng-select-focused .ng-select-container {\n  outline: none;\n  box-shadow: var(--focus-shadow);\n  border-radius: 12px;\n}\n.multiselect .ng-select.ng-select-single .ng-select-container {\n  height: 51px;\n}\n.multiselect .ng-select .ng-select-container {\n  border: none;\n  border-radius: 12px;\n  background-color: var(--control-bg);\n}\n.multiselect .ng-select .ng-select-container .ng-input {\n  top: 16px !important;\n}\n.multiselect .ng-select .ng-select-container .ng-input > input {\n  color: var(--text);\n  font-family: inherit;\n  font-size: inherit;\n}\n.multiselect .ng-dropdown-panel {\n  border: none;\n  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);\n  border-radius: 12px;\n  overflow: hidden;\n}\n.multiselect .ng-dropdown-panel .ng-option {\n  padding: 16px;\n  border-radius: 12px;\n}\n/*# sourceMappingURL=multiselect.component.css.map */\n"], encapsulation: 2, changeDetection: 0 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MultiselectComponent, [{
@@ -4681,10 +4774,19 @@ var MultiselectComponent = class _MultiselectComponent {
                  [placeholder]="placeholder"
                  [searchFn]="searchFn">
         <ng-template let-item="item" ng-label-tmp>
-          {{ item?.name ?? item?.value ?? item }}
+          @if (labelTemplate()) {
+            <ng-container *ngTemplateOutlet="labelTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
+          } @else {
+            {{ (item?.name ?? item?.value ?? item) | translate }}
+          }
         </ng-template>
         <ng-template let-item="item" ng-option-tmp>
-          {{ item?.name ?? item?.value ?? item }}
+          @if (optionTemplate()) {
+            <ng-container
+              *ngTemplateOutlet="optionTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
+          } @else {
+            {{ (item?.name ?? item?.value ?? item) | translate }}
+          }
         </ng-template>
       </ng-select>
     </div>
@@ -4692,14 +4794,16 @@ var MultiselectComponent = class _MultiselectComponent {
       NgSelectComponent,
       FormsModule,
       NgOptionTemplateDirective,
-      NgLabelTemplateDirective
+      NgLabelTemplateDirective,
+      TranslatePipe,
+      NgTemplateOutlet
     ], providers: [
       {
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => MultiselectComponent),
         multi: true
       }
-    ], encapsulation: ViewEncapsulation.None, styles: ["/* angular:styles/component:scss;2571290d8fe82599a2692b7f827bba3593d94c9c09e2a6cb5f6ae589769e9213;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/controls/form/multiselect.component.ts */\nlg-multiselect {\n  display: flex;\n  flex: 1;\n  min-width: 150px;\n}\n.multiselect {\n  flex: 1;\n  width: 100%;\n}\n.multiselect .ng-select.ng-select-focused .ng-select-container {\n  outline: none;\n  box-shadow: var(--focus-shadow);\n  border-radius: 12px;\n}\n.multiselect .ng-select.ng-select-single .ng-select-container {\n  height: 51px;\n}\n.multiselect .ng-select .ng-select-container {\n  border: none;\n  border-radius: 12px;\n  background-color: var(--control-bg);\n}\n.multiselect .ng-select .ng-select-container .ng-input {\n  top: 16px !important;\n}\n.multiselect .ng-select .ng-select-container .ng-input > input {\n  color: var(--text);\n  font-family: inherit;\n  font-size: inherit;\n}\n.multiselect .ng-dropdown-panel {\n  border: none;\n  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);\n  border-radius: 12px;\n  overflow: hidden;\n}\n.multiselect .ng-dropdown-panel .ng-option {\n  padding: 16px;\n  border-radius: 12px;\n}\n/*# sourceMappingURL=multiselect.component.css.map */\n"] }]
+    ], encapsulation: ViewEncapsulation.None, changeDetection: ChangeDetectionStrategy.OnPush, styles: ["/* angular:styles/component:scss;2571290d8fe82599a2692b7f827bba3593d94c9c09e2a6cb5f6ae589769e9213;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/controls/form/multiselect.component.ts */\nlg-multiselect {\n  display: flex;\n  flex: 1;\n  min-width: 150px;\n}\n.multiselect {\n  flex: 1;\n  width: 100%;\n}\n.multiselect .ng-select.ng-select-focused .ng-select-container {\n  outline: none;\n  box-shadow: var(--focus-shadow);\n  border-radius: 12px;\n}\n.multiselect .ng-select.ng-select-single .ng-select-container {\n  height: 51px;\n}\n.multiselect .ng-select .ng-select-container {\n  border: none;\n  border-radius: 12px;\n  background-color: var(--control-bg);\n}\n.multiselect .ng-select .ng-select-container .ng-input {\n  top: 16px !important;\n}\n.multiselect .ng-select .ng-select-container .ng-input > input {\n  color: var(--text);\n  font-family: inherit;\n  font-size: inherit;\n}\n.multiselect .ng-dropdown-panel {\n  border: none;\n  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);\n  border-radius: 12px;\n  overflow: hidden;\n}\n.multiselect .ng-dropdown-panel .ng-option {\n  padding: 16px;\n  border-radius: 12px;\n}\n/*# sourceMappingURL=multiselect.component.css.map */\n"] }]
   }], () => [{ type: SelectResourcesService, decorators: [{
     type: Optional
   }] }], { placeholder: [{
@@ -4707,7 +4811,7 @@ var MultiselectComponent = class _MultiselectComponent {
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MultiselectComponent, { className: "MultiselectComponent", filePath: "src/app/features/controls/form/multiselect.component.ts", lineNumber: 120 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MultiselectComponent, { className: "MultiselectComponent", filePath: "src/app/features/controls/form/multiselect.component.ts", lineNumber: 137 });
 })();
 
 export {
@@ -4716,6 +4820,7 @@ export {
   NgMultiLabelTemplateDirective,
   NgTagTemplateDirective,
   NgSelectComponent,
+  ControlTemplateDirective,
   MultiselectComponent
 };
-//# sourceMappingURL=chunk-OS24NFVI.js.map
+//# sourceMappingURL=chunk-44AY56MU.js.map

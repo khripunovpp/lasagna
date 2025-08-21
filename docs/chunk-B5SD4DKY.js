@@ -8,7 +8,7 @@ import {
   ProductScheme,
   UnitScheme,
   z
-} from "./chunk-HSIXXWKF.js";
+} from "./chunk-64CCJ7DD.js";
 import {
   ControlsBarComponent,
   SelectionToolsComponent
@@ -16,7 +16,7 @@ import {
 import {
   GroupingTileDirective,
   GroupingTilesComponent
-} from "./chunk-V6RRLVGE.js";
+} from "./chunk-OX2YFMOC.js";
 import "./chunk-DN4XY2UK.js";
 import {
   CardListComponent
@@ -69,7 +69,7 @@ import {
 import {
   RecipesRepository,
   TransferDataService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -1190,4 +1190,4 @@ var RecipesListComponent = class _RecipesListComponent {
 export {
   RecipesListComponent
 };
-//# sourceMappingURL=chunk-WBRN2MDF.js.map
+//# sourceMappingURL=chunk-B5SD4DKY.js.map

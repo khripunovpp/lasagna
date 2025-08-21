@@ -29,7 +29,7 @@ import {
   GroupingHeaderDirective,
   GroupingTileDirective,
   GroupingTilesComponent
-} from "./chunk-V6RRLVGE.js";
+} from "./chunk-OX2YFMOC.js";
 import {
   UploadComponent
 } from "./chunk-DN4XY2UK.js";
@@ -37,7 +37,7 @@ import "./chunk-I2GJGW5L.js";
 import "./chunk-6DYMNST7.js";
 import {
   MultiselectComponent
-} from "./chunk-OS24NFVI.js";
+} from "./chunk-44AY56MU.js";
 import {
   ShrinkDirective
 } from "./chunk-4VYWNF2J.js";
@@ -84,7 +84,7 @@ import {
 import {
   OnboardingService,
   TransferDataService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -449,7 +449,7 @@ var CurrencySelectComponent = class _CurrencySelectComponent {
       multi: true,
       useExisting: forwardRef(() => _CurrencySelectComponent)
     }
-  ])], decls: 4, vars: 9, consts: [["lgExpand", "", 3, "label"], [3, "onSelected", "ngModelChange", "ngModel", "multi", "placeholder", "staticItems"]], template: function CurrencySelectComponent_Template(rf, ctx) {
+  ])], decls: 4, vars: 9, consts: [["lgExpand", "", 3, "label"], ["compareField", "code", 3, "onSelected", "ngModelChange", "ngModel", "multi", "placeholder", "staticItems"]], template: function CurrencySelectComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-control", 0);
       \u0275\u0275pipe(1, "translate");
@@ -509,6 +509,7 @@ var CurrencySelectComponent = class _CurrencySelectComponent {
         (onSelected)="onCurrencySelected($event)"
         [(ngModel)]="selectedCurrency"
         [multi]="false"
+        compareField="code"
         [placeholder]="'currency.select-placeholder' | translate"
         [staticItems]="displayedCurrencies()">
       </lg-multiselect>
@@ -517,7 +518,7 @@ var CurrencySelectComponent = class _CurrencySelectComponent {
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CurrencySelectComponent, { className: "CurrencySelectComponent", filePath: "src/app/features/controls/form/currency-select.component.ts", lineNumber: 75 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CurrencySelectComponent, { className: "CurrencySelectComponent", filePath: "src/app/features/controls/form/currency-select.component.ts", lineNumber: 76 });
 })();
 
 // src/app/features/settings/view/localisation/localisation-settings.component.ts
@@ -2859,4 +2860,4 @@ var SettingsComponent = class _SettingsComponent {
 export {
   SettingsComponent
 };
-//# sourceMappingURL=chunk-MPWLZ6KE.js.map
+//# sourceMappingURL=chunk-4D4LOUTG.js.map

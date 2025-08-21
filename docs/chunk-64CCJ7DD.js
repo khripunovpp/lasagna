@@ -15,7 +15,7 @@ import {
 } from "./chunk-WKEFA3OS.js";
 import {
   CsvReaderService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import {
   CheckboxControlValueAccessor,
   FormsModule,
@@ -4650,8 +4650,9 @@ function ExpanderComponent_Conditional_1_Template(rf, ctx) {
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, "close-label"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, ctx_r1.closeLabel ?? "close-label"), " ");
   }
 }
 function ExpanderComponent_Conditional_2_Template(rf, ctx) {
@@ -4668,8 +4669,9 @@ function ExpanderComponent_Conditional_2_Template(rf, ctx) {
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, "open-label"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, ctx_r1.openLabel ?? "open-label"), " ");
   }
 }
 var ExpanderComponent = class _ExpanderComponent {
@@ -4711,7 +4713,7 @@ var ExpanderComponent = class _ExpanderComponent {
       @if (opened()) {
         <div class="expander__header">
           <div (click)="toggle()" class="expander__close">
-            {{ 'close-label' | translate }}
+            {{ (closeLabel ?? 'close-label') | translate }}
           </div>
         </div>
 
@@ -4723,7 +4725,7 @@ var ExpanderComponent = class _ExpanderComponent {
       } @else {
         <div class="expander__header">
           <div (click)="toggle()" class="expander__trigger">
-            {{ 'open-label' | translate }}
+            {{ (openLabel ?? 'open-label') | translate }}
           </div>
         </div>
       }
@@ -4750,4 +4752,4 @@ export {
   ProductScheme,
   ExpanderComponent
 };
-//# sourceMappingURL=chunk-HSIXXWKF.js.map
+//# sourceMappingURL=chunk-64CCJ7DD.js.map

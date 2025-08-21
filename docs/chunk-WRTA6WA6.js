@@ -22,13 +22,14 @@ import {
 import {
   AutocompleteComponent,
   ChipsListComponent
-} from "./chunk-7MBEZAYN.js";
+} from "./chunk-I2TZH5QI.js";
 import {
   UnitSwitcherComponent
 } from "./chunk-MGR3OES4.js";
 import {
+  ControlTemplateDirective,
   MultiselectComponent
-} from "./chunk-OS24NFVI.js";
+} from "./chunk-44AY56MU.js";
 import {
   ShrinkDirective
 } from "./chunk-4VYWNF2J.js";
@@ -88,7 +89,7 @@ import {
 import {
   ProductsRepository,
   SelectResourcesService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -467,17 +468,17 @@ var _c22 = () => ({ currency: "EUR" });
 function AddProductFormComponent_ng_template_12_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-flex-row", 19)(1, "lg-tooltip", 20)(2, "lg-button", 21);
-    \u0275\u0275element(3, "mat-icon", 22);
+    \u0275\u0275elementStart(0, "lg-flex-row", 21)(1, "lg-tooltip", 22)(2, "lg-button", 23);
+    \u0275\u0275element(3, "mat-icon", 24);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "div", 23)(5, "lg-amount-widgets", 24);
+    \u0275\u0275elementStart(4, "div", 25)(5, "lg-amount-widgets", 26);
     \u0275\u0275listener("eggsChanged", function AddProductFormComponent_ng_template_12_Template_lg_amount_widgets_eggsChanged_5_listener($event) {
       \u0275\u0275restoreView(_r3);
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.eggsChanged($event));
     });
     \u0275\u0275elementEnd()()();
-    \u0275\u0275element(6, "lg-unit-switcher", 25);
+    \u0275\u0275element(6, "lg-unit-switcher", 27);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -502,14 +503,40 @@ function AddProductFormComponent_ng_template_17_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, ctx_r3.userSettings()["currency"]));
   }
 }
-function AddProductFormComponent_Conditional_32_Template(rf, ctx) {
+function AddProductFormComponent_ng_template_32_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const item_r6 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(item_r6.system ? \u0275\u0275pipeBind1(2, 1, "category.product." + item_r6.name) : item_r6.name);
+  }
+}
+function AddProductFormComponent_ng_template_33_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const item_r7 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(item_r7.system ? \u0275\u0275pipeBind1(2, 1, "category.product." + item_r7.name) : item_r7.name);
+  }
+}
+function AddProductFormComponent_Conditional_34_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "lg-chips-list", 17);
   }
   if (rf & 2) {
     const ctx_r3 = \u0275\u0275nextContext();
-    const categorySelect_r6 = \u0275\u0275reference(31);
-    \u0275\u0275property("control", categorySelect_r6)("items", ctx_r3.topCategories());
+    const categorySelect_r8 = \u0275\u0275reference(31);
+    \u0275\u0275property("control", categorySelect_r8)("items", ctx_r3.topCategories());
   }
 }
 var AddProductFormComponent = class _AddProductFormComponent {
@@ -616,7 +643,7 @@ var AddProductFormComponent = class _AddProductFormComponent {
     if (rf & 2) {
       \u0275\u0275queryAdvance();
     }
-  }, inputs: { product: [1, "product"] }, decls: 33, vars: 33, consts: [["nameField", ""], ["priceInput", ""], ["sourceInput", ""], ["sourceChips", ""], ["categorySelect", ""], [3, "formGroup"], [3, "label"], ["formControlName", "name", "placeholder", ""], [3, "center", "mobileMode"], ["lgExpand", "", 3, "label"], ["formControlName", "amount", "lgParseMath", "", "placeholder", "", 3, "onInputChange"], ["lgExtraTpl", "", "place", "after"], ["lgWidth", "40%", 3, "label"], ["formControlName", "price", "lgParseMath", "", "placeholder", ""], [2, "--control-bg", "var(--hr-bg-strong)", 3, "equal", "mobileMode", "top"], ["appendTo", "body", "formControlName", "source", "placeholder", "", 3, "onSelected", "noLoad", "resource"], [3, "hidden"], [3, "control", "items"], ["appendTo", "body", "formControlName", "category_id", "placeholder", "", 3, "resource"], [3, "center", "size"], [3, "position"], [3, "flat", "icon"], ["aria-hidden", "false", "fontIcon", "add"], ["ngProjectAs", "content", 5, ["content"]], [3, "eggsChanged"], ["formControlName", "unit"]], template: function AddProductFormComponent_Template(rf, ctx) {
+  }, inputs: { product: [1, "product"] }, decls: 35, vars: 33, consts: [["nameField", ""], ["priceInput", ""], ["sourceInput", ""], ["sourceChips", ""], ["categorySelect", ""], [3, "formGroup"], [3, "label"], ["formControlName", "name", "placeholder", ""], [3, "center", "mobileMode"], ["lgExpand", "", 3, "label"], ["formControlName", "amount", "lgParseMath", "", "placeholder", "", 3, "onInputChange"], ["lgExtraTpl", "", "place", "after"], ["lgWidth", "40%", 3, "label"], ["formControlName", "price", "lgParseMath", "", "placeholder", ""], [2, "--control-bg", "var(--hr-bg-strong)", 3, "equal", "mobileMode", "top"], ["appendTo", "body", "formControlName", "source", "placeholder", "", 3, "onSelected", "noLoad", "resource"], [3, "hidden"], [3, "control", "items"], ["appendTo", "body", "formControlName", "category_id", "placeholder", "", 3, "resource"], ["lgControlTpl", "", "type", "label"], ["lgControlTpl", "", "type", "option"], [3, "center", "size"], [3, "position"], [3, "flat", "icon"], ["aria-hidden", "false", "fontIcon", "add"], ["ngProjectAs", "content", 5, ["content"]], [3, "eggsChanged"], ["formControlName", "unit"]], template: function AddProductFormComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "form", 5)(1, "lg-flex-column")(2, "lg-card")(3, "lg-flex-column")(4, "lg-control", 6);
@@ -652,13 +679,14 @@ var AddProductFormComponent = class _AddProductFormComponent {
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(27, "lg-control", 6);
       \u0275\u0275pipe(28, "translate");
-      \u0275\u0275elementStart(29, "lg-flex-column");
-      \u0275\u0275element(30, "lg-multiselect", 18, 4);
-      \u0275\u0275conditionalCreate(32, AddProductFormComponent_Conditional_32_Template, 1, 2, "lg-chips-list", 17);
+      \u0275\u0275elementStart(29, "lg-flex-column")(30, "lg-multiselect", 18, 4);
+      \u0275\u0275template(32, AddProductFormComponent_ng_template_32_Template, 3, 3, "ng-template", 19)(33, AddProductFormComponent_ng_template_33_Template, 3, 3, "ng-template", 20);
+      \u0275\u0275elementEnd();
+      \u0275\u0275conditionalCreate(34, AddProductFormComponent_Conditional_34_Template, 1, 2, "lg-chips-list", 17);
       \u0275\u0275elementEnd()()()()();
     }
     if (rf & 2) {
-      const sourceInput_r7 = \u0275\u0275reference(23);
+      const sourceInput_r9 = \u0275\u0275reference(23);
       \u0275\u0275property("formGroup", ctx.form);
       \u0275\u0275advance(4);
       \u0275\u0275property("label", \u0275\u0275pipeBind1(5, 18, "product.form.name.placeholder"));
@@ -677,13 +705,13 @@ var AddProductFormComponent = class _AddProductFormComponent {
       \u0275\u0275advance(2);
       \u0275\u0275property("hidden", !ctx.topSources().length);
       \u0275\u0275advance();
-      \u0275\u0275property("control", sourceInput_r7)("items", ctx.topSources());
+      \u0275\u0275property("control", sourceInput_r9)("items", ctx.topSources());
       \u0275\u0275advance(2);
       \u0275\u0275property("label", \u0275\u0275pipeBind1(28, 28, "product.form.category_id.placeholder"));
       \u0275\u0275advance(3);
       \u0275\u0275property("resource", "categories");
-      \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.topCategories().length ? 32 : -1);
+      \u0275\u0275advance(4);
+      \u0275\u0275conditional(ctx.topCategories().length ? 34 : -1);
     }
   }, dependencies: [
     ReactiveFormsModule,
@@ -711,7 +739,8 @@ var AddProductFormComponent = class _AddProductFormComponent {
     CurrencySymbolPipe,
     InputComponent,
     ControlExtraTemplateDirective,
-    ControlComponent
+    ControlComponent,
+    ControlTemplateDirective
   ], styles: ["/* angular:styles/component:scss;e479f686f9038c11f5e097ca886a471be12ee124d83d30d03e810e678247c71f;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/products/view/add-product/add-product-form.component.ts */\nlg-eggs-widget {\n  min-width: 300px;\n}\n/*# sourceMappingURL=add-product-form.component.css.map */\n"], encapsulation: 2 });
 };
 (() => {
@@ -738,7 +767,8 @@ var AddProductFormComponent = class _AddProductFormComponent {
       CurrencySymbolPipe,
       InputComponent,
       ControlExtraTemplateDirective,
-      ControlComponent
+      ControlComponent,
+      ControlTemplateDirective
     ], encapsulation: ViewEncapsulation.None, template: `<form [formGroup]="form">
   <lg-flex-column>
     <lg-card>
@@ -812,7 +842,14 @@ var AddProductFormComponent = class _AddProductFormComponent {
                           [resource]="'categories'"
                           appendTo="body"
                           formControlName="category_id"
-                          placeholder=""></lg-multiselect>
+                          placeholder="">
+            <ng-template let-item lgControlTpl type="label">
+              <span>{{ item.system ? (('category.product.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+            <ng-template let-item lgControlTpl type="option">
+              <span>{{ item.system ? (('category.product.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+          </lg-multiselect>
 
           @if (topCategories().length) {
             <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
@@ -826,7 +863,7 @@ var AddProductFormComponent = class _AddProductFormComponent {
   }], () => [{ type: ProductsRepository }, { type: SelectResourcesService }, { type: Router }, { type: NotificationsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddProductFormComponent, { className: "AddProductFormComponent", filePath: "src/app/features/products/view/add-product/add-product-form.component.ts", lineNumber: 86 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddProductFormComponent, { className: "AddProductFormComponent", filePath: "src/app/features/products/view/add-product/add-product-form.component.ts", lineNumber: 88 });
 })();
 
 // src/app/features/products/view/add-product/add-product.component.ts
@@ -1353,4 +1390,4 @@ var AddProductComponent = class _AddProductComponent {
 export {
   AddProductComponent
 };
-//# sourceMappingURL=chunk-747DJEAY.js.map
+//# sourceMappingURL=chunk-WRTA6WA6.js.map

@@ -59,7 +59,7 @@ import {
 import {
   CalculateRecipeService,
   SelectResourcesService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -1315,4 +1315,4 @@ var CalculateRecipeComponent = class _CalculateRecipeComponent {
 export {
   CalculateRecipeComponent
 };
-//# sourceMappingURL=chunk-NAY5MA36.js.map
+//# sourceMappingURL=chunk-Y2UYQKKI.js.map

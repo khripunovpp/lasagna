@@ -1,17 +1,18 @@
 import {
   AutocompleteComponent,
   ChipsListComponent
-} from "./chunk-7MBEZAYN.js";
+} from "./chunk-I2TZH5QI.js";
 import {
   UnitSwitcherComponent
 } from "./chunk-MGR3OES4.js";
 import {
+  ControlTemplateDirective,
   MultiselectComponent,
   NgLabelTemplateDirective,
   NgMultiLabelTemplateDirective,
   NgOptionTemplateDirective,
   NgSelectComponent
-} from "./chunk-OS24NFVI.js";
+} from "./chunk-44AY56MU.js";
 import {
   ShrinkDirective
 } from "./chunk-4VYWNF2J.js";
@@ -77,7 +78,7 @@ import {
 import {
   RecipesRepository,
   SelectResourcesService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -122,6 +123,7 @@ import {
 } from "./chunk-JRXEEUAD.js";
 import "./chunk-5MLLJAOM.js";
 import {
+  JsonPipe,
   NgStyle
 } from "./chunk-76JI64DZ.js";
 import {
@@ -478,13 +480,13 @@ var _c4 = (a0) => ({ unit: a0 });
 var _forTrack02 = ($index, $item) => $item.value.amount + $index + 1;
 function AddRecipeFormComponent_ng_template_17_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "lg-unit-switcher", 20);
+    \u0275\u0275element(0, "lg-unit-switcher", 22);
   }
 }
 function AddRecipeFormComponent_For_23_Conditional_11_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-multiselect", 33);
+    \u0275\u0275elementStart(0, "lg-multiselect", 35);
     \u0275\u0275listener("onSelected", function AddRecipeFormComponent_For_23_Conditional_11_Template_lg_multiselect_onSelected_0_listener() {
       \u0275\u0275restoreView(_r5);
       const \u0275$index_39_r3 = \u0275\u0275nextContext().$index;
@@ -501,7 +503,7 @@ function AddRecipeFormComponent_For_23_Conditional_11_Template(rf, ctx) {
 function AddRecipeFormComponent_For_23_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
     const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "lg-multiselect", 34, 3);
+    \u0275\u0275elementStart(0, "lg-multiselect", 36, 3);
     \u0275\u0275listener("onSelected", function AddRecipeFormComponent_For_23_Conditional_12_Template_lg_multiselect_onSelected_0_listener() {
       \u0275\u0275restoreView(_r7);
       const \u0275$index_39_r3 = \u0275\u0275nextContext().$index;
@@ -517,21 +519,21 @@ function AddRecipeFormComponent_For_23_Conditional_12_Template(rf, ctx) {
 }
 function AddRecipeFormComponent_For_23_ng_template_16_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "lg-unit-switcher", 35);
+    \u0275\u0275element(0, "lg-unit-switcher", 37);
   }
 }
 function AddRecipeFormComponent_For_23_Conditional_20_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "hr", 32);
+    \u0275\u0275element(0, "hr", 34);
   }
 }
 function AddRecipeFormComponent_For_23_Template(rf, ctx) {
   if (rf & 1) {
     const _r2 = \u0275\u0275getCurrentView();
     \u0275\u0275elementContainerStart(0, 12);
-    \u0275\u0275elementStart(1, "lg-controls-row", 21)(2, "lg-flex-column", 22);
-    \u0275\u0275elementContainerStart(3, 23);
-    \u0275\u0275elementStart(4, "lg-button", 24);
+    \u0275\u0275elementStart(1, "lg-controls-row", 23)(2, "lg-flex-column", 24);
+    \u0275\u0275elementContainerStart(3, 25);
+    \u0275\u0275elementStart(4, "lg-button", 26);
     \u0275\u0275listener("click", function AddRecipeFormComponent_For_23_Template_lg_button_click_4_listener() {
       const \u0275$index_39_r3 = \u0275\u0275restoreView(_r2).$index;
       const ctx_r3 = \u0275\u0275nextContext();
@@ -541,8 +543,8 @@ function AddRecipeFormComponent_For_23_Template(rf, ctx) {
     \u0275\u0275pipe(6, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275elementContainerEnd();
-    \u0275\u0275elementContainerStart(7, 25);
-    \u0275\u0275elementStart(8, "lg-button", 24);
+    \u0275\u0275elementContainerStart(7, 27);
+    \u0275\u0275elementStart(8, "lg-button", 26);
     \u0275\u0275listener("click", function AddRecipeFormComponent_For_23_Template_lg_button_click_8_listener() {
       const \u0275$index_39_r3 = \u0275\u0275restoreView(_r2).$index;
       const ctx_r3 = \u0275\u0275nextContext();
@@ -552,9 +554,9 @@ function AddRecipeFormComponent_For_23_Template(rf, ctx) {
     \u0275\u0275pipe(10, "translate");
     \u0275\u0275elementEnd();
     \u0275\u0275elementContainerEnd();
-    \u0275\u0275conditionalCreate(11, AddRecipeFormComponent_For_23_Conditional_11_Template, 1, 2, "lg-multiselect", 26)(12, AddRecipeFormComponent_For_23_Conditional_12_Template, 2, 2, "lg-multiselect", 27);
+    \u0275\u0275conditionalCreate(11, AddRecipeFormComponent_For_23_Conditional_11_Template, 1, 2, "lg-multiselect", 28)(12, AddRecipeFormComponent_For_23_Conditional_12_Template, 2, 2, "lg-multiselect", 29);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "lg-number-input", 28, 1);
+    \u0275\u0275elementStart(13, "lg-number-input", 30, 1);
     \u0275\u0275pipe(15, "translate");
     \u0275\u0275listener("onKeydown", function AddRecipeFormComponent_For_23_Template_lg_number_input_onKeydown_13_listener() {
       \u0275\u0275restoreView(_r2);
@@ -563,18 +565,18 @@ function AddRecipeFormComponent_For_23_Template(rf, ctx) {
     });
     \u0275\u0275template(16, AddRecipeFormComponent_For_23_ng_template_16_Template, 1, 0, "ng-template", 10);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementContainerStart(17, 29);
-    \u0275\u0275elementStart(18, "lg-button", 30);
+    \u0275\u0275elementContainerStart(17, 31);
+    \u0275\u0275elementStart(18, "lg-button", 32);
     \u0275\u0275listener("click", function AddRecipeFormComponent_For_23_Template_lg_button_click_18_listener() {
       const \u0275$index_39_r3 = \u0275\u0275restoreView(_r2).$index;
       const ctx_r3 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r3.deleteIngredient(\u0275$index_39_r3));
     });
-    \u0275\u0275element(19, "mat-icon", 31);
+    \u0275\u0275element(19, "mat-icon", 33);
     \u0275\u0275elementEnd();
     \u0275\u0275elementContainerEnd();
     \u0275\u0275elementEnd();
-    \u0275\u0275conditionalCreate(20, AddRecipeFormComponent_For_23_Conditional_20_Template, 1, 0, "hr", 32);
+    \u0275\u0275conditionalCreate(20, AddRecipeFormComponent_For_23_Conditional_20_Template, 1, 0, "hr", 34);
     \u0275\u0275elementContainerEnd();
   }
   if (rf & 2) {
@@ -605,14 +607,40 @@ function AddRecipeFormComponent_For_23_Template(rf, ctx) {
     \u0275\u0275conditional(!(\u0275$index_39_r3 === \u0275$count_39_r8 - 1) ? 20 : -1);
   }
 }
-function AddRecipeFormComponent_Conditional_33_Template(rf, ctx) {
+function AddRecipeFormComponent_ng_template_33_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "lg-chips-list", 18);
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const item_r9 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(item_r9.system ? \u0275\u0275pipeBind1(2, 1, "category.recipe." + item_r9.name) : item_r9.name);
+  }
+}
+function AddRecipeFormComponent_ng_template_34_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const item_r10 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(item_r10.system ? \u0275\u0275pipeBind1(2, 1, "category.recipe." + item_r10.name) : item_r10.name);
+  }
+}
+function AddRecipeFormComponent_Conditional_35_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "lg-chips-list", 20);
   }
   if (rf & 2) {
     const ctx_r3 = \u0275\u0275nextContext();
-    const categorySelect_r9 = \u0275\u0275reference(32);
-    \u0275\u0275property("control", categorySelect_r9)("items", ctx_r3.topCategories());
+    const categorySelect_r11 = \u0275\u0275reference(32);
+    \u0275\u0275property("control", categorySelect_r11)("items", ctx_r3.topCategories());
   }
 }
 var AddRecipeFormComponent = class _AddRecipeFormComponent {
@@ -672,7 +700,6 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
     if (!recipe) {
       return;
     }
-    console.log("newformValue", recipeToFormValue(recipe));
     this.form.reset(__spreadProps(__spreadValues({}, recipeToFormValue(recipe)), {
       ingredients: []
     }));
@@ -831,7 +858,7 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
       provide: SelectResourcesService,
       useClass: SelectResourcesService
     }
-  ])], decls: 37, vars: 40, consts: [["nameField", ""], ["amount", ""], ["categorySelect", ""], ["productsSelector", ""], [3, "formGroup"], [3, "position"], ["lgExpand", "", 3, "label"], ["appendTo", "body", "formControlName", "name", "placeholde\u043A", "", 3, "key", "resource"], ["formControlName", "description", "lgExpand", "", "placeholder", ""], ["formControlName", "outcome_amount", "lgParseMath", "", "placeholder", ""], ["lgExtraTpl", "", "place", "after"], ["formArrayName", "ingredients", "lgExpand", "", 3, "size"], [3, "formGroupName"], [3, "click", "size"], [2, "--control-bg", "var(--hr-bg-strong)", 3, "equal", "mobileMode"], [3, "label"], [3, "position", "size"], ["appendTo", "body", "formControlName", "category_id", "lgExpand", "", 3, "resource"], [3, "control", "items"], ["formControlName", "tags", 3, "multi", "resource"], ["formControlName", "outcome_unit"], [3, "mobileMode"], [3, "size"], ["ngProjectAs", "labelTpl", 5, ["labelTpl"]], [3, "click", "flat", "size", "active"], ["ngProjectAs", "afterLabelTpl", 5, ["afterLabelTpl"]], ["appendTo", "body", "formControlName", "recipe_id", 3, "resource", "autoLoad"], ["appendTo", "body", "formControlName", "product_id", 3, "resource", "autoLoad"], ["lgParseMath", "", "formControlName", "amount", 3, "onKeydown", "placeholder"], ["ngProjectAs", "rowActions", 5, ["rowActions"]], [3, "click", "size", "icon"], ["aria-hidden", "false", "fontIcon", "close"], ["size", "2", "lgExpand", "", "color", "#fafafa"], ["appendTo", "body", "formControlName", "recipe_id", 3, "onSelected", "resource", "autoLoad"], ["appendTo", "body", "formControlName", "product_id", 3, "onSelected", "resource", "autoLoad"], ["formControlName", "unit"]], template: function AddRecipeFormComponent_Template(rf, ctx) {
+  ])], decls: 39, vars: 40, consts: [["nameField", ""], ["amount", ""], ["categorySelect", ""], ["productsSelector", ""], [3, "formGroup"], [3, "position"], ["lgExpand", "", 3, "label"], ["appendTo", "body", "formControlName", "name", "placeholde\u043A", "", 3, "key", "resource"], ["formControlName", "description", "lgExpand", "", "placeholder", ""], ["formControlName", "outcome_amount", "lgParseMath", "", "placeholder", ""], ["lgExtraTpl", "", "place", "after"], ["formArrayName", "ingredients", "lgExpand", "", 3, "size"], [3, "formGroupName"], [3, "click", "size"], [2, "--control-bg", "var(--hr-bg-strong)", 3, "equal", "mobileMode"], [3, "label"], [3, "position", "size"], ["appendTo", "body", "formControlName", "category_id", "lgExpand", "", 3, "resource"], ["lgControlTpl", "", "type", "label"], ["lgControlTpl", "", "type", "option"], [3, "control", "items"], ["formControlName", "tags", 3, "multi", "resource"], ["formControlName", "outcome_unit"], [3, "mobileMode"], [3, "size"], ["ngProjectAs", "labelTpl", 5, ["labelTpl"]], [3, "click", "flat", "size", "active"], ["ngProjectAs", "afterLabelTpl", 5, ["afterLabelTpl"]], ["appendTo", "body", "formControlName", "recipe_id", 3, "resource", "autoLoad"], ["appendTo", "body", "formControlName", "product_id", 3, "resource", "autoLoad"], ["lgParseMath", "", "formControlName", "amount", 3, "onKeydown", "placeholder"], ["ngProjectAs", "rowActions", 5, ["rowActions"]], [3, "click", "size", "icon"], ["aria-hidden", "false", "fontIcon", "close"], ["size", "2", "lgExpand", "", "color", "#fafafa"], ["appendTo", "body", "formControlName", "recipe_id", 3, "onSelected", "resource", "autoLoad"], ["appendTo", "body", "formControlName", "product_id", 3, "onSelected", "resource", "autoLoad"], ["formControlName", "unit"]], template: function AddRecipeFormComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "form", 4)(1, "lg-flex-column")(2, "lg-card")(3, "lg-flex-column", 5)(4, "lg-control", 6);
@@ -862,13 +889,14 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
       \u0275\u0275elementEnd()()()()();
       \u0275\u0275elementStart(27, "lg-flex-row", 14)(28, "lg-control", 15);
       \u0275\u0275pipe(29, "translate");
-      \u0275\u0275elementStart(30, "lg-flex-column", 16);
-      \u0275\u0275element(31, "lg-multiselect", 17, 2);
-      \u0275\u0275conditionalCreate(33, AddRecipeFormComponent_Conditional_33_Template, 1, 2, "lg-chips-list", 18);
+      \u0275\u0275elementStart(30, "lg-flex-column", 16)(31, "lg-multiselect", 17, 2);
+      \u0275\u0275template(33, AddRecipeFormComponent_ng_template_33_Template, 3, 3, "ng-template", 18)(34, AddRecipeFormComponent_ng_template_34_Template, 3, 3, "ng-template", 19);
+      \u0275\u0275elementEnd();
+      \u0275\u0275conditionalCreate(35, AddRecipeFormComponent_Conditional_35_Template, 1, 2, "lg-chips-list", 20);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(34, "lg-control", 15);
-      \u0275\u0275pipe(35, "translate");
-      \u0275\u0275element(36, "lg-tags-control", 19);
+      \u0275\u0275elementStart(36, "lg-control", 15);
+      \u0275\u0275pipe(37, "translate");
+      \u0275\u0275element(38, "lg-tags-control", 21);
       \u0275\u0275elementEnd()()()();
     }
     if (rf & 2) {
@@ -906,10 +934,10 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
       \u0275\u0275property("position", "start")("size", "medium");
       \u0275\u0275advance();
       \u0275\u0275property("resource", "recipes-categories");
-      \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.topCategories().length ? 33 : -1);
+      \u0275\u0275advance(4);
+      \u0275\u0275conditional(ctx.topCategories().length ? 35 : -1);
       \u0275\u0275advance();
-      \u0275\u0275property("label", \u0275\u0275pipeBind1(35, 38, "recipe.form.tags.placeholder"));
+      \u0275\u0275property("label", \u0275\u0275pipeBind1(37, 38, "recipe.form.tags.placeholder"));
       \u0275\u0275advance(2);
       \u0275\u0275property("multi", true)("resource", "tags");
     }
@@ -941,7 +969,8 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
     ControlExtraTemplateDirective,
     TagsControlComponent,
     FlexRowComponent,
-    ControlComponent
+    ControlComponent,
+    ControlTemplateDirective
   ], encapsulation: 2 });
 };
 (() => {
@@ -968,7 +997,9 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
       ControlExtraTemplateDirective,
       TagsControlComponent,
       FlexRowComponent,
-      ControlComponent
+      ControlComponent,
+      ControlTemplateDirective,
+      JsonPipe
     ], providers: [
       {
         provide: SelectResourcesService,
@@ -1102,7 +1133,14 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
                           [resource]="'recipes-categories'"
                           appendTo="body"
                           formControlName="category_id"
-                          lgExpand></lg-multiselect>
+                          lgExpand>
+            <ng-template let-item lgControlTpl type="label">
+              <span>{{ item.system ? (('category.recipe.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+            <ng-template let-item lgControlTpl type="option">
+              <span>{{ item.system ? (('category.recipe.' + item.name) | translate) : item.name }}</span>
+            </ng-template>
+          </lg-multiselect>
 
           @if (topCategories().length) {
             <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
@@ -1122,7 +1160,7 @@ var AddRecipeFormComponent = class _AddRecipeFormComponent {
   }], () => [{ type: RecipesRepository }, { type: SelectResourcesService }, { type: Router }, { type: ActivatedRoute }, { type: NotificationsService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddRecipeFormComponent, { className: "AddRecipeFormComponent", filePath: "src/app/features/recipes/view/add-recipe/add-recipe-form.component.ts", lineNumber: 75 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AddRecipeFormComponent, { className: "AddRecipeFormComponent", filePath: "src/app/features/recipes/view/add-recipe/add-recipe-form.component.ts", lineNumber: 79 });
 })();
 
 // src/app/features/recipes/view/add-recipe/add-recipe.component.ts
@@ -1678,4 +1716,4 @@ var AddRecipeComponent = class _AddRecipeComponent {
 export {
   AddRecipeComponent
 };
-//# sourceMappingURL=chunk-LWQXQ7RU.js.map
+//# sourceMappingURL=chunk-FKNFAA37.js.map

@@ -3,10 +3,10 @@ import {
   NgOptionTemplateDirective,
   NgSelectComponent,
   NgTagTemplateDirective
-} from "./chunk-OS24NFVI.js";
+} from "./chunk-44AY56MU.js";
 import {
   SelectResourcesService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
@@ -428,4 +428,4 @@ export {
   ChipsListComponent,
   AutocompleteComponent
 };
-//# sourceMappingURL=chunk-7MBEZAYN.js.map
+//# sourceMappingURL=chunk-I2TZH5QI.js.map

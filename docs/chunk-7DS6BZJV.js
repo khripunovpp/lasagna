@@ -33207,19 +33207,6 @@ var resources = {
       name: "indexDb",
       storeName: Stores.TAGS
     }
-  },
-  taxTemplates: {
-    name: "taxTemplates",
-    loaderConfig: {
-      name: "localStorage",
-      key: "template-tax"
-    },
-    transform: (data) => {
-      if (data) {
-        return data;
-      }
-      return [];
-    }
   }
 };
 
@@ -33998,4 +33985,4 @@ export {
   ProductsRepository,
   RecipesRepository
 };
-//# sourceMappingURL=chunk-TANJAAUF.js.map
+//# sourceMappingURL=chunk-7DS6BZJV.js.map

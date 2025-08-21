@@ -45,7 +45,7 @@ import {
   BarcodeReaderService,
   OpenFoodFactsService,
   ProductsRepository
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import "./chunk-HLCLXN3F.js";
 import "./chunk-UFXGBGSU.js";
 import {
@@ -1329,4 +1329,4 @@ var WidgetsPageComponent = class _WidgetsPageComponent {
 export {
   WidgetsPageComponent
 };
-//# sourceMappingURL=chunk-ZBBSDLEE.js.map
+//# sourceMappingURL=chunk-OM5EXKZK.js.map

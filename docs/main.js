@@ -11,7 +11,7 @@ import {
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-ZSPSGRGF.js";
+} from "./chunk-CFA223CR.js";
 import {
   UserCurrencyPipe
 } from "./chunk-MTFF6LZJ.js";
@@ -80,7 +80,7 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-TANJAAUF.js";
+} from "./chunk-7DS6BZJV.js";
 import {
   DocsService
 } from "./chunk-HLCLXN3F.js";
@@ -2171,7 +2171,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-YJNZGB4D.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-Q2SY2MUT.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2183,15 +2183,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-WBRN2MDF.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-B5SD4DKY.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2201,7 +2201,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-LWQXQ7RU.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-FKNFAA37.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2211,7 +2211,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-NAY5MA36.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-Y2UYQKKI.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2224,15 +2224,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-C2YP6FAV.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-W72XZSO5.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2242,7 +2242,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-747DJEAY.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-WRTA6WA6.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2271,7 +2271,7 @@ var routes = [{
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-337UQJIR.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-RFTTSXDK.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2301,7 +2301,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-MPWLZ6KE.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-4D4LOUTG.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2311,15 +2311,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-XCKA6EI3.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-S6VV55EO.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-FRVJPBHG.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-KRWXP5H5.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-FRVJPBHG.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-KRWXP5H5.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2328,15 +2328,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-M4PKLUXV.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-ITBYBO6D.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-7AJIXZVG.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-L2GVDBDA.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-7AJIXZVG.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-L2GVDBDA.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2347,7 +2347,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-JTS6B4WP.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-3QMUSFLR.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2355,7 +2355,7 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-ZBBSDLEE.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-OM5EXKZK.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
@@ -2365,7 +2365,10 @@ var routes = [{
           path: "**",
           loadComponent: () => import("./chunk-MWJ2U674.js").then((m) => m.ArticleComponent)
         }
-      ]
+      ],
+      data: {
+        canSeeAuthors: true
+      }
     },
     {
       path: "dev",
@@ -12816,7 +12819,7 @@ var SupportPopupComponent = class _SupportPopupComponent {
 // src/app/shared/view/ui/layout/footer.component.ts
 function FooterComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 5);
+    \u0275\u0275elementStart(0, "p", 2);
     \u0275\u0275text(1, " \u{1F468}\u200D\u{1F4BB} ");
     \u0275\u0275elementStart(2, "span", 6);
     \u0275\u0275text(3);
@@ -12827,47 +12830,52 @@ function FooterComponent_Conditional_2_Template(rf, ctx) {
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "translate");
     \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 2, "footer.credit.developed"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 4, "footer.credit.inspired"));
+  }
+}
+function FooterComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+    \u0275\u0275pipe(1, "translate");
+    \u0275\u0275elementStart(2, "a", 7);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(5, ", ");
+    \u0275\u0275elementStart(6, "a", 7);
+    \u0275\u0275text(7);
+    \u0275\u0275pipe(8, "translate");
+    \u0275\u0275elementEnd();
     \u0275\u0275text(9);
     \u0275\u0275pipe(10, "translate");
     \u0275\u0275elementStart(11, "a", 7);
     \u0275\u0275text(12);
     \u0275\u0275pipe(13, "translate");
     \u0275\u0275elementEnd();
-    \u0275\u0275text(14, ", ");
-    \u0275\u0275elementStart(15, "a", 7);
-    \u0275\u0275text(16);
-    \u0275\u0275pipe(17, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275text(18);
-    \u0275\u0275pipe(19, "translate");
-    \u0275\u0275elementStart(20, "a", 7);
-    \u0275\u0275text(21);
-    \u0275\u0275pipe(22, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275text(23, ". ");
+    \u0275\u0275text(14, ". ");
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.credit.developed"));
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 12, "footer.credit.inspired"));
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 14, "footer.agree"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(1, 8, "footer.agree"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275attribute("href", ctx_r1.environment.policies.privacyPolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.privacy"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 10, "footer.privacy"));
     \u0275\u0275advance(3);
     \u0275\u0275attribute("href", ctx_r1.environment.policies.termsOfServiceUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(17, 18, "footer.terms"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 12, "footer.terms"));
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(19, 20, "footer.and"), " ");
+    \u0275\u0275textInterpolate1(", ", \u0275\u0275pipeBind1(10, 14, "footer.and"), " ");
     \u0275\u0275advance(2);
     \u0275\u0275attribute("href", ctx_r1.environment.policies.cookiePolicyUrl, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(22, 22, "footer.cookie"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 16, "footer.cookie"));
   }
 }
 var FooterComponent = class _FooterComponent {
@@ -12877,7 +12885,7 @@ var FooterComponent = class _FooterComponent {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   supportPopup = viewChild(SupportPopupComponent);
-  debugData = toSignal(this.router.events.pipe(
+  routeData = toSignal(this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     startWith(null),
     // Для первоначальной загрузки
@@ -12900,30 +12908,8 @@ var FooterComponent = class _FooterComponent {
       return [routeData];
     })
   ));
-  canSeePolicies = toSignal(this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    startWith(null),
-    // Для первоначальной загрузки
-    switchMap(() => {
-      const findRouteData = (route) => {
-        let currentRoute = route;
-        while (currentRoute) {
-          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
-            return currentRoute.snapshot.data;
-          }
-          if (currentRoute.firstChild) {
-            currentRoute = currentRoute.firstChild;
-          } else {
-            break;
-          }
-        }
-        return {};
-      };
-      const routeData = findRouteData(this.activatedRoute);
-      return [routeData];
-    }),
-    map((data) => data?.canSeePolicies || false)
-  ));
+  canSeePolicies = computed(() => this.routeData()?.["canSeePolicies"] ?? false);
+  canSeeAuthors = computed(() => this.routeData()?.["canSeeAuthors"] ?? false);
   /**
    * Open support popup
    */
@@ -12940,29 +12926,32 @@ var FooterComponent = class _FooterComponent {
     if (rf & 2) {
       \u0275\u0275queryAdvance();
     }
-  }, decls: 11, vars: 5, consts: [["supportPopup", ""], [1, "lg-footer"], [1, "lg-footer__bottom"], ["type", "button", 1, "lg-footer__support-link", 3, "click"], [1, "lg-footer__version"], [1, "footer-credit"], [1, "gradient-text"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
+  }, decls: 12, vars: 6, consts: [["supportPopup", ""], [1, "lg-footer"], [1, "footer-credit"], [1, "lg-footer__bottom"], ["type", "button", 1, "lg-footer__support-link", 3, "click"], [1, "lg-footer__version"], [1, "gradient-text"], ["target", "_blank"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 1);
-      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 24, 24);
-      \u0275\u0275elementStart(3, "div", 2)(4, "button", 3);
-      \u0275\u0275listener("click", function FooterComponent_Template_button_click_4_listener() {
+      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 9, 6, "p", 2);
+      \u0275\u0275conditionalCreate(3, FooterComponent_Conditional_3_Template, 15, 18);
+      \u0275\u0275elementStart(4, "div", 3)(5, "button", 4);
+      \u0275\u0275listener("click", function FooterComponent_Template_button_click_5_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.openSupport());
       });
-      \u0275\u0275text(5);
-      \u0275\u0275pipe(6, "translate");
+      \u0275\u0275text(6);
+      \u0275\u0275pipe(7, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(7, "div", 4);
-      \u0275\u0275text(8);
+      \u0275\u0275elementStart(8, "div", 5);
+      \u0275\u0275text(9);
       \u0275\u0275elementEnd()()()();
-      \u0275\u0275element(9, "lg-support-popup", null, 0);
+      \u0275\u0275element(10, "lg-support-popup", null, 0);
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.canSeePolicies() ? 2 : -1);
+      \u0275\u0275conditional(ctx.canSeeAuthors() ? 2 : -1);
+      \u0275\u0275advance();
+      \u0275\u0275conditional(ctx.canSeePolicies() ? 3 : -1);
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(6, 3, "footer.support"), " ");
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 4, "footer.support"), " ");
       \u0275\u0275advance(3);
       \u0275\u0275textInterpolate1("v", ctx.appVersion());
     }
@@ -12978,12 +12967,13 @@ var FooterComponent = class _FooterComponent {
     args: [{ selector: "lg-footer", standalone: true, template: `
     <lg-fade-in>
       <footer class="lg-footer">
-        @if (canSeePolicies()) {
+        @if (canSeeAuthors()) {
           <p class="footer-credit">
             \u{1F468}\u200D\u{1F4BB} <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
             \u2022 \u{1FA84}&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
           </p>
-
+        }
+        @if (canSeePolicies()) {
           {{ 'footer.agree' | translate }}
           <a [attr.href]="environment.policies.privacyPolicyUrl"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
@@ -12994,9 +12984,9 @@ var FooterComponent = class _FooterComponent {
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
         <div class="lg-footer__bottom">
-          <button type="button"
+          <button (click)="openSupport()"
                   class="lg-footer__support-link"
-                  (click)="openSupport()">
+                  type="button">
             {{ 'footer.support' | translate }}
           </button>
           <div class="lg-footer__version">v{{ appVersion() }}</div>
@@ -13014,7 +13004,7 @@ var FooterComponent = class _FooterComponent {
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 105 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 106 });
 })();
 
 // src/app/features/home/view/demo-informer.component.ts

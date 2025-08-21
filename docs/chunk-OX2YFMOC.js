@@ -278,7 +278,7 @@ function GroupingTilesComponent_For_2_Conditional_3_Template(rf, ctx) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("level", 3);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", (group_r1 == null ? null : group_r1.field) || ctx_r1.translateService.instant("unknown"), " ");
+    \u0275\u0275textInterpolate1(" ", (group_r1 == null ? null : group_r1.field) || ctx_r1.translateService.instant("without-category-label"), " ");
   }
 }
 function GroupingTilesComponent_For_2_For_6_Conditional_1_Template(rf, ctx) {
@@ -402,7 +402,7 @@ var GroupingTilesComponent = class _GroupingTilesComponent {
               </ng-container>
             } @else {
               <lg-title [level]="3">
-                {{ group?.field || translateService.instant('unknown') }}
+                {{ group?.field || translateService.instant('without-category-label') }}
               </lg-title>
             }
           </header>
@@ -458,4 +458,4 @@ export {
   GroupingHeaderDirective,
   GroupingTilesComponent
 };
-//# sourceMappingURL=chunk-V6RRLVGE.js.map
+//# sourceMappingURL=chunk-OX2YFMOC.js.map
