@@ -205,9 +205,9 @@ export class AddProductComponent
           this.product()!,
           this.draftOrProductUUID() ?? ''));
 
-        if (!this.isDraftRoute()) {
-          this._routerManager.replace(['products/draft/' + this.draftRef()!.uuid]);
-        }
+        // if (!this.isDraftRoute()) {
+        //   this._routerManager.replace(['products/draft/' + this.draftRef()!.uuid]);
+        // }
       }
     });
   }
