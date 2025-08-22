@@ -24,6 +24,8 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
 import {Invoice} from '../../service/Inovice/Invoice';
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';
+import {SelfEndDirective} from '../../../../shared/view/directives/self-end.directive';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 
 @Component({
   selector: 'lg-invoices-list',
@@ -65,37 +67,47 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
                            [uuid]="invoice.uuid"
                            [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
                            type="invoice">
-                <lg-flex-column [size]="'medium'">
-                  <lg-flex-row [center]="true">
-                    <lg-flex-row [center]="true" lgExpand>
-                      <a [routerLink]="'/invoices/edit/' + invoice.uuid">
-                        #{{ invoice.prefix }}/{{ invoice.invoice_number }} - {{ invoice.name }}
-                      </a>
+                <lg-flex-column size="medium">
+                  <lg-flex-row [mobileMode]="true"
+                               size="small"
+                               [left]="true">
+                    <a [routerLink]="'/invoices/edit/' + invoice.uuid" lgExpand>
+                      {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
+                    </a>
 
-                      <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
-                        {{ stateLabels()?.[ic]?.[i] }}
+                    <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
+                      {{ stateLabels()?.[ic]?.[i] }}
+                    </div>
+
+                  </lg-flex-row>
+
+                  <lg-flex-row [mobileMode]="true"
+                               size="small"
+                               [left]="true">
+
+                    @if (!invoice.cancelled) {
+                      <div>
+                        {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
                       </div>
-                    </lg-flex-row>
+                    }
+
+                    @if (invoice.issued) {
+                      <div>
+                        {{ 'invoices.days-left' | translate }}:
+                        @if (invoice.overdue) {
+                          {{ 'invoices.days-left.overdue' | translate }}
+                        } @else {
+                          {{ invoice.daysLeft }}
+                        }
+                      </div>
+                    }
+
 
                     <small class="text-muted text-cursive"
+                           lgPull
                            [attr.title]="(invoice?.updatedAt || invoice?.createdAt) | date:'short'">
                       {{ 'edited-at-label'|translate }} {{ (invoice?.updatedAt || invoice?.createdAt) | timeAgo }}
                     </small>
-                  </lg-flex-row>
-
-                  <lg-flex-row [center]="true">
-                    <div>
-                      {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
-                    </div>
-
-                    <div>
-                      {{ 'invoices.days-left' | translate }}:
-                      @if (invoice.overdue) {
-                        {{ 'invoices.days-left.overdue' | translate }}
-                      } @else {
-                        {{ invoice.daysLeft }}
-                      }
-                    </div>
                   </lg-flex-row>
                 </lg-flex-column>
               </ng-template>
@@ -134,7 +146,9 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
     FlexColumnComponent,
     DatePipe,
     DecimalPipe,
-    NgClass
+    NgClass,
+    SelfEndDirective,
+    PullDirective
   ],
   providers: [
     SelectionZoneService,
