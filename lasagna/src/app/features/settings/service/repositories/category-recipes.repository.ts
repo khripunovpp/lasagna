@@ -56,52 +56,7 @@ export class CategoryRecipesRepository {
     return this._indexDbService.remove(Stores.RECIPES_CATEGORIES, uuid);
   }
 
-  async preloadCategories() {
-    const categoriesInstalled = localStorage.getItem('categoriesRecipesInstalled');
-    if (categoriesInstalled) {
-      return;
-    }
-    const categories = await this.getCategories();
-    if (categories.length === 0) {
-      const defaultCategories = [
-        'biscuits',
-        'shortcrust-pastry',
-        'choux-pastry',
-        'puff-pastry',
-        'yeast-dough',
-        'brioche-sweet-bread',
-        'meringues',
-        'creams',
-        'fillings',
-        'glazes-coatings',
-        'cakes',
-        'pastries',
-        'cupcakes-muffins',
-        'cheesecakes',
-        'tarts',
-        'macarons',
-        'cookies',
-        'rolls',
-        'chocolate-products',
-        'caramel',
-        'mousses',
-        'panna-cotta',
-        'jellies-jams',
-        'souffles',
-        'glass-desserts',
-        'gluten-free-baking',
-        'sugar-free-baking',
-        'vegan-desserts',
-        'breakfasts',
-        'author-desserts'
-      ].map((name) => CategoryRecipe.fromRaw({
-        uuid: name,
-        name,
-        system: true,
-      }).toDTO());
-      await this._indexDbService.balkAdd(Stores.RECIPES_CATEGORIES, defaultCategories, false);
-      localStorage.setItem('categoriesRecipesInstalled', 'true');
-    }
+  getLength() {
+    return this._indexDbService.getLength(Stores.RECIPES_CATEGORIES);
   }
-
 }

@@ -68,16 +68,10 @@
       <lg-control [label]="'product.form.category_id.placeholder'|translate">
         <lg-flex-column>
           <lg-multiselect #categorySelect
-                          [resource]="'categories'"
+                          [resource]="'product-categories'"
                           appendTo="body"
                           formControlName="category_id"
                           placeholder="">
-            <ng-template let-item lgControlTpl type="label">
-              <span>{{ item.system ? (('category.product.' + item.name) | translate) : item.name }}</span>
-            </ng-template>
-            <ng-template let-item lgControlTpl type="option">
-              <span>{{ item.system ? (('category.product.' + item.name) | translate) : item.name }}</span>
-            </ng-template>
           </lg-multiselect>
 
           @if (topCategories().length) {

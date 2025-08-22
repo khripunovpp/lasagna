@@ -1,4 +1,4 @@
-import {Injectable, Optional} from '@angular/core';
+import {inject, Injectable, Injector, Optional, runInInjectionContext} from '@angular/core';
 import {IndexDbSelectLoaderService} from './index-db-select-loader.service';
 import {
   IndexDbSelectLoaderConfig,
@@ -33,6 +33,10 @@ export interface SelectResource<T = unknown> {
   updatedAt?: number
 }
 
+function isCustomLoader(cfg: SelectResourcesConfig) {
+  return !!cfg.loaderConfig && (cfg.loaderConfig as any).asyncFactory;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +47,7 @@ export class SelectResourcesService {
   ) {
   }
 
+  private readonly _injector = inject(Injector);
   _registry = new Map<string, SelectResource>();
   private _registry$ = new BehaviorSubject<Map<string, SelectResource>>(new Map());
 
@@ -65,13 +70,17 @@ export class SelectResourcesService {
       lists: {},
       loader: {
         load: async () => {
-          if (cfg.loaderConfig?.name === 'localStorage') {
-            return this._localstorageSelectLoaderService.load((cfg.loaderConfig as LocalstorageSelectLoaderConfig)?.['key']!);
+          if (isCustomLoader(cfg)) {
+            return (cfg.loaderConfig as LocalstorageSelectLoaderConfig | IndexDbSelectLoaderConfig | any)?.asyncFactory();
           }
+          // if (cfg.loaderConfig?.name === 'localStorage') {
+          //   return this._localstorageSelectLoaderService.load((cfg.loaderConfig as LocalstorageSelectLoaderConfig)?.['key']!);
+          // }
           const indexDbCfg = cfg.loaderConfig as IndexDbSelectLoaderConfig;
           if (indexDbCfg?.full) {
             return this._indexDbSelectLoaderService.fullLoad(indexDbCfg?.['storeName']!);
           }
+          console.log('Loading select resource', cfg.name, indexDbCfg);
           return this._indexDbSelectLoaderService.load(indexDbCfg?.['storeName']!)
         },
 
@@ -138,7 +147,9 @@ export class SelectResourcesService {
       if (loaderCfg?.selectUniqueKey?.length) {
         result = await cfg.loader.uniqueKeys(loaderCfg.storeName, loaderCfg.selectUniqueKey);
       } else {
-        result = await cfg.loader.load(cfg.name)
+        await runInInjectionContext(this._injector, async () => {
+          result = await cfg.loader.load(cfg.name)
+        });
       }
 
       if (Array.isArray(result)) {

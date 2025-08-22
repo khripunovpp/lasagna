@@ -30,6 +30,7 @@ export class CsvReaderService {
       reader.onload = () => {
         try {
           const result = reader.result as string;
+          console.log('pre parsed', result);
           const json = JSON.parse(result);
           resolve(json);
         } catch (error) {

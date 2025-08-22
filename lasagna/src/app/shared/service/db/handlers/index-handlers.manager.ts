@@ -4,6 +4,9 @@ import {IndexDataHandler, IndexHandlerRegistry, TransformedData} from '../types/
 import {DocumentationIndexHandler} from './documentation-index.handler';
 import {DefaultIndexHandler} from './default-index.handler';
 import {Stores} from '../const/stores';
+import {ProductsIndexHandler} from './products-index.handler';
+import {ProductsCategoriesIndexHandler} from './products-categories-index.handler';
+import {RecipesCategoriesIndexHandler} from './recipes-categories-index.handler';
 
 /**
  * Manager for handling index data transformations
@@ -79,6 +82,9 @@ export class IndexHandlersManager {
   private initializeHandlers(): void {
     // Register specific handlers
     this.registerHandler(Stores.DOCUMENTATION, new DocumentationIndexHandler());
+    this.registerHandler(Stores.PRODUCTS, new ProductsIndexHandler());
+    this.registerHandler(Stores.PRODUCTS_CATEGORIES, new ProductsCategoriesIndexHandler());
+    this.registerHandler(Stores.RECIPES_CATEGORIES, new RecipesCategoriesIndexHandler());
 
     // Set default handler for tables without specific handlers
     this.defaultHandler = new DefaultIndexHandler();
