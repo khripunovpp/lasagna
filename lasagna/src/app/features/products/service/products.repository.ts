@@ -98,7 +98,9 @@ export class ProductsRepository {
   }
 
   getProducts() {
-    return this._indexDbService.getAll(Stores.PRODUCTS) as Promise<Product[]>;
+    return this._indexDbService.getAll<ProductDTO>(Stores.PRODUCTS).then(products => {
+      return products.map(product => this._productFactory.fromRaw(product));
+    });
   }
 
   getLastProducts() {

@@ -6,6 +6,7 @@ import {
 import {
   RecipesCategoriesSelectResourceLoader
 } from '../../../features/select-resources/recipes-categories-select-resource.loader';
+import {ProductsSelectResourceLoader} from '../../../features/select-resources/product-select-resource.loader';
 
 export interface SelectResourcesConfig {
   name: string
@@ -34,8 +35,10 @@ export const resources: Record<string, SelectResourcesConfig> = {
   products: {
     name: 'products',
     loaderConfig: {
-      name: 'indexDb',
-      storeName: Stores.PRODUCTS,
+      asyncFactory: () => {
+        const loader = inject(ProductsSelectResourceLoader);
+        return loader.load();
+      }
     }
   },
   'product-categories': {
