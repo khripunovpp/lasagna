@@ -56,6 +56,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
               {{ 'export-label'|translate }}
             </lg-button>
           </ng-template>
+
           <ng-template lgInlineSeparatedGroup>
             <lg-import (onDone)="loadProducts()"
                        [label]="('import-label'|translate)"

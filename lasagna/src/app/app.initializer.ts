@@ -35,8 +35,6 @@ export const appInitializer = () => {
   ];
 
   return Promise.all([
-    categoryRepository.preloadCategories(),
-    recipeCategoryRepository.preloadCategories(),
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
     settingsService.loadSettings()

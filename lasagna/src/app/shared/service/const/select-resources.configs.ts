@@ -1,8 +1,17 @@
 import {Stores} from '../db/const/stores';
+import {inject} from '@angular/core';
+import {
+  ProductCategoriesSelectResourceLoader
+} from '../../../features/select-resources/product-categories-select-resource.loader';
+import {
+  RecipesCategoriesSelectResourceLoader
+} from '../../../features/select-resources/recipes-categories-select-resource.loader';
 
 export interface SelectResourcesConfig {
   name: string
-  loaderConfig?: IndexDbSelectLoaderConfig | LocalstorageSelectLoaderConfig
+  loaderConfig?: IndexDbSelectLoaderConfig
+    | LocalstorageSelectLoaderConfig
+    | CustomSelectLoaderConfig
 }
 
 export interface IndexDbSelectLoaderConfig {
@@ -17,6 +26,10 @@ export interface LocalstorageSelectLoaderConfig {
   key: string
 }
 
+export interface CustomSelectLoaderConfig {
+  asyncFactory?: () => Promise<any>
+}
+
 export const resources: Record<string, SelectResourcesConfig> = {
   products: {
     name: 'products',
@@ -25,19 +38,23 @@ export const resources: Record<string, SelectResourcesConfig> = {
       storeName: Stores.PRODUCTS,
     }
   },
-  categories: {
-    name: 'categories',
+  'product-categories': {
+    name: 'product-categories',
     loaderConfig: {
-      name: 'indexDb',
-      storeName: Stores.PRODUCTS_CATEGORIES,
+      asyncFactory: () => {
+        const loader = inject(ProductCategoriesSelectResourceLoader);
+        return loader.load();
+      }
     }
   },
   'recipes-categories': {
     name: 'recipes-categories',
     loaderConfig: {
-      name: 'indexDb',
-      storeName: Stores.RECIPES_CATEGORIES,
-    },
+      asyncFactory: () => {
+        const loader = inject(RecipesCategoriesSelectResourceLoader);
+        return loader.load();
+      }
+    }
   },
   recipes: {
     name: 'recipes',

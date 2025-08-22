@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
@@ -6,18 +6,21 @@ import {DraftFormsService, UsingHistoryService} from '../../../shared/service/se
 import {Subject} from 'rxjs';
 import {Product} from './Product';
 import {ProductDTO} from './Product.scheme';
-import { OnboardingService } from '../../onboarding/onboarding.service';
+import {OnboardingService} from '../../onboarding/onboarding.service';
+import {ProductFactory} from './product.factory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsRepository {
   private _onboardingService = inject(OnboardingService);
+
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
+    private _productFactory: ProductFactory,
   ) {
   }
 
@@ -33,7 +36,7 @@ export class ProductsRepository {
 
   loadAll() {
     return this._indexDbService.getAll(Stores.PRODUCTS).then(products => {
-      this._stream$.next(products.map(product => Product.fromRaw(product)));
+      this._stream$.next(products.map(product => this._productFactory.fromRaw(product)));
       return products;
     });
   }
@@ -59,6 +62,9 @@ export class ProductsRepository {
     uuid: string,
     product: Product
   ) {
+    if (product.system) {
+      product.system = false;
+    }
     await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
     this._saveProductToHistory(uuid);
   }
@@ -75,11 +81,11 @@ export class ProductsRepository {
       }
       if (verbose) {
         await this._indexDbService.getOneWithRelations(Stores.PRODUCTS, uuid).then((result) => {
-          resolve(Product.fromRaw(result.data));
+          resolve(this._productFactory.fromRaw(result.data));
         });
       } else {
         await this._indexDbService.getOne(Stores.PRODUCTS, uuid).then((result: ProductDTO) => {
-          resolve(Product.fromRaw(result));
+          resolve(this._productFactory.fromRaw(result));
         });
       }
     });
@@ -87,7 +93,7 @@ export class ProductsRepository {
 
   getMany(uuids: string[]) {
     return this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, uuids).then(products => {
-      return products.map(product => Product.fromRaw(product));
+      return products.map(product => this._productFactory.fromRaw(product));
     });
   }
 
@@ -109,7 +115,7 @@ export class ProductsRepository {
         }
         return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
       }).map(product => ({
-        product: Product.fromRaw(product),
+        product: this._productFactory.fromRaw(product),
         updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,
         count: product.uuid ? top[product.uuid].count : 0,
       }))
@@ -176,7 +182,6 @@ export class ProductsRepository {
   removeDraftMany(uuids: string[]) {
     return this._draftFormsService.removeDraftForm('draft_products', uuids);
   }
-
 
   private _saveCategory(uuid: string) {
     this._usingHistoryService.count('products_categories', uuid);

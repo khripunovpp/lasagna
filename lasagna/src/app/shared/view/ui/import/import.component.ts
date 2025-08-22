@@ -1,4 +1,4 @@
-import {Component, contentChild, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
+import {Component, contentChild, inject, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../../../../features/controls/form/upload.component';
 import {ButtonComponent} from '../layout/button.component';
@@ -15,6 +15,8 @@ import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
 import {PortalComponent} from '../layout/portal.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NotificationsService} from '../../../service/services';
+import {errorHandler} from '../../../helpers';
 
 @Component({
   selector: 'lg-import',
@@ -33,97 +35,97 @@ import {TranslatePipe} from '@ngx-translate/core';
     TranslatePipe
   ],
   template: `
-      <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
-          <lg-button [flat]="true"
-                     [size]="'small'"
-                     [style]="'warning'">
-              {{ label|translate }}
-          </lg-button>
-      </lg-upload>
+    <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
+      <lg-button [flat]="true"
+                 [size]="'small'"
+                 [style]="'warning'">
+        {{ label|translate }}
+      </lg-button>
+    </lg-upload>
 
-      <div #dialog>
-          <lg-dialog (onCancel)="onClose()"
-                     [cancelButtonText]="'close-label'|translate"
-                     [confirmButtonText]="'confirm-label'|translate"
-                     (onConfirm)="onConfirm()">
-              <lg-flex-column>
-                  @if (data$ | async;as data) {
-                      @if (analize$ | async;as duplicates) {
-                          <lg-flex-column [size]="'medium'">
-                              @for (row of data;track row.name + row.uuid;let i = $index) {
-                                  <lg-flex-column [size]="'small'">
+    <div #dialog>
+      <lg-dialog (onCancel)="onClose()"
+                 [cancelButtonText]="'close-label'|translate"
+                 [confirmButtonText]="'confirm-label'|translate"
+                 (onConfirm)="onConfirm()">
+        <lg-flex-column>
+          @if (data$ | async; as data) {
+            @if (analize$ | async; as duplicates) {
+              <lg-flex-column [size]="'medium'">
+                @for (row of data; track row.name + row.uuid; let i = $index) {
+                  <lg-flex-column [size]="'small'">
 
-                                      <div class="import-row"
-                                           [class.update]="rowsToUpdate[row.name]"
-                                           [class.add]="rowsToAdd[row.name]"
-                                           [class.disabled]="rowsToSkip[row.name]">
+                    <div class="import-row"
+                         [class.update]="rowsToUpdate[row.name]"
+                         [class.add]="rowsToAdd[row.name]"
+                         [class.disabled]="rowsToSkip[row.name]">
 
-                                          @if ((duplicates[row.uuid] || duplicates[row.name])) {
-                                              <input [(ngModel)]="rowsToUpdate[row.name]"
-                                                     [disabled]="rowsToSkip[row.name]"
-                                                     type="checkbox">
-                                              {{ 'update-label'|translate }}
-                                          } @else {
-                                              <input [(ngModel)]="rowsToAdd[row.name]"
-                                                     [disabled]="rowsToSkip[row.name]"
-                                                     checked
-                                                     type="checkbox">
-                                              {{ 'add-label'|translate }}
-                                          }
-
-                                          @if (rowTemplate()) {
-                                              <ng-container
-                                                      *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
-                                          }
-
-                                      </div>
-
-                                      @if ((duplicates[row.uuid] || duplicates[row.name])) {
-                                          <div class="import-row"
-                                               [ngClass]="rowsToSkip[row.name] ? 'skip' : 'duplicated'"
-                                               [class.disabled]="rowsToUpdate[row.name]"
-                                               [class.skip]="rowsToUpdate[row.name]"
-                                               style="margin-left: 16px">
-                                              <input [(ngModel)]="rowsToSkip[row.name]"
-                                                     [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
-                                                     type="checkbox">
-                                              <span>{{ (rowsToSkip[row.name] ? 'skip-label' : 'duplicates-label') | translate }}</span>
-                                              @if (rowTemplate()) {
-                                                  <ng-container
-                                                          *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
-                                              }
-                                          </div>
-                                      }
-                                  </lg-flex-column>
-                              }
-                          </lg-flex-column>
+                      @if ((duplicates[row.uuid] || duplicates[row.name])) {
+                        <input [(ngModel)]="rowsToUpdate[row.name]"
+                               [disabled]="rowsToSkip[row.name]"
+                               type="checkbox">
+                        {{ 'update-label'|translate }}
+                      } @else {
+                        <input [(ngModel)]="rowsToAdd[row.name]"
+                               [disabled]="rowsToSkip[row.name]"
+                               checked
+                               type="checkbox">
+                        {{ 'add-label'|translate }}
                       }
-                  }
 
-                  <lg-flex-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
-                      <input (change)="onSkipAllDuplicates()"
-                             [(ngModel)]="skipAllDuplicates"
-                             type="checkbox">
-                      <label>
-                          {{ 'skip-duplicates-label'|translate }}
-                      </label>
-                  </lg-flex-row>
+                      @if (rowTemplate()) {
+                        <ng-container
+                          *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
+                      }
 
-                  <lg-flex-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
-                      <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
-                             type="checkbox">
-                      <label>
-                          {{ 'replace-duplicates-label'|translate }}
-                      </label>
-                  </lg-flex-row>
+                    </div>
+
+                    @if ((duplicates[row.uuid] || duplicates[row.name])) {
+                      <div class="import-row"
+                           [ngClass]="rowsToSkip[row.name] ? 'skip' : 'duplicated'"
+                           [class.disabled]="rowsToUpdate[row.name]"
+                           [class.skip]="rowsToUpdate[row.name]"
+                           style="margin-left: 16px">
+                        <input [(ngModel)]="rowsToSkip[row.name]"
+                               [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
+                               type="checkbox">
+                        <span>{{ (rowsToSkip[row.name] ? 'skip-label' : 'duplicates-label') | translate }}</span>
+                        @if (rowTemplate()) {
+                          <ng-container
+                            *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
+                        }
+                      </div>
+                    }
+                  </lg-flex-column>
+                }
               </lg-flex-column>
-          </lg-dialog>
-      </div>
+            }
+          }
+
+          <lg-flex-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
+            <input (change)="onSkipAllDuplicates()"
+                   [(ngModel)]="skipAllDuplicates"
+                   type="checkbox">
+            <label>
+              {{ 'skip-duplicates-label'|translate }}
+            </label>
+          </lg-flex-row>
+
+          <lg-flex-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
+            <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
+                   type="checkbox">
+            <label>
+              {{ 'replace-duplicates-label'|translate }}
+            </label>
+          </lg-flex-row>
+        </lg-flex-column>
+      </lg-dialog>
+    </div>
 
 
-      <lg-portal [appendTarget]="'body'" [targetElement]="dialog">
+    <lg-portal [appendTarget]="'body'" [targetElement]="dialog">
 
-      </lg-portal>
+    </lg-portal>
   `,
   styles: [`
     .import-row {
@@ -257,6 +259,8 @@ export class ImportComponent {
     }
   }
 
+  private readonly _notificationsService = inject(NotificationsService);
+
   onSkipAllDuplicates() {
     if (this.skipAllDuplicates()) {
       this.parsedData.forEach((item) => {
@@ -274,32 +278,68 @@ export class ImportComponent {
     }
   }
 
-  onFileSelected(file: File[]) {
-    this.dialog.open();
-    this._csvReaderService.readFromJSONFile(file[0]).then(async (data) => {
-      for (const item of data) {
-        const dataValidated = this.schema()?.safeParse(item);
-        if (!dataValidated?.success) {
-          console.log('error', dataValidated?.error);
-          return;
-        }
+  async onFileSelected(file: File[]) {
+    try {
+      this.dialog.open();
+      const result = await this._csvReaderService.readFromJSONFile(file[0]);
+      for (const record of result) {
+        await this._validateData(record);
+
         if (!this.storeName()) {
           console.log('storeName is not set');
           return;
         }
-        this.dataSubject.next(item);
-        this.parsedData.push(dataValidated.data);
 
-        await this._analyzeDuplicates(dataValidated.data).then((data) => {
+        this.dataSubject.next(record);
+        this.parsedData.push(record);
+
+        await this._analyzeDuplicates(record).then((data) => {
           if (data.duplicate) {
             this.analizeSubject.next(data.data[0]);
           } else {
-            this.rowsToAdd[item.name] = true
+            this.rowsToAdd[record.name] = true
           }
         });
       }
+    } catch (e) {
+      this._notificationsService.error('Can not import data: ' + errorHandler(e));
+    }
+    // this._csvReaderService.readFromJSONFile(file[0]).then(async (data) => {
+    //   for (const record of data) {
+    //     console.log({record})
+    //     const dataValidated = this.schema()?.safeParse(record);
+    //     if (!dataValidated?.success) {
+    //       console.log('error', dataValidated?.error);
+    //       return;
+    //     }
+    //     if (!this.storeName()) {
+    //       console.log('storeName is not set');
+    //       return;
+    //     }
+    //     this.dataSubject.next(record);
+    //     this.parsedData.push(dataValidated.data);
+    //
+    //     await this._analyzeDuplicates(dataValidated.data).then((data) => {
+    //       if (data.duplicate) {
+    //         this.analizeSubject.next(data.data[0]);
+    //       } else {
+    //         this.rowsToAdd[record.name] = true
+    //       }
+    //     });
+    //   }
+    //
+    // });
+  }
 
-    });
+  private async _validateData(data:any) {
+    console.log({
+      schema: this.schema(),
+      data,
+    })
+    const dataValidated = await this.schema()?.safeParseAsync(data);
+    if (!dataValidated?.success) {
+      throw new Error(dataValidated?.error.toString());
+    }
   }
 
   private _analyzeDuplicates(

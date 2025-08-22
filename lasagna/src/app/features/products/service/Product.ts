@@ -17,6 +17,7 @@ export class Product {
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
       color?: string | undefined
+      system?: boolean
     }
   ) {
     this.update(props);
@@ -32,6 +33,7 @@ export class Product {
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
   color?: string | undefined;
+  system?: boolean = false;
 
   get ownColor() {
     if (isColorString(this.color || '')) {
@@ -67,6 +69,7 @@ export class Product {
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
       color: dto?.color,
+      system: dto?.system || false,
     });
   }
 
@@ -93,11 +96,14 @@ export class Product {
     this.price = dto.price ? Number(dto.price) : this.price;
     this.unit = dto.unit || this.unit;
     this.source = dto.source || this.source;
-    this.category_id = CategoryProduct.fromRaw(dto.category_id || '');
+    this.category_id = dto.category_id
+      ? CategoryProduct.fromRaw(dto.category_id || '')
+      : this.category_id;
     this.uuid = dto.uuid || this.uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
+    this.system = dto.system !== undefined ? dto.system : this.system;
     return this as Product;
   }
 
@@ -113,6 +119,7 @@ export class Product {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       color: this.color || estimateColor(this.name),
+      system: this.system || false,
     };
   }
 }

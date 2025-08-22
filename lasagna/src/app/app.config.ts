@@ -49,6 +49,7 @@ import {SortStrategy} from './shared/service/types/sorting.types';
 import localeRu from '@angular/common/locales/ru';
 import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
+import {setupDefaultsInitializer} from './features/setup-defaults/setup-defaults.initializer';
 
 registerLocaleData(localeRu, 'ru-RU');
 registerLocaleData(localePt, 'pt-PT');
@@ -70,6 +71,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideAppInitializer(appInitializer),
     provideAppInitializer(supportInitializer),
+    provideAppInitializer(setupDefaultsInitializer),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'

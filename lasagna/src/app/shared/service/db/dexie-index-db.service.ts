@@ -112,17 +112,9 @@ export class DexieIndexDbService extends Dexie {
         this.indexLogger.log(`Found ${data.length} items in table: ${table}`, {data: data.slice(0, 2)});
 
         if (data.length > 0) {
-          const transformedData = this.indexHandlersManager.transformData(table, data);
+          await this._addBalkIndexWithTransform(table as Stores, data);
 
-          for (const item of transformedData.data) {
-            await this.flexsearchIndexService.addToIndex(table, item);
-          }
-
-          this.indexLogger.log(`Indexed ${transformedData.data.length} items for ${table}`, {
-            handler: transformedData.handlerName
-          });
-
-          if (transformedData.data.length > 0) {
+          if (data.length > 0) {
             try {
               await this.saveIndex(table);
             } catch (error) {
@@ -161,7 +153,7 @@ export class DexieIndexDbService extends Dexie {
           };
           await this.replaceData(Stores.INDICES, table, newData);
 
-          this.indexLogger.log(table, 'Index data saved successfully',{newData});
+          this.indexLogger.log(table, 'Index data saved successfully', {newData});
         } else {
           this.indexLogger.warn(table, 'No data to save for index');
           // Удаляем запись индекса, если данных нет
@@ -273,7 +265,7 @@ export class DexieIndexDbService extends Dexie {
       if (storeKey === Stores.INDICES) {
         return uuid;
       }
-      await this.flexsearchIndexService.addToIndex(storeKey, obj);
+      await this._addBalkIndexWithTransform(storeKey, [obj]);
       // Сохраняем индекс только если есть данные
       try {
         await this.saveIndex(storeKey);
@@ -293,7 +285,8 @@ export class DexieIndexDbService extends Dexie {
     if (storeKey === Stores.INDICES) {
       return;
     }
-    await this.flexsearchIndexService.addToIndex(storeKey, obj);
+    await this._addBalkIndexWithTransform(storeKey, [obj]);
+
     // Сохраняем индекс только если есть данные
     try {
       await this.saveIndex(storeKey);
@@ -313,9 +306,7 @@ export class DexieIndexDbService extends Dexie {
     if (storeKey === Stores.INDICES) {
       return;
     }
-    for (const value of valuesWithUuid) {
-      await this.flexsearchIndexService.addToIndex(storeKey, value);
-    }
+    await this._addBalkIndexWithTransform(storeKey, valuesWithUuid);
     // Сохраняем индекс только если есть данные
     if (valuesWithUuid.length > 0) {
       try {
@@ -413,9 +404,7 @@ export class DexieIndexDbService extends Dexie {
     }
 
     this.logger.log(`Adding ${valuesWithUuid.length} items to index for ${storeKey}`);
-    for (const value of valuesWithUuid) {
-      await this.flexsearchIndexService.addToIndex(storeKey, value);
-    }
+    await this._addBalkIndexWithTransform(storeKey, valuesWithUuid);
     // Сохраняем индекс только если есть данные
     if (valuesWithUuid.length > 0) {
       try {
@@ -458,6 +447,14 @@ export class DexieIndexDbService extends Dexie {
 
   async flushCache(): Promise<void> {
     await this.clear(Stores.INDICES);
+  }
+
+  private async _addBalkIndexWithTransform(storeKey: Stores, data: any[]) {
+    const transformedItem = this.indexHandlersManager.transformData(storeKey, data);
+
+    for (const item of transformedItem.data) {
+      await this.flexsearchIndexService.addToIndex(storeKey, item);
+    }
   }
 
   private async _collectRelations(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {

@@ -52,47 +52,7 @@ export class CategoryProductsRepository {
     return this._indexDbService.remove(Stores.PRODUCTS_CATEGORIES, uuid);
   }
 
-  async preloadCategories() {
-    const categoriesInstalled = localStorage.getItem('categoriesInstalled');
-    if (categoriesInstalled) {
-      return;
-    }
-    const categories = await this.getAll();
-    if (categories.length === 0) {
-      const defaultCategories = [
-        "creams-fillings",
-        "glazes-coatings",
-        "syrups-soaking",
-        "fruit-berry",
-        "nuts-seeds",
-        "chocolate-cocoa",
-        "flour-starches",
-        "sweeteners",
-        "fats-oils",
-        "eggs-egg-products",
-        "dairy",
-        "flavors-spices",
-        "leavening-stabilizers",
-        "gelling-agents",
-        "decorations",
-        "baking-forms",
-        "confectionery-additives",
-        "gluten-free",
-        "vegan-alternatives",
-        "dietary-low-calorie",
-        "frozen-semi-finished",
-        "beverages-liqueurs",
-        "vegetables",
-        "pasta",
-        "salt"
-      ].map((name) => CategoryProduct.fromRaw({
-        uuid: name,
-        name,
-        system: true,
-      }).toDTO());
-      await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
-      localStorage.setItem('categoriesInstalled', 'true');
-    }
+  getLength() {
+    return this._indexDbService.getLength(Stores.PRODUCTS_CATEGORIES);
   }
-
 }
