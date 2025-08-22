@@ -134,11 +134,12 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
       </ng-container>
 
       @if (taxesAndFees().length) {
-        <lg-flex-row>
+        <lg-flex-row [mobileMode]="true"
+                     [top]="true"
+                     size="medium">
           <lg-button (click)="saveTaxes()"
                      [disabled]="!taxesForm.dirty"
                      [style]="'success'"
-                     lgSelfCenter
                      lgShrink>
             @if (taxesForm.dirty) {
               {{ 'settings.taxes.save-changes' | translate }}
@@ -149,7 +150,6 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
 
           <lg-button (click)="addTaxRow()"
                      [style]="'warning'"
-                     lgSelfCenter
                      lgShrink>
             {{ 'settings.taxes.add-tax' | translate }}
           </lg-button>

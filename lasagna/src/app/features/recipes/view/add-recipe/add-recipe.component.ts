@@ -25,7 +25,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 
 
 @Component({
-  selector: 'app-add-recipe',
+  selector: 'lg-add-recipe',
   standalone: true,
   imports: [
     ContainerComponent,
@@ -58,7 +58,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-flex-row [mobileMode]="true" [center]="true">
               <lg-title lgSelfStart>
-                <span class="text-active">{{ recipe()?.name }}</span>
+                {{ recipe()?.name }}
               </lg-title>
             </lg-flex-row>
 
@@ -67,7 +67,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
                 <lg-button [flat]="true"
                            [link]="'/recipes/calculate/' + recipe()?.uuid"
                            [size]="'small'"
-                           [style]="'primary'">
+                           [style]="'success'">
                   {{ 'recipe.calculate-btn'|translate }}
                 </lg-button>
               </ng-template>

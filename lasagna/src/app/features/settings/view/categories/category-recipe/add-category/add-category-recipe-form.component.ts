@@ -17,36 +17,36 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-add-category-recipe-form',
   standalone: true,
   template: `
-      <form [formGroup]="form">
-          <lg-flex-row [bottom]="true" [mobileMode]="true">
-              <lg-control [label]="'settings.category.name' | translate" lgExpand>
-                  <lg-input (onEnter)="onEnter()"
-                            [placeholder]="'settings.category.placeholder' | translate"
-                            formControlName="name"></lg-input>
-              </lg-control>
+    <form [formGroup]="form">
+      <lg-flex-row [bottom]="true" [mobileMode]="true">
+        <lg-control [label]="'settings.category.name' | translate" lgExpand>
+          <lg-input (onEnter)="onEnter()"
+                    [placeholder]="'settings.category.placeholder' | translate"
+                    formControlName="name"></lg-input>
+        </lg-control>
 
-              <div lgNoWrap>
-                  @if (uuid()) {
-                      <lg-button [disabled]="!form.dirty"
-                                 (click)="editCategory()">
-                          @if (form.dirty) {
-                              {{ 'settings.category.save' | translate }}
-                          } @else {
-                              {{ 'settings.category.no-changes' | translate }}
-                          }
-                      </lg-button>
-                  } @else {
-                      <lg-button [disabled]="!form.dirty" (click)="addCategory()">
-                          @if (form.dirty) {
-                              {{ 'settings.category.add' | translate }}
-                          } @else {
-                              {{ 'settings.category.enter-name' | translate }}
-                          }
-                      </lg-button>
-                  }
-              </div>
-          </lg-flex-row>
-      </form>
+        <div lgNoWrap>
+          @if (uuid()) {
+            <lg-button [disabled]="!form.dirty"
+                       (click)="editCategory()">
+              @if (form.dirty) {
+                {{ 'settings.category.save' | translate }}
+              } @else {
+                {{ 'settings.category.no-changes' | translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button [disabled]="!form.dirty" (click)="addCategory()">
+              @if (form.dirty) {
+                {{ 'settings.category.add' | translate }}
+              } @else {
+                {{ 'settings.category.enter-name' | translate }}
+              }
+            </lg-button>
+          }
+        </div>
+      </lg-flex-row>
+    </form>
   `,
   imports: [
     ReactiveFormsModule,

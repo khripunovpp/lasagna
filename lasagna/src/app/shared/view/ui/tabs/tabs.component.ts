@@ -8,7 +8,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import {NgTemplateOutlet} from '@angular/common';
+import {JsonPipe, NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {FlexColumnComponent} from '../layout/flex-column.component';
 
@@ -21,10 +21,12 @@ import {Router} from '@angular/router';
   imports: [
     NgTemplateOutlet,
     FlexColumnComponent,
-    ],
+    JsonPipe,
+  ],
   template: `
       <div [attr.aria-label]="'Tabs'"
            [attr.role]="'tablist'"
+           [class.scrollable]="scrollable()"
            [class.flat]="flat()"
            class="tabs">
           <div class="tabs__labels">
@@ -59,12 +61,22 @@ import {Router} from '@angular/router';
 
     .tabs.flat {
       gap: 12px;
+      margin: -2px;
+    }
+
+    .tabs.scrollable .tabs__labels {
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
     .tabs.flat .tabs__labels {
       border-radius: 0;
       border-bottom: none;
-      padding: 0;
+      padding: 2px;
       background-color: transparent;
     }
 
@@ -83,21 +95,15 @@ import {Router} from '@angular/router';
       gap: 8px;
       padding: 16px;
       background-color: var(--tabs-labels-bg);
-      border-bottom: 2px solid var(--tabs-labels-border);
-      overflow-x: auto;
-      white-space: nowrap;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      overscroll-behavior-x: contain;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 12px 12px 0 0;
+
+      border-radius: 32px 32px 0 0;
     }
 
     .tabs__labels button {
       background: var(--tabs-label-bg);
       border: none;
-      border-radius: 12px;
-      padding: 0.5rem 1rem;
+      border-radius: 16px;
+      padding: 12px;
       cursor: pointer;
       font-size: 1rem;
       transition: background-color 0.3s ease;
@@ -116,17 +122,16 @@ import {Router} from '@angular/router';
     }
 
     .tabs__labels button.active {
-      background-color: var(--accent-color);
+      background-color: var(--tabs-label-active-bg);
       color: var(--tabs-label-active-text);
     }
 
     .tabs__body {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding: 24px 16px;
+      padding: 16px;
       background-color: var(--tabs-body-bg);
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 32px 32px;
     }
 
     .tabs__body > * {
@@ -142,6 +147,7 @@ export class TabsComponent implements AfterContentInit {
   readonly tabs = signal<TabDirective[]>([]);
   readonly flat = input(false)
   readonly silent = input(false)
+  readonly scrollable = input(true)
   readonly activated = signal<boolean[]>([]);
   readonly selectedIndex = signal(0);
   readonly tabQuery = injectQueryParams('tab');

@@ -136,11 +136,12 @@ import {TranslatePipe} from '@ngx-translate/core';
       </ng-container>
 
       @if (credentials().length) {
-        <lg-flex-row>
+        <lg-flex-row [mobileMode]="true"
+                     [top]="true"
+                     size="medium">
           <lg-button (click)="save()"
                      [disabled]="!form.dirty"
                      [style]="'success'"
-                     lgSelfCenter
                      lgShrink>
             @if (form.dirty) {
               {{ 'settings.credentials.save-changes'|translate }}
@@ -151,7 +152,6 @@ import {TranslatePipe} from '@ngx-translate/core';
 
           <lg-button (click)="addRow()"
                      [style]="'warning'"
-                     lgSelfCenter
                      lgShrink>
             {{ 'settings.credentials.add-row'|translate }}
           </lg-button>

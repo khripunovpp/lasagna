@@ -28,7 +28,7 @@ interface OnboardingStep {
   template: `
     @if (!allDone()) {
       <section class="onboarding">
-        <lg-flex-column>
+        <lg-flex-column size="medium">
           <lg-title [level]="4">{{ 'onboarding.title' | translate }}</lg-title>
 
           <p class="no-margin">
@@ -44,9 +44,17 @@ interface OnboardingStep {
                   <span class="onboarding__step-label">{{ step.label | translate }}</span>
                   <span class="onboarding__step-desc">{{ step.description | translate }}</span>
                 </div>
-                <lg-button [disabled]="!step.done && !isCurrentStep(step)"
-                          (onClick)="step.action()">
-                  {{ step.done ? ('onboarding.done' | translate) : (isCurrentStep(step) ? ('onboarding.go' | translate) : ('onboarding.unavailable' | translate)) }}
+
+                <lg-button [disabled]="step.done || !isCurrentStep(step)"
+                           [style]="step.done ? 'secondary' : 'default'"
+                           (onClick)="step.action()">
+                  @if (step.done) {
+                    {{ 'onboarding.done' | translate }}
+                  } @else if (isCurrentStep(step)) {
+                    {{ 'onboarding.go' | translate }}
+                  } @else {
+                    {{ 'onboarding.unavailable' | translate }}
+                  }
                 </lg-button>
               </div>
             }
@@ -60,19 +68,14 @@ interface OnboardingStep {
       display: block;
     }
 
-    .onboarding {
-      --onboarding-bg: var(--color-bg, var(--onboarding-bg));
-      --onboarding-border: var(--color-border, var(--onboarding-border));
-    }
-
     .onboarding__step {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      background: var(--color-bg-secondary, var(--onboarding-bg-secondary));
-      border-radius: 0.5rem;
-      padding: 1rem;
+      background: var(--onboarding-bg);
+      border-radius: 16px;
+      padding: 16px;
       border: 1px solid var(--onboarding-border);
       transition: background 0.2s;
 
@@ -86,29 +89,29 @@ interface OnboardingStep {
     }
 
     .onboarding__step--done {
-      background: var(--color-success-bg, var(--onboarding-success-bg));
-      opacity: 0.7;
+      background: var(--onboarding-success-bg);
+
+      .onboarding__step-content {
+        opacity: 0.5;
+      }
     }
 
-    .onboarding__step--disabled {
-      background: var(--color-bg-disabled, var(--onboarding-bg-disabled));
+    .onboarding__step--disabled .onboarding__step-content {
       opacity: 0.5;
     }
 
     .onboarding__step-content {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 4px;
     }
 
     .onboarding__step-label {
       font-weight: 600;
-      font-size: 1.1rem;
     }
 
     .onboarding__step-desc {
-      font-size: 0.95rem;
-      color: var(--color-text-secondary, var(--onboarding-text-secondary));
+      color: var(--onboarding-text);
     }
     `
   ]

@@ -1,37 +1,77 @@
 @use '@angular/material' as mat;
 @import "@ng-select/ng-select/themes/default.theme.css";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./theme-vars";
 
 :root {
+  // MAIN PALETTE
+  --p-1: #070F03;
+  --p-2: #F9F0E8;
+  --p-3: #EF4529;
+  --p-4: #F0B0F8;
+  --p-5: #02B170;
+  --p-6: #D6FF65;
+
+  // EXTENDED PALETTE
+  --danger-color: #ff4d4f;
+  --warning-color: #faad14;
+  --info-color: #1890ff;
+  --success-color: #4caf50;
+
+  --secondary-color: #928785;
+  --secondary-light-color: #f9f9f9;
+
+  // MAIN
   --text-font: 'Rubik', "Helvetica Neue", system-ui, Arial, sans-serif;
   --text-font-weight: 400;
   --container-width: 1180px;
   --header-height: 51px;
-
   --bounce-bezier: cubic-bezier(.47, 1.64, .41, .8);
+
+  --background-color: var(--p-2);
+  --text-color: var(--p-1);
+
+  --active-color: var(--p-5);
+  --accent-color: var(--p-3);
+
+  // BUTTONS
+  --button-default-bg: var(--p-4);
+  --button-primary-bg: var(--p-5);
+  --button-secondary-bg: var(--secondary-light-color);
+
+  --button-success-bg: var(--success-color);
+  --button-danger-bg: var(--danger-color);
+
+  // ONBOARDING
+  --onboarding-text: var(--p-1);
+  --onboarding-bg: var(--secondary-light-color);
+  --onboarding-success-bg: var(--p-4);
+
+  // TABS
+  --tabs-labels-bg: var(--p-1);
+  --tabs-label-bg:var(--secondary-light-color);
+  --tabs-label-active-bg: var(--p-4);
+  --tabs-label-active-text: var(--p-1);
+
+  --tabs-label-hover-bg: #f0f0f0;
+  --tabs-label-focus: #007bff;
+  --tabs-body-bg: #fff;
+
+  // CONTROLS
+
+  --control-bg: var(--secondary-light-color);
+  --control-bg-selected: #c4e2ea;
+
+  // OTHER
 
   --text-color-inverse: #f5f5f5;
   --accent-sahde-color: #eed2f0;
-  --control-bg: #f8faf4;
-  --control-bg-selected: #c4e2ea;
   --placeholder: #7a7c89;
   --card-bg: #fff;
-  --secondary-color: #5e6282;
 
-  --accent-color: #abc270;
   --accent-light-color: #d0e4b7;
-  --button-default-bg: #fec868;
-  --background-color: rgba(171, 194, 112, 0.2);
-  --active-color: #fda769;
 
   --focus-shadow: 0 0 0 2px var(--active-color);
-  --text-color: #473C33;
-  --button-primary-bg: #28a63c;
-  --button-secondary-bg: #fafafa;
-  --button-success-bg: #1a8c50;
   --button-success-text: #fff8fa;
-  --button-danger-bg: #ee3333;
   --button-danger-text: #fff8fa;
   --button-warning-bg: #ec7b1c;
   --button-info-bg: #2531c2;
@@ -45,12 +85,6 @@
   --text-success: #4caf50;
   --text-danger: #f44336;
   --text-info: #2196f3;
-  --onboarding-bg: #fff;
-  --onboarding-border: #e0e0e0;
-  --onboarding-bg-secondary: #f9f9f9;
-  --onboarding-success-bg: #e6ffe6;
-  --onboarding-bg-disabled: #f0f0f0;
-  --onboarding-text-secondary: #888;
   --card-bg-draft: #bee5ff;
   --category-orange: #e67e22;
   --category-purple: #8e44ad;
@@ -90,13 +124,6 @@
   --jelly-widget-red: #ff8080;
   --chip-blue: #007bff;
   --chip-blue-dark: #0056b3;
-  --tabs-labels-bg: #eed2f0;
-  --tabs-labels-border: #ecc9ee;
-  --tabs-label-bg: #fff;
-  --tabs-label-hover-bg: #f0f0f0;
-  --tabs-label-focus: #007bff;
-  --tabs-label-active-text: #fff;
-  --tabs-body-bg: #fff;
 
   --cookie-noty-bg-color: #f8f9fa;
   --cookie-noty-text-color: #212529;
