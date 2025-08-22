@@ -92,7 +92,8 @@ export class Invoice {
   }
 
   get daysLeft(): number {
-    if (!this.date_due){
+    if (!this.date_due
+      || this.state === InvoiceState.draft) {
       return 0;
     }
 
@@ -100,7 +101,18 @@ export class Invoice {
   }
 
   get overdue(): boolean {
+    if (this.state !== InvoiceState.issued) {
+      return false;
+    }
     return this.daysLeft < 0;
+  }
+
+  get issued(): boolean {
+    return this.state === InvoiceState.issued;
+  }
+
+  get cancelled(): boolean {
+    return this.state === InvoiceState.cancelled;
   }
 
   static fromRaw(
