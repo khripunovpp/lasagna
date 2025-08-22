@@ -21,17 +21,17 @@ import {TranslatePipe} from '@ngx-translate/core';
     TranslatePipe
   ],
   template: `
-      <lg-fade-in>
-          <lg-container>
-              <lg-flex-row [center]="true">
-                  <lg-title>{{ uuid() ? ('categories.edit-recipe' | translate) : ('categories.add-recipe' | translate) }}</lg-title>
-              </lg-flex-row>
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-row [center]="true">
+          <lg-title>{{ uuid() ? ('categories.edit-recipe' | translate) : ('categories.add-recipe' | translate) }}</lg-title>
+        </lg-flex-row>
 
-              <lg-card>
-                  <lg-add-category-recipe-form [uuid]="uuid()"></lg-add-category-recipe-form>
-              </lg-card>
-          </lg-container>
-      </lg-fade-in>
+        <lg-card>
+          <lg-add-category-recipe-form [uuid]="uuid()"></lg-add-category-recipe-form>
+        </lg-card>
+      </lg-container>
+    </lg-fade-in>
   `,
   styles: [
     `

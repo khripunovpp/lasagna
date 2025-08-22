@@ -13,7 +13,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 @Component({
   selector: 'lg-last-edited-recipes',
   template: `
-      <lg-flex-column>
+      <lg-flex-column size="medium">
           <lg-title [level]="4">{{ 'main.last-recipes'|translate }}</lg-title>
 
           <lg-flex-column [size]="'medium'">

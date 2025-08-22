@@ -11,7 +11,9 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-credentials-settings',
   standalone: true,
   template: `
-      <lg-tabs [flat]="true" [silent]="true">
+      <lg-tabs [flat]="true"
+               [scrollable]="false"
+               [silent]="true">
           <ng-template alias="system" [label]="'settings.credentials.system' | translate" lgTab>
               <lg-create-credential [type]="CredentialsType.system"></lg-create-credential>
           </ng-template>

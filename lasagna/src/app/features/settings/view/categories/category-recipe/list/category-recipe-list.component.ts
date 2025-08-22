@@ -11,52 +11,50 @@ import {NotificationsService} from '../../../../../../shared/service/services';
 import {CategoryRecipesRepository} from '../../../../../../shared/service/repositories';
 import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ExpandDirective} from '../../../../../../shared/view/directives/expand.directive';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'lg-category-recipe-list',
   standalone: true,
   template: `
-      <lg-fade-in>
-          <lg-container>
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-row [center]="true">
+          <lg-title>
+            {{ 'categories.recipes.title' | translate }}
+          </lg-title>
+
+          <lg-button [flat]="true"
+                     [link]="'/settings/categories/recipes/add'"
+                     [size]="'small'"
+                     [style]="'primary'">
+            {{ 'add-label' | translate }}
+          </lg-button>
+        </lg-flex-row>
+
+        <lg-card-list>
+          @for (category of categories(); track $index; let i = $index) {
+            <ng-template lgCardListItem>
               <lg-flex-row [center]="true">
-                  <lg-title>
-                      {{ 'categories.recipes.title' | translate }}
-                  </lg-title>
+                <a [routerLink]="'/settings/categories/recipes/edit/' + category.uuid"
+                   lgExpand>
+                  {{ category.name }}
+                </a>
 
-                  <lg-button [flat]="true"
-                             [link]="'/settings/categories/recipes/add'"
-                             [size]="'small'"
-                             [style]="'primary'">
-                      {{ 'add-label' | translate }}
-                  </lg-button>
+                <lg-button [style]="'danger'"
+                           [size]="'tiny'"
+                           [icon]="true"
+                           (click)="deleteCategory(category)">
+                  <mat-icon aria-hidden="false" aria-label="Delete"
+                            fontIcon="close"></mat-icon>
+                </lg-button>
               </lg-flex-row>
-
-              <lg-card-list>
-                  @for (category of categories();track $index;let i = $index) {
-                      <ng-template lgCardListItem>
-                          <lg-flex-row [center]="true">
-                              <div class="expand">
-                                  {{ category.name }}
-                              </div>
-                              <lg-button [style]="'primary'"
-                                         [size]="'small'"
-                                         [link]="'/settings/categories/recipes/edit/' + category.uuid"
-                                         [flat]="true">
-                                  {{ 'edit-label' | translate }}
-                              </lg-button>
-                              <lg-button [style]="'danger'"
-                                         [size]="'tiny'"
-                                         [icon]="true"
-                                         (click)="deleteCategory(category)">
-                                  <mat-icon aria-hidden="false" aria-label="Delete"
-                                            fontIcon="close"></mat-icon>
-                              </lg-button>
-                          </lg-flex-row>
-                      </ng-template>
-                  }
-              </lg-card-list>
-          </lg-container>
-      </lg-fade-in>
+            </ng-template>
+          }
+        </lg-card-list>
+      </lg-container>
+    </lg-fade-in>
   `,
   imports: [
     FlexRowComponent,
@@ -67,7 +65,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     CardListComponent,
     CardListItemDirective,
     FadeInComponent,
-    TranslatePipe
+    TranslatePipe,
+    ExpandDirective,
+    RouterLink
   ],
   styles: [
     `:host {

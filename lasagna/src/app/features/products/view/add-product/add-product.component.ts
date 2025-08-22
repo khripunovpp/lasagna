@@ -29,7 +29,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 
 @Component({
-  selector: 'app-add-recipe',
+  selector: 'lg-add-product',
   standalone: true,
   imports: [
     ContainerComponent,
