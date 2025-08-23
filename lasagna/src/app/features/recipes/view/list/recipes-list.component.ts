@@ -116,8 +116,7 @@ import {JsonPipe} from '@angular/common';
             {{ 'recipes.empty-state.text'|translate }}
 
             <lg-button [link]="'/recipes/add'"
-                       [size]="'medium'"
-                       [style]="'success'">
+                       [size]="'medium'">
               {{ 'recipes.empty-state.btn'|translate }}
             </lg-button>
           </lg-flex-column>

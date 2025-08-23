@@ -172,7 +172,7 @@ import {FadeInComponent} from '../fade-in.component';
     }
 
     .lg-header__link.route-active {
-      background-color: var(--accent-color);
+      background-color: var(--header-active-bg);
       color: #fff;
     }
 
@@ -195,7 +195,7 @@ import {FadeInComponent} from '../fade-in.component';
     }
 
     .lg-header__icon.route-active {
-      background-color: var(--accent-color);
+      background-color: var(--header-active-bg);
       color: #fff;
     }
   `],

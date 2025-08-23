@@ -101,7 +101,7 @@ import {Router} from '@angular/router';
 
     .tabs__labels button {
       background: var(--tabs-label-bg);
-      border: none;
+      border: 1px solid transparent;
       border-radius: 16px;
       padding: 12px;
       cursor: pointer;
@@ -123,6 +123,16 @@ import {Router} from '@angular/router';
 
     .tabs__labels button.active {
       background-color: var(--tabs-label-active-bg);
+      color: var(--tabs-label-active-text);
+    }
+
+    .tabs.flat .tabs__labels button:not(.active) {
+      background-color: transparent;
+      color: var(--tabs-label-active-text);
+    }
+    .tabs.flat .tabs__labels button.active {
+      background-color: #fff;
+      border-color: var(--tabs-label-active-bg);
       color: var(--tabs-label-active-text);
     }
 

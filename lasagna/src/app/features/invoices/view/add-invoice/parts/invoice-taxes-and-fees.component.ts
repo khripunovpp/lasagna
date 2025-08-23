@@ -119,11 +119,12 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
       @if (canBeUpdated) {
         <lg-button (onClick)="open()"
                    [size]="'small'"
-                   [style]="'success'">
-          {{ 'invoices.add-tax-or-fee' | translate }}
+                   [outlined]="true"
+                   [style]="'default'">
           <mat-icon [inline]="true"
                     aria-hidden="false"
                     fontIcon="add"></mat-icon>
+          {{ 'invoices.add-tax-or-fee' | translate }}
         </lg-button>
       }
     </lg-flex-column>

@@ -125,8 +125,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
             {{ 'products.empty-state.text'|translate }}
 
             <lg-button [link]="'/products/add'"
-                       [size]="'medium'"
-                       [style]="'success'">
+                       [size]="'medium'">
               {{ 'products.empty-state.btn'|translate }}
             </lg-button>
           </lg-flex-column>

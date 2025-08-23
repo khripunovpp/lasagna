@@ -126,8 +126,7 @@ import {TranslatePipe} from '@ngx-translate/core';
               {{ 'settings.credentials.empty-state.text'|translate }}
 
               <lg-button [size]="'medium'"
-                         (click)="addRow()"
-                         [style]="'success'">
+                         (click)="addRow()">
                 {{ 'settings.credentials.empty-state.btn'|translate }}
               </lg-button>
             </lg-flex-column>
@@ -141,7 +140,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                      size="medium">
           <lg-button (click)="save()"
                      [disabled]="!form.dirty"
-                     [style]="'success'"
+                     [style]="'primary'"
                      lgShrink>
             @if (form.dirty) {
               {{ 'settings.credentials.save-changes'|translate }}
@@ -151,8 +150,9 @@ import {TranslatePipe} from '@ngx-translate/core';
           </lg-button>
 
           <lg-button (click)="addRow()"
-                     [style]="'warning'"
+                     [style]="'secondary'"
                      lgShrink>
+            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
             {{ 'settings.credentials.add-row'|translate }}
           </lg-button>
         </lg-flex-row>

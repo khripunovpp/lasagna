@@ -226,8 +226,7 @@
           {{ 'recipe.calculation.empty-state.text' | translate }}
 
           <lg-button [size]="'medium'"
-                     [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
-                     [style]="'success'">
+                     [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid">
             {{ 'recipe.calculation.empty-state.btn' | translate }}
           </lg-button>
         </lg-flex-column>

@@ -28,6 +28,7 @@ import {TranslatePipe} from '@ngx-translate/core';
         <div lgNoWrap>
           @if (uuid()) {
             <lg-button [disabled]="!form.dirty"
+                       [style]="'primary'"
                        (click)="editCategory()">
               @if (form.dirty) {
                 {{ 'settings.category.save' | translate }}
@@ -36,7 +37,9 @@ import {TranslatePipe} from '@ngx-translate/core';
               }
             </lg-button>
           } @else {
-            <lg-button [disabled]="!form.dirty" (click)="addCategory()">
+            <lg-button [disabled]="!form.dirty"
+                       [style]="'primary'"
+                       (click)="addCategory()">
               @if (form.dirty) {
                 {{ 'settings.category.add' | translate }}
               } @else {
