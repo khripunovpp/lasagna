@@ -180,7 +180,6 @@ export class InvoiceBuilderService {
     index: number,
     recipe: Recipe
   ): Promise<InvoiceItemBase | undefined> {
-
     const dbRecipe = await this._recipesRepository.getOne(recipe.uuid, true);
     if (!dbRecipe) {
       this._builderLogger.error(`Recipe with UUID ${recipe.uuid} not found in database.`);

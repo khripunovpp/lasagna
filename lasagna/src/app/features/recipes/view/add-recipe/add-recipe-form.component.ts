@@ -36,8 +36,7 @@ import {TagsControlComponent} from '../../../controls/form/tags-control.componen
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
 import {ControlComponent} from "../../../controls/form/control-item/control.component";
 import {UnitValue} from '../../../../shared/view/const/units.const';
-import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
-import {JsonPipe} from '@angular/common';
+import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/entity-item-selector.component';
 
 
 @Component({
@@ -66,8 +65,7 @@ import {JsonPipe} from '@angular/common';
     TagsControlComponent,
     FlexRowComponent,
     ControlComponent,
-    ControlTemplateDirective,
-    JsonPipe
+    EntityItemSelectorComponent
   ],
   providers: [
     {
@@ -184,13 +182,21 @@ export class AddRecipeFormComponent
     }
   }
 
+  private _getLastRowType(): string {
+    if (!this.form) return 'product';
+    const lastRow = this.ingredients.at(this.ingredients.length - 1);
+    if (lastRow && lastRow.value) {
+      return lastRow.value.active_tab;
+    }
+    return 'recipe';
+  }
+
   ngOnInit() {
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
       debounceTime(100),
     ).subscribe({
       next: values => {
-        console.log('form values', values);
         if (!this.form.dirty) {
           return
         }
@@ -293,11 +299,20 @@ export class AddRecipeFormComponent
   private _getIngredientGroup(
     ingredient?: Recipe['ingredients'][number]
   ) {
+    let active_tab = this._getLastRowType();
+
+    if (ingredient?.recipe_id) {
+      active_tab = 'recipe';
+    } else if (ingredient?.product_id) {
+      active_tab = 'product';
+    }
+
     return new FormGroup({
       name: new FormControl(ingredient?.name),
       amount: new FormControl(ingredient?.amount?.toString() ?? null),
       product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
       recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
+      active_tab: new FormControl(active_tab),
       unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
     }, (group) => {
       const ingredient = Ingredient.fromRaw(group.value);
