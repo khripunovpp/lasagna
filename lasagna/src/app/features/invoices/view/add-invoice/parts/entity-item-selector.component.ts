@@ -1,28 +1,27 @@
 import {Component, effect, forwardRef, Input, output, signal, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {InvoiceItemType} from '../../../service/InvoiceItem/InvoiceItem.types';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'lg-invoice-item-selector',
+  selector: 'lg-entity-item-selector',
   standalone: true,
   template: `
-    <div class="invoice-item-selector">
-      <div class="invoice-item-selector__tabs">
+    <div class="entity-item-selector">
+      <div class="entity-item-selector__tabs">
         @for (item of items(); track item.slug; let last = $last, first = $first, index = $index) {
-          <button class="invoice-item-selector__tab"
+          <button class="entity-item-selector__tab"
                   [class.active]="activeIndex() === index"
                   (click)="onClickItem(item, index)">
             {{ item.title | translate }}
           </button>
         }
       </div>
-      <div class="invoice-item-selector__body">
+      <div class="entity-item-selector__body">
         @for (item of items(); track item.slug; let last = $last, first = $first, index = $index) {
-          <div class="invoice-item-selector__part"
+          <div class="entity-item-selector__part"
                (click)="onClickItem(item, index)"
                [class.active]="activeIndex() === index">
-            <div class="invoice-item-selector__control">
+            <div class="entity-item-selector__control">
               @if (item.slug === 'custom') {
                 <ng-content select="freeStyle"></ng-content>
               }
@@ -40,7 +39,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   `,
   styles: [
     `
-      .invoice-item-selector {
+      .entity-item-selector {
         display: flex;
         flex-direction: column;
         position: relative;
@@ -104,7 +103,7 @@ import {TranslatePipe} from '@ngx-translate/core';
         &__part,
         &__tab {
           &:nth-child(1) {
-            --part-color: rgba(248, 157, 150, var(--part-color-opacity, 0.5));
+            --part-color: rgba(105, 185, 255, var(--part-color-opacity, 0.5));
           }
 
           &:nth-child(2) {
@@ -123,7 +122,7 @@ import {TranslatePipe} from '@ngx-translate/core';
             flex: 1;
 
 
-            .invoice-item-selector__control {
+            .entity-item-selector__control {
               display: block;
             }
           }
@@ -136,34 +135,30 @@ import {TranslatePipe} from '@ngx-translate/core';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InvoiceItemSelectorComponent),
+      useExisting: forwardRef(() => EntityItemSelectorComponent),
       multi: true
     }
   ]
 })
-export class InvoiceItemSelectorComponent
+export class EntityItemSelectorComponent
   implements ControlValueAccessor {
   @Input() flat = false;
   items = signal<{
-    slug: InvoiceItemType
+    slug: string
     title: string
   }[]>([
     {
-      slug: InvoiceItemType.Recipe,
-      title: 'invoices.item-selector.recipe',
+      slug: 'recipe',
+      title: 'entity-item.selector.recipe',
     },
     {
-      slug: InvoiceItemType.Product,
-      title: 'invoices.item-selector.product',
+      slug: 'product',
+      title: 'entity-item.selector.product',
     },
-    // {
-    //   slug: InvoiceItemType.Custom,
-    //   title: 'Free style',
-    // }
   ]);
   activeIndex = signal<number>(0);
   value = signal<string>('');
-  onChanged = output<InvoiceItemType>();
+  onChanged = output<string>();
   effect = effect(() => {
     const activeIndex = this.items()?.findIndex(item => item.slug === this.value()) ?? -1;
     this.activeIndex.set(activeIndex === -1 ? 0 : activeIndex);

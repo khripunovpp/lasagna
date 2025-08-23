@@ -13,7 +13,7 @@ import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {MatIcon} from '@angular/material/icon';
 import {InputComponent} from '../../../controls/form/input.component';
-import {InvoiceItemSelectorComponent} from './parts/invoice-item-selector.component';
+import {EntityItemSelectorComponent} from './parts/entity-item-selector.component';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {FlexRowComponent} from "../../../../shared/view/ui/layout/flex-row.component";
 import {WidthDirective} from "../../../../shared/view/directives/width.directive";
@@ -67,7 +67,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     ParseMathDirective,
     UnitSwitcherComponent,
     InputComponent,
-    InvoiceItemSelectorComponent,
+    EntityItemSelectorComponent,
     MultiselectComponent,
     FlexRowComponent,
     WidthDirective,
@@ -241,14 +241,14 @@ export class AddInvoiceFormComponent
   }
 
   onItemChanged(
-    type: InvoiceItemType,
+    type: string,
     index: number
   ) {
     if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
       return
     }
 
-    this.invoiceBuilderService.changeRowType(index, type);
+    this.invoiceBuilderService.changeRowType(index, type as InvoiceItemType);
     this.rows.at(index).patchValue({
       recipe_id: null,
       product_id: null,
