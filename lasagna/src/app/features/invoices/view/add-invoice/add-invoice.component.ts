@@ -54,8 +54,8 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
       <lg-container>
         <lg-flex-column size="medium">
           <lg-flex-row [center]="true"
-                       [mobileReverse]="true"
-                       [mobileMode]="true">
+                       [mobileMode]="true"
+                       [mobileReverse]="true">
             @if (invoiceBuilderService.invoice()?.uuid) {
               <lg-title lgSelfStart>
                 {{ invoiceBuilderService.invoice()?.name }}
@@ -138,6 +138,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
         <lg-flex-row [mobileMode]="true" [relaxed]="true">
           <lg-button (click)="editInvoice()"
                      [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
+                     [style]="'primary'"
                      lgShrink>
             @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
               {{ 'invoices.save-changes' | translate }}
@@ -148,7 +149,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 
           @if (invoiceBuilderService.invoice()?.canBeUpdated) {
             <lg-button (click)="issueInvoice()"
-                       [style]="'success'"
+                       [style]="'default'"
                        lgShrink>
               {{ 'invoices.issue-and-download' | translate }}
             </lg-button>

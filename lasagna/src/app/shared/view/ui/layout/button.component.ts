@@ -12,7 +12,7 @@ export type ButtonStyle = 'default' |
   'info';
 
 export type ButtonSizes =
-  'default' |
+  'regular' |
   'medium' |
   'small' |
   'tiny';
@@ -25,6 +25,7 @@ export type ButtonSizes =
       <a [class.active]="active()"
          [class.flat]="flat()"
          [class.disabled]="disabled()"
+         [class.outlined]="outlined()"
          [class.icon]="icon()"
          [class.no-bottom-radius]="noBottomRadius()"
          [class.no-left-radius]="noLeftRadius()"
@@ -43,6 +44,7 @@ export type ButtonSizes =
               [class.active]="active()"
               [class.flat]="flat()"
               [class.disabled]="disabled()"
+              [class.outlined]="outlined()"
               [class.icon]="icon()"
               [class.no-bottom-radius]="noBottomRadius()"
               [class.no-left-radius]="noLeftRadius()"
@@ -79,10 +81,10 @@ export type ButtonSizes =
         justify-content: center;
         background-color: var(--card-bg);
         color: var(--text-color);
-        padding: 16px 24px;
+        padding: 14px 22px;
         font-size: 1rem;
         font-family: inherit;
-        border: none;
+        border: 1px solid transparent;
         border-radius: 16px;
         cursor: pointer;
         appearance: none;
@@ -170,13 +172,25 @@ export type ButtonSizes =
 
       .button.default {
         background-color: var(--button-default-bg);
+        color: var(--button-default-text);
+
+        &.outlined {
+          background-color: transparent;
+          border-color: var(--button-default-bg);
+        }
       }
 
       .button.primary {
         background-color: var(--button-primary-bg);
+        color: var(--button-primary-text);
 
         &.flat {
           color: var(--button-primary-bg);
+        }
+
+        &.outlined {
+          background-color: transparent;
+          border-color: var(--button-primary-bg);
         }
       }
 
@@ -295,7 +309,8 @@ export class ButtonComponent {
 
   onClick = output<any>();
   style = input<ButtonStyle>('default');
-  size = input<ButtonSizes>('default');
+  size = input<ButtonSizes>('regular');
+  outlined = input<boolean>(false);
   icon = input<boolean>(false);
   flat = input<boolean>(false);
   link = input<string>('');

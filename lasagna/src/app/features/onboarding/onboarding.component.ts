@@ -46,7 +46,7 @@ interface OnboardingStep {
                 </div>
 
                 <lg-button [disabled]="step.done || !isCurrentStep(step)"
-                           [style]="step.done ? 'secondary' : 'default'"
+                           [style]="step.done ? 'secondary' : 'primary'"
                            (onClick)="step.action()">
                   @if (step.done) {
                     {{ 'onboarding.done' | translate }}
@@ -89,7 +89,6 @@ interface OnboardingStep {
     }
 
     .onboarding__step--done {
-      background: var(--onboarding-success-bg);
 
       .onboarding__step-content {
         opacity: 0.5;

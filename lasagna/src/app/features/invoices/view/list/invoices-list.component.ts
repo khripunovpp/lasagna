@@ -119,8 +119,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
             {{ 'invoices.empty-state.text'|translate }}
 
             <lg-button (click)="onAddInvoice()"
-                       [size]="'medium'"
-                       [style]="'success'">
+                       [size]="'medium'">
               {{ 'invoices.empty-state.btn'|translate }}
             </lg-button>
           </lg-flex-column>

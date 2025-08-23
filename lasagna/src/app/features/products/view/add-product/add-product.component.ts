@@ -112,6 +112,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
           @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
             <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                        lgShrink
+                       [style]="'primary'"
                        (click)="onEditProduct()">
               @if (formComponent()?.form?.dirty || draftRef()) {
                 {{ 'product.form.save-btn.edit.active'|translate }}
@@ -121,6 +122,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
             </lg-button>
           } @else {
             <lg-button lgShrink
+                       [style]="'primary'"
                        [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                        (click)="onAddProduct()">
               @if (formComponent()?.form?.dirty || draftRef()) {

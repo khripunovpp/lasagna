@@ -115,6 +115,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
             <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                        lgShrink
+                       [style]="'primary'"
                        (click)="onEditRecipe()">
               @if (formComponent()?.form?.dirty || draftRef()) {
                 {{ 'recipe.form.save-btn.edit.active'|translate }}
@@ -125,6 +126,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
           } @else {
             <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                        lgShrink
+                       [style]="'primary'"
                        (click)="onAddRecipe()">
               @if (formComponent()?.form?.dirty || draftRef()) {
                 {{ 'recipe.form.save-btn.add.active'|translate }}

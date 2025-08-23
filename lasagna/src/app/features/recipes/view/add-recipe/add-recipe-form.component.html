@@ -95,7 +95,7 @@
 
                     <ng-container ngProjectAs="rowActions">
                       <lg-button [style]="'danger'"
-                                 [size]="'tiny'"
+                                 [flat]="true"
                                  [icon]="true"
                                  (click)="deleteIngredient(i)">
                         <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
@@ -110,8 +110,11 @@
             </lg-flex-column>
 
             <lg-button (click)="addIngredient()"
-                       [size]="'small'"
-                       [style]="'primary'">
+                       [outlined]="true"
+                       [size]="'small'">
+              <mat-icon aria-hidden="false"
+                        [inline]="true"
+                        fontIcon="add"></mat-icon>
               {{ 'recipe.form.ingredients.add-btn'|translate }}
             </lg-button>
           </lg-flex-column>

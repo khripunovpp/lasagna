@@ -35,11 +35,18 @@
 
   // BUTTONS
   --button-default-bg: var(--p-4);
-  --button-primary-bg: var(--p-5);
+  --button-default-text: var(--p-1);
+
+  --button-primary-bg: var(--p-3);
+  --button-primary-text: var(--p-2);
+
   --button-secondary-bg: var(--secondary-light-color);
 
   --button-success-bg: var(--success-color);
   --button-danger-bg: var(--danger-color);
+
+  //
+  --header-active-bg: var(--p-5);
 
   // ONBOARDING
   --onboarding-text: var(--p-1);

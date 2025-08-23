@@ -6,6 +6,9 @@ import {NotificationsService} from '../../../../../shared/service/services';
 import {Credential} from '../../../../settings/service/models/Credential';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {errorHandler} from '../../../../../shared/helpers';
+import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-credentials-dialog',
@@ -21,6 +24,11 @@ import {errorHandler} from '../../../../../shared/helpers';
             <b class="credential-item__name">{{ credential.privateName }}</b>
             <div class="text-wrap credential-item__inner">{{ credential.toFormattedString() }}</div>
           </button>
+        } @empty {
+           <lg-flex-column position="center"
+                          size="medium">
+            {{ 'settings.credentials.empty-state.text'|translate }}
+          </lg-flex-column>
         }
       </lg-flex-row>
     </lg-dialog>
@@ -45,7 +53,10 @@ import {errorHandler} from '../../../../../shared/helpers';
   `],
   imports: [
     DialogComponent,
-    FlexRowComponent
+    FlexRowComponent,
+    ButtonComponent,
+    FlexColumnComponent,
+    TranslatePipe
   ]
 })
 export class CredentialsDialogComponent {

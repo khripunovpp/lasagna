@@ -15,24 +15,24 @@ export interface ButtonGroupItem {
   selector: 'lg-buttons-group',
   standalone: true,
   template: `
-      <div [class.buttons-group--flat]="flat"
-           class="buttons-group">
-          @for (item of items();track item.value;let last = $last, first = $first, index = $index) {
-              <lg-button (click)="onClickItem(item,index)"
-                         [active]="activeIndex() == index"
-                         [flat]="flat"
-                         [noScale]="true"
-                         [style]="item.style || 'default'"
-                         [size]="item.size || 'default'"
-                         [noLeftRadius]="last"
-                         [noRightRadius]="first"
-                         class="buttons-group__item"
-                         [noRadius]="!first && !last"
-                         [class.buttons-group__item--active]="activeIndex() == index">
-                  {{ item.label | translate }}
-              </lg-button>
-          }
-      </div>
+    <div [class.buttons-group--flat]="flat"
+         class="buttons-group">
+      @for (item of items(); track item.value; let last = $last, first = $first, index = $index) {
+        <lg-button (click)="onClickItem(item,index)"
+                   [active]="activeIndex() == index"
+                   [flat]="flat"
+                   [noScale]="true"
+                   [style]="item.style || 'default'"
+                   [size]="item.size || 'regular'"
+                   [noLeftRadius]="last"
+                   [noRightRadius]="first"
+                   class="buttons-group__item"
+                   [noRadius]="!first && !last"
+                   [class.buttons-group__item--active]="activeIndex() == index">
+          {{ item.label | translate }}
+        </lg-button>
+      }
+    </div>
   `,
   styles: [
     `
