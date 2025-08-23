@@ -188,7 +188,7 @@ export class AddRecipeFormComponent
     if (lastRow && lastRow.value) {
       return lastRow.value.active_tab;
     }
-    return 'recipe';
+    return 'product';
   }
 
   ngOnInit() {

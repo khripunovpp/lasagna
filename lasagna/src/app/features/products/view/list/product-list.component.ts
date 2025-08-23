@@ -43,7 +43,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
         <lg-button [icon]="true"
                    [link]="'/products/add'"
                    [size]="'medium'"
-                   [style]="'success'">
+                   [style]="'default'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
 
@@ -52,7 +52,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
             <lg-button (click)="exportProducts(selectionZoneService.selected())"
                        [flat]="true"
                        [size]="'small'"
-                       [style]="'info'">
+                       [style]="'solid'">
               {{ 'export-label'|translate }}
             </lg-button>
           </ng-template>

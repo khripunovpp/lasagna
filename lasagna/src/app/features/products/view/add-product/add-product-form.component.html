@@ -9,8 +9,9 @@
         </lg-control>
 
         <lg-flex-row [center]="true" [mobileMode]="true">
-          <lg-control [label]="'product.form.amount.placeholder'|translate:{unit:form.value.unit}"
-                      lgExpand>
+          <lg-control
+            [label]="'product.form.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.unit || UnitValue.GRAM)|translate)}"
+            lgExpand>
             <lg-number-input (onInputChange)="priceInput.focus()"
                              formControlName="amount"
                              lgParseMath
@@ -44,6 +45,18 @@
                 <span>{{ userSettings()['currency']|currencySymbol }}</span>
               </ng-template>
             </lg-number-input>
+          </lg-control>
+
+          <lg-control lgWidth="40%">
+            <ng-template lgControlLabelTemplate>
+              <span>{{ userSettings()['currency']|currencySymbol }}</span>
+              <span [translateParams]="{unit:product()?.unit | unitString | translate}"
+                    [translate]="'per-unit.label'"></span>
+            </ng-template>
+
+            <lg-readonly-control [placeholder]="''"
+                                 [value]="product()?.pricePerUnit | number:'1.0-5' ">
+            </lg-readonly-control>
           </lg-control>
         </lg-flex-row>
       </lg-flex-column>

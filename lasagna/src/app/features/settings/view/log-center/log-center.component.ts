@@ -415,7 +415,6 @@ export class LogCenterComponent implements OnInit {
   }
 
   async updatePaginatedAndGroupedLogs() {
-    debugger
     const paginatedLogs = this.paginationService.paginatedItems();
     this.paginatedLogs.set(paginatedLogs);
 

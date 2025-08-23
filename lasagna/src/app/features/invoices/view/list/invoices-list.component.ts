@@ -36,7 +36,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
         <lg-button (click)="onAddInvoice()"
                    [icon]="true"
                    [size]="'medium'"
-                   [style]="'success'">
+                   [style]="'default'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
       </lg-controls-bar>

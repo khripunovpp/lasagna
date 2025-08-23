@@ -63,15 +63,6 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
                 {{ 'product.form.title'|translate }}
               </lg-title>
             }
-
-            @if (product()?.pricePerUnit) {
-              <span
-                lgSelfStart>
-                ({{ product()?.pricePerUnit | userCurrency:'1.0-5' }}
-                <span [translate]="'per-unit.label'"
-                      [translateParams]="{unit:product()?.unit | unitString | translate}"></span>)
-              </span>
-            }
           </lg-flex-row>
 
           <lg-inline-separated-group>
