@@ -38,7 +38,7 @@ import {errorHandler} from '../../../helpers';
     <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
       <lg-button [flat]="true"
                  [size]="'small'"
-                 [style]="'warning'">
+                 [style]="'solid'">
         {{ label|translate }}
       </lg-button>
     </lg-upload>

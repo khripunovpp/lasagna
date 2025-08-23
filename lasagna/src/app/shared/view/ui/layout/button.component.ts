@@ -6,6 +6,7 @@ export type ButtonStyle = 'default' |
   'primary' |
   'secondary' |
   'secondary-dark' |
+  'solid' |
   'success' |
   'danger' |
   'warning' |
@@ -182,6 +183,20 @@ export type ButtonSizes =
         &.outlined {
           background-color: transparent;
           border-color: var(--button-default-bg);
+        }
+      }
+
+      .button.solid {
+        background-color: var(--button-solid-text);
+        color: var(--button-solid-text);
+
+        &.flat {
+          color: var(--button-solid-bg);
+        }
+
+        &.outlined {
+          background-color: transparent;
+          border-color: var(--button-solid-bg);
         }
       }
 

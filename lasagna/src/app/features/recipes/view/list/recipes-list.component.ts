@@ -41,7 +41,7 @@ import {JsonPipe} from '@angular/common';
         <lg-button [icon]="true"
                    [link]="'/recipes/add'"
                    [size]="'medium'"
-                   [style]="'success'">
+                   [style]="'default'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
 
@@ -50,7 +50,7 @@ import {JsonPipe} from '@angular/common';
             <lg-button (click)="exportRecipes(selectionZoneService.selected())"
                        [flat]="true"
                        [size]="'small'"
-                       [style]="'info'">
+                       [style]="'solid'">
               {{ 'export-label'|translate }}
             </lg-button>
           </ng-template>
@@ -98,7 +98,7 @@ import {JsonPipe} from '@angular/common';
                   <lg-button [flat]="true"
                              [link]="'/recipes/calculate/' + recipe.uuid"
                              [size]="'small'"
-                             [style]="'primary'">
+                             [style]="'success'">
                     {{ 'recipes.calculate-btn'|translate }}
                   </lg-button>
 

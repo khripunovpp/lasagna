@@ -28,7 +28,7 @@ import {AutocompleteComponent} from '../../../controls/form/autocomplete.compone
 import {Product} from '../../service/Product';
 import {productToFormValue} from '../../../../shared/helpers/product.helpers';
 import {debounceTime, tap} from 'rxjs';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
@@ -44,6 +44,12 @@ import {InputComponent} from '../../../controls/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
 import {ControlTemplateDirective} from "../../../controls/form/control-template.directive";
+import {UnitValue} from "../../../../shared/view/const/units.const";
+import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.component';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
+import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
+import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+import {DecimalPipe} from '@angular/common';
 
 
 
@@ -74,6 +80,12 @@ import {ControlTemplateDirective} from "../../../controls/form/control-template.
     ControlExtraTemplateDirective,
     ControlComponent,
     ControlTemplateDirective,
+    ReadonlyControlComponent,
+    UnitStringPipe,
+    ControlLabelTemplateDirective,
+    TranslateDirective,
+    UserCurrencyPipe,
+    DecimalPipe,
   ],
   styles: [
     `
@@ -199,4 +211,5 @@ export class AddProductFormComponent
   }
 
   protected readonly smaller = smaller;
+  protected readonly UnitValue = UnitValue;
 }
