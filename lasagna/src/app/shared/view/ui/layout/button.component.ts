@@ -5,6 +5,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 export type ButtonStyle = 'default' |
   'primary' |
   'secondary' |
+  'secondary-dark' |
   'success' |
   'danger' |
   'warning' |
@@ -174,6 +175,10 @@ export type ButtonSizes =
         background-color: var(--button-default-bg);
         color: var(--button-default-text);
 
+        &.flat {
+          color: var(--button-default-bg);
+        }
+
         &.outlined {
           background-color: transparent;
           border-color: var(--button-default-bg);
@@ -199,6 +204,13 @@ export type ButtonSizes =
 
         &.flat {
           color: var(--button-secondary-bg);
+        }
+      }
+      .button.secondary-dark {
+        background-color: var(--button-secondary-dark-bg);
+
+        &.flat {
+          color: var(--button-secondary-dark-bg);
         }
       }
 

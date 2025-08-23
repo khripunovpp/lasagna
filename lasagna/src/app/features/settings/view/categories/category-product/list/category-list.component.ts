@@ -25,10 +25,10 @@ import {ExpandDirective} from '../../../../../../shared/view/directives/expand.d
             {{ 'categories.products.title' | translate }}
           </lg-title>
 
-          <lg-button [flat]="true"
-                     [link]="'/settings/categories/products/add'"
-                     [size]="'small'"
-                     [style]="'primary'">
+          <lg-button [link]="'/settings/categories/products/add'"
+                     [size]="'tiny'"
+                     [outlined]="true"
+                     [style]="'default'">
             {{ 'add-label' | translate }}
           </lg-button>
         </lg-flex-row>

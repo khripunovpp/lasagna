@@ -128,12 +128,13 @@ import {Router} from '@angular/router';
 
     .tabs.flat .tabs__labels button:not(.active) {
       background-color: transparent;
-      color: var(--tabs-label-active-text);
+      color: var(--tabs-label-flat-text);
     }
+
     .tabs.flat .tabs__labels button.active {
       background-color: #fff;
       border-color: var(--tabs-label-active-bg);
-      color: var(--tabs-label-active-text);
+      color: var(--tabs-label-flat-text);
     }
 
     .tabs__body {

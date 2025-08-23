@@ -46,24 +46,25 @@
                 <ng-container [formGroupName]="i">
                   <lg-controls-row [mobileMode]="true">
                     <lg-flex-column [size]="'small'">
+                      <lg-flex-row size="small">
+                        <ng-container ngProjectAs="labelTpl">
+                          <lg-button (click)="closeRecipeField(i)"
+                                     [flat]="true"
+                                     [size]="'small'"
+                                     [style]="recipeFieldState()[i] ? 'secondary-dark' : 'primary'">
+                            {{ 'recipe.form.ingredients.product_id.label'|translate }}
+                          </lg-button>
+                        </ng-container>
 
-                      <ng-container ngProjectAs="labelTpl">
-                        <lg-button (click)="closeRecipeField(i)"
-                                   [flat]="true"
-                                   [size]="'small'"
-                                   [active]="!recipeFieldState()[i]">
-                          {{ 'recipe.form.ingredients.product_id.label'|translate }}
-                        </lg-button>
-                      </ng-container>
-
-                      <ng-container ngProjectAs="afterLabelTpl">
-                        <lg-button (click)="openRecipeField(i)"
-                                   [flat]="true"
-                                   [size]="'small'"
-                                   [active]="recipeFieldState()[i]">
-                          {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
-                        </lg-button>
-                      </ng-container>
+                        <ng-container ngProjectAs="afterLabelTpl">
+                          <lg-button (click)="openRecipeField(i)"
+                                     [flat]="true"
+                                     [size]="'small'"
+                                     [style]="recipeFieldState()[i] ? 'primary' : 'secondary-dark'">
+                            {{ 'recipe.form.ingredients.recipe_id.label'|translate }}
+                          </lg-button>
+                        </ng-container>
+                      </lg-flex-row>
 
                       @if (recipeFieldState()[i]) {
                         <lg-multiselect [resource]="'recipes'"
@@ -112,8 +113,8 @@
             <lg-button (click)="addIngredient()"
                        [outlined]="true"
                        [size]="'small'">
-              <mat-icon aria-hidden="false"
-                        [inline]="true"
+              <mat-icon [inline]="true"
+                        aria-hidden="false"
                         fontIcon="add"></mat-icon>
               {{ 'recipe.form.ingredients.add-btn'|translate }}
             </lg-button>

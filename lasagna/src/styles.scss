@@ -41,6 +41,7 @@
   --button-primary-text: var(--p-2);
 
   --button-secondary-bg: var(--secondary-light-color);
+  --button-secondary-dark-bg: var(--secondary-color);
 
   --button-success-bg: var(--success-color);
   --button-danger-bg: var(--danger-color);
@@ -56,8 +57,9 @@
   // TABS
   --tabs-labels-bg: var(--p-1);
   --tabs-label-bg:var(--secondary-light-color);
-  --tabs-label-active-bg: var(--p-4);
-  --tabs-label-active-text: var(--p-1);
+  --tabs-label-active-bg: var(--p-5);
+  --tabs-label-active-text: var(--p-2);
+  --tabs-label-flat-text: var(--p-1);
 
   --tabs-label-hover-bg: #f0f0f0;
   --tabs-label-focus: #007bff;
