@@ -107,6 +107,11 @@ export class Product {
     return this as Product;
   }
 
+  setName(name: string) {
+    this.name = name;
+    return this;
+  }
+
   toDTO(): ProductDTO {
     return {
       name: this.name,
