@@ -25,10 +25,10 @@ import {RouterLink} from '@angular/router';
             {{ 'categories.recipes.title' | translate }}
           </lg-title>
 
-          <lg-button [flat]="true"
-                     [link]="'/settings/categories/recipes/add'"
-                     [size]="'small'"
-                     [style]="'primary'">
+          <lg-button [link]="'/settings/categories/recipes/add'"
+                     [size]="'tiny'"
+                     [outlined]="true"
+                     [style]="'default'">
             {{ 'add-label' | translate }}
           </lg-button>
         </lg-flex-row>

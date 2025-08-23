@@ -1,18 +1,21 @@
 <lg-fade-in>
   <lg-container>
     <lg-flex-column>
+      @let hasIngredients = (result()?.calculation?.ingredients?.length || 0 ) > 0;
       <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-title>
           {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
         </lg-title>
 
-        <lg-button [flat]="true"
-                   [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
-                   [size]="'small'"
-                   [style]="'primary'"
-                   lgSelfStart>
-          {{ 'edit-label' | translate }}
-        </lg-button>
+        @if (hasIngredients) {
+          <lg-button [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
+                     [outlined]="true"
+                     [size]="'tiny'"
+                     [style]="'default'"
+                     lgSelfStart>
+            {{ 'edit-label' | translate }}
+          </lg-button>
+        }
       </lg-flex-row>
 
       @if (result()?.calculation?.totalPrice) {
@@ -168,7 +171,7 @@
         }
       </ng-template>
 
-      @if (result()?.calculation?.ingredients?.length) {
+      @if (hasIngredients) {
         <lg-table-card>
           <table>
             <colgroup>
