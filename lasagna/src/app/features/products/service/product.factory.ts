@@ -16,7 +16,7 @@ export class ProductFactory {
 
     if (product.system) {
       const translatedName = this._translateService.instant('product.' + product.uuid);
-      product.update({name: translatedName});
+      product.setName(translatedName);
     }
 
     return product;
