@@ -126,6 +126,7 @@ import {TranslatePipe} from '@ngx-translate/core';
               {{ 'settings.credentials.empty-state.text'|translate }}
 
               <lg-button [size]="'medium'"
+                         [style]="'primary'"
                          (click)="addRow()">
                 {{ 'settings.credentials.empty-state.btn'|translate }}
               </lg-button>
@@ -150,9 +151,12 @@ import {TranslatePipe} from '@ngx-translate/core';
           </lg-button>
 
           <lg-button (click)="addRow()"
-                     [style]="'secondary'"
+                     [style]="'default'"
+                     [outlined]="true"
                      lgShrink>
-            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+            <mat-icon aria-hidden="false"
+                      [inline]="true"
+                      fontIcon="add"></mat-icon>
             {{ 'settings.credentials.add-row'|translate }}
           </lg-button>
         </lg-flex-row>

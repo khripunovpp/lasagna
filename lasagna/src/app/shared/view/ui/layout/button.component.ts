@@ -183,6 +183,7 @@ export type ButtonSizes =
         &.outlined {
           background-color: transparent;
           border-color: var(--button-default-bg);
+          color: var(--button-default-bg);
         }
       }
 
@@ -211,6 +212,7 @@ export type ButtonSizes =
         &.outlined {
           background-color: transparent;
           border-color: var(--button-primary-bg);
+          color: var(--button-primary-bg);
         }
       }
 

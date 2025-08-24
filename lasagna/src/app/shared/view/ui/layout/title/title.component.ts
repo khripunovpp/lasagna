@@ -18,6 +18,7 @@ import {NgClass} from '@angular/common';
     `
       .title {
         font-size: 1.9em;
+        line-height: 1.2;
         font-weight: bold;
         margin: 0;
       }

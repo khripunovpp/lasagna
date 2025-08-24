@@ -188,6 +188,7 @@ import {FadeInComponent} from '../fade-in.component';
       appearance: none;
       backdrop-filter: blur(3px);
       background-color: rgba(255, 255, 255, 0.7);
+      color: inherit;
 
       &--left {
 

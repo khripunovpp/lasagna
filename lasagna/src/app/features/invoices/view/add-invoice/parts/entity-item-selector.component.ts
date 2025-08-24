@@ -65,6 +65,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           cursor: pointer;
           opacity: var(--part-color-opacity, 0.2);
           appearance: none;
+          color: inherit;
           border: none;
           font-family: inherit;
           font-weight: 400;

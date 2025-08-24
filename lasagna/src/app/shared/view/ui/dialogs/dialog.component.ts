@@ -79,10 +79,13 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
 
     .dialog__wrap {
-      padding: 96px 32px 32px;
+      padding: 32px;
       display: flex;
       justify-content: center;
       align-items: center;
+      @media (max-width: 658px) {
+        padding: 16px 8px;
+      }
     }
 
     .dialog__box {
@@ -100,9 +103,15 @@ import {TranslatePipe} from '@ngx-translate/core';
       gap: 16px;
       border-top: 1px solid #f5f5f5;
       padding-top: 16px;
+
+      @media (max-width: 658px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     .dialog__close-button {
+      float: right;
       appearance: none;
       border: none;
       background: #f5f5f5;

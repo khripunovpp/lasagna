@@ -124,6 +124,7 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
               {{ 'settings.taxes.empty-state.text'|translate }}
 
               <lg-button [size]="'medium'"
+                         [style]="'primary'"
                          (click)="addTaxRow()">
                 {{ 'settings.taxes.empty-state.btn'|translate }}
               </lg-button>
@@ -148,9 +149,12 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
           </lg-button>
 
           <lg-button (click)="addTaxRow()"
-                     [style]="'secondary'"
+                     [style]="'default'"
+                     [outlined]="true"
                      lgShrink>
-            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+            <mat-icon aria-hidden="false"
+                      [inline]="true"
+                      fontIcon="add"></mat-icon>
             {{ 'settings.taxes.add-tax' | translate }}
           </lg-button>
         </lg-flex-row>

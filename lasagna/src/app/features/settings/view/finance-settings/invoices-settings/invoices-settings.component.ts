@@ -12,59 +12,43 @@ import {FileInputComponent} from '../../../../controls/form/file-input.component
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {debounceTime} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ControlComponent} from '../../../../controls/form/control-item/control.component';
 
 @Component({
   selector: 'lg-invoices-settings',
   standalone: true,
   template: `
-      <lg-flex-column [formGroup]="form">
-          <lg-flex-column size="medium">
-              <lg-title [level]="5">
-                  {{ 'settings.invoices.logo' | translate }}
-              </lg-title>
+    <lg-flex-column [formGroup]="form"
+                    size="medium">
+      <lg-control [label]=" 'settings.invoices.logo' | translate">
+        @if (logoBase64()) {
+          <div class="lg-invoices-settings__logo">
+            <img [src]="logoBase64()"
+                 alt="Logo">
+          </div>
+        }
 
-              @if (logoBase64()) {
-                  <div class="lg-invoices-settings__logo">
-                      <img [src]="logoBase64()"
-                           alt="Logo">
-                  </div>
-              }
+        <lg-file-input [buttonStyle]="logoBase64() ? 'danger' : 'default'"
+                       [buttonText]="logoBase64() ? ('settings.invoices.replace-logo' | translate) : ('settings.invoices.upload-logo' | translate)"
+                       formControlName="logo"></lg-file-input>
+      </lg-control>
 
-              <lg-file-input [buttonStyle]="logoBase64() ? 'danger' : 'default'"
-                             [buttonText]="logoBase64() ? ('settings.invoices.replace-logo' | translate) : ('settings.invoices.upload-logo' | translate)"
-                             formControlName="logo"></lg-file-input>
-          </lg-flex-column>
+      <lg-control [label]=" 'settings.invoices.prefix' | translate">
+        <lg-input formControlName="prefix"></lg-input>
+      </lg-control>
 
-          <lg-flex-column size="medium">
-              <lg-title [level]="5">
-                  {{ 'settings.invoices.prefix' | translate }}
-              </lg-title>
+      <lg-control [label]=" 'settings.invoices.precision' | translate">
+        <lg-flex-row>
+          <lg-control [label]=" 'settings.invoices.precision-rows' | translate">
+            <lg-number-input formControlName="precisionRows"></lg-number-input>
+          </lg-control>
 
-              <lg-input formControlName="prefix"></lg-input>
-          </lg-flex-column>
-
-          <lg-flex-column size="medium">
-              <lg-title [level]="5">
-                  {{ 'settings.invoices.precision' | translate }}
-              </lg-title>
-
-              <lg-flex-row>
-                  <lg-flex-column size="small">
-                      <lg-title [flat]="true" [level]="6">
-                          {{ 'settings.invoices.precision-rows' | translate }}
-                      </lg-title>
-                      <lg-number-input formControlName="precisionRows"></lg-number-input>
-                  </lg-flex-column>
-
-                  <lg-flex-column size="small">
-                      <lg-title [flat]="true" [level]="6">
-                          {{ 'settings.invoices.precision-totals' | translate }}
-                      </lg-title>
-                      <lg-number-input formControlName="precisionTotals"></lg-number-input>
-                  </lg-flex-column>
-              </lg-flex-row>
-          </lg-flex-column>
-      </lg-flex-column>
+          <lg-control [label]=" 'settings.invoices.precision-totals' | translate">
+            <lg-number-input formControlName="precisionTotals"></lg-number-input>
+          </lg-control>
+        </lg-flex-row>
+      </lg-control>
+    </lg-flex-column>
   `,
   styles: [`
     .lg-invoices-settings__logo {
@@ -90,7 +74,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     FlexRowComponent,
     NumberInputComponent,
     FileInputComponent,
-    TranslatePipe
+    TranslatePipe,
+    ControlComponent
   ]
 })
 export class InvoicesSettingsComponent

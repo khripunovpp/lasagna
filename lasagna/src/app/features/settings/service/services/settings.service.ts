@@ -5,6 +5,7 @@ import {Settings} from '../models/Settings';
 import {SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
 import {getEstimatedCurrency} from '../../../../shared/helpers/localization.helpers';
+import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,11 @@ export class SettingsService {
       this.settingsModel?.addSetting(SettingsKeysConst.currency, currency[0].code);
       changed = true;
     }
+    if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.invoicePrefix)?.data) {
+      this.settingsModel?.addSetting(SettingsKeysConst.invoicePrefix, generateRandomInvoicePrefix());
+      changed = true;
+    }
+
     if (!changed) {
       this._logger.log('Default settings already set');
       return Promise.resolve(this.settingsModel);

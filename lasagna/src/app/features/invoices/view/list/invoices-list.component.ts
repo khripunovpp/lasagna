@@ -36,7 +36,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
         <lg-button (click)="onAddInvoice()"
                    [icon]="true"
                    [size]="'medium'"
-                   [style]="'default'">
+                   [style]="'primary'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
       </lg-controls-bar>
@@ -119,6 +119,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
             {{ 'invoices.empty-state.text'|translate }}
 
             <lg-button (click)="onAddInvoice()"
+                       [style]="'primary'"
                        [size]="'medium'">
               {{ 'invoices.empty-state.btn'|translate }}
             </lg-button>

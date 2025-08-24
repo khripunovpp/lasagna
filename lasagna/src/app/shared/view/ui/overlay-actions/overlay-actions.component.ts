@@ -13,7 +13,9 @@ import {Component, ViewEncapsulation} from '@angular/core';
 
     .overlay-actions {
       position: fixed;
-      inset: auto 0 16px 0;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
       z-index: 20;
       display: flex;
       gap: 8px;
