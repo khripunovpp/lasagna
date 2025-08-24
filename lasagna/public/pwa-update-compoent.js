@@ -29,20 +29,20 @@ function getTranslation(key, params = {}) {
     "pwa.update.dialog.timeout": "Será atualizado em {seconds} segundos"
   }
 };
-  
+
   // Get language with fallback chain
-  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage) 
+  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
     ? window.getCurrentLanguage()
     : (localStorage.getItem('lang') || 'en');
-    
+
   const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
-  
+
   // Replace parameters in translation
   let result = translation;
   Object.keys(params).forEach(param => {
     result = result.replace(new RegExp(`{${param}}`, 'g'), params[param]);
   });
-  
+
   return result;
 }
 // END TRANSLATIONS
@@ -161,6 +161,11 @@ if ('serviceWorker' in navigator) {
     updateAppButton.addEventListener('click', () => {
       if (currentWorker) {
         currentWorker.postMessage({type: 'SKIP_WAITING'});
+        currentWorker.postMessage({action: 'SKIP_WAITING'});
+        currentWorker.postMessage({
+          action: 'ACTIVATE_UPDATE',
+          nonce: Math.random(),
+        });
       }
       updateTimeoutLabel.style.display = 'block';
       updateAppButton.style.display = 'none';
