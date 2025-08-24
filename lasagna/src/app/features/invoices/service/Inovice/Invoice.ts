@@ -71,6 +71,10 @@ export class Invoice {
     return this.state === InvoiceState.draft;
   }
 
+  get canIssue() {
+    return this.state === InvoiceState.draft;
+  }
+
   get canCancel() {
     return this.state === InvoiceState.draft
       || this.state === InvoiceState.issued

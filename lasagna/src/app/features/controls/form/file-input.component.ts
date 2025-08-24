@@ -21,6 +21,7 @@ import {TranslateService, TranslatePipe} from '@ngx-translate/core';
           <lg-button (onClick)="fileInput.click()"
                      [disabled]="disable()"
                      [style]="buttonStyle()"
+                     [outlined]="true"
                      size="small">
               {{ buttonText() | translate }}
           </lg-button>

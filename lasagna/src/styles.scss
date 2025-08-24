@@ -34,8 +34,8 @@
   --accent-color: var(--p-3);
 
   // BUTTONS
-  --button-default-bg: var(--p-4);
-  --button-default-text: var(--p-1);
+  --button-default-bg: var(--p-1);
+  --button-default-text: var(--p-2);
 
   --button-solid-bg: var(--p-1);
   --button-solid-text: var(--p-2);
@@ -50,7 +50,7 @@
   --button-danger-bg: var(--danger-color);
 
   //
-  --header-active-bg: var(--p-5);
+  --header-active-bg: var(--p-1);
 
   // ONBOARDING
   --onboarding-text: var(--p-1);
@@ -58,9 +58,9 @@
   --onboarding-success-bg: var(--p-4);
 
   // TABS
-  --tabs-labels-bg: var(--p-1);
+  --tabs-labels-bg: var(--p-3);
   --tabs-label-bg:var(--secondary-light-color);
-  --tabs-label-active-bg: var(--p-5);
+  --tabs-label-active-bg: var(--p-1);
   --tabs-label-active-text: var(--p-2);
   --tabs-label-flat-text: var(--p-1);
 

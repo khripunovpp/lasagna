@@ -43,7 +43,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
         <lg-button [icon]="true"
                    [link]="'/products/add'"
                    [size]="'medium'"
-                   [style]="'default'">
+                   [style]="'primary'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
 
@@ -125,6 +125,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
             {{ 'products.empty-state.text'|translate }}
 
             <lg-button [link]="'/products/add'"
+                       [style]="'primary'"
                        [size]="'medium'">
               {{ 'products.empty-state.btn'|translate }}
             </lg-button>

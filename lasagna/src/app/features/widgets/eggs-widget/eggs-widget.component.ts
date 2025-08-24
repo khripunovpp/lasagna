@@ -74,11 +74,11 @@ import {TranslatePipe} from '@ngx-translate/core';
       justify-content: center;
       flex: 1;
       flex-direction: column;
-      white-space: nowrap;
       gap: 8px;
       background-color: var(--control-bg);
       border-radius: 24px;
       padding: 16px;
+      text-align: center;
     }
 
     .eggs-widget__egg:first-child img {

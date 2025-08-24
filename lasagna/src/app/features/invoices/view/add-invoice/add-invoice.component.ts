@@ -139,6 +139,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
           <lg-button (click)="editInvoice()"
                      [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
                      [style]="'primary'"
+                     [outlined]="!!invoiceBuilderService.invoice()?.canIssue"
                      lgShrink>
             @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
               {{ 'invoices.save-changes' | translate }}
@@ -147,9 +148,9 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
             }
           </lg-button>
 
-          @if (invoiceBuilderService.invoice()?.canBeUpdated) {
+          @if (invoiceBuilderService.invoice()?.canIssue) {
             <lg-button (click)="issueInvoice()"
-                       [style]="'default'"
+                       [style]="'primary'"
                        lgShrink>
               {{ 'invoices.issue-and-download' | translate }}
             </lg-button>

@@ -41,7 +41,7 @@ import {JsonPipe} from '@angular/common';
         <lg-button [icon]="true"
                    [link]="'/recipes/add'"
                    [size]="'medium'"
-                   [style]="'default'">
+                   [style]="'primary'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
 
@@ -116,7 +116,8 @@ import {JsonPipe} from '@angular/common';
             {{ 'recipes.empty-state.text'|translate }}
 
             <lg-button [link]="'/recipes/add'"
-                       [size]="'medium'">
+                       [size]="'medium'"
+                       [style]="'primary'">
               {{ 'recipes.empty-state.btn'|translate }}
             </lg-button>
           </lg-flex-column>

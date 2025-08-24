@@ -19,10 +19,13 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     TranslatePipe
   ],
   template: `
-    <lg-flex-row size="medium"
-                 [mobileMode]="true">
+    <lg-flex-row [mobileMode]="true"
+                 size="medium">
       <lg-dropdown>
-        <lg-button [size]="'small'" lgDropdownAnchor>
+        <lg-button [outlined]="true"
+                   [size]="'small'"
+                   [style]="'primary'"
+                   lgDropdownAnchor>
           {{ getGroupingLabel(sorting().group) }}
         </lg-button>
 
@@ -82,7 +85,10 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
       <!--      </lg-dropdown>-->
 
       <lg-dropdown>
-        <lg-button [size]="'small'" lgDropdownAnchor>
+        <lg-button [outlined]="true"
+                   [size]="'small'"
+                   [style]="'primary'"
+                   lgDropdownAnchor>
           {{ getGroupingDirectionLabel(sorting().direction) }}
         </lg-button>
 

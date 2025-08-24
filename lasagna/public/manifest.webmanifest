@@ -1,7 +1,7 @@
 {
   "name": "Recipe Cost Calculator",
   "short_name": "RecipeCalc",
-  "theme_color": "#abc270",
+  "theme_color": "#ef4529",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

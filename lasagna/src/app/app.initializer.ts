@@ -5,7 +5,7 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {UserService} from './features/settings/service/services/user.service';
 import {DemoService} from './shared/service/services/demo.service';
 import {DexieIndexDbService} from './shared/service/db/dexie-index-db.service';
-import { VersionService } from './shared/service/services/version.service';
+import {VersionService} from './shared/service/services/version.service';
 import {DocsService} from './features/documentation/service/docs.service';
 import {FaqService} from './features/documentation/service/faq.service';
 
