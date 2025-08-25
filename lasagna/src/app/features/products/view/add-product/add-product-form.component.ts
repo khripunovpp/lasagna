@@ -43,12 +43,12 @@ import {smaller} from 'mathjs';
 import {InputComponent} from '../../../controls/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
-import {ControlTemplateDirective} from "../../../controls/form/control-template.directive";
+
 import {UnitValue} from "../../../../shared/view/const/units.const";
 import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.component';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
-import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+
 import {DecimalPipe} from '@angular/common';
 
 
@@ -79,12 +79,10 @@ import {DecimalPipe} from '@angular/common';
     InputComponent,
     ControlExtraTemplateDirective,
     ControlComponent,
-    ControlTemplateDirective,
     ReadonlyControlComponent,
     UnitStringPipe,
     ControlLabelTemplateDirective,
     TranslateDirective,
-    UserCurrencyPipe,
     DecimalPipe,
   ],
   styles: [

@@ -4,7 +4,7 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} fro
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {InputComponent} from '../../../../controls/form/input.component';
 import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
-import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
+
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 import {MatIcon} from '@angular/material/icon';
 import {NotificationsService} from '../../../../../shared/service/services';
@@ -170,7 +170,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     ButtonComponent,
     InputComponent,
     ReactiveFormsModule,
-    SelfCenterDirective,
     ShrinkDirective,
     FlexColumnComponent,
     FlexColumnComponent,
@@ -179,7 +178,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     InputComponent,
     ButtonComponent,
     MatIcon,
-    SelfCenterDirective,
     ShrinkDirective,
     ExpandDirective,
     ControlComponent,

@@ -4,7 +4,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/layout/button.componen
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
-import {CurrencyPipe, DatePipe, DecimalPipe, NgClass} from '@angular/common';
+import {CurrencyPipe, DatePipe, NgClass} from '@angular/common';
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {Stores} from '../../../../shared/service/db/const/stores';
@@ -24,7 +24,7 @@ import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column
 import {Invoice} from '../../service/Inovice/Invoice';
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';
-import {SelfEndDirective} from '../../../../shared/view/directives/self-end.directive';
+
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 
 @Component({
@@ -145,9 +145,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
     TranslatePipe,
     FlexColumnComponent,
     DatePipe,
-    DecimalPipe,
     NgClass,
-    SelfEndDirective,
     PullDirective
   ],
   providers: [

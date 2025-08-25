@@ -1,7 +1,7 @@
 import {Component, computed, inject, viewChild} from '@angular/core';
 import {FadeInComponent} from '../fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {JsonPipe} from '@angular/common';
+
 import {VersionService} from '../../../service/services/version.service';
 import {environment} from '../../../../../environments/environment';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
@@ -99,7 +99,6 @@ import {SupportPopupComponent} from '../../../../features/home/view/support-popu
   imports: [
     FadeInComponent,
     TranslatePipe,
-    JsonPipe,
     SupportPopupComponent
   ]
 })

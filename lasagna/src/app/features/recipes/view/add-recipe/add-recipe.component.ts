@@ -135,8 +135,6 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
               }
             </lg-button>
           }
-
-
         </lg-flex-row>
       </lg-container>
     </lg-fade-in>

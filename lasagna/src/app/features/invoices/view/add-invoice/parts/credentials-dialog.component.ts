@@ -6,7 +6,7 @@ import {NotificationsService} from '../../../../../shared/service/services';
 import {Credential} from '../../../../settings/service/models/Credential';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
 import {errorHandler} from '../../../../../shared/helpers';
-import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+
 import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
@@ -54,7 +54,6 @@ import {TranslatePipe} from '@ngx-translate/core';
   imports: [
     DialogComponent,
     FlexRowComponent,
-    ButtonComponent,
     FlexColumnComponent,
     TranslatePipe
   ]

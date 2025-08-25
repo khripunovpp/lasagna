@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, DestroyRef, inject, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
 import {InputComponent} from '../../../../controls/form/input.component';
-import {TitleComponent} from '../../../../../shared/view/ui/layout/title/title.component';
+
 
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
@@ -69,7 +69,6 @@ import {ControlComponent} from '../../../../controls/form/control-item/control.c
   imports: [
     FlexColumnComponent,
     InputComponent,
-    TitleComponent,
     ReactiveFormsModule,
     FlexRowComponent,
     NumberInputComponent,

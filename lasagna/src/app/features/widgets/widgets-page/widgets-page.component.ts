@@ -7,7 +7,7 @@ import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.componen
 import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
 
 
-import {BarcodeSeekerWidgetComponent} from '../barcode-seeker/barcode-seeker.component';
+
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
 
 import {TabDirective} from '../../../shared/view/ui/tabs/tab.directive';
@@ -49,7 +49,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     ContainerComponent,
     FlexRowComponent,
     TitleComponent,
-    BarcodeSeekerWidgetComponent,
     FadeInComponent,
     TabDirective,
     TabsComponent,

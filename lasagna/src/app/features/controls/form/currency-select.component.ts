@@ -18,11 +18,8 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FlexColumnComponent } from '../../../shared/view/ui/layout/flex-column.component';
-import { TitleComponent } from '../../../shared/view/ui/layout/title/title.component';
 import { MultiselectComponent } from './multiselect.component';
 import {ControlComponent} from './control-item/control.component';
-import {WidthDirective} from '../../../shared/view/directives/width.directive';
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 
 interface CurrencyOption {
@@ -40,10 +37,7 @@ interface CurrencyOption {
     FormsModule,
     TranslatePipe,
     MultiselectComponent,
-    FlexColumnComponent,
-    TitleComponent,
     ControlComponent,
-    WidthDirective,
     ExpandDirective
   ],
   providers: [

@@ -1,7 +1,15 @@
-import {AfterViewInit, Component, effect, input, OnInit, signal, viewChild, viewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  input,
+  OnInit,
+  signal,
+  viewChild,
+  viewChildren
+} from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-
-
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
@@ -23,12 +31,10 @@ import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
-
 import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
 import {RecipeDTO} from '../../service/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
-
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
@@ -43,6 +49,7 @@ import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/enti
   selector: 'lg-add-recipe-form',
   standalone: true,
   templateUrl: './add-recipe-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     ControlGroupComponent,
@@ -112,6 +119,7 @@ export class AddRecipeFormComponent
   productsSelector = viewChildren<MultiselectComponent>('productsSelector');
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
+  protected readonly UnitValue = UnitValue;
   private recipeEffect = effect(() => {
     if (this.recipe()) {
       this.fillForm(this.recipe()!);
@@ -180,15 +188,6 @@ export class AddRecipeFormComponent
     if (lastControl.value.name || lastControl.value.amount || lastControl.value.product_id) {
       this.addIngredient();
     }
-  }
-
-  private _getLastRowType(): string {
-    if (!this.form) return 'product';
-    const lastRow = this.ingredients.at(this.ingredients.length - 1);
-    if (lastRow && lastRow.value) {
-      return lastRow.value.active_tab;
-    }
-    return 'product';
   }
 
   ngOnInit() {
@@ -284,6 +283,15 @@ export class AddRecipeFormComponent
     return match;
   }
 
+  private _getLastRowType(): string {
+    if (!this.form) return 'product';
+    const lastRow = this.ingredients.at(this.ingredients.length - 1);
+    if (lastRow && lastRow.value) {
+      return lastRow.value.active_tab;
+    }
+    return 'product';
+  }
+
   private _loadUsingHistory() {
     this._recipesRepository.getTopCategories().then(categories => {
       this.topCategories.set(categories.map(category => ({
@@ -337,6 +345,4 @@ export class AddRecipeFormComponent
       return null;
     });
   }
-
-  protected readonly UnitValue = UnitValue;
 }
