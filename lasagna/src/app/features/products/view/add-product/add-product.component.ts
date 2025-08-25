@@ -16,9 +16,9 @@ import {CurrencyPipe} from '@angular/common';
 import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -26,7 +26,7 @@ import {
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
-import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
+
 
 @Component({
   selector: 'lg-add-product',
@@ -42,13 +42,10 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
     TimeAgoPipe,
     TranslatePipe,
     FlexColumnComponent,
-    UserCurrencyPipe,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     SelfStartDirective,
-    UnitStringPipe,
-    TranslateDirective
-  ],
+    ],
   template: `
     <lg-fade-in>
       <lg-container>

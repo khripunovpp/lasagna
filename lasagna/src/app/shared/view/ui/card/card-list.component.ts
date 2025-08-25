@@ -1,7 +1,7 @@
 import {Component, ContentChildren, effect, input, output, QueryList, ViewEncapsulation} from '@angular/core';
 
 import {CardListItemDirective} from './card-list-item.directive';
-import {NgClass, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonComponent} from '../layout/button.component';
@@ -17,8 +17,7 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     ButtonComponent,
     MatIcon,
-    NgClass,
-  ],
+    ],
   template: `
     <section [formGroup]="selected" class="lg-card-list">
       <section class="lg-card-list__inner" formArrayName="items">

@@ -15,7 +15,7 @@ import {PaginationService} from '../../../../shared/service/services/pagination.
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {SelfEndDirective} from '../../../../shared/view/directives/self-end.directive';
+
 
 @Component({
   selector: 'lg-log-center',
@@ -32,8 +32,7 @@ import {SelfEndDirective} from '../../../../shared/view/directives/self-end.dire
     TimeAgoPipe,
     FlexColumnComponent,
     FlexRowComponent,
-    SelfEndDirective
-  ],
+    ],
   template: `
     <div class="log-center">
       <lg-flex-column>

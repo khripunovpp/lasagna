@@ -22,8 +22,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {errorHandler, taxDTOFromFormValue} from '../../../../../shared/helpers';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ControlComponent} from '../../../../controls/form/control-item/control.component';
-import {SelfStartDirective} from '../../../../../shared/view/directives/self-start.directive';
-import {SelfCenterDirective} from '../../../../../shared/view/directives/self-center.directive';
+
+
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 import {ControlBoxComponent} from '../../../../controls/form/control-box.component';
@@ -172,7 +172,6 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
     NumberInputComponent,
     ParseMathDirective,
     ReactiveFormsModule,
-    SelfCenterDirective,
     ShrinkDirective,
     TextareaComponent,
     WidthDirective,
@@ -186,11 +185,9 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
     NumberInputComponent,
     ButtonComponent,
     MatIcon,
-    SelfCenterDirective,
     ShrinkDirective,
     TranslatePipe,
     ControlComponent,
-    SelfStartDirective,
     ControlBoxComponent,
     NgTemplateOutlet,
     SelfEndDirective

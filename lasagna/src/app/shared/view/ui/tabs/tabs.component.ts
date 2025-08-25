@@ -8,7 +8,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import {JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {FlexColumnComponent} from '../layout/flex-column.component';
 
@@ -21,8 +21,7 @@ import {Router} from '@angular/router';
   imports: [
     NgTemplateOutlet,
     FlexColumnComponent,
-    JsonPipe,
-  ],
+    ],
   template: `
       <div [attr.aria-label]="'Tabs'"
            [attr.role]="'tablist'"
