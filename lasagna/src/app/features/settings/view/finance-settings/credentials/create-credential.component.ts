@@ -91,11 +91,13 @@ import {TranslatePipe} from '@ngx-translate/core';
                                size="small">
                     <lg-control [label]="'settings.credentials.phone'|translate">
                       <lg-input formControlName="phone"
+                                type="tel"
                                 placeholder=""></lg-input>
                     </lg-control>
 
                     <lg-control [label]="'settings.credentials.email'|translate">
                       <lg-input formControlName="email"
+                                type="email"
                                 placeholder=""></lg-input>
                     </lg-control>
                   </lg-flex-row>

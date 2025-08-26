@@ -92,6 +92,7 @@ export class LocalisationSettingsComponent {
     try {
       await this._settingsService.changeLang(lang);
       this._notificationsService.success('settings.language.changed');
+      window.location.reload();
     } catch (error) {
       this._notificationsService.error(errorHandler(error));
     }
@@ -101,6 +102,7 @@ export class LocalisationSettingsComponent {
     try {
       await this._settingsService.changeCurrency(String(currency).toUpperCase());
       this._notificationsService.success('settings.currency.changed');
+      window.location.reload();
     } catch (error) {
       this._notificationsService.error(errorHandler(error));
     }

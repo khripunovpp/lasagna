@@ -94,19 +94,20 @@
     <hr color="#fafafa" lgExpand size="2"/>
 
     <lg-flex-column [position]="'start'" [size]="'medium'">
-      <lg-flex-row [equal]="true"
-                   [mobileMode]="true"
-                   [size]="'medium'"
-                   [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px' : 0}"
-                   lgExpand>
-        <div lgWidth="30%">{{ 'invoices.item' | translate }}</div>
-        <div lgWidth="20%">{{ 'invoices.amount' | translate }}</div>
-        <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}</div>
-        <div lgWidth="12.5%">{{ 'invoices.price' | translate }}</div>
-        <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}</div>
-        <div lgWidth="12.5%">{{ 'invoices.total' | translate }}</div>
-      </lg-flex-row>
-
+      @if (!isMobile()) {
+        <lg-flex-row [equal]="true"
+                     [mobileMode]="true"
+                     [size]="'medium'"
+                     [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px' : 0}"
+                     lgExpand>
+          <div lgWidth="40%">{{ 'invoices.item' | translate }}</div>
+          <div [lgWidth]="canBeUpdated ? '20%' : '12.5%'">{{ 'invoices.amount' | translate }}</div>
+          <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.price' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.total' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
+        </lg-flex-row>
+      }
 
       <lg-flex-column [size]="'medium'" formArrayName="rows" lgExpand>
         @for (control of rows.controls; track (control.value.amount + i + 1); let i = $index, last = $last) {
@@ -117,7 +118,7 @@
             <lg-controls-row [mobileMode]="true" [equal]="true">
 
               @if (canBeUpdated) {
-                <lg-entity-item-selector lgWidth="30%"
+                <lg-entity-item-selector lgWidth="40%"
                                          (onChanged)="onItemChanged($event, i)"
                                          formControlName="activeTab">
                   <lg-multiselect [resource]="'recipes'"
@@ -144,80 +145,85 @@
                 </lg-readonly-control>
               }
 
-              @if (canBeUpdated) {
-                <lg-number-input #amount
-                                 lgParseMath
-                                 lgWidth="20%"
-                                 (onInputChange)="onAmountChange($event, i)"
-                                 [placeholder]="'0'"
-                                 formControlName="amount">
-                  <ng-template lgExtraTpl place="after">
-                    <lg-unit-switcher [disable]="true"
-                                      formControlName="unit">
-                    </lg-unit-switcher>
-                  </ng-template>
-                </lg-number-input>
-              } @else {
-                <lg-readonly-control [placeholder]="'0'"
-                                     [value]="item?.pinnedDto?.amount"
-                                     lgWidth="12.5%">
-                </lg-readonly-control>
-              }
+              <lg-control [lgWidth]="canBeUpdated ? '20%' : '12.5%'"
+                          [label]="isMobile() ? ('invoices.amount' | translate) : ''">
+                @if (canBeUpdated) {
+                  <lg-number-input #amount
+                                   lgParseMath
+                                   (onInputChange)="onAmountChange($event, i)"
+                                   [placeholder]="'0'"
+                                   formControlName="amount">
+                    <ng-template lgExtraTpl place="after">
+                      <lg-unit-switcher [disable]="true"
+                                        formControlName="unit">
+                      </lg-unit-switcher>
+                    </ng-template>
+                  </lg-number-input>
+                } @else {
+                  <lg-readonly-control [placeholder]="'0'"
+                                       [value]="item?.pinnedDto?.amount">
+                  </lg-readonly-control>
+                }
+              </lg-control>
 
-              @if (canBeUpdated) {
-                <lg-number-input lgParseMath
-                                 (onInputChange)="onPerUnitPriceChange($event, i)"
-                                 lgWidth="12.5%"
-                                 [placeholder]="'0'"
-                                 formControlName="pricePerUnit">
-                </lg-number-input>
-              } @else {
-                <lg-readonly-control [placeholder]="'0'"
-                                     [value]="item?.pricePerUnitModified | userCurrency: '1.2-4'"
-                                     lgWidth="12.5%">
-                </lg-readonly-control>
-              }
+              <lg-control lgWidth="12.5%"
+                          [label]="isMobile() ? ('invoices.price-per-unit' | translate) : ''">
+                @if (canBeUpdated) {
+                  <lg-number-input lgParseMath
+                                   (onInputChange)="onPerUnitPriceChange($event, i)"
+                                   [placeholder]="'0'"
+                                   formControlName="pricePerUnit">
+                  </lg-number-input>
+                } @else {
+                  <lg-readonly-control [placeholder]="'0'"
+                                       [value]="item?.pricePerUnitModified | number: '1.2-4'">
+                  </lg-readonly-control>
+                }
+              </lg-control>
 
+              <lg-control lgWidth="12.5%"
+                          [label]="isMobile() ? ('invoices.price' | translate) : ''">
+                @if (canBeUpdated && !invoice?.taxesAlreadyIncluded) {
+                  <lg-number-input lgParseMath
+                                   (onInputChange)="onTotalPriceChange($event, i)"
+                                   [placeholder]="'0'"
+                                   formControlName="totalPrice">
+                  </lg-number-input>
+                } @else {
+                  <lg-readonly-control [placeholder]="'0'"
+                                       [value]="item?.totalPrice | number: '1.2-4'">
+                  </lg-readonly-control>
+                }
+              </lg-control>
 
-              @if (canBeUpdated && !invoice?.taxesAlreadyIncluded) {
-                <lg-number-input lgParseMath
-                                 (onInputChange)="onTotalPriceChange($event, i)"
-                                 lgWidth="12.5%"
-                                 [placeholder]="'0'"
-                                 formControlName="totalPrice">
-                </lg-number-input>
-              } @else {
-                <lg-readonly-control [placeholder]="'0'"
-                                     [value]="item?.totalPrice | userCurrency: '1.2-4'"
-                                     lgWidth="12.5%">
-                </lg-readonly-control>
-              }
 
               @let taxAmount = item?.calculateTaxesAndFeesAmount(invoice?.taxesAndFees ?? []) ?? 0;
 
-              @if (isRecipe) {
-                <lg-readonly-control [placeholder]="'0'"
-                                     [value]="taxAmount | userCurrency: '1.2-4'"
-                                     lgWidth="12.5%">
-                </lg-readonly-control>
-              } @else {
-                <div lgWidth="12.5%"></div>
-              }
+              <lg-control lgWidth="12.5%"
+                          [label]="isMobile() ? ('invoices.taxes-and-fees' | translate) : ''">
+                @if (isRecipe) {
+                  <lg-readonly-control [placeholder]="'0'"
+                                       [value]="taxAmount | number: '1.2-4'">
+                  </lg-readonly-control>
+                } @else {
+                  <div></div>
+                }
+              </lg-control>
 
-
-              @if (invoice?.taxesAlreadyIncluded) {
-                <lg-number-input lgParseMath
-                                 (onInputChange)="onTotalPriceWithTaxesAndFeesChange($event, i)"
-                                 lgWidth="12.5%"
-                                 [placeholder]="'0'"
-                                 formControlName="totalPriceWithTaxesAndFees">
-                </lg-number-input>
-              } @else {
-                <lg-readonly-control [placeholder]="'0'"
-                                     [value]="((item?.totalPrice ?? 0) + taxAmount) | userCurrency: '1.2-4'"
-                                     lgWidth="12.5%">
-                </lg-readonly-control>
-              }
+              <lg-control lgWidth="12.5%"
+                          [label]="isMobile() ? ('invoices.total' | translate) : ''">
+                @if (invoice?.taxesAlreadyIncluded) {
+                  <lg-number-input lgParseMath
+                                   (onInputChange)="onTotalPriceWithTaxesAndFeesChange($event, i)"
+                                   [placeholder]="'0'"
+                                   formControlName="totalPriceWithTaxesAndFees">
+                  </lg-number-input>
+                } @else {
+                  <lg-readonly-control [placeholder]="'0'"
+                                       [value]="((item?.totalPrice ?? 0) + taxAmount) | number: '1.2-4'">
+                  </lg-readonly-control>
+                }
+              </lg-control>
 
               @if (canBeUpdated) {
                 <ng-container ngProjectAs="rowActions">
@@ -257,18 +263,6 @@
                                (onRemove)="invoiceBuilderService.removeTax($event[1])"
                                [invoice]="invoiceBuilderService.invoice()"
                                formControlName="taxes_and_fees"></lg-invoice-taxes-and-fees>
-
-    <!--    <lg-flex-row [mobileMode]="true" [relaxed]="true">-->
-    <!--      <lg-control-box lgShrink>-->
-    <!--        <lg-control flow="row-reverse"-->
-    <!--                    label="Include taxes in total"-->
-    <!--                    labelFor="taxesIncluded-">-->
-    <!--          <lg-checkbox formControlName="taxesIncluded"-->
-    <!--                       name="taxesIncluded"-->
-    <!--                       size="small"></lg-checkbox>-->
-    <!--        </lg-control>-->
-    <!--      </lg-control-box>-->
-    <!--    </lg-flex-row>-->
 
     <hr color="#fafafa" lgExpand size="2"/>
 

@@ -44,12 +44,12 @@ import {CredentialFieldComponent} from '@invoices/view/add-invoice/parts/credent
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
 import {BrowserTabTrackingService} from '../../../../shared/service/services/browser-tab-tracking.service';
-import {DatePipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import {InvoiceTaxesAndFeesComponent} from '@invoices/view/add-invoice/parts/invoice-taxes-and-fees.component';
-import {calculateIncludedTax} from '@invoices/helpers/tax.helper';
 import {TranslatePipe} from '@ngx-translate/core';
-
-
+import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
+import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 
 
 @Component({
@@ -81,7 +81,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     DatePipe,
     InvoiceTaxesAndFeesComponent,
     TranslatePipe,
-        ],
+    CurrencySymbolPipe,
+    DecimalPipe,
+  ],
   styles: [
     `
     `
@@ -100,10 +102,11 @@ export class AddInvoiceFormComponent
   ) {
   }
 
-  form = new FormGroup(invoiceFormShape);
-  userSettings = inject(SETTINGS);
-  nameField = viewChild<AutocompleteComponent>('nameField');
-  amountField = viewChildren<NumberInputComponent>('amount');
+  readonly form = new FormGroup(invoiceFormShape);
+  readonly userSettings = inject(SETTINGS);
+  readonly nameField = viewChild<AutocompleteComponent>('nameField');
+  readonly amountField = viewChildren<NumberInputComponent>('amount');
+  readonly isMobile = matchMediaSignal(mobileBreakpoint);
   protected readonly CredentialsType = CredentialsType;
 
   get rows() {
@@ -339,6 +342,6 @@ export class AddInvoiceFormComponent
     item?: Invoice['rows'][number],
     invoice?: Invoice
   ) {
-    return makeInvoiceItemFormGroup(item,invoice);
+    return makeInvoiceItemFormGroup(item, invoice);
   }
 }

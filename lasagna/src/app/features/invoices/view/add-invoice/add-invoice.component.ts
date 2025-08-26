@@ -135,27 +135,30 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 
         <lg-add-invoice-form #formComponent></lg-add-invoice-form>
 
-        <lg-flex-row [mobileMode]="true" [relaxed]="true">
-          <lg-button (click)="editInvoice()"
-                     [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
-                     [style]="'primary'"
-                     [outlined]="!!invoiceBuilderService.invoice()?.canIssue"
-                     lgShrink>
-            @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
-              {{ 'invoices.save-changes' | translate }}
-            } @else {
-              {{ 'invoices.nothing-to-save' | translate }}
-            }
-          </lg-button>
-
-          @if (invoiceBuilderService.invoice()?.canIssue) {
-            <lg-button (click)="issueInvoice()"
+        @if (invoiceBuilderService.invoice()?.canBeUpdated) {
+          <lg-flex-row [mobileMode]="true"
+                       [relaxed]="true">
+            <lg-button (click)="editInvoice()"
+                       [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
                        [style]="'primary'"
+                       [outlined]="!!invoiceBuilderService.invoice()?.canIssue"
                        lgShrink>
-              {{ 'invoices.issue-and-download' | translate }}
+              @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
+                {{ 'invoices.save-changes' | translate }}
+              } @else {
+                {{ 'invoices.nothing-to-save' | translate }}
+              }
             </lg-button>
-          }
-        </lg-flex-row>
+
+            @if (invoiceBuilderService.invoice()?.canIssue) {
+              <lg-button (click)="issueInvoice()"
+                         [style]="'primary'"
+                         lgShrink>
+                {{ 'invoices.issue-and-download' | translate }}
+              </lg-button>
+            }
+          </lg-flex-row>
+        }
       </lg-container>
     </lg-fade-in>
   `,
