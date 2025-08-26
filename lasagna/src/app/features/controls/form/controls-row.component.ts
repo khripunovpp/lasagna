@@ -10,9 +10,7 @@ import {Component, input, ViewEncapsulation} from '@angular/core';
           <div class="controls-row__controls">
               <ng-content></ng-content>
           </div>
-          <div class="controls-row__actions">
-              <ng-content select="rowActions"></ng-content>
-          </div>
+          <ng-content select="rowActions"></ng-content>
       </div>
   `,
   styles: [

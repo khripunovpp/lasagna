@@ -19,31 +19,31 @@ import {NgTemplateOutlet} from '@angular/common';
   selector: 'lg-input',
   standalone: true,
   template: `
-      <div [class.contrast]="theme() === 'contrast'"
-           class="lg-input">
-          @if (beforeExtraTpl()?.templateRef) {
-              <div class="lg-input__before">
-                  <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
-              </div>
-          }
-          <input #input
-                 (blur)="focused.set(false)"
-                 (change)="onInputChanged.emit(value)"
-                 (focus)="focused.set(true)"
-                 (input)="onChangeInput($event)"
-                 (keydown.enter)="onEnter.emit(value)"
-                 [disabled]="disable()"
-                 [placeholder]="placeholder()"
-                 [value]="value"
-                 class="input"
-                 type="text">
+    <div [class.contrast]="theme() === 'contrast'"
+         class="lg-input">
+      @if (beforeExtraTpl()?.templateRef) {
+        <div class="lg-input__before">
+          <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
+        </div>
+      }
+      <input #input
+             (blur)="focused.set(false)"
+             (change)="onInputChanged.emit(value)"
+             (focus)="focused.set(true)"
+             (input)="onChangeInput($event)"
+             (keydown.enter)="onEnter.emit(value)"
+             [disabled]="disable()"
+             [placeholder]="placeholder()"
+             [value]="value"
+             class="input"
+             [type]="inputType()">
 
-          @if (afterExtraTpl()?.templateRef) {
-              <div class="lg-input__after">
-                  <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
-              </div>
-          }
-      </div>
+      @if (afterExtraTpl()?.templateRef) {
+        <div class="lg-input__after">
+          <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+        </div>
+      }
+    </div>
   `,
   styles: [
     `
@@ -126,6 +126,7 @@ export class InputComponent
   focused = signal<boolean>(false);
   placeholder = input('Enter text here');
   autoFocus = input(false);
+  inputType = input<string>('text');
   disable = input(false);
   onInputChanged = output<string>();
   onEnter = output<string>();

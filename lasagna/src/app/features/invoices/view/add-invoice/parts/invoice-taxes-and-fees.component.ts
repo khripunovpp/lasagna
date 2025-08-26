@@ -36,6 +36,8 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
   template: `
     <lg-flex-column [position]="'start'" [size]="'medium'">
       @let canBeUpdated = invoice()?.canBeUpdated;
+      @let hasTaxesOrFees = selectedTaxes().length || selectedFees().length;
+
       @if (selectedTaxes().length) {
         <lg-flex-row [equal]="true"
                      [mobileMode]="true"
@@ -70,8 +72,12 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
             <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax }"></ng-container>
           }
         </lg-flex-column>
-
       }
+
+      @if (!hasTaxesOrFees && !canBeUpdated) {
+        {{ 'settings.taxes.empty-state.text'|translate }}
+      }
+
       <ng-template #itemTpl let-tax>
         <lg-controls-row [equal]="true" [mobileMode]="true">
           <lg-flex-row [center]="true" [mobileMode]="true" lgWidth="70%" size="small">
