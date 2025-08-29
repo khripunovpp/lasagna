@@ -86,6 +86,12 @@ export class Invoice {
       || this.state === InvoiceState.draft;
   }
 
+  get canCopy() {
+     return this.state === InvoiceState.draft
+      || this.state === InvoiceState.issued
+      || this.state === InvoiceState.paid;
+  }
+
   get feesAmount(): number {
     return this.taxesAndFees.reduce((sum, tax) => {
       if (!tax.percentage) {
@@ -342,6 +348,9 @@ export class Invoice {
     copy.system_credential_id = Credential.fromRaw(this.system_credential_id?.toDTO());
     copy.customer_credential_id = Credential.fromRaw(this.customer_credential_id?.toDTO());
     copy.taxesAndFees = this.taxesAndFees.map(tax => Tax.fromRaw(tax.toDTO()));
+    copy.date_issued = Date.now();
+    copy.date_due = with30DaysFromNow();
+    copy.pinnedDto = undefined;
     return copy;
   }
 
@@ -471,6 +480,22 @@ export class Invoice {
     const item = this.rows[index];
 
     return item.calculateTaxesAndFeesAmount(this.taxesAndFees);
+  }
+
+  makeCopy(
+    newFields: {
+      name: string
+      invoice_number: string
+      uuid: string
+    }
+  ) {
+    if (!this.canCopy) return null;
+    const copy = this.clone();
+    copy.name = newFields.name;
+    copy.invoice_number = newFields.invoice_number;
+    copy.uuid = newFields.uuid;
+    copy.state = InvoiceState.draft;
+    return copy;
   }
 
   private _getRowKey(

@@ -41,15 +41,19 @@ export class InvoicesRepository {
     return this.addOne(invoice).then(() => invoice.uuid);
   }
 
-  createCopy(
+  async createCopy(
     invoice: Invoice
   ) {
     const invoiceTpl = this.invoiceFactory();
-    const copy = invoice.clone();
-    copy.name = this._copyPrefix + ' ' + invoiceTpl.name;
-    copy.invoice_number = invoiceTpl.invoice_number;
-    copy.uuid = invoiceTpl.uuid;
-    return this.addOne(copy).then(() => copy.uuid);
+    const copy = invoice.makeCopy({
+      name: this._copyPrefix + ' ' + invoiceTpl.name,
+      invoice_number: invoiceTpl.invoice_number,
+      uuid: invoiceTpl.uuid!,
+    });
+    if (!copy) return Promise.reject('You cannot make a copy of the invoice');
+
+    await this.addOne(copy);
+    return copy.uuid;
   }
 
   getDefaultPrefix() {
@@ -67,7 +71,7 @@ export class InvoicesRepository {
   ) {
     if (!invoice.uuid) return Promise.reject('Invoice UUID is required');
     invoice.clearEmpty();
-    return this._indexDbService.addData(Stores.INVOICES, invoice.toDTO(), invoice.uuid);
+    return this._indexDbService.addData(Stores.INVOICES, invoice.toDTO(), invoice.uuid)
   }
 
   async loadToObservable() {

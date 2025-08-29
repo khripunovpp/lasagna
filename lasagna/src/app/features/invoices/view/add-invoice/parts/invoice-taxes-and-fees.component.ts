@@ -30,6 +30,10 @@ import {NgTemplateOutlet} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../../settings/service/providers/settings.token';
+import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
+import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.directive';
+import {SelfStartDirective} from '../../../../../shared/view/directives/self-start.directive';
 
 @Component({
   selector: 'lg-invoice-taxes-and-fees',
@@ -39,37 +43,41 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
       @let hasTaxesOrFees = selectedTaxes().length || selectedFees().length;
 
       @if (selectedTaxes().length) {
-        <lg-flex-row [equal]="true"
-                     [mobileMode]="true"
-                     [size]="'medium'"
-                     [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
-                     lgExpand>
-          <div lgWidth="70%">{{ 'invoices.tax' | translate }}</div>
-          <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
-          <!--        <div lgWidth="15%">Total</div>-->
-        </lg-flex-row>
+        @if (!isMobile()) {
+          <lg-flex-row [equal]="true"
+                       [mobileMode]="true"
+                       [size]="'medium'"
+                       [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
+                       lgExpand>
+            <div lgWidth="70%">{{ 'invoices.tax' | translate }}</div>
+            <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
+            <!--        <div lgWidth="15%">Total</div>-->
+          </lg-flex-row>
+        }
 
         <lg-flex-column [size]="'medium'" lgExpand>
           @for (tax of selectedTaxes(); track tax.uuid; let i = $index, last = $last) {
-            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax }"></ng-container>
+            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax, count: selectedFees().length  }"></ng-container>
           }
         </lg-flex-column>
       }
 
       @if (selectedFees().length) {
-        <lg-flex-row [equal]="true"
-                     [mobileMode]="true"
-                     [size]="'medium'"
-                     [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
-                     lgExpand>
-          <div lgWidth="70%">{{ 'invoices.fee' | translate }}</div>
-          <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
-          <!--        <div lgWidth="15%">Total</div>-->
-        </lg-flex-row>
+        @if (!isMobile()) {
+          <lg-flex-row [equal]="true"
+                       [mobileMode]="true"
+                       [size]="'medium'"
+                       [styles]="{'--lg-gap-row-pad-right': canBeUpdated ? '36px': 0}"
+                       lgExpand>
+            <div lgWidth="70%">{{ 'invoices.fee' | translate }}</div>
+            <div lgWidth="30%">{{ 'invoices.amount' | translate }}</div>
+            <!--        <div lgWidth="15%">Total</div>-->
+          </lg-flex-row>
+        }
 
         <lg-flex-column [size]="'medium'" lgExpand>
           @for (tax of selectedFees(); track tax.uuid; let i = $index, last = $last) {
-            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax }"></ng-container>
+            <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: tax, count: selectedFees().length }"></ng-container>
           }
         </lg-flex-column>
       }
@@ -78,10 +86,13 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
         {{ 'settings.taxes.empty-state.text'|translate }}
       }
 
-      <ng-template #itemTpl let-tax>
-        <lg-controls-row [equal]="true" [mobileMode]="true">
-          <lg-flex-row [center]="true" [mobileMode]="true" lgWidth="70%" size="small">
-            @if (canBeUpdated) {
+      <ng-template #itemTpl let-tax let-count="count">
+        <lg-controls-row [equal]="true">
+          <lg-flex-row [center]="!isMobile()"
+                       [mobileMode]="true"
+                       lgWidth="70%"
+                       size="small">
+            @if (canBeUpdated && count > 1) {
               <lg-flex-row size="small">
                 <lg-button [size]="'small'"
                            (onClick)="moveTop(tax)"
@@ -104,6 +115,7 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 
 
           <lg-readonly-control [value]="tax.amount"
+                               lgSelfEnd
                                lgWidth="30%"
                                placeholder="">
             <div ngProjectAs="after">{{ tax.percentage ? '%' : userSettings()['currency']|currencySymbol }}</div>
@@ -112,6 +124,8 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
           @if (canBeUpdated) {
             <ng-container ngProjectAs="rowActions">
               <lg-button [style]="'danger'"
+                         lgSelfStart
+                         [lgSelfStartDisabled]="!isMobile()"
                          [size]="'tiny'"
                          (onClick)="select(tax)"
                          [icon]="true">
@@ -194,6 +208,8 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
     NgTemplateOutlet,
     TranslatePipe,
     CurrencySymbolPipe,
+    SelfEndDirective,
+    SelfStartDirective,
   ],
   providers: [
     {
@@ -206,20 +222,21 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 })
 export class InvoiceTaxesAndFeesComponent
   implements ControlValueAccessor {
-  userSettings = inject(SETTINGS);
-  invoice = input<Invoice | undefined>(undefined);
-  taxesAndFees = signal<Tax[]>([]);
-  taxes = computed(() => this.taxesAndFees().filter(t => t.percentage));
-  fees = computed(() => this.taxesAndFees().filter(t => !t.percentage));
-  dialog = viewChild(DialogComponent);
-  selected = signal<Tax[]>([]);
-  selectedTaxes = computed(() => this.selected().filter(t => t.percentage));
-  selectedFees = computed(() => this.selected().filter(t => !t.percentage));
-  onAdd = output<[number, Tax]>();
-  onRemove = output<[number, Tax]>();
+  readonly isMobile = matchMediaSignal(mobileBreakpoint);
+  readonly userSettings = inject(SETTINGS);
+  readonly invoice = input<Invoice | undefined>(undefined);
+  readonly taxesAndFees = signal<Tax[]>([]);
+  readonly taxes = computed(() => this.taxesAndFees().filter(t => t.percentage));
+  readonly fees = computed(() => this.taxesAndFees().filter(t => !t.percentage));
+  readonly dialog = viewChild(DialogComponent);
+  readonly selected = signal<Tax[]>([]);
+  readonly selectedTaxes = computed(() => this.selected().filter(t => t.percentage));
+  readonly selectedFees = computed(() => this.selected().filter(t => !t.percentage));
+  readonly onAdd = output<[number, Tax]>();
+  readonly onRemove = output<[number, Tax]>();
   private readonly _taxesRepository = inject(TaxesRepository);
   private readonly _notificationService = inject(NotificationsService);
-  taxesEffect = effect(() => {
+  readonly taxesEffect = effect(() => {
     this._taxesRepository.getAll()
       .then((taxes) => {
         this.taxesAndFees.set(taxes);

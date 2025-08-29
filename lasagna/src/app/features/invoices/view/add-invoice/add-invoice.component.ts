@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, OnInit, signal, viewChild} from '@angular/core';
+import {Component, computed, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
 import {AddInvoiceFormComponent} from './add-invoice-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -10,7 +10,7 @@ import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directi
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe, NgClass} from '@angular/common';
 import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
 import {InvoiceBuilderService} from '../invoice-builder.service';
 import {LoggerService} from '../../../logger/logger.service';
@@ -24,7 +24,6 @@ import {BrowserTabTrackingService} from '../../../../shared/service/services/bro
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
-import {TranslateService} from '@ngx-translate/core';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
@@ -56,9 +55,9 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
           <lg-flex-row [center]="true"
                        [mobileMode]="true"
                        [mobileReverse]="true">
-            @if (invoiceBuilderService.invoice()?.uuid) {
+            @if (currentInvoice()?.uuid) {
               <lg-title lgSelfStart>
-                {{ invoiceBuilderService.invoice()?.name }}
+                {{ currentInvoice()?.name }}
               </lg-title>
             } @else {
               <lg-title lgSelfStart>
@@ -72,7 +71,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 
 
             <lg-inline-separated-group lgPull lgShrink>
-              @if (invoiceBuilderService.invoice()?.canMarkPaid) {
+              @if (currentInvoice()?.canMarkPaid) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-button (click)="changeState('paid')"
                              [flat]="true"
@@ -83,7 +82,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
                 </ng-template>
               }
 
-              @if (invoiceBuilderService.invoice()?.canCancel) {
+              @if (currentInvoice()?.canCancel) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-button (click)="changeState('cancelled')"
                              [flat]="true"
@@ -100,7 +99,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
           <lg-inline-separated-group>
             <ng-template lgInlineSeparatedGroup>
               <lg-button (onClick)="generatePDF()"
-                         [disabled]="!!invoiceBuilderService.invoice()?.canBeUpdated"
+                         [disabled]="!!currentInvoice()?.canBeUpdated"
                          [flat]="true"
                          [style]="'success'"
                          lgShrink>
@@ -108,14 +107,16 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
               </lg-button>
             </ng-template>
 
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button (onClick)="copyInvoice()"
-                         [flat]="true"
-                         [style]="'warning'"
-                         lgShrink>
-                {{ 'invoices.copy' | translate }}
-              </lg-button>
-            </ng-template>
+            @if (currentInvoice()?.canCopy) {
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button (onClick)="copyInvoice()"
+                           [flat]="true"
+                           [style]="'warning'"
+                           lgShrink>
+                  {{ 'invoices.copy' | translate }}
+                </lg-button>
+              </ng-template>
+            }
 
             <ng-template lgInlineSeparatedGroup>
               <lg-button (onClick)="onDeleteInvoice()" [flat]="true"
@@ -126,31 +127,31 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
             </ng-template>
           </lg-inline-separated-group>
 
-          @if (invoiceBuilderService.invoice()?.updatedAt) {
+          @if (currentInvoice()?.updatedAt) {
             <small class="text-muted text-cursive">
-              {{ 'edited-at-label'|translate }} {{ this.invoiceBuilderService.invoice()?.updatedAt | timeAgo }}
+              {{ 'edited-at-label'|translate }} {{ currentInvoice()?.updatedAt | timeAgo }}
             </small>
           }
         </lg-flex-column>
 
         <lg-add-invoice-form #formComponent></lg-add-invoice-form>
 
-        @if (invoiceBuilderService.invoice()?.canBeUpdated) {
+        @if (currentInvoice()?.canBeUpdated) {
           <lg-flex-row [mobileMode]="true"
                        [relaxed]="true">
             <lg-button (click)="editInvoice()"
-                       [disabled]="!formComponent?.form?.dirty || !invoiceBuilderService.invoice()?.canBeUpdated"
+                       [disabled]="!formComponent?.form?.dirty || !currentInvoice()?.canBeUpdated"
                        [style]="'primary'"
-                       [outlined]="!!invoiceBuilderService.invoice()?.canIssue"
+                       [outlined]="!!currentInvoice()?.canIssue"
                        lgShrink>
-              @if (formComponent?.form?.dirty && invoiceBuilderService.invoice()?.canBeUpdated) {
+              @if (formComponent?.form?.dirty && currentInvoice()?.canBeUpdated) {
                 {{ 'invoices.save-changes' | translate }}
               } @else {
                 {{ 'invoices.nothing-to-save' | translate }}
               }
             </lg-button>
 
-            @if (invoiceBuilderService.invoice()?.canIssue) {
+            @if (currentInvoice()?.canIssue) {
               <lg-button (click)="issueInvoice()"
                          [style]="'primary'"
                          lgShrink>
@@ -170,8 +171,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
     CurrencyPipe,
   ]
 })
-export class AddInvoiceComponent
-  implements OnInit, AfterViewInit {
+export class AddInvoiceComponent {
   constructor(
     public invoiceBuilderService: InvoiceBuilderService,
     public router: Router,
@@ -187,55 +187,47 @@ export class AddInvoiceComponent
 
   uuid = signal<string | undefined>(undefined);
   formComponent = viewChild('formComponent', {read: AddInvoiceFormComponent});
+  currentInvoice = computed(() => this.invoiceBuilderService.invoice());
   stateLabel = computed(() => {
-    if (!this.invoiceBuilderService.invoice()) {
+    if (!this.currentInvoice()) {
       return this._translateService.instant('invoices.state.unknown');
     }
-    const state = this.invoiceBuilderService.invoice()!.state;
+    const state = this.currentInvoice()!.state;
     const key = stateToLabelMap[state];
     return key ? this._translateService.instant(key) : this._translateService.instant('invoices.state.unknown');
   });
   stateBadgeClass = computed(() => {
-    if (!this.invoiceBuilderService.invoice()) {
+    if (!this.currentInvoice()) {
       return stateToBadgeClassMap['draft'];
     }
-    const state = this.invoiceBuilderService.invoice()!.state;
+    const state = this.currentInvoice()!.state;
     return stateToBadgeClassMap[state || 'draft'];
   });
 
-  ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
-  }
-
-  ngOnDestroy() {
-
-  }
-
   onDeleteInvoice() {
-    if (!this.invoiceBuilderService.invoice()?.uuid) {
+    if (!this.currentInvoice()?.uuid) {
       return;
     }
-    this._invoicesRepository.deleteOne(this.invoiceBuilderService.invoice()!.uuid!).then(() => {
+    this._invoicesRepository.deleteOne(this.currentInvoice()!.uuid!).then(() => {
       this._notificationsService.success('invoices.deleted');
       this.router.navigate(['invoices']);
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
   }
 
   generatePDF() {
-    if (!this.invoiceBuilderService.invoice()?.uuid) {
+    if (!this.currentInvoice()?.uuid) {
       return;
     }
-    this._invoicesRepository.generatePdf(this.invoiceBuilderService.invoice()!);
+    this._invoicesRepository.generatePdf(this.currentInvoice()!);
   }
 
   copyInvoice() {
-    if (!this.invoiceBuilderService.invoice()?.uuid) {
+    if (!this.currentInvoice()?.uuid) {
       return;
     }
-    this._invoicesRepository.createCopy(this.invoiceBuilderService.invoice()!).then((newUUID) => {
+    this._invoicesRepository.createCopy(this.currentInvoice()!).then((newUUID) => {
       this._notificationsService.success('invoices.copied');
       this.router.navigate(['invoices', 'edit', newUUID]).then(() => {
         window.location.reload();
@@ -268,50 +260,54 @@ export class AddInvoiceComponent
   }
 
   editInvoice() {
-    if (!this.invoiceBuilderService.invoice()) {
+    if (!this.currentInvoice()) {
       return;
     }
     this._invoicesRepository.replaceOne(
-      this.invoiceBuilderService.invoice()?.uuid!,
-      this.invoiceBuilderService.invoice()!
+      this.currentInvoice()?.uuid!,
+      this.currentInvoice()!
     ).then(() => {
       // Track invoice edit analytics
       this._analyticsService.trackUserEngagement(
         'edit_invoice',
         'invoice',
-        this.invoiceBuilderService.invoice()?.name,
+        this.currentInvoice()?.name,
         1
       );
 
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success('notifications.invoice.edited');
 
-      this.router.navigate(['/invoices', 'edit', this.invoiceBuilderService.invoice()?.uuid]);
+      this.router.navigate(['/invoices', 'edit', this.currentInvoice()?.uuid]);
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
   }
 
   issueInvoice() {
-    if (!this.invoiceBuilderService.invoice()?.canBeUpdated) return;
+    if (!this.currentInvoice()?.canBeUpdated) return;
     this.invoiceBuilderService.issueInvoice();
     this._invoicesRepository.replaceOne(
-      this.invoiceBuilderService.invoice()?.uuid!,
-      this.invoiceBuilderService.invoice()!
+      this.currentInvoice()?.uuid!,
+      this.currentInvoice()!
     ).then(() => {
       // Track invoice creation analytics
       this._analyticsService.trackInvoiceCreated(
-        this.invoiceBuilderService.invoice()?.invoice_number,
-        this.invoiceBuilderService.invoice()?.total,
+        this.currentInvoice()?.invoice_number,
+        this.currentInvoice()?.total,
         {
-          invoice_uuid: this.invoiceBuilderService.invoice()?.uuid,
-          invoice_name: this.invoiceBuilderService.invoice()?.name,
-          items_count: this.invoiceBuilderService.invoice()?.rows?.length || 0,
-          state: this.invoiceBuilderService.invoice()?.state
+          invoice_uuid: this.currentInvoice()?.uuid,
+          invoice_name: this.currentInvoice()?.name,
+          items_count: this.currentInvoice()?.rows?.length || 0,
+          state: this.currentInvoice()?.state
         }
       );
 
       this._browserTabTrackingService.disableProtection();
       this._notificationsService.success('invoices.issued');
       this.generatePDF();
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
   }
 }
