@@ -64,6 +64,10 @@ export class ProductInvoiceItem
     return this.product.name || 'Unnamed Product';
   }
 
+  get defaultOutcome() {
+    return this.product.amount;
+  }
+
   toDTO(): InvoiceItemDTO {
     return {
       type: this.type,

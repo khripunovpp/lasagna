@@ -10,6 +10,8 @@ export abstract class InvoiceItemBase {
 
   abstract get weightGram(): number;
 
+  abstract get defaultOutcome(): number;
+
   abstract get totalPrice(): number;
 
   abstract get pricePerUnit(): number;

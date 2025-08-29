@@ -224,7 +224,12 @@ export class AddInvoiceFormComponent
       this.amountField()?.at(index)?.focus();
       this.rows.at(index).patchValue({
         unit: row?.unit || 'gram',
+        amount: row?.defaultOutcome,
       });
+
+      setTimeout(() => {
+        this.recalculateRows();
+      }, 200);
     });
   }
 

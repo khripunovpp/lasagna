@@ -73,6 +73,15 @@ export class RecipeInvoiceItem
     return this.recipe.name || 'Unnamed recipe';
   }
 
+  get defaultOutcome() {
+    if (this.recipe.outcome_unit === 'piece') {
+      return this.recipe.outcome_amount;
+    } else if (!this.recipe.outcome_unit || this.recipe.outcome_unit === 'gram') {
+      return this.recipe.outcome_amount || this.weightGram;
+    }
+    return 0;
+  }
+
   toDTO(): InvoiceItemDTO {
     return {
       type: this.type,
