@@ -1,4 +1,4 @@
-import {Directive, HostBinding} from '@angular/core';
+import {Directive, HostBinding, input} from '@angular/core';
 
 @Directive({
   standalone: true,
@@ -8,5 +8,9 @@ export class SelfStartDirective {
   constructor() {
   }
 
-  @HostBinding('style.align-self') selfAlign = 'start';
+  lgSelfStartDisabled = input(false);
+
+  @HostBinding('style.align-self') get selfAlign() {
+    return this.lgSelfStartDisabled() ? null : 'start';
+  }
 }
