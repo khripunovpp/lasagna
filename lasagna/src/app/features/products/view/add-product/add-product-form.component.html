@@ -12,7 +12,8 @@
           <lg-control
             [label]="'product.form.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.unit || UnitValue.GRAM)|translate)}"
             lgExpand>
-            <lg-number-input (onInputChange)="priceInput.focus()"
+            <lg-number-input #amountField
+                             (onInputChange)="priceField.focus()"
                              formControlName="amount"
                              lgParseMath
                              placeholder="">
@@ -38,7 +39,8 @@
 
           <lg-control [label]="'product.form.price.placeholder'|translate:{currency:'EUR'}"
                       lgWidth="40%">
-            <lg-number-input #priceInput formControlName="price"
+            <lg-number-input #priceField
+                             formControlName="price"
                              lgParseMath
                              placeholder="">
               <ng-template lgExtraTpl place="after">
