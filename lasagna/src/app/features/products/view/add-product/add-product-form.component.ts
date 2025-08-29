@@ -27,14 +27,13 @@ import {NotificationsService} from '../../../../shared/service/services/notifica
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
 import {productToFormValue} from '../../../../shared/helpers/product.helpers';
-import {debounceTime, tap} from 'rxjs';
+import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
 import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
-import {USER_CURRENCY} from '../../../settings/service/providers/user-currency.token';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {smaller} from 'mathjs';
@@ -50,7 +49,6 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
 
 import {DecimalPipe} from '@angular/common';
-
 
 
 @Component({
@@ -122,8 +120,11 @@ export class AddProductFormComponent
     color: string
   }[]>([]);
   topSources = signal<any[]>([]);
-  nameField = viewChild<AutocompleteComponent>('nameField');
-
+  nameField = viewChild<InputComponent>('nameField');
+  amountField = viewChild<NumberInputComponent>('amountField');
+  priceField = viewChild<NumberInputComponent>('priceField');
+  protected readonly smaller = smaller;
+  protected readonly UnitValue = UnitValue;
   private productEffect = effect(() => {
     if (!this.product() || this.form.dirty) {
       return;
@@ -185,10 +186,20 @@ export class AddProductFormComponent
     this._selectResourcesService.load().then(resources => {
     });
 
-    if (!this.product()?.uuid) {
+    this._focusFirstEmptyControl();
+    this.form.markAsPristine()
+  }
+
+  private _focusFirstEmptyControl() {
+    if (!this.form.value.name?.length) {
+      this.nameField()!.focus();
+    } else if (!this.form.value.amount) {
+      this.amountField()!.focus();
+    } else if (!this.form.value.price) {
+      this.priceField()!.focus();
+    } else {
       this.nameField()!.focus();
     }
-    this.form.markAsPristine()
   }
 
   private _loadUsingHistory() {
@@ -207,7 +218,4 @@ export class AddProductFormComponent
       })));
     });
   }
-
-  protected readonly smaller = smaller;
-  protected readonly UnitValue = UnitValue;
 }
