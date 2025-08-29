@@ -8,7 +8,7 @@
     "start-host": "ng serve --no-hmr --host 192.168.1.163 --port 4200 --disable-host-check",
     "prebuild": "node scripts/generate-ver.js && node scripts/inject-translations.js",
     "build": "ng build --base-href https://khripunovpp.github.io/lasagna/ --configuration development && cp ../docs/index.html ../docs/404.html",
-    "build-vercel": "npm run config && ng build --configuration production",
+    "build-vercel": "npm run config && npm run prebuild && ng build --configuration production",
     "config": "node scripts/set-env.js",
     "cleanup": "ng generate @angular/core:cleanup-unused-imports",
     "watch": "ng build --watch --configuration local",
