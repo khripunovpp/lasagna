@@ -9,5 +9,6 @@ export const setupDefaultsInitializer = () => {
     setupDefaultsService.setupRecipesCategories(),
     setupDefaultsService.setupProductsCategories(),
     setupDefaultsService.setupProducts(),
+    setupDefaultsService.setUserUUID(),
   ]);
 };

@@ -6,6 +6,7 @@ import {CategoryProductsRepository} from '../settings/service/repositories/categ
 import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.service';
 import {CategoryProduct} from '../settings/service/models/CategoryProduct';
 import {Product} from '../products/service/Product';
+import {generateUuid} from '../../shared/helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -261,5 +262,13 @@ export class SetupDefaultsService {
 
     await this._indexDbService.balkAdd(Stores.PRODUCTS, defaultProducts, false);
     localStorage.setItem('productsInstalled', 'true');
+  }
+
+  async setUserUUID() {
+    let userUUID = localStorage.getItem('userUUID');
+    if (!userUUID) {
+      userUUID = generateUuid();
+      localStorage.setItem('userUUID', userUUID);
+    }
   }
 }
