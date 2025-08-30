@@ -1,12 +1,12 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-pwa-install',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (showButton) {
+    @if (showButton() && !isPwa()) {
       <button (click)="installPWA()">
         {{ 'pwa.install' | translate }}
       </button>
@@ -40,34 +40,50 @@ import {AnalyticsService} from '../../../shared/service/services/analytics.servi
   ]
 })
 export class PwaInstallComponent implements OnInit {
+  showButton = signal(false);
+  readonly isPwa = computed(() => {
+    return window.matchMedia('(display-mode: standalone)').matches
+      || (window.navigator as any)['standalone'] === true;
+  });
   private readonly analyticsService = inject(AnalyticsService);
-  deferredPrompt: any = null;
-  showButton = false;
+  private _deferredPrompt: any = null;
 
   ngOnInit(): void {
     window.addEventListener('beforeinstallprompt', (e: Event) => {
-      e.preventDefault();
-      this.deferredPrompt = e;
-      this.showButton = true;
+      this._deferredPrompt = e;
+      this.showButton.set(true);
+    });
+
+    window.addEventListener('appinstalled', () => {
+      this._onSuccess();
     });
   }
 
   async installPWA(): Promise<void> {
-    if (!this.deferredPrompt) return;
+    if (!this._deferredPrompt) return;
+    this._deferredPrompt.preventDefault();
 
-    this.deferredPrompt.prompt();
+    this._deferredPrompt.prompt();
 
-    const {outcome} = await this.deferredPrompt.userChoice;
+    const {outcome} = await this._deferredPrompt.userChoice;
     if (outcome === 'accepted') {
-      this.showButton = false;
-      console.log('PWA installed!');
-      this.analyticsService.trackPwaInstallAccepted();
+      this._onSuccess();
     } else {
-      console.log('User declined installation');
-      this.analyticsService.trackPwaInstallDeclined();
+      this._onDecline();
     }
 
-    this.deferredPrompt = null;
-    this.showButton = false;
+    this._deferredPrompt = null;
+    this.showButton.set(false);
+  }
+
+  private _onSuccess() {
+    console.log('PWA installed!');
+    this.showButton.set(false);
+    this.analyticsService.trackPwaInstallAccepted();
+  }
+
+  private _onDecline() {
+    console.log('User declined installation');
+    this.analyticsService.trackPwaInstallDeclined();
   }
 }
