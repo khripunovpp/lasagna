@@ -55,6 +55,7 @@
   "no-products": "No products found",
   "no-recipes": "No recipes found",
   "no-results": "No results found",
+  "no-history-records": "No history records yet",
   "product.form.amount.label": "Amount",
   "product.form.amount.placeholder": "Amount in {{ unit }}",
   "product.form.delete-btn": "Remove this product",

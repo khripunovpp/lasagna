@@ -55,6 +55,7 @@
   "no-products": "Продуктов не найдено",
   "no-recipes": "Рецепты не найдены",
   "no-results": "Результатов не найдено",
+  "no-history-records": "Пока нет записей",
   "product.form.amount.label": "Количество",
   "product.form.amount.placeholder": "Количество в  {{ unit }}",
   "product.form.delete-btn": "Удалить этот продукт",
