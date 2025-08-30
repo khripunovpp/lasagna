@@ -44,6 +44,7 @@
   "no-products": "Nenhum produto encontrado",
   "no-recipes": "Nenhuma receita encontrada",
   "no-results": "Nenhum resultado encontrado",
+  "no-history-records": "Nenhum registro de histórico ainda",
   "product.form.amount.label": "Quantidade",
   "product.form.amount.placeholder": "Quantidade em {{ unit }}",
   "product.form.delete-btn": "Excluir este produto",
