@@ -1,6 +1,6 @@
 {
-  "name": "Recipe Cost Calculator",
-  "short_name": "RecipeCalc",
+  "name": "What's lasagna cost?",
+  "short_name": "Lasagna",
   "theme_color": "#ef4529",
   "background_color": "#fafafa",
   "display": "standalone",
@@ -16,29 +16,6 @@
       "src": "/logo.png",
       "sizes": "512x512",
       "type": "image/png"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Открыть виджеты",
-      "short_name": "Виджеты",
-      "description": "Перейти к панели виджетов",
-      "url": "/widgets",
-      "icons": [{ "src": "/icons/widgets.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Добавить продукт",
-      "short_name": "Продукт",
-      "description": "Создать новый продукт",
-      "url": "/products/add",
-      "icons": [{ "src": "/icons/add-product.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Добавить рецепт",
-      "short_name": "Рецепт",
-      "description": "Создать новый рецепт",
-      "url": "/recipes/add",
-      "icons": [{ "src": "/icons/add-recipe.png", "sizes": "192x192" }]
     }
   ]
 }
