@@ -6,7 +6,7 @@ import {AnalyticsService} from '../../../shared/service/services/analytics.servi
   selector: 'lg-pwa-install',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (showButton() && !isPwa()) {
+    @if (showButton()) {
       <button (click)="installPWA()">
         {{ 'pwa.install' | translate }}
       </button>
@@ -36,11 +36,11 @@ import {AnalyticsService} from '../../../shared/service/services/analytics.servi
     }
   `],
   imports: [
-    TranslatePipe
+    TranslatePipe,
   ]
 })
 export class PwaInstallComponent implements OnInit {
-  showButton = signal(false);
+  readonly showButton = signal(false);
   readonly isPwa = computed(() => {
     return window.matchMedia('(display-mode: standalone)').matches
       || (window.navigator as any)['standalone'] === true;
@@ -49,7 +49,13 @@ export class PwaInstallComponent implements OnInit {
   private _deferredPrompt: any = null;
 
   ngOnInit(): void {
+    if (this._alreadyDeclined()) {
+      return;
+    }
     window.addEventListener('beforeinstallprompt', (e: Event) => {
+      if (this._alreadyDeclined()) {
+        return;
+      }
       this._deferredPrompt = e;
       this.showButton.set(true);
     });
@@ -76,6 +82,22 @@ export class PwaInstallComponent implements OnInit {
     this.showButton.set(false);
   }
 
+  private _alreadyDeclined(): boolean {
+    try {
+      return localStorage.getItem('pwa-install-declined') === 'true';
+    } catch {
+      return false;
+    }
+  }
+
+  private _setDeclinedStatus(value: boolean): void {
+    try {
+      localStorage.setItem('pwa-install-declined', value ? 'true' : 'false');
+    } catch {
+      // ignore
+    }
+  }
+
   private _onSuccess() {
     console.log('PWA installed!');
     this.showButton.set(false);
@@ -84,6 +106,8 @@ export class PwaInstallComponent implements OnInit {
 
   private _onDecline() {
     console.log('User declined installation');
+    this.showButton.set(false);
+    this._setDeclinedStatus(true);
     this.analyticsService.trackPwaInstallDeclined();
   }
 }
