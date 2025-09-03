@@ -55,6 +55,18 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
           </lg-button>
         </lg-flex-column>
       </lg-card>
+
+      <lg-card style="--card-bg:#e78888">
+        <lg-flex-column [position]="'center'">
+          <div class="text-center">
+            {{ 'backup.delete-all.informer'|translate }}
+          </div>
+
+          <lg-button (click)="onDeleteAll()" [style]="'danger'">
+            {{ 'backup.delete-all.btn'|translate }}
+          </lg-button>
+        </lg-flex-column>
+      </lg-card>
     </lg-flex-column>
   `,
   styles: [``],
@@ -121,6 +133,21 @@ export class BackupSettingsComponent {
       window.location.reload();
     } catch (e) {
       this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.flush-failed'));
+      console.error(e);
+    } finally {
+    }
+  }
+
+  async onDeleteAll() {
+    try {
+      await this.dexieIndexDbService.deleteAllData();
+      localStorage.clear();
+      this.notificationsService.success(this.translate.instant('all-data.deleted'));
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (e) {
+      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('all-data.delete-failed'));
       console.error(e);
     } finally {
     }
