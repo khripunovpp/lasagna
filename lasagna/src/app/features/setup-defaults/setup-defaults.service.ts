@@ -123,10 +123,6 @@ export class SetupDefaultsService {
       // creams & fillings
       "heavy-cream-35": "dairy",
       "whipping-cream-30": "dairy",
-      "pastry-cream": "creams-fillings",
-      "vanilla-custard": "creams-fillings",
-      "buttercream": "creams-fillings",
-      "ganache": "glazes-coatings",
       "sour-cream": "dairy",
       "cream-cheese": "dairy",
 
@@ -164,7 +160,6 @@ export class SetupDefaultsService {
       "coconut-flour": "flour-starches",
       "all-purpose-flour": "flour-starches",
       "bread-flour": "flour-starches",
-      "gluten-free-flour-mix": "gluten-free",
 
       // sugars & sweeteners
       "sugar": "sweeteners",
