@@ -449,6 +449,10 @@ export class DexieIndexDbService extends Dexie {
     await this.clear(Stores.INDICES);
   }
 
+  async deleteAllData(): Promise<void> {
+    this.delete();
+  }
+
   private async _addBalkIndexWithTransform(storeKey: Stores, data: any[]) {
     const transformedItem = this.indexHandlersManager.transformData(storeKey, data);
 
