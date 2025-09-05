@@ -7,6 +7,7 @@ import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.servic
 import {CategoryProduct} from '../settings/service/models/CategoryProduct';
 import {Product} from '../products/service/Product';
 import {generateUuid} from '../../shared/helpers';
+import * as Sentry from '@sentry/angular';
 
 @Injectable({
   providedIn: 'root'

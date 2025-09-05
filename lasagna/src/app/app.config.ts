@@ -92,6 +92,16 @@ export const appConfig: ApplicationConfig = {
 
         return {
           handleError(error: any): void {
+            // Set user context before sending error to Sentry
+            try {
+              const userUUID = localStorage.getItem('userUUID');
+              if (userUUID) {
+                Sentry.setUser({ user_weak_uuid: userUUID });
+              }
+            } catch {
+              // Ignore localStorage errors
+            }
+
             sentryHandler.handleError(error); // передаём дальше
           }
         };

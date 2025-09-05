@@ -19,6 +19,9 @@ export interface AnalyticsGoal {
   providedIn: 'root'
 })
 export class AnalyticsService {
+  constructor() {
+  }
+
   private readonly GOALS = {
     RECIPE_CREATED: {
       goal_id: 'recipe_created',
@@ -64,9 +67,6 @@ export class AnalyticsService {
     }
   };
 
-  constructor() {
-  }
-
   /**
    * Track a custom event
    */
@@ -75,7 +75,10 @@ export class AnalyticsService {
       // Check if analytics storage is granted
       const consent = localStorage.getItem('cookie-consent');
       if (consent === 'all' || consent === 'analytics') {
-        window.gtag('event', eventName, parameters);
+        window.gtag('event', eventName, {
+          ...parameters,
+          user_weak_uuid: this._getUserUUID(),
+        });
         console.log('Analytics event tracked:', eventName, parameters);
       } else {
         console.warn('Analytics consent not granted for event:', eventName);
@@ -175,19 +178,6 @@ export class AnalyticsService {
     }
 
     this.trackEvent('invoice_created', eventData);
-  }
-
-  /**
-   * Track page view
-   */
-  trackPageView(pageTitle: string, pagePath?: string): void {
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('config', 'G-GWN769JKRP', {
-        page_title: pageTitle,
-        page_path: pagePath || window.location.pathname
-      });
-      console.log('Page view tracked:', pageTitle);
-    }
   }
 
   /**
@@ -306,6 +296,14 @@ export class AnalyticsService {
       consent,
       gtag: hasGtag
     };
+  }
+
+  private _getUserUUID(): string {
+    try {
+      return localStorage.getItem('userUUID') || 'unknown';
+    } catch {
+      return 'unknown';
+    }
   }
 }
 
