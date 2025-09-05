@@ -171,6 +171,7 @@ function dialog() {
     align-items: center;
     justify-content: center;
     appearance: none;
+    margin: 8px;
     font-family: inherit;
     font-size: inherit;
   `;
