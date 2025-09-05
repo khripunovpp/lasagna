@@ -22,3 +22,7 @@ Sim, o aplicativo funciona excelentemente em navegadores móveis: Safari no iOS 
 :::accordion Posso usar o aplicativo no modo privado/incógnito?
 Sim, mas note que no modo privado, os dados podem não persistir entre sessões. Para funcionalidade completa, recomendamos usar o modo normal do navegador.
 :::
+
+:::accordion ⚠️ Cuidado ao limpar o cache do navegador!
+**Tenha cuidado** ao limpar o cache do seu navegador! Se você escolher "Limpar tudo" (avançado, "todos os dados do site") ou "Cookies e outros dados do site", isso excluirá todos os dados do seu aplicativo, incluindo receitas, produtos e configurações. O IndexedDB (onde seus dados são armazenados) é excluído junto com cookies e dados do site. Para limpeza segura do cache, use apenas a opção "Imagens e arquivos em cache" - isso não afetará seus dados.
+:::
