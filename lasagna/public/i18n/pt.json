@@ -133,6 +133,8 @@
   "onboarding.unavailable": "Indisponível",
   "onboarding.settings.label": "Escolha idioma e moeda",
   "onboarding.settings.description": "Assim, a interface e os cálculos ficam mais práticos para você.",
+  "onboarding.faq.label": "Leia o FAQ",
+  "onboarding.faq.description": "Leia as perguntas frequentes para entender melhor o aplicativo. Passe pelo menos 2 minutos lendo.",
   "onboarding.product.label": "Adicione seu primeiro produto",
   "onboarding.product.description": "Salve seu primeiro ingrediente ou produto para organizar e encontrar tudo com facilidade.",
   "onboarding.recipe.label": "Crie sua primeira receita",

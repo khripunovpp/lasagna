@@ -128,6 +128,13 @@ export class OnboardingComponent {
       action: () => this.goToSettings()
     },
     {
+      key: 'faq',
+      label: 'onboarding.faq.label',
+      description: 'onboarding.faq.description',
+      done: this._onboarding.isFaqDone(),
+      action: () => this.goToFaq()
+    },
+    {
       key: 'product',
       label: 'onboarding.product.label',
       description: 'onboarding.product.description',
@@ -159,9 +166,15 @@ export class OnboardingComponent {
   goToSettings() {
     this._router.navigate(['/settings']);
   }
+  
+  goToFaq() {
+    this._router.navigate(['/docs']);
+  }
+  
   goToAddProduct() {
     this._router.navigate(['/products/add']);
   }
+  
   goToAddRecipe() {
     this._router.navigate(['/recipes/add']);
   }
