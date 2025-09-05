@@ -22,3 +22,7 @@ Yes, the app works excellently in mobile browsers: Safari on iOS (14+), Chrome o
 :::accordion Can I use the app in private/incognito mode?
 Yes, but note that in private mode, data may not persist between sessions. For full functionality, we recommend using normal browser mode.
 :::
+
+:::accordion ⚠️ Be careful when clearing browser cache!
+**Be careful** when clearing your browser cache! If you choose "Clear everything" (advanced, "all site data") or "Cookies and other site data" options, this will delete all your app data, including recipes, products, and settings. IndexedDB (where your data is stored) gets deleted along with cookies and site data. For safe cache clearing, use only "Cached images and files" option - this won't affect your data.
+:::
