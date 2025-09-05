@@ -18,3 +18,4 @@ Todas as notificações oficiais vêm apenas através do próprio aplicativo. N�
 Se encontrar tentativas de fraude em nome do Lasagna, reporte através do formulário de suporte no aplicativo ou escreva para nosso email oficial de suporte.
 :::
 
+

@@ -18,3 +18,4 @@ All official notifications come only through the app itself. We don't send email
 If you encounter fraud attempts on behalf of Lasagna, report to us through the support form in the app or write to our official support email.
 :::
 
+
