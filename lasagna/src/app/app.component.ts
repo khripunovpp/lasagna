@@ -11,7 +11,6 @@ import {HeaderComponent} from './shared/view/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
 import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
-
 import {DecimalPipe} from '@angular/common';
 
 @Component({
