@@ -4,8 +4,8 @@ import {DraftForm, NotificationsService, SelectionZoneService} from '../../../..
 import {RecipeDTO} from '../../service/Recipe.scheme';
 import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';

@@ -1,10 +1,10 @@
 import {Component, inject, OnInit, Signal} from '@angular/core';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CurrencyPipe} from '@angular/common';
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
@@ -31,7 +31,7 @@ import {
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 
 @Component({

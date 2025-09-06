@@ -1,19 +1,19 @@
 import {Component, contentChild, inject, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../../../../features/controls/form/upload.component';
-import {ButtonComponent} from '../layout/button.component';
+import {ButtonComponent} from '../button.component';
 import {ZodObject} from 'zod';
 import {Stores} from '../../../service/db/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialogs/dialog.component';
 import {AsyncPipe, NgClass, NgTemplateOutlet} from '@angular/common';
-import {FlexRowComponent} from '../layout/flex-row.component';
-import {FlexColumnComponent} from '../layout/flex-column.component';
+import {FlexRowComponent} from '../../layout/flex-row.component';
+import {FlexColumnComponent} from '../../layout/flex-column.component';
 import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
-import {PortalComponent} from '../layout/portal.component';
+import {PortalComponent} from '../portal.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../service/services';
 import {errorHandler} from '../../../helpers';

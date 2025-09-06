@@ -1,6 +1,6 @@
 import {Component, HostBinding, inject, OnInit, signal, Signal} from '@angular/core';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';

@@ -11,8 +11,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ButtonComponent} from '../layout/button.component';
-import {FlexRowComponent} from '../layout/flex-row.component';
+import {ButtonComponent} from '../button.component';
+import {FlexRowComponent} from '../../layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
 export interface PaginationConfig {

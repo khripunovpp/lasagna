@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, computed, input, OnDestroy, output, resource, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
 import {InputComponent} from '../../controls/form/input.component';
-import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
-import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
+import {ButtonComponent} from '../../../shared/view/ui/button.component';
 
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';
-import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {NumberInputComponent} from '../../controls/form/number-input.component';
 import {ControlComponent} from '../../controls/form/control-item/control.component';
 import {OpenFoodFactsService} from '../../../shared/service/services/openfoodfacts.service';

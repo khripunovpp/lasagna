@@ -1,10 +1,10 @@
 import {Component, signal} from '@angular/core';
 import {AddCategoryFormComponent} from './add-category-form.component';
 import {ActivatedRoute} from '@angular/router';
-import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
+import {ContainerComponent} from '../../../../../../shared/view/layout/container.component';
 import {CardComponent} from '../../../../../../shared/view/ui/card/card.component';
-import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
-import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
+import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
+import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
 

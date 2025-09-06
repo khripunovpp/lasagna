@@ -1,11 +1,11 @@
 import {Component, inject} from '@angular/core';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {LastEditedRecipesComponent} from '../last-edited-recipes/last-edited-recipes.component';
 import {LastEditedProductsComponent} from '../last-edited-products/last-edited-products.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ProductsRepository, RecipesRepository} from '../../../../shared/service/repositories';
 import {AsyncPipe} from '@angular/common';

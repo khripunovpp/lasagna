@@ -1,12 +1,12 @@
 import {Component, signal} from '@angular/core';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ProductsRepository} from '../../../products/service/products.repository';
 import {Product} from '../../../products/service/Product';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 

@@ -1,8 +1,8 @@
 import {Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
 
-import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {ButtonGroupItem, ButtonsGroupComponent} from '../../controls/form/buttons-group.component';
 import {JellyCalculationModel} from './jelly-calculation.model';
 import {DecimalPipe} from '@angular/common';

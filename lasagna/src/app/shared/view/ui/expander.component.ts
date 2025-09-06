@@ -1,5 +1,5 @@
 import {Component, Input, signal} from '@angular/core';
-import {FlexColumnComponent} from './layout/flex-column.component';
+import {FlexColumnComponent} from '../layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({

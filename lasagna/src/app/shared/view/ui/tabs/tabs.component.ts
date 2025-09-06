@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
-import {FlexColumnComponent} from '../layout/flex-column.component';
+import {FlexColumnComponent} from '../../layout/flex-column.component';
 
 import {injectQueryParams} from '../../../helpers/route.helpers';
 import {Router} from '@angular/router';

@@ -1,11 +1,11 @@
 import {Component, DestroyRef, inject} from '@angular/core';
 import {RecipesRepository} from '../../service/recipes.repository';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {Stores} from '../../../../shared/service/db/const/stores';
@@ -26,7 +26,7 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {CATEGORIZED_RECIPES_LIST} from '../../service/categorized-recipes-list.token';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {JsonPipe} from '@angular/common';
 

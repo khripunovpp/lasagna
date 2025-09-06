@@ -3,18 +3,18 @@ import {CommonModule} from '@angular/common';
 import {LogCenterService} from '../../service/services/log-center.service';
 import {LogEntryModel, LogLevel} from '../../service/models/LogEntry';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {LogsByMinuteGroupingStrategy} from '../../service/providers/logs.grouping';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingHeaderDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-header.directive';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {PaginationComponent} from '../../../../shared/view/ui/pagination/pagination.component';
 import {PaginationService} from '../../../../shared/service/services/pagination.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 
 
 @Component({

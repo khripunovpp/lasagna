@@ -10,16 +10,16 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe.service';
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
 import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';

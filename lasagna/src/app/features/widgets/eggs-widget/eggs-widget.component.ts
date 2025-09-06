@@ -1,8 +1,8 @@
 import {Component, computed, model, output, signal, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {InputComponent} from '../../controls/form/input.component';
-import {FlexColumnComponent} from '../../../shared/view/ui/layout/flex-column.component';
-import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
 import {DecimalPipe} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
 

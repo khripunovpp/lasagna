@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {RecipesRepository} from '../../../../shared/service/repositories';
 import {DraftForm, NotificationsService} from '../../../../shared/service/services';
@@ -12,7 +12,7 @@ import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Recipe} from '../../service/models/Recipe';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {errorHandler} from '../../../../shared/helpers';
 import {

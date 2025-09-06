@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, HostListener, inject, signal, ViewEncapsulation} from '@angular/core';
 import {DEMO_MODE} from '../../../shared/service/tokens/demo-mode.token';
-import {PortalComponent} from '../../../shared/view/ui/layout/portal.component';
+import {PortalComponent} from '../../../shared/view/ui/portal.component';
 import {DemoService} from '../../../shared/service/services/demo.service';
 import {TranslatePipe} from '@ngx-translate/core';
 

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {FlexColumnComponent} from './layout/flex-column.component';
-import {TitleComponent} from './layout/title/title.component';
+import {FlexColumnComponent} from '../layout/flex-column.component';
+import {TitleComponent} from '../layout/title.component';
 
 @Component({
   selector: 'lg-error-page-404',
