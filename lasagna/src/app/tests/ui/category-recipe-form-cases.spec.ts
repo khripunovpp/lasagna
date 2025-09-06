@@ -1,9 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button.component';
 import {InputComponent} from '../../features/controls/form/input.component';
 import {ControlComponent} from '../../features/controls/form/control-item/control.component';
-import {FlexRowComponent} from '../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../shared/view/layout/flex-row.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {NoWrapDirective} from '../../shared/view/directives/no-wrap.directive';
 import {ComponentRef} from '@angular/core';

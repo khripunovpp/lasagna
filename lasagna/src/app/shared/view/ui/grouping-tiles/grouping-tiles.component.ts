@@ -1,6 +1,6 @@
 import {Component, computed, ContentChild, input, Optional} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
-import {TitleComponent} from '../layout/title/title.component';
+import {TitleComponent} from '../../layout/title.component';
 import {GroupingTileDirective} from './grouping-tile.directive';
 import {NgTemplateOutlet} from '@angular/common';
 import {SelectableSectionComponent} from '../selectable-section.component';

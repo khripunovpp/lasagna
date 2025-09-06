@@ -1,14 +1,14 @@
 import {Component, Signal, signal, viewChildren} from '@angular/core';
-import {ButtonComponent} from './button.component';
+import {ButtonComponent} from '../ui/button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location} from '@angular/common';
-import {GlobalSearchService} from '../../../service/services';
+import {GlobalSearchService} from '../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
-import {LanguageService} from '../../../../features/settings/service/services/language.service';
-import {DemoInformerComponent} from '../../../../features/home/view/demo-informer.component';
-import {FadeInComponent} from '../fade-in.component';
+import {LanguageService} from '../../../features/settings/service/services/language.service';
+import {DemoInformerComponent} from '../../../features/home/view/demo-informer.component';
+import {FadeInComponent} from '../ui/fade-in.component';
 
 @Component({
   selector: 'lg-header',

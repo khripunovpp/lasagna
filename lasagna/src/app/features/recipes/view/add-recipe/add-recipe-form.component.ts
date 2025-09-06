@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/recipes.repository';
@@ -39,7 +39,7 @@ import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.co
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {TagsControlComponent} from '../../../controls/form/tags-control.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ControlComponent} from "../../../controls/form/control-item/control.component";
 import {UnitValue} from '../../../../shared/view/const/units.const';
 import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/entity-item-selector.component';

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {Router} from '@angular/router';
@@ -20,7 +20,7 @@ import {NumberInputComponent} from '../../../controls/form/number-input.componen
 import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
@@ -31,7 +31,7 @@ import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {MatIcon} from '@angular/material/icon';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';

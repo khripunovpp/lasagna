@@ -1,6 +1,6 @@
 import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {CardComponent} from '../card/card.component';
-import {ButtonComponent} from '../layout/button.component';
+import {ButtonComponent} from '../button.component';
 import {FocusTrapDirective} from '../../directives/focus-trap.directive';
 import {BODY_LOCKER} from '../../../service/providers/body-locker.provider';
 import {TranslatePipe} from '@ngx-translate/core';

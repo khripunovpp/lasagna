@@ -1,7 +1,7 @@
 import {Component, ElementRef, forwardRef, input, signal, ViewChild, inject} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/layout/button.component';
+import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/button.component';
 import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @Component({

@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, DestroyRef, inject, signal} from '@angular/core';
-import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column.component';
 import {InputComponent} from '../../../../controls/form/input.component';
 
 
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {SettingsService} from '../../../service/services/settings.service';
 
 import {NumberInputComponent} from '../../../../controls/form/number-input.component';

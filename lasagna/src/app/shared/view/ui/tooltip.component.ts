@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {NgClass} from '@angular/common';
-import {PortalComponent} from './layout/portal.component';
+import {PortalComponent} from './portal.component';
 
 @Component({
   selector: 'lg-tooltip',

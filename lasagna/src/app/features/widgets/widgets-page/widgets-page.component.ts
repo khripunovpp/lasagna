@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {EggsWidgetComponent} from '../eggs-widget/eggs-widget.component';
 
 
-import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
-import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
-import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../shared/view/layout/container.component';
+import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
 
 
 

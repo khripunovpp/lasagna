@@ -1,17 +1,17 @@
 import {Component, computed, signal, viewChild} from '@angular/core';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddInvoiceFormComponent} from './add-invoice-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {NotificationsService} from '../../../../shared/service/services';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe, NgClass} from '@angular/common';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {InvoiceBuilderService} from '../invoice-builder.service';
 import {LoggerService} from '../../../logger/logger.service';
 import {

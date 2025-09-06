@@ -8,11 +8,11 @@ import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {FadeInComponent} from '../../shared/view/ui/fade-in.component';
 import {FocusTrapDirective} from '../../shared/view/directives/focus-trap.directive';
 import {groupBy} from '../../shared/helpers/grouping.helper';
-import {TitleComponent} from '../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../shared/view/layout/title.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
 import {BODY_LOCKER} from '../../shared/service/providers/body-locker.provider';
-import {FlexColumnComponent} from '../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {injectQueryParams} from '../../shared/helpers';
 import {toObservable} from '@angular/core/rxjs-interop';
 

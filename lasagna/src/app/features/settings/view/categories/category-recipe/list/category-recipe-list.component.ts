@@ -1,9 +1,9 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {FlexRowComponent} from '../../../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../../../shared/view/ui/button.component';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
 import {CardListComponent} from '../../../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../../../shared/view/ui/card/card-list-item.directive';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';

@@ -4,7 +4,7 @@ import {NavigationEnd, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {combineLatestWith, defer, filter, of, startWith, switchMap} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
-import {ButtonComponent} from '../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../shared/view/ui/button.component';
 import {DropdownComponent} from '../../controls/dropdown/dropdown.component';
 import {DocsService} from '../service/docs.service';
 

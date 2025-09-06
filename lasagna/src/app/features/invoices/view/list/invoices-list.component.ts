@@ -1,9 +1,9 @@
 import {Component, computed, inject, OnInit, Signal} from '@angular/core';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../shared/view/ui/layout/container/container.component';
-import {TitleComponent} from '../../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../../shared/view/layout/container.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CurrencyPipe, DatePipe, NgClass} from '@angular/common';
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
@@ -20,7 +20,7 @@ import {ExpandDirective} from '../../../../shared/view/directives/expand.directi
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CATEGORIZED_INVOICES_LIST} from './categorized-invoices-list.token';
 import {InvoicesRepository} from '../../service/Invoices.repository';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {Invoice} from '../../service/Inovice/Invoice';
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
 import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';

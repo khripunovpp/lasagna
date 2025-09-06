@@ -2,7 +2,7 @@ import {Component, ContentChildren, effect, input, Optional, output, QueryList, 
 import {CardListItemDirective} from './card/card-list-item.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CheckboxComponent} from '../../../features/controls/form/chckbox.component';
-import {ButtonComponent} from './layout/button.component';
+import {ButtonComponent} from './button.component';
 import {MatIcon} from '@angular/material/icon';
 import {SelectionZoneService} from '../../service/services';
 import {generateUuid} from '../../helpers/attribute.helper';

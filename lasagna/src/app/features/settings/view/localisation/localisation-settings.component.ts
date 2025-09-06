@@ -1,8 +1,8 @@
 import {Component, computed, inject, model, Signal} from '@angular/core';
 import {SettingsService} from '../../service/services/settings.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FormsModule} from '@angular/forms';
 import {RadioComponent} from '../../../controls/form/radio.component';
 import {CurrencySelectComponent} from '../../../controls/form/currency-select.component';

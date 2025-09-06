@@ -10,12 +10,12 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
-import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {Tax} from '../../../../settings/service/models/Tax';
 import {DialogComponent} from '../../../../../shared/view/ui/dialogs/dialog.component';
-import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {errorHandler} from '../../../../../shared/helpers';
 import {TaxesRepository} from '../../../../settings/service/repositories/taxes.repository';
 import {NotificationsService} from '../../../../../shared/service/services';

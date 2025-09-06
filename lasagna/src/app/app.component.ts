@@ -6,8 +6,8 @@ import {LastBackupInformerComponent} from './features/home/view/last-backup-info
 import {TranslateModule} from '@ngx-translate/core';
 import {FontTesterComponent} from './features/home/view/font-tester.component';
 import {DemoService} from './shared/service/services/demo.service';
-import {FooterComponent} from './shared/view/ui/layout/footer.component';
-import {HeaderComponent} from './shared/view/ui/layout/header.component';
+import {FooterComponent} from './shared/view/layout/footer.component';
+import {HeaderComponent} from './shared/view/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
 import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';

@@ -1,9 +1,9 @@
 import {Component, effect, input, signal} from '@angular/core';
-import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {InputComponent} from '../../../../controls/form/input.component';
-import {ButtonComponent} from '../../../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
 
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 import {MatIcon} from '@angular/material/icon';

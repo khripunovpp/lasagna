@@ -9,7 +9,7 @@ import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
 import {RecipeCost} from '../../../service/models/RecipeCost';
-import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 import {currencyStringToSymbol} from '../../../../../shared/helpers/assets/currency.helper';

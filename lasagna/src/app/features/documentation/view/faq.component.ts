@@ -3,7 +3,7 @@ import {FaqService} from '../service/faq.service';
 import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
 import {SafeHtmlPipe} from '../../../shared/view/pipes/safehtml.pipe';
 import {TranslatePipe} from '@ngx-translate/core';
-import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 
 @Component({

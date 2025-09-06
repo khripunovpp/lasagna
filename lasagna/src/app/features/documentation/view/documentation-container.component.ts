@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {DocsThreeComponent} from './docs-three.component';
 import {FaqComponent} from './faq.component';
-import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
+import {ContainerComponent} from '../../../shared/view/layout/container.component';
 
 
 @Component({

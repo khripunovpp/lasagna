@@ -1,7 +1,7 @@
 import {Component, OnInit, inject} from '@angular/core';
-import {ContainerComponent} from '../../../shared/view/ui/layout/container/container.component';
-import {FlexRowComponent} from '../../../shared/view/ui/layout/flex-row.component';
-import {TitleComponent} from '../../../shared/view/ui/layout/title/title.component';
+import {ContainerComponent} from '../../../shared/view/layout/container.component';
+import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';

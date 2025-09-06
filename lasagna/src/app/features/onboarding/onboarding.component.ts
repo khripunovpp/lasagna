@@ -1,10 +1,10 @@
 import {Component, computed, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
-import {ButtonComponent} from '../../shared/view/ui/layout/button.component';
-import {TitleComponent} from '../../shared/view/ui/layout/title/title.component';
+import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {TitleComponent} from '../../shared/view/layout/title.component';
 import {OnboardingService} from '../onboarding/onboarding.service';
-import {FlexColumnComponent} from '../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
 interface OnboardingStep {
@@ -166,15 +166,15 @@ export class OnboardingComponent {
   goToSettings() {
     this._router.navigate(['/settings']);
   }
-  
+
   goToFaq() {
     this._router.navigate(['/docs']);
   }
-  
+
   goToAddProduct() {
     this._router.navigate(['/products/add']);
   }
-  
+
   goToAddRecipe() {
     this._router.navigate(['/recipes/add']);
   }

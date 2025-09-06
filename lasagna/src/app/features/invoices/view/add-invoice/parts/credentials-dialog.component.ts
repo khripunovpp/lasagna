@@ -4,10 +4,10 @@ import {CredentialsType} from '../../../../settings/service/types/credentials.ty
 import {CredentialsRepository} from '../../../../settings/service/repositories/credentials.repository';
 import {NotificationsService} from '../../../../../shared/service/services';
 import {Credential} from '../../../../settings/service/models/Credential';
-import {FlexRowComponent} from '../../../../../shared/view/ui/layout/flex-row.component';
+import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {errorHandler} from '../../../../../shared/helpers';
 
-import {FlexColumnComponent} from '../../../../../shared/view/ui/layout/flex-column.component';
+import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({

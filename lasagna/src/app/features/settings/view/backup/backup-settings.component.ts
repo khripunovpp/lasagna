@@ -1,10 +1,10 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {FlexRowComponent} from '../../../../shared/view/ui/layout/flex-row.component';
-import {FlexColumnComponent} from '../../../../shared/view/ui/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {ButtonComponent} from '../../../../shared/view/ui/layout/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {UploadComponent} from '../../../controls/form/upload.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {injectQueryParams} from '../../../../shared/helpers';
