@@ -14,7 +14,6 @@ export const appInitializer = () => {
   const recipeCategoryRepository = inject(CategoryRecipesRepository);
   const docsService = inject(DocsService);
   const faqService = inject(FaqService);
-  const settingsService = inject(SettingsService);
   const userService = inject(UserService);
   const demoService = inject(DemoService);
   const indexDbService = inject(DexieIndexDbService);
@@ -37,8 +36,5 @@ export const appInitializer = () => {
   return Promise.all([
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
-    settingsService.loadSettings()
-      .then((settings) => settingsService.setDefaultSettings())
-      .then((settings) => settingsService.changeLang(settings?.getSetting<string>('lang')?.data || 'en')),
   ])
 };
