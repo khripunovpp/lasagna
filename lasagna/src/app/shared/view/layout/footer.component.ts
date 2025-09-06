@@ -18,8 +18,8 @@ import {SupportPopupComponent} from '../../../features/home/view/support-popup.c
       <footer class="lg-footer">
         @if (canSeeAuthors()) {
           <p class="footer-credit">
-            👨‍💻 <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
-            • 🪄&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
+            <span>👨‍💻&nbsp;<span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span></span>
+            <span>🪄&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span></span>
           </p>
         }
         @if (canSeePolicies()) {
@@ -88,6 +88,24 @@ import {SupportPopupComponent} from '../../../features/home/view/support-popup.c
       font-size: 14px;
       font-weight: 600;
       margin: 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+
+      & > *:first-child::after {
+        content: "•";
+        margin-left: 8px;
+      }
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        gap: 0;
+
+        & > *:first-child::after {
+          display: none;
+        }
+      }
     }
 
     .gradient-text {
