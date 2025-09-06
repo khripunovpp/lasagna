@@ -1,4 +1,4 @@
-import {Component, computed, ContentChild, input, Optional} from '@angular/core';
+import {Component, computed, ContentChild, input, Optional, signal} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
 import {TitleComponent} from '../../layout/title.component';
 import {GroupingTileDirective} from './grouping-tile.directive';
@@ -7,28 +7,41 @@ import {SelectableSectionComponent} from '../selectable-section.component';
 import {SelectionZoneService} from '../../../service/services';
 import {GroupingHeaderDirective} from './grouping-header.directive';
 import {TranslateService} from '@ngx-translate/core';
+import {FlexRowComponent} from '../../layout/flex-row.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-grouping-tiles',
   standalone: true,
   template: `
     <section class="grouping-tiles">
-      @for (group of sortResult()?.groups; track group?.field) {
-        <section class="grouping-tiles__section">
-          <header class="grouping-tiles__header">
-            @if (groupingHeaderDirective) {
-              <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
-                            [ngTemplateOutletContext]="{ $implicit: group?.field }">
-              </ng-container>
-            } @else {
-              <lg-title [level]="3">
-                {{ group?.field || translateService.instant('without-category-label') }}
-              </lg-title>
-            }
+      @for (group of sortResult()?.groups; track group?.field; let i = $index) {
+        <section class="grouping-tiles__section"
+                 [class.grouping-tiles__section--collapsed]="!collapsedState()[i]">
+          @let items = group.items;
+          <header class="grouping-tiles__header"
+                  (click)="onHeaderClick(i)">
+            <lg-flex-row size="small"
+                         [center]="true">
+              @if (groupingHeaderDirective) {
+                <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
+                              [ngTemplateOutletContext]="{ $implicit: group?.field,items: items, collapsed: !collapsedState()[i] }">
+                </ng-container>
+              } @else {
+                <lg-title [level]="3">
+                  {{ group?.field || translateService.instant('without-category-label') }}
+                </lg-title>
+
+                <span class="text-muted">({{ items.length }})</span>
+              }
+
+              <mat-icon [fontIcon]="collapsedState()[i] ? 'expand_more' : 'chevron_right'"
+                        style="transition: transform 0.3s ease;"></mat-icon>
+            </lg-flex-row>
           </header>
 
           <div class="grouping-tiles__content">
-            @for (tile of group?.items; track tile) {
+            @for (tile of items; track tile) {
               <div class="grouping-tiles__item">
                 @if (selectable()) {
                   <lg-selectable-section [key]="tile.uuid">
@@ -58,7 +71,9 @@ import {TranslateService} from '@ngx-translate/core';
   imports: [
     TitleComponent,
     NgTemplateOutlet,
-    SelectableSectionComponent
+    SelectableSectionComponent,
+    FlexRowComponent,
+    MatIcon
   ],
   styles: [`
     .grouping-tiles {
@@ -73,7 +88,20 @@ import {TranslateService} from '@ngx-translate/core';
       gap: 24px;
     }
 
+    .grouping-tiles__section--collapsed .grouping-tiles__content {
+      display: none;
+    }
+
     .grouping-tiles__header {
+      cursor: pointer;
+    }
+
+    .grouping-tiles__header:hover {
+      text-decoration: underline;
+    }
+
+    .grouping-tiles__section--collapsed .grouping-tiles__header {
+
     }
 
     .grouping-tiles__content {
@@ -101,12 +129,22 @@ export class GroupingTilesComponent {
   ) {
   }
 
-  sortResult = input<SortResult<any> | undefined>(undefined);
-  selectable = input<boolean>(false);
-  empty = computed(() => {
+  readonly sortResult = input<SortResult<any> | undefined>(undefined);
+  readonly selectable = input<boolean>(false);
+  readonly empty = computed(() => {
     return !this.sortResult()?.groups.length;
+  });
+  readonly collapsedState = signal<Record<number, boolean>>({
+    0: true,
   });
 
   @ContentChild(GroupingTileDirective) groupingTileDirective!: GroupingTileDirective;
   @ContentChild(GroupingHeaderDirective) groupingHeaderDirective!: GroupingHeaderDirective;
+
+  onHeaderClick(index: number) {
+    this.collapsedState.update(state => {
+      state[index] = !state[index];
+      return state;
+    });
+  }
 }
