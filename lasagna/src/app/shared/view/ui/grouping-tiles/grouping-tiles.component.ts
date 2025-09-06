@@ -7,7 +7,6 @@ import {SelectableSectionComponent} from '../selectable-section.component';
 import {SelectionZoneService} from '../../../service/services';
 import {GroupingHeaderDirective} from './grouping-header.directive';
 import {TranslateService} from '@ngx-translate/core';
-import {FlexRowComponent} from '../../layout/flex-row.component';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
@@ -21,23 +20,19 @@ import {MatIcon} from '@angular/material/icon';
           @let items = group.items;
           <header class="grouping-tiles__header"
                   (click)="onHeaderClick(i)">
-            <lg-flex-row size="small"
-                         [center]="true">
-              @if (groupingHeaderDirective) {
-                <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
-                              [ngTemplateOutletContext]="{ $implicit: group?.field,items: items, collapsed: !collapsedState()[i] }">
-                </ng-container>
-              } @else {
-                <lg-title [level]="3">
-                  {{ group?.field || translateService.instant('without-category-label') }}
-                </lg-title>
+            @if (groupingHeaderDirective) {
+              <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
+                            [ngTemplateOutletContext]="{ $implicit: group?.field,items: items, collapsed: !collapsedState()[i] }">
+              </ng-container>
+            } @else {
+              <lg-title [level]="3">
+                {{ group?.field || translateService.instant('without-category-label') }}
+              </lg-title>
 
-                <span class="text-muted">({{ items.length }})</span>
-              }
+              <span class="grouping-tiles__header-count text-muted">{{ items.length }}</span>
+            }
 
-              <mat-icon [fontIcon]="collapsedState()[i] ? 'expand_more' : 'chevron_right'"
-                        style="transition: transform 0.3s ease;"></mat-icon>
-            </lg-flex-row>
+            <mat-icon [fontIcon]="collapsedState()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
           </header>
 
           <div class="grouping-tiles__content">
@@ -72,7 +67,6 @@ import {MatIcon} from '@angular/material/icon';
     TitleComponent,
     NgTemplateOutlet,
     SelectableSectionComponent,
-    FlexRowComponent,
     MatIcon
   ],
   styles: [`
@@ -94,10 +88,25 @@ import {MatIcon} from '@angular/material/icon';
 
     .grouping-tiles__header {
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
     }
 
     .grouping-tiles__header:hover {
       text-decoration: underline;
+    }
+
+    .grouping-tiles__header-count {
+      flex-shrink: 0;
+      @media (max-width: 600px) {
+        margin-left: auto;
+      }
+    }
+
+    .grouping-tiles__header mat-icon {
+      flex: 0 0 auto;
     }
 
     .grouping-tiles__section--collapsed .grouping-tiles__header {
