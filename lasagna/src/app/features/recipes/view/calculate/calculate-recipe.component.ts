@@ -43,7 +43,6 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
-import {UnitValue} from '../../../../shared/view/const/units.const';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -198,31 +197,26 @@ export class CalculateRecipeComponent
   };
   @ViewChild('priceChart', {read: BaseChartDirective}) chartPrices: BaseChartDirective | undefined;
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
-  recalculateTotalsModel = model(0);
-  notInGrams = computed(() => {
-    // TODO
-    return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== UnitValue.GRAM
+  readonly recalculateTotalsModel = model(0);
+  readonly notInGrams = computed(() => {
+    return this.result()?.calculation?.isCountUnit;
   });
   recipePriceAdditionsForm = new FormControl();
-  values = toSignal(this.recipePriceAdditionsForm.valueChanges);
-  isMobile = matchMediaSignal(mobileBreakpoint);
-
-  totalScaleFactor = computed(() => {
+  readonly values = toSignal(this.recipePriceAdditionsForm.valueChanges);
+  readonly isMobile = matchMediaSignal(mobileBreakpoint);
+  readonly totalScaleFactor = computed(() => {
     if (!this.recalculateTotalsModel()) return 1;
     return this.recalculateTotalsModel() / (this.result()?.calculation?.outcomeAmount || 1);
   })
-
-  totalPrice = computed(() => {
+  readonly totalPrice = computed(() => {
     return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
   });
-
-  totalPriceDifference = computed(() => {
+  readonly totalPriceDifference = computed(() => {
     const diff = (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
     const threshold = 0.000001
     return Math.abs(diff) < threshold ? 0 : diff;
   });
-
-  totalPriceWithAdditions = computed(() => {
+  readonly totalPriceWithAdditions = computed(() => {
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
   protected readonly difference = difference;

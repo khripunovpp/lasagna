@@ -6,6 +6,7 @@ import {Recipe} from './Recipe';
 import {RecipeDTO} from '../Recipe.scheme';
 import {deepClone} from '../../../../shared/helpers/objects.helper';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {convertKilogramToGram, isCountUnit, isWeightUnit} from '../../../../shared/helpers/unit.helper';
 
 export class Ingredient {
   constructor(
@@ -44,23 +45,34 @@ export class Ingredient {
 
   get totalWeightGram() {
     // TODO
-    if (this.unit !== UnitValue.GRAM) {
+    const amount = parseFloatingNumber(this.amount);
+
+    if (isCountUnit(this.unit)) {
       if (this.recipe_id) {
         const weightPerUnit = this.recipe_id.totalIngredientsWeight / this.recipe_id.outcome_amount;
-        return weightPerUnit * this.amount;
+        return weightPerUnit * amount
       }
-      return 0
+      return 0;
+    } else if (isWeightUnit(this.unit)) {
+      if (this.unit === UnitValue.KILOGRAM) {
+        return convertKilogramToGram(amount)
+      } else if (this.unit === UnitValue.GRAM) {
+        return amount;
+      }
     }
-    return parseFloatingNumber(this.amount);
+
+    return 0;
   }
 
   get pricePerUnit() {
     // TODO
-    if (this.product_id && this.product_id.unit !== UnitValue.GRAM) {
+
+    if (this.product_id && isCountUnit(this.product_id.unit)) {
       return this.product_id?.pricePerUnit;
     }
 
     if (this.recipe_id) {
+      // TODO
       if (this.recipe_id.outcome_unit === this.unit) {
         return this.recipe_id.pricePerUnit;
       } else {
@@ -75,10 +87,11 @@ export class Ingredient {
     let total = 0;
     if (this.product_id) {
       // TODO
-      if (this.product_id.unit !== UnitValue.GRAM) {
-        total += this.product_id.pricePerUnit * this.amount;
+
+      if (isWeightUnit(this.product_id.unit)) {
+        total += this.product_id.pricePerGram * this.totalWeightGram;
       } else {
-        total += this.product_id.pricePerUnit * this.totalWeightGram;
+        total += this.product_id.pricePerUnit * this.amount;
       }
     }
 
