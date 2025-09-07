@@ -17,31 +17,38 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
       map((products: Product[]) => products.toSorted((a: Product, b: Product) => a.name.localeCompare(b.name))),
       map((products: Product[]) => groupBy(products, 'category_id')),
       mergeMap(async (grouped: Record<string, Product[]>) => {
-          const list = [];
+          const list: {
+            category: string
+            products: Product[]
+          }[] = [];
+          const withoutGroup: Product[] = [];
           const uuids = Object.keys(grouped).filter(uuid => uuid !== ''); // исключаем пустые категории
           const categories = await categoryRepository.getMany(uuids);
+
 
           for (const groupKey in grouped) {
             const products = grouped[groupKey];
             if (products && products.length) {
               const category = categories.find(c => c.uuid === groupKey);
-              list.push({
+              const group = {
                 category: category?.name || '',
                 products: products,
-              });
+              };
+
+              if (category?.name) {
+                list.push(group)
+              } else {
+                withoutGroup.push(...products)
+              }
             }
           }
 
-          if (!list.length) return [];
+          const sortedList = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
 
-          const [first, ...sortedList] = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
-
-          // без категории всегда внизу
-          if (first?.category) {
-            return [first].concat(sortedList);
-          }
-
-          return sortedList.concat([first]);
+          return sortedList.concat([{
+            category: '',
+            products: withoutGroup,
+          }]);
         }
       ),
     );
