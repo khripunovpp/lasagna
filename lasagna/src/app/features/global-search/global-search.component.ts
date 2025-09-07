@@ -174,7 +174,7 @@ import {toObservable} from '@angular/core/rxjs-interop';
   `,
   styles: [`
     .lg-global-search {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
