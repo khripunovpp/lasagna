@@ -95,6 +95,11 @@ export class UnitSwitcherComponent implements ControlValueAccessor {
       style: 'secondary',
     },
     {
+      label:  marker('unit.kilogram'),
+      value: UnitValue.KILOGRAM,
+      style: 'secondary',
+    },
+    {
       label:  marker('unit.piece'),
       value: UnitValue.PIECE,
       style: 'secondary',

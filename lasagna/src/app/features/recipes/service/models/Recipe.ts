@@ -82,6 +82,7 @@ export class Recipe {
     if (this.ingredients.length === 0) {
       return 0;
     }
+    // TODO
     if (this.outcome_unit && this.outcome_unit !== UnitValue.GRAM) {
       return this.totalPrice / this.outcome_amount;
     }
@@ -106,6 +107,7 @@ export class Recipe {
   }
 
   get weightForUnit(): number {
+    // TODO
     if (!this.outcome_unit || this.outcome_unit === UnitValue.GRAM) {
       return this.totalIngredientsWeight;
     }

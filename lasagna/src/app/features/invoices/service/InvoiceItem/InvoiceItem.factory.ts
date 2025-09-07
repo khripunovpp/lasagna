@@ -24,12 +24,6 @@ export class InvoiceItemFactory {
           ? Recipe.fromRaw({uuid: dto.recipe_id})
           : Recipe.fromRaw(dto.recipe_id);
         return new RecipeInvoiceItem(recipe, dto?.amount, dto?.unit || UnitValue.GRAM, dto?.pinnedDto || null);
-      //
-      // case InvoiceItemType.Custom:
-      //   if (dto.name == null || dto.unitPrice == null) {
-      //     throw new Error(`Invalid custom item data`);
-      //   }
-      //   return new CustomInvoiceItem(dto.name, dto.unitPrice, dto.quantity);
 
       default:
         return undefined

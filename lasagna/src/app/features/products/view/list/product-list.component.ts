@@ -35,7 +35,6 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {SortResult} from '../../../../shared/service/types/sorting.types';
-import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
 
 @Component({
   selector: 'lg-product-list',
@@ -84,7 +83,7 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
 
         @if (!groupingTiles.empty()) {
           <lg-flex-column [size]="'medium'">
-<!--            <lg-grouping-sorting></lg-grouping-sorting>-->
+            <!--            <lg-grouping-sorting></lg-grouping-sorting>-->
 
             <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
           </lg-flex-column>
@@ -154,8 +153,7 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
     TranslateDirective,
     CardComponent,
     GroupingTileDirective,
-    GroupingTilesComponent,
-    GroupingSortingComponent
+    GroupingTilesComponent
   ],
   providers: [
     SelectionZoneService,
