@@ -8,7 +8,8 @@
 <lg-global-search></lg-global-search>
 <lg-font-tester></lg-font-tester>
 
-<main class="app">
+<main [class.app--pwa]="isPwa()"
+      class="app">
   <lg-header></lg-header>
 
   <div class="app-content">

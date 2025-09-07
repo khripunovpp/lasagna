@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
+import {isPwa} from '../../../shared/helpers/match-media.helper';
 
 @Component({
   selector: 'lg-pwa-install',
@@ -41,10 +42,7 @@ import {AnalyticsService} from '../../../shared/service/services/analytics.servi
 })
 export class PwaInstallComponent implements OnInit {
   readonly showButton = signal(false);
-  readonly isPwa = computed(() => {
-    return window.matchMedia('(display-mode: standalone)').matches
-      || (window.navigator as any)['standalone'] === true;
-  });
+  readonly isPwa = isPwa;
   private readonly analyticsService = inject(AnalyticsService);
   private _deferredPrompt: any = null;
 
