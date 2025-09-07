@@ -12,6 +12,7 @@ import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-
 import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
 import {DecimalPipe} from '@angular/common';
+import {isPwa} from './shared/helpers/match-media.helper';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ import {DecimalPipe} from '@angular/common';
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent,
-    ],
+  ],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.scss',
@@ -40,6 +41,7 @@ export class AppComponent
   constructor() {
   }
 
+  readonly isPwa = isPwa;
   private readonly demoService = inject(DemoService);
 
   async ngOnInit() {

@@ -128,13 +128,6 @@ export class OnboardingComponent {
       action: () => this.goToSettings()
     },
     {
-      key: 'faq',
-      label: 'onboarding.faq.label',
-      description: 'onboarding.faq.description',
-      done: this._onboarding.isFaqDone(),
-      action: () => this.goToFaq()
-    },
-    {
       key: 'product',
       label: 'onboarding.product.label',
       description: 'onboarding.product.description',
@@ -147,7 +140,14 @@ export class OnboardingComponent {
       description: 'onboarding.recipe.description',
       done: this._onboarding.isRecipeDone(),
       action: () => this.goToAddRecipe()
-    }
+    },
+    {
+      key: 'faq',
+      label: 'onboarding.faq.label',
+      description: 'onboarding.faq.description',
+      done: this._onboarding.isFaqDone(),
+      action: () => this.goToFaq()
+    },
   ]);
 
   // Текущий активный шаг (первый незавершённый)
