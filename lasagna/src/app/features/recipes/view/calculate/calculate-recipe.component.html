@@ -1,7 +1,7 @@
 <lg-fade-in>
   <lg-container>
     <lg-flex-column>
-      @let hasIngredients = (result()?.calculation?.ingredients?.length || 0 ) > 0;
+      @let hasIngredients = (result()?.calculation?.ingredients?.length || 0) > 0;
       <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-title>
           {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
@@ -37,11 +37,12 @@
 
             <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
-                <lg-flex-row [size]="'small'" [relaxed]="true">
+                <lg-flex-row [size]="'small'"
+                             [mobileMode]="true"
+                             [relaxed]="true">
                   <div>
-                    {{ 'recipe.calculation.one-unit.label' | translate }} <b>
-                    {{ result()?.calculation?.outcomeUnit | unitString | translate }}
-                  </b>
+                    {{ 'recipe.calculation.one-unit.label' | translate }}
+                    <b>{{ result()?.calculation?.outcomeUnit | unitString | translate }}</b>
                   </div>
 
                   <b>
@@ -62,7 +63,9 @@
 
             <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
-                <lg-flex-row [size]="'small'" [relaxed]="true">
+                <lg-flex-row [size]="'small'"
+                             [mobileMode]="true"
+                             [relaxed]="true">
                   <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
                   <b>
@@ -76,7 +79,7 @@
                     </span>
 
                       <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                      ({{ diff > 0 ? '+' : '' }} {{ diff |  userCurrency: '1.2-2' }})
+                      ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }})
                     </span>
                     }
                   </b>
@@ -161,7 +164,7 @@
             </span>
 
             <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-              ({{ diff > 0 ? '+' : '' }} {{ diff |  userCurrency: '1.2-2' }})
+              ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }})
             </span>
           }
           /
@@ -200,7 +203,7 @@
                   <td>{{ i + 1 }}</td>
 
                   <td width="200">
-                    <div [ngClass]="'indent-' + row.indent">
+                    <div class="text-no-wrap" [ngClass]="'indent-' + row.indent">
                       @if (row.type !== 'total') {
                         <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit/' : '/products/edit/', row.uuid]">
                           {{ row.name }}
@@ -215,9 +218,9 @@
 
                   <td>{{ row.unit | unitString | translate }}</td>
 
-                  <td>{{ row.price_per_gram | userCurrency: '1.2-5' }}</td>
+                  <td class="text-no-wrap">{{ row.price_per_gram | userCurrency: '1.2-5' }}</td>
 
-                  <td>{{ row.total | userCurrency: '1.0-2' }}</td>
+                  <td class="text-no-wrap">{{ row.total | userCurrency: '1.0-2' }}</td>
                 </tr>
               }
             </tbody>
