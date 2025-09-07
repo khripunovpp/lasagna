@@ -89,7 +89,7 @@ import {MatIcon} from '@angular/material/icon';
     .grouping-tiles__header {
       cursor: pointer;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: flex-start;
       gap: 4px;
     }
@@ -100,6 +100,7 @@ import {MatIcon} from '@angular/material/icon';
 
     .grouping-tiles__header-count {
       flex-shrink: 0;
+      margin-left: 8px;
       @media (max-width: 600px) {
         margin-left: auto;
       }
