@@ -200,6 +200,7 @@ export class CalculateRecipeComponent
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
   recalculateTotalsModel = model(0);
   notInGrams = computed(() => {
+    // TODO
     return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== UnitValue.GRAM
   });
   recipePriceAdditionsForm = new FormControl();

@@ -519,6 +519,8 @@
   "support.notifications.send-error": "Не удалось отправить сообщение. Пожалуйста, попробуйте позже.",
   "unit.gram": "г.",
   "unit.long.gram": "грамм",
+  "unit.kilogram": "кг.",
+  "unit.long.kilogram": "килограмм",
   "unit.piece": "шт.",
   "unit.long.piece": "штук",
   "tags.add-tag-text": "Добавить тег",

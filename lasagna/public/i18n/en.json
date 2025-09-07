@@ -520,6 +520,8 @@
   "support.notifications.send-error": "Failed to send message. Please try again later.",
   "unit.gram": "gr.",
   "unit.long.gram": "grams",
+  "unit.kilogram": "kg.",
+  "unit.long.kilogram": "kilograms",
   "unit.piece": "pcs.",
   "unit.long.piece": "pieces",
   "tags.add-tag-text": "Add tag",

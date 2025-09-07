@@ -26,6 +26,7 @@ export class ProductInvoiceItem
   }
 
   get weightGram(): number {
+    // TODO
     if (this.unit === 'gram' && this.product.unit === 'gram') {
       return this.amount;
     }
@@ -33,10 +34,12 @@ export class ProductInvoiceItem
   }
 
   get pricePerUnit(): number {
+    // TODO
     if (this.unit === 'piece' && this.product.unit !== 'piece') {
       return 0;
     }
 
+    // TODO
     if (this.unit === 'gram' && this.product.unit === 'piece') {
       return 0;
     }

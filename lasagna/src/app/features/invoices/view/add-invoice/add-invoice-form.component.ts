@@ -324,7 +324,7 @@ export class AddInvoiceFormComponent
     event: any,
     index: number
   ) {
-    // this.invoiceBuilderService.invoice()?.pinPricePerUnitByTotal(index, event);
+
     this.recalculateRows();
   }
 
