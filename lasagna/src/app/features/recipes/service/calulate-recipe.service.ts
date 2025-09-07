@@ -88,7 +88,7 @@ export class CalculateRecipeService {
         unit: ingredient.unit,
         uuid: ingredient.uuid || '',
         indent: 0,
-        type: ingredient.recipe_id ? 'recipe-row' : undefined,
+        type: ingredient.recipe_id && !ingredient.product_id ? 'recipe-row' : undefined,
       }));
     });
 

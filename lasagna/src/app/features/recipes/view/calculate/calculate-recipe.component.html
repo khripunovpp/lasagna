@@ -19,7 +19,9 @@
       </lg-flex-row>
 
       @if (result()?.calculation?.totalPrice) {
-        <lg-flex-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
+        <lg-flex-row [mobileMode]="true"
+                     style="max-width: 1200px"
+                     lgExpand>
           <lg-flex-column [position]="'stretch'">
 
             <lg-card size="small">
@@ -116,7 +118,8 @@
           </lg-flex-column>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-flex-column [size]="'small'">
+            <lg-flex-column [fill]="true"
+                            [size]="'small'">
               <lg-title [level]="5">
                 <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
               </lg-title>
@@ -132,7 +135,8 @@
           </lg-card>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-flex-column [size]="'small'">
+            <lg-flex-column [fill]="true"
+                            [size]="'small'">
               <lg-title [level]="5">
                 <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
               </lg-title>

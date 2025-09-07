@@ -86,7 +86,7 @@
   "recipe.calculation.price-chart": "Распределение стоимости",
   "recipe.calculation.table.amount.title": "Количество",
   "recipe.calculation.table.name.title": "Название",
-  "recipe.calculation.table.price.title": "Цена за грамм",
+  "recipe.calculation.table.price.title": "Цена за еденицу",
   "recipe.calculation.table.total-row": "Подытог (до налогов и сборов)",
   "recipe.calculation.table.total.title": "Общая стоимость",
   "recipe.calculation.table.unit.title": "Единица измерения",

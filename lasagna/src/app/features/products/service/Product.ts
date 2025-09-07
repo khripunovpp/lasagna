@@ -3,6 +3,8 @@ import {ProductDTO} from './Product.scheme';
 import {Unit} from '../../../shared/service/types/Unit.types';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {estimateColor, isColorString} from '../../../shared/helpers/color.helper';
+import {convertPriceOfKilogramToGram, isWeightUnit} from '../../../shared/helpers/unit.helper';
+import {UnitValue} from '../../../shared/view/const/units.const';
 
 export class Product {
   constructor(
@@ -48,6 +50,18 @@ export class Product {
       return 0;
     }
     return parseFloatingNumber(this.price) / parseFloatingNumber(this.amount);
+  }
+
+  get pricePerGram() {
+    if (isWeightUnit(this.unit)) {
+      if (this.unit === UnitValue.KILOGRAM) {
+        return convertPriceOfKilogramToGram(this.pricePerUnit)
+      } else if (this.unit === UnitValue.GRAM) {
+        return this.pricePerUnit;
+      }
+      return 0;
+    }
+    return 0;
   }
 
   static fromRaw(dto: any) {
