@@ -485,7 +485,7 @@
   "file-input.upload-file": "Upload file",
   "pwa.update.banner-text": "New version available! Click to update.",
   "pwa.update.dialog.title": "New version available!",
-  "pwa.update.dialog.description": "We recommend to save a backup of your data before updating.",
+  "pwa.update.dialog.description": "We recommend to save a backup of your data before updating. Sometimes the app doesn't update on the first try, so you can just do nothing and it will update automatically anyway.",
   "pwa.update.dialog.save-backup": "Save Backup",
   "pwa.update.dialog.update-without-backup": "Update App without Backup",
   "pwa.update.dialog.timeout": "Will be updated in {seconds} seconds",
