@@ -4,9 +4,9 @@ export const removeAllNonLetters = (str: string) => {
 }
 
 export const removeAllNonMathSymbols = (str: string) => {
-  return String(str || '').replace(/[^0-9%.,+-\/*]/g, '')
-    .replace(',', '.')
-    .replace(/(\.\d{3})\d+/g, '$1');
+  return String(str || '')
+    .replace(/[^0-9%.,+\-*/^() ]/g, '')  // разрешаем цифры, буквы, %, ., ,, + - * / ^ скобки и пробел
+    .replace(',', '.')                           // заменяем запятую на точку
 }
 
 export const toString = (value: any) => {
