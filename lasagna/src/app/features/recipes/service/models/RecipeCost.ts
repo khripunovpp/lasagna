@@ -74,6 +74,13 @@ export class RecipeCost {
     return this.totalPriceWithAdditions - this.totalPrice;
   }
 
+  get totalPriceProfit(): number {
+    if (this.totalPrice === 0) {
+      return 0;
+    }
+    return (this.totalPriceDifference / this.totalPrice) * 100;
+  }
+
   get pricePerUnitDifference(): number {
     return this.pricePerUnitModified - this.pricePerOutcomeUnit;
   }
@@ -94,7 +101,7 @@ export class RecipeCost {
     if (!this.recipe) {
       return 0;
     }
-    return  this.recipe.totalPriceModified / this.recipe.outcomeAmount;
+    return this.recipe.totalPriceModified / this.recipe.outcomeAmount;
   }
 
   get pricePerUnitFromTotalDifference(): number {

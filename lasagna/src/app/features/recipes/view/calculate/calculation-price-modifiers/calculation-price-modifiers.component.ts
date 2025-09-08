@@ -31,9 +31,9 @@ import {TranslatePipe} from '@ngx-translate/core';
   template: `
     <lg-flex-row [formGroup]="recipePriceAdditionsForm">
       <lg-number-input [moveBeforeAbove]="isMobile()"
+                       [placeholder]="'price-modifier.placeholder' | translate"
                        formControlName="value"
-                       lgParseMath
-                       [placeholder]="'price-modifier.placeholder' | translate">
+                       lgParseMath>
         <ng-template lgExtraTpl place="before">
           <lg-unit-switcher [items]="additionalPriceType"
                             formControlName="type">
@@ -43,20 +43,16 @@ import {TranslatePipe} from '@ngx-translate/core';
           </lg-unit-switcher>
         </ng-template>
 
-        @if (showPriceAdditionUnits()) {
+
+        @if (roundActionSelected()) {
+          <ng-template lgExtraTpl place="after">
+            {{ userSettings()['currency']|currencySymbol }}
+          </ng-template>
+        } @else {
           <ng-template lgExtraTpl place="after">
             <lg-unit-switcher formControlName="unit"
                               [items]="additionalPriceUnit">
             </lg-unit-switcher>
-          </ng-template>
-        }
-
-        @if (roundActionSelected()) {
-          <ng-template lgExtraTpl place="after">
-            <b>{{ userSettings()['currency']|currencySymbol }}
-              /
-              {{ recipeCost()?.outcomeUnit }}
-            </b>
           </ng-template>
         }
       </lg-number-input>
@@ -128,10 +124,6 @@ export class CalculationPriceModifiersComponent
   onChanged = output<RecipePriceModifier[]>();
   isMobile = matchMediaSignal(mobileBreakpoint);
 
-  showPriceAdditionUnits = computed(() => {
-
-    return true;
-  });
   roundActionSelected = computed(() => {
     return this.values()?.action === 'round';
   });
@@ -156,6 +148,6 @@ export class CalculationPriceModifiersComponent
       value: obj?.value || 0,
       unit: obj?.unit || 'currency',
       type: obj?.type || 'per_unit',
-    }, {emitEvent: false});
+    });
   }
 }
