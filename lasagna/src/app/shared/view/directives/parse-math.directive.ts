@@ -13,6 +13,10 @@ export class ParseMathDirective {
   }
 
   @HostListener('keydown.enter', ['$event']) onEnter(e: KeyboardEvent) {
+    this._writeValue();
+  }
+
+  private _writeValue() {
     this._ngControl?.valueAccessor?.writeValue(evaluate(String(this._ngControl?.value)));
   }
 }

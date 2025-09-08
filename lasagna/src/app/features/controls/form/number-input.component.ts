@@ -37,7 +37,8 @@ import {NgTemplateOutlet} from '@angular/common';
              [placeholder]="placeholder()"
              [value]="value"
              class="input"
-             type="tel">
+             inputmode="decimal"
+             type="text">
       @if (afterExtraTpl()?.templateRef) {
         <div class="lg-number-input__after">
           <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
@@ -104,6 +105,7 @@ import {NgTemplateOutlet} from '@angular/common';
         background-color: transparent;
         border-radius: 12px;
         width: 100%;
+        appearance: none;
       }
 
       .input::placeholder {
