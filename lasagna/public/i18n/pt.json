@@ -75,7 +75,7 @@
   "recipe.calculation.price-chart": "Distribuição de custos",
   "recipe.calculation.table.amount.title": "Quantidade",
   "recipe.calculation.table.name.title": "Nome",
-  "recipe.calculation.table.price.title": "Preço por grama",
+  "recipe.calculation.table.price.title": "Preço por unidade",
   "recipe.calculation.table.total-row": "Subtotal (antes de impostos e taxas)",
   "recipe.calculation.table.total.title": "Custo total",
   "recipe.calculation.table.unit.title": "Unidade",
