@@ -221,6 +221,10 @@ export class CalculateRecipeComponent
     return Math.abs(diff) < threshold ? 0 : diff;
   });
 
+  totalPriceProfit = computed(() => {
+    return this.result()?.calculation?.totalPriceProfit || 0;
+  });
+
   totalPriceWithAdditions = computed(() => {
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });

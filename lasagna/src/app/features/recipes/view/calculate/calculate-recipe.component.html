@@ -74,13 +74,15 @@
                     @if (totalPriceDifference()) {
                       @let diff = totalPriceDifference();
                       >
-                      <span class="text-underlined">
-                      {{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}
-                    </span>
+                      <span class="text-underlined">{{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}</span>
 
                       <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                      ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }})
-                    </span>
+                        (
+                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }}
+                          /
+                          <span class="text-no-wrap">{{ totalPriceProfit() |number:'1.2-2' }}%</span>
+                          )
+                      </span>
                     }
                   </b>
                 </lg-flex-row>
@@ -159,9 +161,7 @@
           @if (result()?.calculation?.hasPriceDifference) {
             @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
             >
-            <span class="text-underlined">
-              {{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: '1.2-2' }}
-            </span>
+            <span class="text-underlined">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: '1.2-2' }}</span>
 
             <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
               ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }})
