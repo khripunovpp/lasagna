@@ -86,7 +86,7 @@
   "recipe.calculation.price-chart": "Cost Distribution",
   "recipe.calculation.table.amount.title": "Amount",
   "recipe.calculation.table.name.title": "Name",
-  "recipe.calculation.table.price.title": "Price per gram",
+  "recipe.calculation.table.price.title": "Price per unit",
   "recipe.calculation.table.total-row": "Subtotal (before taxes and fees)",
   "recipe.calculation.table.total.title": "Total Cost",
   "recipe.calculation.table.unit.title": "Unit",
