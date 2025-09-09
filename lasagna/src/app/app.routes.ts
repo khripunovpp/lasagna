@@ -12,6 +12,11 @@ import {inject} from '@angular/core';
 import {BrowserTabTrackingService} from './shared/service/services/browser-tab-tracking.service';
 import {NotificationsService} from './shared/service/services';
 import {TranslateService} from '@ngx-translate/core';
+import {
+  defTitleResolver,
+  recipeCalculationTitleResolver,
+  recipeTitleResolver
+} from './shared/service/providers/title.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -30,7 +35,8 @@ export const routes: Routes = [{
             .then(m => m.ApplicationComponent),
           data: {
             canSeePolicies: true,
-          }
+          },
+          title: defTitleResolver,
         }
       ]
     },
@@ -41,11 +47,13 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/recipes/view/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
+          title: defTitleResolver,
         },
         {
           path: 'add',
           loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
+          title: defTitleResolver,
         },
         {
           path: 'edit/:uuid',
@@ -54,6 +62,7 @@ export const routes: Routes = [{
           resolve: {
             recipe: recipeEditResolver,
           },
+          title: recipeTitleResolver,
           data: {
             editRoute: true,
           }
@@ -65,6 +74,7 @@ export const routes: Routes = [{
           resolve: {
             draft: recipeDraftResolver,
           },
+          title: defTitleResolver,
           data: {
             draftRoute: true,
           }
@@ -75,8 +85,9 @@ export const routes: Routes = [{
             .then(m => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
-            template: recipeCalculationTemplateResolver,
-          }
+          },
+          title: recipeCalculationTitleResolver,
+          data: {}
         },
       ]
     },
@@ -88,11 +99,13 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/products/view/list/product-list.component')
             .then(m => m.ProductListComponent),
+          title: defTitleResolver,
         },
         {
           path: 'add',
           loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
+          title: defTitleResolver,
         },
         {
           path: 'edit/:uuid',
@@ -101,6 +114,7 @@ export const routes: Routes = [{
           resolve: {
             product: recipeEditResolver,
           },
+          title: defTitleResolver,
           data: {
             editRoute: true,
           }
@@ -112,6 +126,7 @@ export const routes: Routes = [{
           resolve: {
             draft: productDraftResolver,
           },
+          title: defTitleResolver,
           data: {
             draftRoute: true,
           }
@@ -136,6 +151,7 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/invoices/view/list/invoices-list.component')
             .then(m => m.InvoicesListComponent),
+          title: defTitleResolver,
         },
         {
           path: 'edit/:uuid',
@@ -147,6 +163,7 @@ export const routes: Routes = [{
           resolve: {
             invoice: invoiceEditResolver,
           },
+          title: defTitleResolver,
           data: {
             editRoute: true,
           },
@@ -174,6 +191,7 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/settings/view/settings.component')
             .then(m => m.SettingsComponent),
+          title: defTitleResolver,
         },
         {
           path: 'categories',
@@ -185,16 +203,19 @@ export const routes: Routes = [{
                   path: '',
                   loadComponent: () => import('./features/settings/view/categories/category-product/list/category-list.component')
                     .then(m => m.CategoryListComponent),
+                  title: defTitleResolver,
                 },
                 {
                   path: 'add',
                   loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
-                    .then(m => m.AddCategoryComponent)
+                    .then(m => m.AddCategoryComponent),
+                  title: defTitleResolver,
                 },
                 {
                   path: 'edit/:uuid',
                   loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
-                    .then(m => m.AddCategoryComponent)
+                    .then(m => m.AddCategoryComponent),
+                  title: defTitleResolver,
                 }
               ]
             },
@@ -205,17 +226,20 @@ export const routes: Routes = [{
                   path: '',
                   loadComponent: () => import('./features/settings/view/categories/category-recipe/list/category-recipe-list.component')
                     .then(m => m.CategoryRecipeListComponent),
+                  title: defTitleResolver,
                 },
                 {
                   path: 'add',
                   loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
-                    .then(m => m.AddCategoryRecipeComponent)
+                    .then(m => m.AddCategoryRecipeComponent),
+                  title: defTitleResolver,
 
                 },
                 {
                   path: 'edit/:uuid',
                   loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
-                    .then(m => m.AddCategoryRecipeComponent)
+                    .then(m => m.AddCategoryRecipeComponent),
+                  title: defTitleResolver,
                 }
               ]
             }
@@ -227,7 +251,8 @@ export const routes: Routes = [{
             {
               path: '',
               loadComponent: () => import('./features/settings/view/finance-settings/taxes/taxes-settings.component')
-                .then(m => m.TaxesSettingsComponent)
+                .then(m => m.TaxesSettingsComponent),
+              title: defTitleResolver,
             },
           ],
         }
@@ -238,22 +263,25 @@ export const routes: Routes = [{
     {
       path: 'widgets',
       loadComponent: () => import('./features/widgets/widgets-page/widgets-page.component')
-        .then(m => m.WidgetsPageComponent)
+        .then(m => m.WidgetsPageComponent),
+      title: defTitleResolver,
     },
 
     {
       path: 'docs',
       loadComponent: () => import('./features/documentation/view/documentation-container.component')
         .then(m => m.DocumentationContainerComponent),
+
+      title: defTitleResolver,
       children: [
         {
           path: '**',
-
           loadComponent: () => import('./features/documentation/view/article.component')
             .then(m => m.ArticleComponent),
+          title: defTitleResolver,
         }
       ],
-      data:{
+      data: {
         canSeeAuthors: true,
       }
     },
@@ -268,6 +296,7 @@ export const routes: Routes = [{
       path: '**',
       loadComponent: () => import('./shared/view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),
+      title: defTitleResolver,
     }
   ]
 }];
