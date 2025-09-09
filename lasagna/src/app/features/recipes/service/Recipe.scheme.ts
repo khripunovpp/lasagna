@@ -20,6 +20,7 @@ export const RecipeScheme = z.object({
     value: z.number().or(z.string()),
     unit: z.enum(['currency', 'percent']),
   })).optional(),
+  master: z.boolean().optional(),
 });
 
 

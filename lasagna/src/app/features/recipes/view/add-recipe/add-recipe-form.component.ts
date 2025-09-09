@@ -43,7 +43,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
 import {ControlComponent} from "../../../controls/form/control-item/control.component";
 import {UnitValue} from '../../../../shared/view/const/units.const';
 import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/entity-item-selector.component';
-
+import {SwitchComponent} from '../../../controls/form/switch.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -72,7 +72,8 @@ import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/enti
     TagsControlComponent,
     FlexRowComponent,
     ControlComponent,
-    EntityItemSelectorComponent
+    EntityItemSelectorComponent,
+    SwitchComponent
   ],
   providers: [
     {
@@ -105,6 +106,7 @@ export class AddRecipeFormComponent
     ]),
     category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
+    master: new FormControl<boolean>(false),
   }, (group) => {
     const recipeTmpModel = Recipe.fromRaw(group.value);
 

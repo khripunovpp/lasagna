@@ -1,23 +1,22 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
 import {UsingHistoryService} from '../../../shared/service/services/using-history.service';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {DraftForm, DraftFormsService} from '../../../shared/service/services/draft-forms.service';
 import {TagsRepository} from '../../settings/service/repositories/tags.repository';
 import {Recipe} from './models/Recipe';
 import {RecipeDTO} from './Recipe.scheme';
 import {Tag} from '../../settings/service/models/Tag';
 import {ProductsRepository} from '../../products/service/products.repository';
-import {response} from 'express';
 import {OnboardingService} from '../../onboarding/onboarding.service';
+import {Filters} from '../../../shared/types/filter.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesRepository {
-  private _onboardingService = inject(OnboardingService);
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
@@ -28,7 +27,8 @@ export class RecipesRepository {
   ) {
   }
 
-  private _stream$ = new Subject<Recipe[]>();
+  private _onboardingService = inject(OnboardingService);
+  private _stream$ = new BehaviorSubject<Recipe[]>([]);
 
   get recipes$() {
     return this._stream$.asObservable();
@@ -62,12 +62,18 @@ export class RecipesRepository {
     return uuid;
   }
 
-  loadRecipes() {
-    return this._indexDbService.getAll(Stores.RECIPES).then(resp => {
-      const recipes = resp.map(recipe => Recipe.fromRaw(recipe));
-      this._stream$.next(recipes);
-      return recipes;
-    });
+  async loadRecipes(
+    filter?: Filters,
+  ) {
+    let resp: Recipe[] = [];
+    if (filter?.key && filter.value) {
+      resp = await this._indexDbService.filter(Stores.RECIPES, filter.key, filter.value, filter.operator === 'equals');
+    } else {
+      resp = await this._indexDbService.getAll(Stores.RECIPES);
+    }
+    const recipes = resp.map(recipe => Recipe.fromRaw(recipe));
+    this._stream$.next(recipes);
+    return recipes;
   }
 
   getRecipes() {

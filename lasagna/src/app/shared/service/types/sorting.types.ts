@@ -18,4 +18,8 @@ export class SortResult<T> {
     public groups: SortResultGroup<T>[],
   ) {
   }
+
+  get length() {
+    return this.groups.reduce((acc, group) => acc + group.items.length, 0);
+  }
 }

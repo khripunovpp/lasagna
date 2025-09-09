@@ -78,14 +78,16 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
       <lg-container>
         <lg-title>
           {{ 'products.list-title'|translate }}
+
+          <span [translateParams]="{length:productsTiles()?.length}"
+                [translate]="'filters.results.length'"
+                class="text-muted text-small"></span>
         </lg-title>
 
         <lg-draft-products-list></lg-draft-products-list>
 
         @if (!groupingTiles.empty()) {
           <lg-flex-column [size]="'medium'">
-<!--            <lg-grouping-sorting></lg-grouping-sorting>-->
-
             <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
           </lg-flex-column>
         }

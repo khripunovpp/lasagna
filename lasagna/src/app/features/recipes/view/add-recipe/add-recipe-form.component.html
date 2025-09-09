@@ -162,5 +162,11 @@
         </lg-flex-column>
       </lg-control>
     </lg-flex-row>
+
+    <lg-switch formControlName="master"
+               style="--control-bg: var(--hr-bg-strong)">
+      <span slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
+      <span slot="right">{{ 'recipe.form.master.label' | translate }}</span>
+    </lg-switch>
   </lg-flex-column>
 </form>

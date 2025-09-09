@@ -28,6 +28,7 @@ export class Recipe {
   tags?: Tag[];
   color?: string | undefined;
   priceModifiers: RecipePriceModifier[] = [];
+  master?: boolean = false;
 
   get perUnitPriceModified() {
     let value = this.pricePerUnit;
@@ -145,6 +146,7 @@ export class Recipe {
             modifier.type || 'per_unit',
           );
         }) : [],
+      master: dto?.master || false,
     });
   }
 
@@ -162,6 +164,7 @@ export class Recipe {
       updatedAt: undefined,
       tags: [],
       color: undefined,
+      master: false,
     });
   }
 
@@ -202,6 +205,7 @@ export class Recipe {
       }),
       color: this.color || estimateColor(this.name),
       priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
+      master: this.master || false,
     };
   }
 
@@ -239,6 +243,7 @@ export class Recipe {
           modifier.type || 'per_unit',
         );
       }) : this.priceModifiers;
+    this.master = dto?.master ?? this.master;
     return this;
   }
 }

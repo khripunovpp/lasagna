@@ -21,6 +21,7 @@ export const recipeToFormValue = (recipe: Recipe) => {
       uuid: recipe.category_id?.uuid,
     } : null,
     tags: recipe.tags?.map((tag) => tag.toString()) || [],
+    master: recipe.master || false,
   }
 }
 
