@@ -8,6 +8,7 @@ import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map, switchMap, startWith, filter} from 'rxjs';
 import {SupportPopupComponent} from '../../../features/home/view/support-popup.component';
+import {findRouteData} from '../../helpers';
 
 
 @Component({
@@ -132,27 +133,6 @@ export class FooterComponent {
     filter(event => event instanceof NavigationEnd),
     startWith(null), // Для первоначальной загрузки
     switchMap(() => {
-      // Функция для поиска данных в дереве маршрутов
-      const findRouteData = (route: ActivatedRoute): any => {
-        let currentRoute = route;
-
-        // Идем по всему дереву маршрутов и собираем все данные
-        while (currentRoute) {
-          if (currentRoute.snapshot.data && Object.keys(currentRoute.snapshot.data).length > 0) {
-            return currentRoute.snapshot.data;
-          }
-
-          // Переходим к дочернему маршруту
-          if (currentRoute.firstChild) {
-            currentRoute = currentRoute.firstChild;
-          } else {
-            break;
-          }
-        }
-
-        return {};
-      };
-
       const routeData = findRouteData(this.activatedRoute);
       return [routeData];
     })

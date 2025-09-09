@@ -3,15 +3,13 @@ import {SetupDefaultsService} from './setup-defaults.service';
 import {NotificationsService} from '../../shared/service/services';
 import {errorHandler} from '../../shared/helpers';
 import {SettingsService} from '../settings/service/services/settings.service';
-import {Title} from '@angular/platform-browser';
-import {TranslateService} from '@ngx-translate/core';
+import {PageTitleService} from '../../shared/service/services/page-title.service';
 
 export const setupDefaultsInitializer = async () => {
   const setupDefaultsService = inject(SetupDefaultsService);
   const notificationsService = inject(NotificationsService);
   const settingsService = inject(SettingsService);
-  const title = inject(Title);
-  const translateService = inject(TranslateService);
+  const title = inject(PageTitleService);
 
   try {
     return await Promise.all([
@@ -24,7 +22,7 @@ export const setupDefaultsInitializer = async () => {
         .then(async (settings) => {
           const lang = settings?.getSetting<string>('lang')?.data || 'en';
           await settingsService.changeLang(lang);
-          title.setTitle(translateService.instant('app.title'));
+          title.setTitle('');
         }),
     ]);
   } catch (error) {
