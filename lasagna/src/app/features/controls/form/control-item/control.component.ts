@@ -54,11 +54,6 @@ import {NgTemplateOutlet} from '@angular/common';
         min-width: 0;
 
         &-string {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          width: 100%;
-          display: inline-block;
         }
       }
 

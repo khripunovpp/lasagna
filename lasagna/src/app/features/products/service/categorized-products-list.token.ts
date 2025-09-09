@@ -29,7 +29,6 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
         const uuids = Object.keys(grouped).filter(uuid => uuid !== ''); // исключаем пустые категории
         const categories = await categoryRepository.getMany(uuids);
 
-
         for (const groupKey in grouped) {
           const products = grouped[groupKey];
           if (products && products.length) {
@@ -49,10 +48,13 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
 
         const sortedList = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
 
-        return [{
-          category: '',
-          products: withoutGroup,
-        }].concat(sortedList);
+        if (withoutGroup.length) {
+          return [{
+            category: '',
+            products: withoutGroup,
+          }].concat(sortedList);
+        }
+        return sortedList;
       }),
       catchError((error, caught) => {
         notificationsService.error(errorHandler(error));

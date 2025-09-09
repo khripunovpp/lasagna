@@ -118,17 +118,14 @@ export class SettingsService {
   }
 
   setInvoicePrecisions(
-    precisionRows: number | null,
-    precisionTotals: number | null
+    precision: number | null,
   ) {
-    this.settingsModel?.addSetting(SettingsKeysConst.invoicePrecisionRows, precisionRows);
-    this.settingsModel?.addSetting(SettingsKeysConst.invoicePrecisionTotals, precisionTotals);
+    this.settingsModel?.addSetting(SettingsKeysConst.pricePrecision, precision);
   }
 
   getInvoicePrecision(): [number, number] {
-    const precisionRows = this.settingsModel?.getSetting<number>(SettingsKeysConst.invoicePrecisionRows)?.data;
-    const precisionTotals = this.settingsModel?.getSetting<number>(SettingsKeysConst.invoicePrecisionTotals)?.data;
+    const precision = this.settingsModel?.getSetting<number>(SettingsKeysConst.pricePrecision)?.data;
 
-    return [precisionRows ?? 2, precisionTotals ?? 2];
+    return [precision ?? 2, precision ?? 2];
   }
 }

@@ -18,6 +18,7 @@ import {ProductsRepository} from '../../products/service/products.repository';
 import {NotificationsService} from '../../../shared/service/services/notifications.service';
 import {Product} from '../../products/service/Product';
 import {TranslatePipe} from '@ngx-translate/core';
+import {Unit} from '../../../shared/service/types/Unit.types';
 
 
 @Component({
@@ -59,11 +60,16 @@ export class BarcodeSeekerWidgetComponent
     name: string
   }>();
   barcode = signal('');
-  product = {
+  product:{
+    name: string
+    price: number
+    amount: number
+    unit: Unit
+  } = {
     name: '',
     price: 0,
     amount: 0,
-    unit: 'gram' as 'gram' | 'piece'
+    unit: 'gram'
   };
   lockRequest = false;
   showFormInitially = input(false);
@@ -117,7 +123,7 @@ export class BarcodeSeekerWidgetComponent
       name: '',
       price: 0,
       amount: 0,
-      unit: 'gram' as 'gram' | 'piece'
+      unit: 'gram'
     };
     this.showProductForm.set(false);
     this.lockRequest = false;
@@ -140,7 +146,7 @@ export class BarcodeSeekerWidgetComponent
     this._arcodeReaderService.stopCamera();
   }
 
-  detectUnit(product: any): 'gram' | 'piece' {
+  detectUnit(product: any): Unit {
     const qty = (product.serving_quantity_unit || '').toLowerCase();
     if (qty.includes('g') || qty.includes('ml')) return 'gram';
     if (qty.includes('pc') || qty.includes('шт')) return 'piece';
@@ -166,7 +172,7 @@ export class BarcodeSeekerWidgetComponent
         name: '',
         price: 0,
         amount: 0,
-        unit: 'gram' as 'gram' | 'piece'
+        unit: 'gram'
       };
       this.barcode.set('');
       this.lockRequest = false;

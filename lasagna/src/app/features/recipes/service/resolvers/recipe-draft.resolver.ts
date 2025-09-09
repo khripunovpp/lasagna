@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router, RouterStateSnapshot} from '@angular/router';
 import {inject} from '@angular/core';
-import {RecipesRepository} from '../recipes.repository';
+import {RecipesRepository} from '../providers/recipes.repository';
 import {Recipe} from '../models/Recipe';
 import {DraftForm} from '../../../../shared/service/services/draft-forms.service';
 

@@ -1,6 +1,7 @@
 import {Recipe} from './Recipe';
-import {CalculationTableParams} from '../calulate-recipe.service';
+import {CalculationTableParams} from '../providers/calulate-recipe.service';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {parseFloatingNumber} from '../../../../shared/helpers';
 
 export class RecipeCost {
   constructor(
@@ -16,6 +17,12 @@ export class RecipeCost {
     }
 
     return this.ingredientsTotalPrice;
+  }
+
+  get totalPricePerGram() {
+    return this.totalWeight
+      ? parseFloatingNumber(this.totalPrice / this.totalWeight)
+      : this.totalPrice;
   }
 
   get ingredientsTotalPrice(): number {
@@ -36,19 +43,38 @@ export class RecipeCost {
       return 0;
     }
 
-    return this.totalPrice / this.totalWeight;
+    if (this.hasWeight) {
+      return this.totalPrice / this.totalWeight;
+    }
+
+    return 0;
+  }
+
+  get hasWeight() {
+    return !!this.totalWeight;
   }
 
   get pricePerOutcomeUnit(): number {
-    if (!this.recipe || !this.recipe.outcome_amount) {
+    if (!this.recipe) {
       return 0;
     }
 
-    return this.totalPrice / this.recipe.outcome_amount;
+    if (this.recipe.portions) {
+      return this.totalPrice / this.recipe.portions;
+    } else {
+      return this.totalPrice / this.totalWeight;
+    }
   }
 
   get totalWeight(): number {
-    return this.recipe?.totalIngredientsWeight || 0;
+    console.log('-----')
+    return this.ingredients.reduce((acc, ingredient) => {
+      // Не включаем в расчет позициии для которых не удалось вывести стоимость
+      if (!ingredient.pricePerUnit) return acc;
+      console.log(ingredient, ingredient.totalWeightGram);
+      // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
+      return acc + (ingredient.totalWeightGram ?? 0);
+    }, 0);
   }
 
   get outcomeAmount(): number {
@@ -60,11 +86,9 @@ export class RecipeCost {
   }
 
   get outcomeUnit(): string {
-    if (!this.recipe) {
-      return UnitValue.GRAM;
-    }
-
-    return this.recipe.outcome_unit || UnitValue.GRAM;
+    return this.recipe?.portions
+      ? UnitValue.PIECE
+      : UnitValue.GRAM;
   }
 
   get totalPriceDifference(): number {

@@ -5,6 +5,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MultiselectComponent} from './multiselect.component';
 import {ControlComponent} from './control-item/control.component';
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
 
 interface CurrencyOption {
   code: string;
@@ -22,7 +23,8 @@ interface CurrencyOption {
     TranslatePipe,
     MultiselectComponent,
     ControlComponent,
-    ExpandDirective
+    ExpandDirective,
+    FlexColumnComponent
   ],
   providers: [
     {
@@ -32,21 +34,28 @@ interface CurrencyOption {
     },
   ],
   template: `
-    <lg-control [label]="'language.settings.currency-title' | translate"
-                lgExpand>
-      <lg-multiselect
-        (onSelected)="onCurrencySelected($event)"
-        [multi]="false"
-        [ngModel]="selectedCurrency()"
-        [placeholder]="'currency.select-placeholder' | translate"
-        [staticItems]="currencyList"
-        compareField="code">
-      </lg-multiselect>
-    </lg-control>
+    <lg-flex-column [size]="'small'">
+      <lg-control [label]="'language.settings.currency-title' | translate"
+                  lgExpand>
+        <lg-multiselect
+          (onSelected)="onCurrencySelected($event)"
+          [multi]="false"
+          [ngModel]="selectedCurrency()"
+          [placeholder]="'currency.select-placeholder' | translate"
+          [staticItems]="currencyList"
+          compareField="code">
+        </lg-multiselect>
+      </lg-control>
+      <small class="text-small text-muted">
+        {{'language.settings.currency-informer' | translate}}
+
+      </small>
+    </lg-flex-column>
   `,
   styles: [`
     :host {
       display: flex;
+
       flex: 1;
     }
   `],

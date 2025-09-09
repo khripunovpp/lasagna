@@ -13,8 +13,7 @@ export const recipeToFormValue = (recipe: Recipe) => {
         unit: ingredient.unit,
       };
     }),
-    outcome_amount: recipe.outcome_amount,
-    outcome_unit: recipe.outcome_unit,
+    portions: recipe.portions,
     uuid: recipe.uuid,
     category_id: recipe.category_id?.uuid ? {
       uuid: recipe.category_id?.uuid,

@@ -1,6 +1,7 @@
 import {Stores} from '../const/stores';
 import {Transaction} from 'dexie';
-import {RecipeDTO} from '../../../../features/recipes/service/Recipe.scheme';
+import {RecipeDTO} from '../../../../features/recipes/service/schemes/Recipe.scheme';
+import {UnitValue} from '../../../view/const/units.const';
 
 export const migrations: {
   version: number
@@ -72,6 +73,41 @@ export const migrations: {
       [Stores.SETTINGS]: '++key',
       [Stores.INVOICES]: '++uuid',
       [Stores.CREDENTIALS]: '++uuid,type',
+    },
+  },
+  {
+    version: 4,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+      [Stores.SETTINGS]: '++key',
+      [Stores.INVOICES]: '++uuid',
+      [Stores.CREDENTIALS]: '++uuid,type',
+    },
+    update: tx => {
+      return new Promise(async (resolve) => {
+        const recipesTable = tx.table(Stores.RECIPES);
+        const recipes = await recipesTable.toArray();
+
+        await Promise.all(recipes.map((recipe: any) => {
+          return recipesTable.update(recipe.uuid, {
+            portions: recipe.outcome_unit === UnitValue.PIECE && Number(recipe.outcome_amount) > 0
+              ? Number(recipe.outcome_amount)
+              : 0,
+            outcome_unit: undefined,
+            outcome_amount: undefined,
+          });
+        }));
+
+        resolve();
+      })
     },
   },
 ]
