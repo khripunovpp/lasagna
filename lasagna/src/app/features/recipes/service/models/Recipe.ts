@@ -7,6 +7,7 @@ import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRe
 import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from '../PriceModifier';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {isCountUnit} from '../../../../shared/helpers/unit.helper';
 
 export class Recipe {
   constructor(
@@ -80,10 +81,9 @@ export class Recipe {
   }
 
   get pricePerUnit() {
-    if (this.ingredients.length === 0) {
-      return 0;
-    }
-    if (this.outcome_unit && this.outcome_unit !== UnitValue.GRAM) {
+    if (this.ingredients.length === 0) return 0;
+    // TODO
+    if (isCountUnit(this.outcome_unit)) {
       return this.totalPrice / this.outcome_amount;
     }
     return this.pricePerGram;
@@ -107,9 +107,7 @@ export class Recipe {
   }
 
   get weightForUnit(): number {
-    if (!this.outcome_unit || this.outcome_unit === UnitValue.GRAM) {
-      return this.totalIngredientsWeight;
-    }
+    if (!isCountUnit(this.outcome_unit)) return 0;
     return this.totalIngredientsWeight / this.outcome_amount;
   }
 

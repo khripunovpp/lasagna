@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/features/recipes/service/categorized-recipes-list.token.ts"],
-  "sourcesContent": ["import {InjectionToken} from '@angular/core';\nimport {Observable} from 'rxjs';\nimport {RecipeDTO} from './Recipe.scheme';\nimport {SortResult} from '../../../shared/service/types/sorting.types';\n\nexport const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult<RecipeDTO>>>('CategorizedRecipesList');\n"],
-  "mappings": ";;;;;AAKO,IAAM,2BAA2B,IAAI,eAAkD,wBAAwB;",
-  "names": []
-}

@@ -10,6 +10,7 @@ export class UnitStringPipe {
 
   private readonly _unitMap: Record<string, string> = {
     [UnitValue.GRAM]: marker('unit.gram'),
+    [UnitValue.KILOGRAM]: marker('unit.kilogram'),
     [UnitValue.PIECE]: marker('unit.piece'),
   };
 

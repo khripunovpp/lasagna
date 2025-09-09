@@ -141,11 +141,7 @@ export class Invoice {
       for (let idx = 0; idx < this.rows.length; idx++) {
         const item = this.rows[idx];
         const perUnitTaxAmountIncluded = calculateIncludedTax(item.pricePerUnitModified, this.taxesAndFees);
-        console.log({
-          itemPricePerUnit: item.pricePerUnitModified,
-          perUnitTaxAmountIncluded,
-          resultingPricePerUnit: item.pricePerUnitModified - perUnitTaxAmountIncluded,
-        })
+
         this.pinPricePerUnit(idx, item.pricePerUnitModified - perUnitTaxAmountIncluded);
       }
     }

@@ -1,75 +1,69 @@
 import {
   FaqService
-} from "./chunk-L3OGPP6U.js";
+} from "./chunk-QEB4NIMR.js";
 import {
   provideCharts,
   withDefaultRegisterables
-} from "./chunk-ZODO7AL2.js";
+} from "./chunk-3QM3YPNJ.js";
 import {
   BrowserTabTrackingService,
   DateAdapter,
   InvoiceBuilderService,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
-} from "./chunk-NNJGJB3X.js";
-import {
-  UserCurrencyPipe
-} from "./chunk-36PVMZQC.js";
-import {
-  GroupSortService
-} from "./chunk-R3XUMN4L.js";
-import "./chunk-PTFKCVPY.js";
+} from "./chunk-K47MHHJP.js";
+import "./chunk-THYAZBLT.js";
 import {
   InputComponent
-} from "./chunk-BEOO26FI.js";
+} from "./chunk-FWO7KYGH.js";
 import {
-  CATEGORIZED_RECIPES_LIST
-} from "./chunk-4UPQAEW5.js";
+  isPwa
+} from "./chunk-LLE5CVLK.js";
 import {
   PortalComponent
-} from "./chunk-7BUCXCEO.js";
+} from "./chunk-LWSH7HL2.js";
 import {
   BODY_LOCKER,
   DialogComponent,
   FocusTrapDirective
-} from "./chunk-NCI2AXMM.js";
+} from "./chunk-CU6H67XS.js";
 import {
   ROUTER_MANAGER_PROVIDER
-} from "./chunk-OBLG76QB.js";
+} from "./chunk-3VKINZ24.js";
 import {
   ControlsRowComponent
-} from "./chunk-CVDG6MR4.js";
+} from "./chunk-TBQQGCER.js";
 import {
   AnalyticsService
-} from "./chunk-ZSRRFY7V.js";
+} from "./chunk-4ER4XFVT.js";
 import {
   TextareaComponent
-} from "./chunk-25VVVZZW.js";
+} from "./chunk-WYYB64AD.js";
 import {
   ControlComponent
-} from "./chunk-L6LNU7WI.js";
-import "./chunk-RSTLHIV7.js";
+} from "./chunk-MIHJPSYK.js";
+import "./chunk-E4VJ6P46.js";
 import {
   ExpandDirective
-} from "./chunk-RDIOWZFB.js";
+} from "./chunk-M2YGHT4C.js";
 import {
   MatIcon
-} from "./chunk-XSNVK4IA.js";
-import "./chunk-KWEJJNRF.js";
+} from "./chunk-L5RYK3YF.js";
+import "./chunk-JBMQGOGT.js";
 import {
   TimeAgoPipe
-} from "./chunk-YTRTB3GK.js";
+} from "./chunk-AI45K3G4.js";
 import {
   FlexColumnComponent
-} from "./chunk-MVKV245R.js";
+} from "./chunk-P5TU7LMT.js";
 import "./chunk-R64U7JLD.js";
 import {
   FadeInComponent
-} from "./chunk-TFPBWSA6.js";
+} from "./chunk-NYW6IVNI.js";
 import "./chunk-R4FNXVZE.js";
 import {
   TitleComponent
-} from "./chunk-S3LHKJVR.js";
+} from "./chunk-2FAMYL7R.js";
 import {
   CalculateRecipeService,
   CategoryProductsRepository,
@@ -80,11 +74,27 @@ import {
   RecipesRepository,
   StorageQuotaService,
   VersionService
-} from "./chunk-MUCTVFUK.js";
+} from "./chunk-TNNH66C3.js";
+import "./chunk-2JX3723C.js";
 import {
   DocsService
-} from "./chunk-CDODNEUR.js";
-import "./chunk-A44TAXVW.js";
+} from "./chunk-GYGQEGQM.js";
+import "./chunk-HO3BXY6Z.js";
+import {
+  CategoryProduct,
+  CategoryRecipe,
+  LanguageService,
+  NotificationsService,
+  Product,
+  Recipe,
+  SETTINGS,
+  SettingsService,
+  errorHandler,
+  groupBy,
+  marker,
+  provideHotToastConfig
+} from "./chunk-BDWFQHRO.js";
+import "./chunk-T5CRNY7R.js";
 import {
   FormBuilder,
   FormControl,
@@ -92,44 +102,39 @@ import {
   FormControlName,
   FormGroupDirective,
   FormsModule,
-  LanguageService,
   MaxLengthValidator,
   NgControlStatus,
   NgControlStatusGroup,
   NgModel,
-  NotificationsService,
   ReactiveFormsModule,
-  Recipe,
-  SETTINGS,
-  SettingsService,
   Validators,
-  groupBy,
   injectQueryParams,
-  marker,
-  provideHotToastConfig,
   toObservable,
   toSignal,
   ɵNgNoValidate
-} from "./chunk-2XO3IHHJ.js";
-import "./chunk-Q4M4NLQD.js";
+} from "./chunk-CT346LCA.js";
+import "./chunk-IWOUTMKL.js";
 import {
   ButtonComponent
-} from "./chunk-T3BLSHK3.js";
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslatePipe,
-  TranslateService
-} from "./chunk-K2AXQEJL.js";
+} from "./chunk-ZB5UPSW5.js";
 import {
   DB_NAME,
   DISABLE_LOGGER,
   DexieIndexDbService,
   LOGGER_CONTEXT,
   LoggerService,
+  Stores,
   USER_LANGUAGE
-} from "./chunk-HL3YEUI2.js";
-import "./chunk-5WJUMO7X.js";
+} from "./chunk-WSDGGV5V.js";
+import {
+  generateUuid
+} from "./chunk-5WJUMO7X.js";
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslatePipe,
+  TranslateService
+} from "./chunk-CQ4TEOHT.js";
 import {
   ActivatedRoute,
   NavigationCancel,
@@ -144,25 +149,26 @@ import {
   RouterOutlet,
   provideRouter,
   withInMemoryScrolling
-} from "./chunk-O3OB56H2.js";
+} from "./chunk-OJVTGBZ3.js";
 import {
   DomRendererFactory2,
   HammerModule,
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
+  Title,
   bootstrapApplication,
   provideHttpClient
-} from "./chunk-GCNVZWZ6.js";
+} from "./chunk-3B7JG6VR.js";
 import {
   AsyncPipe,
   CommonModule,
   DecimalPipe,
-  JsonPipe,
   Location,
   NgTemplateOutlet,
-  TitleCasePipe
-} from "./chunk-3W3KDUL6.js";
+  TitleCasePipe,
+  registerLocaleData
+} from "./chunk-S3HQU7AK.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -180,6 +186,7 @@ import {
   InjectionToken,
   Injector,
   Input,
+  LOCALE_ID,
   NEVER,
   NgModule,
   NgZone,
@@ -197,6 +204,7 @@ import {
   computed,
   debounceTime,
   effect,
+  enableProfiling,
   filter,
   firstValueFrom,
   formatRuntimeError,
@@ -211,7 +219,6 @@ import {
   provideAppInitializer,
   provideZonelessChangeDetection,
   setClassMetadata,
-  shareReplay,
   signal,
   startWith,
   switchMap,
@@ -277,7 +284,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuerySignal
-} from "./chunk-S2UUPSJN.js";
+} from "./chunk-FOZDM4WI.js";
 import "./chunk-PZQLIUCM.js";
 import "./chunk-7YWLATDR.js";
 import {
@@ -2174,7 +2181,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-HSRK6TFP.js").then((m) => m.ApplicationComponent),
+          loadComponent: () => import("./chunk-KJMSCYAF.js").then((m) => m.ApplicationComponent),
           data: {
             canSeePolicies: true
           }
@@ -2186,15 +2193,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-7FZ46NLQ.js").then((m) => m.RecipesListComponent)
+          loadComponent: () => import("./chunk-7BHNFK2M.js").then((m) => m.RecipesListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent)
+          loadComponent: () => import("./chunk-34UVZM5E.js").then((m) => m.AddRecipeComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-34UVZM5E.js").then((m) => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver
           },
@@ -2204,7 +2211,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-VHPD4Y7R.js").then((m) => m.AddRecipeComponent),
+          loadComponent: () => import("./chunk-34UVZM5E.js").then((m) => m.AddRecipeComponent),
           resolve: {
             draft: recipeDraftResolver
           },
@@ -2214,7 +2221,7 @@ var routes = [{
         },
         {
           path: "calculate/:uuid",
-          loadComponent: () => import("./chunk-AK7GVDKC.js").then((m) => m.CalculateRecipeComponent),
+          loadComponent: () => import("./chunk-FOVOH7XD.js").then((m) => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
             template: recipeCalculationTemplateResolver
@@ -2227,15 +2234,15 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-N7WGWE7M.js").then((m) => m.ProductListComponent)
+          loadComponent: () => import("./chunk-65AVVSX4.js").then((m) => m.ProductListComponent)
         },
         {
           path: "add",
-          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent)
+          loadComponent: () => import("./chunk-AZYMJRIE.js").then((m) => m.AddProductComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-AZYMJRIE.js").then((m) => m.AddProductComponent),
           resolve: {
             product: recipeEditResolver
           },
@@ -2245,7 +2252,7 @@ var routes = [{
         },
         {
           path: "draft/:uuid",
-          loadComponent: () => import("./chunk-XKO4KC2J.js").then((m) => m.AddProductComponent),
+          loadComponent: () => import("./chunk-AZYMJRIE.js").then((m) => m.AddProductComponent),
           resolve: {
             draft: productDraftResolver
           },
@@ -2270,11 +2277,11 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-Y6U6TECC.js").then((m) => m.InvoicesListComponent)
+          loadComponent: () => import("./chunk-HTFNEIZP.js").then((m) => m.InvoicesListComponent)
         },
         {
           path: "edit/:uuid",
-          loadComponent: () => import("./chunk-X75DQNXG.js").then((m) => m.AddInvoiceComponent),
+          loadComponent: () => import("./chunk-3YBN7RNL.js").then((m) => m.AddInvoiceComponent),
           providers: [
             InvoiceBuilderService
           ],
@@ -2304,7 +2311,7 @@ var routes = [{
       children: [
         {
           path: "",
-          loadComponent: () => import("./chunk-I2F445VY.js").then((m) => m.SettingsComponent)
+          loadComponent: () => import("./chunk-4UQBFXEM.js").then((m) => m.SettingsComponent)
         },
         {
           path: "categories",
@@ -2314,15 +2321,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-LD567FWK.js").then((m) => m.CategoryListComponent)
+                  loadComponent: () => import("./chunk-KZUOE4SM.js").then((m) => m.CategoryListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-QKTKKT32.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-EHY3YTEJ.js").then((m) => m.AddCategoryComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-QKTKKT32.js").then((m) => m.AddCategoryComponent)
+                  loadComponent: () => import("./chunk-EHY3YTEJ.js").then((m) => m.AddCategoryComponent)
                 }
               ]
             },
@@ -2331,15 +2338,15 @@ var routes = [{
               children: [
                 {
                   path: "",
-                  loadComponent: () => import("./chunk-QVHUK7G5.js").then((m) => m.CategoryRecipeListComponent)
+                  loadComponent: () => import("./chunk-4ERWFYYD.js").then((m) => m.CategoryRecipeListComponent)
                 },
                 {
                   path: "add",
-                  loadComponent: () => import("./chunk-G3DV5ICO.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-SQ4POI33.js").then((m) => m.AddCategoryRecipeComponent)
                 },
                 {
                   path: "edit/:uuid",
-                  loadComponent: () => import("./chunk-G3DV5ICO.js").then((m) => m.AddCategoryRecipeComponent)
+                  loadComponent: () => import("./chunk-SQ4POI33.js").then((m) => m.AddCategoryRecipeComponent)
                 }
               ]
             }
@@ -2350,7 +2357,7 @@ var routes = [{
           children: [
             {
               path: "",
-              loadComponent: () => import("./chunk-4J6FJBGO.js").then((m) => m.TaxesSettingsComponent)
+              loadComponent: () => import("./chunk-3YIHVN2W.js").then((m) => m.TaxesSettingsComponent)
             }
           ]
         }
@@ -2358,15 +2365,15 @@ var routes = [{
     },
     {
       path: "widgets",
-      loadComponent: () => import("./chunk-OZXABXLL.js").then((m) => m.WidgetsPageComponent)
+      loadComponent: () => import("./chunk-UWD35COC.js").then((m) => m.WidgetsPageComponent)
     },
     {
       path: "docs",
-      loadComponent: () => import("./chunk-M5VNPWJK.js").then((m) => m.DocumentationContainerComponent),
+      loadComponent: () => import("./chunk-5KXBV2GQ.js").then((m) => m.DocumentationContainerComponent),
       children: [
         {
           path: "**",
-          loadComponent: () => import("./chunk-OXAQ4QM2.js").then((m) => m.ArticleComponent)
+          loadComponent: () => import("./chunk-QFCGGM5Z.js").then((m) => m.ArticleComponent)
         }
       ],
       data: {
@@ -2375,11 +2382,11 @@ var routes = [{
     },
     {
       path: "dev",
-      loadComponent: () => import("./chunk-ZJJXY4TP.js").then((m) => m.ColorPaletteComponent)
+      loadComponent: () => import("./chunk-2CHFRC7V.js").then((m) => m.ColorPaletteComponent)
     },
     {
       path: "**",
-      loadComponent: () => import("./chunk-LEKZHLKU.js").then((m) => m.ErrorPage404Component)
+      loadComponent: () => import("./chunk-T7WBBAJN.js").then((m) => m.ErrorPage404Component)
     }
   ]
 }];
@@ -2961,7 +2968,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-KYTSJGET.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-KKYPWKTA.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
@@ -6498,6 +6505,9 @@ function captureEvent(event, hint) {
 }
 function setContext(name, context) {
   getIsolationScope().setContext(name, context);
+}
+function setUser(user) {
+  getIsolationScope().setUser(user);
 }
 function lastEventId() {
   return getIsolationScope().lastEventId();
@@ -10370,115 +10380,6 @@ var TranslateHttpLoader = class _TranslateHttpLoader {
   }], null);
 })();
 
-// src/app/shared/service/groupings/base-grouping.ts
-var BaseGrouping = class {
-  innerSort(a, b, direction = "asc") {
-    if (direction === "asc") {
-      return JSON.stringify(a).localeCompare(JSON.stringify(b));
-    } else {
-      return JSON.stringify(b).localeCompare(JSON.stringify(a));
-    }
-  }
-  groupingSort(a, b, direction = "asc") {
-    if (direction === "asc") {
-      return a.localeCompare(b);
-    } else {
-      return b.localeCompare(a);
-    }
-  }
-  groupBy(item) {
-    return JSON.stringify(item);
-  }
-  fieldTransform(field) {
-    return field;
-  }
-};
-
-// src/app/shared/service/groupings/recipes.grouping.ts
-var CategoryRecipeSortStrategy = class extends BaseGrouping {
-  categoryRecipesRepository;
-  constructor(categoryRecipesRepository) {
-    super();
-    this.categoryRecipesRepository = categoryRecipesRepository;
-  }
-  groupBy(item) {
-    return item.category_id || "";
-  }
-  innerSort(a, b, direction, field = "name") {
-    return recipeInnerSortFunction(a, b);
-  }
-  groupingSort(a, b, direction) {
-    if (direction === "asc") {
-      return a.localeCompare(b);
-    } else {
-      return b.localeCompare(a);
-    }
-  }
-  async fieldTransform(field) {
-    const category = await this.categoryRecipesRepository.getOne(field);
-    return category?.name || field;
-  }
-};
-var TagsRecipeSortStrategy = class extends BaseGrouping {
-  groupBy(item) {
-    return item.tags?.map((tag) => tag.toString()) || "";
-  }
-  innerSort(a, b, direction, field = "name") {
-    return recipeInnerSortFunction(a, b);
-  }
-};
-var RecipeAlphabeticalSortStrategy = class extends BaseGrouping {
-  groupBy(item) {
-    return item.name.toLowerCase().charAt(0);
-  }
-  innerSort(a, b, direction, field = "name") {
-    return recipeInnerSortFunction(a, b);
-  }
-  groupingSort(a, b, direction) {
-    if (direction === "asc") {
-      return a.localeCompare(b);
-    } else {
-      return b.localeCompare(a);
-    }
-  }
-};
-var RecipeCreatedAtMonthSortStrategy = class {
-  groupBy(item) {
-    const date = item.createdAt ? new Date(item.createdAt) : /* @__PURE__ */ new Date();
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${("0" + date.getDate()).slice(-2)}`;
-  }
-  innerSort(a, b, direction, field = "createdAt") {
-    return recipeInnerSortFunction(a, b);
-  }
-  groupingSort(a, b, direction) {
-    const [yearA, monthA, dayA] = a.split("-").map(Number);
-    const [yearB, monthB, dayB] = b.split("-").map(Number);
-    const dateA = new Date(yearA, monthA - 1, dayA);
-    const dateB = new Date(yearB, monthB - 1, dayB);
-    if (direction === "asc") {
-      return dateA.getTime() - dateB.getTime();
-    } else {
-      return dateB.getTime() - dateA.getTime();
-    }
-  }
-};
-var recipeInnerSortFunction = (a, b, direction = "asc", field = "name") => {
-  if (!a || !b)
-    return 0;
-  if (field === "name") {
-    if (direction === "asc") {
-      return a[field]?.toString()?.localeCompare(b[field]) || 0;
-    } else {
-      return b[field]?.toString()?.localeCompare(a[field]) || 0;
-    }
-  } else if (field === "createdAt") {
-    const dateA = new Date(a[field]);
-    const dateB = new Date(b[field]);
-    return direction === "asc" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
-  }
-  return 0;
-};
-
 // src/app/shared/service/services/sendpulse.service.ts
 var SendPulseService = class _SendPulseService {
   httpClient = inject(HttpClient);
@@ -11316,7 +11217,6 @@ var appInitializer = () => {
   const recipeCategoryRepository = inject(CategoryRecipesRepository);
   const docsService = inject(DocsService);
   const faqService = inject(FaqService);
-  const settingsService = inject(SettingsService);
   const userService = inject(UserService);
   const demoService = inject(DemoService);
   const indexDbService = inject(DexieIndexDbService);
@@ -11333,15 +11233,310 @@ var appInitializer = () => {
     docsService.init()
   ];
   return Promise.all([
-    categoryRepository.preloadCategories(),
-    recipeCategoryRepository.preloadCategories(),
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
-    versionService.load(),
-    settingsService.loadSettings().then((settings) => settingsService.setDefaultSettings()).then((settings) => settingsService.changeLang(settings?.getSetting("lang")?.data || "en"))
+    versionService.load()
   ]);
 };
 
+// node_modules/@angular/common/locales/ru.js
+var u = void 0;
+function plural(val) {
+  const n = val, i = Math.floor(Math.abs(val)), v = val.toString().replace(/^[^.]*\.?/, "").length;
+  if (v === 0 && (i % 10 === 1 && !(i % 100 === 11)))
+    return 1;
+  if (v === 0 && (i % 10 === Math.floor(i % 10) && (i % 10 >= 2 && i % 10 <= 4) && !(i % 100 >= 12 && i % 100 <= 14)))
+    return 3;
+  if (v === 0 && i % 10 === 0 || (v === 0 && (i % 10 === Math.floor(i % 10) && (i % 10 >= 5 && i % 10 <= 9)) || v === 0 && (i % 100 === Math.floor(i % 100) && (i % 100 >= 11 && i % 100 <= 14))))
+    return 4;
+  return 5;
+}
+var ru_default = ["ru", [["AM", "PM"], u, u], u, [["\u0412", "\u041F", "\u0412", "\u0421", "\u0427", "\u041F", "\u0421"], ["\u0432\u0441", "\u043F\u043D", "\u0432\u0442", "\u0441\u0440", "\u0447\u0442", "\u043F\u0442", "\u0441\u0431"], ["\u0432\u043E\u0441\u043A\u0440\u0435\u0441\u0435\u043D\u044C\u0435", "\u043F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A", "\u0432\u0442\u043E\u0440\u043D\u0438\u043A", "\u0441\u0440\u0435\u0434\u0430", "\u0447\u0435\u0442\u0432\u0435\u0440\u0433", "\u043F\u044F\u0442\u043D\u0438\u0446\u0430", "\u0441\u0443\u0431\u0431\u043E\u0442\u0430"], ["\u0432\u0441", "\u043F\u043D", "\u0432\u0442", "\u0441\u0440", "\u0447\u0442", "\u043F\u0442", "\u0441\u0431"]], u, [["\u042F", "\u0424", "\u041C", "\u0410", "\u041C", "\u0418", "\u0418", "\u0410", "\u0421", "\u041E", "\u041D", "\u0414"], ["\u044F\u043D\u0432.", "\u0444\u0435\u0432\u0440.", "\u043C\u0430\u0440.", "\u0430\u043F\u0440.", "\u043C\u0430\u044F", "\u0438\u044E\u043D.", "\u0438\u044E\u043B.", "\u0430\u0432\u0433.", "\u0441\u0435\u043D\u0442.", "\u043E\u043A\u0442.", "\u043D\u043E\u044F\u0431.", "\u0434\u0435\u043A."], ["\u044F\u043D\u0432\u0430\u0440\u044F", "\u0444\u0435\u0432\u0440\u0430\u043B\u044F", "\u043C\u0430\u0440\u0442\u0430", "\u0430\u043F\u0440\u0435\u043B\u044F", "\u043C\u0430\u044F", "\u0438\u044E\u043D\u044F", "\u0438\u044E\u043B\u044F", "\u0430\u0432\u0433\u0443\u0441\u0442\u0430", "\u0441\u0435\u043D\u0442\u044F\u0431\u0440\u044F", "\u043E\u043A\u0442\u044F\u0431\u0440\u044F", "\u043D\u043E\u044F\u0431\u0440\u044F", "\u0434\u0435\u043A\u0430\u0431\u0440\u044F"]], [["\u042F", "\u0424", "\u041C", "\u0410", "\u041C", "\u0418", "\u0418", "\u0410", "\u0421", "\u041E", "\u041D", "\u0414"], ["\u044F\u043D\u0432.", "\u0444\u0435\u0432\u0440.", "\u043C\u0430\u0440\u0442", "\u0430\u043F\u0440.", "\u043C\u0430\u0439", "\u0438\u044E\u043D\u044C", "\u0438\u044E\u043B\u044C", "\u0430\u0432\u0433.", "\u0441\u0435\u043D\u0442.", "\u043E\u043A\u0442.", "\u043D\u043E\u044F\u0431.", "\u0434\u0435\u043A."], ["\u044F\u043D\u0432\u0430\u0440\u044C", "\u0444\u0435\u0432\u0440\u0430\u043B\u044C", "\u043C\u0430\u0440\u0442", "\u0430\u043F\u0440\u0435\u043B\u044C", "\u043C\u0430\u0439", "\u0438\u044E\u043D\u044C", "\u0438\u044E\u043B\u044C", "\u0430\u0432\u0433\u0443\u0441\u0442", "\u0441\u0435\u043D\u0442\u044F\u0431\u0440\u044C", "\u043E\u043A\u0442\u044F\u0431\u0440\u044C", "\u043D\u043E\u044F\u0431\u0440\u044C", "\u0434\u0435\u043A\u0430\u0431\u0440\u044C"]], [["\u0434\u043E \u043D.\u044D.", "\u043D.\u044D."], ["\u0434\u043E \u043D. \u044D.", "\u043D. \u044D."], ["\u0434\u043E \u0420\u043E\u0436\u0434\u0435\u0441\u0442\u0432\u0430 \u0425\u0440\u0438\u0441\u0442\u043E\u0432\u0430", "\u043E\u0442 \u0420\u043E\u0436\u0434\u0435\u0441\u0442\u0432\u0430 \u0425\u0440\u0438\u0441\u0442\u043E\u0432\u0430"]], 1, [6, 0], ["dd.MM.y", "d MMM y '\u0433'.", "d MMMM y '\u0433'.", "EEEE, d MMMM y '\u0433'."], ["HH:mm", "HH:mm:ss", "HH:mm:ss z", "HH:mm:ss zzzz"], ["{1}, {0}", u, u, u], [",", "\xA0", ";", "%", "+", "-", "E", "\xD7", "\u2030", "\u221E", "\u043D\u0435\xA0\u0447\u0438\u0441\u043B\u043E", ":"], ["#,##0.###", "#,##0\xA0%", "#,##0.00\xA0\xA4", "#E0"], "RUB", "\u20BD", "\u0440\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0438\u0439 \u0440\u0443\u0431\u043B\u044C", { "BYN": [u, "\u0440."], "GEL": [u, "\u10DA"], "PHP": [u, "\u20B1"], "RON": [u, "L"], "RUB": ["\u20BD"], "RUR": ["\u0440."], "THB": ["\u0E3F"], "TMT": ["\u0422\u041C\u0422"], "TWD": ["NT$"], "UAH": ["\u20B4"], "XXX": ["XXXX"] }, "ltr", plural];
+
+// node_modules/@angular/common/locales/pt.js
+var u2 = void 0;
+function plural2(val) {
+  const n = val, i = Math.floor(Math.abs(val)), v = val.toString().replace(/^[^.]*\.?/, "").length, e = parseInt(val.toString().replace(/^[^e]*(e([-+]?\d+))?/, "$2")) || 0;
+  if (i === Math.floor(i) && (i >= 0 && i <= 1))
+    return 1;
+  if (e === 0 && (!(i === 0) && (i % 1e6 === 0 && v === 0)) || !(e >= 0 && e <= 5))
+    return 4;
+  return 5;
+}
+var pt_default = ["pt", [["AM", "PM"], u2, u2], u2, [["D", "S", "T", "Q", "Q", "S", "S"], ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "s\xE1b."], ["domingo", "segunda-feira", "ter\xE7a-feira", "quarta-feira", "quinta-feira", "sexta-feira", "s\xE1bado"], ["dom.", "seg.", "ter.", "qua.", "qui.", "sex.", "s\xE1b."]], u2, [["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], ["jan.", "fev.", "mar.", "abr.", "mai.", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."], ["janeiro", "fevereiro", "mar\xE7o", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]], u2, [["a.C.", "d.C."], u2, ["antes de Cristo", "depois de Cristo"]], 0, [6, 0], ["dd/MM/y", "d 'de' MMM 'de' y", "d 'de' MMMM 'de' y", "EEEE, d 'de' MMMM 'de' y"], ["HH:mm", "HH:mm:ss", "HH:mm:ss z", "HH:mm:ss zzzz"], ["{1} {0}", u2, u2, u2], [",", ".", ";", "%", "+", "-", "E", "\xD7", "\u2030", "\u221E", "NaN", ":"], ["#,##0.###", "#,##0%", "\xA4\xA0#,##0.00", "#E0"], "BRL", "R$", "Real brasileiro", { "AUD": ["AU$", "$"], "BYN": [u2, "\u0440."], "JPY": ["JP\xA5", "\xA5"], "PHP": [u2, "\u20B1"], "PTE": ["Esc."], "RON": [u2, "L"], "SYP": [u2, "S\xA3"], "THB": ["\u0E3F"], "TWD": ["NT$"], "USD": ["US$", "$"] }, "ltr", plural2];
+
+// src/app/features/setup-defaults/setup-defaults.service.ts
+var SetupDefaultsService = class _SetupDefaultsService {
+  _categoryRecipesRepository = inject(CategoryRecipesRepository);
+  _categoryProductsRepository = inject(CategoryProductsRepository);
+  _indexDbService = inject(DexieIndexDbService);
+  async setupRecipesCategories() {
+    const categoriesInstalled = localStorage.getItem("categoriesRecipesInstalled");
+    if (categoriesInstalled) {
+      return;
+    }
+    const categories = await this._categoryRecipesRepository.getLength();
+    if (categories)
+      return;
+    const defaultCategories = [
+      "biscuits",
+      "shortcrust-pastry",
+      "choux-pastry",
+      "puff-pastry",
+      "yeast-dough",
+      "brioche-sweet-bread",
+      "meringues",
+      "creams",
+      "fillings",
+      "glazes-coatings",
+      "cakes",
+      "pastries",
+      "cupcakes-muffins",
+      "cheesecakes",
+      "tarts",
+      "macarons",
+      "cookies",
+      "rolls",
+      "chocolate-products",
+      "caramel",
+      "mousses",
+      "panna-cotta",
+      "jellies-jams",
+      "souffles",
+      "glass-desserts",
+      "gluten-free-baking",
+      "sugar-free-baking",
+      "vegan-desserts",
+      "breakfasts",
+      "author-desserts"
+    ].map((name) => CategoryRecipe.fromRaw({
+      uuid: name,
+      name,
+      system: true,
+      createdAt: Date.now()
+    }).toDTO());
+    await this._indexDbService.balkAdd(Stores.RECIPES_CATEGORIES, defaultCategories, false);
+    localStorage.setItem("categoriesRecipesInstalled", "true");
+  }
+  async setupProductsCategories() {
+    const categoriesInstalled = localStorage.getItem("categoriesInstalled");
+    if (categoriesInstalled) {
+      return;
+    }
+    const categories = await this._categoryProductsRepository.getLength();
+    if (categories)
+      return;
+    const defaultCategories = [
+      "creams-fillings",
+      "glazes-coatings",
+      "syrups-soaking",
+      "fruit-berry",
+      "nuts-seeds",
+      "chocolate-cocoa",
+      "flour-starches",
+      "sweeteners",
+      "fats-oils",
+      "eggs-egg-products",
+      "dairy",
+      "flavors-spices",
+      "leavening-stabilizers",
+      "gelling-agents",
+      "decorations",
+      "baking-forms",
+      "confectionery-additives",
+      "gluten-free",
+      "vegan-alternatives",
+      "dietary-low-calorie",
+      "frozen-semi-finished",
+      "beverages-liqueurs",
+      "vegetables",
+      "pasta",
+      "salt"
+    ].map((name) => CategoryProduct.fromRaw({
+      uuid: name,
+      name,
+      system: true,
+      createdAt: Date.now()
+    }).toDTO());
+    await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
+    localStorage.setItem("categoriesInstalled", "true");
+  }
+  async setupProducts() {
+    const productsInstalled = localStorage.getItem("productsInstalled");
+    if (productsInstalled) {
+      return;
+    }
+    const products = await this._indexDbService.getLength(Stores.PRODUCTS);
+    if (products)
+      return;
+    const categoryMap = {
+      // creams & fillings
+      "heavy-cream-35": "dairy",
+      "whipping-cream-30": "dairy",
+      "sour-cream": "dairy",
+      "cream-cheese": "dairy",
+      // dairy powders
+      "milk-powder": "dairy",
+      "condensed-milk": "dairy",
+      // chocolate
+      "white-chocolate": "chocolate-cocoa",
+      "dark-chocolate": "chocolate-cocoa",
+      "milk-chocolate": "chocolate-cocoa",
+      "cocoa-powder": "chocolate-cocoa",
+      "cocoa-butter": "chocolate-cocoa",
+      // nuts & seeds
+      "almonds": "nuts-seeds",
+      "hazelnuts": "nuts-seeds",
+      "walnuts": "nuts-seeds",
+      "pistachios": "nuts-seeds",
+      "cashews": "nuts-seeds",
+      "sunflower-seeds": "nuts-seeds",
+      "pumpkin-seeds": "nuts-seeds",
+      "sesame-seeds": "nuts-seeds",
+      // gelling agents
+      "gelatin-powder": "gelling-agents",
+      "agar-agar": "gelling-agents",
+      "pectin": "gelling-agents",
+      // flours & starches
+      "corn-starch": "flour-starches",
+      "potato-starch": "flour-starches",
+      "rice-flour": "flour-starches",
+      "almond-flour": "flour-starches",
+      "coconut-flour": "flour-starches",
+      "all-purpose-flour": "flour-starches",
+      "bread-flour": "flour-starches",
+      // sugars & sweeteners
+      "sugar": "sweeteners",
+      "brown-sugar": "sweeteners",
+      "powdered-sugar": "sweeteners",
+      "invert-sugar": "sweeteners",
+      "glucose-syrup": "sweeteners",
+      "honey": "sweeteners",
+      "maple-syrup": "sweeteners",
+      "corn-syrup": "sweeteners",
+      "golden-syrup": "sweeteners",
+      // salt
+      "salt": "salt",
+      "sea-salt": "salt",
+      // leavening & stabilizers
+      "baking-powder": "leavening-stabilizers",
+      "baking-soda": "leavening-stabilizers",
+      "dry-yeast": "leavening-stabilizers",
+      "fresh-yeast": "leavening-stabilizers",
+      "cream-of-tartar": "leavening-stabilizers",
+      "xanthan-gum": "leavening-stabilizers",
+      "guar-gum": "leavening-stabilizers",
+      "stabilizer-pastry": "leavening-stabilizers",
+      // additives
+      "lecithin": "confectionery-additives",
+      // flavors & spices
+      "vanilla-pod": "flavors-spices",
+      "vanilla-extract": "flavors-spices",
+      "vanillin": "flavors-spices",
+      "cinnamon": "flavors-spices",
+      "nutmeg": "flavors-spices",
+      "cloves": "flavors-spices",
+      "cardamom": "flavors-spices",
+      "ginger-powder": "flavors-spices",
+      // fruits & berries
+      "fruit-puree-raspberry": "fruit-berry",
+      "fruit-puree-strawberry": "fruit-berry",
+      "fruit-puree-mango": "fruit-berry",
+      "fruit-puree-passion-fruit": "fruit-berry",
+      "fruit-puree-apricot": "fruit-berry",
+      "fruit-puree-cherry": "fruit-berry",
+      "frozen-berries-mix": "frozen-semi-finished",
+      "candied-fruits": "fruit-berry",
+      "orange-zest": "fruit-berry",
+      "lemon-zest": "fruit-berry",
+      // liqueurs & beverages
+      "liqueur-cointreau": "beverages-liqueurs",
+      "liqueur-rum": "beverages-liqueurs",
+      "liqueur-kahlua": "beverages-liqueurs",
+      "liqueur-amaretto": "beverages-liqueurs",
+      "liqueur-grand-marnier": "beverages-liqueurs",
+      "espresso-coffee": "beverages-liqueurs",
+      "matcha-powder": "beverages-liqueurs",
+      "instant-coffee": "beverages-liqueurs",
+      // eggs
+      "egg-whites": "eggs-egg-products",
+      "egg-yolks": "eggs-egg-products",
+      "whole-eggs": "eggs-egg-products",
+      "dried-egg-powder": "eggs-egg-products",
+      // marzipan & almond products
+      "almond-paste": "nuts-seeds",
+      "marzipan": "nuts-seeds",
+      // decorations
+      "isomalt": "decorations",
+      "fondant": "decorations",
+      "sprinkles": "decorations",
+      "colored-sugar": "decorations",
+      "food-coloring-gel": "decorations",
+      "edible-gold": "decorations",
+      "wafer-paper": "decorations",
+      "chocolate-transfer-sheet": "decorations",
+      // baking forms & consumables
+      "molds-silicone": "baking-forms",
+      "baking-paper": "baking-forms",
+      "acetate-sheet": "baking-forms"
+    };
+    const defaultProducts = Object.keys(categoryMap).map((name) => Product.fromRaw({
+      uuid: name,
+      name,
+      category_id: categoryMap[name],
+      system: true,
+      createdAt: Date.now()
+    }).toDTO());
+    await this._indexDbService.balkAdd(Stores.PRODUCTS, defaultProducts, false);
+    localStorage.setItem("productsInstalled", "true");
+  }
+  async setUserUUID() {
+    let userUUID = localStorage.getItem("userUUID");
+    if (!userUUID) {
+      userUUID = generateUuid();
+      localStorage.setItem("userUUID", userUUID);
+    }
+  }
+  static \u0275fac = function SetupDefaultsService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SetupDefaultsService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _SetupDefaultsService, factory: _SetupDefaultsService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SetupDefaultsService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/features/setup-defaults/setup-defaults.initializer.ts
+var setupDefaultsInitializer = async () => {
+  const setupDefaultsService = inject(SetupDefaultsService);
+  const notificationsService = inject(NotificationsService);
+  const settingsService = inject(SettingsService);
+  const title = inject(Title);
+  const translateService = inject(TranslateService);
+  try {
+    return await Promise.all([
+      setupDefaultsService.setupRecipesCategories(),
+      setupDefaultsService.setupProductsCategories(),
+      setupDefaultsService.setupProducts(),
+      setupDefaultsService.setUserUUID(),
+      settingsService.loadSettings().then((settings) => settingsService.setDefaultSettings()).then(async (settings) => {
+        const lang = settings?.getSetting("lang")?.data || "en";
+        await settingsService.changeLang(lang);
+        title.setTitle(translateService.instant("app.title"));
+      })
+    ]);
+  } catch (error) {
+    return notificationsService.error(errorHandler(error));
+  }
+};
+
 // src/app/app.config.ts
+registerLocaleData(ru_default, "ru-RU");
+registerLocaleData(pt_default, "pt-PT");
 var httpLoaderFactory = (http) => new TranslateHttpLoader(http, "./i18n/", ".json");
 var appConfig = {
   providers: [
@@ -11354,6 +11549,7 @@ var appConfig = {
     provideAnimationsAsync(),
     provideAppInitializer(appInitializer),
     provideAppInitializer(supportInitializer),
+    provideAppInitializer(setupDefaultsInitializer),
     provideServiceWorker("ngsw-worker.js", {
       enabled: !isDevMode(),
       registrationStrategy: "registerWhenStable:30000"
@@ -11373,6 +11569,13 @@ var appConfig = {
         });
         return {
           handleError(error) {
+            try {
+              const userUUID = localStorage.getItem("userUUID");
+              if (userUUID) {
+                setUser({ user_weak_uuid: userUUID });
+              }
+            } catch {
+            }
             sentryHandler.handleError(error);
           }
         };
@@ -11426,29 +11629,6 @@ var appConfig = {
       },
       deps: [SettingsService]
     },
-    {
-      provide: CATEGORIZED_RECIPES_LIST,
-      useFactory: () => {
-        const groupSortService = inject(GroupSortService);
-        const recipesRepository = inject(RecipesRepository);
-        const groupingParam = injectQueryParams("groupBy");
-        const sortDirection = injectQueryParams("sortDirection");
-        const sortField = injectQueryParams("sortField");
-        const categoryRepository = inject(CategoryRecipesRepository);
-        const recipes = from(recipesRepository.loadRecipes()).pipe(switchMap(() => recipesRepository.recipes$), map((recipes2) => recipes2.map((recipe) => recipe.toDTO())));
-        const groupingMap = {
-          "createdAt": () => new RecipeCreatedAtMonthSortStrategy(),
-          "category": () => new CategoryRecipeSortStrategy(categoryRepository),
-          "alphabetical": () => new RecipeAlphabeticalSortStrategy(),
-          "tag": () => new TagsRecipeSortStrategy()
-        };
-        return recipes.pipe(switchMap((recipes2) => {
-          const grouping = groupingParam();
-          const strategy = groupingMap[grouping]?.() ?? groupingMap["category"]();
-          return groupSortService.groupItems(recipes2, strategy, sortDirection() ?? "asc", sortField() ?? "name");
-        }), shareReplay(1));
-      }
-    },
     LoggerService,
     {
       provide: DISABLE_LOGGER,
@@ -11460,6 +11640,18 @@ var appConfig = {
     provideZonelessChangeDetection(),
     {
       provide: MAT_DATE_LOCALE,
+      useFactory: () => {
+        const userLanguage = inject(USER_LANGUAGE);
+        const langToLocaleMap = {
+          "en": "en-US",
+          "ru": "ru-RU",
+          "pt": "pt-PT"
+        };
+        return langToLocaleMap[userLanguage()] || "en-US";
+      }
+    },
+    {
+      provide: LOCALE_ID,
       useFactory: () => {
         const userLanguage = inject(USER_LANGUAGE);
         const langToLocaleMap = {
@@ -11495,31 +11687,62 @@ function PwaInstallComponent_Conditional_0_Template(rf, ctx) {
   }
 }
 var PwaInstallComponent = class _PwaInstallComponent {
+  showButton = signal(false, ...ngDevMode ? [{ debugName: "showButton" }] : []);
+  isPwa = isPwa;
   analyticsService = inject(AnalyticsService);
-  deferredPrompt = null;
-  showButton = false;
+  _deferredPrompt = null;
   ngOnInit() {
+    if (this._alreadyDeclined()) {
+      return;
+    }
     window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      this.deferredPrompt = e;
-      this.showButton = true;
+      if (this._alreadyDeclined()) {
+        return;
+      }
+      this._deferredPrompt = e;
+      this.showButton.set(true);
+    });
+    window.addEventListener("appinstalled", () => {
+      this._onSuccess();
     });
   }
   async installPWA() {
-    if (!this.deferredPrompt)
+    if (!this._deferredPrompt)
       return;
-    this.deferredPrompt.prompt();
-    const { outcome } = await this.deferredPrompt.userChoice;
+    this._deferredPrompt.preventDefault();
+    this._deferredPrompt.prompt();
+    const { outcome } = await this._deferredPrompt.userChoice;
     if (outcome === "accepted") {
-      this.showButton = false;
-      console.log("PWA installed!");
-      this.analyticsService.trackPwaInstallAccepted();
+      this._onSuccess();
     } else {
-      console.log("User declined installation");
-      this.analyticsService.trackPwaInstallDeclined();
+      this._onDecline();
     }
-    this.deferredPrompt = null;
-    this.showButton = false;
+    this._deferredPrompt = null;
+    this.showButton.set(false);
+  }
+  _alreadyDeclined() {
+    try {
+      return localStorage.getItem("pwa-install-declined") === "true";
+    } catch {
+      return false;
+    }
+  }
+  _setDeclinedStatus(value) {
+    try {
+      localStorage.setItem("pwa-install-declined", value ? "true" : "false");
+    } catch {
+    }
+  }
+  _onSuccess() {
+    console.log("PWA installed!");
+    this.showButton.set(false);
+    this.analyticsService.trackPwaInstallAccepted();
+  }
+  _onDecline() {
+    console.log("User declined installation");
+    this.showButton.set(false);
+    this._setDeclinedStatus(true);
+    this.analyticsService.trackPwaInstallDeclined();
   }
   static \u0275fac = function PwaInstallComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _PwaInstallComponent)();
@@ -11529,15 +11752,15 @@ var PwaInstallComponent = class _PwaInstallComponent {
       \u0275\u0275conditionalCreate(0, PwaInstallComponent_Conditional_0_Template, 3, 3, "button");
     }
     if (rf & 2) {
-      \u0275\u0275conditional(ctx.showButton ? 0 : -1);
+      \u0275\u0275conditional(ctx.showButton() ? 0 : -1);
     }
-  }, dependencies: [TranslatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\nbutton[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"] });
+  }, dependencies: [TranslatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: contents;\n}\nbutton[_ngcontent-%COMP%] {\n  background-image:\n    linear-gradient(\n      45deg,\n      #3F51B5,\n      #9C27B0);\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  cursor: pointer;\n  box-shadow: -15px 6px 8px 0px #eed2f0;\n  border-radius: 0 16px 16px 0;\n  background-size: calc(100% + 70px) 100%;\n  transition: background-position 0.3s ease;\n  text-decoration: none;\n  white-space: nowrap;\n}\nbutton[_ngcontent-%COMP%]:hover {\n  background-position: -70px 0;\n}\n/*# sourceMappingURL=pwa-install.component.css.map */"], changeDetection: 0 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PwaInstallComponent, [{
     type: Component,
-    args: [{ selector: "lg-pwa-install", standalone: true, template: `
-    @if (showButton) {
+    args: [{ selector: "lg-pwa-install", changeDetection: ChangeDetectionStrategy.OnPush, template: `
+    @if (showButton()) {
       <button (click)="installPWA()">
         {{ 'pwa.install' | translate }}
       </button>
@@ -11548,7 +11771,7 @@ var PwaInstallComponent = class _PwaInstallComponent {
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/features/home/view/pwa-install.component.ts", lineNumber: 42 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PwaInstallComponent, { className: "PwaInstallComponent", filePath: "src/app/features/home/view/pwa-install.component.ts", lineNumber: 43 });
 })();
 
 // src/app/features/global-search/global-search.component.ts
@@ -12013,7 +12236,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
     AsyncPipe,
     TranslatePipe,
     TimeAgoPipe
-  ], styles: ["\n\n.lg-global-search[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(31, 31, 31, 0.7);\n  -webkit-backdrop-filter: blur(10px);\n  backdrop-filter: blur(10px);\n  z-index: 10000;\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lg-global-search__inner[_ngcontent-%COMP%] {\n  width: 100%;\n  max-width: 600px;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n.lg-global-search__search[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n.lg-global-search__no-results[_ngcontent-%COMP%] {\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n  max-height: 400px;\n  overflow-y: auto;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%]   .lg-global-search__language-badge[_ngcontent-%COMP%] {\n  font-size: 0.8em;\n  color: var(--text-muted);\n  font-style: italic;\n}\n.lg-global-search--expanded[_ngcontent-%COMP%] {\n  align-items: flex-start;\n}\n.lg-global-search__results__list[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n/*# sourceMappingURL=global-search.component.css.map */"], changeDetection: 0 });
+  ], styles: ["\n\n.lg-global-search[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(31, 31, 31, 0.7);\n  -webkit-backdrop-filter: blur(10px);\n  backdrop-filter: blur(10px);\n  z-index: 10000;\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lg-global-search__inner[_ngcontent-%COMP%] {\n  width: 100%;\n  max-width: 600px;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n.lg-global-search__search[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n.lg-global-search__no-results[_ngcontent-%COMP%] {\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n  max-height: 400px;\n  overflow-y: auto;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results[_ngcontent-%COMP%]   .lg-global-search__language-badge[_ngcontent-%COMP%] {\n  font-size: 0.8em;\n  color: var(--text-muted);\n  font-style: italic;\n}\n.lg-global-search--expanded[_ngcontent-%COMP%] {\n  align-items: flex-start;\n}\n.lg-global-search__results__list[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n/*# sourceMappingURL=global-search.component.css.map */"], changeDetection: 0 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(GlobalSearchComponent, [{
@@ -12183,7 +12406,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
       TimeAgoPipe,
       FlexColumnComponent,
       NgTemplateOutlet
-    ], styles: ["/* angular:styles/component:scss;155523e4dbacc322905985325d851faa1d95af8e6e26ca5d18613359111b38a1;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/global-search/global-search.component.ts */\n.lg-global-search {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(31, 31, 31, 0.7);\n  -webkit-backdrop-filter: blur(10px);\n  backdrop-filter: blur(10px);\n  z-index: 10000;\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lg-global-search__inner {\n  width: 100%;\n  max-width: 600px;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n.lg-global-search__search {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n.lg-global-search__no-results {\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n  max-height: 400px;\n  overflow-y: auto;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results .lg-global-search__language-badge {\n  font-size: 0.8em;\n  color: var(--text-muted);\n  font-style: italic;\n}\n.lg-global-search--expanded {\n  align-items: flex-start;\n}\n.lg-global-search__results__list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n/*# sourceMappingURL=global-search.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;a712fc311214a498d693e69fbc08e8f581db75bbdb3d2af3b13254df4f3cb7ed;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/features/global-search/global-search.component.ts */\n.lg-global-search {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(31, 31, 31, 0.7);\n  -webkit-backdrop-filter: blur(10px);\n  backdrop-filter: blur(10px);\n  z-index: 10000;\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lg-global-search__inner {\n  width: 100%;\n  max-width: 600px;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}\n.lg-global-search__search {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n}\n.lg-global-search__no-results {\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results {\n  display: flex;\n  flex-direction: column;\n  gap: 32px;\n  max-height: 400px;\n  overflow-y: auto;\n  background-color: rgba(255, 255, 255, 0.7);\n  margin-top: 32px;\n  padding: 16px;\n  border-radius: 12px;\n}\n.lg-global-search__results .lg-global-search__language-badge {\n  font-size: 0.8em;\n  color: var(--text-muted);\n  font-style: italic;\n}\n.lg-global-search--expanded {\n  align-items: flex-start;\n}\n.lg-global-search__results__list {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n/*# sourceMappingURL=global-search.component.css.map */\n"] }]
   }], () => [{ type: GlobalSearchService }], { _onClickOutside: [{
     type: HostListener,
     args: ["document:click", ["$event"]]
@@ -12872,26 +13095,27 @@ var SupportPopupComponent = class _SupportPopupComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SupportPopupComponent, { className: "SupportPopupComponent", filePath: "src/app/features/home/view/support-popup.component.ts", lineNumber: 213 });
 })();
 
-// src/app/shared/view/ui/layout/footer.component.ts
+// src/app/shared/view/layout/footer.component.ts
 function FooterComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 2);
-    \u0275\u0275text(1, " \u{1F468}\u200D\u{1F4BB} ");
-    \u0275\u0275elementStart(2, "span", 6);
-    \u0275\u0275text(3);
-    \u0275\u0275pipe(4, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275text(5, " \u2022 \u{1FA84}\xA0");
-    \u0275\u0275elementStart(6, "span", 6);
-    \u0275\u0275text(7);
-    \u0275\u0275pipe(8, "translate");
+    \u0275\u0275elementStart(0, "p", 2)(1, "span");
+    \u0275\u0275text(2, "\u{1F468}\u200D\u{1F4BB}\xA0");
+    \u0275\u0275elementStart(3, "span", 6);
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "translate");
     \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "span");
+    \u0275\u0275text(7, "\u{1FA84}\xA0");
+    \u0275\u0275elementStart(8, "span", 6);
+    \u0275\u0275text(9);
+    \u0275\u0275pipe(10, "translate");
+    \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 2, "footer.credit.developed"));
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 4, "footer.credit.inspired"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 2, "footer.credit.developed"));
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 4, "footer.credit.inspired"));
   }
 }
 function FooterComponent_Conditional_3_Template(rf, ctx) {
@@ -12986,7 +13210,7 @@ var FooterComponent = class _FooterComponent {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "lg-fade-in")(1, "footer", 1);
-      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 9, 6, "p", 2);
+      \u0275\u0275conditionalCreate(2, FooterComponent_Conditional_2_Template, 11, 6, "p", 2);
       \u0275\u0275conditionalCreate(3, FooterComponent_Conditional_3_Template, 15, 18);
       \u0275\u0275elementStart(4, "div", 3)(5, "button", 4);
       \u0275\u0275listener("click", function FooterComponent_Template_button_click_5_listener() {
@@ -13015,7 +13239,7 @@ var FooterComponent = class _FooterComponent {
     FadeInComponent,
     SupportPopupComponent,
     TranslatePipe
-  ], styles: ["\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link[_ngcontent-%COMP%] {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link[_ngcontent-%COMP%]:hover {\n  opacity: 1;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */"] });
+  ], styles: ['@charset "UTF-8";\n\n\n\n.lg-footer[_ngcontent-%COMP%] {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version[_ngcontent-%COMP%] {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link[_ngcontent-%COMP%] {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link[_ngcontent-%COMP%]:hover {\n  opacity: 1;\n}\n.footer-credit[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n  display: flex;\n  gap: 8px;\n  align-items: center;\n  justify-content: center;\n}\n.footer-credit[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:first-child::after {\n  content: "\\2022";\n  margin-left: 8px;\n}\n@media (max-width: 600px) {\n  .footer-credit[_ngcontent-%COMP%] {\n    flex-direction: column;\n    gap: 0;\n  }\n  .footer-credit[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%]:first-child::after {\n    display: none;\n  }\n}\n.gradient-text[_ngcontent-%COMP%] {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */'] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FooterComponent, [{
@@ -13025,8 +13249,8 @@ var FooterComponent = class _FooterComponent {
       <footer class="lg-footer">
         @if (canSeeAuthors()) {
           <p class="footer-credit">
-            \u{1F468}\u200D\u{1F4BB} <span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span>
-            \u2022 \u{1FA84}&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span>
+            <span>\u{1F468}\u200D\u{1F4BB}&nbsp;<span class="gradient-text">{{ 'footer.credit.developed' | translate }}</span></span>
+            <span>\u{1FA84}&nbsp;<span class="gradient-text">{{ 'footer.credit.inspired' | translate }}</span></span>
           </p>
         }
         @if (canSeePolicies()) {
@@ -13054,13 +13278,12 @@ var FooterComponent = class _FooterComponent {
   `, imports: [
       FadeInComponent,
       TranslatePipe,
-      JsonPipe,
       SupportPopupComponent
-    ], styles: ["/* angular:styles/component:scss;e2a7dd1fa08939401add8eb3c290788106ecb65cc9d5b5cb98a6834eea2779f5;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link:hover {\n  opacity: 1;\n}\n.footer-credit {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n}\n.gradient-text {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
+    ], styles: ['@charset "UTF-8";\n\n/* angular:styles/component:scss;39057e95a08b8da73fba7c80b2ef12b9462c5d6d74a0e6097b814b7e70128785;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/layout/footer.component.ts */\n.lg-footer {\n  text-align: center;\n  font-size: 12px;\n  color: #555;\n  padding: 1em;\n  line-height: 1.6;\n  padding-top: 100px;\n}\n.lg-footer__bottom {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin-top: 0.5em;\n}\n.lg-footer__version {\n  color: #888;\n  opacity: 0.7;\n}\n.lg-footer__support-link {\n  background: none;\n  border: none;\n  color: #888;\n  font-family: inherit;\n  font-size: inherit;\n  cursor: pointer;\n  text-decoration: underline;\n  opacity: 0.7;\n  transition: opacity 0.2s ease;\n}\n.lg-footer__support-link:hover {\n  opacity: 1;\n}\n.footer-credit {\n  font-size: 14px;\n  font-weight: 600;\n  margin: 0;\n  display: flex;\n  gap: 8px;\n  align-items: center;\n  justify-content: center;\n}\n.footer-credit > *:first-child::after {\n  content: "\\2022";\n  margin-left: 8px;\n}\n@media (max-width: 600px) {\n  .footer-credit {\n    flex-direction: column;\n    gap: 0;\n  }\n  .footer-credit > *:first-child::after {\n    display: none;\n  }\n}\n.gradient-text {\n  background:\n    linear-gradient(\n      90deg,\n      #9C27B0,\n      #E91E63);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n}\n/*# sourceMappingURL=footer.component.css.map */\n'] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/ui/layout/footer.component.ts", lineNumber: 106 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/shared/view/layout/footer.component.ts", lineNumber: 123 });
 })();
 
 // src/app/features/home/view/demo-informer.component.ts
@@ -13196,7 +13419,7 @@ var DemoInformerComponent = class _DemoInformerComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DemoInformerComponent, { className: "DemoInformerComponent", filePath: "src/app/features/home/view/demo-informer.component.ts", lineNumber: 88 });
 })();
 
-// src/app/shared/view/ui/layout/header.component.ts
+// src/app/shared/view/layout/header.component.ts
 var _c04 = () => ({ exact: false });
 var _c13 = () => ["route-active"];
 var _forTrack02 = ($index, $item) => $item.label;
@@ -13243,11 +13466,11 @@ var HeaderComponent = class _HeaderComponent {
       {
         label: marker("products.menu-label"),
         link: "/products"
-      },
-      {
-        label: marker("invoices.menu-label"),
-        link: "/invoices"
       }
+      // {
+      //   label: _('invoices.menu-label'),
+      //   link: '/invoices',
+      // },
     ], ...ngDevMode ? [{ debugName: "items" }] : []);
   }
   items;
@@ -13320,7 +13543,7 @@ var HeaderComponent = class _HeaderComponent {
     DemoInformerComponent,
     FadeInComponent,
     TranslatePipe
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  position: fixed;\n  z-index: 3;\n  left: 50%;\n  right: 0;\n  top: 12px;\n  transform: translateX(-50%);\n  max-width: var(--container-width);\n  width: calc(100% - 32px);\n}\n@media (max-width: 768px) {\n  [_nghost-%COMP%] {\n    width: 100%;\n  }\n}\n.lg-header[_ngcontent-%COMP%] {\n  height: var(--header-height);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  overflow: hidden;\n  overflow-x: auto;\n  white-space: nowrap;\n  padding: 0 16px;\n}\n@media (max-width: 768px) {\n  .lg-header[_ngcontent-%COMP%] {\n    justify-content: normal;\n    scroll-snap-type: both mandatory;\n    overscroll-behavior-x: contain;\n    scrollbar-width: none;\n  }\n}\n.lg-header__left[_ngcontent-%COMP%], \n.lg-header__right[_ngcontent-%COMP%], \n.lg-header__leftToMiddle[_ngcontent-%COMP%], \n.lg-header__rightToMiddle[_ngcontent-%COMP%], \n.lg-header__middle[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  gap: 8px;\n  min-width: 40px;\n}\n@media (max-width: 768px) {\n  .lg-header__left[_ngcontent-%COMP%], \n   .lg-header__right[_ngcontent-%COMP%], \n   .lg-header__leftToMiddle[_ngcontent-%COMP%], \n   .lg-header__rightToMiddle[_ngcontent-%COMP%], \n   .lg-header__middle[_ngcontent-%COMP%] {\n    flex: 0 0 auto;\n    min-width: 0;\n  }\n}\n.lg-header__leftToMiddle[_ngcontent-%COMP%] {\n  margin-left: auto;\n}\n.lg-header__rightToMiddle[_ngcontent-%COMP%] {\n  margin-right: auto;\n}\n.lg-header__inner[_ngcontent-%COMP%] {\n  display: flex;\n  border-radius: 35px;\n  padding: 8px;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__link[_ngcontent-%COMP%] {\n  font-size: 1rem;\n  font-family: inherit;\n  text-decoration: none;\n  padding: 8px 24px;\n  border-radius: 32px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  transition: all 0.3s ease-in-out;\n  appearance: none;\n}\n.lg-header__link.route-active[_ngcontent-%COMP%] {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n.lg-header__icon[_ngcontent-%COMP%] {\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  cursor: pointer;\n  scroll-snap-align: center;\n  border: none;\n  appearance: none;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__icon.route-active[_ngcontent-%COMP%] {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  position: fixed;\n  z-index: 3;\n  left: 50%;\n  right: 0;\n  top: 12px;\n  transform: translateX(-50%);\n  max-width: var(--container-width);\n  width: calc(100% - 32px);\n}\n@media (max-width: 768px) {\n  [_nghost-%COMP%] {\n    width: 100%;\n  }\n}\n.lg-header[_ngcontent-%COMP%] {\n  height: var(--header-height);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  overflow: hidden;\n  overflow-x: auto;\n  white-space: nowrap;\n  padding: 0 16px;\n}\n@media (max-width: 768px) {\n  .lg-header[_ngcontent-%COMP%] {\n    justify-content: normal;\n    scroll-snap-type: both mandatory;\n    overscroll-behavior-x: contain;\n    scrollbar-width: none;\n  }\n}\n.lg-header__left[_ngcontent-%COMP%], \n.lg-header__right[_ngcontent-%COMP%], \n.lg-header__leftToMiddle[_ngcontent-%COMP%], \n.lg-header__rightToMiddle[_ngcontent-%COMP%], \n.lg-header__middle[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  gap: 8px;\n  min-width: 40px;\n}\n@media (max-width: 768px) {\n  .lg-header__left[_ngcontent-%COMP%], \n   .lg-header__right[_ngcontent-%COMP%], \n   .lg-header__leftToMiddle[_ngcontent-%COMP%], \n   .lg-header__rightToMiddle[_ngcontent-%COMP%], \n   .lg-header__middle[_ngcontent-%COMP%] {\n    flex: 0 0 auto;\n    min-width: 0;\n  }\n}\n.lg-header__leftToMiddle[_ngcontent-%COMP%] {\n  margin-left: auto;\n}\n.lg-header__rightToMiddle[_ngcontent-%COMP%] {\n  margin-right: auto;\n}\n.lg-header__inner[_ngcontent-%COMP%] {\n  display: flex;\n  border-radius: 35px;\n  padding: 8px;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__link[_ngcontent-%COMP%] {\n  font-size: 1rem;\n  font-family: inherit;\n  text-decoration: none;\n  padding: 8px 24px;\n  border-radius: 32px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  transition: all 0.3s ease-in-out;\n  appearance: none;\n}\n.lg-header__link.route-active[_ngcontent-%COMP%] {\n  background-color: var(--header-active-bg);\n  color: #fff;\n}\n.lg-header__icon[_ngcontent-%COMP%] {\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  cursor: pointer;\n  scroll-snap-align: center;\n  border: none;\n  appearance: none;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n  color: inherit;\n}\n.lg-header__icon.route-active[_ngcontent-%COMP%] {\n  background-color: var(--header-active-bg);\n  color: #fff;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HeaderComponent, [{
@@ -13400,11 +13623,11 @@ var HeaderComponent = class _HeaderComponent {
       TranslatePipe,
       DemoInformerComponent,
       FadeInComponent
-    ], styles: ["/* angular:styles/component:scss;2d53fe81f46969a13263862ff7874ae7ccdaa9fc86d5df38ae73016eedf715b7;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/layout/header.component.ts */\n:host {\n  position: fixed;\n  z-index: 3;\n  left: 50%;\n  right: 0;\n  top: 12px;\n  transform: translateX(-50%);\n  max-width: var(--container-width);\n  width: calc(100% - 32px);\n}\n@media (max-width: 768px) {\n  :host {\n    width: 100%;\n  }\n}\n.lg-header {\n  height: var(--header-height);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  overflow: hidden;\n  overflow-x: auto;\n  white-space: nowrap;\n  padding: 0 16px;\n}\n@media (max-width: 768px) {\n  .lg-header {\n    justify-content: normal;\n    scroll-snap-type: both mandatory;\n    overscroll-behavior-x: contain;\n    scrollbar-width: none;\n  }\n}\n.lg-header__left,\n.lg-header__right,\n.lg-header__leftToMiddle,\n.lg-header__rightToMiddle,\n.lg-header__middle {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  gap: 8px;\n  min-width: 40px;\n}\n@media (max-width: 768px) {\n  .lg-header__left,\n  .lg-header__right,\n  .lg-header__leftToMiddle,\n  .lg-header__rightToMiddle,\n  .lg-header__middle {\n    flex: 0 0 auto;\n    min-width: 0;\n  }\n}\n.lg-header__leftToMiddle {\n  margin-left: auto;\n}\n.lg-header__rightToMiddle {\n  margin-right: auto;\n}\n.lg-header__inner {\n  display: flex;\n  border-radius: 35px;\n  padding: 8px;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__link {\n  font-size: 1rem;\n  font-family: inherit;\n  text-decoration: none;\n  padding: 8px 24px;\n  border-radius: 32px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  transition: all 0.3s ease-in-out;\n  appearance: none;\n}\n.lg-header__link.route-active {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n.lg-header__icon {\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  cursor: pointer;\n  scroll-snap-align: center;\n  border: none;\n  appearance: none;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__icon.route-active {\n  background-color: var(--accent-color);\n  color: #fff;\n}\n/*# sourceMappingURL=header.component.css.map */\n"] }]
+    ], styles: ["/* angular:styles/component:scss;d2f74e2c9784f2c6e56a1e8fea1bc9d6125727537794378fd21cd3504e12f377;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/layout/header.component.ts */\n:host {\n  position: fixed;\n  z-index: 3;\n  left: 50%;\n  right: 0;\n  top: 12px;\n  transform: translateX(-50%);\n  max-width: var(--container-width);\n  width: calc(100% - 32px);\n}\n@media (max-width: 768px) {\n  :host {\n    width: 100%;\n  }\n}\n.lg-header {\n  height: var(--header-height);\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n  overflow: hidden;\n  overflow-x: auto;\n  white-space: nowrap;\n  padding: 0 16px;\n}\n@media (max-width: 768px) {\n  .lg-header {\n    justify-content: normal;\n    scroll-snap-type: both mandatory;\n    overscroll-behavior-x: contain;\n    scrollbar-width: none;\n  }\n}\n.lg-header__left,\n.lg-header__right,\n.lg-header__leftToMiddle,\n.lg-header__rightToMiddle,\n.lg-header__middle {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  gap: 8px;\n  min-width: 40px;\n}\n@media (max-width: 768px) {\n  .lg-header__left,\n  .lg-header__right,\n  .lg-header__leftToMiddle,\n  .lg-header__rightToMiddle,\n  .lg-header__middle {\n    flex: 0 0 auto;\n    min-width: 0;\n  }\n}\n.lg-header__leftToMiddle {\n  margin-left: auto;\n}\n.lg-header__rightToMiddle {\n  margin-right: auto;\n}\n.lg-header__inner {\n  display: flex;\n  border-radius: 35px;\n  padding: 8px;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n}\n.lg-header__link {\n  font-size: 1rem;\n  font-family: inherit;\n  text-decoration: none;\n  padding: 8px 24px;\n  border-radius: 32px;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  scroll-snap-align: center;\n  transition: all 0.3s ease-in-out;\n  appearance: none;\n}\n.lg-header__link.route-active {\n  background-color: var(--header-active-bg);\n  color: #fff;\n}\n.lg-header__icon {\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 8px;\n  cursor: pointer;\n  scroll-snap-align: center;\n  border: none;\n  appearance: none;\n  -webkit-backdrop-filter: blur(3px);\n  backdrop-filter: blur(3px);\n  background-color: rgba(255, 255, 255, 0.7);\n  color: inherit;\n}\n.lg-header__icon.route-active {\n  background-color: var(--header-active-bg);\n  color: #fff;\n}\n/*# sourceMappingURL=header.component.css.map */\n"] }]
   }], () => [{ type: Location }, { type: GlobalSearchService }, { type: LanguageService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/shared/view/ui/layout/header.component.ts", lineNumber: 211 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/shared/view/layout/header.component.ts", lineNumber: 212 });
 })();
 
 // src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts
@@ -13420,7 +13643,7 @@ var OverlayActionsComponent = class _OverlayActionsComponent {
       \u0275\u0275projection(1);
       \u0275\u0275domElementEnd();
     }
-  }, styles: ["/* angular:styles/component:scss;d4bccf7041aecf58d1dccce916233a9bc2c3eeb922d571d21a15bf3315eb6072;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  inset: auto 0 16px 0;\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"], encapsulation: 2 });
+  }, styles: ["/* angular:styles/component:scss;ce25b2e5d80110e22c40be25165ef8433986155f543a87ad5d5a5a66ca2db4d3;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"], encapsulation: 2 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(OverlayActionsComponent, [{
@@ -13429,11 +13652,11 @@ var OverlayActionsComponent = class _OverlayActionsComponent {
     <div class="overlay-actions">
       <ng-content></ng-content>
     </div>
-  `, styles: ["/* angular:styles/component:scss;d4bccf7041aecf58d1dccce916233a9bc2c3eeb922d571d21a15bf3315eb6072;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  inset: auto 0 16px 0;\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"] }]
+  `, styles: ["/* angular:styles/component:scss;ce25b2e5d80110e22c40be25165ef8433986155f543a87ad5d5a5a66ca2db4d3;/Users/khripunovpavel/Documents/my/lasagna/lasagna/src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts */\n.overlay-actions {\n  position: fixed;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  z-index: 20;\n  display: flex;\n  gap: 8px;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  pointer-events: none;\n}\n.overlay-actions * {\n  pointer-events: auto;\n}\n@media (max-width: 599px) {\n  :host {\n    inset: auto 8px 12px 8px;\n  }\n  .overlay-actions {\n    justify-content: flex-start;\n    flex-wrap: wrap;\n  }\n}\n/*# sourceMappingURL=overlay-actions.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(OverlayActionsComponent, { className: "OverlayActionsComponent", filePath: "src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts", lineNumber: 41 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(OverlayActionsComponent, { className: "OverlayActionsComponent", filePath: "src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts", lineNumber: 43 });
 })();
 
 // src/app/features/home/view/storage-quota-warning.component.ts
@@ -14111,6 +14334,7 @@ var SatisfactionPopupComponent = class _SatisfactionPopupComponent {
 var AppComponent = class _AppComponent {
   constructor() {
   }
+  isPwa = isPwa;
   demoService = inject(DemoService);
   async ngOnInit() {
     await this.demoService.loadDemoData();
@@ -14120,7 +14344,7 @@ var AppComponent = class _AppComponent {
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], features: [\u0275\u0275ProvidersFeature([
     DecimalPipe
-  ])], decls: 13, vars: 0, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
+  ])], decls: 13, vars: 2, consts: [[1, "app"], [1, "app-content"], [1, "app-footer"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "lg-overlay-actions");
       \u0275\u0275element(1, "lg-pwa-install")(2, "lg-last-backup-informer")(3, "lg-storage-quota-warning");
@@ -14135,6 +14359,10 @@ var AppComponent = class _AppComponent {
       \u0275\u0275element(12, "lg-footer");
       \u0275\u0275elementEnd()();
     }
+    if (rf & 2) {
+      \u0275\u0275advance(7);
+      \u0275\u0275classProp("app--pwa", ctx.isPwa());
+    }
   }, dependencies: [
     RouterOutlet,
     HeaderComponent,
@@ -14147,7 +14375,7 @@ var AppComponent = class _AppComponent {
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app[_ngcontent-%COMP%] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content[_ngcontent-%COMP%] {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer[_ngcontent-%COMP%] {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app[_ngcontent-%COMP%] {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  background-color: var(--background-color);\n}\n.app--pwa[_ngcontent-%COMP%] {\n  border-radius: 16px;\n}\n.app-content[_ngcontent-%COMP%] {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer[_ngcontent-%COMP%] {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AppComponent, [{
@@ -14163,15 +14391,14 @@ var AppComponent = class _AppComponent {
       FooterComponent,
       OverlayActionsComponent,
       StorageQuotaWarningComponent,
-      SatisfactionPopupComponent,
-      UserCurrencyPipe
+      SatisfactionPopupComponent
     ], standalone: true, providers: [
       DecimalPipe
-    ], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
+    ], template: '<lg-overlay-actions>\n  <lg-pwa-install></lg-pwa-install>\n  <lg-last-backup-informer></lg-last-backup-informer>\n  <lg-storage-quota-warning></lg-storage-quota-warning>\n</lg-overlay-actions>\n\n<lg-satisfaction-popup></lg-satisfaction-popup>\n<lg-global-search></lg-global-search>\n<lg-font-tester></lg-font-tester>\n\n<main [class.app--pwa]="isPwa()"\n      class="app">\n  <lg-header></lg-header>\n\n  <div class="app-content">\n    <router-outlet/>\n  </div>\n\n  <div class="app-footer">\n    <lg-footer></lg-footer>\n  </div>\n</main>\n\n', styles: ["/* src/app/app.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  background-color: var(--background-color);\n}\n.app--pwa {\n  border-radius: 16px;\n}\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n.app-footer {\n  margin-top: auto;\n}\n/*# sourceMappingURL=app.component.css.map */\n"] }]
   }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 40 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 39 });
 })();
 
 // src/main.ts
@@ -14179,8 +14406,21 @@ init2({
   dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",
   // Setting this option to true will send default PII data to Sentry.
   // For example, automatic IP address collection on events
-  sendDefaultPii: true
+  sendDefaultPii: true,
+  beforeSend(event) {
+    try {
+      const userUUID = localStorage.getItem("userUUID");
+      if (userUUID) {
+        event.user = {
+          user_weak_uuid: userUUID
+        };
+      }
+    } catch {
+    }
+    return event;
+  }
 });
+enableProfiling();
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
 /*! Bundled license information:
 
@@ -14210,6 +14450,16 @@ hammerjs/hammer.js:
    * @license Angular v20.2.1
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
+   *)
+
+@angular/common/locales/ru.js:
+@angular/common/locales/pt.js:
+  (**
+   * @license
+   * Copyright Google LLC All Rights Reserved.
+   *
+   * Use of this source code is governed by an MIT-style license that can be
+   * found in the LICENSE file at https://angular.dev/license
    *)
 */
 //# sourceMappingURL=main.js.map

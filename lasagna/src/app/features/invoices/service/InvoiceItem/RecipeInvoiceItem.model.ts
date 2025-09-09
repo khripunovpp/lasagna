@@ -35,6 +35,7 @@ export class RecipeInvoiceItem
   }
 
   get weightGram(): number {
+    // TODO
     if (this.unit === 'gram' && this.recipe.outcome_unit === 'gram') {
       return this.amount;
     }
@@ -45,9 +46,11 @@ export class RecipeInvoiceItem
     if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
+    // TODO
     if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
       return 0;
     }
+    // TODO
     if (this.unit === 'gram' && this.recipe.outcome_unit === 'piece') {
       return this.recipe.totalPrice / this.recipe.totalIngredientsWeight
     }
@@ -74,9 +77,11 @@ export class RecipeInvoiceItem
   }
 
   get defaultOutcome() {
+    // TODO
     if (this.recipe.outcome_unit === 'piece') {
       return this.recipe.outcome_amount;
     } else if (!this.recipe.outcome_unit || this.recipe.outcome_unit === 'gram') {
+      // TODO
       return this.recipe.outcome_amount || this.weightGram;
     }
     return 0;

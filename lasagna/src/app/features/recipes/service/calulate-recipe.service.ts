@@ -16,7 +16,7 @@ export interface Calculation {
 export interface CalculationTableParams {
   name: string
   unit: Unit | undefined | string
-  price_per_gram: number | undefined
+  price_per_unit: number | undefined
   amount: number | undefined
   total: number | undefined
   indent: number
@@ -82,13 +82,13 @@ export class CalculateRecipeService {
       if (ingredient.blanked) return;
       table.push(this._makeRow({
         name: ingredient.generalName,
-        price_per_gram: ingredient.pricePerUnit,
+        price_per_unit: ingredient.pricePerUnit,
         amount: ingredient.amount,
         total: ingredient.totalPrice,
         unit: ingredient.unit,
         uuid: ingredient.uuid || '',
         indent: 0,
-        type: ingredient.recipe_id ? 'recipe-row' : undefined,
+        type: ingredient.recipe_id && !ingredient.product_id ? 'recipe-row' : undefined,
       }));
     });
 
@@ -104,7 +104,7 @@ export class CalculateRecipeService {
     params: {
       uuid: string
       name: string
-      price_per_gram: number | undefined
+      price_per_unit: number | undefined
       amount: number | undefined
       total: number | undefined
       unit?: Unit | undefined | string
@@ -114,7 +114,7 @@ export class CalculateRecipeService {
   ): CalculationTableParams {
     return {
       name: params.name,
-      price_per_gram: params.price_per_gram ?? 0,
+      price_per_unit: params.price_per_unit ?? 0,
       amount: params.amount,
       total: params.total ?? 0,
       unit: params.unit || UnitValue.GRAM,
@@ -132,7 +132,7 @@ export class CalculateRecipeService {
       name: _('recipe.calculation.table.total-row'),
       amount: totalWeight,
       unit: UnitValue.GRAM,
-      price_per_gram: parseFloatingNumber(total / totalWeight),
+      price_per_unit: parseFloatingNumber(total / totalWeight),
       total: total,
       indent: 0,
       type: 'total',
