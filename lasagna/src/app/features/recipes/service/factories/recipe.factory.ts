@@ -1,4 +1,4 @@
-import {Recipe} from './models/Recipe';
+import {Recipe} from '../models/Recipe';
 
 export const recipeFactory = () => {
   return new Recipe({});

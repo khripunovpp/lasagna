@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   effect,
   inject,
   input,
@@ -26,7 +27,7 @@ import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
-import {productToFormValue} from '../../../../shared/helpers/product.helpers';
+import {hasMicroPrice, productToFormValue} from '../../../../shared/helpers/product.helpers';
 import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
@@ -37,24 +38,21 @@ import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.co
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {smaller} from 'mathjs';
-
-
 import {InputComponent} from '../../../controls/form/input.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
-
 import {UnitValue} from "../../../../shared/view/const/units.const";
 import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.component';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
-
 import {DecimalPipe} from '@angular/common';
 import {TextareaComponent} from '../../../controls/form/textarea.component';
+import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
 
 
 @Component({
   selector: 'lg-add-product-form',
-  standalone: true,
   templateUrl: './add-product-form.component.html',
   imports: [
     ReactiveFormsModule,
@@ -103,9 +101,15 @@ export class AddProductFormComponent
     public _selectResourcesService: SelectResourcesService,
     private _router: Router,
     private _notificationsService: NotificationsService,
+    private _settingsService: SettingsService,
   ) {
   }
 
+  readonly hasMicroPrice = computed(() => {
+    return hasMicroPrice(this.product()?.pricePerUnit ?? 0)
+  });
+  readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
+  readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     amount: new FormControl<number | null>(null, Validators.required),

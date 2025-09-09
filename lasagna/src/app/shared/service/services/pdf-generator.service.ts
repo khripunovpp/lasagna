@@ -21,8 +21,8 @@ export class PdfGeneratorService {
     const settings = this.userSettings();
     return {
       logo: settings[SettingsKeysConst.invoiceLogo],
-      rowsPrecision: +settings[SettingsKeysConst.invoicePrecisionRows] || 2,
-      totalPrecision: +settings[SettingsKeysConst.invoicePrecisionTotals] || 2,
+      rowsPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
+      totalPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
       currency: currencyStringToSymbol(settings[SettingsKeysConst.currency] || 'USD'),
     };
   }

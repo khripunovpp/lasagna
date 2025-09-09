@@ -1,5 +1,5 @@
 import {Component, computed, effect, forwardRef, inject, input, output} from '@angular/core';
-import {RecipePriceModifier} from '../../../service/PriceModifier';
+import {RecipePriceModifier} from '../../../service/models/PriceModifier';
 import {NumberInputComponent} from '../../../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
 import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';

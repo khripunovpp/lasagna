@@ -45,6 +45,7 @@
                              placeholder="">
               <ng-template lgExtraTpl place="after">
                 <span>{{ userSettings()['currency']|currencySymbol }}</span>
+
               </ng-template>
             </lg-number-input>
           </lg-control>
@@ -56,9 +57,15 @@
                     [translate]="'per-unit.label'"></span>
             </ng-template>
 
-            <lg-readonly-control [placeholder]="''"
-                                 [value]="product()?.pricePerUnit | number:'1.0-5' ">
-            </lg-readonly-control>
+            @if (hasMicroPrice()) {
+              <lg-readonly-control [placeholder]="''"
+                                   [value]="'micro-amount'|translate ">
+              </lg-readonly-control>
+            } @else {
+              <lg-readonly-control [placeholder]="''"
+                                   [value]="product()?.pricePerUnit | number:pipesDigits() ">
+              </lg-readonly-control>
+            }
           </lg-control>
         </lg-flex-row>
       </lg-flex-column>

@@ -1,6 +1,7 @@
 import {z} from 'zod';
-import {ProductScheme} from '../../products/service/Product.scheme';
+import {ProductScheme} from '../../../products/service/Product.scheme';
 import {RecipeScheme} from './Recipe.scheme';
+import {UnitScheme} from './Unit.scheme';
 
 export const IngredientScheme = z.object({
   name: z.string(),
@@ -8,7 +9,7 @@ export const IngredientScheme = z.object({
   uuid: z.string().optional(),
   product_id: ProductScheme,
   recipe_id: z.lazy(() => RecipeScheme),
-  unit: z.enum(['gram', 'portion', 'piece']),
+  unit: UnitScheme
 });
 
 export type IngredientDTO = z.infer<typeof IngredientScheme>;

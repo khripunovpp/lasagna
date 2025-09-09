@@ -15,7 +15,7 @@ import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.co
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {debounceTime} from 'rxjs';
-import {RecipesRepository} from '../../service/recipes.repository';
+import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -32,7 +32,7 @@ import {AutocompleteComponent} from '../../../controls/form/autocomplete.compone
 import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
 import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
-import {RecipeDTO} from '../../service/Recipe.scheme';
+import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
@@ -48,6 +48,7 @@ import {InputComponent} from '../../../controls/form/input.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
+import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -66,7 +67,6 @@ import {WidthDirective} from '../../../../shared/view/directives/width.directive
     ExpandDirective,
     ParseMathDirective,
     ChipsListComponent,
-    AutocompleteComponent,
     FormsModule,
     MatIcon,
     TranslatePipe,
@@ -107,21 +107,13 @@ export class AddRecipeFormComponent
   form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl(''),
-    outcome_amount: new FormControl<number | string | null>(null),
-    outcome_unit: new FormControl<string>(''),
+    portions: new FormControl<number | string | null>(null),
     ingredients: new FormArray([
       this._getIngredientGroup(),
     ]),
     category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
     master: new FormControl<boolean>(false),
-  }, (group) => {
-    const recipeTmpModel = Recipe.fromRaw(group.value);
-
-    if (recipeTmpModel.outcomeAmountGreaterThanIngredients) {
-      return {outcomeAmountGreaterThanIngredients: true};
-    }
-    return null;
   })
   recipeFieldState = signal<Record<number, boolean>>({});
   tooltipComponent = viewChildren<TooltipComponent>('tooltipComponent');
@@ -130,6 +122,7 @@ export class AddRecipeFormComponent
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
   protected readonly UnitValue = UnitValue;
+  protected readonly productLabelFactory = productLabelFactory;
   private recipeEffect = effect(() => {
     if (this.recipe()) {
       this.fillForm(this.recipe()!);

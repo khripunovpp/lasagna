@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit, signal} from '@angular/core';
 import {RecipesRepository} from '../../../../shared/service/repositories';
 import {DraftForm, NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
-import {RecipeDTO} from '../../service/Recipe.scheme';
+import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
 import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';

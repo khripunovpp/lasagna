@@ -44,7 +44,7 @@ export interface MultiselectItem {
           @if (labelTemplate()) {
             <ng-container *ngTemplateOutlet="labelTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
           } @else {
-            {{ (item?.name ?? item?.value ?? item) | translate }}
+            {{ (labelFactory()?.(item) ?? '') | translate }}
           }
         </ng-template>
         <ng-template let-item="item" ng-option-tmp>
@@ -52,7 +52,7 @@ export interface MultiselectItem {
             <ng-container
               *ngTemplateOutlet="optionTemplate()?.templateRef; context: { $implicit: item }"></ng-container>
           } @else {
-            {{ (item?.name ?? item?.value ?? item) | translate }}
+            {{ (labelFactory()?.(item) ?? '') | translate }}
           }
         </ng-template>
       </ng-select>
@@ -142,6 +142,8 @@ export class MultiselectComponent
   }
 
   @Input() placeholder: string = '';
+  labelFactory = input<((item: any) => string) | null>((item) => (item?.name ?? item?.value ?? item));
+  optionFactory = input<((item: any) => string) | null>((item) => (item?.name ?? item?.value ?? item));
   resource = input<string>('');
   appendTo = input<string>('');
   compareField = input<string>('uuid');
