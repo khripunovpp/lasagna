@@ -1,6 +1,5 @@
-import {Recipe} from './models/Recipe';
 import {ActionType, BasePriceModifier, ModifierType, UnitType} from './BasePriceModifier';
-import {parseFloatingNumber} from '../../../shared/helpers';
+import {parseFloatingNumber} from '../../../../shared/helpers';
 
 export class RecipePriceModifier
   extends BasePriceModifier {

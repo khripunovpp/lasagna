@@ -1,7 +1,7 @@
 import {inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRouteSnapshot} from '@angular/router';
-import {Calculation} from '../../../features/recipes/service/calulate-recipe.service';
+import {Calculation} from '../../../features/recipes/service/providers/calulate-recipe.service';
 
 export const defTitleResolver = () => {
   const translateService = inject(TranslateService);

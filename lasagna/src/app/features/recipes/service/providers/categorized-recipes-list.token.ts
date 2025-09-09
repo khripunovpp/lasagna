@@ -1,18 +1,18 @@
 import {inject, InjectionToken} from '@angular/core';
 import {from, map, Observable, shareReplay, switchMap} from 'rxjs';
-import {RecipeDTO} from './Recipe.scheme';
-import {SortResult, SortStrategy} from '../../../shared/service/types/sorting.types';
-import {GroupSortService} from '../../../shared/service/services/grouping-sorting.service';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
+import {SortResult, SortStrategy} from '../../../../shared/service/types/sorting.types';
+import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {RecipesRepository} from './recipes.repository';
-import {injectQueryParams} from '../../../shared/helpers';
-import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
-import {Recipe} from './models/Recipe';
+import {injectQueryParams} from '../../../../shared/helpers';
+import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
+import {Recipe} from '../models/Recipe';
 import {
   CategoryRecipeSortStrategy,
   RecipeAlphabeticalSortStrategy,
   RecipeCreatedAtMonthSortStrategy,
   TagsRecipeSortStrategy
-} from '../../../shared/service/groupings/recipes.grouping';
+} from '../../../../shared/service/groupings/recipes.grouping';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult<RecipeDTO>>>('CategorizedRecipesList', {
   factory: () => {

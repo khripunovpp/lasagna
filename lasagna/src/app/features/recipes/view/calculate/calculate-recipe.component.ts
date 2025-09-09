@@ -1,10 +1,11 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   model,
   OnInit,
-  Provider,
   signal,
   ViewChild,
   ViewEncapsulation
@@ -12,9 +13,9 @@ import {
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
-import {CalculateRecipeService, Calculation} from '../../service/calulate-recipe.service';
+import {CalculateRecipeService, Calculation} from '../../service/providers/calulate-recipe.service';
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
-import {CurrencyPipe, DecimalPipe, NgClass, NgTemplateOutlet} from '@angular/common';
+import {CurrencyPipe, DecimalPipe, NgClass} from '@angular/common';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -31,19 +32,23 @@ import {ExpandDirective} from '../../../../shared/view/directives/expand.directi
 import {randomRGB} from '../../../../shared/helpers/color.helper';
 import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
 import {difference} from 'lodash';
-import {RecipePriceModifier} from '../../service/PriceModifier';
+import {RecipePriceModifier} from '../../service/models/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
-import {UnitValue} from '../../../../shared/view/const/units.const';
+import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
+import {SETTINGS} from '../../../settings/service/providers/settings.token';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -59,7 +64,6 @@ import {UnitValue} from '../../../../shared/view/const/units.const';
     FormsModule,
     RouterLink,
     FlexColumnComponent,
-    NgTemplateOutlet,
     FadeInComponent,
     BaseChartDirective,
     CardComponent,
@@ -71,6 +75,9 @@ import {UnitValue} from '../../../../shared/view/const/units.const';
     CalculationPriceModifiersComponent,
     SelfStartDirective,
     UnitStringPipe,
+    TranslateDirective,
+    CurrencySymbolPipe,
+
 
   ],
   templateUrl: './calculate-recipe.component.html',
@@ -80,9 +87,10 @@ import {UnitValue} from '../../../../shared/view/const/units.const';
     }
   `],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    SelectResourcesService as Provider,
-    CurrencyPipe as Provider,
+    SelectResourcesService,
+    CurrencyPipe,
   ]
 })
 export class CalculateRecipeComponent
@@ -92,6 +100,7 @@ export class CalculateRecipeComponent
     private _calculateRecipeService: CalculateRecipeService,
     private _notificationService: NotificationsService,
     private _analyticsService: AnalyticsService,
+    private _settingsService: SettingsService,
   ) {
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
@@ -124,6 +133,10 @@ export class CalculateRecipeComponent
     });
   }
 
+  readonly userSettings = inject(SETTINGS)
+  readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
+  readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
+  readonly totalPipesDigits = '1.0-2';
   public doughnutChartType: ChartType = 'pie';
   uuid = injectParams<string>('uuid');
   result = signal<Calculation | null>(null);
@@ -198,37 +211,35 @@ export class CalculateRecipeComponent
   };
   @ViewChild('priceChart', {read: BaseChartDirective}) chartPrices: BaseChartDirective | undefined;
   @ViewChild('weightChart', {read: BaseChartDirective}) chartWeight: BaseChartDirective | undefined;
-  recalculateTotalsModel = model(0);
-  notInGrams = computed(() => {
-    return this.result()?.calculation?.outcomeUnit && this.result()?.calculation?.outcomeUnit !== UnitValue.GRAM
+  readonly recalculateTotalsModel = model(0);
+  readonly hasPortions = computed(() => {
+    return !!this.result()?.calculation?.recipe?.portions;
   });
   recipePriceAdditionsForm = new FormControl();
-  values = toSignal(this.recipePriceAdditionsForm.valueChanges);
-  isMobile = matchMediaSignal(mobileBreakpoint);
-
-  totalScaleFactor = computed(() => {
+  readonly values = toSignal(this.recipePriceAdditionsForm.valueChanges);
+  readonly isMobile = matchMediaSignal(mobileBreakpoint);
+  readonly totalScaleFactor = computed(() => {
     if (!this.recalculateTotalsModel()) return 1;
     return this.recalculateTotalsModel() / (this.result()?.calculation?.outcomeAmount || 1);
   })
-
-  totalPrice = computed(() => {
+  readonly totalPrice = computed(() => {
     return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
   });
-
-  totalPriceDifference = computed(() => {
+  readonly totalPriceDifference = computed(() => {
     const diff = (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
     const threshold = 0.000001
     return Math.abs(diff) < threshold ? 0 : diff;
   });
 
-  totalPriceProfit = computed(() => {
+  readonly totalPriceProfit = computed(() => {
     return this.result()?.calculation?.totalPriceProfit || 0;
   });
 
-  totalPriceWithAdditions = computed(() => {
+  readonly totalPriceWithAdditions = computed(() => {
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
   protected readonly difference = difference;
+  protected readonly productLabelFactory = productLabelFactory;
 
   ngOnInit() {
   }

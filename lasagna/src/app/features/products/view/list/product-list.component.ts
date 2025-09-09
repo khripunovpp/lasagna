@@ -1,4 +1,13 @@
-import {Component, DestroyRef, inject, linkedSignal, OnInit, Signal} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  linkedSignal,
+  OnInit,
+  Signal
+} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {ProductsRepository} from '../../service/products.repository';
@@ -35,11 +44,16 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {SortResult} from '../../../../shared/service/types/sorting.types';
-import {errorHandler} from '../../../../shared/helpers';
+import {errorHandler, hasMicroPrice} from '../../../../shared/helpers';
+import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
+import {SETTINGS} from '../../../settings/service/providers/settings.token';
 
 @Component({
   selector: 'lg-product-list',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (products()?.length) {
       <lg-controls-bar>
@@ -100,11 +114,16 @@ import {errorHandler} from '../../../../shared/helpers';
               <lg-flex-column size="medium">
                 <lg-flex-row [center]="true" lgExpand>
                   <a [routerLink]="'/products/edit/' + product.uuid">
-                    {{ product.name }} {{ product.source ? '- ' + product.source : '' }}
+                    {{ productLabelFactory(product) }}
                   </a>
 
                   <div>
-                    {{ $any(product).pricePerUnit | userCurrency:'1.0-5' }}
+                    @if (hasMicroPrice(product.pricePerUnit)) {
+                      {{ 'micro-amount'|translate }}
+                      {{ userSettings()['currency']|currencySymbol }}
+                    } @else {
+                      {{ $any(product).pricePerUnit | userCurrency: pipesDigits() }}
+                    }
                     <span [translateParams]="{unit:$any(product)?.unit | unitString | translate}"
                           [translate]="'per-unit.label'"></span>
                   </div>
@@ -156,7 +175,8 @@ import {errorHandler} from '../../../../shared/helpers';
     TranslateDirective,
     CardComponent,
     GroupingTileDirective,
-    GroupingTilesComponent
+    GroupingTilesComponent,
+    CurrencySymbolPipe
   ],
   providers: [
     SelectionZoneService,
@@ -176,6 +196,7 @@ export class ProductListComponent
     private _transferDataService: TransferDataService,
     private _notificationsService: NotificationsService,
     public selectionZoneService: SelectionZoneService,
+    private _settingsService: SettingsService,
   ) {
     this.selectionZoneService.onDelete.pipe(
       takeUntilDestroyed(this.destroyRef),
@@ -184,6 +205,9 @@ export class ProductListComponent
     });
   }
 
+  readonly userSettings = inject(SETTINGS);
+  readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
+  readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   readonly destroyRef = inject(DestroyRef);
   readonly products: Signal<{
     category: string
@@ -198,6 +222,8 @@ export class ProductListComponent
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
+  protected readonly productLabelFactory = productLabelFactory;
+  protected readonly hasMicroPrice = hasMicroPrice;
 
   exportProducts(
     selected: Set<string>,

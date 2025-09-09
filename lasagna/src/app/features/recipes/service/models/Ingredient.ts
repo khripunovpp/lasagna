@@ -3,9 +3,12 @@ import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
 import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Product} from '../../../products/service/Product';
 import {Recipe} from './Recipe';
-import {RecipeDTO} from '../Recipe.scheme';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {deepClone} from '../../../../shared/helpers/objects.helper';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {ingredientProductCostFactory, ingredientRecipeCostFactory} from '../factories/ingredinet-cost-entity.factory';
+import {productIngredientWeight, recipeIngredientWeight} from '../helpers/ingredient.helper';
+import {hasMicroPrice} from '../../../../shared/helpers';
 
 export class Ingredient {
   constructor(
@@ -43,47 +46,54 @@ export class Ingredient {
   }
 
   get totalWeightGram() {
-    if (this.unit !== UnitValue.GRAM) {
-      if (this.recipe_id) {
-        const weightPerUnit = this.recipe_id.totalIngredientsWeight / this.recipe_id.outcome_amount;
-        return weightPerUnit * this.amount;
-      }
-      return 0
+    if (this.product_id) {
+      return productIngredientWeight(this.product_id, this.amount, this.unit)
+    } else if (this.recipe_id) {
+      return recipeIngredientWeight(this.recipe_id, this.amount, this.unit);
     }
-    return parseFloatingNumber(this.amount);
+    // // TODO
+    // const amount = parseFloatingNumber(this.amount);
+    //
+    // if (isCountUnit(this.unit)) {
+    //   if (this.recipe_id) {
+    //     const weightPerUnit = this.recipe_id.totalIngredientsWeight / this.recipe_id.outcome_amount;
+    //     return weightPerUnit * amount
+    //   }
+    //   return 0;
+    // } else if (isWeightUnit(this.unit)) {
+    //   if (this.unit === UnitValue.KILOGRAM) {
+    //     return convertKilogramToGram(amount)
+    //   } else if (this.unit === UnitValue.GRAM) {
+    //     return amount;
+    //   }
+    // }
+
+    return 0;
   }
 
   get pricePerUnit() {
-    if (this.product_id && this.product_id.unit !== UnitValue.GRAM) {
-      return this.product_id?.pricePerUnit;
+    if (this.totalWeightGram == null) {
+      return undefined;
     }
-
-    if (this.recipe_id) {
-      if (this.recipe_id.outcome_unit === this.unit) {
-        return this.recipe_id.pricePerUnit;
-      } else {
-        return this.recipe_id.pricePerGram;
-      }
-    }
-
-    return this.totalPrice / this.totalWeightGram;
+    return this.cost?.pricePerUnit;
   }
 
-  get totalPrice() {
-    let total = 0;
-    if (this.product_id) {
-      if (this.product_id.unit !== UnitValue.GRAM) {
-        total += this.product_id.pricePerUnit * this.amount;
-      } else {
-        total += this.product_id.pricePerUnit * this.totalWeightGram;
-      }
+  get hasMicroPerUnitPrice() {
+    if (!this.pricePerUnit) {
+      return false;
     }
+    return hasMicroPrice(this.pricePerUnit);
+  }
 
-    if (this.recipe_id) {
-      total += this.pricePerUnit * this.amount;
+  get totalPrice(): number {
+    return this.cost?.totalPrice ?? 0;
+  }
+
+  get hasMicroTotalPrice() {
+    if (!this.totalPrice) {
+      return false;
     }
-
-    return total;
+    return hasMicroPrice(this.totalPrice);
   }
 
   get blanked() {
@@ -112,6 +122,15 @@ export class Ingredient {
       && !this.amount
       && !this.product_id
       && !this.recipe_id;
+  }
+
+  get cost() {
+    if (this.recipe_id) {
+      return ingredientRecipeCostFactory(this.recipe_id, this.unit, this.amount)
+    } else if (this.product_id) {
+      return ingredientProductCostFactory(this.product_id, this.unit, this.amount)
+    }
+    return undefined;
   }
 
   static fromRaw(dto: any) {
