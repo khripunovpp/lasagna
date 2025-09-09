@@ -19,17 +19,21 @@ import {SelectionZoneService} from '../../../../shared/service/services/selectio
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {RecipeScheme} from '../../service/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from './draft-recipes-list.component';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
 import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {CATEGORIZED_RECIPES_LIST} from '../../service/categorized-recipes-list.token';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {JsonPipe} from '@angular/common';
-
+import {RecipesFiltersComponent} from './recipes-filters.component';
+import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 
 
 @Component({
@@ -73,18 +77,29 @@ import {JsonPipe} from '@angular/common';
         <lg-flex-row [center]="true">
           <lg-title>
             {{ 'recipes.list-title'|translate }}
+
+            <span [translateParams]="{length:recipes()?.length}"
+                  [translate]="'filters.results.length'"
+                  class="text-muted text-small"></span>
           </lg-title>
         </lg-flex-row>
 
         <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        @if (!groupingTiles.empty()) {
-          <lg-flex-column [size]="'medium'">
-            <lg-grouping-sorting></lg-grouping-sorting>
 
+        <lg-flex-column [size]="'medium'">
+          <lg-flex-row [center]="!isMobile()"
+                       [mobileMode]="true"
+                       [size]="'medium'">
+            <lg-recipes-filters></lg-recipes-filters>
+
+            <lg-grouping-sorting></lg-grouping-sorting>
+          </lg-flex-row>
+
+          @if (!groupingTiles.empty()) {
             <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-          </lg-flex-column>
-        }
+          }
+        </lg-flex-column>
 
         <lg-grouping-tiles #groupingTiles
                            [selectable]="true"
@@ -92,7 +107,9 @@ import {JsonPipe} from '@angular/common';
           <ng-template let-recipe lgGroupingTile>
             <lg-card>
               <lg-flex-column size="medium">
-                <a [routerLink]="'/recipes/edit/' + recipe.uuid">{{ recipe.name }}</a>
+                <a [routerLink]="'/recipes/edit/' + recipe.uuid">
+                  {{ recipe.name }}
+                </a>
 
                 <lg-flex-row>
                   <lg-button [flat]="true"
@@ -151,6 +168,8 @@ import {JsonPipe} from '@angular/common';
     GroupingTileDirective,
     FlexColumnComponent,
     CardComponent,
+    RecipesFiltersComponent,
+    TranslateDirective,
   ],
   styles: [
     `:host {
@@ -166,14 +185,6 @@ export class RecipesListComponent {
     private _transferDataService: TransferDataService,
     public selectionZoneService: SelectionZoneService,
   ) {
-    this._recipesRepository.recipes$.subscribe({
-      next: (recipes) => {
-        console.log('recipes loaded', recipes);
-      },
-      error: (err) => {
-      }
-    })
-
     this.selectionZoneService.onDelete.pipe(
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(key => {
@@ -183,11 +194,11 @@ export class RecipesListComponent {
 
   destroyRef = inject(DestroyRef);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
+  readonly isMobile = matchMediaSignal(mobileBreakpoint);
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
 
   ngOnInit() {
-    this.loadRecipes();
   }
 
   deleteRecipe(uuid: string | undefined) {

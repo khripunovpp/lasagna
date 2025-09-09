@@ -186,7 +186,8 @@ export class GroupingSortingComponent {
         sortDirection: props.direction || this.sorting().direction,
         groupBy: props.group || this.sorting().group
       },
-      relativeTo: this.aRouter
+      relativeTo: this.aRouter,
+      queryParamsHandling: 'merge',
     }).then(() => {
       // update page
       window.location.reload();

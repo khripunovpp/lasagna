@@ -158,43 +158,6 @@ export const appConfig: ApplicationConfig = {
       },
       deps: [SettingsService]
     },
-    {
-      provide: CATEGORIZED_RECIPES_LIST,
-      useFactory: () => {
-        const groupSortService = inject(GroupSortService);
-        const recipesRepository = inject(RecipesRepository);
-        const groupingParam = injectQueryParams('groupBy');
-        const sortDirection = injectQueryParams<string | null>('sortDirection');
-        const sortField = injectQueryParams('sortField');
-        const categoryRepository = inject(CategoryRecipesRepository);
-        const recipes = from(recipesRepository.loadRecipes()).pipe(
-          switchMap(() => recipesRepository.recipes$),
-          map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
-        );
-        const groupingMap: Record<string, () => any> = {
-          'createdAt': () => new RecipeCreatedAtMonthSortStrategy(),
-          'category': () => new CategoryRecipeSortStrategy(categoryRepository),
-          'alphabetical': () => new RecipeAlphabeticalSortStrategy(),
-          'tag': () => new TagsRecipeSortStrategy(),
-        }
-
-        return recipes.pipe(
-          switchMap((recipes: RecipeDTO[]) => {
-            const grouping = groupingParam();
-            const strategy: SortStrategy<any> = groupingMap[grouping as string]?.() ?? groupingMap['category']();
-
-            return groupSortService.groupItems<RecipeDTO>(
-              recipes,
-              strategy,
-              (sortDirection() as any) ?? 'asc',
-              (sortField() as any) ?? 'name',
-            );
-          }),
-          shareReplay(1),
-        );
-      },
-    },
-
     LoggerService,
 
     {

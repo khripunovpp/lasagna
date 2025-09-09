@@ -10,7 +10,7 @@ import {Component} from '@angular/core';
       :host {
         display: flex;
         flex: 1;
-        background-color: var(--control-bg);
+        background-color: var(--control-box-bg);
         border-radius: 12px;
         gap: 8px;
         padding: 16px;

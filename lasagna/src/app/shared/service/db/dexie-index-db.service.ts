@@ -327,14 +327,20 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async filter(storeKey: Stores, indexField: string, value: string, exactMatch = false): Promise<any[]> {
+    const valueIsBoolean = value === 'true' || value === 'false';
+
     // @ts-ignore
     return (this[storeKey] as Table<any>).filter((item: any) => {
       if (exactMatch) {
+        if (valueIsBoolean) {
+          return item[indexField] === (value === 'true');
+        }
         return item[indexField] === value;
       }
       return item[indexField]?.toLowerCase().includes(value.toLowerCase())
     }).toArray();
   }
+
 
   getStore(storeKey: Stores): Table<any, string> {
     // @ts-ignore
