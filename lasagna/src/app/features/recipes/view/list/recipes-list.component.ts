@@ -1,5 +1,5 @@
 import {Component, DestroyRef, inject} from '@angular/core';
-import {RecipesRepository} from '../../service/recipes.repository';
+import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {RouterLink} from '@angular/router';
@@ -17,7 +17,7 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {RecipeScheme} from '../../service/Recipe.scheme';
+import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from './draft-recipes-list.component';
@@ -27,7 +27,7 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {CATEGORIZED_RECIPES_LIST} from '../../service/categorized-recipes-list.token';
+import {CATEGORIZED_RECIPES_LIST} from '../../service/providers/categorized-recipes-list.token';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';

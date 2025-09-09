@@ -23,7 +23,7 @@ import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manage
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
-import {RecipeScheme} from '../../service/Recipe.scheme';
+import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {MatIcon} from '@angular/material/icon';
 
@@ -87,24 +87,25 @@ import {MatIcon} from '@angular/material/icon';
                 </ng-template>
               }
 
-              <ng-template lgInlineSeparatedGroup>
-                <lg-button [flat]="true"
-                           [link]="'/recipes/calculate/' + recipe()?.uuid"
-                           [style]="'default'">
-                  {{ 'recipe.calculate-btn'|translate }}
-                </lg-button>
-              </ng-template>
-
-
-              @if (editMode()) {
+              @if (!draftRef()) {
                 <ng-template lgInlineSeparatedGroup>
-                  <lg-button lgShrink
-                             [style]="'default'"
-                             [flat]="true"
-                             (click)="onCloneRecipe()">
-                    {{ 'recipe.form.clone-btn'|translate }}
+                  <lg-button [flat]="true"
+                             [link]="'/recipes/calculate/' + recipe()?.uuid"
+                             [style]="'default'">
+                    {{ 'recipe.calculate-btn'|translate }}
                   </lg-button>
                 </ng-template>
+
+                @if (editMode()) {
+                  <ng-template lgInlineSeparatedGroup>
+                    <lg-button lgShrink
+                               [style]="'default'"
+                               [flat]="true"
+                               (click)="onCloneRecipe()">
+                      {{ 'recipe.form.clone-btn'|translate }}
+                    </lg-button>
+                  </ng-template>
+                }
               }
 
               @if (isDraftRoute()) {
@@ -306,8 +307,7 @@ export class AddRecipeComponent
       this._analyticsService.trackRecipeCreated(recipe.name, {
         recipe_uuid: newUUID,
         ingredients_count: recipe.ingredients?.length || 0,
-        outcome_amount: recipe.outcome_amount,
-        outcome_unit: recipe.outcome_unit,
+        portions: recipe.portions,
         category: recipe.category_id?.name
       });
 

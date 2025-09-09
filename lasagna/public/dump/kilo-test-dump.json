@@ -1,0 +1,522 @@
+[
+  {
+    "store": "productsStore",
+    "data": [
+      {
+        "name": "Продукт в штуках",
+        "amount": 10,
+        "price": 1500,
+        "unit": "piece",
+        "source": "",
+        "brand": "",
+        "notes": "",
+        "uuid": "7a2967q561rmfgj6trj",
+        "updatedAt": 1757663033778,
+        "color": "#00e7e6",
+        "system": false
+      },
+      {
+        "name": "Продукт в граммах",
+        "amount": 150,
+        "price": 12,
+        "unit": "gram",
+        "source": "",
+        "brand": "",
+        "notes": "",
+        "uuid": "pqcc5ss6sm8mfgj5vjt",
+        "updatedAt": 1757662988925,
+        "color": "#5e8dd1",
+        "system": false
+      },
+      {
+        "name": "Продукт в килограммах",
+        "amount": 25,
+        "price": 3000,
+        "unit": "kilogram",
+        "source": "",
+        "brand": "",
+        "notes": "",
+        "uuid": "rcyrsz612rtmfgj6cpf",
+        "updatedAt": 1757663010325,
+        "color": "#1d6efc",
+        "system": false
+      }
+    ],
+    "version": 30,
+    "createdAt": 1757863732590
+  },
+  {
+    "store": "recipesStore",
+    "data": [
+      {
+        "name": "Рецепт простой для расчетов других рецептов",
+        "description": "",
+        "ingredients": [
+          {
+            "amount": 120,
+            "product_id": "pqcc5ss6sm8mfgj5vjt",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "7a2967q561rmfgj6trj",
+            "unit": "piece"
+          },
+          {
+            "amount": 2,
+            "product_id": "rcyrsz612rtmfgj6cpf",
+            "unit": "kilogram"
+          }
+        ],
+        "outcome_amount": 0,
+        "outcome_unit": "gram",
+        "uuid": "1hv3hg4cyjumfgxhlum",
+        "updatedAt": 1757861090262,
+        "tags": [],
+        "color": "#4094bb",
+        "priceModifiers": [
+          {
+            "action": "round",
+            "unit": "currency",
+            "value": 1,
+            "type": "per_unit"
+          }
+        ],
+        "master": false
+      },
+      {
+        "name": "Все в граммах",
+        "description": "",
+        "ingredients": [
+          {
+            "amount": 100,
+            "product_id": "7a2967q561rmfgj6trj",
+            "unit": "gram"
+          },
+          {
+            "amount": 200,
+            "product_id": "pqcc5ss6sm8mfgj5vjt",
+            "unit": "gram"
+          },
+          {
+            "amount": 30,
+            "product_id": "rcyrsz612rtmfgj6cpf",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "recipe_id": "1hv3hg4cyjumfgxhlum",
+            "unit": "gram"
+          },
+          {
+            "amount": 10,
+            "recipe_id": "jzomjocgl5mfgxhmvd",
+            "unit": "gram"
+          }
+        ],
+        "outcome_amount": 0,
+        "outcome_unit": "gram",
+        "uuid": "1kgcq8wl6mkmfgj8r0l",
+        "updatedAt": 1757861819544,
+        "tags": [],
+        "color": "#90a8f7",
+        "priceModifiers": [
+          {
+            "action": "add",
+            "unit": "currency",
+            "value": 0,
+            "type": "per_unit"
+          }
+        ],
+        "master": false
+      },
+      {
+        "name": "Все в штуках",
+        "description": "",
+        "ingredients": [
+          {
+            "amount": 12,
+            "product_id": "7a2967q561rmfgj6trj",
+            "unit": "piece"
+          },
+          {
+            "amount": 20,
+            "product_id": "pqcc5ss6sm8mfgj5vjt",
+            "unit": "piece"
+          },
+          {
+            "amount": 2,
+            "product_id": "rcyrsz612rtmfgj6cpf",
+            "unit": "piece"
+          },
+          {
+            "amount": 2,
+            "recipe_id": "1hv3hg4cyjumfgxhlum",
+            "unit": "piece"
+          },
+          {
+            "amount": 3,
+            "recipe_id": "jzomjocgl5mfgxhmvd",
+            "unit": "piece"
+          }
+        ],
+        "outcome_amount": 0,
+        "outcome_unit": "gram",
+        "uuid": "8kcgp21h56kmfgj97nn",
+        "updatedAt": 1757860981516,
+        "tags": [],
+        "color": "#74da73",
+        "priceModifiers": [
+          {
+            "action": "round",
+            "unit": "currency",
+            "value": 10000,
+            "type": "total"
+          }
+        ],
+        "master": false
+      },
+      {
+        "name": "Все в килограммах",
+        "description": "",
+        "ingredients": [
+          {
+            "amount": 1,
+            "product_id": "7a2967q561rmfgj6trj",
+            "unit": "kilogram"
+          },
+          {
+            "amount": 2,
+            "product_id": "pqcc5ss6sm8mfgj5vjt",
+            "unit": "kilogram"
+          },
+          {
+            "amount": 3,
+            "product_id": "rcyrsz612rtmfgj6cpf",
+            "unit": "kilogram"
+          },
+          {
+            "amount": 1,
+            "recipe_id": "1hv3hg4cyjumfgxhlum",
+            "unit": "kilogram"
+          },
+          {
+            "amount": 1,
+            "recipe_id": "jzomjocgl5mfgxhmvd",
+            "unit": "kilogram"
+          }
+        ],
+        "outcome_amount": 0,
+        "outcome_unit": "gram",
+        "uuid": "ek0rxlma9ngmfgj88iv",
+        "updatedAt": 1757687270775,
+        "tags": [],
+        "color": "#4f9761",
+        "priceModifiers": [
+          {
+            "action": "round",
+            "unit": "currency",
+            "value": 0,
+            "type": "per_unit"
+          }
+        ],
+        "master": false
+      },
+      {
+        "name": "Рецепт в порциях для расчетов других рецептов",
+        "description": "",
+        "ingredients": [
+          {
+            "amount": 120,
+            "product_id": "pqcc5ss6sm8mfgj5vjt",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "7a2967q561rmfgj6trj",
+            "unit": "piece"
+          },
+          {
+            "amount": 2,
+            "product_id": "rcyrsz612rtmfgj6cpf",
+            "unit": "kilogram"
+          }
+        ],
+        "outcome_amount": "12",
+        "outcome_unit": "piece",
+        "uuid": "jzomjocgl5mfgxhmvd",
+        "createdAt": 1757687054089,
+        "updatedAt": 1757863284153,
+        "tags": [],
+        "color": "#4094bb",
+        "priceModifiers": [
+          {
+            "action": "round",
+            "unit": "currency",
+            "value": 0,
+            "type": "per_unit"
+          }
+        ],
+        "master": false
+      }
+    ],
+    "version": 30,
+    "createdAt": 1757863732591
+  },
+  {
+    "store": "categoryProductsStore",
+    "data": [
+      {
+        "uuid": "Ароматизаторы и специи",
+        "name": "Ароматизаторы и специи"
+      },
+      {
+        "uuid": "Безглютеновые ингредиенты",
+        "name": "Безглютеновые ингредиенты"
+      },
+      {
+        "uuid": "Веганские и растительные альтернативы",
+        "name": "Веганские и растительные альтернативы"
+      },
+      {
+        "uuid": "Глазури и покрытия",
+        "name": "Глазури и покрытия"
+      },
+      {
+        "uuid": "Диетические и низкокалорийные продукты",
+        "name": "Диетические и низкокалорийные продукты"
+      },
+      {
+        "uuid": "Желирующие вещества (агар, желатин, пектин)",
+        "name": "Желирующие вещества (агар, желатин, пектин)"
+      },
+      {
+        "uuid": "Жиры и масла",
+        "name": "Жиры и масла"
+      },
+      {
+        "uuid": "Замороженные и полуфабрикаты",
+        "name": "Замороженные и полуфабрикаты"
+      },
+      {
+        "uuid": "Кондитерские добавки и эмульгаторы",
+        "name": "Кондитерские добавки и эмульгаторы"
+      },
+      {
+        "uuid": "Кремы и начинки",
+        "name": "Кремы и начинки"
+      },
+      {
+        "uuid": "Молочные продукты",
+        "name": "Молочные продукты"
+      },
+      {
+        "uuid": "Мука и крахмалы",
+        "name": "Мука и крахмалы"
+      },
+      {
+        "uuid": "Напитки и ликеры для десертов",
+        "name": "Напитки и ликеры для десертов"
+      },
+      {
+        "uuid": "Овощи",
+        "name": "Овощи"
+      },
+      {
+        "uuid": "Орехи и семена",
+        "name": "Орехи и семена"
+      },
+      {
+        "uuid": "Пасты",
+        "name": "Пасты"
+      },
+      {
+        "uuid": "Подсластители (сахар, мед, сиропы)",
+        "name": "Подсластители (сахар, мед, сиропы)"
+      },
+      {
+        "uuid": "Разрыхлители и стабилизаторы",
+        "name": "Разрыхлители и стабилизаторы"
+      },
+      {
+        "uuid": "Сиропы и пропитки",
+        "name": "Сиропы и пропитки"
+      },
+      {
+        "uuid": "Соль",
+        "name": "Соль"
+      },
+      {
+        "uuid": "Украшения и декор",
+        "name": "Украшения и декор"
+      },
+      {
+        "uuid": "Формы для выпечки и инвентарь",
+        "name": "Формы для выпечки и инвентарь"
+      },
+      {
+        "uuid": "Фруктовые и ягодные компоненты",
+        "name": "Фруктовые и ягодные компоненты"
+      },
+      {
+        "uuid": "Шоколад и какао-продукты",
+        "name": "Шоколад и какао-продукты"
+      },
+      {
+        "uuid": "Яйца и яичные продукты",
+        "name": "Яйца и яичные продукты"
+      }
+    ],
+    "version": 30,
+    "createdAt": 1757863732592
+  },
+  {
+    "store": "categoryRecipesStore",
+    "data": [
+      {
+        "uuid": "Авторские десерты",
+        "name": "Авторские десерты"
+      },
+      {
+        "uuid": "Бисквиты",
+        "name": "Бисквиты"
+      },
+      {
+        "uuid": "Бриошь и сдоба",
+        "name": "Бриошь и сдоба"
+      },
+      {
+        "uuid": "Веганские десерты",
+        "name": "Веганские десерты"
+      },
+      {
+        "uuid": "Выпечка без глютена",
+        "name": "Выпечка без глютена"
+      },
+      {
+        "uuid": "Выпечка без сахара",
+        "name": "Выпечка без сахара"
+      },
+      {
+        "uuid": "Глазури и покрытия",
+        "name": "Глазури и покрытия"
+      },
+      {
+        "uuid": "Десерты в стаканах",
+        "name": "Десерты в стаканах"
+      },
+      {
+        "uuid": "Дрожжевое тесто",
+        "name": "Дрожжевое тесто"
+      },
+      {
+        "uuid": "Желе и конфитюры",
+        "name": "Желе и конфитюры"
+      },
+      {
+        "uuid": "Заварное тесто",
+        "name": "Заварное тесто"
+      },
+      {
+        "uuid": "Завтраки",
+        "name": "Завтраки"
+      },
+      {
+        "uuid": "Карамель",
+        "name": "Карамель"
+      },
+      {
+        "uuid": "Кексы и маффины",
+        "name": "Кексы и маффины"
+      },
+      {
+        "uuid": "Кремы",
+        "name": "Кремы"
+      },
+      {
+        "uuid": "Макарон",
+        "name": "Макарон"
+      },
+      {
+        "uuid": "Меренги",
+        "name": "Меренги"
+      },
+      {
+        "uuid": "Муссы",
+        "name": "Муссы"
+      },
+      {
+        "uuid": "Начинки",
+        "name": "Начинки"
+      },
+      {
+        "uuid": "Панна котта",
+        "name": "Панна котта"
+      },
+      {
+        "uuid": "Песочное тесто",
+        "name": "Песочное тесто"
+      },
+      {
+        "uuid": "Печенье",
+        "name": "Печенье"
+      },
+      {
+        "uuid": "Пирожные",
+        "name": "Пирожные"
+      },
+      {
+        "uuid": "Рулеты",
+        "name": "Рулеты"
+      },
+      {
+        "uuid": "Слоёное тесто",
+        "name": "Слоёное тесто"
+      },
+      {
+        "uuid": "Суфле",
+        "name": "Суфле"
+      },
+      {
+        "uuid": "Тарты",
+        "name": "Тарты"
+      },
+      {
+        "uuid": "Торты",
+        "name": "Торты"
+      },
+      {
+        "uuid": "Чизкейки",
+        "name": "Чизкейки"
+      },
+      {
+        "uuid": "Шоколадные изделия",
+        "name": "Шоколадные изделия"
+      }
+    ],
+    "version": 30,
+    "createdAt": 1757863732592
+  },
+  {
+    "store": "settings",
+    "data": [
+      {
+        "key": "currency",
+        "data": "RUB",
+        "uuid": "fjs71mz6pf8mfjunmdu"
+      },
+      {
+        "key": "invoicePrefix",
+        "data": "UV-LG",
+        "uuid": "tmvoqazynglmfjunmdu"
+      },
+      {
+        "key": "lang",
+        "data": "ru",
+        "uuid": "ais3v8ckvopmfjunmdu"
+      }
+    ],
+    "version": 30,
+    "createdAt": 1757863732595
+  }
+]

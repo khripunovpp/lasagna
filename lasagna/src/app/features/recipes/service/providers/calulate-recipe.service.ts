@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {RecipesRepository} from './recipes.repository';
-import {Recipe} from './models/Recipe';
-import {Unit} from '../../../shared/service/types/Unit.types';
-import {RecipeCost} from './models/RecipeCost';
-import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
+import {Unit} from '../../../../shared/service/types/Unit.types';
+import {RecipeCost} from '../models/RecipeCost';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {RecipeDTO} from './Recipe.scheme';
-import {UnitValue} from '../../../shared/view/const/units.const';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
+import {UnitValue} from '../../../../shared/view/const/units.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {Ingredient} from '../models/Ingredient';
 
 export interface Calculation {
   calculation: RecipeCost
@@ -14,9 +14,10 @@ export interface Calculation {
 }
 
 export interface CalculationTableParams {
+  ingredient?:Ingredient
   name: string
   unit: Unit | undefined | string
-  price_per_gram: number | undefined
+  price_per_unit: number | undefined
   amount: number | undefined
   total: number | undefined
   indent: number
@@ -30,6 +31,7 @@ export interface CalculationTableParams {
 export class CalculateRecipeService {
   constructor(
     private _recipeRepository: RecipesRepository,
+    private _settingsService: SettingsService,
   ) {
   }
 
@@ -62,18 +64,19 @@ export class CalculateRecipeService {
     recipeCost.ingredients.forEach(ingredient => {
       if (ingredient.blanked) return;
       table.push(this._makeRow({
+        ingredient,
         name: ingredient.generalName,
-        price_per_gram: ingredient.pricePerUnit,
+        price_per_unit: ingredient.pricePerUnit,
         amount: ingredient.amount,
         total: ingredient.totalPrice,
         unit: ingredient.unit,
         uuid: ingredient.uuid || '',
         indent: 0,
-        type: ingredient.recipe_id ? 'recipe-row' : undefined,
+        type: ingredient.recipe_id && !ingredient.product_id ? 'recipe-row' : undefined,
       }));
     });
 
-    table.push(this._makeTotal(recipeCost.totalPrice, recipeCost.totalWeight));
+    table.push(this._makeTotal(recipeCost.totalPrice, recipeCost.totalWeight, recipeCost.totalPricePerGram));
 
     return {
       calculation: recipeCost,
@@ -83,9 +86,10 @@ export class CalculateRecipeService {
 
   private _makeRow(
     params: {
+      ingredient: Ingredient,
       uuid: string
       name: string
-      price_per_gram: number | undefined
+      price_per_unit: number | undefined
       amount: number | undefined
       total: number | undefined
       unit?: Unit | undefined | string
@@ -94,11 +98,12 @@ export class CalculateRecipeService {
     },
   ): CalculationTableParams {
     return {
+      ingredient: params.ingredient,
       name: params.name,
-      price_per_gram: params.price_per_gram ?? 0,
+      price_per_unit: params.price_per_unit ?? 0,
       amount: params.amount,
       total: params.total ?? 0,
-      unit: params.unit || UnitValue.GRAM,
+      unit: params.unit,
       indent: params.indent ?? 0,
       type: params.type || 'row',
       uuid: params.uuid,
@@ -108,12 +113,13 @@ export class CalculateRecipeService {
   private _makeTotal(
     total: number,
     totalWeight: number,
+    totalPricePerUnit: number,
   ): CalculationTableParams {
     return {
       name: _('recipe.calculation.table.total-row'),
       amount: totalWeight,
       unit: UnitValue.GRAM,
-      price_per_gram: parseFloatingNumber(total / totalWeight),
+      price_per_unit: totalPricePerUnit,
       total: total,
       indent: 0,
       type: 'total',

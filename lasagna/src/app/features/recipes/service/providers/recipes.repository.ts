@@ -1,18 +1,18 @@
 import {inject, Injectable} from '@angular/core';
-import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
-import {Stores} from '../../../shared/service/db/const/stores';
-import {CategoryRecipesRepository} from '../../settings/service/repositories/category-recipes.repository';
-import {UsingHistoryService} from '../../../shared/service/services/using-history.service';
+import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
+import {Stores} from '../../../../shared/service/db/const/stores';
+import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
+import {UsingHistoryService} from '../../../../shared/service/services/using-history.service';
 import {BehaviorSubject} from 'rxjs';
-import {DraftForm, DraftFormsService} from '../../../shared/service/services/draft-forms.service';
-import {TagsRepository} from '../../settings/service/repositories/tags.repository';
-import {Recipe} from './models/Recipe';
-import {RecipeDTO} from './Recipe.scheme';
-import {Tag} from '../../settings/service/models/Tag';
-import {ProductsRepository} from '../../products/service/products.repository';
-import {OnboardingService} from '../../onboarding/onboarding.service';
-import {Filters} from '../../../shared/types/filter.types';
-import {copyRecipeFactory} from './recipe.factory';
+import {DraftForm, DraftFormsService} from '../../../../shared/service/services/draft-forms.service';
+import {TagsRepository} from '../../../settings/service/repositories/tags.repository';
+import {Recipe} from '../models/Recipe';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
+import {Tag} from '../../../settings/service/models/Tag';
+import {ProductsRepository} from '../../../products/service/products.repository';
+import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {Filters} from '../../../../shared/types/filter.types';
+import {copyRecipeFactory} from '../factories/recipe.factory';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({

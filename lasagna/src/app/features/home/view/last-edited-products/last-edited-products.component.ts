@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 
@@ -9,34 +9,35 @@ import {Product} from '../../../products/service/Product';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
+import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
 
 @Component({
   selector: 'lg-last-edited-products',
   template: `
-      <lg-flex-column size="medium">
-          <lg-title [level]="4">{{ 'main.last-products'|translate }}</lg-title>
+    <lg-flex-column size="medium">
+      <lg-title [level]="4">{{ 'main.last-products'|translate }}</lg-title>
 
-          <div class="last-edited-recipes">
-              <lg-flex-column [size]="'medium'">
-                  @for (item of products();track item.product.uuid) {
-                      <lg-flex-row [size]="'medium'" [mobileMode]="true">
-                          <a [routerLink]="['/products/edit/', item.product.uuid]"
-                             class="last-edited-product">
-                              {{ item.product.name }}
-                          </a>
+      <div class="last-edited-recipes">
+        <lg-flex-column [size]="'medium'">
+          @for (item of products(); track item.product.uuid) {
+            <lg-flex-row [size]="'medium'" [mobileMode]="true">
+              <a [routerLink]="['/products/edit/', item.product.uuid]"
+                 class="last-edited-product">
+                {{ productLabelFactory(item.product) }}
+              </a>
 
-                          <small class="text-muted text-right text-cursive" lgPull>
-                              {{ (item?.updatedAt) | timeAgo }}
-                          </small>
-                      </lg-flex-row>
-                  } @empty {
-                      <div class="last-edited-recipe-name">
-                          {{ 'no-products'|translate }}
-                      </div>
-                  }
-              </lg-flex-column>
-          </div>
-      </lg-flex-column>
+              <small class="text-muted text-right text-cursive" lgPull>
+                {{ (item?.updatedAt) | timeAgo }}
+              </small>
+            </lg-flex-row>
+          } @empty {
+            <div class="last-edited-recipe-name">
+              {{ 'no-products'|translate }}
+            </div>
+          }
+        </lg-flex-column>
+      </div>
+    </lg-flex-column>
   `,
   styles: [
     `
@@ -56,7 +57,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     FlexRowComponent,
     PullDirective,
     TranslatePipe
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LastEditedProductsComponent {
   constructor(
@@ -69,11 +71,12 @@ export class LastEditedProductsComponent {
     updatedAt: number
     count: number
   }[]>([]);
+  protected readonly productLabelFactory = productLabelFactory;
 
   ngOnInit() {
     this._productsRepository.getLastProducts()
       .then(products => {
-      this.products.set(products);
-    });
+        this.products.set(products);
+      });
   }
 }

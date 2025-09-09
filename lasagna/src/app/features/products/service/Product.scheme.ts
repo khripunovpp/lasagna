@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {UnitScheme} from '../../recipes/service/Unit.scheme';
+import {UnitScheme} from '../../recipes/service/schemes/Unit.scheme';
 
 export const ProductScheme = z.object({
   name: z.string(),

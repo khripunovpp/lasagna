@@ -3,31 +3,34 @@
 // Auto-generated translations - DO NOT EDIT MANUALLY
 function getTranslation(key, params = {}) {
   const TRANSLATIONS = {
-    "en": {
-      "pwa.update.banner-text": "New version available! Click to update.",
-      "pwa.update.dialog.title": "New version available!",
-      "pwa.update.dialog.description": "We recommend to save a backup of your data before updating.",
-      "pwa.update.dialog.save-backup": "Save Backup",
-      "pwa.update.dialog.update-without-backup": "Update App without Backup",
-      "pwa.update.dialog.timeout": "Will be updated in {seconds} seconds"
-    },
-    "ru": {
-      "pwa.update.banner-text": "Доступна новая версия! Нажмите для обновления.",
-      "pwa.update.dialog.title": "Доступна новая версия!",
-      "pwa.update.dialog.description": "Рекомендуем сохранить резервную копию данных перед обновлением.",
-      "pwa.update.dialog.save-backup": "Сохранить резервную копию",
-      "pwa.update.dialog.update-without-backup": "Обновить без резервной копии",
-      "pwa.update.dialog.timeout": "Обновление через {seconds} секунд"
-    },
-    "pt": {
-      "pwa.update.banner-text": "Nova versão disponível! Clique para atualizar.",
-      "pwa.update.dialog.title": "Nova versão disponível!",
-      "pwa.update.dialog.description": "Recomendamos salvar um backup dos seus dados antes de atualizar.",
-      "pwa.update.dialog.save-backup": "Salvar Backup",
-      "pwa.update.dialog.update-without-backup": "Atualizar sem Backup",
-      "pwa.update.dialog.timeout": "Será atualizado em {seconds} segundos"
-    }
-  };
+  "en": {
+    "pwa.update.banner-text": "New version available! Click to update.",
+    "pwa.update.dialog.title": "New version available!",
+    "pwa.update.dialog.description": "We recommend to save a backup of your data before updating. Sometimes the app doesn't update on the first try, so you can just do nothing and it will update automatically anyway.",
+    "pwa.update.dialog.save-backup": "Save Backup",
+    "pwa.update.dialog.update-without-backup": "Update App without Backup",
+    "pwa.update.dialog.timeout": "Will be updated in {seconds} seconds",
+    "pwa.update.dialog.close-btn": "Close without updating"
+  },
+  "ru": {
+    "pwa.update.banner-text": "Доступна новая версия! Нажмите для обновления.",
+    "pwa.update.dialog.title": "Доступна новая версия!",
+    "pwa.update.dialog.description": "Рекомендуем сохранить резервную копию данных перед обновлением. Иногда приложение не обновляется с первого раза, поэтому вы спокойно можете ничего не делать и оно все равно обновится автоматически.",
+    "pwa.update.dialog.save-backup": "Сохранить резервную копию",
+    "pwa.update.dialog.update-without-backup": "Обновить без резервной копии",
+    "pwa.update.dialog.timeout": "Обновление через {seconds} секунд",
+    "pwa.update.dialog.close-btn": "Закрыть без обновления"
+  },
+  "pt": {
+    "pwa.update.banner-text": "Nova versão disponível! Clique para atualizar.",
+    "pwa.update.dialog.title": "Nova versão disponível!",
+    "pwa.update.dialog.description": "Recomendamos salvar um backup dos seus dados antes de atualizar. Às vezes, o aplicativo não atualiza na primeira tentativa, então você pode ficar tranquilo e não fazer nada; ele será atualizado automaticamente.",
+    "pwa.update.dialog.save-backup": "Salvar Backup",
+    "pwa.update.dialog.update-without-backup": "Atualizar sem Backup",
+    "pwa.update.dialog.timeout": "Será atualizado em {seconds} segundos",
+    "pwa.update.dialog.close-btn": "Fechar sem atualizar"
+  }
+};
 
   // Get language with fallback chain
   const lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
@@ -44,7 +47,6 @@ function getTranslation(key, params = {}) {
 
   return result;
 }
-
 // END TRANSLATIONS
 
 function createUpdateButton() {

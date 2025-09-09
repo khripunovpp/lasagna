@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from '@angular/router';
 import {inject} from '@angular/core';
-import {CalculateRecipeService} from '../calulate-recipe.service';
-import {RecipesRepository} from '../recipes.repository';
+import {CalculateRecipeService} from '../providers/calulate-recipe.service';
+import {RecipesRepository} from '../providers/recipes.repository';
 
 export const recipeEditResolver: ResolveFn<any> = async (
   route: ActivatedRouteSnapshot,

@@ -45,7 +45,6 @@ import {TranslatePipe} from '@ngx-translate/core';
         position: relative;
         padding-top: 27px;
         --part-color-opacity: 0.5;
-        white-space: nowrap;
 
         &__tabs {
           display: flex;
@@ -56,6 +55,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           top: 0;
           left: 0;
           width: 100%;
+          white-space: nowrap;
         }
 
         &__tab {

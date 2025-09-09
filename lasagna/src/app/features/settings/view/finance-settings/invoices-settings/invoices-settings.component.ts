@@ -38,15 +38,7 @@ import {ControlComponent} from '../../../../controls/form/control-item/control.c
       </lg-control>
 
       <lg-control [label]=" 'settings.invoices.precision' | translate">
-        <lg-flex-row>
-          <lg-control [label]=" 'settings.invoices.precision-rows' | translate">
-            <lg-number-input formControlName="precisionRows"></lg-number-input>
-          </lg-control>
-
-          <lg-control [label]=" 'settings.invoices.precision-totals' | translate">
-            <lg-number-input formControlName="precisionTotals"></lg-number-input>
-          </lg-control>
-        </lg-flex-row>
+        <lg-number-input formControlName="precision"></lg-number-input>
       </lg-control>
     </lg-flex-column>
   `,
@@ -88,8 +80,7 @@ export class InvoicesSettingsComponent
 
   form = new FormGroup({
     prefix: new FormControl<string | null>(null),
-    precisionRows: new FormControl<number | null>(null),
-    precisionTotals: new FormControl<number | null>(null),
+    precision: new FormControl<number | null>(null),
     logo: new FormControl<File | null>(null)
   })
   logoBase64 = signal<string | null>(null);
@@ -99,8 +90,7 @@ export class InvoicesSettingsComponent
     const precisions = this._settingsService.getInvoicePrecision();
     this.form.patchValue({
       prefix: this._settingsService.getInvoicePrefix(),
-      precisionRows: precisions[0] ?? 2,
-      precisionTotals: precisions[1] ?? 2,
+      precision: precisions[0] ?? 2,
     });
 
     this.logoBase64.set(this._settingsService.getInvoiceLogo() ?? null);
@@ -116,7 +106,7 @@ export class InvoicesSettingsComponent
       this._settingsService.setInvoiceLogo(this.logoBase64());
       this._settingsService.setInvoicePrefix(value.prefix ?? '');
       this._settingsService.setInvoicePrecisions(
-        value.precisionRows ?? 2, value.precisionTotals ?? 2
+        value.precision ?? 2,
       );
       await this._settingsService.saveSettings();
     });

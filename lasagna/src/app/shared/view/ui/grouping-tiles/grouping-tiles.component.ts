@@ -160,8 +160,8 @@ export class GroupingTilesComponent {
   }
 
   readonly storedGroup = injectFragment();
-  readonly sortResult = input<SortResult<any>>();
-  readonly selectable = input<boolean>(false);
+  sortResult = input<SortResult<any>>();
+  selectable = input<boolean>(false);
   readonly empty = computed(() => {
     return !this.sortResult()?.groups.length;
   });

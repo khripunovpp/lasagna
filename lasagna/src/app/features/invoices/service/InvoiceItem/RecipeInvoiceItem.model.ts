@@ -5,6 +5,7 @@ import {parseFloatingNumber} from '../../../../shared/helpers';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Recipe} from '../../../recipes/service/models/Recipe';
 import {Tax} from '../../../settings/service/models/Tax';
+import {UnitValue} from '../../../../shared/view/const/units.const';
 
 export class RecipeInvoiceItem
   extends InvoiceItemBase {
@@ -35,7 +36,8 @@ export class RecipeInvoiceItem
   }
 
   get weightGram(): number {
-    if (this.unit === 'gram' && this.recipe.outcome_unit === 'gram') {
+    // TODO
+    if (this.unit === 'gram' && !this.recipe.portions) {
       return this.amount;
     }
     return 0
@@ -45,16 +47,11 @@ export class RecipeInvoiceItem
     if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
-    if (this.unit === 'piece' && this.recipe.outcome_unit !== 'piece') {
-      return 0;
-    }
-    if (this.unit === 'gram' && this.recipe.outcome_unit === 'piece') {
+    // TODO
+    if (this.unit === 'gram' && this.recipe?.portions) {
       return this.recipe.totalPrice / this.recipe.totalIngredientsWeight
     }
-    if (this.unit === this.recipe.outcome_unit || !this.recipe.outcome_unit) {
-      return this.recipe.pricePerUnit;
-    }
-    return 0;
+    return this.recipe.pricePerUnit;
   }
 
   get compareKey(): string {
@@ -74,12 +71,13 @@ export class RecipeInvoiceItem
   }
 
   get defaultOutcome() {
-    if (this.recipe.outcome_unit === 'piece') {
-      return this.recipe.outcome_amount;
-    } else if (!this.recipe.outcome_unit || this.recipe.outcome_unit === 'gram') {
-      return this.recipe.outcome_amount || this.weightGram;
+    // TODO
+    if (this.recipe.portions) {
+      return this.recipe.portions;
+    } else  {
+      // TODO
+      return this.recipe.portions || this.weightGram;
     }
-    return 0;
   }
 
   toDTO(): InvoiceItemDTO {
@@ -104,7 +102,9 @@ export class RecipeInvoiceItem
   setPayload(payload: unknown): void {
     if (payload instanceof Recipe) {
       this.recipe = payload;
-      this.setUnit(this.recipe.outcome_unit || 'gram');
+      this.setUnit(this.recipe.portions
+        ? UnitValue.PIECE
+        : UnitValue.GRAM);
     } else {
       throw new Error('Invalid payload type for RecipeInvoiceItem');
     }

@@ -1,1 +1,3 @@
-export type Unit = 'gram' | 'piece';
+export type Unit = 'gram'
+  | 'kilogram'
+  | 'piece';

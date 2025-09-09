@@ -1,5 +1,5 @@
 import {SortStrategy} from '../types/sorting.types';
-import {RecipeDTO} from '../../../features/recipes/service/Recipe.scheme';
+import {RecipeDTO} from '../../../features/recipes/service/schemes/Recipe.scheme';
 import {BaseGrouping} from './base-grouping';
 import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
 

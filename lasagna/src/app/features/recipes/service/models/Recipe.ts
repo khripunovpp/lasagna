@@ -1,12 +1,13 @@
 import {Ingredient} from './Ingredient';
-import {RecipeDTO} from '../Recipe.scheme';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {Unit} from '../../../../shared/service/types/Unit.types';
 import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
 import {estimateColor, isColorString, parseFloatingNumber} from '../../../../shared/helpers';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
-import {RecipePriceModifier} from '../PriceModifier';
+import {RecipePriceModifier} from './PriceModifier';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {isCountUnit} from '../../../../shared/helpers/unit.helper';
 
 export class Recipe {
   constructor(
@@ -18,8 +19,7 @@ export class Recipe {
   name: string = '';
   description: string = '';
   ingredients: Ingredient[] = [];
-  outcome_amount: number = 0;
-  outcome_unit: Unit = UnitValue.GRAM;
+  portions: number = 0;
   uuid?: string | undefined = undefined;
   category_id?: CategoryRecipe;
   createdAt?: number | undefined;
@@ -54,7 +54,7 @@ export class Recipe {
   get valid() {
     return this.name
       && this.ingredients.length > 0
-      && this.outcome_amount > 0
+      && this.portions > 0
       && this.category_id
   }
 
@@ -72,18 +72,16 @@ export class Recipe {
   }
 
   get outcomeAmount(): number {
-    if (this.outcome_amount) {
-      return parseFloatingNumber(this.outcome_amount);
+    if (this.portions) {
+      return parseFloatingNumber(this.portions);
     }
     return this.totalIngredientsWeight;
   }
 
   get pricePerUnit() {
-    if (this.ingredients.length === 0) {
-      return 0;
-    }
-    if (this.outcome_unit && this.outcome_unit !== UnitValue.GRAM) {
-      return this.totalPrice / this.outcome_amount;
+    if (this.ingredients.length === 0) return 0;
+    if (this.portions) {
+      return this.totalPrice / this.portions;
     }
     return this.pricePerGram;
   }
@@ -97,19 +95,14 @@ export class Recipe {
 
   get totalIngredientsWeight(): number {
     return this.ingredients.reduce((acc, ingredient) => {
-      return acc + ingredient.totalWeightGram;
+      // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
+      return acc + (ingredient.totalWeightGram ?? 0);
     }, 0);
   }
 
-  get outcomeAmountGreaterThanIngredients() {
-    return parseFloatingNumber(this.outcome_amount) > this.totalIngredientsWeight;
-  }
-
   get weightForUnit(): number {
-    if (!this.outcome_unit || this.outcome_unit === UnitValue.GRAM) {
-      return this.totalIngredientsWeight;
-    }
-    return this.totalIngredientsWeight / this.outcome_amount;
+    if (!this.portions) return 0;
+    return this.totalIngredientsWeight / this.portions;
   }
 
   static fromRaw(dto: any) {
@@ -118,8 +111,7 @@ export class Recipe {
         name: dto,
         description: '',
         ingredients: [],
-        outcome_amount: 0,
-        outcome_unit: UnitValue.GRAM,
+        portions: 0,
       });
     }
 
@@ -127,8 +119,7 @@ export class Recipe {
       name: dto?.name || '',
       description: dto?.description || '',
       ingredients: dto?.ingredients || [],
-      outcome_amount: dto?.outcome_amount || 0,
-      outcome_unit: dto?.outcome_unit || UnitValue.GRAM,
+      portions: dto?.portions || 0,
       uuid: dto?.uuid,
       category_id: dto?.category_id,
       createdAt: dto?.createdAt,
@@ -153,8 +144,7 @@ export class Recipe {
       name: '',
       description: '',
       ingredients: [],
-      outcome_amount: 0,
-      outcome_unit: UnitValue.GRAM,
+      portions: 0,
       uuid: undefined,
       category_id: null,
       createdAt: undefined,
@@ -190,8 +180,7 @@ export class Recipe {
       name: this.name,
       description: this.description,
       ingredients: this.ingredients.map((ingredient) => ingredient.toDTO()),
-      outcome_amount: this.outcome_amount,
-      outcome_unit: this.outcome_unit,
+      portions: this.portions,
       uuid: this.uuid,
       category_id: this.category_id?.toUUID(),
       createdAt: this.createdAt,
@@ -214,8 +203,7 @@ export class Recipe {
       ? dto.ingredients.map((ingredient: any) => {
         return Ingredient.fromRaw(ingredient);
       }) : this.ingredients;
-    this.outcome_amount = dto?.outcome_amount ?? this.outcome_amount;
-    this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
+    this.portions = dto?.portions ?? this.portions;
     this.uuid = dto?.uuid || this.uuid;
     this.category_id = dto?.category_id ? CategoryRecipe.fromRaw(
       typeof dto.category_id === 'string' ? {

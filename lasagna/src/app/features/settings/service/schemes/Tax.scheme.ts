@@ -1,5 +1,4 @@
 import {z} from 'zod';
-import {UnitScheme} from '../../../recipes/service/Unit.scheme';
 
 export const TaxScheme = z.object({
   name: z.string(),

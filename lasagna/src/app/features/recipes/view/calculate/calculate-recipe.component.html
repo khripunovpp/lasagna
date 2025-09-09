@@ -1,6 +1,7 @@
 <lg-fade-in>
   <lg-container>
     <lg-flex-column>
+      @let calculation = result()?.calculation;
       @let hasIngredients = (result()?.calculation?.ingredients?.length || 0) > 0;
       <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-title>
@@ -19,23 +20,34 @@
       </lg-flex-row>
 
       @if (result()?.calculation?.totalPrice) {
-        <lg-flex-row [center]="true" [mobileMode]="true" style="max-width: 1200px" lgExpand>
+        <lg-flex-row [mobileMode]="true"
+                     style="max-width: 1200px"
+                     lgExpand>
           <lg-flex-column [position]="'stretch'">
+            @if (calculation?.hasWeight) {
+              <lg-card size="small">
+                <lg-flex-row [size]="'small'"
+                             [mobileMode]="true"
+                             [relaxed]="true">
+                  <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
 
-            <lg-card size="small">
-              <lg-flex-row [size]="'small'" [relaxed]="true">
-                <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
+                  <lg-flex-row size="tiny">
+                    <div class="text-bold">
+                      {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
+                      {{ result()?.calculation?.outcomeUnit | unitString | translate }}
+                    </div>
 
-                <b>
-                  {{ result()?.calculation?.outcomeAmount | number: '1.0-2' }}
-                  {{ result()?.calculation?.outcomeUnit | unitString | translate }}
-                </b>
-              </lg-flex-row>
+                    @if (hasPortions()) {
+                      <span>/</span>
 
-            </lg-card>
+                      <div>
+                        {{ result()?.calculation?.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}
+                      </div>
+                    }
+                  </lg-flex-row>
+                </lg-flex-row>
+              </lg-card>
 
-
-            <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
                 <lg-flex-row [size]="'small'"
                              [mobileMode]="true"
@@ -45,21 +57,40 @@
                     <b>{{ result()?.calculation?.outcomeUnit | unitString | translate }}</b>
                   </div>
 
-                  <b>
-                    @if (notInGrams()) {
-                      <ng-container *ngTemplateOutlet="totalAmount"></ng-container>
-                    } @else {
-                      {{ result()?.calculation?.pricePerUnit | userCurrency:'1.2-5' }}
+                  <lg-flex-row size="tiny">
+                    @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
+                    <lg-flex-row [size]="'tiny'">
+                      <div [class.text-bold]="!result()?.calculation?.hasPriceDifference">
+                        @if (hasPortions()) {
+                          {{ result()?.calculation?.pricePerOutcomeUnit | userCurrency: pipesDigits() }}
+                        } @else {
+                          {{ result()?.calculation?.pricePerUnit | userCurrency:pipesDigits() }}
+                        }
+                      </div>
+
+                      @if (result()?.calculation?.hasPriceDifference) {
+                        <span>></span>
+                        <div
+                          class="text-underlined text-bold">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: pipesDigits() }}
+                        </div>
+                      }
+                    </lg-flex-row>
+
+                    @if (result()?.calculation?.hasPriceDifference) {
+                      <lg-flex-row [size]="'tiny'"
+                                   class="text-bold"
+                                   [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+                        <span>(</span>
+                        <div>
+                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
+                        </div>
+                        <span>)</span>
+                      </lg-flex-row>
                     }
-                  </b>
+                  </lg-flex-row>
                 </lg-flex-row>
               </lg-card>
-
-
-              <lg-flex-row [size]="'small'"
-                           [relaxed]="true" style="--control-bg: var(--hr-bg-strong);padding: 0 16px">
-              </lg-flex-row>
-            </lg-flex-column>
+            }
 
             <lg-flex-column [position]="'stretch'" size="small">
               <lg-card size="small">
@@ -68,23 +99,34 @@
                              [relaxed]="true">
                   <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
-                  <b>
-                    {{ totalPrice() | userCurrency: '1.2-2' }}
+                  <lg-flex-row [size]="'tiny'">
+                    @let diff = totalPriceDifference();
+                    <lg-flex-row [class.text-bold]="!totalPriceDifference()"
+                                 size="tiny">
+                      <div> {{ totalPrice() | userCurrency: totalPipesDigits }}</div>
+
+                      @if (totalPriceDifference()) {
+                        <span>></span>
+                        <div class="text-bold text-underlined">
+                          {{ totalPriceWithAdditions() |  userCurrency: pipesDigits() }}
+                        </div>
+                      }
+                    </lg-flex-row>
 
                     @if (totalPriceDifference()) {
-                      @let diff = totalPriceDifference();
-                      >
-                      <span class="text-underlined">{{ totalPriceWithAdditions() |  userCurrency: '1.2-2' }}</span>
-
-                      <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                        (
-                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }}
-                          /
-                          <span class="text-no-wrap">{{ totalPriceProfit() |number:'1.2-2' }}%</span>
-                          )
-                      </span>
+                      <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
+                                   class="text-bold"
+                                   size="tiny">
+                        <span>(</span>
+                        <div [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
+                        </div>
+                        <span>/</span>
+                        <div class="text-no-wrap">{{ totalPriceProfit() |number:totalPipesDigits }}%</div>
+                        <span>)</span>
+                      </lg-flex-row>
                     }
-                  </b>
+                  </lg-flex-row>
                 </lg-flex-row>
               </lg-card>
 
@@ -121,7 +163,8 @@
           </lg-flex-column>
 
           <lg-card lgWidth="270px" size="small">
-            <lg-flex-column [size]="'small'">
+            <lg-flex-column [fill]="true"
+                            [size]="'small'">
               <lg-title [level]="5">
                 <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
               </lg-title>
@@ -136,43 +179,31 @@
             </lg-flex-column>
           </lg-card>
 
-          <lg-card lgWidth="270px" size="small">
-            <lg-flex-column [size]="'small'">
-              <lg-title [level]="5">
-                <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
-              </lg-title>
+          @if (calculation?.hasWeight) {
+            <lg-card lgWidth="270px" size="small">
+              <lg-flex-column [fill]="true"
+                              [size]="'small'">
+                <lg-title [level]="5">
+                  <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
+                </lg-title>
 
-              <canvas [data]="doughnutChartData().weight"
-                      [options]="doughnutChartOptions"
-                      (chartHover)="onChartHover('weight', $event.event, $event.active)"
-                      [type]="doughnutChartType"
-                      #weightChart
-                      baseChart>
-              </canvas>
-            </lg-flex-column>
-          </lg-card>
+                <canvas [data]="doughnutChartData().weight"
+                        [options]="doughnutChartOptions"
+                        (chartHover)="onChartHover('weight', $event.event, $event.active)"
+                        [type]="doughnutChartType"
+                        #weightChart
+                        baseChart>
+                </canvas>
+              </lg-flex-column>
+            </lg-card>
+          }
         </lg-flex-row>
       }
 
-      <ng-template #totalAmount>
-        @if (notInGrams()) {
-          {{ result()?.calculation?.pricePerOutcomeUnit |  userCurrency: '1.2-2' }}
 
-          @if (result()?.calculation?.hasPriceDifference) {
-            @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
-            >
-            <span class="text-underlined">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: '1.2-2' }}</span>
-
-            <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-              ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: '1.2-2' }})
-            </span>
-          }
-          /
-          {{ result()?.calculation?.weightForUnit |  number: '1.0-2' }} {{ 'recipe.calculation.gram' | translate }}
-        } @else {
-          {{ result()?.calculation?.totalPrice | userCurrency: '1.2-2' }}
-        }
-      </ng-template>
+      <lg-title [level]="3">
+        {{ 'recipe.calculation.table.title'  | translate }}
+      </lg-title>
 
       @if (hasIngredients) {
         <lg-table-card>
@@ -180,10 +211,9 @@
             <colgroup>
               <col span="1" style="width: 1%;">
               <col span="1" style="width: 20%;">
-              <col span="1" style="width: 5%;">
-              <col span="1" style="width: 3%;">
-              <col span="1" style="width: 5%;">
+              <col span="1" style="width: 10%;">
               <col span="1" style="width: 7%;">
+              <col span="1" style="width: 10%;">
             </colgroup>
             <thead>
 
@@ -191,7 +221,6 @@
               <th>#</th>
               <th>{{ 'recipe.calculation.table.name.title' | translate }}</th>
               <th>{{ 'recipe.calculation.table.amount.title' | translate }}</th>
-              <th>{{ 'recipe.calculation.table.unit.title' | translate }}</th>
               <th>{{ 'recipe.calculation.table.price.title' | translate }}</th>
               <th>{{ 'recipe.calculation.table.total.title' | translate }}</th>
             </tr>
@@ -203,24 +232,55 @@
                   <td>{{ i + 1 }}</td>
 
                   <td width="200">
-                    <div class="text-no-wrap" [ngClass]="'indent-' + row.indent">
-                      @if (row.type !== 'total') {
-                        <a [routerLink]="[row.type === 'recipe-row' ? '/recipes/edit/' : '/products/edit/', row.uuid]">
+                    <div class="text-no-wrap"
+                         [ngClass]="'indent-' + row.indent">
+                      <!--                      <pre>{{row.ingredient|json}}</pre>-->
+                      @if (row.type === 'recipe-row') {
+                        <a [routerLink]="['/recipes/edit/' ,row.uuid]">
                           {{ row.name }}
                         </a>
-                      } @else {
+                      } @else if (row.type == 'total') {
                         {{ row.name | translate }}
+                      } @else {
+                        <a [routerLink]="['/products/edit/', row.uuid]">
+                          {{ productLabelFactory(row.ingredient?.product_id) }}
+                        </a>
                       }
                     </div>
                   </td>
 
-                  <td>{{ row.amount | number: '1.0-2' }}</td>
+                  <td>
+                    @if (row.type !== 'total') {
+                      {{ row.amount | number: pipesDigits() }}
+                    } @else {
+                      {{ row.amount | number: totalPipesDigits }}
+                    }
+                    {{ row.unit | unitString | translate }}
+                  </td>
 
-                  <td>{{ row.unit | unitString | translate }}</td>
+                  <td class="text-no-wrap">
+                    @if (row.ingredient?.hasMicroPerUnitPrice) {
+                      {{ 'micro-amount'|translate }}
+                      {{ userSettings()['currency']|currencySymbol }}
+                    } @else {
+                      {{ row.price_per_unit | userCurrency: pipesDigits() }}
+                    }
+                    <span [translateParams]="{unit:row.unit | unitString | translate}"
+                          [translate]="'per-unit.label'"></span>
+                  </td>
 
-                  <td class="text-no-wrap">{{ row.price_per_gram | userCurrency: '1.2-5' }}</td>
-
-                  <td class="text-no-wrap">{{ row.total | userCurrency: '1.0-2' }}</td>
+                  <td class="text-no-wrap">
+                    @if (row.type !== 'total') {
+                      @if (row.ingredient?.hasMicroTotalPrice) {
+                        {{ 'micro-amount'|translate }}
+                        {{ userSettings()['currency']|currencySymbol }}
+                      } @else {
+                        {{ row.total | userCurrency: pipesDigits() }}
+                      }
+                    } @else {
+                      {{ row.total | userCurrency: totalPipesDigits }}
+                    }
+                  </td>
                 </tr>
               }
             </tbody>

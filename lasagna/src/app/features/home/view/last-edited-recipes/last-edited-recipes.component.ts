@@ -1,5 +1,5 @@
 import {Component, signal} from '@angular/core';
-import { RecipesRepository} from '../../../recipes/service/recipes.repository';
+import { RecipesRepository} from '../../../recipes/service/providers/recipes.repository';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 

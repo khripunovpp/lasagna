@@ -1,8 +1,7 @@
 export enum SettingsKeysConst {
   invoicePrefix = 'invoicePrefix',
   invoiceLogo = 'invoiceLogo',
-  invoicePrecisionRows = 'invoicePrecisionRows',
-  invoicePrecisionTotals = 'invoicePrecisionTotals',
+  pricePrecision = 'pricePrecision',
   currency = 'currency',
   lang = 'lang',
 }
