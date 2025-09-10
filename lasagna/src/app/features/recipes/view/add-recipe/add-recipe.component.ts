@@ -90,7 +90,6 @@ import {MatIcon} from '@angular/material/icon';
               <ng-template lgInlineSeparatedGroup>
                 <lg-button [flat]="true"
                            [link]="'/recipes/calculate/' + recipe()?.uuid"
-                           [size]="'small'"
                            [style]="'default'">
                   {{ 'recipe.calculate-btn'|translate }}
                 </lg-button>

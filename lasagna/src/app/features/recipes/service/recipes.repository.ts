@@ -12,7 +12,7 @@ import {Tag} from '../../settings/service/models/Tag';
 import {ProductsRepository} from '../../products/service/products.repository';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {Filters} from '../../../shared/types/filter.types';
-import {clonedRecipeFactory} from './recipe.factory';
+import {copyRecipeFactory} from './recipe.factory';
 import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
@@ -191,7 +191,7 @@ export class RecipesRepository {
   }
 
   cloneRecipe(recipe: Recipe) {
-    const cloned = clonedRecipeFactory(recipe);
+    const cloned = copyRecipeFactory(recipe);
     cloned.name = `${this._copyPrefix} ${cloned.name}`;
     return this.addRecipe(cloned);
   }
