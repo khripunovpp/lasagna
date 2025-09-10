@@ -18,7 +18,6 @@ import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
-
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -28,6 +27,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {MatIcon} from '@angular/material/icon';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-add-product',
@@ -247,6 +247,8 @@ export class AddProductComponent
     this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
       this._notificationsService.success('notifications.product.deleted');
       this._routerManager.navigate(['products']);
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 
@@ -269,6 +271,8 @@ export class AddProductComponent
       }
 
       this._routerManager.replace(['products/edit/' + newUUID]);
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 
@@ -286,6 +290,8 @@ export class AddProductComponent
       }
 
       this._routerManager.replace(['products', 'edit', productUUID]);
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 
@@ -306,6 +312,8 @@ export class AddProductComponent
         return;
       }
       this.product.set(product);
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 }

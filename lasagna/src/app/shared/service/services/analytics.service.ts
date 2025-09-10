@@ -71,7 +71,7 @@ export class AnalyticsService {
    * Track a custom event
    */
   trackEvent(eventName: string, parameters: AnalyticsEvent): void {
-    if (typeof window !== 'undefined' && window.gtag) {
+    if (typeof window !== 'undefined' && window.gtag && window.gtagLoaded) {
       // Check if analytics storage is granted
       const consent = localStorage.getItem('cookie-consent');
       if (consent === 'all' || consent === 'analytics') {
@@ -300,7 +300,7 @@ export class AnalyticsService {
 
   private _getUserUUID(): string {
     try {
-      return localStorage.getItem('userUUID') || 'unknown';
+      return String(localStorage.getItem('userUUID')).trim() || 'unknown';
     } catch {
       return 'unknown';
     }
@@ -310,6 +310,7 @@ export class AnalyticsService {
 // Extend Window interface for TypeScript
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: (...args: any[]) => void
+    gtagLoaded: boolean
   }
 }

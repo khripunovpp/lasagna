@@ -23,33 +23,33 @@ function getTranslation(key, params = {}) {
     "cookies.banner.reject-all": "Rejeitar Todos"
   }
 };
-  
+
   // Get language with fallback chain
-  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage) 
+  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
     ? window.getCurrentLanguage()
     : (localStorage.getItem('lang') || 'en');
-    
+
   const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
-  
+
   // Replace parameters in translation
   let result = translation;
   Object.keys(params).forEach(param => {
     result = result.replace(new RegExp(`{${param}}`, 'g'), params[param]);
   });
-  
+
   return result;
 }
 // END TRANSLATIONS
 
 // Google Analytics Configuration
 const GA_TRACKING_ID = 'G-GWN769JKRP';
-let gtagLoaded = false;
+window.gtagLoaded = false;
 // Dynamic Google Analytics loader
 function loadGoogleAnalytics(
   callback = () => {
   }
 ) {
-  if (gtagLoaded) return;
+  if (window.gtagLoaded) return;
   // Create and load gtag script
   const script = document.createElement('script');
   script.async = true;
@@ -70,7 +70,7 @@ function loadGoogleAnalytics(
     });
     gtag('js', new Date());
     gtag('config', GA_TRACKING_ID);
-    gtagLoaded = true;
+    window.gtagLoaded = true;
     console.log('Google Analytics loaded dynamically');
     // Execute callback after GA is fully initialized
     if (typeof callback === 'function') {
@@ -81,7 +81,7 @@ function loadGoogleAnalytics(
 }
 // Google Analytics Consent Management Functions
 function consentGrantedAdStorage() {
-  if (!gtagLoaded) {
+  if (!window.gtagLoaded) {
     loadGoogleAnalytics(() => {
       gtag('consent', 'update', {
         'ad_storage': 'granted'
@@ -94,7 +94,7 @@ function consentGrantedAdStorage() {
   }
 }
 function consentGrantedAdUserData() {
-  if (!gtagLoaded) {
+  if (!window.gtagLoaded) {
     loadGoogleAnalytics(() => {
       gtag('consent', 'update', {
         'ad_user_data': 'granted'
@@ -107,7 +107,7 @@ function consentGrantedAdUserData() {
   }
 }
 function consentGrantedAdPersonalization() {
-  if (!gtagLoaded) {
+  if (!window.gtagLoaded) {
     loadGoogleAnalytics(() => {
       gtag('consent', 'update', {
         'ad_personalization': 'granted'
@@ -120,7 +120,7 @@ function consentGrantedAdPersonalization() {
   }
 }
 function consentGrantedAnalyticsStorage() {
-  if (!gtagLoaded) {
+  if (!window.gtagLoaded) {
     loadGoogleAnalytics(() => {
       gtag('consent', 'update', {
         'analytics_storage': 'granted'
@@ -133,7 +133,7 @@ function consentGrantedAnalyticsStorage() {
   }
 }
 function consentGrantedAll() {
-  if (!gtagLoaded) {
+  if (!window.gtagLoaded) {
     loadGoogleAnalytics(() => {
       gtag('consent', 'update', {
         'ad_storage': 'granted',
