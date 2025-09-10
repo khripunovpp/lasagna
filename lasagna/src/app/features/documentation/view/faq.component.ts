@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, OnDestroy} from '@angular/core';
+import {Component, computed, inject, OnDestroy, OnInit} from '@angular/core';
 import {FaqService} from '../service/faq.service';
 import {USER_LANGUAGE} from '../../../features/settings/service/providers/user-language.token';
 import {SafeHtmlPipe} from '../../../shared/view/pipes/safehtml.pipe';
@@ -26,22 +26,15 @@ import {OnboardingService} from '../../onboarding/onboarding.service';
 
   `]
 })
-export class FaqComponent implements OnInit, OnDestroy {
+export class FaqComponent implements OnInit {
   private faqService = inject(FaqService);
   private lang = inject(USER_LANGUAGE);
-  private _onboarding = inject(OnboardingService);
-
   localizedFaqs = computed(() =>
     this.faqService.getFaqsView().filter(section => section.language === this.lang())
   );
+  private _onboarding = inject(OnboardingService);
 
   ngOnInit() {
-    // Начинаем отслеживание времени при отображении FAQ компонента
-    this._onboarding.startFaqTimeTracking();
-  }
-
-  ngOnDestroy() {
-    // Останавливаем отслеживание времени при уничтожении FAQ компонента
-    this._onboarding.stopFaqTimeTracking();
+    this._onboarding.markFaqDone();
   }
 }

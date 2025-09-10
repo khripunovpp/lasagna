@@ -144,9 +144,7 @@ export class GroupingTilesComponent {
   readonly empty = computed(() => {
     return !this.sortResult()?.groups.length;
   });
-  readonly collapsedState = signal<Record<number, boolean>>({
-    0: true,
-  });
+  readonly collapsedState = signal<Record<number, boolean>>({});
 
   @ContentChild(GroupingTileDirective) groupingTileDirective!: GroupingTileDirective;
   @ContentChild(GroupingHeaderDirective) groupingHeaderDirective!: GroupingHeaderDirective;
