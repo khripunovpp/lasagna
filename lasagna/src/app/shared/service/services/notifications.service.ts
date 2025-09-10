@@ -18,7 +18,7 @@ export class NotificationsService {
 
   private _options: ToastOptions<any> = {
     duration: 5000,
-    position: 'top-right' as const,
+    position: 'bottom-right' as const,
     dismissible: true,
   };
 
