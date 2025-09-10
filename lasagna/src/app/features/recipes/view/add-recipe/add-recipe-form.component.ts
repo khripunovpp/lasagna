@@ -44,6 +44,7 @@ import {ControlComponent} from "../../../controls/form/control-item/control.comp
 import {UnitValue} from '../../../../shared/view/const/units.const';
 import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/entity-item-selector.component';
 import {SwitchComponent} from '../../../controls/form/switch.component';
+import {InputComponent} from '../../../controls/form/input.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -73,7 +74,8 @@ import {SwitchComponent} from '../../../controls/form/switch.component';
     FlexRowComponent,
     ControlComponent,
     EntityItemSelectorComponent,
-    SwitchComponent
+    SwitchComponent,
+    InputComponent
   ],
   providers: [
     {

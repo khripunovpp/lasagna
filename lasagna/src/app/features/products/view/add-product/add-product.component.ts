@@ -26,7 +26,8 @@ import {
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
-
+import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-add-product',
@@ -45,8 +46,21 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     SelfStartDirective,
-    ],
+    ControlsBarComponent,
+    MatIcon,
+  ],
   template: `
+    @if (editMode()) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/products/add'"
+                   [size]="'medium'"
+                   [style]="'primary'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+      </lg-controls-bar>
+    }
+
     <lg-fade-in>
       <lg-container>
         <lg-flex-column size="medium">
@@ -152,6 +166,9 @@ export class AddProductComponent
     return this.draftRef()!.meta?.['uuid'];
   });
   isDraftRoute = signal(false);
+  readonly editMode = computed(() => {
+    return (this.product()?.uuid && !this.draftRef()) || (this.draftRef() && this.draftByExistingProduct())
+  })
   private _routerManager = inject(ROUTER_MANAGER);
 
   ngOnDestroy() {

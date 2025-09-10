@@ -4,13 +4,10 @@
       <lg-flex-column [position]="'start'">
         <lg-control [label]="'recipe.form.name.placeholder'|translate"
                     lgExpand>
-          <lg-autocomplete #nameField
-                           [key]="'name'"
-                           [resource]="'recipes-names'"
-                           appendTo="body"
-                           formControlName="name"
-                           placeholdeк=""
-          ></lg-autocomplete>
+          <lg-input #nameField
+                    formControlName="name"
+                    placeholder=""
+          ></lg-input>
         </lg-control>
 
         <lg-control [label]="'recipe.form.description.placeholder'|translate"

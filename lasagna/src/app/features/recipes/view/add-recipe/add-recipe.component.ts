@@ -22,6 +22,10 @@ import {
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
+import {RecipeScheme} from '../../service/Recipe.scheme';
+import {Stores} from '../../../../shared/service/db/const/stores';
+import {MatIcon} from '@angular/material/icon';
 
 
 @Component({
@@ -41,9 +45,21 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
     RouterLink,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    SelfStartDirective
+    SelfStartDirective,
+    ControlsBarComponent,
+    MatIcon,
   ],
   template: `
+    @if (editMode()) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   [link]="'/recipes/add'"
+                   [size]="'medium'"
+                   [style]="'primary'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+      </lg-controls-bar>
+    }
 
     <lg-fade-in>
       <lg-container>
@@ -164,6 +180,11 @@ export class AddRecipeComponent
   isDraftRoute = signal(false);
   draftRecipeModel?: Recipe;
   addedRecipeInformerUUID = signal<null | string>(null);
+  readonly editMode = computed(() => {
+    return (this.recipe()?.uuid && !this.draftRef()) || (this.draftRef() && this.draftByExistingRecipe())
+  })
+  protected readonly RecipeScheme = RecipeScheme;
+  protected readonly Stores = Stores;
   private _routerManager = inject(ROUTER_MANAGER);
 
   ngOnInit() {
