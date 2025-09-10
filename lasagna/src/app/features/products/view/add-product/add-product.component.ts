@@ -100,7 +100,7 @@ import {MatIcon} from '@angular/material/icon';
             </ng-template>
           </lg-inline-separated-group>
 
-          @if (product()?.updatedAt) {
+          @if (editMode() && product()?.updatedAt) {
             <small class="text-muted text-cursive">
               {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
             </small>

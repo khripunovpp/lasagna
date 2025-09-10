@@ -12,6 +12,8 @@ export class Product {
       price: number
       unit?: string
       source?: string | undefined
+      brand?: string | undefined
+      notes?: string | undefined
       category_id?: string
       uuid?: string | undefined
       createdAt?: number | string | undefined
@@ -29,6 +31,8 @@ export class Product {
   unit: Unit = 'gram';
   category_id?: CategoryProduct;
   source?: string;
+  brand?: string;
+  notes?: string;
   uuid?: string | undefined;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
@@ -64,6 +68,8 @@ export class Product {
       price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
       source: dto?.source || '',
+      brand: dto?.brand || '',
+      notes: dto?.notes || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
       createdAt: dto?.createdAt,
@@ -80,6 +86,8 @@ export class Product {
       price: 0,
       unit: 'gram',
       source: undefined,
+      brand: undefined,
+      notes: undefined,
       category_id: '',
       uuid: undefined,
       createdAt: undefined,
@@ -96,6 +104,8 @@ export class Product {
     this.price = dto.price ? Number(dto.price) : this.price;
     this.unit = dto.unit || this.unit;
     this.source = dto.source || this.source;
+    this.brand = dto.brand || this.brand;
+    this.notes = dto.notes || this.notes;
     this.category_id = dto.category_id
       ? CategoryProduct.fromRaw(dto.category_id || '')
       : this.category_id;
@@ -119,6 +129,8 @@ export class Product {
       price: this.price,
       unit: this.unit,
       source: this.source ?? '',
+      brand: this.brand ?? '',
+      notes: this.notes ?? '',
       category_id: this.category_id?.toUUID(),
       uuid: this.uuid,
       createdAt: this.createdAt,

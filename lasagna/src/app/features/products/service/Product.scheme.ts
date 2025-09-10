@@ -6,6 +6,8 @@ export const ProductScheme = z.object({
   price: z.number().or(z.string()),
   amount: z.number().or(z.string()),
   source: z.string(),
+  brand: z.string(),
+  notes: z.string(),
   category_id: z.string().nullable().optional(),
   uuid: z.string().optional(),
   unit: UnitScheme.or(z.string()).optional(),
