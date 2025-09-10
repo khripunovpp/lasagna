@@ -18,12 +18,12 @@ import {TranslatePipe} from '@ngx-translate/core';
 
           <lg-flex-column [size]="'medium'">
               @for (item of recipes();track item.recipe.uuid) {
-                  <lg-flex-row [center]="true" [size]="'medium'" [mobileMode]="true">
+                  <lg-flex-row [size]="'medium'" [mobileMode]="true">
                       <a [routerLink]="['/recipes/edit/', item.recipe.uuid]" class="last-edited-recipe">
                           {{ item.recipe.name }}
                       </a>
 
-                      <small class="text-muted text-cursive" lgPull>
+                      <small class="text-muted text-right text-cursive" lgPull>
                           {{ (item?.updatedAt) | timeAgo }}
                       </small>
                   </lg-flex-row>
