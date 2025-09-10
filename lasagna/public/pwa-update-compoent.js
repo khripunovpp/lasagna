@@ -198,6 +198,7 @@ function dialog() {
   closeButton.style.cssText = closeButtonStyles;
   closeButton.addEventListener('click', () => {
     dialog.close();
+    banner.style.display = 'none';
   });
   saveBackupButton.addEventListener('click', (e) => {
     downloadBackupDirectlyIndexDB();
@@ -227,21 +228,25 @@ if ('serviceWorker' in navigator) {
     })
   };
   const messageListener = (event) => {
-    const versionDetected = event?.data?.type === "VERSION_DETECTED";
+    const versionDetected = event?.data?.type === "VERSION_DETECTED"
+      || event?.data?.type === "UPDATE_AVAILABLE";
+
     if (!versionDetected) return;
     banner.style.display = 'flex';
     const updateAppButton = updateDialog.querySelector('#update-app');
+    const closeButton = updateDialog.querySelector('#close-btn');
     updateAppButton.addEventListener('click', () => {
       if (currentWorker) {
         currentWorker.postMessage({type: 'SKIP_WAITING'});
         currentWorker.postMessage({action: 'SKIP_WAITING'});
         currentWorker.postMessage({
           action: 'ACTIVATE_UPDATE',
-          nonce: Math.random(),
+          nonce: event.data?.nonce,
         });
       }
       updateTimeoutLabel.style.display = 'block';
       updateAppButton.style.display = 'none';
+      closeButton.style.display = 'none';
       const interval = setInterval(() => {
         if (secondsLeft <= 0) {
           clearInterval(interval);
