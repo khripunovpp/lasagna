@@ -12,6 +12,8 @@ import {Tag} from '../../settings/service/models/Tag';
 import {ProductsRepository} from '../../products/service/products.repository';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {Filters} from '../../../shared/types/filter.types';
+import {clonedRecipeFactory} from './recipe.factory';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +26,14 @@ export class RecipesRepository {
     private _draftFormsService: DraftFormsService,
     private _tagsRepository: TagsRepository,
     private _productsRepository: ProductsRepository,
+    private _translate: TranslateService,
   ) {
+    this._copyPrefix = this._translate.instant('recipes.copy.prefix');
   }
 
   private _onboardingService = inject(OnboardingService);
   private _stream$ = new BehaviorSubject<Recipe[]>([]);
+  private _copyPrefix = '';
 
   get recipes$() {
     return this._stream$.asObservable();
@@ -183,6 +188,12 @@ export class RecipesRepository {
 
   deleteMany(uuids: string[]) {
     return this._indexDbService.removeMany(Stores.RECIPES, uuids);
+  }
+
+  cloneRecipe(recipe: Recipe) {
+    const cloned = clonedRecipeFactory(recipe);
+    cloned.name = `${this._copyPrefix} ${cloned.name}`;
+    return this.addRecipe(cloned);
   }
 
   getTopCategories() {

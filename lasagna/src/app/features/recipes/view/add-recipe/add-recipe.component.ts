@@ -79,38 +79,54 @@ import {MatIcon} from '@angular/material/icon';
             </lg-flex-row>
 
             <lg-inline-separated-group>
-              <ng-template lgInlineSeparatedGroup>
-                <lg-button [flat]="true"
-                           [link]="'/recipes/calculate/' + recipe()?.uuid"
-                           [size]="'small'"
-                           [style]="'success'">
-                  {{ 'recipe.calculate-btn'|translate }}
-                </lg-button>
-              </ng-template>
-
               @if (draftRef() && formComponent()?.form?.dirty) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-fade-in>
-                    {{ 'saved-draft-label'|translate }}
+                    <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
                   </lg-fade-in>
                 </ng-template>
               }
 
               <ng-template lgInlineSeparatedGroup>
-                @if (isDraftRoute()) {
-                  <lg-button lgShrink [style]="'danger'"
+                <lg-button [flat]="true"
+                           [link]="'/recipes/calculate/' + recipe()?.uuid"
+                           [size]="'small'"
+                           [style]="'default'">
+                  {{ 'recipe.calculate-btn'|translate }}
+                </lg-button>
+              </ng-template>
+
+
+              @if (editMode()) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'default'"
+                             [flat]="true"
+                             (click)="onCloneRecipe()">
+                    {{ 'recipe.form.clone-btn'|translate }}
+                  </lg-button>
+                </ng-template>
+              }
+
+              @if (isDraftRoute()) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'danger'"
                              [flat]="true"
                              (click)="onRemoveDraft()">
                     {{ 'recipe.form.delete-draft-btn'|translate }}
                   </lg-button>
-                } @else if (recipe()?.uuid) {
-                  <lg-button lgShrink [style]="'danger'"
+                </ng-template>
+              } @else if (recipe()?.uuid) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'danger'"
                              [flat]="true"
                              (click)="onDeleteRecipe()">
                     {{ 'recipe.form.delete-btn'|translate }}
                   </lg-button>
-                }
-              </ng-template>
+                </ng-template>
+              }
             </lg-inline-separated-group>
 
             @if (recipe()?.updatedAt) {
@@ -268,6 +284,19 @@ export class AddRecipeComponent
     this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
       this._notificationsService.success('notifications.recipe.deleted');
       this._routerManager.navigate(['recipes']);
+    });
+  }
+
+  onCloneRecipe() {
+    if (!this.recipe()) {
+      return;
+    }
+    this._recipesRepository.cloneRecipe(this.recipe()!).then(async (newUUID: string) => {
+      this._notificationsService.success('notifications.recipe.cloned');
+      await this._routerManager.replace(['recipes', 'edit', newUUID]);
+
+      await this._loadRecipe(newUUID);
+      return newUUID;
     });
   }
 
