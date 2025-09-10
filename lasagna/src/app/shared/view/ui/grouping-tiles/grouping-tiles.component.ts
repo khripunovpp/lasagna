@@ -16,13 +16,13 @@ import {MatIcon} from '@angular/material/icon';
     <section class="grouping-tiles">
       @for (group of sortResult()?.groups; track group?.field; let i = $index) {
         <section class="grouping-tiles__section"
-                 [class.grouping-tiles__section--collapsed]="!collapsedState()[i]">
+                 [class.grouping-tiles__section--collapsed]="!collapsedStates()[i]">
           @let items = group.items;
           <header class="grouping-tiles__header"
                   (click)="onHeaderClick(i)">
             @if (groupingHeaderDirective) {
               <ng-container [ngTemplateOutlet]="groupingHeaderDirective.templateRef"
-                            [ngTemplateOutletContext]="{ $implicit: group?.field,items: items, collapsed: !collapsedState()[i] }">
+                            [ngTemplateOutletContext]="{ $implicit: group?.field,items: items, collapsed: !collapsedStates()[i] }">
               </ng-container>
             } @else {
               <lg-title [level]="3">
@@ -32,7 +32,7 @@ import {MatIcon} from '@angular/material/icon';
               <span class="grouping-tiles__header-count text-muted">{{ items.length }}</span>
             }
 
-            <mat-icon [fontIcon]="collapsedState()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
+            <mat-icon [fontIcon]="collapsedStates()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
           </header>
 
           <div class="grouping-tiles__content">
@@ -144,13 +144,13 @@ export class GroupingTilesComponent {
   readonly empty = computed(() => {
     return !this.sortResult()?.groups.length;
   });
-  readonly collapsedState = signal<Record<number, boolean>>({});
+  readonly collapsedStates = signal<Record<number, boolean>>({});
 
   @ContentChild(GroupingTileDirective) groupingTileDirective!: GroupingTileDirective;
   @ContentChild(GroupingHeaderDirective) groupingHeaderDirective!: GroupingHeaderDirective;
 
   onHeaderClick(index: number) {
-    this.collapsedState.update(state => {
+    this.collapsedStates.update(state => {
       state[index] = !state[index];
       return state;
     });

@@ -15,7 +15,8 @@ const TRANSLATION_KEYS = {
     'pwa.update.dialog.description',
     'pwa.update.dialog.save-backup',
     'pwa.update.dialog.update-without-backup',
-    'pwa.update.dialog.timeout'
+    'pwa.update.dialog.timeout',
+    'pwa.update.dialog.close-btn'
   ]
 };
 
@@ -50,20 +51,20 @@ function generateTranslationFunction(translations) {
 // Auto-generated translations - DO NOT EDIT MANUALLY
 function getTranslation(key, params = {}) {
   const TRANSLATIONS = ${JSON.stringify(translations, null, 2)};
-  
+
   // Get language with fallback chain
-  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage) 
+  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
     ? window.getCurrentLanguage()
     : (localStorage.getItem('lang') || 'en');
-    
+
   const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
-  
+
   // Replace parameters in translation
   let result = translation;
   Object.keys(params).forEach(param => {
     result = result.replace(new RegExp(\`{$\{param\}}\`, 'g'), params[param]);
   });
-  
+
   return result;
 }
 `;
@@ -72,28 +73,28 @@ function getTranslation(key, params = {}) {
 function injectTranslationsIntoFile(filePath, translations) {
   try {
     let content = fs.readFileSync(filePath, 'utf8');
-    
+
     // Простая и надежная замена: удаляем все между маркерами
     const startMarker = '// START TRANSLATIONS';
     const endMarker = '// END TRANSLATIONS';
-    
+
     const startIndex = content.indexOf(startMarker);
     const endIndex = content.indexOf(endMarker);
-    
+
     if (startIndex === -1 || endIndex === -1) {
       console.error(`❌ Markers not found in ${path.basename(filePath)}`);
       console.error(`Start marker found: ${startIndex !== -1}, End marker found: ${endIndex !== -1}`);
       return;
     }
-    
+
     // Извлекаем части до и после маркеров
     const beforeTranslations = content.substring(0, startIndex);
     const afterTranslations = content.substring(endIndex);
-    
+
     // Создаем новый контент с переводами
     const translationCode = generateTranslationFunction(translations);
     const newContent = beforeTranslations + startMarker + '\n' + translationCode + afterTranslations;
-    
+
     fs.writeFileSync(filePath, newContent, 'utf8');
     console.log(`✅ Translations injected into ${path.basename(filePath)}`);
   } catch (error) {
@@ -103,33 +104,33 @@ function injectTranslationsIntoFile(filePath, translations) {
 
 function main() {
   console.log('🚀 Injecting translations into JS files...');
-  
+
   // Загружаем переводы для всех языков
   const allTranslations = {};
   LANGUAGES.forEach(lang => {
     allTranslations[lang] = loadTranslations(lang);
   });
-  
+
   // Обрабатываем каждый JS файл
   Object.keys(TRANSLATION_KEYS).forEach(filename => {
     const filePath = path.join(__dirname, '../public', filename);
     const neededKeys = TRANSLATION_KEYS[filename];
-    
+
     if (!fs.existsSync(filePath)) {
       console.warn(`⚠️  File not found: ${filePath}`);
       return;
     }
-    
+
     // Извлекаем нужные переводы для всех языков
     const translationsForFile = {};
     LANGUAGES.forEach(lang => {
       translationsForFile[lang] = extractNeededTranslations(allTranslations[lang], neededKeys);
     });
-    
+
     // Внедряем переводы в файл
     injectTranslationsIntoFile(filePath, translationsForFile);
   });
-  
+
   console.log('✨ Translation injection completed!');
 }
 
