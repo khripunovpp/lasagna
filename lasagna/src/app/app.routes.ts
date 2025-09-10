@@ -1,7 +1,6 @@
 import {Routes} from '@angular/router';
 import {recipeEditResolver} from './features/recipes/service/resolvers/recipe-edit.resolver';
 import {recipeCalculationResolver,} from './features/recipes/service/resolvers/recipe-calculation.resolver';
-import {recipeCalculationTemplateResolver} from './features/recipes/service/resolvers/recipe-tax-template.resolver';
 import {recipeDraftResolver} from './features/recipes/service/resolvers/recipe-draft.resolver';
 import {productDraftResolver} from './features/products/service/product-draft.resolver';
 import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';

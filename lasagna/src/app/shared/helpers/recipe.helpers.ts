@@ -16,7 +16,6 @@ export const recipeToFormValue = (recipe: Recipe) => {
     outcome_amount: recipe.outcome_amount,
     outcome_unit: recipe.outcome_unit,
     uuid: recipe.uuid,
-    taxTemplateName: recipe.taxTemplateName,
     category_id: recipe.category_id?.uuid ? {
       uuid: recipe.category_id?.uuid,
     } : null,

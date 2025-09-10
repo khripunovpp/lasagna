@@ -21,7 +21,6 @@ export class Recipe {
   outcome_amount: number = 0;
   outcome_unit: Unit = UnitValue.GRAM;
   uuid?: string | undefined = undefined;
-  taxTemplateName?: string | undefined;
   category_id?: CategoryRecipe;
   createdAt?: number | undefined;
   updatedAt?: number | undefined;
@@ -131,7 +130,6 @@ export class Recipe {
       outcome_amount: dto?.outcome_amount || 0,
       outcome_unit: dto?.outcome_unit || UnitValue.GRAM,
       uuid: dto?.uuid,
-      taxTemplateName: dto?.taxTemplateName,
       category_id: dto?.category_id,
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
@@ -158,7 +156,6 @@ export class Recipe {
       outcome_amount: 0,
       outcome_unit: UnitValue.GRAM,
       uuid: undefined,
-      taxTemplateName: undefined,
       category_id: null,
       createdAt: undefined,
       updatedAt: undefined,
@@ -196,7 +193,6 @@ export class Recipe {
       outcome_amount: this.outcome_amount,
       outcome_unit: this.outcome_unit,
       uuid: this.uuid,
-      taxTemplateName: this.taxTemplateName,
       category_id: this.category_id?.toUUID(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -221,7 +217,6 @@ export class Recipe {
     this.outcome_amount = dto?.outcome_amount ?? this.outcome_amount;
     this.outcome_unit = dto?.outcome_unit || this.outcome_unit;
     this.uuid = dto?.uuid || this.uuid;
-    this.taxTemplateName = dto?.taxTemplateName || this.taxTemplateName;
     this.category_id = dto?.category_id ? CategoryRecipe.fromRaw(
       typeof dto.category_id === 'string' ? {
         uuid: dto.category_id,
