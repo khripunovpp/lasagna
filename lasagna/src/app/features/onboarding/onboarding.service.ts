@@ -15,7 +15,7 @@ export class OnboardingService {
   private _faqDone = signal(!!localStorage.getItem('onboarding_faq_done'));
 
   // Computed для общего статуса
-  isOnboardingComplete = computed(() => 
+  isOnboardingComplete = computed(() =>
     this._settingsDone() && this._productDone() && this._recipeDone() && this._faqDone()
   );
 
@@ -58,41 +58,4 @@ export class OnboardingService {
   isFaqDone(): boolean {
     return this._faqDone();
   }
-
-  // Методы для отслеживания времени на FAQ странице
-  startFaqTimeTracking() {
-    this._pageTimeTracker.startTracking(
-      OnboardingService.FAQ_PAGE_KEY,
-      OnboardingService.FAQ_REQUIRED_TIME,
-      this._onFaqCompleted
-    );
-  }
-
-  stopFaqTimeTracking() {
-    this._pageTimeTracker.stopTracking(OnboardingService.FAQ_PAGE_KEY);
-  }
-
-  getFaqProgress(): number {
-    return this._pageTimeTracker.getProgress(OnboardingService.FAQ_PAGE_KEY);
-  }
-
-  getFaqTotalTime(): number {
-    return this._pageTimeTracker.getTotalTime(OnboardingService.FAQ_PAGE_KEY);
-  }
-
-  // Метод для сброса онбординга
-  resetOnboarding() {
-    localStorage.removeItem('onboarding_settings_done');
-    localStorage.removeItem('onboarding_product_done');
-    localStorage.removeItem('onboarding_recipe_done');
-    localStorage.removeItem('onboarding_faq_done');
-    
-    this._settingsDone.set(false);
-    this._productDone.set(false);
-    this._recipeDone.set(false);
-    this._faqDone.set(false);
-    
-    // Сбрасываем трекинг времени FAQ
-    this._pageTimeTracker.resetTracking(OnboardingService.FAQ_PAGE_KEY);
-  }
-} 
+}
