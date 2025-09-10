@@ -154,6 +154,7 @@ function dialog() {
 
     <button id="save-backup">${getTranslation('pwa.update.dialog.save-backup')}</button>
     <button id="update-app">${getTranslation('pwa.update.dialog.update-without-backup')}</button>
+    <button id="close-btn">${getTranslation('pwa.update.dialog.close-btn')}</button>
 
     <p id="update-timeout-label" style="margin: 0;display: none">
       ${getTranslation('pwa.update.dialog.timeout', {seconds: '<span id="seconds-left">' + reloadTimeoutInSeconds + '</span>'})}
@@ -182,10 +183,22 @@ function dialog() {
     color: var(--text-color);
   `;
 
+  const closeButtonStyles = `
+    ${buttonStyles}
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+  `;
+
   const updateAppButton = dialog.querySelector('#update-app');
   updateAppButton.style.cssText = updateAppButtonStyles;
   const saveBackupButton = dialog.querySelector('#save-backup');
   saveBackupButton.style.cssText = buttonStyles;
+  const closeButton = dialog.querySelector('#close-btn');
+  closeButton.style.cssText = closeButtonStyles;
+  closeButton.addEventListener('click', () => {
+    dialog.close();
+  });
   saveBackupButton.addEventListener('click', (e) => {
     downloadBackupDirectlyIndexDB();
   });
