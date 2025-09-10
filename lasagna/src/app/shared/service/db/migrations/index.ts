@@ -56,5 +56,22 @@ export const migrations: {
         resolve();
       })
     }
-  }
+  },
+  {
+    version: 3,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand',
+      [Stores.RECIPES]: '++uuid,name',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+      [Stores.SETTINGS]: '++key',
+      [Stores.INVOICES]: '++uuid',
+      [Stores.CREDENTIALS]: '++uuid,type',
+    },
+  },
 ]

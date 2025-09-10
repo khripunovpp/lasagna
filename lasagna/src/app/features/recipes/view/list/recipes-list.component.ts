@@ -199,6 +199,7 @@ export class RecipesListComponent {
   protected readonly RecipeScheme = RecipeScheme;
 
   ngOnInit() {
+    this.loadRecipes();
   }
 
   deleteRecipe(uuid: string | undefined) {

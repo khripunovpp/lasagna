@@ -45,10 +45,10 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
 
           const sortedList = list.toSorted((a, b) => a.category > b.category ? 1 : -1);
 
-          return sortedList.concat([{
+          return [{
             category: '',
             products: withoutGroup,
-          }]);
+          }].concat(sortedList);
         }
       ),
     );

@@ -48,6 +48,7 @@ export class ProductsRepository {
 
     if (product.category_id) this._saveCategory(product.category_id.toString());
     if (product.source) this._saveSource(product.source);
+    if (product.brand) this._saveBrand(product.brand);
     this._saveProductToHistory(uuid);
 
     // Онбординг: если это первый продукт, отмечаем шаг завершённым
@@ -146,6 +147,10 @@ export class ProductsRepository {
     return Object.keys(this._usingHistoryService.read('products_sources').top);
   }
 
+  async getTopBrands() {
+    return Object.keys(this._usingHistoryService.read('products_brands').top);
+  }
+
   saveDraftProduct(product: Product, uuid?: string) {
     return this._draftFormsService.setDraftForm(
       'draft_products',
@@ -191,6 +196,9 @@ export class ProductsRepository {
 
   private _saveSource(source: string) {
     this._usingHistoryService.count('products_sources', source);
+  }
+  private _saveBrand(source: string) {
+    this._usingHistoryService.count('products_brands', source);
   }
 
   private _saveProductToHistory(uuid: string) {

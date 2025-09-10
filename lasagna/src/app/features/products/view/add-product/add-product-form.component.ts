@@ -49,6 +49,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
 
 import {DecimalPipe} from '@angular/common';
+import {TextareaComponent} from '../../../controls/form/textarea.component';
 
 
 @Component({
@@ -82,6 +83,7 @@ import {DecimalPipe} from '@angular/common';
     ControlLabelTemplateDirective,
     TranslateDirective,
     DecimalPipe,
+    TextareaComponent,
   ],
   styles: [
     `
@@ -110,6 +112,8 @@ export class AddProductFormComponent
     price: new FormControl<number | null>(null, Validators.required),
     unit: new FormControl('gram'),
     source: new FormControl<string | null>(null),
+    brand: new FormControl<string | null>(null),
+    notes: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null),
   });
   userSettings = inject(SETTINGS)
@@ -120,6 +124,7 @@ export class AddProductFormComponent
     color: string
   }[]>([]);
   topSources = signal<any[]>([]);
+  topBrands = signal<any[]>([]);
   nameField = viewChild<InputComponent>('nameField');
   amountField = viewChild<NumberInputComponent>('amountField');
   priceField = viewChild<NumberInputComponent>('priceField');
@@ -139,6 +144,8 @@ export class AddProductFormComponent
       amount: null,
       price: null,
       source: null,
+      brand: null,
+      notes: null,
       category_id: null,
       unit: 'gram',
     };
@@ -215,6 +222,13 @@ export class AddProductFormComponent
       this.topSources.set(sources.map(source => ({
         label: source,
         value: source,
+      })));
+    });
+
+    this._productsRepository.getTopBrands().then(brands => {
+      this.topBrands.set(brands.map(brand => ({
+        label: brand,
+        value: brand,
       })));
     });
   }

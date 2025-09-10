@@ -9,6 +9,8 @@ export const productToFormValue = (product?: Product) => {
     unit: product?.unit || 'gram',
     price: product?.price || null,
     source: product?.source || null,
+    brand: product?.brand || null,
+    notes: product?.notes || null,
     category_id: product?.category_id?.toUUID() || null,
   }
 }

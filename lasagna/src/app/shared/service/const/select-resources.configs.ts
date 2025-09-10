@@ -96,6 +96,14 @@ export const resources: Record<string, SelectResourcesConfig> = {
       selectUniqueKey: 'source',
     },
   },
+  'brands': {
+    name: 'brands',
+    loaderConfig: {
+      name: 'indexDb',
+      storeName: Stores.PRODUCTS,
+      selectUniqueKey: 'brand',
+    },
+  },
   'tags': {
     name: 'tags',
     loaderConfig: {
