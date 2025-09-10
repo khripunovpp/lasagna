@@ -116,7 +116,7 @@ export class ProductsRepository {
         if (!a.uuid || !b.uuid) {
           return 0;
         }
-        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+        return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
       }).map(product => ({
         product: this._productFactory.fromRaw(product),
         updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,

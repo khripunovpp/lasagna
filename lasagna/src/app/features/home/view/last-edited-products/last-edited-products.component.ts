@@ -19,12 +19,13 @@ import {TranslatePipe} from '@ngx-translate/core';
           <div class="last-edited-recipes">
               <lg-flex-column [size]="'medium'">
                   @for (item of products();track item.product.uuid) {
-                      <lg-flex-row [center]="true" [size]="'medium'" [mobileMode]="true">
-                          <a [routerLink]="['/products/edit/', item.product.uuid]" class="last-edited-product">
+                      <lg-flex-row [size]="'medium'" [mobileMode]="true">
+                          <a [routerLink]="['/products/edit/', item.product.uuid]"
+                             class="last-edited-product">
                               {{ item.product.name }}
                           </a>
 
-                          <small class="text-muted text-cursive" lgPull>
+                          <small class="text-muted text-right text-cursive" lgPull>
                               {{ (item?.updatedAt) | timeAgo }}
                           </small>
                       </lg-flex-row>
@@ -70,7 +71,8 @@ export class LastEditedProductsComponent {
   }[]>([]);
 
   ngOnInit() {
-    this._productsRepository.getLastProducts().then(products => {
+    this._productsRepository.getLastProducts()
+      .then(products => {
       this.products.set(products);
     });
   }

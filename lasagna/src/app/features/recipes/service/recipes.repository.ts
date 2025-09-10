@@ -222,7 +222,7 @@ export class RecipesRepository {
 
     return this._indexDbService.getMany(Stores.RECIPES, keys).then(recipes => {
       return recipes.toSorted((a, b) => {
-        return top[b.uuid].count > top[a.uuid].count ? 1 : -1;
+        return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
       }).map(recipe => ({
         recipe: Recipe.fromRaw(recipe),
         updatedAt: top[recipe.uuid].updatedAt,
