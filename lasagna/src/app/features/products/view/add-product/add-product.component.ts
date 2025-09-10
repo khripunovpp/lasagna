@@ -79,25 +79,29 @@ import {errorHandler} from '../../../../shared/helpers';
           <lg-inline-separated-group>
             @if (draftRef() && formComponent()?.form?.dirty) {
               <ng-template lgInlineSeparatedGroup>
-                <span>{{ 'saved-draft-label'|translate }}</span>
+                <lg-fade-in>
+                  <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
+                </lg-fade-in>
               </ng-template>
             }
 
-            <ng-template lgInlineSeparatedGroup>
-              @if (isDraftRoute()) {
+            @if (isDraftRoute()) {
+              <ng-template lgInlineSeparatedGroup>
                 <lg-button lgShrink [style]="'danger'"
                            [flat]="true"
                            (click)="onRemoveDraft()">
                   {{ 'product.form.delete-draft-btn'|translate }}
                 </lg-button>
-              } @else if (product()?.uuid) {
+              </ng-template>
+            } @else if (product()?.uuid) {
+              <ng-template lgInlineSeparatedGroup>
                 <lg-button lgShrink [style]="'danger'"
                            [flat]="true"
                            (click)="onDeleteProduct()">
                   {{ 'product.form.delete-btn'|translate }}
                 </lg-button>
-              }
-            </ng-template>
+              </ng-template>
+            }
           </lg-inline-separated-group>
 
           @if (editMode() && product()?.updatedAt) {
