@@ -9,7 +9,6 @@ export const RecipeScheme = z.object({
   ingredients: z.array(z.lazy<any>(() => IngredientScheme)),
   outcome_unit: UnitScheme,
   outcome_amount: z.number().or(z.string()),
-  taxTemplateName: z.string().optional(),
   category_id: z.string().nullable().optional(),
   createdAt: z.union([z.string(), z.number()]).optional(),
   updatedAt: z.union([z.string(), z.number()]).optional(),

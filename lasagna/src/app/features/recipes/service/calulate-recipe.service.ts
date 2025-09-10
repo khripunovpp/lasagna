@@ -35,25 +35,6 @@ export class CalculateRecipeService {
 
   calculation?: Calculation;
 
-  linkTaxTemplate(
-    recipeUUID: string,
-    taxTemplateName: string,
-  ) {
-    return new Promise<Recipe | null>(async (resolve, reject) => {
-      await this._recipeRepository.getOne(recipeUUID).then(async (recipe: any) => {
-        if (!recipe) {
-          resolve(null);
-          return;
-        }
-        recipe.taxTemplateName = taxTemplateName;
-        await this._recipeRepository.editRecipe(recipe.uuid, recipe);
-
-
-        resolve(recipe);
-      });
-    });
-  }
-
   async updateRecipe(
     updates: Partial<RecipeDTO>
   ) {
