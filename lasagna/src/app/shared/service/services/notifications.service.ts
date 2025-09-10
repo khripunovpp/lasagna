@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HotToastService} from '@ngxpert/hot-toast';
+import {HotToastService, ToastOptions} from '@ngxpert/hot-toast';
 import {FormArray, FormGroup} from '@angular/forms';
 import {LogLevel} from '../../../features/settings/service/models/LogEntry';
 import {LogCenterService} from '../../../features/settings/service/services/log-center.service';
@@ -16,46 +16,49 @@ export class NotificationsService {
   ) {
   }
 
-  private _withTranslation(message: string): string {
-    return this._translate.instant(message);
-  }
+  private _options: ToastOptions<any> = {
+    duration: 5000,
+    position: 'top-right' as const,
+    dismissible: true,
+  };
+
   success(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.success(this._withTranslation(message));
+    this._toast.success(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.SUCCESS, this._withTranslation(message), undefined, source);
     }
   }
 
   error(message: string, logToCenter: boolean = true, source?: string) {
-    this._toast.error(this._withTranslation(message));
+    this._toast.error(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.ERROR, this._withTranslation(message), undefined, source);
     }
   }
 
   warning(message: string, logToCenter: boolean = true, source?: string) {
-    this._toast.warning(this._withTranslation(message));
+    this._toast.warning(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.WARNING, this._withTranslation(message), undefined, source);
     }
   }
 
   info(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.info(this._withTranslation(message));
+    this._toast.info(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
   }
 
   show(message: string, logToCenter: boolean = false, source?: string) {
-    this._toast.show(this._withTranslation(message));
+    this._toast.show(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
   }
 
   loading(message: string) {
-    return this._toast.loading(this._withTranslation(message));
+    return this._toast.loading(this._withTranslation(message), this._options);
   }
 
   showJsonErrors(
@@ -118,19 +121,7 @@ export class NotificationsService {
     return errors;
   }
 
-  logInfo(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), data, source);
-  }
-
-  logWarning(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.WARNING, this._withTranslation(message), data, source);
-  }
-
-  logError(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.ERROR, this._withTranslation(message), data, source);
-  }
-
-  logSuccess(message: string, data?: any, source?: string) {
-    this._logCenter.addLog(LogLevel.SUCCESS, this._withTranslation(message), data, source);
+  private _withTranslation(message: string): string {
+    return this._translate.instant(message);
   }
 }
