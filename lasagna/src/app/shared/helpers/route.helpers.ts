@@ -1,7 +1,7 @@
 import {assertInInjectionContext, computed, inject, signal, Signal} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {filter, map, pairwise} from 'rxjs';
+import {filter, map, pairwise, take} from 'rxjs';
 
 export function injectParams<T = Params | string | null>(
   keyOrTransform?: string | ((params: Params) => T),
@@ -35,6 +35,13 @@ export function injectQueryParams<T = Params | string | null>(
   return toSignal(route.queryParams.pipe(map(getParam)), {requireSync: true});
 }
 
+export function injectFragment() {
+  assertInInjectionContext(injectFragment);
+  const route = inject(ActivatedRoute);
+
+  return toSignal(route.fragment.pipe(take(1)));
+}
+
 /**
  * Фабрика для создания сигнала, который отслеживает изменения маршрута.
  * @param router
@@ -63,6 +70,10 @@ export function routeChangeSignal(
   });
 
   return computed(() => routes());
+}
+
+export const getURLWithoutParams = (url: string): string => {
+  return url.split('?')[0].split('#')[0];
 }
 
 export const findRouteData = (route: ActivatedRoute): any => {
