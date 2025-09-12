@@ -45,6 +45,9 @@ import {UnitValue} from '../../../../shared/view/const/units.const';
 import {EntityItemSelectorComponent} from '@invoices/view/add-invoice/parts/entity-item-selector.component';
 import {SwitchComponent} from '../../../controls/form/switch.component';
 import {InputComponent} from '../../../controls/form/input.component';
+import {ControlBoxComponent} from '../../../controls/form/control-box.component';
+import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -75,7 +78,10 @@ import {InputComponent} from '../../../controls/form/input.component';
     ControlComponent,
     EntityItemSelectorComponent,
     SwitchComponent,
-    InputComponent
+    InputComponent,
+    ControlBoxComponent,
+    SelfStartDirective,
+    WidthDirective
   ],
   providers: [
     {

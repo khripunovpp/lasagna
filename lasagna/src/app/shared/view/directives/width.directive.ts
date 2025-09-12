@@ -22,7 +22,7 @@ export class WidthDirective {
     if (mediaMobMax()) {
       return '100%';
     }
-    return 'calc(var(--lg-width, 100%) - var(--gap, 0px))';
+    return 'calc(var(--lg-width, 100%) - (var(--gap, 0px) / 2))';
   }
 
   @HostBinding('style.flex-grow') get flexGrow() {
