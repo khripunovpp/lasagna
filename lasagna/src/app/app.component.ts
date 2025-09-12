@@ -13,8 +13,9 @@ import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-w
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
 import {DecimalPipe, ViewportScroller} from '@angular/common';
 import {isPwa} from './shared/helpers/match-media.helper';
-import {filter, map} from 'rxjs';
+import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {getURLWithoutParams} from './shared/helpers';
 
 @Component({
   selector: 'app-root',
@@ -47,12 +48,19 @@ export class AppComponent
     this.scrollingPosition = toSignal(
       this._router.events.pipe(
         filter((event): event is Scroll => event instanceof Scroll),
-        map((event: Scroll) => event.position || [0, 0]),
+        pairwise(),
+        map((events: [Scroll, Scroll]) => {
+          const diff = getURLWithoutParams(events[0].routerEvent.url) !== getURLWithoutParams(events[1].routerEvent.url);
+          if (diff) {
+            return [0, 0];
+          }
+          return events[1].position ?? this._viewportScroller.getScrollPosition()
+        }),
       ),
     );
   }
 
-  readonly scrollingPosition: Signal<[number, number] | undefined>;
+  readonly scrollingPosition: Signal<[number, number] | undefined | null>;
   readonly scrollToPositionEffect = effect(() => {
     if (this.scrollingPosition()) {
       this._viewportScroller.scrollToPosition(this.scrollingPosition()!);
