@@ -137,6 +137,15 @@
       </lg-flex-column>
     </lg-card>
 
+    <lg-flex-row [mobileMode]="true">
+      <lg-control-box lgSelfStart lgWidth="50%" style="--control-box-bg: var(--hr-bg-strong)">
+        <lg-switch formControlName="master">
+          <span class="text-center" slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
+          <span class="text-center" slot="right">{{ 'recipe.form.master.label' | translate }}</span>
+        </lg-switch>
+      </lg-control-box>
+    </lg-flex-row>
+
     <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
       <lg-control [label]="'recipe.form.tags.placeholder'|translate">
         <lg-tags-control [multi]="true"
@@ -159,11 +168,5 @@
         </lg-flex-column>
       </lg-control>
     </lg-flex-row>
-
-    <lg-switch formControlName="master"
-               style="--control-bg: var(--hr-bg-strong)">
-      <span slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
-      <span slot="right">{{ 'recipe.form.master.label' | translate }}</span>
-    </lg-switch>
   </lg-flex-column>
 </form>
