@@ -35,7 +35,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
 import {SortResult} from '../../../../shared/service/types/sorting.types';
-import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-product-list',
@@ -156,8 +156,7 @@ import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sort
     TranslateDirective,
     CardComponent,
     GroupingTileDirective,
-    GroupingTilesComponent,
-    GroupingSortingComponent
+    GroupingTilesComponent
   ],
   providers: [
     SelectionZoneService,
@@ -205,6 +204,8 @@ export class ProductListComponent
   ) {
     this._transferDataService.exportTable(Stores.PRODUCTS, 'json', {
       selected: Array.from(selected ?? []),
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 
@@ -215,6 +216,8 @@ export class ProductListComponent
     this._productsRepository.deleteProduct(uuid).then(() => {
       this._notificationsService.success('notifications.product.deleted');
       this.loadProducts();
+    }).catch(error => {
+      this._notificationsService.error(errorHandler(error));
     });
   }
 
@@ -223,6 +226,8 @@ export class ProductListComponent
   }
 
   loadProducts() {
-    this._productsRepository.loadAll();
+    this._productsRepository.loadAll().catch(error => {
+      this._notificationsService.error(errorHandler(error));
+    });
   }
 }

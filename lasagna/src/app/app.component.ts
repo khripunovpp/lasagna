@@ -1,5 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {Component, effect, inject, OnInit, Signal} from '@angular/core';
+import {Router, RouterOutlet, Scroll} from '@angular/router';
 import {PwaInstallComponent} from './features/home/view/pwa-install.component';
 import {GlobalSearchComponent} from './features/global-search/global-search.component';
 import {LastBackupInformerComponent} from './features/home/view/last-backup-informer.component';
@@ -11,8 +11,10 @@ import {HeaderComponent} from './shared/view/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
 import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, ViewportScroller} from '@angular/common';
 import {isPwa} from './shared/helpers/match-media.helper';
+import {filter, map} from 'rxjs';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -38,9 +40,24 @@ import {isPwa} from './shared/helpers/match-media.helper';
 })
 export class AppComponent
   implements OnInit {
-  constructor() {
+  constructor(
+    private _viewportScroller: ViewportScroller,
+    private _router: Router,
+  ) {
+    this.scrollingPosition = toSignal(
+      this._router.events.pipe(
+        filter((event): event is Scroll => event instanceof Scroll),
+        map((event: Scroll) => event.position || [0, 0]),
+      ),
+    );
   }
 
+  readonly scrollingPosition: Signal<[number, number] | undefined>;
+  readonly scrollToPositionEffect = effect(() => {
+    if (this.scrollingPosition()) {
+      this._viewportScroller.scrollToPosition(this.scrollingPosition()!);
+    }
+  });
   readonly isPwa = isPwa;
   private readonly demoService = inject(DemoService);
 
