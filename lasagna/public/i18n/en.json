@@ -493,6 +493,7 @@
   "recipe.form.tags.placeholder": "Tags",
   "recipe.form.title": "Add new recipe",
   "recipe.title": "",
+  "product.title": "",
   "recipes.calculate-btn": "Calculate",
   "recipes.copy.prefix": "copy",
   "recipes.empty-state.btn": "Add your first recipe",

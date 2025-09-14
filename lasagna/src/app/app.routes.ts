@@ -12,7 +12,7 @@ import {BrowserTabTrackingService} from './shared/service/services/browser-tab-t
 import {NotificationsService} from './shared/service/services';
 import {TranslateService} from '@ngx-translate/core';
 import {
-  defTitleResolver,
+  defTitleResolver, productTitleResolver,
   recipeCalculationTitleResolver,
   recipeTitleResolver
 } from './shared/service/providers/title.resolver';
@@ -110,10 +110,7 @@ export const routes: Routes = [{
           path: 'edit/:uuid',
           loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
-          resolve: {
-            product: recipeEditResolver,
-          },
-          title: defTitleResolver,
+          title: productTitleResolver,
           data: {
             editRoute: true,
           }
