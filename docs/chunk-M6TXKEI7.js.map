@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/factories/entity-labels/product.label.factory.ts"],
+  "sourcesContent": ["import {Product} from '../../../features/products/service/Product';\n\nexport const productLabelFactory = (product?: Product) => {\n  if (!product) {\n    return 'unknown';\n  }\n  let string = product.name;\n\n  if (!product.brand && !product.source) {\n    return string;\n  }\n  if (product.brand) {\n    string += ` - ${product.brand}`;\n  }\n  if (product.source) {\n    string += ` (${product.source})`;\n  }\n  return string;\n}\n"],
+  "mappings": ";AAEO,IAAM,sBAAsB,CAAC,YAAqB;AACvD,MAAI,CAAC,SAAS;AACZ,WAAO;EACT;AACA,MAAI,SAAS,QAAQ;AAErB,MAAI,CAAC,QAAQ,SAAS,CAAC,QAAQ,QAAQ;AACrC,WAAO;EACT;AACA,MAAI,QAAQ,OAAO;AACjB,cAAU,MAAM,QAAQ,KAAK;EAC/B;AACA,MAAI,QAAQ,QAAQ;AAClB,cAAU,KAAK,QAAQ,MAAM;EAC/B;AACA,SAAO;AACT;",
+  "names": []
+}

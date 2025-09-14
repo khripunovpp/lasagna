@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/shared/view/pipes/unitString.pipe.ts"],
-  "sourcesContent": ["import {Pipe} from '@angular/core';\nimport {marker} from '@colsen1991/ngx-translate-extract-marker';\nimport {UnitValue} from '../const/units.const';\n\n@Pipe({\n  name: 'unitString',\n  standalone: true,\n})\nexport class UnitStringPipe {\n\n  private readonly _unitMap: Record<string, string> = {\n    [UnitValue.GRAM]: marker('unit.gram'),\n    [UnitValue.PIECE]: marker('unit.piece'),\n  };\n\n  transform(value?: string) {\n    return value\n      ? this._unitMap[value] || value\n      : marker('unit.unknown');\n  }\n}\n"],
-  "mappings": ";;;;;;;;;;;AAQM,IAAO,iBAAP,MAAO,gBAAc;EAER,WAAmC;IAClD,CAAC,UAAU,IAAI,GAAG,OAAO,WAAW;IACpC,CAAC,UAAU,KAAK,GAAG,OAAO,YAAY;;EAGxC,UAAU,OAAc;AACtB,WAAO,QACH,KAAK,SAAS,KAAK,KAAK,QACxB,OAAO,cAAc;EAC3B;;qCAXW,iBAAc;EAAA;yFAAd,iBAAc,MAAA,KAAA,CAAA;;;sEAAd,gBAAc,CAAA;UAJ1B;WAAK;MACJ,MAAM;MACN,YAAY;KACb;;;",
-  "names": []
-}
