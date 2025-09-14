@@ -1,6 +1,7 @@
 import {inject} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRouteSnapshot} from '@angular/router';
+import {ProductsRepository} from '../../../features/products/service/products.repository';
 import {Calculation} from '../../../features/recipes/service/calulate-recipe.service';
 
 export const defTitleResolver = () => {
@@ -15,6 +16,7 @@ export const recipeTitleResolver = async (route: ActivatedRouteSnapshot) => {
 
   return translateService.instant('recipe.title', {name: data?.name})
 };
+
 export const recipeCalculationTitleResolver = async (route: ActivatedRouteSnapshot) => {
   const translateService = inject(TranslateService);
   const data = await dataResolver<Calculation>(route, 'result');
@@ -29,3 +31,19 @@ const dataResolver = <T = any>(route: ActivatedRouteSnapshot, dataKey: string) =
   }
   return null;
 }
+
+export const productTitleResolver = async (route: ActivatedRouteSnapshot) => {
+  const translateService = inject(TranslateService);
+  const productsRepository = inject(ProductsRepository);
+
+  const productId = route.paramMap.get('uuid');
+  if (productId) {
+    return productsRepository.getOne(productId).then(product => {
+      return translateService.instant('product.title', {name: product?.name})
+    }).catch(() => {
+      return translateService.instant('app.title')
+    });
+  }
+
+  return translateService.instant('app.title')
+};
