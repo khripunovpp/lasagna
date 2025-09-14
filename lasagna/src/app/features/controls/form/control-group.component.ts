@@ -4,14 +4,14 @@ import {Component, input} from '@angular/core';
   selector: 'lg-control-group',
   standalone: true,
   template: `
-      <div class="control-group">
-          @if (label()) {
-              <p class="control-group__label"> {{ label() }} </p>
-          }
-          <div class="control-group__content">
-              <ng-content></ng-content>
-          </div>
+    <div class="control-group">
+      @if (label()) {
+        <p class="control-group__label"> {{ label() }} </p>
+      }
+      <div class="control-group__content">
+        <ng-content></ng-content>
       </div>
+    </div>
   `,
   styles: [
     `
@@ -25,6 +25,7 @@ import {Component, input} from '@angular/core';
         display: flex;
         flex-direction: column;
         gap: 16px;
+        min-width: 0;
       }
 
       .control-group__label {
