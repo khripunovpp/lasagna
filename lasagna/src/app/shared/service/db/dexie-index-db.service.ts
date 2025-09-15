@@ -432,10 +432,14 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async restoreAllData(data: BuckupData[]): Promise<void> {
+    const currentVersion = await this.getVersion();
     const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
     for (const store of stores) {
       const items = data.find(item => item.store === store);
       if (items) {
+        if (items.version > currentVersion) {
+          throw new Error(`Backup version ${items.version} is newer than current DB version ${currentVersion}. Please update the application.`);
+        }
         // TODO validate schema
         await this.clear(store);
         await this.balkAdd(store, items.data, false);

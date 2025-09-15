@@ -16,7 +16,7 @@ import {ImportRowTplDirective} from './import-row-tpl.directive';
 import {PortalComponent} from '../portal.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../service/services';
-import {errorHandler} from '../../../helpers';
+import {errorHandler, parseZodError} from '../../../helpers';
 
 @Component({
   selector: 'lg-import',
@@ -280,9 +280,16 @@ export class ImportComponent {
 
   async onFileSelected(file: File[]) {
     try {
-      this.dialog.open();
       const result = await this._csvReaderService.readFromJSONFile(file[0]);
-      for (const record of result) {
+      const currentDbVersion = await this._indexDbService.getVersion();
+      if (!result?.data) {
+        throw new Error('Invalid file content: data property is missing');
+      }
+      if (!result?.version || result.version > currentDbVersion) {
+        throw new Error('The database version is lower than the data version. Please update the application to the latest version.' +
+          ' Current version: ' + currentDbVersion + ', data version: ' + result.version);
+      }
+      for (const record of result.data) {
         await this._validateData(record);
 
         if (!this.storeName()) {
@@ -301,44 +308,23 @@ export class ImportComponent {
           }
         });
       }
+      this.dialog.open();
     } catch (e) {
       this._notificationsService.error('Can not import data: ' + errorHandler(e));
     }
-    // this._csvReaderService.readFromJSONFile(file[0]).then(async (data) => {
-    //   for (const record of data) {
-    //     console.log({record})
-    //     const dataValidated = this.schema()?.safeParse(record);
-    //     if (!dataValidated?.success) {
-    //       console.log('error', dataValidated?.error);
-    //       return;
-    //     }
-    //     if (!this.storeName()) {
-    //       console.log('storeName is not set');
-    //       return;
-    //     }
-    //     this.dataSubject.next(record);
-    //     this.parsedData.push(dataValidated.data);
-    //
-    //     await this._analyzeDuplicates(dataValidated.data).then((data) => {
-    //       if (data.duplicate) {
-    //         this.analizeSubject.next(data.data[0]);
-    //       } else {
-    //         this.rowsToAdd[record.name] = true
-    //       }
-    //     });
-    //   }
-    //
-    // });
   }
 
   private async _validateData(data:any) {
+    const currentDbVersion = await this._indexDbService.getVersion();
     console.log({
       schema: this.schema(),
       data,
+      currentDbVersion,
     })
     const dataValidated = await this.schema()?.safeParseAsync(data);
     if (!dataValidated?.success) {
-      throw new Error(dataValidated?.error.toString());
+      console.error(dataValidated?.error,{dataValidated});
+      throw new Error(parseZodError(dataValidated?.error));
     }
   }
 
