@@ -37,8 +37,14 @@ export class TransferDataService {
     } else {
       data = await this._indexDbService.getAll(source);
     }
+    const writeObjects: BuckupData = {
+      store: source,
+      data,
+      version: await this._indexDbService.getVersion(),
+      createdAt: Date.now(),
+    };
     if (fileType === 'json') {
-      this._csvReaderService.saveToJSONFile(data, this._getFileName(source, fileType));
+      this._csvReaderService.saveToJSONFile(writeObjects, this._getFileName(source, fileType));
       return;
     }
     this._csvReaderService.saveToCSVFile(data, this._getFileName(source, fileType));
@@ -74,7 +80,7 @@ export class TransferDataService {
       throw new Error('Only one file is allowed');
       return;
     }
-    const data = await this._csvReaderService.readFromJSONFile<BuckupData>(files![0]);
+    const data = await this._csvReaderService.readFromJSONFile<BuckupData[]>(files![0]);
     await this._indexDbService.restoreAllData(data);
   }
 

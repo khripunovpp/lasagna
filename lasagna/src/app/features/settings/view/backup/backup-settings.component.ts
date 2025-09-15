@@ -118,7 +118,7 @@ export class BackupSettingsComponent {
       await this.transferDataService.restoreAllData(event);
       this.notificationsService.success(this.translate.instant('backup.restored'));
     } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.restore-failed'));
+      this.notificationsService.showJsonErrors([JSON.stringify(e?.toString()).trim()], this.translate.instant('backup.restore-failed'));
       console.error(e);
     } finally {
       loader.close();

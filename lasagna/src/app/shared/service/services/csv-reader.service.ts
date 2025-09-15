@@ -24,7 +24,7 @@ export class CsvReaderService {
     });
   }
 
-  readFromJSONFile<T = any>(file: File): Promise<T[]> {
+  readFromJSONFile<T = any>(file: File): Promise<T> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -81,7 +81,7 @@ export class CsvReaderService {
     URL.revokeObjectURL(url);
   }
 
-  saveToJSONFile(data: any[], filename: string) {
+  saveToJSONFile(data: any, filename: string) {
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
