@@ -258,7 +258,8 @@
                     {{ row.unit | unitString | translate }}
                   </td>
 
-                  <td class="text-no-wrap">
+                  <td class="text-no-wrap"
+                      [class.text-muted]="row.ingredient?.hasMicroPerUnitPrice">
                     @if (row.ingredient?.hasMicroPerUnitPrice) {
                       {{ 'micro-amount'|translate }}
                       {{ userSettings()['currency']|currencySymbol }}
@@ -269,7 +270,7 @@
                           [translate]="'per-unit.label'"></span>
                   </td>
 
-                  <td class="text-no-wrap">
+                  <td class="text-bold text-no-wrap">
                     @if (row.type !== 'total') {
                       @if (row.ingredient?.hasMicroTotalPrice) {
                         {{ 'micro-amount'|translate }}
