@@ -11,12 +11,10 @@ import {ProductsRepository, RecipesRepository} from '../../../../shared/service/
 import {AsyncPipe} from '@angular/common';
 import {OnboardingComponent} from '../../../onboarding/onboarding.component';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
-import {PopoverDirective} from '../../../../shared/view/ui/popver/popover.directive';
 
 
 @Component({
   selector: 'app-application',
-  standalone: true,
   templateUrl: './application.component.html',
   styleUrl: './application.component.scss',
   imports: [
@@ -29,9 +27,8 @@ import {PopoverDirective} from '../../../../shared/view/ui/popver/popover.direct
     FlexRowComponent,
     TranslatePipe,
     AsyncPipe,
-    OnboardingComponent,
-    PopoverDirective
-  ]
+    OnboardingComponent
+  ],
 })
 export class ApplicationComponent {
   title = 'lasagna';

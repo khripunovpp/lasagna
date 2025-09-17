@@ -16,7 +16,7 @@ import {CurrencyPipe} from '@angular/common';
 import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {
   InlineSeparatedGroupComponent,
@@ -28,6 +28,12 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {MatIcon} from '@angular/material/icon';
 import {errorHandler} from '../../../../shared/helpers';
+import {
+  DeleteConfirmationService
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+import {
+  DeleteConfirmationPopoverComponent
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
 
 @Component({
   selector: 'lg-add-product',
@@ -48,6 +54,7 @@ import {errorHandler} from '../../../../shared/helpers';
     SelfStartDirective,
     ControlsBarComponent,
     MatIcon,
+    DeleteConfirmationPopoverComponent,
   ],
   template: `
     @if (editMode()) {
@@ -142,6 +149,8 @@ import {errorHandler} from '../../../../shared/helpers';
         </lg-flex-row>
       </lg-container>
     </lg-fade-in>
+
+    <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
   `,
   styles: [
     `
@@ -149,7 +158,8 @@ import {errorHandler} from '../../../../shared/helpers';
   ],
   providers: [
     CurrencyPipe,
-  ]
+    DeleteConfirmationService
+  ],
 })
 export class AddProductComponent
   implements OnInit, AfterViewInit {
@@ -159,9 +169,11 @@ export class AddProductComponent
     private _productsRepository: ProductsRepository,
     private _notificationsService: NotificationsService,
     private _analyticsService: AnalyticsService,
+    private _translateService: TranslateService,
   ) {
   }
 
+  readonly deleteConfirmationService = inject(DeleteConfirmationService);
   draftOrProductUUID = signal<string | undefined>(undefined);
   product = signal<Product | null>(null);
   formComponent = viewChild<AddProductFormComponent | null>(AddProductFormComponent);
@@ -248,12 +260,22 @@ export class AddProductComponent
     if (!this.product()?.uuid) {
       return;
     }
-    this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
-      this._notificationsService.success('notifications.product.deleted');
-      this._routerManager.navigate(['products']);
-    }).catch(error => {
-      this._notificationsService.error(errorHandler(error));
+
+
+    this.deleteConfirmationService.configure({
+      message: this._translateService.instant('product.form.delete-confirm-message'),
+      onSuccess: () => {
+        this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
+          this._notificationsService.success('notifications.product.deleted');
+          this._routerManager.navigate(['products']);
+        }).catch(error => {
+          this._notificationsService.error(errorHandler(error));
+        });
+      },
+      onCancel: () => {
+      }
     });
+
   }
 
   private _addProduct(product: Product) {
