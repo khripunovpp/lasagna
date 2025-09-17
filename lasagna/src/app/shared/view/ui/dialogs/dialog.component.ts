@@ -9,8 +9,8 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-dialog',
   standalone: true,
   template: `
-    <div [style.display]="displayed() ? 'flex' : 'none'"
-         class="dialog" (click)="close()">
+    <div (click)="close()"
+         [style.display]="displayed() ? 'flex' : 'none'" class="dialog">
       <div class="dialog__container">
         <div class="dialog__wrap">
           <div class="dialog__box" lgFocusTrap>
@@ -28,14 +28,17 @@ import {TranslatePipe} from '@ngx-translate/core';
                 </div>
 
                 @if (displayFooter()) {
-                  <div class="dialog__footer">
+                  <div class="dialog__footer"
+                       [class.column]="columnButtons()"
+                       [class.centered]="centerButtons()">
                     <lg-button (click)="onCancelClick()"
-                               [style]="'secondary'"
+                               [style]="cancelButtonStyle()"
                                class="dialog__cancel-button">
                       {{ cancelButtonText() }}
                     </lg-button>
 
                     <lg-button (click)="onConfirmClick()"
+                               [style]="confirmButtonStyle()"
                                class="dialog__confirm-button">
                       {{ confirmButtonText() }}
                     </lg-button>
@@ -104,9 +107,15 @@ import {TranslatePipe} from '@ngx-translate/core';
       border-top: 1px solid #f5f5f5;
       padding-top: 16px;
 
-      @media (max-width: 658px) {
-        flex-direction: column;
-        align-items: flex-start;
+      &.centered {
+        justify-content: center;
+      }
+
+      &.column {
+        @media (max-width: 658px) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     }
 
@@ -139,8 +148,12 @@ export class DialogComponent {
   closeButton = input(true);
   cancelButtonText = input('Cancel');
   confirmButtonText = input('Confirm');
+  confirmButtonStyle = input<'primary' | 'secondary' | 'default'>('default');
+  cancelButtonStyle = input<'primary' | 'secondary'>('secondary');
   closeOnConfirm = input(true);
   displayFooter = input(true);
+  centerButtons = input(false);
+  columnButtons = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
   readonly #_bodyLocker = inject(BODY_LOCKER);

@@ -13,7 +13,7 @@ import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directi
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Recipe} from '../../service/models/Recipe';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {errorHandler} from '../../../../shared/helpers';
 import {
   InlineSeparatedGroupComponent,
@@ -26,11 +26,19 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {MatIcon} from '@angular/material/icon';
+import {
+  DeleteConfirmationPopoverComponent
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+import {
+  DeleteConfirmationService
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
 
 
 @Component({
   selector: 'lg-add-recipe',
-  standalone: true,
+  providers: [
+    DeleteConfirmationService
+  ],
   imports: [
     ContainerComponent,
     TitleComponent,
@@ -48,6 +56,7 @@ import {MatIcon} from '@angular/material/icon';
     SelfStartDirective,
     ControlsBarComponent,
     MatIcon,
+    DeleteConfirmationPopoverComponent,
   ],
   template: `
     @if (editMode()) {
@@ -170,6 +179,8 @@ import {MatIcon} from '@angular/material/icon';
         </lg-flex-row>
       </lg-container>
     </lg-fade-in>
+
+    <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
   `,
   styles: [
     `
@@ -183,9 +194,11 @@ export class AddRecipeComponent
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
     private _analyticsService: AnalyticsService,
+    private _translateService: TranslateService,
   ) {
   }
 
+  readonly deleteConfirmationService = inject(DeleteConfirmationService);
   draftOrRecipeUUID = signal<string | undefined>(undefined);
   recipe = signal<Recipe | undefined>(undefined);
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
@@ -281,9 +294,19 @@ export class AddRecipeComponent
     if (!this.recipe()?.uuid) {
       return;
     }
-    this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
-      this._notificationsService.success('notifications.recipe.deleted');
-      this._routerManager.navigate(['recipes']);
+
+    this.deleteConfirmationService.configure({
+      message: this._translateService.instant('recipe.form.delete-confirm-message'),
+      onSuccess: () => {
+        this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
+          this._notificationsService.success('notifications.recipe.deleted');
+          this._routerManager.navigate(['recipes']);
+        }).catch((e) => {
+          this._notificationsService.error(errorHandler(e));
+        });
+      },
+      onCancel: () => {
+      }
     });
   }
 
