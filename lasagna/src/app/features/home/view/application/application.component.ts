@@ -11,6 +11,7 @@ import {ProductsRepository, RecipesRepository} from '../../../../shared/service/
 import {AsyncPipe} from '@angular/common';
 import {OnboardingComponent} from '../../../onboarding/onboarding.component';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {PopoverDirective} from '../../../../shared/view/ui/popver/popover.directive';
 
 
 @Component({
@@ -28,7 +29,8 @@ import {OnboardingService} from '../../../onboarding/onboarding.service';
     FlexRowComponent,
     TranslatePipe,
     AsyncPipe,
-    OnboardingComponent
+    OnboardingComponent,
+    PopoverDirective
   ]
 })
 export class ApplicationComponent {
