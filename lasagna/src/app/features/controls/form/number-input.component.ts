@@ -22,29 +22,46 @@ import {NgTemplateOutlet} from '@angular/common';
     <div [class.disabled]="disable()"
          [class.moveBeforeAbove]="moveBeforeAbove()"
          class="lg-number-input">
-      @if (beforeExtraTpl()?.templateRef) {
-        <div class="lg-number-input__before">
-          <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
-        </div>
-      }
-      <input #input
-             (blur)="focused.set(false)"
-             (change)="onInputChange.emit(value)"
-             (focus)="focused.set(true)"
-             (input)="onChangeInput($event)"
-             (keydown)="onKeydown.emit()"
-             [disabled]="disable()"
-             [placeholder]="placeholder()"
-             [value]="value"
-             class="input"
-             inputmode="decimal"
-             type="text">
-      @if (afterExtraTpl()?.templateRef) {
-        <div class="lg-number-input__after">
-          <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+
+      @if (topExtraTpl()?.templateRef) {
+        <div class="lg-number-input__top">
+          <ng-container *ngTemplateOutlet="topExtraTpl()!.templateRef"></ng-container>
         </div>
       }
 
+
+      <div class="lg-number-input__body">
+        @if (beforeExtraTpl()?.templateRef) {
+          <div class="lg-number-input__before">
+            <ng-container *ngTemplateOutlet="beforeExtraTpl()!.templateRef"></ng-container>
+          </div>
+        }
+
+        <input #input
+               (blur)="focused.set(false)"
+               (change)="onInputChange.emit(value)"
+               (focus)="focused.set(true)"
+               (input)="onChangeInput($event)"
+               (keydown)="onKeydown.emit()"
+               [disabled]="disable()"
+               [placeholder]="placeholder()"
+               [value]="value"
+               class="input"
+               inputmode="decimal"
+               type="text">
+
+        @if (afterExtraTpl()?.templateRef) {
+          <div class="lg-number-input__after">
+            <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
+          </div>
+        }
+      </div>
+
+      @if (bottomExtraTpl()?.templateRef) {
+        <div class="lg-number-input__bottom">
+          <ng-container *ngTemplateOutlet="bottomExtraTpl()!.templateRef"></ng-container>
+        </div>
+      }
     </div>
 
   `,
@@ -65,7 +82,7 @@ import {NgTemplateOutlet} from '@angular/common';
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 0 16px 0 0;
+        padding: 0 8px 0 0;
       }
 
       .lg-number-input.moveBeforeAbove {
@@ -74,7 +91,6 @@ import {NgTemplateOutlet} from '@angular/common';
 
       .lg-number-input.moveBeforeAbove .lg-number-input__before {
         width: 100%;
-        padding-top: 16px;
         padding-right: 16px;
       }
 
@@ -82,14 +98,29 @@ import {NgTemplateOutlet} from '@angular/common';
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 0 0 0 16px;
+        padding: 0 0 0 8px;
+      }
+
+      .lg-number-input__top,
+      .lg-number-input__bottom {
+        width: 100%;
+        padding: 8px;
       }
 
       .lg-number-input {
         display: flex;
         flex: 1;
+        flex-direction: column;
         background-color: var(--control-bg);
         border-radius: 12px;
+        padding: 8px;
+      }
+
+      .lg-number-input__body {
+
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
       }
 
       .lg-number-input.disabled {
@@ -99,7 +130,7 @@ import {NgTemplateOutlet} from '@angular/common';
       .input {
         flex: 1;
         border: none;
-        padding: 16px;
+        padding: 8px;
         font-family: inherit;
         font-size: inherit;
         background-color: transparent;
@@ -149,6 +180,12 @@ export class NumberInputComponent
   });
   beforeExtraTpl = computed(() => {
     return this.extraTpl().find(tpl => tpl.place() === 'before');
+  });
+  topExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'top');
+  });
+  bottomExtraTpl = computed(() => {
+    return this.extraTpl().find(tpl => tpl.place() === 'bottom');
   });
 
   @HostBinding('class.focused') get focusedClass() {
