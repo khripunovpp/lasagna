@@ -10,6 +10,8 @@ export class RecipeCost {
   }
 
   result?: CalculationTableParams[]
+  scaleFactor: number = 1;
+  recalculateValue: number = 0;
 
   get totalPrice(): number {
     if (!this.recipe) {

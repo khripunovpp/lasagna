@@ -134,22 +134,19 @@
                               size="small"
                               [style.padding]="isMobile() ? '0' : '0 16px'"
                               style="--control-bg: var(--hr-bg-strong);">
+                <lg-number-input lgParseMath
+                                 [placeholder]="'recipe.calculation.recalculate.placeholder' | translate"
+                                 [(ngModel)]="recalculateTotalsModel">
+                  <ng-template lgExtraTpl place="before">
+                    {{ 'recipe.calculation.recalculate.label'  | translate }}
+                  </ng-template>
 
-                <!--                <lg-number-input lgParseMath-->
-                <!--                                 placeholder="amount"-->
-                <!--                                 [(ngModel)]="recalculateTotalsModel">-->
-                <!--                  <ng-template lgExtraTpl place="before">-->
-                <!--                    Recalculate for-->
-                <!--                  </ng-template>-->
-
-                <!--                  &lt;!&ndash;                  @if (roundActionSelected()) {&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                    <ng-template lgExtraTpl place="after">&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                      <b>&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                        {{ result()?.calculation?.outcomeUnit }}&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                      </b>&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                    </ng-template>&ndash;&gt;-->
-                <!--                  &lt;!&ndash;                  }&ndash;&gt;-->
-                <!--                </lg-number-input>-->
+                  <ng-template lgExtraTpl place="after">
+                    <b>
+                      {{ result()?.calculation?.outcomeUnit | unitString | translate }}
+                    </b>
+                  </ng-template>
+                </lg-number-input>
 
                 <div>
                   {{ 'recipe.calculation.price-modifiers.title' | translate }}
