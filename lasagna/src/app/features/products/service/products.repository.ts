@@ -13,8 +13,6 @@ import {ProductFactory} from './product.factory';
   providedIn: 'root'
 })
 export class ProductsRepository {
-  private _onboardingService = inject(OnboardingService);
-
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
@@ -24,6 +22,7 @@ export class ProductsRepository {
   ) {
   }
 
+  private _onboardingService = inject(OnboardingService);
   private _stream$ = new Subject<Product[]>();
 
   get products$() {
@@ -44,13 +43,10 @@ export class ProductsRepository {
   async addOne(
     product: Product,
   ) {
-    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, product.toDTO());
-
-    if (product.category_id) this._saveCategory(product.category_id.toString());
-    if (product.source) this._saveSource(product.source);
-    if (product.brand) this._saveBrand(product.brand);
-    this._saveProductToHistory(uuid);
-
+    const dto = product.toDTO();
+    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, dto);
+    dto.uuid = uuid;
+    this._saveSomeHistoryData(dto);
     // Онбординг: если это первый продукт, отмечаем шаг завершённым
     if (!this._onboardingService.isProductDone()) {
       this._onboardingService.markProductDone();
@@ -66,8 +62,9 @@ export class ProductsRepository {
     if (product.system) {
       product.system = false;
     }
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
-    this._saveProductToHistory(uuid);
+    const dto = product.toDTO();
+    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, dto);
+    this._saveSomeHistoryData(dto);
   }
 
   async getOne(
@@ -190,6 +187,13 @@ export class ProductsRepository {
     return this._draftFormsService.removeDraftForm('draft_products', uuids);
   }
 
+  private _saveSomeHistoryData(product: ProductDTO) {
+    if (product.category_id) this._saveCategory(product.category_id.toString());
+    if (product.source) this._saveSource(product.source);
+    if (product.brand) this._saveBrand(product.brand);
+    this._saveProductToHistory(product.uuid!);
+  }
+
   private _saveCategory(uuid: string) {
     this._usingHistoryService.count('products_categories', uuid);
   }
@@ -197,6 +201,7 @@ export class ProductsRepository {
   private _saveSource(source: string) {
     this._usingHistoryService.count('products_sources', source);
   }
+
   private _saveBrand(source: string) {
     this._usingHistoryService.count('products_brands', source);
   }
