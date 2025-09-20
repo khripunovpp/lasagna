@@ -49,6 +49,9 @@ import {SettingsService} from '../../../settings/service/services/settings.servi
 import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
+import {NumberInputComponent} from '../../../controls/form/number-input.component';
+import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
+import {ControlExtraTemplateDirective} from '../../../controls/form/control-extra-template.directive';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -77,6 +80,9 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
     UnitStringPipe,
     TranslateDirective,
     CurrencySymbolPipe,
+    NumberInputComponent,
+    ParseMathDirective,
+    ControlExtraTemplateDirective,
 
 
   ],
@@ -129,7 +135,7 @@ export class CalculateRecipeComponent
         unit: recipePriceModifiers?.unit,
         value: recipePriceModifiers?.value,
         type: recipePriceModifiers?.type,
-      })
+      });
     });
   }
 
