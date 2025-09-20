@@ -49,6 +49,7 @@ import {DecimalPipe} from '@angular/common';
 import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
+import {errorHandler} from '../../../../shared/helpers';
 
 
 @Component({
@@ -105,9 +106,6 @@ export class AddProductFormComponent
   ) {
   }
 
-  readonly hasMicroPrice = computed(() => {
-    return hasMicroPrice(this.product()?.pricePerUnit ?? 0)
-  });
   readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   form = new FormGroup({
@@ -122,6 +120,10 @@ export class AddProductFormComponent
   });
   userSettings = inject(SETTINGS)
   product = input<Product | null>(null);
+  readonly hasMicroPrice = computed(() => {
+    return hasMicroPrice(this.product()?.pricePerUnit ?? 0)
+  });
+  editMode = input(false);
   topCategories = signal<{
     label: string
     value: string
@@ -195,13 +197,18 @@ export class AddProductFormComponent
 
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
+      this._focusFirstEmptyControl();
+      this.form.markAsPristine()
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
-
-    this._focusFirstEmptyControl();
-    this.form.markAsPristine()
   }
 
   private _focusFirstEmptyControl() {
+    if (this.editMode()) {
+      return
+    }
+
     if (!this.form.value.name?.length) {
       this.nameField()!.focus();
     } else if (!this.form.value.amount) {

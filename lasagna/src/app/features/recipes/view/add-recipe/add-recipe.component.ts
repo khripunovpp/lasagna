@@ -150,7 +150,8 @@ import {
           }
         </lg-flex-column>
 
-        <lg-add-recipe-form [recipe]="recipe()"></lg-add-recipe-form>
+        <lg-add-recipe-form [editMode]="editMode()"
+                            [recipe]="recipe()"></lg-add-recipe-form>
 
         <lg-flex-row [mobileMode]="true" [relaxed]="true">
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {

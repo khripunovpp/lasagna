@@ -119,7 +119,8 @@ import {
 
         </lg-flex-column>
 
-        <lg-add-product-form [product]="product()"></lg-add-product-form>
+        <lg-add-product-form [editMode]="editMode()"
+                             [product]="product()"></lg-add-product-form>
 
         <lg-flex-row [mobileMode]="true" [relaxed]="true">
           @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
@@ -183,7 +184,8 @@ export class AddProductComponent
   });
   isDraftRoute = signal(false);
   readonly editMode = computed(() => {
-    return (this.product()?.uuid && !this.draftRef()) || (this.draftRef() && this.draftByExistingProduct())
+    return Boolean((this.product()?.uuid && !this.draftRef())
+      || (this.draftRef() && this.draftByExistingProduct()))
   })
   private _routerManager = inject(ROUTER_MANAGER);
 
