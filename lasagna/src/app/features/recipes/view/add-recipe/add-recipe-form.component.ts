@@ -20,7 +20,6 @@ import {MultiselectComponent} from '../../../controls/form/multiselect.component
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
-import {ControlsRowComponent} from '../../../controls/form/controls-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
@@ -49,6 +48,7 @@ import {ControlBoxComponent} from '../../../controls/form/control-box.component'
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -63,7 +63,6 @@ import {productLabelFactory} from '../../../../shared/factories/entity-labels/pr
     TextareaComponent,
     MultiselectComponent,
     NumberInputComponent,
-    ControlsRowComponent,
     ExpandDirective,
     ParseMathDirective,
     ChipsListComponent,
@@ -102,6 +101,7 @@ export class AddRecipeFormComponent
   ) {
   }
 
+  editMode = input(false);
   recipe = input<Recipe | undefined>(undefined);
   uuid = injectParams<string>('uuid');
   form = new FormGroup({
@@ -213,12 +213,12 @@ export class AddRecipeFormComponent
 
   ngAfterViewInit() {
     this._selectResourcesService.load().then(resources => {
-
+      if (!this.editMode()) {
+        this.nameField()!.focus();
+      }
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
-
-    if (!this.recipe()?.uuid) {
-      this.nameField()!.focus();
-    }
   }
 
   addIngredient() {
