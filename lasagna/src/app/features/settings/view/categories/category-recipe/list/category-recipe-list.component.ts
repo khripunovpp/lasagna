@@ -103,7 +103,7 @@ export class CategoryRecipeListComponent
 
   loadCategory() {
     this.categoryRepository.getCategories().then((categories) => {
-      const sorted = categories.toSorted((a, b) => a.name.localeCompare(b.name));
+      const sorted = categories.toSorted((a, b) => a?.name?.localeCompare(b?.name));
       this.categories.set(sorted);
     });
   }
