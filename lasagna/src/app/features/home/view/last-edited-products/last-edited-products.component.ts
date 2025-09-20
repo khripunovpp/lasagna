@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 
@@ -71,7 +71,7 @@ export class LastEditedProductsComponent {
     updatedAt: number
     count: number
   }[]>([]);
-  protected readonly productLabelFactory = productLabelFactory;
+  protected readonly productLabelFactory = inject(productLabelFactory);
 
   ngOnInit() {
     this._productsRepository.getLastProducts()

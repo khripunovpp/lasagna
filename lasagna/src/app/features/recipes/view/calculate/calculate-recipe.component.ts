@@ -239,7 +239,7 @@ export class CalculateRecipeComponent
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
   protected readonly difference = difference;
-  protected readonly productLabelFactory = productLabelFactory;
+  protected readonly productLabelFactory = inject(productLabelFactory);
 
   ngOnInit() {
   }

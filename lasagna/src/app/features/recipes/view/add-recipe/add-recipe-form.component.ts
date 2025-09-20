@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  effect,
+  effect, inject,
   input,
   OnInit,
   signal,
@@ -122,7 +122,7 @@ export class AddRecipeFormComponent
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
   protected readonly UnitValue = UnitValue;
-  protected readonly productLabelFactory = productLabelFactory;
+  protected readonly productLabelFactory = inject(productLabelFactory);
   private recipeEffect = effect(() => {
     if (this.recipe()) {
       this.fillForm(this.recipe()!);

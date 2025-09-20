@@ -222,7 +222,7 @@ export class ProductListComponent
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
-  protected readonly productLabelFactory = productLabelFactory;
+  protected readonly productLabelFactory = inject(productLabelFactory);
   protected readonly hasMicroPrice = hasMicroPrice;
 
   exportProducts(
