@@ -49,9 +49,8 @@ export class RecipesRepository {
     recipe.clearEmpty();
     const data = recipe.toDTO();
     const uuid = await this._indexDbService.addData(Stores.RECIPES, data);
-
-    if (data.category_id) this._saveCategory(data.category_id);
-    this._saveRecipeToHistory(uuid);
+    data.uuid = uuid;
+    this._saveSomeHistoryData(data);
 
     if (recipe.tags?.length) {
       for (const tag of recipe.tags) {
@@ -129,8 +128,10 @@ export class RecipesRepository {
     recipe: Recipe
   ) {
     recipe.clearEmpty();
-    await this._indexDbService.replaceData(Stores.RECIPES, uuid, recipe.toDTO());
-    this._saveRecipeToHistory(uuid);
+    const dto = recipe.toDTO();
+    await this._indexDbService.replaceData(Stores.RECIPES, uuid, dto);
+    this._saveSomeHistoryData(dto);
+
     if (recipe.tags?.length) {
       for (const tag of recipe.tags) {
         await this._saveTag(tag);
@@ -241,5 +242,10 @@ export class RecipesRepository {
 
   private _saveTag(tag: Tag) {
     return this._tagsRepository.addOne(tag)
+  }
+
+  private _saveSomeHistoryData(recipe: RecipeDTO) {
+    if (recipe.category_id) this._saveCategory(recipe.category_id);
+    this._saveRecipeToHistory(recipe.uuid!);
   }
 }
