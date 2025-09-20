@@ -19,8 +19,8 @@ export class DeleteConfirmationService {
               cancelText,
     withLock,
             }: {
-    onSuccess: () => void,
-    onCancel?: () => void,
+    onSuccess: () => void | Promise<void>,
+    onCancel?: () => void | Promise<void>,
     message?: string,
     confirmText?: string,
     cancelText?: string,

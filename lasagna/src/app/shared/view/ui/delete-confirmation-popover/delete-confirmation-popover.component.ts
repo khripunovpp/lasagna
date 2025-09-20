@@ -14,11 +14,11 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     <lg-dialog (onCancel)="onCancel()"
                (onConfirm)="onConfirm()"
                [cancelButtonStyle]="'primary'"
-               [cancelButtonText]="'delete-close-label'|translate"
+               [cancelButtonText]="settings()?.cancelText ?? ('delete-close-label'|translate)"
                [centerButtons]="true"
                [columnButtons]="false"
                [confirmButtonStyle]="'secondary'"
-               [confirmButtonText]="'delete-confirm-label'|translate">
+               [confirmButtonText]="settings()?.confirmText ?? ('delete-confirm-label'|translate)">
       <lg-flex-column [position]="'center'" [size]="'small'">
         <div>{{ settings()?.message }}</div>
 

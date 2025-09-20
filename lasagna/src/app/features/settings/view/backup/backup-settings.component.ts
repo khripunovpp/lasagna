@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {AfterViewInit, Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -11,6 +11,12 @@ import {injectQueryParams} from '../../../../shared/helpers';
 import {NotificationsService, TransferDataService} from '../../../../shared/service/services';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+import {
+  DeleteConfirmationService
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+import {
+  DeleteConfirmationPopoverComponent
+} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -68,6 +74,8 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
         </lg-flex-column>
       </lg-card>
     </lg-flex-column>
+
+    <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
   `,
   styles: [``],
   imports: [
@@ -79,18 +87,24 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
     ButtonComponent,
     UploadComponent,
     TranslatePipe,
-    SelfStartDirective
-  ]
+    SelfStartDirective,
+    DeleteConfirmationPopoverComponent
+  ],
+  providers: [
+    DeleteConfirmationService,
+  ],
 })
-export class BackupSettingsComponent {
+export class BackupSettingsComponent
+  implements AfterViewInit {
   constructor() {
   }
 
-  downloadBackupParam = injectQueryParams('download_backup');
-  transferDataService = inject(TransferDataService);
-  notificationsService = inject(NotificationsService);
-  dexieIndexDbService = inject(DexieIndexDbService);
-  translate = inject(TranslateService);
+  readonly deleteConfirmationService = inject(DeleteConfirmationService);
+  readonly downloadBackupParam = injectQueryParams('download_backup');
+  readonly transferDataService = inject(TransferDataService);
+  readonly notificationsService = inject(NotificationsService);
+  readonly dexieIndexDbService = inject(DexieIndexDbService);
+  readonly translate = inject(TranslateService);
 
   ngAfterViewInit() {
     if (this.downloadBackupParam()) {
@@ -113,43 +127,62 @@ export class BackupSettingsComponent {
   }
 
   async onRestore(event: File[]) {
-    const loader = this.notificationsService.loading(this.translate.instant('backup.restoring'));
-    try {
-      await this.transferDataService.restoreAllData(event);
-      this.notificationsService.success(this.translate.instant('backup.restored'));
-    } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e?.toString()).trim()], this.translate.instant('backup.restore-failed'));
-      console.error(e);
-    } finally {
-      loader.close();
-      loader.close();
-    }
+    this.deleteConfirmationService.configure({
+      message: this.translate.instant('backup.restore-confirmation'),
+      confirmText: this.translate.instant('backup.restore-confirmation-confirm'),
+      onSuccess: async () => {
+        const loader = this.notificationsService.loading(this.translate.instant('backup.restoring'));
+
+        try {
+          await this.transferDataService.restoreAllData(event);
+          this.notificationsService.success(this.translate.instant('backup.restored'));
+        } catch (e) {
+          this.notificationsService.showJsonErrors([JSON.stringify(e?.toString()).trim()], this.translate.instant('backup.restore-failed'));
+          console.error(e);
+        } finally {
+          loader.close();
+          loader.close();
+        }
+      },
+    });
   }
 
   async onFlush() {
-    try {
-      await this.dexieIndexDbService.flushCache();
-      this.notificationsService.success(this.translate.instant('backup.flushed'));
-      window.location.reload();
-    } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.flush-failed'));
-      console.error(e);
-    } finally {
-    }
+    this.deleteConfirmationService.configure({
+      message: this.translate.instant('backup.flush-confirmation'),
+      confirmText: this.translate.instant('backup.flush-confirmation-confirm'),
+      onSuccess: async () => {
+        try {
+          await this.dexieIndexDbService.flushCache();
+          this.notificationsService.success(this.translate.instant('backup.flushed'));
+          window.location.reload();
+        } catch (e) {
+          this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.flush-failed'));
+          console.error(e);
+        } finally {
+        }
+      }
+    });
   }
 
   async onDeleteAll() {
-    try {
-      await this.dexieIndexDbService.deleteAllData();
-      localStorage.clear();
-      this.notificationsService.success(this.translate.instant('all-data.deleted'));
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (e) {
-      this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('all-data.delete-failed'));
-      console.error(e);
-    } finally {
-    }
+    this.deleteConfirmationService.configure({
+      message: this.translate.instant('backup.delete-all.confirmation'),
+      confirmText: this.translate.instant('backup.delete-all.confirmation-confirm'),
+      onSuccess: async () => {
+        try {
+          await this.dexieIndexDbService.deleteAllData();
+          localStorage.clear();
+          this.notificationsService.success(this.translate.instant('all-data.deleted'));
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (e) {
+          this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('all-data.delete-failed'));
+          console.error(e);
+        } finally {
+        }
+      }
+    });
   }
 }
