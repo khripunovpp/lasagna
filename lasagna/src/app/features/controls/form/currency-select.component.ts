@@ -1,7 +1,7 @@
-import {Component, forwardRef, input, model,} from '@angular/core';
+import {Component, computed, forwardRef, input, model,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule,} from '@angular/forms';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {MultiselectComponent} from './multiselect.component';
 import {ControlComponent} from './control-item/control.component';
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
@@ -9,7 +9,6 @@ import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.compo
 
 interface CurrencyOption {
   code: string;
-  label: string;
   name: string;
 }
 
@@ -42,12 +41,12 @@ interface CurrencyOption {
           [multi]="false"
           [ngModel]="selectedCurrency()"
           [placeholder]="'currency.select-placeholder' | translate"
-          [staticItems]="currencyList"
+          [staticItems]="currencyList()"
           compareField="code">
         </lg-multiselect>
       </lg-control>
       <small class="text-small text-muted">
-        {{'language.settings.currency-informer' | translate}}
+        {{ 'language.settings.currency-informer' | translate }}
 
       </small>
     </lg-flex-column>
@@ -61,23 +60,28 @@ interface CurrencyOption {
   `],
 })
 export class CurrencySelectComponent implements ControlValueAccessor {
+  constructor(
+    private _translate: TranslateService,
+  ) {
+  }
+
   // Язык передаётся через input-сигнал
   lang = input<string>('en');
-
-  readonly currencyList: CurrencyOption[] = [
-    {code: 'USD', label: 'US Dollar', name: 'US Dollar'},
-    {code: 'EUR', label: 'Euro', name: 'Euro'},
-    {code: 'RUB', label: 'Russian Ruble', name: 'Russian Ruble'},
-    {code: 'BRL', label: 'Brazilian Real', name: 'Brazilian Real'},
-    {code: 'GBP', label: 'British Pound', name: 'British Pound'},
-    {code: 'JPY', label: 'Japanese Yen', name: 'Japanese Yen'},
-    {code: 'CNY', label: 'Chinese Yuan', name: 'Chinese Yuan'},
-    {code: 'INR', label: 'Indian Rupee', name: 'Indian Rupee'},
-    {code: 'KZT', label: 'Kazakhstani Tenge', name: 'Kazakhstani Tenge'},
-    {code: 'UAH', label: 'Ukrainian Hryvnia', name: 'Ukrainian Hryvnia'},
-    {code: 'PLN', label: 'Polish Zloty', name: 'Polish Zloty'},
-    {code: 'TRY', label: 'Turkish Lira', name: 'Turkish Lira'},
-  ];
+  readonly currencyList = computed<CurrencyOption[]>(() => {
+    return [
+      {code: 'USD', name: this._translate.instant('currency.USD')},
+      {code: 'EUR', name: this._translate.instant('currency.EUR')},
+      {code: 'RUB', name: this._translate.instant('currency.RUB')},
+      {code: 'GBP', name: this._translate.instant('currency.GBP')},
+      {code: 'JPY', name: this._translate.instant('currency.JPY')},
+      {code: 'CNY', name: this._translate.instant('currency.CNY')},
+      {code: 'INR', name: this._translate.instant('currency.INR')},
+      {code: 'KZT', name: this._translate.instant('currency.KZT')},
+      {code: 'UAH', name: this._translate.instant('currency.UAH')},
+      {code: 'PLN', name: this._translate.instant('currency.PLN')},
+      {code: 'TRY', name: this._translate.instant('currency.TRY')},
+    ]
+  });
 
   selectedCurrency = model<string | Partial<CurrencyOption>>('USD');
 
@@ -86,7 +90,7 @@ export class CurrencySelectComponent implements ControlValueAccessor {
     this.selectedCurrency.set(currencyCode);
 
     // Найти объект валюты в списке
-    const foundCurrency = this.currencyList.find(c => c.code === currencyCode);
+    const foundCurrency = this.currencyList().find(c => c.code === currencyCode);
 
     if (foundCurrency) {
       // Установить объект валюты вместо кода
