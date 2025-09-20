@@ -34,6 +34,12 @@ import {TranslatePipe} from '@ngx-translate/core';
                        [placeholder]="'price-modifier.placeholder' | translate"
                        formControlName="value"
                        lgParseMath>
+        <ng-template lgExtraTpl place="top">
+          <div>
+            {{ 'recipe.calculation.price-modifiers.title' | translate }}
+          </div>
+        </ng-template>
+
         <ng-template lgExtraTpl place="before">
           <lg-unit-switcher [items]="additionalPriceType"
                             formControlName="type">
@@ -57,7 +63,6 @@ import {TranslatePipe} from '@ngx-translate/core';
         }
       </lg-number-input>
     </lg-flex-row>
-
   `,
   styles: [`
     :host {

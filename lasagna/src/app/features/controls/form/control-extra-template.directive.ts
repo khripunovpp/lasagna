@@ -1,4 +1,4 @@
-import {Directive, inject, input, TemplateRef} from '@angular/core';
+import {Directive, input, TemplateRef} from '@angular/core';
 
 @Directive({
   selector: '[lgExtraTpl]',
@@ -10,5 +10,5 @@ export class ControlExtraTemplateDirective {
   ) {
   }
 
-  place = input<'before' | 'after'>('after');
+  place = input<'before' | 'after' | 'top' | 'bottom'>('after');
 }

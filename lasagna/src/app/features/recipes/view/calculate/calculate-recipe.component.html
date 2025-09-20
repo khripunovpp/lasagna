@@ -148,10 +148,6 @@
                   </ng-template>
                 </lg-number-input>
 
-                <div>
-                  {{ 'recipe.calculation.price-modifiers.title' | translate }}
-                </div>
-
                 <lg-calculation-price-modifiers
                   [formControl]="recipePriceAdditionsForm"
                   [recipeCost]="result()?.calculation"></lg-calculation-price-modifiers>
