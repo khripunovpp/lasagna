@@ -83,7 +83,7 @@ export class RecipesRepository {
   getRecipes() {
     return this._indexDbService.getAll(Stores.RECIPES)
       .then(res => res.map(recipe => Recipe.fromRaw(recipe))
-        .toSorted((a: Recipe, b: Recipe) => a.name.localeCompare(b.name)));
+        .toSorted((a: Recipe, b: Recipe) => a?.name?.localeCompare(b?.name)));
   }
 
   async getOne(

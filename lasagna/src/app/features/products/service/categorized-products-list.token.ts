@@ -18,7 +18,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
     );
 
     return products.pipe(
-      map((products: Product[]) => products.toSorted((a: Product, b: Product) => a.name.localeCompare(b.name))),
+      map((products: Product[]) => products.toSorted((a: Product, b: Product) => a?.name?.localeCompare(b?.name))),
       map((products: Product[]) => groupBy(products, 'category_id')),
       mergeMap(async (grouped: Record<string, Product[]>) => {
         const list: {
