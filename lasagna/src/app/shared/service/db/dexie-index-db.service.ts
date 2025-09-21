@@ -428,7 +428,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async getVersion(): Promise<number> {
-    return (this as any).idbdb.version;
+    return (this as any).idbdb?.version ?? 0;
   }
 
   async restoreAllData(data: BuckupData[]): Promise<void> {
