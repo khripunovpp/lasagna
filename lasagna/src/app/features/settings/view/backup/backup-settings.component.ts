@@ -35,6 +35,17 @@ import {
         }
       </lg-flex-row>
 
+      <lg-card style="--card-bg:#fcd9b5">
+        <lg-flex-column [position]="'center'">
+          <div class="text-center">
+            {{ 'backup.flush-informer'|translate }}
+          </div>
+
+          <lg-button (click)="onFlush()" [style]="'success'">
+            {{ 'backup.flush-btn'|translate }}
+          </lg-button>
+        </lg-flex-column>
+      </lg-card>
 
       <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
         <lg-card style="--card-bg:#e78888">
@@ -50,21 +61,9 @@ import {
         </lg-card>
       </lg-upload>
 
-      <lg-card style="--card-bg:#fcd9b5">
-        <lg-flex-column [position]="'center'">
-          <div class="text-center">
-            {{ 'backup.flush-informer'|translate }}
-          </div>
-
-          <lg-button (click)="onFlush()" [style]="'success'">
-            {{ 'backup.flush-btn'|translate }}
-          </lg-button>
-        </lg-flex-column>
-      </lg-card>
-
       <lg-card style="--card-bg:#e78888">
         <lg-flex-column [position]="'center'">
-          <div class="text-center">
+          <div class="text-center text-inverse">
             {{ 'backup.delete-all.informer'|translate }}
           </div>
 
