@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, contentChild, input, Optional, signal} from '@angular/core';
+import {afterNextRender, Component, computed, contentChild, effect, input, Optional, signal} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
 import {TitleComponent} from '../../layout/title.component';
 import {GroupingTileDirective} from './grouping-tile.directive';
@@ -157,6 +157,10 @@ export class GroupingTilesComponent {
         });
       }, 200);
     })
+
+    effect(() => {
+      console.log({sortResult: this.sortResult()});
+    });
   }
 
   readonly storedGroup = injectFragment();

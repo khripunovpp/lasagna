@@ -93,7 +93,7 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
         <lg-title>
           {{ 'products.list-title'|translate }}
 
-          <span [translateParams]="{length:productsTiles()?.length}"
+          <span [translateParams]="{length:products()?.length}"
                 [translate]="'filters.results.length'"
                 class="text-muted text-small"></span>
         </lg-title>
@@ -108,7 +108,7 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
 
         <lg-grouping-tiles #groupingTiles
                            [selectable]="true"
-                           [sortResult]="productsTiles()">
+                           [sortResult]="products()">
           <ng-template let-product lgGroupingTile>
             <lg-card>
               <lg-flex-column size="medium">
@@ -209,16 +209,7 @@ export class ProductListComponent
   readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   readonly destroyRef = inject(DestroyRef);
-  readonly products: Signal<{
-    category: string
-    products: Product[]
-  }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
-  readonly productsTiles = linkedSignal(() => {
-    return new SortResult(this.products()?.map(c => ({
-      field: c.category || '',
-      items: c.products || [],
-    })) ?? []);
-  });
+  readonly products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;

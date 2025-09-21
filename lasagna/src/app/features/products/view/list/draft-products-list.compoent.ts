@@ -1,7 +1,6 @@
-import {Component, HostBinding, inject, OnInit, signal, Signal} from '@angular/core';
+import {Component, HostBinding, OnInit, signal} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
-
 import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {RouterLink} from '@angular/router';
@@ -12,11 +11,11 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ExpanderComponent} from '../../../../shared/view/ui/expander.component';
 import {DraftForm, NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
 import {ProductsRepository} from '../../../../shared/service/repositories';
-import {Product} from '../../service/Product';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {CATEGORIZED_PRODUCTS_LIST} from '../../service/categorized-products-list.token';
 import {ProductDTO, ProductScheme} from '../../service/Product.scheme';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-draft-products-list',
@@ -116,10 +115,6 @@ export class DraftProductsListCompoent
   ) {
   }
 
-  products: Signal<{
-    category: string
-    products: Product[]
-  }[]> = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
   drafts = signal<(DraftForm<ProductDTO>)[]>([]);
   protected readonly ProductDbInputScheme = ProductScheme;
 

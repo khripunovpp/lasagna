@@ -7,8 +7,9 @@ import {Product} from './Product';
 import {catchError} from 'rxjs/operators';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
+import {SortResult} from '../../../shared/service/types/sorting.types';
 
-export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('CategorizedProductsList', {
+export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResult<Product>>>('CategorizedProductsList', {
   factory: () => {
     const productsRepository = inject(ProductsRepository);
     const categoryRepository = inject(CategoryProductsRepository);
@@ -54,8 +55,13 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<any>>('Ca
             products: withoutGroup,
           }].concat(sortedList);
         }
+
         return sortedList;
       }),
+      map(list => new SortResult(list.map(c => ({
+        field: c.category || '',
+        items: c.products || [],
+      })) ?? [])),
       catchError((error, caught) => {
         notificationsService.error(errorHandler(error));
         return caught;
