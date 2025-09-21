@@ -109,6 +109,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
       &.centered {
         justify-content: center;
+        flex-wrap: wrap;
       }
 
       &.column {
