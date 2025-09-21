@@ -224,10 +224,10 @@ export class HeaderComponent {
         label: _('products.menu-label'),
         link: '/products',
       },
-      // {
-      //   label: _('invoices.menu-label'),
-      //   link: '/invoices',
-      // },
+      {
+        label: _('invoices.menu-label'),
+        link: '/invoices',
+      },
     ]);
   }
 

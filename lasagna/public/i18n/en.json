@@ -215,6 +215,7 @@
   "invoices.private-name": "Private name",
   "invoices.private-name-placeholder": "Optional internal name. Only visible to you",
   "invoices.save-changes": "Save changes",
+  "invoices.soon.text": "Soon you'll be able to create and manage invoices directly in the app. Stay tuned!",
   "invoices.state.cancelled": "Cancelled",
   "invoices.state.draft": "Draft",
   "invoices.state.issued": "Issued",

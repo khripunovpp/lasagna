@@ -215,6 +215,7 @@
   "invoices.private-name": "Приватное имя",
   "invoices.private-name-placeholder": "Опциональное внутреннее имя. Видно только вам",
   "invoices.save-changes": "Сохранить изменения",
+  "invoices.soon.text": "Раздел почти готов. Следите за обновлениями!",
   "invoices.state.cancelled": "Отменен",
   "invoices.state.draft": "Черновик",
   "invoices.state.issued": "Выдан",

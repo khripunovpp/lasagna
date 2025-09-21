@@ -215,6 +215,7 @@
   "invoices.private-name": "Nome privado",
   "invoices.private-name-placeholder": "Apenas um nome opcional livre. Só é visível para si",
   "invoices.save-changes": "Guardar alterações",
+  "invoices.soon.text": "Este recurso estará disponível em breve",
   "invoices.state.cancelled": "Cancelado",
   "invoices.state.draft": "Rascunho",
   "invoices.state.issued": "Emitido",

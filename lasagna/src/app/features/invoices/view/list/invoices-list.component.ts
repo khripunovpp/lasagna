@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, Signal} from '@angular/core';
+import {Component, computed, inject, isDevMode, OnInit, Signal} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {MatIcon} from '@angular/material/icon';
@@ -48,82 +48,87 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
           {{ 'invoices.list-title' | translate }}
         </lg-title>
 
-        @if (invoices()?.length) {
-          <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
-        }
+        @if (isDevMode()) {
 
-        @for (category of invoices(); track $index; let ic = $index) {
-          <lg-title [level]="3">
-            {{ category?.group_key || ('without-category-label'|translate) }}
-          </lg-title>
+          @if (invoices()?.length) {
+            <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+          }
 
-          <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                        (onSelected)="selectionZoneService.putSelected($event)"
-                        (onDeleteOne)="deleteOne($event)"
-                        [selectAll]="selectionZoneService.selectAll()"
-                        [deselectAll]="selectionZoneService.deselectAll()">
-            @for (invoice of category.items; track (invoice.uuid ?? '') + $index; let i = $index) {
-              <ng-template lgCardListItem
-                           [uuid]="invoice.uuid"
-                           [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
-                           type="invoice">
-                <lg-flex-column size="medium">
-                  <lg-flex-row [mobileMode]="true"
-                               size="small"
-                               [left]="true">
-                    <a [routerLink]="'/invoices/edit/' + invoice.uuid" lgExpand>
-                      {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
-                    </a>
+          @for (category of invoices(); track $index; let ic = $index) {
+            <lg-title [level]="3">
+              {{ category?.group_key || ('without-category-label'|translate) }}
+            </lg-title>
 
-                    <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
-                      {{ stateLabels()?.[ic]?.[i] }}
-                    </div>
+            <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                          (onSelected)="selectionZoneService.putSelected($event)"
+                          (onDeleteOne)="deleteOne($event)"
+                          [selectAll]="selectionZoneService.selectAll()"
+                          [deselectAll]="selectionZoneService.deselectAll()">
+              @for (invoice of category.items; track (invoice.uuid ?? '') + $index; let i = $index) {
+                <ng-template lgCardListItem
+                             [uuid]="invoice.uuid"
+                             [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
+                             type="invoice">
+                  <lg-flex-column size="medium">
+                    <lg-flex-row [mobileMode]="true"
+                                 size="small"
+                                 [left]="true">
+                      <a [routerLink]="'/invoices/edit/' + invoice.uuid" lgExpand>
+                        {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
+                      </a>
 
-                  </lg-flex-row>
-
-                  <lg-flex-row [mobileMode]="true"
-                               size="small"
-                               [left]="true">
-
-                    @if (!invoice.cancelled) {
-                      <div>
-                        {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
+                      <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
+                        {{ stateLabels()?.[ic]?.[i] }}
                       </div>
-                    }
 
-                    @if (invoice.issued) {
-                      <div>
-                        {{ 'invoices.days-left' | translate }}:
-                        @if (invoice.overdue) {
-                          {{ 'invoices.days-left.overdue' | translate }}
-                        } @else {
-                          {{ invoice.daysLeft }}
-                        }
-                      </div>
-                    }
+                    </lg-flex-row>
+
+                    <lg-flex-row [mobileMode]="true"
+                                 size="small"
+                                 [left]="true">
+
+                      @if (!invoice.cancelled) {
+                        <div>
+                          {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
+                        </div>
+                      }
+
+                      @if (invoice.issued) {
+                        <div>
+                          {{ 'invoices.days-left' | translate }}:
+                          @if (invoice.overdue) {
+                            {{ 'invoices.days-left.overdue' | translate }}
+                          } @else {
+                            {{ invoice.daysLeft }}
+                          }
+                        </div>
+                      }
 
 
-                    <small class="text-muted text-cursive"
-                           lgPull
-                           [attr.title]="(invoice?.updatedAt || invoice?.createdAt) | date:'short'">
-                      {{ 'edited-at-label'|translate }} {{ (invoice?.updatedAt || invoice?.createdAt) | timeAgo }}
-                    </small>
-                  </lg-flex-row>
-                </lg-flex-column>
-              </ng-template>
-            }
-          </lg-card-list>
-        } @empty {
-          <lg-flex-column position="center"
-                          size="medium">
-            {{ 'invoices.empty-state.text'|translate }}
+                      <small class="text-muted text-cursive"
+                             lgPull
+                             [attr.title]="(invoice?.updatedAt || invoice?.createdAt) | date:'short'">
+                        {{ 'edited-at-label'|translate }} {{ (invoice?.updatedAt || invoice?.createdAt) | timeAgo }}
+                      </small>
+                    </lg-flex-row>
+                  </lg-flex-column>
+                </ng-template>
+              }
+            </lg-card-list>
+          } @empty {
+            <lg-flex-column position="center"
+                            size="medium">
+              {{ 'invoices.empty-state.text'|translate }}
 
-            <lg-button (click)="onAddInvoice()"
-                       [style]="'primary'"
-                       [size]="'medium'">
-              {{ 'invoices.empty-state.btn'|translate }}
-            </lg-button>
-          </lg-flex-column>
+              <lg-button (click)="onAddInvoice()"
+                         [style]="'primary'"
+                         [size]="'medium'">
+                {{ 'invoices.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
+          }
+        } @else {
+          {{ 'invoices.soon.text'|translate }}
         }
       </lg-container>
     </lg-fade-in>
@@ -170,13 +175,22 @@ export class InvoicesListComponent
   ) {
   }
 
-  private _userLang = inject(USER_LANGUAGE);
-
+  readonly isDevMode = isDevMode;
   nowDate = Date.now();
   invoices: Signal<{
     group_key: string
     items: Invoice[]
   }[]> = toSignal(inject(CATEGORIZED_INVOICES_LIST));
+  stateBadgeClasses = computed(() => {
+    return this.invoices()?.map(prefixGroup => {
+      return prefixGroup?.items?.map(invoice => {
+        const state = invoice!.state;
+        return stateToBadgeClassMap[state || 'draft'];
+      })
+    });
+  });
+  protected readonly Stores = Stores;
+  private _userLang = inject(USER_LANGUAGE);
   stateLabels = computed(() => {
     // Добавляем зависимость от языка для реактивности
     this._userLang();
@@ -189,15 +203,6 @@ export class InvoicesListComponent
       })
     });
   });
-  stateBadgeClasses = computed(() => {
-    return this.invoices()?.map(prefixGroup => {
-      return prefixGroup?.items?.map(invoice => {
-        const state = invoice!.state;
-        return stateToBadgeClassMap[state || 'draft'];
-      })
-    });
-  });
-  protected readonly Stores = Stores;
 
   deleteOne(
     event?: {
