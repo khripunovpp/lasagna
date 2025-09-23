@@ -45,6 +45,7 @@ export type ButtonSizes =
       <button (click)="onClickHandler($event)"
               [class.active]="active()"
               [class.flat]="flat()"
+              [attr.type]="type()"
               [class.disabled]="disabled()"
               [class.outlined]="outlined()"
               [class.icon]="icon()"
@@ -321,7 +322,7 @@ export type ButtonSizes =
           padding: 2px;
 
           .mat-icon {
-            font-size: 10px;
+            font-size: 16px;
             width: 16px;
             height: 16px;
           }
@@ -351,6 +352,7 @@ export class ButtonComponent {
 
   onClick = output<any>();
   style = input<ButtonStyle>('default');
+  type = input<string>('button');
   size = input<ButtonSizes>('regular');
   outlined = input<boolean>(false);
   icon = input<boolean>(false);

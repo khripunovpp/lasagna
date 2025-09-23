@@ -1,6 +1,5 @@
 import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
-import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
 import {UsingHistoryService} from '../../../../shared/service/services/using-history.service';
 import {BehaviorSubject} from 'rxjs';
@@ -10,10 +9,11 @@ import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
 import {ProductsRepository} from '../../../products/service/products.repository';
-import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {Filters} from '../../../../shared/types/filter.types';
 import {copyRecipeFactory} from '../factories/recipe.factory';
 import {TranslateService} from '@ngx-translate/core';
+import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {Stores} from '../../../../shared/service/db/const/stores';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +64,10 @@ export class RecipesRepository {
     }
 
     return uuid;
+  }
+
+  addMany(recipes: Recipe[]) {
+    return this._indexDbService.balkAdd(Stores.RECIPES, recipes.map(recipe => recipe.toDTO()))
   }
 
   async loadRecipes(

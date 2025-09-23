@@ -3,10 +3,11 @@ import {ProductDTO} from './Product.scheme';
 import {Unit} from '../../../shared/service/types/Unit.types';
 import {parseFloatingNumber} from '../../../shared/helpers/number.helper';
 import {estimateColor, isColorString} from '../../../shared/helpers/color.helper';
+import {BaseModel} from "../../settings/service/models/BaseModel";
 import {convertPriceOfKilogramToGram, isWeightUnit} from '../../../shared/helpers/unit.helper';
 import {UnitValue} from '../../../shared/view/const/units.const';
 
-export class Product {
+export class Product extends BaseModel {
   constructor(
     props: {
       name: string
@@ -18,13 +19,18 @@ export class Product {
       notes?: string | undefined
       category_id?: string
       uuid?: string | undefined
+      cloud_uuid?: string | undefined
       createdAt?: number | string | undefined
       updatedAt?: number | string | undefined
+      syncedAt?: number | string | undefined
       color?: string | undefined
       system?: boolean
+      dirtyToSync?: boolean | undefined
     }
   ) {
-    this.update(props);
+    super();
+    this.update(props, true);
+    this.dirtyToSync = props.dirtyToSync ?? false;
   }
 
   name: string = '';
@@ -35,9 +41,6 @@ export class Product {
   source?: string;
   brand?: string;
   notes?: string;
-  uuid?: string | undefined;
-  createdAt?: number | undefined;
-  updatedAt?: number | undefined;
   color?: string | undefined;
   system?: boolean = false;
 
@@ -86,9 +89,35 @@ export class Product {
       notes: dto?.notes || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
+      cloud_uuid: dto?.cloud_uuid,
       createdAt: dto?.createdAt,
       updatedAt: dto?.updatedAt,
+      syncedAt: dto?.syncedAt,
       color: dto?.color,
+      dirtyToSync: dto?.dirtyToSync ?? false,
+      system: dto?.system || false,
+    });
+  }
+
+  static fromCloud(dto: any) {
+    const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
+    const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
+    const syncedAt = dto?.syncedAt ? new Date(dto?.syncedAt) : undefined;
+
+    return new Product({
+      name: dto?.name || '',
+      amount: Number(dto?.amount) || 0,
+      price: Number(dto?.price) || 0,
+      unit: dto?.unit || 'gram',
+      source: dto?.source || '',
+      category_id: dto?.category_id || '',
+      uuid: dto?.uuid,
+      cloud_uuid: dto?.cloud_uuid,
+      createdAt: createdAt?.getTime(),
+      updatedAt: updatedAt?.getTime(),
+      syncedAt: syncedAt?.getTime(),
+      color: dto?.color,
+      dirtyToSync: dto?.dirtyToSync ?? false,
       system: dto?.system || false,
     });
   }
@@ -104,14 +133,17 @@ export class Product {
       notes: undefined,
       category_id: '',
       uuid: undefined,
+      cloud_uuid: undefined,
       createdAt: undefined,
       updatedAt: undefined,
+      syncedAt: undefined,
       color: undefined,
     });
   }
 
-  update(
+  override update(
     dto: any,
+    doNotMarkDirty: boolean = false,
   ) {
     this.name = dto.name || this.name;
     this.amount = dto.amount ? Number(dto.amount) : this.amount;
@@ -124,19 +156,21 @@ export class Product {
       ? CategoryProduct.fromRaw(dto.category_id || '')
       : this.category_id;
     this.uuid = dto.uuid || this.uuid;
+    this.cloud_uuid = dto.cloud_uuid || this.cloud_uuid;
     this.createdAt = dto.createdAt ? Number(dto.createdAt) : this.createdAt;
     this.updatedAt = dto?.updatedAt || Date.now();
+    this.syncedAt = dto?.syncedAt ? Number(dto.syncedAt) : this.syncedAt;
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
     this.system = dto.system !== undefined ? dto.system : this.system;
+    super.update(dto, doNotMarkDirty);
     return this as Product;
   }
-
   setName(name: string) {
     this.name = name;
     return this;
   }
 
-  toDTO(): ProductDTO {
+  override toDTO(): ProductDTO {
     return {
       name: this.name,
       amount: this.amount,
@@ -147,9 +181,29 @@ export class Product {
       notes: this.notes ?? '',
       category_id: this.category_id?.toUUID(),
       uuid: this.uuid,
+      cloud_uuid: this.cloud_uuid,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      syncedAt: this.syncedAt,
       color: this.color || estimateColor(this.name),
+      dirtyToSync: this.dirtyToSync,
+      system: this.system || false,
+    };
+  }
+
+  override toCloudDTO(): any {
+    return {
+      name: this.name,
+      price: this.price,
+      amount: this.amount,
+      source: this.source,
+      unit: this.unit,
+      color: this.color || estimateColor(this.name),
+      uuid: this.uuid,
+      cloud_uuid: this.cloud_uuid,
+      syncedAt: this.syncedAt,
+      dirtyToSync: this.dirtyToSync,
+      category_id: this.category_id?.toUUID(),
       system: this.system || false,
     };
   }

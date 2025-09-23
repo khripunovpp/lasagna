@@ -10,10 +10,13 @@ export const ProductScheme = z.object({
   notes: z.string(),
   category_id: z.string().nullable().optional(),
   uuid: z.string().optional(),
+  cloud_uuid: z.string().optional(),
   unit: UnitScheme.or(z.string()).optional(),
   createdAt: z.union([z.string(), z.number()]).optional(),
   updatedAt: z.union([z.string(), z.number()]).optional(),
+  syncedAt: z.union([z.string(), z.number()]).optional(),
   color: z.string().optional(),
+  dirtyToSync: z.boolean().optional(),
   system: z.boolean().optional(),
 });
 
