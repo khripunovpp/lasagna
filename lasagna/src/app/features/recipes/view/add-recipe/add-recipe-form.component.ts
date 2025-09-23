@@ -47,7 +47,7 @@ import {InputComponent} from '../../../controls/form/input.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
-import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
@@ -122,7 +122,7 @@ export class AddRecipeFormComponent
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
   protected readonly UnitValue = UnitValue;
-  protected readonly productLabelFactory = inject(productLabelFactory);
+  protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   private recipeEffect = effect(() => {
     if (this.recipe()) {
       this.fillForm(this.recipe()!);
