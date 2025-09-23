@@ -5,6 +5,9 @@ import {SETTINGS} from '../../../features/settings/service/providers/settings.to
 import {SettingsKeysConst} from '../../../features/settings/const/settings-keys.const';
 import {currencyStringToSymbol} from '../../helpers/assets/currency.helper';
 import {LoggerService} from '../../../features/logger/logger.service';
+import {Calculation} from '../../../features/recipes/service/providers/calulate-recipe.service';
+import {calculationPdfGenerator} from '../../helpers/pdf-generators/calculation-pdf.generator';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,7 @@ import {LoggerService} from '../../../features/logger/logger.service';
 export class PdfGeneratorService {
 
   userSettings = inject(SETTINGS);
+  translateService = inject(TranslateService);
   private _logger = inject(LoggerService).withContext({
     label: 'PdfGeneratorService',
     color: '#2fab9c',
@@ -27,11 +31,28 @@ export class PdfGeneratorService {
     };
   }
 
+  get calculationSettings() {
+    const settings = this.userSettings();
+    return {
+      rowsPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
+      totalPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
+      currency: currencyStringToSymbol(settings[SettingsKeysConst.currency] || 'USD'),
+    };
+  }
+
   generateInvoicePDF(
     invoice: Invoice,
   ): void {
     const settings = this.invoiceSettings;
     this._logger.log('Generating invoice PDF', {invoice, settings});
     generateInvoicePdf(invoice, settings);
+  }
+
+  generateCalculationPDF(
+    calculation: Calculation,
+  ) {
+    const settings = this.calculationSettings;
+    this._logger.log('Generating calculation PDF', {calculation, settings});
+    calculationPdfGenerator(calculation, settings, {translate: this.translateService,});
   }
 }

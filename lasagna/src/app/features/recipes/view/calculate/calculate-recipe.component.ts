@@ -46,12 +46,16 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
-import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {ControlExtraTemplateDirective} from '../../../controls/form/control-extra-template.directive';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -83,6 +87,8 @@ import {ControlExtraTemplateDirective} from '../../../controls/form/control-extr
     NumberInputComponent,
     ParseMathDirective,
     ControlExtraTemplateDirective,
+    InlineSeparatedGroupComponent,
+    InlineSeparatedGroupDirective,
 
 
   ],
@@ -245,7 +251,7 @@ export class CalculateRecipeComponent
     return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
   });
   protected readonly difference = difference;
-  protected readonly productLabelFactory = inject(productLabelFactory);
+  protected readonly productLabelFactory = inject(productLabelFactoryProvider);
 
   ngOnInit() {
   }
@@ -288,6 +294,15 @@ export class CalculateRecipeComponent
 
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
       this.result.set(result);
+    } catch (error) {
+      this._notificationService.error(errorHandler(error));
+    }
+  }
+
+  async onPdfGenerate() {
+    if (!this.result()) return;
+    try {
+      await this._calculateRecipeService.generatePdf(this.result()!);
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }

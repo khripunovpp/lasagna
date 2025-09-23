@@ -321,6 +321,7 @@
   "open-label": "Open",
   "pagination.next": "Next",
   "pagination.previous": "Previous",
+  "pdf-generate-label": "Generate PDF",
   "per-unit.label": "/{{ unit }}",
   "price-modifier.add": "Add",
   "price-modifier.per-unit": "Per unit",
