@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  linkedSignal,
-  OnInit,
-  Signal
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
 import {ProductsRepository} from '../../service/products.repository';
@@ -28,7 +19,6 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {Product} from '../../service/Product';
 import {ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
@@ -43,7 +33,6 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {SortResult} from '../../../../shared/service/types/sorting.types';
 import {errorHandler, hasMicroPrice} from '../../../../shared/helpers';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';

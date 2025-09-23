@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "Category",
+    "description": "Product categories for organization"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "color": {
+      "type": "string"
+    },
+    "system": {
+      "type": "boolean",
+      "default": false
+    },
+    "uuid": {
+      "type": "string",
+      "unique": true
+    },
+    "cloud_uuid": {
+      "type": "string",
+      "unique": true
+    },
+    "syncedAt": {
+      "type": "datetime"
+    },
+    "dirtyToSync": {
+      "type": "boolean",
+      "default": false
+    },
+
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

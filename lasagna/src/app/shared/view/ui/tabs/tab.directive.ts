@@ -12,4 +12,5 @@ export class TabDirective {
 
   @Input({required: true}) label!: string;
   @Input({required: true}) alias!: string;
+  @Input({required: false}) display: boolean = true;
 }
