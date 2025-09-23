@@ -37,11 +37,13 @@ import {TranslatePipe} from '@ngx-translate/core';
                       {{ cancelButtonText() }}
                     </lg-button>
 
-                    <lg-button (click)="onConfirmClick()"
-                               [style]="confirmButtonStyle()"
-                               class="dialog__confirm-button">
-                      {{ confirmButtonText() }}
-                    </lg-button>
+                    @if (showConfirmButton()) {
+                      <lg-button (click)="onConfirmClick()"
+                                 [style]="confirmButtonStyle()"
+                                 class="dialog__confirm-button">
+                        {{ confirmButtonText() }}
+                      </lg-button>
+                    }
                   </div>
                 }
               </div>
@@ -155,6 +157,7 @@ export class DialogComponent {
   displayFooter = input(true);
   centerButtons = input(false);
   columnButtons = input(true);
+  showConfirmButton = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
   readonly #_bodyLocker = inject(BODY_LOCKER);

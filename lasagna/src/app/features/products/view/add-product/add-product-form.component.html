@@ -19,17 +19,8 @@
                              placeholder="">
               <ng-template lgExtraTpl place="after">
                 <lg-flex-row [center]="true" [size]="'small'">
-                  <lg-tooltip [position]="'left'">
-                    <lg-button [flat]="true"
-                               [icon]="true"
-                               [style]="'success'">
-                      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-                    </lg-button>
+                  <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
 
-                    <div ngProjectAs="content">
-                      <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
-                    </div>
-                  </lg-tooltip>
                   <lg-unit-switcher formControlName="unit">
                   </lg-unit-switcher>
                 </lg-flex-row>

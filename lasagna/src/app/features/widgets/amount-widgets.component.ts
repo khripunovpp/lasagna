@@ -1,28 +1,50 @@
-import {Component, output, signal} from '@angular/core';
+import {Component, output, signal, viewChild} from '@angular/core';
 import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {DialogComponent} from '../../shared/view/ui/dialogs/dialog.component';
+import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-amount-widgets',
   standalone: true,
   template: `
+    <lg-button (click)="open()"
+               [flat]="true"
+               [icon]="true"
+               [style]="'success'">
+      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+    </lg-button>
+
+    <lg-dialog #dialog
+               (onCancel)="onCancel()"
+               (onConfirm)="onConfirm()"
+               [centerButtons]="true"
+               [showConfirmButton]="false"
+               [displayFooter]="false"
+               [columnButtons]="false">
       <div [class.selected]="selectedWidget() != null"
            class="amount-widgets">
-          <div class="amount-widgets__buttons">
-              <button (click)="onWidgetSelect('eggs')"
-                      class="amount-widgets__button">{{ 'widgets.eggs.title' | translate }}
-              </button>
+        <div class="amount-widgets__buttons">
+          <button (click)="onWidgetSelect('eggs')"
+                  class="amount-widgets__button">{{ 'widgets.eggs.title' | translate }}
+          </button>
+        </div>
+        @if (selectedWidget() === 'eggs') {
+          <div class="amount-widgets__wrapper">
+            <lg-eggs-widget (changed)="onEggsChanged($event)"></lg-eggs-widget>
           </div>
-          @if (selectedWidget() === 'eggs') {
-              <div class="amount-widgets__wrapper">
-                  <lg-eggs-widget (changed)="onEggsChanged($event)"></lg-eggs-widget>
-              </div>
-          }
+        }
       </div>
+    </lg-dialog>
   `,
   imports: [
     EggsWidgetComponent,
-    TranslatePipe
+    TranslatePipe,
+    DialogComponent,
+    ButtonComponent,
+    MatIcon,
+    MatIcon,
   ],
   styles: [
     `
@@ -70,6 +92,8 @@ export class AmountWidgetsComponent {
 
   eggsChanged = output<number | null>();
   selectedWidget = signal<string | null>(null);
+  readonly dialog = viewChild(DialogComponent);
+
   onWidgetSelect(event: any) {
     this.selectedWidget.set(event);
   }
@@ -78,5 +102,21 @@ export class AmountWidgetsComponent {
   onEggsChanged(event: any) {
     if (!event) return;
     this.eggsChanged.emit(event);
+  }
+
+  onConfirm() {
+
+  }
+
+  onCancel() {
+
+  }
+
+  open() {
+    this.dialog()?.open();
+  }
+
+  close() {
+    this.dialog()?.close();
   }
 }
