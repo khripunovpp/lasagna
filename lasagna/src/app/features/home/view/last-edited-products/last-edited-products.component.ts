@@ -9,7 +9,7 @@ import {Product} from '../../../products/service/Product';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
-import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 
 @Component({
   selector: 'lg-last-edited-products',
@@ -71,7 +71,7 @@ export class LastEditedProductsComponent {
     updatedAt: number
     count: number
   }[]>([]);
-  protected readonly productLabelFactory = inject(productLabelFactory);
+  protected readonly productLabelFactory = inject(productLabelFactoryProvider);
 
   ngOnInit() {
     this._productsRepository.getLastProducts()
