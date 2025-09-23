@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
-
+import {AfterViewInit, Component, computed, effect, inject, OnInit, Renderer2, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {DraftForm} from '../../../../shared/service/services/draft-forms.service';
 import {ProductsRepository} from '../../service/products.repository';
@@ -17,23 +15,27 @@ import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
+import {SyncSingleButtonComponent} from '../../../api/sync-button.component';
+import {CloudSyncService} from '../../../api/cloud-sync.service';
+import {Stores} from '../../../../shared/service/db/const/stores';
+import {errorHandler} from '../../../../shared/helpers';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {MatIcon} from '@angular/material/icon';
-import {errorHandler} from '../../../../shared/helpers';
 import {
   DeleteConfirmationService
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
 import {
   DeleteConfirmationPopoverComponent
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 
 @Component({
   selector: 'lg-add-product',
@@ -42,7 +44,6 @@ import {
     ContainerComponent,
     TitleComponent,
     AddProductFormComponent,
-    FlexRowComponent,
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
@@ -55,6 +56,10 @@ import {
     ControlsBarComponent,
     MatIcon,
     DeleteConfirmationPopoverComponent,
+    InlineSeparatedGroupDirective,
+    SyncSingleButtonComponent,
+    FlexColumnComponent,
+    FlexRowComponent,
   ],
   template: `
     @if (editMode()) {
@@ -118,6 +123,10 @@ import {
           }
 
         </lg-flex-column>
+        @if (product()?.uuid) {
+          <lg-sync-single-button (onClick)="sync()"
+                                 [needSync]="!!product()?.needSync()"></lg-sync-single-button>
+        }
 
         <lg-add-product-form [editMode]="editMode()"
                              [product]="product()"></lg-add-product-form>
@@ -171,6 +180,8 @@ export class AddProductComponent
     private _notificationsService: NotificationsService,
     private _analyticsService: AnalyticsService,
     private _translateService: TranslateService,
+    private _renderer: Renderer2,
+    private _cloudSyncService: CloudSyncService,
   ) {
   }
 
@@ -188,6 +199,19 @@ export class AddProductComponent
       || (this.draftRef() && this.draftByExistingProduct()))
   })
   private _routerManager = inject(ROUTER_MANAGER);
+
+  async sync() {
+    try {
+      debugger
+      if (!this.product()?.uuid) {
+        return;
+      }
+
+      await this._productsRepository.safetyPutToCloud(Stores.PRODUCTS, this.product()!);
+    } catch (error) {
+      this._notificationsService.error(errorHandler(error));
+    }
+  }
 
   ngOnDestroy() {
   }

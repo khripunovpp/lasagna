@@ -23,34 +23,36 @@ import {Router} from '@angular/router';
     FlexColumnComponent,
     ],
   template: `
-      <div [attr.aria-label]="'Tabs'"
-           [attr.role]="'tablist'"
-           [class.scrollable]="scrollable()"
-           [class.flat]="flat()"
-           class="tabs">
-          <div class="tabs__labels">
-              @for (tab of tabs();track tab.label;let i = $index) {
-                  <button (click)="selectTab(i)"
-                          [class.active]="activated()[i]"
-                          [attr.aria-selected]="activated()[i]"
-                          [attr.aria-controls]="'tab-' + i"
-                          [attr.id]="'tab-' + i">
-                      {{ tab.label }}
-                  </button>
-              }
-          </div>
-
-          <div class="tabs__body">
-              @if (tabs().length > 0) {
-                  @if (activated()[selectedIndex()]) {
-                      <lg-flex-column [size]="'small'">
-                          <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
-                          </ng-container>
-                      </lg-flex-column>
-                  }
-              }
-          </div>
+    <div [attr.aria-label]="'Tabs'"
+         [attr.role]="'tablist'"
+         [class.flat]="flat()"
+          [class.scrollable]="scrollable()"
+         class="tabs">
+      <div class="tabs__labels">
+        @for (tab of tabs(); track tab.label; let i = $index) {
+          @if (tab.display) {
+            <button (click)="selectTab(i)"
+                    [class.active]="activated()[i]"
+                    [attr.aria-selected]="activated()[i]"
+                    [attr.aria-controls]="'tab-' + i"
+                    [attr.id]="'tab-' + i">
+              {{ tab.label }}
+            </button>
+          }
+        }
       </div>
+
+      <div class="tabs__body">
+        @if (tabs().length > 0) {
+          @if (activated()[selectedIndex()]) {
+            <lg-flex-column [size]="'small'">
+              <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
+              </ng-container>
+            </lg-flex-column>
+          }
+        }
+      </div>
+    </div>
   `,
   styles: [`
     .tabs {

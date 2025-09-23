@@ -3,6 +3,10 @@
     <lg-title>{{ 'settings.title'|translate }}</lg-title>
 
     <lg-tabs>
+      <ng-template alias="account" label="{{ 'account.title'|translate }}" lgTab>
+        <lg-account-settings></lg-account-settings>
+      </ng-template>
+
       <ng-template alias="language" label="{{ 'language.settings-title'|translate }}" lgTab>
         <lg-language-settings></lg-language-settings>
       </ng-template>
@@ -33,6 +37,13 @@
 
       <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
         <lg-backup-settings></lg-backup-settings>
+      </ng-template>
+
+      <ng-template [display]="!!authService.currentUser()?.username"
+                   alias="sync"
+                   label="{{ 'sync.title'|translate }}"
+                   lgTab>
+        <lg-sync-settings></lg-sync-settings>
       </ng-template>
 
       <ng-template alias="logs" label="{{ 'log-center.title'|translate }}" lgTab>
