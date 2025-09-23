@@ -2,17 +2,14 @@ import {Product} from '../../../features/products/service/Product';
 import {inject, InjectionToken} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
-export const productLabelFactory = new InjectionToken('productLabelFactory', {
-  factory: () => {
-    const translateService = inject(TranslateService);
-    return (product?: Product) => {
+export const productLabelFactory =  (product?: Product,t?: (s: string) => string) => {
       if (!product) {
         return 'unknown';
       }
       let string = product.name;
 
       if (product.system){
-        string = translateService.instant('product.' + product.uuid);
+        string = t?.('product.' + product.uuid) || product.name;
       }
 
       if (!product.brand && !product.source) {
@@ -26,5 +23,10 @@ export const productLabelFactory = new InjectionToken('productLabelFactory', {
       }
       return string;
     }
+
+export const productLabelFactoryProvider = new InjectionToken('productLabelFactory', {
+  factory: () => {
+    const translateService = inject(TranslateService);
+    return (product?: Product) => productLabelFactory(product, (s: string) => translateService.instant(s));
   }
 });

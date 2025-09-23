@@ -47,7 +47,7 @@ import {SortResult} from '../../../../shared/service/types/sorting.types';
 import {errorHandler, hasMicroPrice} from '../../../../shared/helpers';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
-import {productLabelFactory} from '../../../../shared/factories/entity-labels/product.label.factory';
+import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 
@@ -213,7 +213,7 @@ export class ProductListComponent
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
-  protected readonly productLabelFactory = inject(productLabelFactory);
+  protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   protected readonly hasMicroPrice = hasMicroPrice;
 
   exportProducts(

@@ -3,21 +3,34 @@
     <lg-flex-column>
       @let calculation = result()?.calculation;
       @let hasIngredients = (result()?.calculation?.ingredients?.length || 0) > 0;
-      <lg-flex-row [center]="true" [mobileMode]="true">
-        <lg-title>
-          {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
-        </lg-title>
+
+      <lg-flex-column [size]="'medium'">
+        <lg-flex-row [center]="true" [mobileMode]="true">
+          <lg-title>
+            {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
+          </lg-title>
+        </lg-flex-row>
 
         @if (hasIngredients) {
-          <lg-button [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
-                     [outlined]="true"
-                     [size]="'tiny'"
-                     [style]="'default'"
-                     lgSelfStart>
-            {{ 'edit-label' | translate }}
-          </lg-button>
+          <lg-inline-separated-group>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button [flat]="true"
+                         [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
+                         [style]="'default'">
+                {{ 'edit-label' | translate }}
+              </lg-button>
+            </ng-template>
+
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button [flat]="true"
+                         (onClick)="onPdfGenerate()"
+                         [style]="'default'">
+                {{ 'pdf-generate-label' | translate }}
+              </lg-button>
+            </ng-template>
+          </lg-inline-separated-group>
         }
-      </lg-flex-row>
+      </lg-flex-column>
 
       @if (result()?.calculation?.totalPrice) {
         <lg-flex-row [mobileMode]="true"
@@ -71,7 +84,7 @@
                       @if (result()?.calculation?.hasPriceDifference) {
                         <span>></span>
                         <div
-                          class="text-underlined text-bold">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency: pipesDigits() }}
+                          class="text-underlined text-bold">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency : pipesDigits() }}
                         </div>
                       }
                     </lg-flex-row>
@@ -238,6 +251,7 @@
                         <a [routerLink]="['/products/edit/', row.uuid]">
                           {{ productLabelFactory(row.ingredient?.product_id) }}
                         </a>
+
                       }
                     </div>
                   </td>

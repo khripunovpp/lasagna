@@ -7,6 +7,7 @@ import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {UnitValue} from '../../../../shared/view/const/units.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {Ingredient} from '../models/Ingredient';
+import {PdfGeneratorService} from '../../../../shared/service/services/pdf-generator.service';
 
 export interface Calculation {
   calculation: RecipeCost
@@ -14,7 +15,7 @@ export interface Calculation {
 }
 
 export interface CalculationTableParams {
-  ingredient?:Ingredient
+  ingredient?: Ingredient
   name: string
   unit: Unit | undefined | string
   price_per_unit: number | undefined
@@ -32,6 +33,7 @@ export class CalculateRecipeService {
   constructor(
     private _recipeRepository: RecipesRepository,
     private _settingsService: SettingsService,
+    private _pdfGenerator: PdfGeneratorService,
   ) {
   }
 
@@ -54,6 +56,12 @@ export class CalculateRecipeService {
     this.calculation = this._makeView(calculation);
 
     return this.calculation;
+  }
+
+  generatePdf(
+    calculation: Calculation,
+  ) {
+    return this._pdfGenerator.generateCalculationPDF(calculation);
   }
 
   private _makeView(

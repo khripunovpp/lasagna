@@ -321,6 +321,7 @@
   "open-label": "Открыть",
   "pagination.next": "Следующая",
   "pagination.previous": "Предыдущая",
+  "pdf-generate-label": "Скачать PDF",
   "per-unit.label": "/{{ unit }}",
   "price-modifier.add": "Добавить",
   "price-modifier.per-unit": "За единицу",
