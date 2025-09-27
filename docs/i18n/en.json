@@ -553,6 +553,7 @@
   "search.not-found": "Start typing to search",
   "search.placeholder": "Search products, recipes, categories, documentation...",
   "search.product-categories.title": "Product categories",
+  "search.product.more-with-same-source": "Found {{length}} more recipes with same product. Click to expand.",
   "search.product.title": "Storage",
   "search.recipe-categories.title": "Recipe categories",
   "search.recipes.title": "Recipes",

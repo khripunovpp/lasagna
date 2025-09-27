@@ -11865,13 +11865,14 @@ var PwaInstallComponent = class _PwaInstallComponent {
 var _c0 = (a0, a1, a2, a3) => ({ $implicit: a0, caption: a1, itemTpl: a2, subTpl: a3 });
 var _c1 = (a0) => ["/products/edit/", a0];
 var _c2 = () => [];
-var _c3 = (a0) => ({ $implicit: a0 });
-var _c4 = (a0) => ["/recipes/edit/", a0];
-var _c5 = (a0, a1, a2) => ({ $implicit: a0, caption: a1, itemTpl: a2 });
-var _c6 = (a0) => ["/settings/categories/products/edit/", a0];
-var _c7 = (a0) => ["/settings/categories/recipes/edit/", a0];
-var _c8 = (a0) => ["/invoices/edit/", a0];
-var _c9 = (a0) => ["/docs", a0];
+var _c3 = (a0) => ({ length: a0 });
+var _c4 = (a0) => ({ $implicit: a0 });
+var _c5 = (a0) => ["/recipes/edit/", a0];
+var _c6 = (a0, a1, a2) => ({ $implicit: a0, caption: a1, itemTpl: a2 });
+var _c7 = (a0) => ["/settings/categories/products/edit/", a0];
+var _c8 = (a0) => ["/settings/categories/recipes/edit/", a0];
+var _c9 = (a0) => ["/invoices/edit/", a0];
+var _c10 = (a0) => ["/docs", a0];
 var _forTrack0 = ($index, $item) => $item.context;
 var _forTrack1 = ($index, $item) => $item.uuid;
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_0_Template(rf, ctx) {
@@ -11901,33 +11902,35 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_
     \u0275\u0275conditional((data_r1 == null ? null : data_r1.source) ? 2 : -1);
   }
 }
-function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_3_ng_container_0_Template(rf, ctx) {
+function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_4_ng_container_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0);
   }
 }
-function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_3_Template(rf, ctx) {
+function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_3_ng_container_0_Template, 1, 0, "ng-container", 18);
+    \u0275\u0275template(0, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_4_ng_container_0_Template, 1, 0, "ng-container", 18);
   }
   if (rf & 2) {
     const res_r2 = ctx.$implicit;
     \u0275\u0275nextContext(4);
     const recipeItemTpl_r3 = \u0275\u0275reference(2);
-    \u0275\u0275property("ngTemplateOutlet", recipeItemTpl_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c3, res_r2));
+    \u0275\u0275property("ngTemplateOutlet", recipeItemTpl_r3)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c4, res_r2));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "lg-expander", 16)(1, "lg-flex-column", 17);
-    \u0275\u0275repeaterCreate(2, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_3_Template, 1, 4, "ng-container", null, _forTrack1);
+    \u0275\u0275elementStart(0, "lg-expander", 16);
+    \u0275\u0275pipe(1, "translate");
+    \u0275\u0275elementStart(2, "lg-flex-column", 17);
+    \u0275\u0275repeaterCreate(3, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_For_4_Template, 1, 4, "ng-container", null, _forTrack1);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     \u0275\u0275nextContext();
     const additionalResults_r4 = \u0275\u0275readContextLet(0);
-    \u0275\u0275property("flat", true)("once", true)("openLabel", "Found " + ((additionalResults_r4 == null ? null : additionalResults_r4.length) ?? 0) + " more with same source. Click to expand.");
-    \u0275\u0275advance();
+    \u0275\u0275property("flat", true)("once", true)("openLabel", \u0275\u0275pipeBind2(1, 4, "search.product.more-with-same-source", \u0275\u0275pureFunction1(7, _c3, additionalResults_r4 == null ? null : additionalResults_r4.length)));
+    \u0275\u0275advance(2);
     \u0275\u0275property("size", "tiny");
     \u0275\u0275advance();
     \u0275\u0275repeater(additionalResults_r4);
@@ -11936,7 +11939,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275declareLet(0);
-    \u0275\u0275conditionalCreate(1, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_Template, 4, 4, "lg-expander", 16);
+    \u0275\u0275conditionalCreate(1, GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_0_ng_template_4_Conditional_1_Template, 5, 9, "lg-expander", 16);
   }
   if (rf & 2) {
     const searchData_r5 = ctx.$implicit;
@@ -11971,7 +11974,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_ng_template_1_
   }
   if (rf & 2) {
     const data_r12 = ctx.$implicit;
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c4, data_r12 == null ? null : data_r12.uuid));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c5, data_r12 == null ? null : data_r12.uuid));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", data_r12 == null ? null : data_r12.name, " ");
   }
@@ -11988,7 +11991,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_3_
     const recipeItemTpl_r3 = \u0275\u0275reference(2);
     \u0275\u0275nextContext(2);
     const sectionTpl_r11 = \u0275\u0275reference(13);
-    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c5, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.recipes.title"), recipeItemTpl_r3));
+    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c6, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.recipes.title"), recipeItemTpl_r3));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_4_ng_template_0_Template(rf, ctx) {
@@ -12001,7 +12004,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_4_
   }
   if (rf & 2) {
     const data_r13 = ctx.$implicit;
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c6, data_r13 == null ? null : data_r13.uuid));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c7, data_r13 == null ? null : data_r13.uuid));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", data_r13 == null ? null : data_r13.name, " ");
   }
@@ -12017,7 +12020,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_4_
     const item_r6 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275nextContext(2);
     const sectionTpl_r11 = \u0275\u0275reference(13);
-    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c5, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.product-categories.title"), productCategoryItemTpl_r14));
+    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c6, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.product-categories.title"), productCategoryItemTpl_r14));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_5_ng_template_0_Template(rf, ctx) {
@@ -12030,7 +12033,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_5_
   }
   if (rf & 2) {
     const data_r15 = ctx.$implicit;
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c7, data_r15 == null ? null : data_r15.uuid));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(2, _c8, data_r15 == null ? null : data_r15.uuid));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", data_r15 == null ? null : data_r15.name, " ");
   }
@@ -12046,7 +12049,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_5_
     const item_r6 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275nextContext(2);
     const sectionTpl_r11 = \u0275\u0275reference(13);
-    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c5, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.recipe-categories.title"), recipeCategoryItemTpl_r16));
+    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c6, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.recipe-categories.title"), recipeCategoryItemTpl_r16));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_6_ng_template_0_Template(rf, ctx) {
@@ -12059,7 +12062,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_6_
   }
   if (rf & 2) {
     const data_r17 = ctx.$implicit;
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(4, _c8, data_r17 == null ? null : data_r17.uuid));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(4, _c9, data_r17 == null ? null : data_r17.uuid));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate3(" #", data_r17 == null ? null : data_r17.prefix, "/", data_r17 == null ? null : data_r17.invoice_number, " - ", data_r17 == null ? null : data_r17.name, " ");
   }
@@ -12075,7 +12078,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_6_
     const item_r6 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275nextContext(2);
     const sectionTpl_r11 = \u0275\u0275reference(13);
-    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c5, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.invoices.title"), invoiceItemTpl_r18));
+    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c6, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.invoices.title"), invoiceItemTpl_r18));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_7_ng_template_0_Template(rf, ctx) {
@@ -12101,7 +12104,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_7_
   }
   if (rf & 2) {
     const data_r19 = ctx.$implicit;
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(3, _c9, data_r19 == null ? null : data_r19.path));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(3, _c10, data_r19 == null ? null : data_r19.path));
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", data_r19 == null ? null : data_r19.title, " ");
     \u0275\u0275advance();
@@ -12119,7 +12122,7 @@ function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Conditional_7_
     const item_r6 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275nextContext(2);
     const sectionTpl_r11 = \u0275\u0275reference(13);
-    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c5, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.documentation.title"), documentationItemTpl_r20));
+    \u0275\u0275property("ngTemplateOutlet", sectionTpl_r11)("ngTemplateOutletContext", \u0275\u0275pureFunction3(4, _c6, item_r6.result, \u0275\u0275pipeBind1(1, 2, "search.documentation.title"), documentationItemTpl_r20));
   }
 }
 function GlobalSearchComponent_Conditional_0_Conditional_10_For_3_Template(rf, ctx) {
@@ -12201,7 +12204,7 @@ function GlobalSearchComponent_Conditional_0_ng_template_12_For_7_Conditional_6_
     const res_r23 = \u0275\u0275nextContext().$implicit;
     const subTpl_r24 = \u0275\u0275nextContext().subTpl;
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", subTpl_r24)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c3, res_r23.data));
+    \u0275\u0275property("ngTemplateOutlet", subTpl_r24)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c4, res_r23.data));
   }
 }
 function GlobalSearchComponent_Conditional_0_ng_template_12_For_7_Template(rf, ctx) {
@@ -12222,7 +12225,7 @@ function GlobalSearchComponent_Conditional_0_ng_template_12_For_7_Template(rf, c
     const itemTpl_r26 = ctx_r24.itemTpl;
     const subTpl_r24 = ctx_r24.subTpl;
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", itemTpl_r26)("ngTemplateOutletContext", \u0275\u0275pureFunction1(9, _c3, res_r23.data));
+    \u0275\u0275property("ngTemplateOutlet", itemTpl_r26)("ngTemplateOutletContext", \u0275\u0275pureFunction1(9, _c4, res_r23.data));
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind1(4, 5, "edited-at-label"), " ", \u0275\u0275pipeBind1(5, 7, (res_r23.data == null ? null : res_r23.data.updatedAt) || (res_r23.data == null ? null : res_r23.data.createdAt)), " ");
     \u0275\u0275advance(3);
@@ -12446,7 +12449,7 @@ var GlobalSearchComponent = class _GlobalSearchComponent {
                       @if (additionalResults?.length) {
                         <lg-expander [flat]="true"
                                      [once]="true"
-                                     [openLabel]="'Found ' + (additionalResults?.length ?? 0) + ' more with same source. Click to expand.'">
+                                     [openLabel]="'search.product.more-with-same-source' | translate:{length: additionalResults?.length}">
 
                           <lg-flex-column [size]="'tiny'">
                             @for (res of additionalResults; track res.uuid) {
