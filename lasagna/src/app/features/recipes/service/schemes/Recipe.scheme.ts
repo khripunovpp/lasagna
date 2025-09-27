@@ -6,6 +6,7 @@ export const RecipeScheme = z.object({
   uuid: z.string().optional(),
   description: z.string(),
   ingredients: z.array(z.lazy<any>(() => IngredientScheme)),
+  ingredientsUUIDs: z.array(z.string()).optional(),
   portions: z.number().or(z.string()).optional(),
   category_id: z.string().nullable().optional(),
   createdAt: z.union([z.string(), z.number()]).optional(),

@@ -399,7 +399,7 @@
         "updatedAt": 1751400032000
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594839
   },
   {
@@ -920,7 +920,7 @@
         "priceModifiers": []
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594839
   },
   {
@@ -951,7 +951,7 @@
         "name": "Nut pastes"
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594839
   },
   {
@@ -1083,7 +1083,7 @@
         "system": true
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594839
   },
   {
@@ -1240,7 +1240,7 @@
         "system": true
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594839
   },
   {
@@ -1556,7 +1556,7 @@
         "taxesIncluded": false
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594841
   },
   {
@@ -1706,7 +1706,7 @@
         "type": "system"
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752612594841
   },
   {
@@ -1769,7 +1769,7 @@
         "uuid": "tax007eco"
       }
     ],
-    "version": 160,
+    "version": 0,
     "createdAt": 1752415013627
   }
 ]
