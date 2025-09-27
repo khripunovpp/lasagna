@@ -553,6 +553,7 @@
   "search.not-found": "Начните вводить для поиска",
   "search.placeholder": "Поиск продуктов, рецептов, категорий, документации...",
   "search.product-categories.title": "Категории продуктов",
+  "search.product.more-with-same-source": "Найдено еще {{length}} рецептов с этим продуктом. Нажмите, чтобы развернуть.",
   "search.product.title": "Склад",
   "search.recipe-categories.title": "Категории рецептов",
   "search.recipes.title": "Рецепты",
