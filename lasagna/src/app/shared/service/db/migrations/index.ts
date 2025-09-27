@@ -110,4 +110,49 @@ export const migrations: {
       })
     },
   },
+
+  {
+    version: 5,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand',
+      [Stores.RECIPES]: '++uuid,name,*ingredientsUUIDs',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+      [Stores.SETTINGS]: '++key',
+      [Stores.INVOICES]: '++uuid',
+      [Stores.CREDENTIALS]: '++uuid,type',
+    },
+    update: tx => {
+      return new Promise(async (resolve) => {
+        const recipesTable = tx.table(Stores.RECIPES);
+        const recipes = await recipesTable.toArray(); debugger;
+        const getIngredientsUUIDs = (recipe: any): string[] => {
+
+          const uuids = new Set<string>();
+          for (const ingredient of recipe.ingredients) {
+            if (ingredient.product_id) {
+              uuids.add(ingredient.product_id);
+            }
+            if (ingredient.recipe_id) {
+              uuids.add(ingredient.recipe_id);
+            }
+          }
+          return Array.from(uuids);
+        }
+
+        await Promise.all(recipes.map((recipe: any) => {
+          return recipesTable.update(recipe.uuid, {
+            ingredientsUUIDs: getIngredientsUUIDs(recipe),
+          });
+        }));
+
+        resolve();
+      })
+    },
+  },
 ]

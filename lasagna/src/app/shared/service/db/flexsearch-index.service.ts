@@ -8,7 +8,7 @@ export class FlexsearchIndexService {
   constructor() {
   }
 
-  private indices: { [table: string]: Document } = {};
+  indices: { [table: string]: Document } = {};
 
   async initIndex(tableData: any, tableName: string, fields: string[]) {
     this.indices[tableName] = this.createIndex(fields);

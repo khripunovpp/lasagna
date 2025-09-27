@@ -8,6 +8,9 @@ import {CategoryRecipesRepository} from '../settings/service/repositories/catego
 import {InvoicesRepository} from '@invoices/service/Invoices.repository';
 import {DocsService} from '../documentation/service/docs.service';
 import {DocFile} from '../documentation/service/docs-loader.service';
+import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.service';
+import {groupBy} from '../../shared/helpers';
+import {BehaviorSubject} from 'rxjs';
 
 export enum SearchResultContext {
   PRODUCT = 'product',
@@ -24,12 +27,27 @@ export interface SearchResult {
   result: string[]
 }
 
+export type GroupedSearchResult = {
+  context: SearchResultContext
+  result: {
+    context: SearchResultContext
+    uuid: string
+    data: any
+  }[]
+}[]
+
+export type AdditionalData = Partial<Record<SearchResultContext, Record<string, {
+  uuid: string
+  data: any
+}>>>
+
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalSearchService {
   constructor(
     private _flexsearchIndexService: FlexsearchIndexService,
+    private _indexDbService: DexieIndexDbService,
     private _productsRepository: ProductsRepository,
     private _recipesRepository: RecipesRepository,
     private _categoryProductsRepository: CategoryProductsRepository,
@@ -46,6 +64,36 @@ export class GlobalSearchService {
     uuid: string
     data: any
   }[]>([]);
+  readonly additionalDataSubject = new BehaviorSubject<AdditionalData>({});
+  private readonly _additionalHandlers: Partial<Record<SearchResultContext, (uuid: string) => Promise<void>>> = {
+    [SearchResultContext.PRODUCT]: async (uuid: string) => {
+      try {
+        const result = await this._indexDbService.table(Stores.RECIPES)
+          .where('ingredientsUUIDs')
+          .anyOf(uuid)
+          .toArray();
+
+        const existingStorage = this.additionalDataSubject.value[SearchResultContext.PRODUCT];
+        const existingData = existingStorage ? existingStorage[uuid] : undefined;
+        const newData = {
+          uuid,
+          data: existingData
+            ? existingData.data.concat(result)
+            : result,
+        };
+        const newStorage = {
+          ...(existingStorage || {}),
+          [uuid]: newData,
+        }
+        this.additionalDataSubject.next({
+          ...this.additionalDataSubject.value,
+          [SearchResultContext.PRODUCT]: newStorage,
+        });
+      } catch (error) {
+        console.error('Error fetching additional product data:', error);
+      }
+    },
+  };
 
   showBar() {
     this.displayBar.set(true);
@@ -55,7 +103,11 @@ export class GlobalSearchService {
     this.displayBar.set(false);
   }
 
-  async search(query: string) {
+  async search(query: string): Promise<GroupedSearchResult> {
+    this.additionalDataSubject.next({});
+    this.results.set([]);
+    this.resultsPayload.set([]);
+
     const results = await Promise.all([
       this._searchInProducts(query),
       this._searchInRecipes(query),
@@ -88,7 +140,27 @@ export class GlobalSearchService {
     console.log({resultsPayload})
 
     this.resultsPayload.set(resultsPayload);
-    return resultsPayload;
+
+    const group = groupBy(resultsPayload, 'context');
+    return Object.entries(group).map(([key, value]) => {
+      return {
+        context: key as SearchResultContext,
+        result: value,
+      } as any;
+    });
+  }
+
+  runSecondSearch(
+    results: GroupedSearchResult,
+  ) {
+    for (const group of results) {
+      const handler = this._additionalHandlers[group.context];
+      if (handler) {
+        for (const item of group.result) {
+          handler(item.uuid)
+        }
+      }
+    }
   }
 
   async getResource(result: SearchResult) {

@@ -1,13 +1,10 @@
 import {Ingredient} from './Ingredient';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
-import {Unit} from '../../../../shared/service/types/Unit.types';
 import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
 import {estimateColor, isColorString, parseFloatingNumber} from '../../../../shared/helpers';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from './PriceModifier';
-import {UnitValue} from '../../../../shared/view/const/units.const';
-import {isCountUnit} from '../../../../shared/helpers/unit.helper';
 
 export class Recipe {
   constructor(
@@ -191,6 +188,7 @@ export class Recipe {
       color: this.color || estimateColor(this.name),
       priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
       master: this.master || false,
+      ingredientsUUIDs: this._ingredientsUUIDs(),
     };
   }
 
@@ -228,5 +226,18 @@ export class Recipe {
       }) : this.priceModifiers;
     this.master = dto?.master ?? this.master;
     return this;
+  }
+
+  private _ingredientsUUIDs() {
+    const uuids = new Set<string>();
+    for (const ingredient of this.ingredients) {
+      if (ingredient.product_id?.uuid) {
+        uuids.add(ingredient.product_id.uuid);
+      }
+      if (ingredient.recipe_id?.uuid) {
+        uuids.add(ingredient.recipe_id.uuid);
+      }
+    }
+    return Array.from(uuids);
   }
 }
