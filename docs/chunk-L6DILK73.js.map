@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/shared/view/directives/self-start.directive.ts"],
-  "sourcesContent": ["import {Directive, HostBinding} from '@angular/core';\n\n@Directive({\n  standalone: true,\n  selector: '[lgSelfStart]',\n})\nexport class SelfStartDirective {\n  constructor() {\n  }\n\n  @HostBinding('style.align-self') selfAlign = 'start';\n}\n"],
-  "mappings": ";;;;;;;;;AAMM,IAAO,qBAAP,MAAO,oBAAkB;EAC7B,cAAA;EACA;EAEiC,YAAY;;qCAJlC,qBAAkB;EAAA;yEAAlB,qBAAkB,WAAA,CAAA,CAAA,IAAA,eAAA,EAAA,CAAA,GAAA,UAAA,GAAA,cAAA,SAAA,gCAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAAlB,MAAA,sBAAA,cAAA,IAAA,SAAA;;;;;sEAAA,oBAAkB,CAAA;UAJ9B;WAAU;MACT,YAAY;MACZ,UAAU;KACX;kBAKkC,WAAS,CAAA;UAAzC;WAAY,kBAAkB;;;",
-  "names": []
-}
