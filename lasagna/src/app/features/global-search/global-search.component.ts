@@ -62,7 +62,7 @@ import {ExpanderComponent} from '../../shared/view/ui/expander.component';
                       @if (additionalResults?.length) {
                         <lg-expander [flat]="true"
                                      [once]="true"
-                                     [openLabel]="'Found ' + (additionalResults?.length ?? 0) + ' more with same source. Click to expand.'">
+                                     [openLabel]="'search.product.more-with-same-source' | translate:{length: additionalResults?.length}">
 
                           <lg-flex-column [size]="'tiny'">
                             @for (res of additionalResults; track res.uuid) {
