@@ -1,4 +1,4 @@
-import {Component, Input, signal} from '@angular/core';
+import {Component, input, Input, signal} from '@angular/core';
 import {FlexColumnComponent} from '../layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 
@@ -6,14 +6,17 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-expander',
   standalone: true,
   template: `
-    <div class="expander"
-         [class.opened]="opened()">
+    <div [class.flat]="flat()"
+         [class.opened]="opened()"
+         class="expander">
       @if (opened()) {
-        <div class="expander__header">
-          <div (click)="toggle()" class="expander__close">
-            {{ (closeLabel ?? 'close-label') | translate }}
+        @if (!once()) {
+          <div class="expander__header">
+            <div (click)="toggle($event)" class="expander__close">
+              {{ (closeLabel ?? 'close-label') | translate }}
+            </div>
           </div>
-        </div>
+        }
 
         <div class="expander__content">
           <lg-flex-column size="medium">
@@ -22,7 +25,7 @@ import {TranslatePipe} from '@ngx-translate/core';
         </div>
       } @else {
         <div class="expander__header">
-          <div (click)="toggle()" class="expander__trigger">
+          <div (click)="toggle($event)" class="expander__trigger">
             {{ (openLabel ?? 'open-label') | translate }}
           </div>
         </div>
@@ -65,6 +68,19 @@ import {TranslatePipe} from '@ngx-translate/core';
           background-color: var(--control-bg);
         }
       }
+
+      .expander.flat {
+        background-color: transparent;
+        border-radius: 0;
+      }
+
+      .expander.flat .expander__content {
+        padding: 0;
+      }
+
+      .expander.flat .expander__header {
+        padding: 0;
+      }
     `
   ]
 })
@@ -76,10 +92,16 @@ export class ExpanderComponent {
     'tiny' | 'small' | 'medium' | 'large'
   >('medium');
   opened = signal(false);
+  flat = input(false);
+  once = input(false);
   @Input() openLabel: string = 'Open';
   @Input() closeLabel: string = 'Close';
 
-  toggle() {
+  toggle(event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     this.opened.set(!this.opened());
   }
 }

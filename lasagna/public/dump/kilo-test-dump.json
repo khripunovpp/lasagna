@@ -42,7 +42,7 @@
         "system": false
       }
     ],
-    "version": 30,
+    "version": 0,
     "createdAt": 1757863732590
   },
   {
@@ -260,7 +260,7 @@
         "master": false
       }
     ],
-    "version": 30,
+    "version": 0,
     "createdAt": 1757863732591
   },
   {
@@ -367,7 +367,7 @@
         "name": "Яйца и яичные продукты"
       }
     ],
-    "version": 30,
+    "version": 0,
     "createdAt": 1757863732592
   },
   {
@@ -494,7 +494,7 @@
         "name": "Шоколадные изделия"
       }
     ],
-    "version": 30,
+    "version": 0,
     "createdAt": 1757863732592
   },
   {
@@ -516,7 +516,7 @@
         "uuid": "ais3v8ckvopmfjunmdu"
       }
     ],
-    "version": 30,
+    "version": 0,
     "createdAt": 1757863732595
   }
 ]

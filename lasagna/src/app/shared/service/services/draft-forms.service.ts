@@ -12,9 +12,7 @@ export interface DraftForm<T extends Record<string, any>> {
   uuid: string
 }
 
-export type DraftFormData<T extends Record<string, any>> = {
-  [K in keyof T]: T[K]
-}
+export type DraftFormData<T extends Record<string, any>> = T
 
 @Injectable({
   providedIn: 'root'
