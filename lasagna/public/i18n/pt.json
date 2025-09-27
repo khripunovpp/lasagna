@@ -553,6 +553,7 @@
   "search.not-found": "Comece a digitar para pesquisar",
   "search.placeholder": "Buscar produtos, receitas, categorias, documentação...",
   "search.product-categories.title": "Categorias de produtos",
+  "search.product.more-with-same-source": "Encontradas {{length}} mais receitas com o mesmo produto. Clique para expandir.",
   "search.product.title": "Armazenamento",
   "search.recipe-categories.title": "Categorias de receitas",
   "search.recipes.title": "Receitas",
