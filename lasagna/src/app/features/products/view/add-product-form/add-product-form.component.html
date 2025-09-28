@@ -51,17 +51,17 @@
                     [translate]="'per-unit.label'"></span>
             </ng-template>
 
-            @if (hasMicroPrice()) {
-              <lg-readonly-control [placeholder]="''"
-                                   name="pricePerUnit"
-                                   [value]="'micro-amount'|translate ">
-              </lg-readonly-control>
-            } @else {
-              <lg-readonly-control [placeholder]="''"
-                                   name="pricePerUnit"
-                                   [value]="product()?.pricePerUnit | number:pipesDigits() ">
-              </lg-readonly-control>
-            }
+            <lg-readonly-control [placeholder]="''"
+                                 name="pricePerUnit"
+                                 [value]="hasMicroPrice() ? ('micro-amount'|translate) : (product()?.pricePerUnit | number:pipesDigits())">
+              <lg-button (click)="priceChangesComponent.open()"
+                         [flat]="true"
+                         [icon]="true"
+                         [style]="'success'"
+                         ngProjectAs="after">
+                <mat-icon aria-hidden="false" fontIcon="bar_chart"></mat-icon>
+              </lg-button>
+            </lg-readonly-control>
           </lg-control>
         </lg-flex-row>
       </lg-flex-column>
@@ -142,3 +142,5 @@
     </lg-flex-row>
   </lg-flex-column>
 </form>
+
+<lg-price-changes #priceChangesComponent [uuid]="product()?.uuid"></lg-price-changes>

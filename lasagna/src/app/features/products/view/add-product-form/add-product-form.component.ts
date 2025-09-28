@@ -12,14 +12,12 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
 import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
-
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -32,8 +30,6 @@ import {hasMicroPrice, productToFormValue} from '../../../../shared/helpers/prod
 import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-
-
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
@@ -47,12 +43,14 @@ import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
 import {DecimalPipe} from '@angular/common';
-
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {errorHandler} from '../../../../shared/helpers';
+import {PriceChangesComponent} from '../price-changes.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
+import {MatIcon} from '@angular/material/icon';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 
@@ -83,8 +81,11 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     ControlLabelTemplateDirective,
     TranslateDirective,
     DecimalPipe,
+    PriceChangesComponent,
     ControlBoxComponent,
     HtmlEditorComponent,
+    ButtonComponent,
+    MatIcon,
   ],
   styles: [
     `

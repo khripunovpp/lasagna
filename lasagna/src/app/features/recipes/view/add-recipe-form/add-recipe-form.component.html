@@ -52,7 +52,8 @@
                         <lg-multiselect [resource]="'recipes'"
                                         name="recipe_id"
                                         appendTo="body"
-                                        [placeholder]="'invoices.find-recipe' | translate"
+                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
+                                        [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
                                         formControlName="recipe_id"
                                         ngProjectAs="recipes"
                                         [autoLoad]="true"></lg-multiselect>
@@ -61,8 +62,10 @@
                                         appendTo="body"
                                         name="product_id"
                                         [optionFactory]="productLabelFactory"
+                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                        [labelFactory]="productLabelFactory"
                                         formControlName="product_id"
-                                        [placeholder]="'invoices.find-product' | translate"
+                                        [placeholder]="'recipe.form.ingredients.product_id.label' | translate"
                                         ngProjectAs="products"
                                         [autoLoad]="true">
                           <ng-template lgControlTpl type="label" let-item>
@@ -84,6 +87,15 @@
                             }
                           </ng-template>
                         </lg-multiselect>
+
+                        <lg-input ngProjectAs="custom"
+                                  formControlName="new_product_name"
+                                  [placeholder]="'recipe.form.ingredients.new_product_name.label' | translate"></lg-input>
+                        <div ngProjectAs="custom-title">
+                          <mat-icon [inline]="true"
+                                    aria-hidden="false"
+                                    fontIcon="add"></mat-icon>
+                        </div>
                       </lg-entity-item-selector>
 
                       <lg-number-input #amount

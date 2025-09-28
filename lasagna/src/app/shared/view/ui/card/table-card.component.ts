@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 import {CardComponent} from './card.component';
 
 @Component({
@@ -8,13 +8,13 @@ import {CardComponent} from './card.component';
     CardComponent,
   ],
   template: `
-      <lg-card [flat]="true">
-          <div class="table">
-              <div class="table__scroll">
-                  <ng-content></ng-content>
-              </div>
-          </div>
-      </lg-card>
+    <lg-card [flat]="true">
+      <div [class]="['table',size()]">
+        <div class="table__scroll">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </lg-card>
   `,
   styles: [
     `
@@ -33,13 +33,19 @@ import {CardComponent} from './card.component';
         --border-color: #efefef;
       }
 
+      .table.large {
+        td, thead th {
+          padding: 16px 24px;
+        }
+      }
+
       table thead tr {
         border-bottom: 1px solid var(--border-color);
       }
 
       table thead th {
         text-align: left;
-        padding: 16px 24px;
+        padding: 8px 12px;
         opacity: 0.4;
         font-size: 0.8em;
       }
@@ -53,14 +59,15 @@ import {CardComponent} from './card.component';
       }
 
       td {
-        padding: 16px 24px;
+        padding: 8px 12px;
       }
     `
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class TableCardComponent  {
+export class TableCardComponent {
   constructor() {
   }
 
+  size = input<'small' | 'medium' | 'large'>('large');
 }

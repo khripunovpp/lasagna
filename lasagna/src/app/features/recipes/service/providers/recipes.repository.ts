@@ -256,6 +256,7 @@ export class RecipesRepository {
     }
 
     const newRecipe = recipe.clone();
+    let addedCount = 0;
 
     for (let i = 0; i < newRecipe.ingredients.length; i++) {
       const ingredient = newRecipe.ingredients[i];
@@ -268,10 +269,14 @@ export class RecipesRepository {
         newProd.uuid = await this._productsRepository.addOne(newProd);
 
         ingredient.replaceProduct(newProd);
+        addedCount++;
       }
     }
 
-    return newRecipe;
+    return {
+      recipe: newRecipe,
+      addedCount: addedCount,
+    };
   }
 
   private _saveCategory(uuid: string) {

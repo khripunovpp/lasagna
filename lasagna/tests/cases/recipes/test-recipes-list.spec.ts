@@ -2,7 +2,7 @@ import {expect, Page, test} from '@playwright/test';
 import {buildUrl, URLS} from '../../helpers/urls.const';
 import {RecipesListPage} from '../../scripts/e2e/classes/RecipesListPage';
 import {RecipePage} from '../../scripts/e2e/classes/RecipePage';
-import {putDbItems} from '../../helpers/indexed-db.helpers';
+import {logDb, putDbItems} from '../../helpers/indexed-db.helpers';
 import {Stores} from '../../../src/app/shared/service/db/const/stores';
 import {recipesInput} from './recipes-test.helpers';
 
@@ -35,6 +35,8 @@ test.describe.serial('Список рецептов', () => {
 
     await page.goto(URLS.recipes.list);
     await seedRecipes(page);
+
+    await logDb(page, 'lasagna-db', [Stores.RECIPES]);
 
     await expect(recipesListPage.ref.recipesListGroupingTiles).toBeVisible();
     const getFirstGroup = recipesListPage.getGroupByIndex(0)

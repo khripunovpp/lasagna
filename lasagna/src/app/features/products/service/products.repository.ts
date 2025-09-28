@@ -3,11 +3,14 @@ import {CategoryProductsRepository} from '../../settings/service/repositories/ca
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {Product} from './Product';
 import {ProductDTO} from './Product.scheme';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {ProductFactory} from './product.factory';
+import {updateProductTransaction} from './update-product.transaction';
+import {ChangesLogService} from '../../history/changes-log.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +22,7 @@ export class ProductsRepository {
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
     private _productFactory: ProductFactory,
+    private _changesLogService: ChangesLogService,
   ) {
   }
 
@@ -47,7 +51,7 @@ export class ProductsRepository {
     const uuid = await this._indexDbService.addData(Stores.PRODUCTS, dto);
     dto.uuid = uuid;
     this._saveSomeHistoryData(dto);
-    // Онбординг: если это первый продукт, отмечаем шаг завершённым
+    // Онбординг: если это первый продукт, отмечаем шаг завершённым TODO перенести во вью
     if (!this._onboardingService.isProductDone()) {
       this._onboardingService.markProductDone();
     }
@@ -66,11 +70,12 @@ export class ProductsRepository {
     uuid: string,
     product: Product
   ) {
-    if (product.system) {
-      product.system = false;
-    }
-    const dto = product.toDTO();
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, dto);
+    const dto = await this._indexDbService.withTransaction<ProductDTO>(
+      [Stores.PRODUCTS, Stores.CHANGES_LOG],
+      (tx) => updateProductTransaction(tx, uuid, product)
+    );
+    await this._indexDbService.saveIndex(Stores.PRODUCTS);
+
     this._saveSomeHistoryData(dto);
   }
 
@@ -192,6 +197,12 @@ export class ProductsRepository {
 
   removeDraftMany(uuids: string[]) {
     return this._draftFormsService.removeDraftForm('draft_products', uuids);
+  }
+
+  getChanges(uuid: string) {
+    return this._changesLogService.getChanges('product', uuid).then(entries => {
+      return entries.toSorted((a, b) => b.timestamp - a.timestamp)
+    })
   }
 
   private _saveSomeHistoryData(product: ProductDTO) {

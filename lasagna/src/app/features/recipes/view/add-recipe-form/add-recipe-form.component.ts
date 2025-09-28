@@ -13,7 +13,6 @@ import {ControlContainer, FormArray, FormGroup, FormsModule, ReactiveFormsModule
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
-import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
@@ -46,11 +45,7 @@ import {productLabelFactoryProvider} from '../../../../shared/factories/entity-l
 import {errorHandler} from '../../../../shared/helpers';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
-import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
-import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
-import {getIngredientGroup} from './add-recipe.helpers';
 import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-per-unit.component';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
@@ -134,13 +129,15 @@ export class AddRecipeFormComponent
   }
 
   ngAfterViewInit() {
-    this._selectResourcesService.load().then(resources => {
-      if (!this.editMode()) {
-        this.nameField()!.focus();
-      }
-    }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
+    this._selectResourcesService.load()
+      .then(resources => {
+        if (!this.editMode()) {
+          this.nameField()!.focus();
+        }
+      })
+      .catch(err => {
+        this._notificationsService.error(errorHandler(err));
+      });
   }
 
   fillForm(
@@ -183,28 +180,6 @@ export class AddRecipeFormComponent
     this.form?.markAsPristine();
   }
 
-  validateForm() {
-    if (!this._formValid) {
-      const errors = this._notificationsService.parseFormErrors(this.form, {
-        keysMap: {
-          required: this._translateService.instant('form.error.required'),
-          ingredientAmountRequired: this._translateService.instant('recipe.form.error.ingredient-amount-required'),
-          ingredientRequired: this._translateService.instant('recipe.form.error.ingredient-required'),
-          cycleRecipe: this._translateService.instant('recipe.form.error.cycle-recipe'),
-        },
-        controlsMap: {
-          name: this._translateService.instant('recipe.form.validation-name.name'),
-          portions: this._translateService.instant('recipe.form.validation-name.portions'),
-          ingredients: this._translateService.instant('recipe.form.validation-name.ingredients'),
-          category_id: this._translateService.instant('recipe.form.validation-name.category'),
-          tags: this._translateService.instant('recipe.form.validation-name.tags'),
-        },
-      });
-      this._notificationsService.error(errors.join('\n'));
-      return false;
-    }
-    return true
-  }
 
   addLast() {
     const lastControl = this.ingredients.at(this.ingredients.length - 1);
@@ -212,37 +187,6 @@ export class AddRecipeFormComponent
     if (lastControl.value.name || lastControl.value.amount || lastControl.value.product_id) {
       this.addIngredient();
     }
-  }
-
-  ngOnInit() {
-    if (!this.isClient) {
-      return;
-    }
-    this._loadUsingHistory();
-    this.form.valueChanges.pipe(
-      debounceTime(100),
-    ).subscribe({
-      next: values => {
-        if (!this.form.dirty) {
-          return
-        }
-        this.recipe()?.update(this.form.getRawValue());
-        const hasCycledRecipe = this.checkCycleRecipe(this.form.getRawValue().ingredients, this.uuid());
-        if (hasCycledRecipe) {
-          this._notificationsService.error('recipe.form.error.cycle-recipe');
-        }
-      }
-    });
-  }
-
-  ngAfterViewInit() {
-    this._selectResourcesService.load().then(resources => {
-      if (!this.editMode()) {
-        this.nameField()!.focus();
-      }
-    }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
   }
 
   addIngredient() {
@@ -315,9 +259,9 @@ export class AddRecipeFormComponent
             name: category.name,
           },
         })));
-      }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
+      })
+      .catch(err => {
+        this._notificationsService.error(errorHandler(err));
+      });
   }
-
 }

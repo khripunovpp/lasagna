@@ -19,6 +19,7 @@ import {defaultProductsForRecipes, recipesInput} from '../recipes/recipes-test.h
 import {RecipePage} from '../../scripts/e2e/classes/RecipePage';
 import {ProductPage} from '../../scripts/e2e/classes/ProductPage';
 import {AppRefs} from '../../scripts/e2e/classes/AppRefs';
+import {ChangeLogScheme} from '../../../src/app/features/history/ChangeLogEntry.scheme';
 
 /**
  * Тест настроек
@@ -193,6 +194,7 @@ async function validateBackupContentAndCount(
     [Stores.TAXES]: TaxScheme,
     [Stores.INVOICES]: InvoiceScheme,
     [Stores.CREDENTIALS]: CredentialScheme,
+    [Stores.CHANGES_LOG]: ChangeLogScheme,
   };
   const countKeys = Object.keys(schemaMap) as Stores[];
   const parsedInfo = await validateDownloadedBackup(contentStringJSON, schemaMap);
@@ -221,5 +223,6 @@ function getDataInitialCounts(
     [Stores.TAXES]: 0,
     [Stores.INVOICES]: 0,
     [Stores.CREDENTIALS]: 0,
+    [Stores.CHANGES_LOG]: 0,
   };
 }
