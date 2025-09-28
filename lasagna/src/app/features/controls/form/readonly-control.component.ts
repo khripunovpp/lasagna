@@ -26,7 +26,6 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
       :host {
         display: flex;
         user-select: none;
-        pointer-events: none;
         width: 100%;
       }
 

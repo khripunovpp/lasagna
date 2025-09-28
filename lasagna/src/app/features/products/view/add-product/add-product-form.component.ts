@@ -18,7 +18,6 @@ import {SelectResourcesService} from '../../../../shared/service/services/select
 import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
-import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -50,6 +49,7 @@ import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {errorHandler} from '../../../../shared/helpers';
+import {PriceChangesComponent} from '../price-changes.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 
@@ -62,7 +62,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     FlexColumnComponent,
     MultiselectComponent,
     NumberInputComponent,
-    TooltipComponent,
     AmountWidgetsComponent,
     ParseMathDirective,
     FlexRowComponent,
@@ -85,6 +84,7 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     TranslateDirective,
     DecimalPipe,
     TextareaComponent,
+    PriceChangesComponent,
     ControlBoxComponent,
     HtmlEditorComponent,
   ],
