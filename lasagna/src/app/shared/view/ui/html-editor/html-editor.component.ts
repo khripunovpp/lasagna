@@ -15,6 +15,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                   [editor]="editor"
                   [attr.data-u2e]="'html-editor.' + name()"
                   [formControl]="htmlString"
+                  outputFormat="html"
                   [placeholder]="placeholder()"
       ></ngx-editor>
     } @error {

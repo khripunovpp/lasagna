@@ -45,7 +45,7 @@ export class CalculateRecipeService {
     if (!this.calculation?.calculation?.recipeUuid) return;
     const cloned = this.calculation.calculation.recipe!.clone();
     cloned.update(updates);
-    await this._recipeRepository.editRecipe(cloned.uuid!, cloned);
+    await this._recipeRepository.updateOne(cloned.uuid!, cloned);
   }
 
   async calculateRecipe(

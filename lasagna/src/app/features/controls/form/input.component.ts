@@ -214,13 +214,13 @@ export class InputComponent
     }
   }
 
-  private _change(value: string) {
-    this.value = String(value || '').trim();
-    this.onChange(this.value);
-  }
-
   clear() {
     this._change('');
     this.focus();
+  }
+
+  private _change(value: string) {
+    this.value = String(value || '').trim();
+    this.onChange(this.value);
   }
 }

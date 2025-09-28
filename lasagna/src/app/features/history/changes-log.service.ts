@@ -3,6 +3,15 @@ import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.servic
 import {Stores} from '../../shared/service/db/const/stores';
 import {ChangeLogDTO} from './ChangeLogEntry.scheme';
 
+export interface ChangeLogEntry {
+  uuid: string
+  entity: string
+  entityId: string
+  timestamp: number
+  oldValue: any
+  newValue: any
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,7 +54,7 @@ export class ChangesLogService {
           return this._indexDbService.remove(Stores.CHANGES_LOG, entry.id);
         }
         return Promise.resolve();
-      })
+      });
   }
 
   removeOne(id: string) {

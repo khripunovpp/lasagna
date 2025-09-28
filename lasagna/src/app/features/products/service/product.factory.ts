@@ -21,4 +21,8 @@ export class ProductFactory {
 
     return product;
   }
+
+  fromCloud(dto: any): Product {
+    return Product.fromCloud(dto);
+  }
 }

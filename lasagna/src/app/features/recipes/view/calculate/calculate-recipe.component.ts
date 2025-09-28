@@ -19,7 +19,7 @@ import {CurrencyPipe, DecimalPipe, NgClass} from '@angular/common';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
+import {ActiveElement, Chart, ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {injectParams} from '../../../../shared/helpers/route.helpers';
@@ -256,7 +256,7 @@ export class CalculateRecipeComponent
         display: false,
       },
     },
-    onClick: (event, elements, chart) => {
+    onClick: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
 
     }
   };

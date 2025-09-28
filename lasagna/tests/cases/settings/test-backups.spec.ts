@@ -20,6 +20,7 @@ import {RecipePage} from '../../scripts/e2e/classes/RecipePage';
 import {ProductPage} from '../../scripts/e2e/classes/ProductPage';
 import {AppRefs} from '../../scripts/e2e/classes/AppRefs';
 import {ChangeLogScheme} from '../../../src/app/features/history/ChangeLogEntry.scheme';
+import {DeleteRecordScheme} from '../../../src/app/shared/service/db/shemes/DeleteRecord.scheme';
 
 /**
  * Тест настроек
@@ -168,7 +169,7 @@ async function configureRoute(
   page: Page,
   options?: { withProducts: boolean },
 ) {
-  await page.goto(URLS.settings.withTab('backup'));
+  await page.goto(URLS.settings.withTab('data'));
   if (options?.withProducts) {
     await seedProducts(page, defaultProductsForRecipes);
   }
@@ -197,13 +198,23 @@ async function validateBackupContentAndCount(
     [Stores.INVOICES]: InvoiceScheme,
     [Stores.CREDENTIALS]: CredentialScheme,
     [Stores.CHANGES_LOG]: ChangeLogScheme,
+    [Stores.DELETES_STORE]: DeleteRecordScheme,
   };
   const countKeys = Object.keys(schemaMap) as Stores[];
   const parsedInfo = await validateDownloadedBackup(contentStringJSON, schemaMap);
 
+  console.log('[validateBackupContentAndCount] parsedInfo keys:', Object.keys(parsedInfo));
+  console.log('[validateBackupContentAndCount] countKeys:', countKeys);
+  console.log('[validateBackupContentAndCount] parsedInfo.length:', Object.keys(parsedInfo).length, 'expected:', countKeys.length);
+
   expect(Object.keys(parsedInfo).length).toBe(countKeys.length);
 
   for (const key of countKeys) {
+    const actual = parsedInfo[key]?.parsedCount;
+    const expected = countMap[key];
+    if (actual !== expected) {
+      console.error(`[validateBackupContentAndCount] MISMATCH store="${key}": actual=${actual} expected=${expected}`);
+    }
     expect(parsedInfo[key]?.parsedCount).toBe(countMap[key]);
   }
 }
@@ -226,5 +237,6 @@ function getDataInitialCounts(
     [Stores.INVOICES]: 0,
     [Stores.CREDENTIALS]: 0,
     [Stores.CHANGES_LOG]: 0,
+    [Stores.DELETES_STORE]: 0,
   };
 }

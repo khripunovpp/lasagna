@@ -6,9 +6,9 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
-import {SelfEndDirective} from '../../../../shared/view/directives/self-end.directive';
+
 
 @Component({
   selector: 'lg-tg-bot-announcement',
@@ -64,10 +64,8 @@ import {SelfEndDirective} from '../../../../shared/view/directives/self-end.dire
     ButtonComponent,
     PromoWidgetWrapperComponent,
     TranslatePipe,
-    FlexColumnComponent,
     FlexRowComponent,
-    SelfEndDirective,
-  ]
+    ]
 })
 export class TelegramBotAnnouncementWidgetComponent {
   protected readonly PromoWidget = PromoWidget;

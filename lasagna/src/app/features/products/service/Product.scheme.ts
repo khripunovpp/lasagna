@@ -15,7 +15,18 @@ export const ProductScheme = z.object({
   updatedAt: z.union([z.string(), z.number()]).optional(),
   color: z.string().optional(),
   system: z.boolean().optional(),
+  dirtyToSync: z.boolean().optional(),
+  cloud_uuid: z.string().optional(),
+  syncedAt: z.union([z.string(), z.number()]).optional(),
+  deleted: z.number().optional(),
+  deletedAt: z.union([z.string(), z.number()]).optional(),
 });
 
-
 export type ProductDTO = z.infer<typeof ProductScheme>;
+
+export type ProductCloudDTO = Omit<ProductDTO, 'createdAt'
+  | 'updatedAt'
+  | 'syncedAt'
+  | 'dirtyToSync'
+  | 'cloud_uuid'>;
+

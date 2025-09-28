@@ -17,6 +17,14 @@ export const setupDefaultsInitializer = async () => {
   const window = inject(WINDOW);
   const disableSetupProducts = new URLSearchParams(window?.location.search ?? '').get('dsp') === '';
 
+  if (disableSetupProducts) {
+    try {
+      localStorage.setItem('productsInstalled', 'true');
+    } catch {
+      // Ignore
+    }
+  }
+
   try {
     return await Promise.all([
       setupDefaultsService.setupRecipesCategories(),

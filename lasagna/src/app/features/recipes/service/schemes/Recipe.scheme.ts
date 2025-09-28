@@ -19,7 +19,20 @@ export const RecipeScheme = z.object({
     unit: z.enum(['currency', 'percent']),
   })).optional(),
   master: z.boolean().optional(),
+  dirtyToSync: z.boolean().optional(),
+  cloud_uuid: z.string().optional(),
+  syncedAt: z.union([z.string(), z.number()]).optional(),
+  deleted: z.number().optional(),
+  deletedAt: z.union([z.string(), z.number()]).optional(),
 });
 
-
 export type RecipeDTO = z.infer<typeof RecipeScheme>;
+
+export type RecipeCloudDTO = Omit<RecipeDTO, 'ingredientsUUIDs'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'dirtyToSync'
+  | 'cloud_uuid'
+  | 'syncedAt'
+>;
+

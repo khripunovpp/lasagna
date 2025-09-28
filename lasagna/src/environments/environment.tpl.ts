@@ -11,5 +11,8 @@ export const environment = {
   },
   bot: {
     apiUrl: ''
-  }
+  },
+  api: {
+    baseUrl: '',
+  },
 };

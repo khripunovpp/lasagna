@@ -3,12 +3,12 @@ import { RestService } from '../api/rest.service';
 import { HttpHeaders } from '@angular/common/http';
 import { LoggerService } from '../logger/logger.service';
 import { TokenService } from '../../shared/service/services/token.service';
+import {environment} from '../../../environments/environment';
 
 export interface AuthUser {
   id: string;
   username: string;
   email: string;
-  // ... другие поля ...
 }
 
 export interface Profile {
@@ -18,7 +18,7 @@ export interface Profile {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly API_BASE = 'http://localhost:1337/api';
+  private readonly API_BASE = environment.api.baseUrl;
 
   currentUser = signal<Profile | null>(null);
 
@@ -79,6 +79,42 @@ export class AuthService {
       this.currentUser.set(user);
     } else {
       throw new Error('Invalid registration response');
+    }
+  }
+
+  async sendRecoverLink(email: string): Promise<void> {
+    const response: any = await this._restService.post(`${this.API_BASE}/auth/forgot-password`, {
+      email
+    });
+    if (response.ok) {
+      this.logger.log('Password recovery email sent to:', email);
+    } else {
+      throw new Error('Invalid password recovery response');
+    }
+  }
+
+  async changePassword(
+    code: string,
+    newPassword: string,
+    confirmPassword: string
+  ): Promise<void> {
+    const response: any = await this._restService.post(`${this.API_BASE}/auth/reset-password`, {
+      code,
+      password: newPassword,
+      passwordConfirmation: confirmPassword
+    });
+    if (response.jwt && response.user) {
+      this._tokenService.setToken(response.jwt);
+      if (response.refreshToken) {
+        this._tokenService.setRefreshToken(response.refreshToken);
+      }
+      this._tokenService.setUserId(response.user.id.toString());
+      this.logger.log('Password changed successfully for user:', response.user.username);
+      // Получить и сохранить пользователя
+      const user = await this.getCurrentUser();
+      this.currentUser.set(user);
+    } else {
+      throw new Error('Invalid password change response');
     }
   }
 

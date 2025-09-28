@@ -1,4 +1,4 @@
-import {Component, inject, Signal, signal, viewChildren} from '@angular/core';
+import {Component, computed, inject, Signal, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from '../ui/button/button.component';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {WINDOW} from '../../service/tokens/window.token';
@@ -9,6 +9,7 @@ import {DemoInformerComponent} from '../../../features/home/view/informers/demo-
 import {PromoWidgetsService} from '../../../features/home/service/promo-widgets.service';
 import {NgOptimizedImage} from '@angular/common';
 import {GlobalSearchService} from '../../../features/global-search/global-search.service';
+import {ACCOUNT, AUTHENTICATED} from '../../../features/account/account.token';
 
 @Component({
   selector: 'lg-header',
@@ -40,6 +41,16 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
             <span class="lg-header__promo-dot"></span>
           }
         </a>
+
+        @if (authenticated()) {
+          <a [routerLinkActiveOptions]="{ exact: false }"
+             [routerLinkActive]="['route-active']"
+             [queryParams]="{ tab: 'account' }"
+             [routerLink]="'/settings'"
+             class="lg-header__account">
+            {{ shortName() }}
+          </a>
+        }
       </div>
 
       <div class="lg-header__leftToMiddle">
@@ -267,6 +278,18 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
       background-color: var(--header-active-bg);
       color: #fff;
     }
+
+    .lg-header__account {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      scroll-snap-align: center;
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+    }
   `],
   imports: [
     RouterLink,
@@ -298,11 +321,24 @@ export class HeaderComponent {
     ]);
   }
 
+  readonly account = inject(ACCOUNT);
+  readonly authenticated = inject(AUTHENTICATED);
   items: Signal<{ label: string, link: string }[]>
   activeIndex = signal(0);
   links = viewChildren(ButtonComponent);
   readonly window = inject(WINDOW);
   readonly promoWidgetsService = inject(PromoWidgetsService);
+  readonly shortName = computed(() => {
+    const name = this.account()?.user?.username || '';
+    const parts = name.split(' ');
+    if (parts.length === 1) {
+      return (name.charAt(0) + name.charAt(1)).toUpperCase();
+    }
+    return parts
+      .map(n => n.charAt(0))
+      .join('')
+      .toUpperCase()
+  });
 
   setActive(index: number) {
     this.activeIndex.set(index);

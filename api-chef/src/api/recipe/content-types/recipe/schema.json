@@ -15,9 +15,6 @@
       "type": "string",
       "required": true
     },
-    "description": {
-      "type": "text"
-    },
     "portions": {
       "type": "decimal",
       "required": true
@@ -43,15 +40,23 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
     },
-    "ingredients": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product",
-      "mappedBy": "recipe"
-    },
     "master": {
       "type": "boolean",
       "default": false
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "deletedAt": {
+      "type": "datetime"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "recipes.ingredient_component"
     }
   }
 }

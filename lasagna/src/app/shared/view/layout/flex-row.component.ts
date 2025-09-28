@@ -16,6 +16,7 @@ import {NgClass, NgStyle} from '@angular/common';
          [class.gap-row__relaxed]="relaxed()"
          [class.gap-row__top]="top()"
          [class.gap-row__equal]="equal"
+         [class.gap-row__inline]="inline()"
          [class.gap-row__wrap]="wrap()"
          [class.gap-row__mobileReverse]="mobileReverse()"
          [ngClass]="size()"
@@ -44,6 +45,9 @@ import {NgClass, NgStyle} from '@angular/common';
       padding-right: var(--lg-gap-row-pad-right);
     }
 
+    .gap-row__inline {
+      display: inline-flex;
+    }
 
     .gap-row__center {
       align-items: center;
@@ -156,6 +160,7 @@ export class FlexRowComponent {
   noResponsive = input<boolean>(false);
   relaxed = input<boolean>(false);
   wrap = input<boolean>(false);
+  inline = input<boolean>(false);
   cols = input<string|number>(1);
   size = input<
     'default' |

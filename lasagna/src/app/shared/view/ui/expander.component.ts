@@ -14,9 +14,9 @@ import {TranslatePipe} from '@ngx-translate/core';
           <div class="expander__header">
             <div (click)="toggle($event)" class="expander__close">
               @if (flat()) {
-                {{ (openLabel ?? 'open-label') | translate }}
+                {{ (openLabel || 'open-label') | translate }}
               } @else {
-                {{ (closeLabel ?? 'close-label') | translate }}
+                {{ (closeLabel || 'close-label') | translate }}
               }
             </div>
           </div>
@@ -30,7 +30,7 @@ import {TranslatePipe} from '@ngx-translate/core';
       } @else {
         <div class="expander__header">
           <div (click)="toggle($event)" class="expander__trigger">
-            {{ (openLabel ?? 'open-label') | translate }}
+            {{ (openLabel || 'open-label') | translate }}
           </div>
         </div>
       }

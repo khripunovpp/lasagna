@@ -51,11 +51,11 @@ import {WINDOW} from '../../../shared/service/tokens/window.token';
 
         @if (item.path) {
           <a [routerLink]="getPath(item.path)" class="doc-tree-link">
-            {{ (nameToTitleMap[item.name] ?? item.title ?? item.name) | translate }}
+            {{ (nameToTitleMap[item.name] || item.title || item.name) | translate }}
           </a>
         } @else {
           <div class="doc-tree-folder-name">
-            {{ (nameToTitleMap[item.name] ?? item.title ?? item.name) | translate }}
+            {{ (nameToTitleMap[item.name] || item.title || item.name) | translate }}
           </div>
         }
       </div>

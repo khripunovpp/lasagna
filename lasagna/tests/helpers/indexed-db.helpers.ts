@@ -48,7 +48,7 @@ export const putDbItems = async (
 
               console.log(`Total items in store ${storeKey}:`, getAllRequest.result.length);
 
-            resolve(null);
+              resolve(null);
             };
             getAllRequest.onerror = () => {
               console.error(`Failed to retrieve items from the store ${storeKey}:`, getAllRequest.error);

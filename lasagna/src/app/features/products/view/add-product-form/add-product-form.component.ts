@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   computed,
+  DestroyRef,
   effect,
   inject,
   input,
@@ -14,8 +15,7 @@ import {
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ProductsRepository} from '../../service/products.repository';
-import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
-import {Router} from '@angular/router';
+import {NotificationsService, SelectResourcesService} from '../../../../shared/service/services';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
@@ -23,10 +23,9 @@ import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ChipsListComponent} from '../../../controls/form/chips-list.component';
-import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
-import {hasMicroPrice, productToFormValue} from '../../../../shared/helpers/product.helpers';
+import {errorHandler, fromValuesToProductDTO, hasMicroPrice, productToFormValue} from '../../../../shared/helpers';
 import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
@@ -45,13 +44,13 @@ import {ControlLabelTemplateDirective} from '../../../controls/form/control-item
 import {DecimalPipe} from '@angular/common';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
-import {errorHandler} from '../../../../shared/helpers';
 import {PriceChangesComponent} from '../price-changes.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -103,7 +102,6 @@ export class AddProductFormComponent
   constructor(
     public _productsRepository: ProductsRepository,
     public _selectResourcesService: SelectResourcesService,
-    private _router: Router,
     private _notificationsService: NotificationsService,
     private _settingsService: SettingsService,
     private _translateService: TranslateService,
@@ -151,6 +149,7 @@ export class AddProductFormComponent
     this.form.reset(productToFormValue(this.product()!));
     this.form.markAsPristine();
   });
+  private readonly _destroyRef = inject(DestroyRef);
 
   private get _defFormValue() {
     return {
@@ -182,11 +181,12 @@ export class AddProductFormComponent
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
       debounceTime(100),
+      takeUntilDestroyed(this._destroyRef),
     ).subscribe(values => {
       if (!this.form.dirty) {
         return
       }
-      this.product()?.update(values);
+      this.product()?.update(fromValuesToProductDTO(values));
     })
   }
 
@@ -251,32 +251,30 @@ export class AddProductFormComponent
   }
 
   private _loadUsingHistory() {
-    this._productsRepository.getTopCategories().then(categories => {
-      this.topCategories.set(categories.map(category => ({
-        label: category.name,
-        value: category.uuid ?? '',
-        color: category.ownColor,
-      })));
-    }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
+    Promise.all([
+      this._productsRepository.getTopCategories(),
+      this._productsRepository.getTopSources(),
+      this._productsRepository.getTopBrands(),
+    ])
+      .then(([categories, sources, brands]) => {
+        this.topCategories.set(categories.map(category => ({
+          label: category.name,
+          value: category.uuid ?? '',
+          color: category.ownColor,
+        })));
 
-    this._productsRepository.getTopSources().then(sources => {
-      this.topSources.set(sources.map(source => ({
-        label: source,
-        value: source,
-      })));
-    }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
+        this.topSources.set(sources.map(source => ({
+          label: source,
+          value: source,
+        })));
 
-    this._productsRepository.getTopBrands().then(brands => {
-      this.topBrands.set(brands.map(brand => ({
-        label: brand,
-        value: brand,
-      })));
-    }).catch(err => {
-      this._notificationsService.error(errorHandler(err));
-    });
+        this.topBrands.set(brands.map(brand => ({
+          label: brand,
+          value: brand,
+        })));
+      })
+      .catch(err => {
+        this._notificationsService.error(errorHandler(err));
+      });
   }
 }

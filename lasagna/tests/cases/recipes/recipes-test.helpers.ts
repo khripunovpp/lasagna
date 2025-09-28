@@ -9,6 +9,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '4',
     master: true,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -34,6 +35,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '2',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -59,6 +61,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '4',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -84,6 +87,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '4',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -109,6 +113,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '2',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -134,6 +139,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '3',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [],
   },
   {
@@ -143,6 +149,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '3',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         recipe_id: 'test-recipe-uuid-1',
@@ -168,6 +175,7 @@ export const recipesInput: RecipeDTO[] = [
     portions: '5',
     master: false,
     tags: ['test_1', 'test_2'],
+    deleted: 0,
     ingredients: [
       {
         product_id: 'test-product-uuid-1',
@@ -261,7 +269,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 321 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   },
   {
     "name": "Cream cheese - for tests",
@@ -276,7 +285,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 342 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   },
   {
     "name": "Heavy cream 35% - for tests",
@@ -291,7 +301,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 350 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   },
   {
     "name": "Milk powder - for tests",
@@ -306,7 +317,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 496 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   },
   {
     "name": "Sour cream - for tests",
@@ -321,7 +333,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 193 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   },
   {
     "name": "Whipping cream 30% - for tests",
@@ -336,7 +349,8 @@ export const defaultProductsForRecipes = [
     "system": false,
     "notes": "Calories: 292 kcal per 100 grams",
     "source": "FoodData Central",
-    "brand": "USDA"
+    "brand": "USDA",
+    "deleted": 0
   }
 ];
 

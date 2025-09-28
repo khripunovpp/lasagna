@@ -49,8 +49,7 @@ import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 
 
             <lg-flex-column formGroupName="to">
-              @let fromType = form.value?.from?.type;
-              @let toType = form.value?.to?.type;
+              @let toType = form.value.to?.type;
               <lg-flex-row [strictCenter]="true" class="text-center">
                 <lg-flex-column [position]="'center'" [size]="'small'" lgShrink>
                   <div>
@@ -131,7 +130,7 @@ import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
           </lg-flex-row>
 
           <div class="text-small" lgPull>
-            @let currentRatio = form.value?.ratio;
+            @let currentRatio = form.value.ratio;
             <lg-flex-row [size]="'small'">
               <span>{{ 'jelly.proportion-label' | translate }}:</span>
               <lg-button (onClick)="changeRatio(5)"

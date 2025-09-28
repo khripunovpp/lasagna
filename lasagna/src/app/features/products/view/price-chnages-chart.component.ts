@@ -1,5 +1,6 @@
 import {Component, inject, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {Chart, ChartConfiguration, ChartDataset} from 'chart.js/auto';
+import {Chart, ChartConfiguration, ChartDataset, TooltipItem} from 'chart.js/auto';
+import {ChangeLogEntry} from '../../history/changes-log.service';
 import {ProductFactory} from '../service/product.factory';
 import {UserCurrencyPipe} from '../../../shared/view/pipes/userCurrency.pipe';
 import {DecimalPipe} from '@angular/common';
@@ -71,6 +72,8 @@ export class ProductChangesChartComponent
     const timestamps = this.changes
       .map(c => c.timestamp)
       .toSorted((a, b) => a - b);
+
+    console.log({timestamps})
 
     const data = timestamps.reduce((acc, ts) => {
       const entry = this.changes.find(c => c.timestamp <= ts);
@@ -153,7 +156,7 @@ export class ProductChangesChartComponent
           legend: {display: true},
           tooltip: {
             callbacks: {
-              label: (context) => {
+              label: (context: TooltipItem<'line'>) => {
                 const index = context.dataIndex!;
                 switch (context.dataset.label) {
                   case labelPrice:
@@ -201,7 +204,7 @@ export class ProductChangesChartComponent
       }
     };
 
-    this.chart = new Chart(this.chartCanvas.nativeElement, config);
+    this.chart = new Chart(this.chartCanvas.nativeElement, config) as Chart<'line'>;
   }
 
   private _priceTooltipLabel(value: number | null): string {

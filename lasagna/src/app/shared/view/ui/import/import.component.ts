@@ -8,7 +8,6 @@ import {CsvReaderService} from '../../../service/services/csv-reader.service';
 import {Observable, scan, startWith, Subject} from 'rxjs';
 import {DialogComponent} from '../dialogs/dialog.component';
 import {AsyncPipe, NgClass, NgTemplateOutlet} from '@angular/common';
-import {FlexRowComponent} from '../../layout/flex-row.component';
 import {FlexColumnComponent} from '../../layout/flex-column.component';
 import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
@@ -27,7 +26,6 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
     ButtonComponent,
     DialogComponent,
     AsyncPipe,
-    FlexRowComponent,
     FlexColumnComponent,
     FormsModule,
     NgClass,
@@ -234,6 +232,7 @@ export class ImportComponent {
   @ViewChild(DialogComponent) dialog!: DialogComponent;
   upload = viewChild<UploadComponent>(UploadComponent);
   parsedData: any[] = [];
+  private readonly _notificationsService = inject(NotificationsService);
 
   async onConfirm() {
     for (const item of this.parsedData) {
@@ -279,8 +278,6 @@ export class ImportComponent {
       this.rowsToAdd = {};
     }
   }
-
-  private readonly _notificationsService = inject(NotificationsService);
 
   onSkipAllDuplicates() {
     if (this.skipAllDuplicates()) {

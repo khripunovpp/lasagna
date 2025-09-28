@@ -373,83 +373,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
-  collectionName: 'categories';
-  info: {
-    description: 'Product categories for organization';
-    displayName: 'Category';
-    pluralName: 'categories';
-    singularName: 'category';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    cloud_uuid: Schema.Attribute.String & Schema.Attribute.Unique;
-    color: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    dirtyToSync: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    syncedAt: Schema.Attribute.DateTime;
-    system: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    uuid: Schema.Attribute.String & Schema.Attribute.Unique;
-  };
-}
-
-export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
-  collectionName: 'ingredients';
-  info: {
-    description: 'Recipe ingredients';
-    displayName: 'Ingredient';
-    pluralName: 'ingredients';
-    singularName: 'ingredient';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    cloud_uuid: Schema.Attribute.String & Schema.Attribute.Unique;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    dirtyToSync: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::ingredient.ingredient'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    product_id: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    recipe_id: Schema.Attribute.String;
-    syncedAt: Schema.Attribute.DateTime;
-    unit: Schema.Attribute.Enumeration<['gram', 'portion', 'piece']> &
-      Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    uuid: Schema.Attribute.String & Schema.Attribute.Unique;
-  };
-}
-
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -462,12 +385,15 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    amount: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    brand: Schema.Attribute.Text;
     category_id: Schema.Attribute.String;
     color: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    deleted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    deletedAt: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -475,9 +401,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    notes: Schema.Attribute.RichText;
+    price: Schema.Attribute.BigInteger & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    recipe: Schema.Attribute.Relation<'manyToOne', 'api::recipe.recipe'>;
     source: Schema.Attribute.String;
     system: Schema.Attribute.Boolean;
     unit: Schema.Attribute.Enumeration<['gram', 'kilogram', 'piece']> &
@@ -542,8 +468,13 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    ingredients: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    deleted: Schema.Attribute.Boolean;
+    deletedAt: Schema.Attribute.DateTime;
+    description: Schema.Attribute.RichText;
+    ingredients: Schema.Attribute.Component<
+      'recipes.ingredient_component',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1076,8 +1007,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::category.category': ApiCategoryCategory;
-      'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::product.product': ApiProductProduct;
       'api::profile.profile': ApiProfileProfile;
       'api::recipe.recipe': ApiRecipeRecipe;

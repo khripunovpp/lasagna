@@ -60,6 +60,9 @@ const setEnv = () => {
     bot: {
       apiUrl: '${process.env['BOT_API_URL']}'
     },
+    api: {
+      baseUrl: '${process.env['API_BASE_URL'] || ''}'
+    },
     version: '${appVersion}'
   };
   `;

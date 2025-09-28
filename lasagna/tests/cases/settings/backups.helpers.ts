@@ -29,15 +29,19 @@ export const validateDownloadedBackup = async (
             const parsed = storeScheme.parse(record);
             parsedRecords.push(parsed);
           } catch (e) {
-            console.error(e);
+            console.error(`[validateDownloadedBackup] Zod error in store "${storeObj.store}" at index ${j}:`, e);
+            console.error(`[validateDownloadedBackup] Failed record:`, JSON.stringify(storeObj.data[j]));
             throw e;
           }
         }
+      } else {
+        console.warn(`[validateDownloadedBackup] No schema for store "${storeObj.store}", skipping validation`);
       }
 
       parsedInfo[storeObj.store as Stores] = {
         parsedCount: parsedRecords.length,
       }
+      console.log(`[validateDownloadedBackup] store="${storeObj.store}" records=${storeObj.data.length} parsed=${parsedRecords.length}`);
     }
   }
 

@@ -59,10 +59,12 @@ export abstract class BaseModel
       : this.syncedAt;
     this.cloud_uuid = dto?.cloud_uuid || this.cloud_uuid;
     this.uuid = dto?.uuid || this.uuid;
-    this.deleted = parseInt(dto?.deleted) === 1 ? true : this.deleted;
-    this.deletedAt = dto?.deletedAt
-      ? Number(dto.deletedAt)
-      : this.deletedAt;
+    this.deleted = !!(dto?.deleted == null ? this.deleted : dto.deleted);
+    this.deletedAt = this.deleted
+      ? dto?.deletedAt
+        ? Number(dto.deletedAt)
+        : this.deletedAt
+      : undefined;
 
     if (doNotMarkDirty) return;
     this.markAsNeedSync();
@@ -71,8 +73,8 @@ export abstract class BaseModel
   toCloudDTO() {
     return {
       uuid: this.uuid,
-      deleted: this.deleted ? 1 : 0,
-      deletedAt: this.deletedAt,
+      deleted: this.deleted ?? false,
+      deletedAt: this.deletedAt ?? null,
     };
   }
 

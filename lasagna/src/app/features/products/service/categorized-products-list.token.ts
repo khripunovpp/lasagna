@@ -15,7 +15,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResul
     const categoryRepository = inject(CategoryProductsRepository);
     const notificationsService = inject(NotificationsService);
     const products = from(productsRepository.loadAll()).pipe(
-      switchMap(() => productsRepository.products$),
+      switchMap(() => productsRepository.getStream$),
     );
 
     return products.pipe(

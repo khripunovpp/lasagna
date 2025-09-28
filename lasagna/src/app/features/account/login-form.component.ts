@@ -39,6 +39,13 @@ import {errorHandler} from '../../shared/helpers';
                      type="button">
             {{ 'account.to-register' | translate }}
           </lg-button>
+
+          <lg-button (click)="toRecoverPassword.emit()"
+                     [flat]="true"
+                     [style]="'secondary-dark'"
+                     type="button">
+            {{ 'account.to-recover-password' | translate }}
+          </lg-button>
         </lg-flex-column>
       </lg-flex-column>
     </form>
@@ -70,6 +77,7 @@ export class LoginFormComponent {
   notificationsService = inject(NotificationsService);
   isLoading = signal(false);
   toRegister = output();
+  toRecoverPassword = output();
 
   async onLogin() {
     this.isLoading.set(true);

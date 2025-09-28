@@ -18,7 +18,7 @@ import {
 import {TranslatePipe} from '@ngx-translate/core';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
-import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
+
 import {matchMediaSignal} from '../../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints';
 
@@ -84,8 +84,7 @@ import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints'
     TranslatePipe,
     FadeInComponent,
     FlexColumnComponent,
-    TitleComponent
-  ],
+    ],
   styles: [
     `
     `

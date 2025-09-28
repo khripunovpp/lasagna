@@ -2,7 +2,7 @@ import {Component, effect, inject, viewChild} from '@angular/core';
 import {ConfirmationService} from './confirmation.service';
 import {DialogComponent} from '../dialogs/dialog.component';
 import {TranslatePipe} from '@ngx-translate/core';
-import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
+
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {timer} from 'rxjs';
 import {FlexColumnComponent} from '../../layout/flex-column.component';
@@ -21,14 +21,13 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                [confirmButtonText]="settings()?.confirmText ?? ('confirm-confirm-label'|translate)"
                name="confirmation-popover">
       <lg-flex-column [position]="'center'" [size]="'small'">
-        <div>{{ settings()?.message }}</div>
+        <div class="text-wrap">{{ settings()?.message }}</div>
       </lg-flex-column>
     </lg-dialog>
   `,
   imports: [
     DialogComponent,
     TranslatePipe,
-    CheckboxComponent,
     ReactiveFormsModule,
     FlexColumnComponent
   ]

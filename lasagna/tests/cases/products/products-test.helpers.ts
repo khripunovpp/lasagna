@@ -10,6 +10,7 @@ export const productsDTOs: ProductDTO[] = [
     brand: 'Test Brand',
     notes: '',
     uuid: 'test-product-uuid-1',
+    deleted: 0,
   },
   {
     name: 'Test Product KG',
@@ -20,6 +21,7 @@ export const productsDTOs: ProductDTO[] = [
     brand: 'Test Brand',
     notes: '',
     uuid: 'test-product-uuid-2',
+    deleted: 0,
   },
   {
     name: 'Test Product Piece',
@@ -30,6 +32,7 @@ export const productsDTOs: ProductDTO[] = [
     brand: 'Test Brand',
     notes: '',
     uuid: 'test-product-uuid-3',
+    deleted: 0,
   },
 ];
 export const productsCardsInfo: {
