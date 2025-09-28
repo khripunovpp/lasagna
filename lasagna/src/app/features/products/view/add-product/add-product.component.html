@@ -1,0 +1,95 @@
+@if (editMode()) {
+  <lg-controls-bar>
+    <lg-button [icon]="true"
+               [link]="'/products/add'"
+               [size]="'medium'"
+               [style]="'primary'">
+      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+    </lg-button>
+  </lg-controls-bar>
+}
+
+<lg-fade-in>
+  <lg-container>
+    <lg-flex-column size="medium">
+      <lg-flex-row [center]="true" [mobileMode]="true">
+        @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+          <lg-title lgSelfStart>
+            {{ product()?.name }}
+          </lg-title>
+        } @else {
+          <lg-title lgSelfStart>
+            {{ 'product.form.title'|translate }}
+          </lg-title>
+        }
+      </lg-flex-row>
+
+      <lg-inline-separated-group>
+        @if (draftRef() && formComponent()?.form?.dirty) {
+          <ng-template lgInlineSeparatedGroup>
+            <lg-fade-in>
+              <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
+            </lg-fade-in>
+          </ng-template>
+        }
+
+        @if (isDraftRoute()) {
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button lgShrink [style]="'danger'"
+                       [flat]="true"
+                       (click)="onRemoveDraft()">
+              {{ 'product.form.delete-draft-btn'|translate }}
+            </lg-button>
+          </ng-template>
+        } @else if (product()?.uuid) {
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button lgShrink [style]="'danger'"
+                       [flat]="true"
+                       (click)="onDeleteProduct()">
+              {{ 'product.form.delete-btn'|translate }}
+            </lg-button>
+          </ng-template>
+        }
+      </lg-inline-separated-group>
+
+      @if (editMode() && product()?.updatedAt) {
+        <small class="text-muted text-cursive">
+          {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
+        </small>
+      }
+
+    </lg-flex-column>
+
+    <lg-add-product-form [editMode]="editMode()"
+                         [product]="product()"></lg-add-product-form>
+
+    <lg-flex-row [mobileMode]="true" [relaxed]="true">
+      @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+        <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                   lgShrink
+                   [style]="'primary'"
+                   (click)="onEditProduct()">
+          @if (formComponent()?.form?.dirty || draftRef()) {
+            {{ 'product.form.save-btn.edit.active'|translate }}
+          } @else {
+            {{ 'product.form.save-btn.edit.disabled'|translate }}
+          }
+        </lg-button>
+      } @else {
+        <lg-button lgShrink
+                   [style]="'primary'"
+                   [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                   (click)="onAddProduct()">
+          @if (formComponent()?.form?.dirty || draftRef()) {
+            {{ 'product.form.save-btn.add.active'|translate }}
+          } @else {
+            {{ 'product.form.save-btn.add.disabled'|translate }}
+          }
+        </lg-button>
+      }
+
+    </lg-flex-row>
+  </lg-container>
+</lg-fade-in>
+
+<lg-delete-confirmation-popover></lg-delete-confirmation-popover>

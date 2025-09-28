@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
-import {AddProductFormComponent} from './add-product-form.component';
+import {AddProductFormComponent} from '../add-product-form/add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';

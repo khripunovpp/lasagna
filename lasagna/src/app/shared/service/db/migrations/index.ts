@@ -130,7 +130,7 @@ export const migrations: {
     update: tx => {
       return new Promise(async (resolve) => {
         const recipesTable = tx.table(Stores.RECIPES);
-        const recipes = await recipesTable.toArray(); debugger;
+        const recipes = await recipesTable.toArray();
         const getIngredientsUUIDs = (recipe: any): string[] => {
 
           const uuids = new Set<string>();
@@ -155,4 +155,22 @@ export const migrations: {
       })
     },
   },
+  {
+    version: 6,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand',
+      [Stores.RECIPES]: '++uuid,name,*ingredientsUUIDs',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
+      [Stores.TAGS]: '++name',
+      [Stores.TAXES]: '++uuid',
+      [Stores.SETTINGS]: '++key',
+      [Stores.INVOICES]: '++uuid',
+      [Stores.CREDENTIALS]: '++uuid,type',
+      [Stores.CHANGES_LOG]: '++uuid,entity,entityId,timestamp',
+    },
+  }
 ]

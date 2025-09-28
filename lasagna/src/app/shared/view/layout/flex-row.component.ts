@@ -12,6 +12,7 @@ import {NgClass, NgStyle} from '@angular/common';
          [class.gap-row__strict-center]="strictCenter()"
          [class.gap-row__fit]="fit()"
          [class.gap-row__mobile]="mobileMode()"
+         [class.gap-row__responsive]="!noResponsive()"
          [class.gap-row__relaxed]="relaxed()"
          [class.gap-row__top]="top()"
          [class.gap-row__equal]="equal"
@@ -111,25 +112,27 @@ import {NgClass, NgStyle} from '@angular/common';
     }
 
     @media (max-width: 768px) {
-      .gap-row__mobile {
-        flex-direction: column;
-        --gap: 16px;
-      }
+      .gap-row__responsive {
+        &.gap-row__mobile {
+          flex-direction: column;
+          --gap: 16px;
+        }
 
-      .gap-row__mobile.small {
-        --gap: 4px;
-      }
+        &.gap-row__mobile.small {
+          --gap: 4px;
+        }
 
-      .gap-row__mobile.medium {
-        --gap: 8px;
-      }
+        &.gap-row__mobile.medium {
+          --gap: 8px;
+        }
 
-      .gap-row__mobile.tiny {
-        --gap: 2px;
-      }
+        &.gap-row__mobile.tiny {
+          --gap: 2px;
+        }
 
-      .gap-row__mobileReverse {
-        flex-direction: column-reverse;
+        &.gap-row__mobileReverse {
+          flex-direction: column-reverse;
+        }
       }
     }
     `
@@ -150,6 +153,7 @@ export class FlexRowComponent {
   fit = input<boolean>(false);
   mobileMode = input<boolean>(false);
   mobileReverse = input<boolean>(false);
+  noResponsive = input<boolean>(false);
   relaxed = input<boolean>(false);
   wrap = input<boolean>(false);
   cols = input<string|number>(1);

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, computed, DestroyRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
-import {AddRecipeFormComponent} from './add-recipe-form.component';
+import {AddRecipeFormComponent} from '../add-recipe-form/add-recipe-form.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -288,10 +288,6 @@ export class AddRecipeComponent
         this.draftRef.set(this._recipesRepository.saveDraftRecipe(
           this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));
-
-        // if (!this.isDraftRoute()) {
-        //   this._routerManager.replace(['recipes/draft/' + this.draftRef()!.uuid]);
-        // }
       }
     });
   }
@@ -302,7 +298,39 @@ export class AddRecipeComponent
         || !this._validateForm()) {
         return;
       }
-      const newUUID = await this._addRecipe(this.recipe()!);
+
+      const {recipe: newRecipe, addedCount} = await this._recipesRepository.createRelatedProducts(
+        this.recipe()!,
+        this.form.value.ingredients ?? []
+      );
+      const newUUID = await this._recipesRepository.addRecipe(newRecipe);
+
+      this._analyticsService.trackRecipeCreated(newRecipe.name, {
+        recipe_uuid: newUUID,
+        ingredients_count: newRecipe.ingredients?.length || 0,
+        portions: newRecipe.portions,
+        category: newRecipe.category_id?.name
+      });
+
+      this.formComponent()?.resetForm();
+
+      this._notificationsService.success('notifications.recipe.added');
+      if (addedCount > 0) {
+        this._notificationsService.success(
+          this._translateService.instant('notifications.recipe.related-products-created', {
+            count: addedCount
+          })
+        );
+      }
+
+      if (this.draftRef()) {
+        this._removeDraft();
+      }
+
+      await this._routerManager.replace(['recipes', 'edit', newUUID]);
+
+      await this._loadRecipe(newUUID);
+
       this.addedRecipeInformerUUID.set(newUUID);
     } catch (e) {
       this._notificationsService.error(errorHandler(e));
@@ -311,10 +339,38 @@ export class AddRecipeComponent
 
   async onEditRecipe() {
     if (!this.recipe()
-      || !this._validateForm()) {
+      || !this._validateForm()
+      || !this.draftOrRecipeUUID()) {
       return;
     }
-    await this._editRecipe(this.recipe()!);
+
+    try {
+      let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
+      const {recipe: newRecipe, addedCount} = await this._recipesRepository.createRelatedProducts(
+        this.recipe()!,
+        this.form.value.ingredients ?? []
+      );
+      await this._recipesRepository.editRecipe(recipeUUID as string, newRecipe);
+
+      this.formComponent()?.resetForm(newRecipe);
+
+      this._notificationsService.success('notifications.recipe.edited');
+      if (addedCount > 0) {
+        this._notificationsService.success(
+          this._translateService.instant('notifications.recipe.related-products-created', {
+            count: addedCount
+          })
+        );
+      }
+
+      if (this.draftRef()) {
+        this._removeDraft();
+      }
+
+      this._routerManager.replace(['recipes', 'edit', recipeUUID]);
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   onRemoveDraft() {
@@ -346,13 +402,16 @@ export class AddRecipeComponent
     if (!this.recipe()) {
       return;
     }
-    this._recipesRepository.cloneRecipe(this.recipe()!).then(async (newUUID: string) => {
-      this._notificationsService.success('notifications.recipe.cloned');
-      await this._routerManager.replace(['recipes', 'edit', newUUID]);
-
-      await this._loadRecipe(newUUID);
-      return newUUID;
-    });
+    this._recipesRepository.cloneRecipe(this.recipe()!)
+      .then(async (newUUID: string) => {
+        this._notificationsService.success('notifications.recipe.cloned');
+        await this._routerManager.replace(['recipes', 'edit', newUUID]);
+        await this._loadRecipe(newUUID);
+        return newUUID;
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 
   private _validateForm() {
@@ -361,58 +420,6 @@ export class AddRecipeComponent
       return false;
     }
     return true
-  }
-
-  private async _addRecipe(recipe: Recipe) {
-    try {
-      const newRecipe = await this._recipesRepository.createRelatedProducts(
-        recipe,
-        this.form.value.ingredients ?? []
-      );
-      const newUUID = await this._recipesRepository.addRecipe(newRecipe);
-
-      this._analyticsService.trackRecipeCreated(newRecipe.name, {
-        recipe_uuid: newUUID,
-        ingredients_count: newRecipe.ingredients?.length || 0,
-        portions: newRecipe.portions,
-        category: newRecipe.category_id?.name
-      });
-
-      this.formComponent()?.resetForm();
-      this._notificationsService.success('notifications.recipe.added');
-
-      if (this.draftRef()) {
-        this._removeDraft();
-      }
-
-      await this._routerManager.replace(['recipes', 'edit', newUUID]);
-
-      await this._loadRecipe(newUUID);
-      return newUUID;
-    } catch (e) {
-      this._notificationsService.error(errorHandler(e));
-      return null;
-    }
-  }
-
-  private async _editRecipe(recipe: Recipe) {
-    if (!this.draftOrRecipeUUID()) {
-      return Promise.resolve();
-    }
-    let recipeUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrRecipeUUID();
-    try {
-      await this._recipesRepository.editRecipe(recipeUUID as string, recipe);
-      this.formComponent()?.resetForm(recipe);
-      this._notificationsService.success('notifications.recipe.edited');
-
-      if (this.draftRef()) {
-        this._removeDraft();
-      }
-
-      this._routerManager.replace(['recipes', 'edit', recipeUUID]);
-    } catch (e) {
-      this._notificationsService.error(errorHandler(e));
-    }
   }
 
   private _removeDraft() {
@@ -424,14 +431,15 @@ export class AddRecipeComponent
   }
 
   private _loadRecipe(uuid?: string) {
-    if (!uuid) {
-      return Promise.resolve();
-    }
-    return this._recipesRepository.getOne(uuid).then(recipe => {
-      if (!recipe) {
-        return;
-      }
-      this.recipe.set(recipe);
-    });
+    if (!uuid) return Promise.resolve();
+
+    return this._recipesRepository.getOne(uuid)
+      .then(recipe => {
+        if (!recipe) return;
+        this.recipe.set(recipe);
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 }

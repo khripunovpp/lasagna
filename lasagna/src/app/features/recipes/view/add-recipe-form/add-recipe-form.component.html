@@ -47,6 +47,7 @@
                                                formControlName="active_tab">
                         <lg-multiselect [resource]="'recipes'"
                                         appendTo="body"
+                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
                                         [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
                                         formControlName="recipe_id"
                                         ngProjectAs="recipes"
@@ -54,6 +55,8 @@
 
                         <lg-multiselect [resource]="'products'"
                                         appendTo="body"
+                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                        [labelFactory]="productLabelFactory"
                                         [optionFactory]="productLabelFactory"
                                         formControlName="product_id"
                                         [placeholder]="'recipe.form.ingredients.product_id.label' | translate"

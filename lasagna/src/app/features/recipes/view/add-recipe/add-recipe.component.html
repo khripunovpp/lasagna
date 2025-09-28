@@ -1,0 +1,122 @@
+@if (editMode()) {
+  <lg-controls-bar>
+    <lg-button [icon]="true"
+               [link]="'/recipes/add'"
+               [size]="'medium'"
+               [style]="'primary'">
+      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+    </lg-button>
+  </lg-controls-bar>
+}
+
+<lg-fade-in>
+  <lg-container [formGroup]="form">
+    <lg-flex-column size="medium">
+      @if (addedRecipeInformerUUID(); as uuid) {
+        <p>
+          {{ 'recipe.added-informer' | translate }} <a
+          routerLink="/recipes/edit/{{ uuid }}">{{ 'recipe.added-informer.link' | translate }}</a>
+        </p>
+      }
+
+      @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+        <lg-flex-row [mobileMode]="true" [center]="true">
+          <lg-title lgSelfStart>
+            {{ recipe()?.name }}
+          </lg-title>
+        </lg-flex-row>
+
+        <lg-inline-separated-group>
+          @if (draftRef() && form.dirty) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-fade-in>
+                <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
+              </lg-fade-in>
+            </ng-template>
+          }
+
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button [flat]="true"
+                       [disabled]="!!draftRef()"
+                       [link]="'/recipes/calculate/' + recipe()?.uuid"
+                       [style]="'default'">
+              {{ 'recipe.calculate-btn'|translate }}
+            </lg-button>
+          </ng-template>
+
+          @if (!draftRef() && editMode()) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button lgShrink
+                         [style]="'default'"
+                         [flat]="true"
+                         (click)="onCloneRecipe()">
+                {{ 'recipe.form.clone-btn'|translate }}
+              </lg-button>
+            </ng-template>
+          }
+
+          @if (isDraftRoute()) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button lgShrink
+                         [style]="'danger'"
+                         [flat]="true"
+                         (click)="onRemoveDraft()">
+                {{ 'recipe.form.delete-draft-btn'|translate }}
+              </lg-button>
+            </ng-template>
+          } @else if (recipe()?.uuid) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button lgShrink
+                         [style]="'danger'"
+                         [flat]="true"
+                         (click)="onDeleteRecipe()">
+                {{ 'recipe.form.delete-btn'|translate }}
+              </lg-button>
+            </ng-template>
+          }
+        </lg-inline-separated-group>
+
+        @if (recipe()?.updatedAt) {
+          <small class="text-muted text-cursive">
+            {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
+          </small>
+        }
+      } @else {
+        <lg-title>
+          {{ 'recipe.form.title'|translate }}
+        </lg-title>
+      }
+    </lg-flex-column>
+
+    <lg-add-recipe-form [editMode]="editMode()"
+                        [recipe]="recipe()"></lg-add-recipe-form>
+
+    <lg-flex-row [mobileMode]="true" [relaxed]="true">
+      @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+        <lg-button [disabled]="!form.dirty && !draftRef()"
+                   lgShrink
+                   [style]="'primary'"
+                   (click)="onEditRecipe()">
+          @if (form.dirty || draftRef()) {
+            {{ 'recipe.form.save-btn.edit.active'|translate }}
+          } @else {
+            {{ 'recipe.form.save-btn.edit.disabled'|translate }}
+          }
+        </lg-button>
+      } @else {
+        <lg-button [disabled]="!form.dirty && !draftRef()"
+                   lgShrink
+                   [style]="'primary'"
+                   (click)="onAddRecipe()">
+          @if (form.dirty || draftRef()) {
+            {{ 'recipe.form.save-btn.add.active'|translate }}
+          } @else {
+            {{ 'recipe.form.save-btn.add.disabled'|translate }}
+          }
+        </lg-button>
+      }
+    </lg-flex-row>
+  </lg-container>
+</lg-fade-in>
+
+<lg-delete-confirmation-popover></lg-delete-confirmation-popover>
