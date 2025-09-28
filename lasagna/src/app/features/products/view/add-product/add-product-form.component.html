@@ -36,7 +36,6 @@
                              placeholder="">
               <ng-template lgExtraTpl place="after">
                 <span>{{ userSettings()['currency']|currencySymbol }}</span>
-
               </ng-template>
             </lg-number-input>
           </lg-control>
@@ -48,19 +47,22 @@
                     [translate]="'per-unit.label'"></span>
             </ng-template>
 
-            @if (hasMicroPrice()) {
-              <lg-readonly-control [placeholder]="''"
-                                   [value]="'micro-amount'|translate ">
-              </lg-readonly-control>
-            } @else {
-              <lg-readonly-control [placeholder]="''"
-                                   [value]="product()?.pricePerUnit | number:pipesDigits() ">
-              </lg-readonly-control>
-            }
+            <lg-readonly-control [placeholder]="''"
+                                 [value]="hasMicroPrice() ? ('micro-amount'|translate) : (product()?.pricePerUnit | number:pipesDigits())">
+              <lg-button (click)="priceChangesComponent.open()"
+                         [flat]="true"
+                         [icon]="true"
+                         [style]="'success'"
+                         ngProjectAs="after">
+                <mat-icon aria-hidden="false" fontIcon="bar_chart"></mat-icon>
+              </lg-button>
+            </lg-readonly-control>
           </lg-control>
         </lg-flex-row>
       </lg-flex-column>
     </lg-card>
+
+    <lg-price-changes #priceChangesComponent [uuid]="product()?.uuid"></lg-price-changes>
 
     <lg-flex-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: var(--hr-bg-strong)">
       <lg-control [label]="'product.form.source.placeholder'|translate">
