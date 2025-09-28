@@ -27,15 +27,17 @@ import {TranslatePipe} from '@ngx-translate/core';
                   <ng-content></ng-content>
                 </div>
 
-                @if (displayFooter()) {
+                @if (displayFooter() && (showCancelButton() || showConfirmButton())) {
                   <div class="dialog__footer"
                        [class.column]="columnButtons()"
                        [class.centered]="centerButtons()">
-                    <lg-button (click)="onCancelClick()"
-                               [style]="cancelButtonStyle()"
-                               class="dialog__cancel-button">
-                      {{ cancelButtonText() }}
-                    </lg-button>
+                    @if (showCancelButton()) {
+                      <lg-button (click)="onCancelClick()"
+                                 [style]="cancelButtonStyle()"
+                                 class="dialog__cancel-button">
+                        {{ cancelButtonText() }}
+                      </lg-button>
+                    }
 
                     @if (showConfirmButton()) {
                       <lg-button (click)="onConfirmClick()"
@@ -158,6 +160,7 @@ export class DialogComponent {
   centerButtons = input(false);
   columnButtons = input(true);
   showConfirmButton = input(true);
+  showCancelButton = input(true);
   onCancel = output<void>();
   onConfirm = output<void>();
   readonly #_bodyLocker = inject(BODY_LOCKER);

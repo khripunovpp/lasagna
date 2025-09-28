@@ -1,5 +1,5 @@
 import {inject, Inject, Injectable} from '@angular/core';
-import Dexie, {Table} from 'dexie';
+import Dexie, {Table, Transaction} from 'dexie';
 import {Stores} from './const/stores';
 import {migrations} from './migrations';
 import {generateUuid} from '../../helpers/attribute.helper';
@@ -534,5 +534,9 @@ export class DexieIndexDbService extends Dexie {
       tableName,
       key,
     };
+  }
+
+  async withTransaction<T = any>(storeKeys: Stores[], fn: (tx: Transaction) => Promise<T>): Promise<T> {
+    return this.transaction<T>('rw', storeKeys, fn);
   }
 }
