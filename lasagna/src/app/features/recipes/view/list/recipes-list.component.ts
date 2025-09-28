@@ -17,7 +17,7 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
+import {RecipeDTO, RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from './draft-recipes-list.component';
@@ -201,14 +201,14 @@ export class RecipesListComponent {
   ) {
     this.selectionZoneService.onDelete$.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(([key]) => {
-      this.deleteRecipe(key);
+    ).subscribe(([key, data]) => {
+      this.deleteMany([data]);
     });
 
     this.selectionZoneService.onDeleteSelected$.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe((keys) => {
-      this.deleteMany(keys);
+    ).subscribe((items) => {
+      this.deleteMany(items);
     });
   }
 
@@ -226,25 +226,11 @@ export class RecipesListComponent {
     this.loadRecipes();
   }
 
-  deleteRecipe(uuid: string | undefined) {
-    if (!uuid) {
+  deleteMany(recipes: RecipeDTO[]) {
+    if (!recipes.length) {
       return;
     }
-    this._recipesRepository.deleteOne(uuid)
-      .then(() => {
-        this._notificationsService.success('recipe.deleted');
-        this.loadRecipes();
-      })
-      .catch((e) => {
-        this._notificationsService.error(errorHandler(e));
-      })
-  }
-
-  deleteMany(uuids: string[]) {
-    if (!uuids.length) {
-      return;
-    }
-    this._recipesRepository.deleteMany(uuids)
+    this._recipesRepository.deleteMany(recipes.map(recipe => this._recipesRepository.factory(recipe)))
       .then(() => {
         this._notificationsService.success('recipe.deleted');
         this.loadRecipes();
@@ -256,7 +242,7 @@ export class RecipesListComponent {
   }
 
   loadRecipes() {
-    return this._recipesRepository.loadRecipes()
+    return this._recipesRepository.loadAll()
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));
       });

@@ -395,6 +395,9 @@ test.describe.serial('Групповой тест создания и кальк
       await productTab.click();
       await expect(productTab).toHaveClass(/active/);
 
+      // first click on ng-select input to open dropdown, then find needed product by name and click on it, then check that correct value is selected
+      await recipePage.getProductTabNgSelectInput(ingredientItem).click();
+
       await recipePage.findAndCheck(
         recipesProductUUIDToNameMap[ingredientDto.product_id],
         recipePage.getProductTabNgSelectInput(ingredientItem),

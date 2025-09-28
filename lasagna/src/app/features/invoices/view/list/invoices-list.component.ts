@@ -34,7 +34,7 @@ import {errorHandler} from '../../../../shared/helpers';
   standalone: true,
   template: `
     @defer {
-      @if (invoices()?.length) {
+      @if (invoices().length) {
         <lg-controls-bar>
           <lg-button (click)="onAddInvoice()"
                      [icon]="true"
@@ -53,7 +53,7 @@ import {errorHandler} from '../../../../shared/helpers';
 
           @if (isDevMode()) {
 
-            @if (invoices()?.length) {
+            @if (invoices().length) {
               <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
             }
 
@@ -64,7 +64,7 @@ import {errorHandler} from '../../../../shared/helpers';
 
               <lg-card-list [mode]="selectionZoneService.selectionMode()"
                             (onSelected)="selectionZoneService.putSelected($event)"
-                            (onDeleteOne)="deleteOne($event)"
+                            (onDeleteOne)="deleteMany([$event.uuid])"
                             [selectAll]="selectionZoneService.selectAll()"
                             [deselectAll]="selectionZoneService.deselectAll()">
                 @for (invoice of category.items; track (invoice.uuid ?? '') + i; let i = $index) {
@@ -80,8 +80,8 @@ import {errorHandler} from '../../../../shared/helpers';
                           {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
                         </a>
 
-                        <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
-                          {{ stateLabels()?.[ic]?.[i] }}
+                        <div [ngClass]="stateBadgeClasses()[ic]?.[i]">
+                          {{ stateLabels()[ic]?.[i] }}
                         </div>
 
                       </lg-flex-row>
@@ -181,8 +181,8 @@ export class InvoicesListComponent
   ) {
     this.selectionZoneService.onDeleteSelected$.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe((keys) => {
-      this.deleteMany(keys);
+    ).subscribe((items) => {
+      this.deleteMany(items);
     });
   }
 
@@ -236,11 +236,13 @@ export class InvoicesListComponent
       });
   }
 
-  deleteMany(uuids: string[]) {
-    if (!uuids.length) {
+  deleteMany(
+    items: string[],
+  ) {
+    if (!items.length) {
       return;
     }
-    this._invoicesRepository.deleteMany(uuids)
+    this._invoicesRepository.deleteMany(items.map(i => i))
       .then(() => {
         this._notificationsService.success('invoices.deleted');
         this.loadItems();

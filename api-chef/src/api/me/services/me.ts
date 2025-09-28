@@ -1,10 +1,26 @@
-
-export default {
-  async myProfile(userId, strapi) {
+export default ({strapi}) => ({
+  async myProfile(
+    userId: number,
+  ) {
     const profile = await strapi.entityService.findMany('api::profile.profile', {
-      filters: { user: userId },
-      populate: { user: true },
+      filters: {user: userId},
+      fields: [
+        'canBuy'
+      ],
+      populate: {
+        user: {
+          fields: [
+            'username',
+            'email',
+          ]
+        },
+      },
     });
-    return profile.length > 0 ? profile[0] : null;
+
+    if (!profile.length) {
+      return null;
+    }
+
+    return profile[0];
   },
-}; 
+});

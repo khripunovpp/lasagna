@@ -6,20 +6,18 @@ import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CurrencyPipe} from '@angular/common';
-import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
+import {NotificationsService, SelectionZoneService, TransferDataService} from '../../../../shared/service/services';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {ImportComponent} from '../../../../shared/view/ui/import/import.component';
 import {RouterLink} from '@angular/router';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {ImportRowTplDirective} from '../../../../shared/view/ui/import/import-row-tpl.directive';
 import {CATEGORIZED_PRODUCTS_LIST} from '../../service/categorized-products-list.token';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
-import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {ProductScheme} from '../../service/Product.scheme';
+import {ProductDTO, ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftProductsListComponent} from './draft-products-list.component';
@@ -40,6 +38,7 @@ import {productLabelFactoryProvider} from '../../../../shared/factories/entity-l
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {ProductFactory} from '../../service/product.factory';
 
 @Component({
   selector: 'lg-product-list',
@@ -179,7 +178,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     CardComponent,
     GroupingTileDirective,
     GroupingTilesComponent,
-    CurrencySymbolPipe
+    CurrencySymbolPipe,
   ],
   providers: [
     SelectionZoneService,
@@ -195,7 +194,8 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 export class ProductListComponent
   implements OnInit {
   constructor(
-    public _productsRepository: ProductsRepository,
+    private _productsRepository: ProductsRepository,
+    private _productFactory: ProductFactory,
     private _transferDataService: TransferDataService,
     private _notificationsService: NotificationsService,
     public selectionZoneService: SelectionZoneService,
@@ -203,14 +203,14 @@ export class ProductListComponent
   ) {
     this.selectionZoneService.onDelete$.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(([key]) => {
-      this.deleteProduct(key);
+    ).subscribe(([key, data]) => {
+      this.deleteMeny([data]);
     });
 
     this.selectionZoneService.onDeleteSelected$.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe((keys) => {
-      this.deleteMeny(keys);
+    ).subscribe((items) => {
+      this.deleteMeny(items);
     });
   }
 
@@ -236,29 +236,15 @@ export class ProductListComponent
       });
   }
 
-  deleteProduct(uuid: string | undefined) {
-    if (!uuid) {
+  deleteMeny(
+    products: ProductDTO[],
+  ) {
+    if (!products.length) {
       return;
     }
-    this._productsRepository.deleteProduct(uuid)
+    this._productsRepository.deleteMany(products.map(product => this._productFactory.fromRaw(product)))
       .then(() => {
         this._notificationsService.success('notifications.product.deleted');
-        this.loadProducts();
-      })
-      .catch(error => {
-        this._notificationsService.error(errorHandler(error));
-      });
-  }
-
-  deleteMeny(
-    uuids: string[],
-  ) {
-    if (!uuids.length) {
-      return;
-    }
-    this._productsRepository.deleteMany(uuids)
-      .then(() => {
-        this._notificationsService.success('notifications.product.deleted-many');
         this.loadProducts();
         this.selectionZoneService.onDeselectAll();
       })

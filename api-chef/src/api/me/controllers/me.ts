@@ -1,5 +1,4 @@
-
-export default {
+export default ({strapi}) => ({
   async myProfile(ctx) {
     try {
       if (!ctx.state.user) {
@@ -8,11 +7,11 @@ export default {
       const userId = ctx.state.user.id;
 
       const syncService = strapi.service('api::me.me');
-      const result = await syncService.myProfile( userId, strapi);
+      const result = await syncService.myProfile(userId);
 
       return ctx.send(result);
     } catch (error) {
       return ctx.badRequest('Failed getting profile', {error: error.message});
     }
   },
-}; 
+});

@@ -4,14 +4,16 @@ import {SyncCloudResponse} from "./sync.service";
 import {errorHandler} from '../../../shared/helpers';
 
 export type SyncLocalDbResponse = Record<string, any>;
+export type SyncCloudDbResponse = Record<string, any>;
 
-export type SyncTransactionItem = [SyncCloudResponse | null, SyncLocalDbResponse | null];
+export type SyncTransactionItem = [SyncCloudDbResponse | null, SyncLocalDbResponse | null];
 
 export interface SyncTransactionResult {
   toUpdate: SyncTransactionItem[]
   toAdd: SyncTransactionItem[]
   toSkip: SyncTransactionItem[]
   notSynced: SyncTransactionItem[]
+  toDelete: SyncTransactionItem[]
 }
 
 export const estimateSyncChangesTransaction = async (
@@ -28,8 +30,11 @@ export const estimateSyncChangesTransaction = async (
       const result: SyncTransactionResult = {
         toUpdate: [],
         toAdd: [],
+        // TODO : подумать нужно ли это, потому что если элемент пропускается, значит он уже есть локально и актуален,
+        //  но это значит что в облаке он старый и его нужно обновить
         toSkip: [],
         notSynced: [],
+        toDelete: [],
       };
 
       // находим все не синхронизированные элементы, те у которых нет cloud_uuid,
@@ -42,30 +47,37 @@ export const estimateSyncChangesTransaction = async (
       for (let i = 0; i < uuids.length; i++) {
         const existingDto = existingDtos[i];
         const incomingCloudResponse = withItems[i];
+        const incomingDto_updatedAt = new Date(incomingCloudResponse['updatedAt']).getTime();
+        const incomingDto_deletedAt = incomingCloudResponse['deletedAt']
+          ? new Date(incomingCloudResponse['deletedAt']).getTime()
+          : null;
         // если есть локальный элемент с таким uuid
         if (existingDto) {
           // сравниваем updatedAt чтобы понять что новее
           const existingDto_updatedAt = new Date(existingDto['updatedAt']).getTime();
-          const incomingDto_updatedAt = new Date(incomingCloudResponse['updatedAt']).getTime();
           // если локальный элемент новее или такой же, и есть связь с облаком, пропускаем обновление
           if (existingDto_updatedAt >= incomingDto_updatedAt
             && existingDto['cloud_uuid']) {
-            console.log('Skipping update, existing item is newer or same', {
-              existingDto,
-              incomingDto: incomingCloudResponse,
-              existingDto_updatedAt,
-              incomingDto_updatedAt
-            });
-            result.toSkip.push([incomingCloudResponse, existingDto]);
+            if (incomingCloudResponse.deleted && existingDto['deleted']) {
+              result.toDelete.push([incomingCloudResponse, existingDto]);
+            } else {
+              result.toSkip.push([incomingCloudResponse, existingDto]);
+            }
             continue
           }
 
           // если облачный элемент новее, планируем обновление локального элемента
-          result.toUpdate.push([incomingCloudResponse, existingDto]);
-        } else {
+          // или удаление, если в облаке стоит флаг deleted
+          if (incomingCloudResponse.deleted && incomingCloudResponse['deletedAt']) {
+            if (existingDto['updatedAt'] <= incomingDto_deletedAt!) {
+              result.toDelete.push([incomingCloudResponse, existingDto]);
+            }
+          } else {
+            result.toUpdate.push([incomingCloudResponse, existingDto]);
+          }
+        } else if (!incomingCloudResponse.deleted) {
           // если нет локального элемента с таким uuid, планируем добавление
           result.toAdd.push([incomingCloudResponse, null]);
-          console.log('Adding new item', {incomingDto: incomingCloudResponse});
         }
       }
 

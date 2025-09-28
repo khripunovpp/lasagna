@@ -1,22 +1,20 @@
 /**
  * sync service
  */
-const {ProductSyncStrategy} = require('./product-sync-strategy');
-const {RecipeSyncStrategy} = require('./recipe-sync-strategy');
 
-const strategies = {
-  products: new ProductSyncStrategy(),
-  recipes: new RecipeSyncStrategy(),
-};
+export default ({strapi}) => ({
+  strategies: {
+    products: strapi.service('api::sync.product-sync-strategy'),
+    recipes: strapi.service('api::sync.recipe-sync-strategy'),
+  },
 
-export default {
-  async syncData(afterDate, userId, strapi) {
+  async syncData(afterDate, userId) {
     const results = {};
     const dateObj = new Date(afterDate);
 
-    for (const [key, strategy] of Object.entries(strategies)) {
+    for (const [key, strategy] of Object.entries(this.strategies)) {
       results[key] = await strategy.sync(dateObj, userId, strapi);
     }
     return results;
   },
-}; 
+});

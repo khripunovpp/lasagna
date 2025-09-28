@@ -16,11 +16,11 @@
       "required": true
     },
     "price": {
-      "type": "decimal",
+      "type": "biginteger",
       "required": true
     },
     "amount": {
-      "type": "decimal",
+      "type": "biginteger",
       "required": true
     },
     "source": {
@@ -53,11 +53,18 @@
     "system": {
       "type": "boolean"
     },
-    "recipe": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::recipe.recipe",
-      "inversedBy": "ingredients"
+    "deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "deletedAt": {
+      "type": "datetime"
+    },
+    "brand": {
+      "type": "text"
+    },
+    "notes": {
+      "type": "richtext"
     }
   }
 }

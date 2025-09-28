@@ -17,7 +17,7 @@ export class IndexDbSelectLoaderService
   load<T>(
     storeName: Stores
   ) {
-    return this._indexDb.getAll(storeName) as Promise<T[]>;
+    return this._indexDb.getAll(storeName, true) as Promise<T[]>;
   }
 
   fullLoad<T>(

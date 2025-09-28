@@ -37,6 +37,7 @@ import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
+import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -62,6 +63,7 @@ import {TransferDataService} from '../../../../shared/service/services/transfer-
     MatIcon,
     ConfirmationPopoverComponent,
     ReactiveFormsModule,
+    SyncBadgeComponent,
   ],
   templateUrl: './add-recipe.component.html',
   styles: [
@@ -148,6 +150,7 @@ export class AddRecipeComponent
         this._decodeRecipe(this.sharedRecipe()!);
       } else {
         this.recipe.set(Recipe.empty());
+        console.log('Creating new recipe', this.recipe());
       }
 
       this.isDraftRoute.set(!!data['draftRoute']);
@@ -194,7 +197,8 @@ export class AddRecipeComponent
         this.recipe()!,
         this.form.value.ingredients ?? []
       );
-      const newUUID = await this._recipesRepository.addRecipe(newRecipe);
+      const createdRecipe = await this._recipesRepository.addRecipe(newRecipe);
+      const newUUID = createdRecipe.data?.uuid!;
 
       this._analyticsService.trackRecipeCreated(newRecipe.name, {
         recipe_uuid: newUUID,
@@ -243,7 +247,7 @@ export class AddRecipeComponent
         this.recipe()!,
         this.form.value.ingredients ?? []
       );
-      await this._recipesRepository.editRecipe(recipeUUID as string, newRecipe);
+      await this._recipesRepository.updateOne(recipeUUID as string, newRecipe);
 
       this.formComponent()?.resetForm(newRecipe);
 
@@ -279,7 +283,7 @@ export class AddRecipeComponent
     this.deleteConfirmationService.configure({
       message: this._translateService.instant('recipe.form.delete-confirm-message'),
       onSuccess: () => {
-        this._recipesRepository.deleteOne(this.recipe()!.uuid!)
+        this._recipesRepository.deleteOne(this.recipe()!)
           .then(() => {
             this._notificationsService.success('notifications.recipe.deleted');
             this._routerManager.navigate(['recipes']);
@@ -326,11 +330,11 @@ export class AddRecipeComponent
       return;
     }
     this._recipesRepository.cloneRecipe(this.recipe()!)
-      .then(async (newUUID: string) => {
+      .then(async (newRecipe) => {
         this._notificationsService.success('notifications.recipe.cloned');
-        await this._routerManager.replace(['recipes', 'edit', newUUID]);
-        await this._loadRecipe(newUUID);
-        return newUUID;
+        await this._routerManager.replace(['recipes', 'edit', newRecipe.data?.uuid]);
+        await this._loadRecipe(newRecipe.data?.uuid);
+        return newRecipe.data?.uuid;
       })
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));

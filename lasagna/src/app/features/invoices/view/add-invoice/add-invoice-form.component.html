@@ -11,7 +11,7 @@
       } @else {
         <lg-readonly-control [placeholder]="''"
                              lgExpand
-                             [value]="form.value?.name"></lg-readonly-control>
+                             [value]="form.value.name"></lg-readonly-control>
       }
     </lg-control>
 
@@ -24,7 +24,7 @@
                       [placeholder]="'invoices.prefix-placeholder' | translate"
             ></lg-input>
           } @else {
-            <lg-readonly-control [value]="form.value?.prefix"
+            <lg-readonly-control [value]="form.value.prefix"
                                  [placeholder]="'invoices.prefix-placeholder' | translate">
             </lg-readonly-control>
           }
@@ -36,7 +36,7 @@
                       [placeholder]="'invoices.invoice-number-placeholder' | translate"
                       [required]="true"></lg-input>
           } @else {
-            <lg-readonly-control [value]="form.value?.invoice_number"
+            <lg-readonly-control [value]="form.value.invoice_number"
                                  [placeholder]="'invoices.invoice-number-placeholder' | translate">
             </lg-readonly-control>
           }
@@ -49,7 +49,7 @@
             <lg-date-picker formControlName="date_issued"
                             [required]="true"></lg-date-picker>
           } @else {
-            <lg-readonly-control [value]="form.value?.date_issued | date: 'dd.MM.yyyy'"
+            <lg-readonly-control [value]="form.value.date_issued | date: 'dd.MM.yyyy'"
                                  [placeholder]="'invoices.date-issued' | translate"
                                  lgExpand>
             </lg-readonly-control>
@@ -60,7 +60,7 @@
           @if (canBeUpdated) {
             <lg-date-picker formControlName="date_due"></lg-date-picker>
           } @else {
-            <lg-readonly-control [value]="form.value?.date_due | date: 'dd.MM.yyyy'"
+            <lg-readonly-control [value]="form.value.date_due | date: 'dd.MM.yyyy'"
                                  [placeholder]="'invoices.due-date' | translate"
                                  lgExpand>
             </lg-readonly-control>
@@ -114,7 +114,7 @@
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
             @let isRecipe = item?.type === 'recipe';
-            @let isProduct = item?.type === 'product';
+
             <lg-controls-row [mobileMode]="true" [equal]="true">
 
               @if (canBeUpdated) {

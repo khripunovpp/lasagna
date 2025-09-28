@@ -22,15 +22,21 @@
           </p>
         }
 
-        @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-          <lg-title lgSelfStart>
-            {{ recipe()?.name }}
-          </lg-title>
-        } @else {
-          <lg-title lgSelfStart>
-            {{ 'recipe.form.title'|translate }}
-          </lg-title>
-        }
+        <lg-flex-row [center]="true">
+          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+            <lg-title lgSelfStart>
+              {{ recipe()?.name }}
+            </lg-title>
+          } @else {
+            <lg-title lgSelfStart>
+              {{ 'recipe.form.title'|translate }}
+            </lg-title>
+          }
+
+          @if (recipe()) {
+            <lg-sync-badge [entity]="recipe()!"></lg-sync-badge>
+          }
+        </lg-flex-row>
 
         <lg-inline-separated-group>
           @if (draftRef() && form.dirty) {

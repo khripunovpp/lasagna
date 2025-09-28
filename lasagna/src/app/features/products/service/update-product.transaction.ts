@@ -1,24 +1,26 @@
 import {Transaction} from 'dexie';
-import {Product} from './Product';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {generateUuid} from '../../../shared/helpers';
 import {ProductDTO} from './Product.scheme';
 import {ChangeLogDTO} from '../../history/ChangeLogEntry.scheme';
+import {CanBeStoredIndexDbAbstract} from '../../sync/service/CanBeStoredIndexDb.abstract';
 
 export const updateProductTransaction = async (
   tx: Transaction,
   uuid: string,
-  product: Product
+  table: Stores,
+  item: CanBeStoredIndexDbAbstract,
+  changeLogCondition: (oldItem?: any, newItem?: any) => boolean,
 ) => {
-  return new Promise<ProductDTO>(async (resolve, reject) => {
+  return new Promise<CanBeStoredIndexDbAbstract>(async (resolve, reject) => {
     try {
-      const productsTable = tx.table(Stores.PRODUCTS);
+      const tabeRows = tx.table(table);
       const changesLogTable = tx.table(Stores.CHANGES_LOG);
-      const newProductDto = product.toDTO();
-      if (newProductDto.system) {
-        newProductDto.system = false;
+      const newDTO = item.toDTO();
+      if (newDTO.system) {
+        newDTO.system = false;
       }
-      const existingProductDto: ProductDTO = await productsTable.get(uuid);
+      const existingDto: CanBeStoredIndexDbAbstract & ProductDTO = await tabeRows.get(uuid);
 
       const logs = await changesLogTable
         .where('entityId')
@@ -31,29 +33,29 @@ export const updateProductTransaction = async (
         changesLogTable.delete(logs[0].uuid);
       }
 
-      const hasNecessaryData = existingProductDto
-        && (existingProductDto.price !== newProductDto.price
-          || existingProductDto.amount !== newProductDto.amount
-          || existingProductDto.unit !== newProductDto.unit);
+      const hasNecessaryData = existingDto
+        && (newDTO.price !== existingDto.price
+          || newDTO.amount !== existingDto.amount
+          || newDTO.unit !== existingDto.unit);
 
       if (hasNecessaryData) {
         const change: ChangeLogDTO = {
           entity: 'product',
           entityId: uuid,
           timestamp: Date.now(),
-          oldValue: existingProductDto,
-          newValue: newProductDto,
+          oldValue: existingDto,
+          newValue: newDTO,
           uuid: generateUuid(),
         };
 
         changesLogTable.put(change);
       }
 
-      await productsTable.put(newProductDto);
+      await tabeRows.put(newDTO);
 
-      resolve(newProductDto);
+      resolve(newDTO);
     } catch (e) {
-      console.error('Failed to update product transaction', e);
+      console.error('Failed to update transaction', e);
       reject(e);
     }
   });

@@ -22,9 +22,9 @@ import {errorHandler} from '../../../../shared/helpers';
   selector: 'lg-draft-products-list',
   standalone: true,
   template: `
-    @if (drafts()?.length) {
+    @if (drafts().length) {
       <lg-expander [closeLabel]="'drafts-close-label'|translate"
-                   [openLabel]="'drafts-label'|translate:{length:drafts()?.length}">
+                   [openLabel]="'drafts-label'|translate:{length:drafts().length}">
 
         <lg-inline-separated-group>
           <ng-template lgInlineSeparatedGroup>
@@ -60,7 +60,7 @@ import {errorHandler} from '../../../../shared/helpers';
 
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
                       (onSelected)="selectionZoneService.putSelected($event)"
-                      (onDeleteOne)="deleteDraft($event?.uuid)"
+                      (onDeleteOne)="deleteDraft($event.uuid)"
                       [selectAll]="selectionZoneService.selectAll()"
                       [deselectAll]="selectionZoneService.deselectAll()"
                       style="--card-bg: var(--card-bg-draft)">

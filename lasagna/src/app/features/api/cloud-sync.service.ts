@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {ProductsApiService} from '../products/service/products-api.service';
 import {Stores} from '../../shared/service/db/const/stores';
 import {ApiAgentInterface} from './api-agent.interface';
+import {RecipesApiService} from '../recipes/service/providers/recipes-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,13 @@ export class CloudSyncService {
   }
 
   productsApiService = inject(ProductsApiService);
+  recipesApiService = inject(RecipesApiService);
   storesToApiMap: Partial<Record<Stores, ApiAgentInterface<any>>> = {
-    [Stores.PRODUCTS]: this.productsApiService
-  }
+    [Stores.PRODUCTS]: this.productsApiService,
+    [Stores.RECIPES]: this.recipesApiService,
+  };
 
-  addDataToSync<T,R>(
+  addDataToSync<T, R>(
     store: Stores,
     data: T,
   ) {
@@ -52,6 +55,20 @@ export class CloudSyncService {
     return api.put(id, data);
   }
 
+  patchManyData(
+    store: Stores,
+    data: Array<{ id: string, data: any }>,
+  ) {
+    const api = this.storesToApiMap[store];
+    if (!api) {
+      throw new Error(`No API agent found for store: ${store}`);
+    }
+    if (!api.putMany) {
+      throw new Error(`API agent for store: ${store} does not support batch operations`);
+    }
+    return api.putMany(data);
+  }
+
   deleteData(
     store: Stores,
     id: string,
@@ -72,5 +89,18 @@ export class CloudSyncService {
       throw new Error(`No API agent found for store: ${store}`);
     }
     return api.get(id);
+  }
+
+  getDataByField(
+    store: Stores,
+    field: string,
+    value: any,
+  ) {
+    // This method assumes that the API agent has a method to get data by field.
+    const api = this.storesToApiMap[store];
+    if (!api || !(api as any).getByField) {
+      throw new Error(`No API agent found for store: ${store} or it does not support getByField method`);
+    }
+    return (api as any).getByField(field, value);
   }
 }

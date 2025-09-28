@@ -1,5 +1,20 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface RecipesIngredientComponent extends Struct.ComponentSchema {
+  collectionName: 'components_recipes_ingreds';
+  info: {
+    description: '';
+    displayName: 'ingredient_component';
+    icon: 'apps';
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    name: Schema.Attribute.Text;
+    product_id: Schema.Attribute.String;
+    recipe_id: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +80,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'recipes.ingredient_component': RecipesIngredientComponent;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

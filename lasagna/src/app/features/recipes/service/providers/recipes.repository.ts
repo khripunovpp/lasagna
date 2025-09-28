@@ -1,25 +1,26 @@
 import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
-import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
-import {UsingHistoryService} from '../../../../shared/service/services/using-history.service';
-import {BehaviorSubject} from 'rxjs';
-import {DraftForm, DraftFormsService} from '../../../../shared/service/services/draft-forms.service';
+import {DraftForm, DraftFormsService, UsingHistoryService} from '../../../../shared/service/services';
 import {TagsRepository} from '../../../settings/service/repositories/tags.repository';
 import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
-import {ProductsRepository} from '../../../products/service/products.repository';
-import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {Filters} from '../../../../shared/types/filter.types';
 import {copyRecipeFactory} from '../factories/recipe.factory';
 import {TranslateService} from '@ngx-translate/core';
 import {ProductFactory} from '../../../products/service/product.factory';
+import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {Stores} from '../../../../shared/service/db/const/stores';
+import {RepositoryAbstract} from '../../../../shared/service/services/repository/repository.abstract';
+import {CloudSyncService} from '../../../api/cloud-sync.service';
+import {ProductsRepository} from '../../../products/service/products.repository';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecipesRepository {
+export class RecipesRepository
+  extends RepositoryAbstract<RecipeDTO, Recipe> {
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
@@ -29,121 +30,85 @@ export class RecipesRepository {
     private _productsRepository: ProductsRepository,
     private _productFactory: ProductFactory,
     private _translate: TranslateService,
+    private _cloudSyncService: CloudSyncService,
   ) {
+    super(Stores.RECIPES, _indexDbService, _cloudSyncService);
     this._copyPrefix = this._translate.instant('recipes.copy.prefix');
   }
 
   private _onboardingService = inject(OnboardingService);
-  private _stream$ = new BehaviorSubject<Recipe[]>([]);
   private _copyPrefix = '';
+  override factory = (dto: RecipeDTO) => Recipe.fromRaw(dto);
 
-  get recipes$() {
-    return this._stream$.asObservable();
-  }
-
-  get length() {
-    return this._indexDbService
-      .getLength(Stores.RECIPES);
-  }
-
-  hasRecords() {
-    return this._indexDbService.getFirst(Stores.RECIPES);
-  }
+  override changeLogCondition = (oldItem?: RecipeDTO, newItem?: RecipeDTO): boolean => {
+    return false;
+  };
 
   async addRecipe(
     recipe: Recipe
   ) {
     recipe.clearEmpty();
-    const data = recipe.toDTO();
-    const uuid = await this._indexDbService.addData(Stores.RECIPES, data);
-    data.uuid = uuid;
-    this._saveSomeHistoryData(data);
+    const resp = await super.addOne(recipe);
 
-    if (recipe.tags?.length) {
-      for (const tag of recipe.tags) {
-        await this._saveTag(tag);
+    if (resp.data) {
+      this._saveSomeHistoryData(resp.data.toDTO());
+
+      if (recipe.tags?.length) {
+        for (const tag of recipe.tags) {
+          await this._saveTag(tag);
+        }
+      }
+
+      // Онбординг: если это первый рецепт, отмечаем шаг завершённым
+      if (!this._onboardingService.isRecipeDone()) {
+        this._onboardingService.markRecipeDone();
       }
     }
 
-    // Онбординг: если это первый рецепт, отмечаем шаг завершённым
-    if (!this._onboardingService.isRecipeDone()) {
-      this._onboardingService.markRecipeDone();
-    }
-
-    return uuid;
+    return resp;
   }
 
-  async loadRecipes(
+  override async loadAll(
     filter?: Filters,
   ) {
     let resp: Recipe[] = [];
     if (filter?.key && filter.value) {
       resp = await this._indexDbService.filter(Stores.RECIPES, filter.key, filter.value, filter.operator === 'equals');
     } else {
-      resp = await this._indexDbService.getAll(Stores.RECIPES);
+      resp = await this._indexDbService.getAll(Stores.RECIPES, true);
     }
     const recipes = resp.map(recipe => Recipe.fromRaw(recipe));
-    this._stream$.next(recipes);
+    this.stream$.next(recipes);
     return recipes;
   }
 
-  getRecipes() {
-    return this._indexDbService.getAll(Stores.RECIPES)
-      .then(res => res.map(recipe => Recipe.fromRaw(recipe))
-        .toSorted((a: Recipe, b: Recipe) => a?.name?.localeCompare(b?.name)));
+  override getAll() {
+    return super.getAll(true)
+      .then(res => res.toSorted((a: Recipe, b: Recipe) => a?.name?.localeCompare(b?.name)));
   }
 
-  async getOne(
-    uuid: Recipe | string | undefined,
-    verbose: boolean = false,
-  ) {
-    return new Promise<Recipe | undefined>(async (resolve, reject) => {
-      if (!uuid) {
-        resolve(undefined);
-        return;
-      }
-      uuid = (uuid as Recipe).uuid || uuid as string;
-      if (verbose) {
-        await this._indexDbService.getOneWithRelations(Stores.RECIPES, uuid).then((result) => {
-          resolve(Recipe.fromRaw(result.data));
-        });
-      } else {
-        await this._indexDbService.getOne<RecipeDTO>(Stores.RECIPES, uuid).then((result: RecipeDTO) => {
-          resolve(Recipe.fromRaw(result));
-        });
-      }
-    });
-  }
-
-  getMany(
-    uuids: string[],
-    verbose: boolean = false,
-  ) {
-    return new Promise<Recipe[]>(async (resolve, reject) => {
-      if (verbose) {
-        const recipes = await this._indexDbService.getManyWithRelations(Stores.RECIPES, uuids);
-        resolve(recipes.data.map(recipe => Recipe.fromRaw(recipe)));
-      } else {
-        const recipes = await this._indexDbService.getMany<RecipeDTO>(Stores.RECIPES, uuids);
-        resolve(recipes.map(recipe => Recipe.fromRaw(recipe)));
-      }
-    });
-  }
-
-  async editRecipe(
+  override async updateOne(
     uuid: string,
     recipe: Recipe
-  ) {
+  ): Promise<{
+    data: Recipe
+    message: string
+  }> {
     recipe.clearEmpty();
-    const dto = recipe.toDTO();
-    await this._indexDbService.replaceData(Stores.RECIPES, uuid, dto);
-    this._saveSomeHistoryData(dto);
+
+    const resp = await super.updateOne(uuid, recipe);
+
+    await this.saveIndex();
+
+    this._saveSomeHistoryData(resp.data.toDTO());
 
     if (recipe.tags?.length) {
       for (const tag of recipe.tags) {
         await this._saveTag(tag);
       }
     }
+
+    return resp;
   }
 
   saveDraftRecipe(recipe: Recipe, uuid?: string) {
@@ -190,18 +155,10 @@ export class RecipesRepository {
     return this._draftFormsService.removeDraftForm('draft_recipes', uuids);
   }
 
-  deleteOne(uuid: string) {
-    return this._indexDbService.remove(Stores.RECIPES, uuid);
-  }
-
-  deleteMany(uuids: string[]) {
-    return this._indexDbService.removeMany(Stores.RECIPES, uuids);
-  }
-
   cloneRecipe(recipe: Recipe) {
     const cloned = copyRecipeFactory(recipe);
     cloned.name = `${this._copyPrefix} ${cloned.name}`;
-    return this.addRecipe(cloned);
+    return this.addOne(cloned);
   }
 
   getTopCategories() {
@@ -228,14 +185,11 @@ export class RecipesRepository {
       return Promise.resolve([]);
     }
 
-    return this._indexDbService.getMany(Stores.RECIPES, keys)
-      .then(recipes => {
-        return recipes
-          .toSorted((a, b) => {
-            return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
-          })
-          .map(recipe => Recipe.fromRaw(recipe))
-      })
+    return this.getMany(keys).then(recipes => {
+      return recipes.toSorted((a, b) => {
+        return top[b.uuid!].updatedAt > top[a.uuid!].updatedAt ? 1 : -1;
+      });
+    })
   }
 
   async addProductByName(
@@ -270,7 +224,7 @@ export class RecipesRepository {
           name: formIngredient.new_product_name,
           unit: ingredient.unit,
         });
-        newProd.uuid = await this._productsRepository.addOne(newProd);
+        newProd.uuid = (await this._productsRepository.addOne(newProd)).data?.uuid;
 
         ingredient.replaceProduct(newProd);
         addedCount++;

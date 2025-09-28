@@ -39,10 +39,10 @@ import {errorHandler} from '../../../../shared/helpers';
     SelectionZoneService,
   ],
   template: `
-    @if (drafts()?.length) {
+    @if (drafts().length) {
       <lg-expander [closeLabel]="'drafts-close-label'|translate"
                    data-u2e="draft-recipes-list.expander"
-                   [openLabel]="'drafts-label'|translate:{length:drafts()?.length}">
+                   [openLabel]="'drafts-label'|translate:{length:drafts().length}">
         <lg-inline-separated-group>
           <ng-template lgInlineSeparatedGroup>
             <lg-button (click)="selectionZoneService.onSelection()"
@@ -76,7 +76,7 @@ import {errorHandler} from '../../../../shared/helpers';
         </lg-inline-separated-group>
 
         <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                      (onDeleteOne)="deleteDraft($event?.uuid)"
+                      (onDeleteOne)="deleteDraft($event.uuid)"
                       (onSelected)="selectionZoneService.putSelected($event)"
                       [selectAll]="selectionZoneService.selectAll()"
                       [deselectAll]="selectionZoneService.deselectAll()"

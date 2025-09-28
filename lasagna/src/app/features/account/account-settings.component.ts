@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, inject, signal} from '@angular/core';
 import {AuthService} from './auth.service';
 import {NotificationsService} from '../../shared/service/services/notifications.service';
 import {FormsModule} from '@angular/forms';
@@ -6,10 +6,14 @@ import {FlexColumnComponent} from '../../shared/view/layout/flex-column.componen
 import {LoginFormComponent} from './login-form.component';
 import {SignupFormComponent} from './signup-form.component';
 import {ProfileComponent} from './profile.component';
+import {PasswordRecoverFormComponent} from './password-recover-form.component';
+import {ActivatedRoute} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
 
 @Component({
   selector: 'lg-account-settings',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <lg-flex-column [size]="'small'">
       <!--      <lg-title [level]="5">-->
@@ -17,12 +21,29 @@ import {ProfileComponent} from './profile.component';
       <!--      </lg-title>-->
 
       @if ((authService.currentUser()); as user) {
-        <lg-profile></lg-profile>
-      } @else {
-        @if (showRegister()) {
-          <lg-signup-form (toLogin)="showRegister.set(false)"></lg-signup-form>
+        @if (state() === 'reset-password') {
+          <lg-password-recover-form (onDone)="state.set('login')"
+                                    [code]="code()"></lg-password-recover-form>
         } @else {
-          <lg-login-form (toRegister)="showRegister.set(true)"></lg-login-form>
+          <lg-profile></lg-profile>
+        }
+      } @else {
+        @switch (state()) {
+          @case ('login') {
+            <lg-login-form (toRegister)="state.set('register')"
+                           (toRecoverPassword)="state.set('recover-request')">
+            </lg-login-form>
+          }
+          @case ('register') {
+            <lg-signup-form (toLogin)="state.set('login')"></lg-signup-form>
+          }
+          @case ('recover-request') {
+            <lg-password-recover-form (onDone)="state.set('login')"></lg-password-recover-form>
+          }
+          @case ('reset-password') {
+            <lg-password-recover-form (onDone)="state.set('login')"
+                                      [code]="code()"></lg-password-recover-form>
+          }
         }
       }
     </lg-flex-column>
@@ -35,14 +56,30 @@ import {ProfileComponent} from './profile.component';
     FormsModule,
     LoginFormComponent,
     SignupFormComponent,
-    ProfileComponent
+    ProfileComponent,
+    PasswordRecoverFormComponent
   ]
 })
 export class AccountSettingsComponent {
+  constructor() {
+    console.log({
+      snapshot: this.activatedRoute.snapshot.queryParams,
+    })
+  }
+
   authService = inject(AuthService);
   notificationsService = inject(NotificationsService);
-
+  activatedRoute = inject(ActivatedRoute);
+  code = toSignal(this.activatedRoute.queryParams.pipe(
+    map(params => params['code'] || null)
+  ), {initialValue: null});
   showRegister = signal(false);
+  state = signal<'login' | 'register' | 'recover-request' | 'reset-password'>('login');
+  codeEffect = effect(() => {
+    if (this.code() != null) {
+      this.state.set('reset-password');
+    }
+  });
 
   onLogout() {
     this.authService.logout();
