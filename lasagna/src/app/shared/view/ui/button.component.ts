@@ -222,11 +222,24 @@ export type ButtonSizes =
         &.flat {
           color: var(--button-secondary-bg);
         }
+
+        &.outlined {
+          background-color: transparent;
+          border-color: var(--button-secondary-bg);
+          color: var(--button-secondary-bg);
+        }
       }
+
       .button.secondary-dark {
         background-color: var(--button-secondary-dark-bg);
 
         &.flat {
+          color: var(--button-secondary-dark-bg);
+        }
+
+        &.outlined {
+          background-color: transparent;
+          border-color: var(--button-secondary-dark-bg);
           color: var(--button-secondary-dark-bg);
         }
       }
