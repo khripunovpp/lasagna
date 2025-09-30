@@ -20,13 +20,12 @@ export const convertPairs: Partial<Record<JellyBaseType, Partial<Record<JellyBas
     },
   },
 }
-
-export const waterCalculationFromMass = (jellyAmount: number) => {
-  return jellyAmount * 5;
+export const waterCalculationFromMass = (jellyAmount: number, ratio: number = 5) => {
+  return jellyAmount * ratio;
 }
 
-export const waterCalculationToMass = (waterAmount: number) => {
-  return waterAmount * 5 / 6;
+export const waterCalculationToMass = (waterAmount: number, ratio: number = 5) => {
+  return waterAmount * ratio / 6;
 }
 
 export const bloomRatio = (fromBloom: number, toBloom: number) => {
@@ -37,6 +36,7 @@ export class JellyCalculationModel {
   constructor(
     public type: JellyBaseType,
     public bloom: number = 1,
+    public ratio: number = 5, // выбираем 1:5 или 1:6
   ) {
   }
 
@@ -58,9 +58,9 @@ export class JellyCalculationModel {
       return 0
     }
     if (this.type === 'mass') {
-      return waterCalculationFromMass(jellyAmount);
+      return waterCalculationFromMass(jellyAmount, this.ratio);
     } else if (type === 'mass') {
-      return waterCalculationToMass(jellyAmount);
+      return waterCalculationToMass(jellyAmount, this.ratio);
     }
     return 0;
   }

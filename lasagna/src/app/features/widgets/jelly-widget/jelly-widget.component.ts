@@ -13,6 +13,8 @@ import {NumberInputComponent} from '../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';
 import {ControlExtraTemplateDirective} from '../../controls/form/control-extra-template.directive';
 import {TranslatePipe} from '@ngx-translate/core';
+import {PullDirective} from '../../../shared/view/directives/pull.directive';
+import {ButtonComponent} from '../../../shared/view/ui/button.component';
 
 
 @Component({
@@ -21,110 +23,132 @@ import {TranslatePipe} from '@ngx-translate/core';
   template: `
     <lg-flex-column>
       <form [formGroup]="form">
-        <lg-flex-row [bottom]="true" [mobileMode]="true">
-          <lg-flex-column formGroupName="from">
-            {{ 'jelly.in-recipe-you-have' | translate }}
-            <lg-number-input [placeholder]="''"
-                             formControlName="amount"
-                             lgParseMath>
-              <ng-template lgExtraTpl place="after">
-                {{ 'jelly.grams-of' | translate }}
-              </ng-template>
-            </lg-number-input>
+        <lg-flex-column [size]="'medium'">
+          <lg-flex-row [bottom]="true" [mobileMode]="true">
+            <lg-flex-column formGroupName="from">
+              <span>{{ 'jelly.in-recipe-you-have' | translate }}</span>
 
-            <lg-range
-              [max]="220"
-              [min]="120"
-              [step]="10"
-              [tickInterval]="20"
-              formControlName="bloom"
-            ></lg-range>
-
-            <lg-buttons-group [items]="typeButtons" formControlName="type"></lg-buttons-group>
-          </lg-flex-column>
-
-
-          <lg-flex-column formGroupName="to">
-            @let fromType = form.value?.from?.type;
-            @let toType = form.value?.to?.type;
-            <lg-flex-row [strictCenter]="true" class="text-center">
-              <lg-flex-column [position]="'center'" [size]="'small'" lgShrink>
-                <div>
-                  {{ 'jelly.you-need' | translate }}
-                </div>
-
-                <lg-flex-row [size]="'small'" style="font-size: 2rem">
-                  <div>{{ result() | number: '1.0-2' }}</div>
-                  @switch (toType) {
-                    @case ("powder") {
-                      🍚
-                    }
-                    @case ("leaf") {
-                      🍃
-                    }
-                    @case ("mass") {
-                      🧫
-                    }
-                  }
-                </lg-flex-row>
-
-                <div>
+              <lg-number-input [placeholder]="''"
+                               formControlName="amount"
+                               lgParseMath>
+                <ng-template lgExtraTpl place="after">
                   {{ 'jelly.grams-of' | translate }}
-                </div>
-              </lg-flex-column>
-              @if (waterNeeded()) {
-                <lg-flex-column lgShrink [size]="'small'" [position]="'center'">
-                  <div>
-                    @switch (toType) {
-                      @case ("mass") {
-                        <div>
-                          {{ 'jelly.with' | translate }}
-                        </div>
-                      }
-                    }
+                </ng-template>
+              </lg-number-input>
 
-                    @switch (toType) {
-                      @case ("powder") {
-                        <div>
-                          {{ 'jelly.and' | translate }}
-                        </div>
-                      }
-                      @case ("leaf") {
-                        <div>
-                          {{ 'jelly.and' | translate }}
-                        </div>
-                      }
-                    }
+              <lg-range
+                [max]="220"
+                [min]="120"
+                [step]="10"
+                [tickInterval]="20"
+                formControlName="bloom"
+              ></lg-range>
+
+              <lg-buttons-group [items]="typeButtons" formControlName="type"></lg-buttons-group>
+            </lg-flex-column>
+
+
+            <lg-flex-column formGroupName="to">
+              @let fromType = form.value?.from?.type;
+              @let toType = form.value?.to?.type;
+              <lg-flex-row [strictCenter]="true" class="text-center">
+                <lg-flex-column [position]="'center'" [size]="'small'" lgShrink>
+                  <div>
+                    {{ 'jelly.you-need' | translate }}
                   </div>
 
                   <lg-flex-row [size]="'small'" style="font-size: 2rem">
-                    <div>{{ waterNeeded() | number: '1.0-2' }}</div>
-                    💧
+                    <div>{{ result() | number: '1.0-2' }}</div>
+                    @switch (toType) {
+                      @case ("powder") {
+                        🍚
+                      }
+                      @case ("leaf") {
+                        🍃
+                      }
+                      @case ("mass") {
+                        🧫
+                      }
+                    }
                   </lg-flex-row>
 
                   <div>
-                    {{ 'jelly.ml-of-water' | translate }}
-                    @switch (toType) {
-                      @case ("mass") {
-                        <br>{{ 'jelly.included' | translate }}
-                      }
-                    }
+                    {{ 'jelly.grams-of' | translate }}
                   </div>
                 </lg-flex-column>
-              }
+                @if (waterNeeded()) {
+                  <lg-flex-column lgShrink [size]="'small'" [position]="'center'">
+                    <div>
+                      @switch (toType) {
+                        @case ("mass") {
+                          <div>
+                            {{ 'jelly.with' | translate }}
+                          </div>
+                        }
+                      }
+
+                      @switch (toType) {
+                        @case ("powder") {
+                          <div>
+                            {{ 'jelly.and' | translate }}
+                          </div>
+                        }
+                        @case ("leaf") {
+                          <div>
+                            {{ 'jelly.and' | translate }}
+                          </div>
+                        }
+                      }
+                    </div>
+
+                    <lg-flex-row [size]="'small'" style="font-size: 2rem">
+                      <div>{{ waterNeeded() | number: '1.0-2' }}</div>
+                      💧
+                    </lg-flex-row>
+
+                    <div>
+                      {{ 'jelly.ml-of-water' | translate }}
+                      @switch (toType) {
+                        @case ("mass") {
+                          <br>{{ 'jelly.included' | translate }}
+                        }
+                      }
+                    </div>
+                  </lg-flex-column>
+                }
+              </lg-flex-row>
+
+              <lg-range
+                [max]="220"
+                [min]="120"
+                [step]="10"
+                [tickInterval]="20"
+                formControlName="bloom"
+              ></lg-range>
+
+              <lg-buttons-group [items]="typeButtons" formControlName="type"></lg-buttons-group>
+            </lg-flex-column>
+          </lg-flex-row>
+
+          <div class="text-small" lgPull>
+            @let currentRatio = form.value?.ratio;
+            <lg-flex-row [size]="'small'">
+              <span>{{ 'jelly.proportion-label' | translate }}:</span>
+              <lg-button (onClick)="changeRatio(5)"
+                         [outlined]="true"
+                         [size]="'tiny'"
+                         [style]="currentRatio === 5 ? 'primary' : 'secondary-dark'">
+                1/5
+              </lg-button>
+              <lg-button (onClick)="changeRatio(6)"
+                         [outlined]="true"
+                         [size]="'tiny'"
+                         [style]="currentRatio === 6 ? 'primary' : 'secondary-dark'">
+                1/6
+              </lg-button>
             </lg-flex-row>
-
-            <lg-range
-              [max]="220"
-              [min]="120"
-              [step]="10"
-              [tickInterval]="20"
-              formControlName="bloom"
-            ></lg-range>
-
-            <lg-buttons-group [items]="typeButtons" formControlName="type"></lg-buttons-group>
-          </lg-flex-column>
-        </lg-flex-row>
+          </div>
+        </lg-flex-column>
       </form>
     </lg-flex-column>
   `,
@@ -140,7 +164,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     NumberInputComponent,
     ParseMathDirective,
     ControlExtraTemplateDirective,
-    TranslatePipe
+    TranslatePipe,
+    PullDirective,
+    ButtonComponent
   ],
   styles: [`
     :host {
@@ -213,7 +239,11 @@ export class JellyWidgetComponent {
       if (isNaN(amount)) {
         return;
       }
-      const model = new JellyCalculationModel(value?.from?.type as any, value?.from?.bloom as any);
+      const model = new JellyCalculationModel(
+        value?.from?.type as any,
+        value?.from?.bloom as any,
+        value?.ratio as any
+      );
       const convertedAmount = model.convertToBase(value?.to?.type as any, amount, value?.to?.bloom as any);
       const waterNeeded = model.convertToWater(value?.to?.type as any, convertedAmount);
 
@@ -235,6 +265,7 @@ export class JellyWidgetComponent {
       type: new FormControl('powder'),
       bloom: new FormControl(140),
     }),
+    ratio: new FormControl(5),
   })
 
   typeButtons: ButtonGroupItem[] = [
@@ -253,5 +284,9 @@ export class JellyWidgetComponent {
       value: 'mass',
       style: 'secondary'
     }
-  ]
+  ];
+
+  changeRatio(ratio: number) {
+    this.form.get('ratio')?.setValue(ratio);
+  }
 }
