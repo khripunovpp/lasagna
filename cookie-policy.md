@@ -75,7 +75,7 @@ Lasagna uses the following third-party services that may set cookies or similar 
 - **Sentry** — app crash and error tracking.
 - **[Future] CDN / Image Hosting Provider** — for media delivery (when enabled).
 
-These services operate under their own privacy and cookie policies, which we link to from our [Privacy Policy](https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md).
+These services operate under their own privacy and cookie policies, which we link to from our Privacy Policy.
 
 ---
 
@@ -89,7 +89,7 @@ We recommend checking this page from time to time.
 ## 8. Contact Us
 
 If you have any questions about this Cookie Policy, please contact us at:  
-**Email:** khripunovpp@gmail.com
+**Email:** support@lasagnacost.com
 
 ---
 

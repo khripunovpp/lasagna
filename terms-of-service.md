@@ -120,7 +120,7 @@ Continued use of Lasagna means you accept any updates.
 ## 12. Contact
 
 For questions, requests, or legal concerns, please contact us at:  
-**Email:** khripunovpp@gmail.com
+**Email:** support@lasagnacost.com
 
 ---
 

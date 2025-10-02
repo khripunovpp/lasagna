@@ -2,7 +2,7 @@
 	"add-label": "Add",
 	"all-data.delete-failed": "Couldn't delete all data. Please try again.",
 	"all-data.deleted": "All data deleted. The app has been reset to defaults and refreshed.",
-	"app.title": "🍰 \"What's Lasagna cost?\" - Recipe Cost Calculator",
+	"app.title": "🍰 \"What does Lasagna cost?\" - Recipe Cost Calculator",
 	"backup.created": "Backup created!",
 	"backup.creating": "Creating backup...",
 	"backup.delete-all.btn": "Delete all data",

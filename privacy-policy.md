@@ -12,7 +12,7 @@
 
 We respect your privacy and are committed to transparency regarding how your data is handled.
 
-You can contact us at: khripunovpp@gmail.com
+You can contact us at: support@lasagnacost.com
 
 ---
 
@@ -101,7 +101,7 @@ We recommend you check this page periodically.
 ## 10. Contact Us
 
 For questions, requests, or privacy concerns, please contact us:  
-**Email:** khripunovpp@gmail.com
+**Email:** support@lasagnacost.com
 
 ---
 
