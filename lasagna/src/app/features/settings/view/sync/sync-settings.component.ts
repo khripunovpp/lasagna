@@ -66,12 +66,12 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
               <p>{{ status.products?.dirty }} {{ 'sync.status.dirty' | translate }}</p>
             </div>
 
-            <div class="sync-status-item">
-              <h5>{{ 'sync.status.recipes' | translate }}</h5>
-              <p>{{ status.recipes?.total }} {{ 'sync.status.total' | translate }}</p>
-              <p>{{ status.recipes?.synced }} {{ 'sync.status.synced' | translate }}</p>
-              <p>{{ status.recipes?.dirty }} {{ 'sync.status.dirty' | translate }}</p>
-            </div>
+<!--            <div class="sync-status-item">-->
+<!--              <h5>{{ 'sync.status.recipes' | translate }}</h5>-->
+<!--              <p>{{ status.recipes?.total }} {{ 'sync.status.total' | translate }}</p>-->
+<!--              <p>{{ status.recipes?.synced }} {{ 'sync.status.synced' | translate }}</p>-->
+<!--              <p>{{ status.recipes?.dirty }} {{ 'sync.status.dirty' | translate }}</p>-->
+<!--            </div>-->
           </div>
         </lg-flex-column>
       }

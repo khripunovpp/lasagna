@@ -66,7 +66,11 @@ export class SyncService {
       // Собираем данные по стратегиям
       const syncData = await this.#_prepare(props.forceAll);
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
-      const result = await this._restService.post<SyncResponse>(`http://localhost:1337/api/sync/data`, {data: syncData}, headers);
+
+      const result = await this._restService.post<SyncResponse>(`http://localhost:1337/api/sync/data`, {
+        afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
+      }, headers);
+
       if (result) {
         if (props.withAdding) {
           for (const [key, strategy] of Object.entries(this.strategies)) {
@@ -109,6 +113,7 @@ export class SyncService {
   }
 
   async getSyncStatus(): Promise<any> {
+    debugger
     const status: Record<string, any> = {};
     for (const [key, strategy] of Object.entries(this.strategies)) {
       status[key] = await strategy.getSyncStatus();
@@ -135,6 +140,7 @@ export class SyncService {
   }
 
   private async updateLocalSyncStatus(): Promise<void> {
+    debugger
     await this.getSyncStatus();
   }
 

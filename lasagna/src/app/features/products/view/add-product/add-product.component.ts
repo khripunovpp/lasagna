@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, effect, inject, OnInit, Renderer2, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, inject, OnInit, Renderer2, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -123,6 +123,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
           }
 
         </lg-flex-column>
+
         @if (product()?.uuid) {
           <lg-sync-single-button (onClick)="sync()"
                                  [needSync]="!!product()?.needSync()"></lg-sync-single-button>
@@ -202,12 +203,12 @@ export class AddProductComponent
 
   async sync() {
     try {
-      debugger
       if (!this.product()?.uuid) {
         return;
       }
 
       await this._productsRepository.safetyPutToCloud(Stores.PRODUCTS, this.product()!);
+      this._notificationsService.success('notifications.product.synced');
     } catch (error) {
       this._notificationsService.error(errorHandler(error));
     }

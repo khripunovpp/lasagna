@@ -12,9 +12,10 @@ export abstract class BaseModel
 
   markAsSynced(
     cloud_uuid?: string,
+    date: number = Date.now(),
   ) {
+    this.syncedAt = date;
     this.dirtyToSync = false;
-    this.syncedAt = Date.now();
     this.updatedAt = this.syncedAt;
     if (!cloud_uuid) return;
     this.cloud_uuid = cloud_uuid;

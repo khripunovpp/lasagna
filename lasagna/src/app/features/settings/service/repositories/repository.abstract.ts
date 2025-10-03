@@ -18,64 +18,72 @@ export abstract class RepositoryAbstract {
     return this.cloudSyncService.getData(table, cloud_uuid);
   }
 
-  async updateToCloud(
+  async addToCloud(
     table: Stores,
     item: CanSync,
   ) {
-    if (!item.uuid || !item.cloud_uuid) return;
-    const resp = await this.cloudSyncService.patchData(
-      table, item.cloud_uuid, item.toCloudDTO()
+    return this.cloudSyncService.addDataToSync<any, CanSync>(
+      table, item.toCloudDTO()
     );
-
-    const document = resp.cloud_uuid;
-    item.markAsSynced(document);
-    await this.indexDbService.replaceData(table, item.uuid, {
-      cloud_uuid: item.cloud_uuid,
-      syncedAt: item.syncedAt,
-      updatedAt: item.updatedAt,
-      dirtyToSync: false,
-    });
   }
 
+  /**
+   * Если у элемента нет cloud_uuid, то он добавляется в облако.
+   * Если есть, проверяем актуальность по updatedAt и syncedAt.
+   * Если локальный элемент новее, обновляем облако.
+   * Если облачный элемент новее, обновляем локальный элемент.
+   * @param table
+   * @param itemToChange
+   */
   async safetyPutToCloud(
     table: Stores,
-    productToChange: CanSync & CanBeStoredIndexDbAbstract,
+    itemToChange: CanSync & CanBeStoredIndexDbAbstract,
   ): Promise<{
     messages: string[]
     data: any
   }> {
-    try {debugger
-      if (!productToChange?.uuid) {
+    try {
+      debugger
+      if (!itemToChange?.uuid) {
         return {
           messages: ['Item does not have a UUID, cannot update to cloud.'],
           data: null
         }
       }
-      if (!productToChange?.cloud_uuid) {
-        const resp = await this.cloudSyncService.addDataToSync<any>(
-          Stores.PRODUCTS, productToChange.toCloudDTO()
+      if (!itemToChange?.cloud_uuid) {
+        const resp = await this.addToCloud(
+          table, itemToChange
         );
-        productToChange.markAsSynced(resp.documentId);
+        itemToChange.markAsSynced(resp.cloud_uuid, resp.updatedAt);
       } else {
-        // first get the current state from the cloud
-        const cloudProduct = await this.getFromCloud(table, productToChange.cloud_uuid!);
+        // TODO тут надо ловить 404 ошибку и удалять cloud_uuid если облачный элемент удален
+        const cloudItem = await this.getFromCloud(table, itemToChange.cloud_uuid!);
 
-        if (!cloudProduct) {
-          const resp = await this.cloudSyncService.addDataToSync<any>(
-            Stores.PRODUCTS, productToChange.toCloudDTO()
+        if (!cloudItem) {
+          const resp = await this.addToCloud(
+            table, itemToChange
           );
-          const document = resp.documentId;
-          productToChange.markAsSynced(document);
+          itemToChange.markAsSynced(resp.cloud_uuid, resp.updatedAt);
         }
-        if (productToChange.updatedAt && productToChange.updatedAt > cloudProduct.updatedAt) {
-          console.warn('Local item is newer than cloud item, updating cloud:', productToChange.uuid);
+
+        if (itemToChange.updatedAt && itemToChange.updatedAt > cloudItem.updatedAt) {
+          console.warn('Local item is newer than cloud item, updating cloud:', itemToChange.uuid);
           const resp = await this.cloudSyncService.patchData(
-            table, productToChange.cloud_uuid, productToChange.toCloudDTO()
+            table, itemToChange.cloud_uuid, itemToChange.toCloudDTO()
           );
-          productToChange.markAsSynced(resp.cloud_uuid);
+          itemToChange.markAsSynced(resp.cloud_uuid, resp.updatedAt);
+        } else if (cloudItem.updatedAt > (itemToChange.updatedAt || 0)) {
+          console.warn('Cloud item is newer than local item, updating local:', itemToChange.uuid);
+          // cloud is newer, update local
+          itemToChange.markAsSynced(cloudItem.cloud_uuid, cloudItem.updatedAt);
+          await this.indexDbService.replaceData(table, itemToChange.uuid, itemToChange.toDTO());
+          return {
+            messages: ['Local item was outdated and has been updated from the cloud.'],
+            data: 1,
+          }
         }
       }
-      await this.indexDbService.replaceData(Stores.PRODUCTS, productToChange.uuid!, productToChange.toDTO());
+      await this.indexDbService.replaceData(table, itemToChange.uuid!, itemToChange.toDTO());
       // update the item with the current state
 
       return {
@@ -86,14 +94,5 @@ export abstract class RepositoryAbstract {
       console.error('Error updating to cloud:', error);
       throw error;
     }
-  }
-
-  async deleteFromCloud(
-    table: Stores,
-    item: CanSync,
-  ) {
-    if (!item.uuid || !item.cloud_uuid) return;
-    await this.cloudSyncService.deleteData(table, item.cloud_uuid);
-    await this.indexDbService.remove(table, item.uuid);
   }
 }

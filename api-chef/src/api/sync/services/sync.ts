@@ -1,22 +1,21 @@
 /**
  * sync service
  */
-const { ProductSyncStrategy } = require('./product-sync-strategy');
-const { RecipeSyncStrategy } = require('./recipe-sync-strategy');
+const {ProductSyncStrategy} = require('./product-sync-strategy');
+const {RecipeSyncStrategy} = require('./recipe-sync-strategy');
 
 const strategies = {
   products: new ProductSyncStrategy(),
-  recipes: new RecipeSyncStrategy(),
+  // recipes: new RecipeSyncStrategy(),
 };
 
 export default {
-  async syncData(data, userId, strapi) {
+  async syncData(afterDate, userId, strapi) {
     const results = {};
+    const dateObj = new Date(afterDate);
+
     for (const [key, strategy] of Object.entries(strategies)) {
-      if (data[key]) {
-        const res = await strategy.sync(data[key], userId, strapi);
-        results[key] = res;
-      }
+      results[key] = await strategy.sync(dateObj, userId, strapi);
     }
     return results;
   },
