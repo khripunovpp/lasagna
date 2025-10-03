@@ -96,25 +96,24 @@ import {
                 </ng-template>
               }
 
-              @if (!draftRef()) {
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button [flat]="true"
+                           [disabled]="!!draftRef()"
+                           [link]="'/recipes/calculate/' + recipe()?.uuid"
+                           [style]="'default'">
+                  {{ 'recipe.calculate-btn'|translate }}
+                </lg-button>
+              </ng-template>
+
+              @if (!draftRef() && editMode()) {
                 <ng-template lgInlineSeparatedGroup>
-                  <lg-button [flat]="true"
-                             [link]="'/recipes/calculate/' + recipe()?.uuid"
-                             [style]="'default'">
-                    {{ 'recipe.calculate-btn'|translate }}
+                  <lg-button lgShrink
+                             [style]="'default'"
+                             [flat]="true"
+                             (click)="onCloneRecipe()">
+                    {{ 'recipe.form.clone-btn'|translate }}
                   </lg-button>
                 </ng-template>
-
-                @if (editMode()) {
-                  <ng-template lgInlineSeparatedGroup>
-                    <lg-button lgShrink
-                               [style]="'default'"
-                               [flat]="true"
-                               (click)="onCloneRecipe()">
-                      {{ 'recipe.form.clone-btn'|translate }}
-                    </lg-button>
-                  </ng-template>
-                }
               }
 
               @if (isDraftRoute()) {
@@ -244,8 +243,9 @@ export class AddRecipeComponent
     this.formComponent()?.form.valueChanges.pipe(
       debounceTime(500),
     ).subscribe((value) => {
-      if (!this.formComponent()!.form.dirty) {
-        return
+      if (!this.formComponent()!.form.dirty
+        || !this.formComponent()?.form?.touched){
+        return false
       }
       if (this.draftRef()?.uuid) {
         this._recipesRepository.updateDraftRecipe(

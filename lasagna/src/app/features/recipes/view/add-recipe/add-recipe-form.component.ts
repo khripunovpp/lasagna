@@ -49,6 +49,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {errorHandler} from '../../../../shared/helpers';
+import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -80,7 +81,8 @@ import {errorHandler} from '../../../../shared/helpers';
     InputComponent,
     ControlBoxComponent,
     SelfStartDirective,
-    WidthDirective
+    WidthDirective,
+    HtmlEditorComponent
   ],
   providers: [
     {
