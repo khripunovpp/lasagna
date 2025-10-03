@@ -7,8 +7,9 @@ export abstract class CanSync {
 
   markAsSynced(
     cloud_uuid?: string,
+    date: number = Date.now(),
   ) {
-    this.syncedAt = Date.now();
+    this.syncedAt = date;
     this.dirtyToSync = false;
     this.updatedAt = this.syncedAt;
     if (!cloud_uuid) return;

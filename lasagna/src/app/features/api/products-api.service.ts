@@ -17,13 +17,13 @@ export class ProductsApiService implements ApiAgentInterface<Product> {
 
   post(data?: Record<string, any>) {
     return this.strapiService.post('/products', data).then((response) => {
-      return Product.fromCloud(response.data);
+      return Product.fromCloud(response);
     });
   }
 
   put(id: string, data?: Record<string, any>) {
     return this.strapiService.put(`/products/${id}`, data).then((response) => {
-      return Product.fromCloud(response.data);
+      return Product.fromCloud(response);
     });
   }
 

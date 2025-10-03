@@ -1,14 +1,19 @@
-import {RecipesRepository} from '../../../features/recipes/service/recipes.repository';
 import {SyncStrategy} from './sync-strategy';
-import {Recipe} from '../../../features/recipes/service/models/Recipe';
+import {Recipe} from '../../../../features/recipes/service/models/Recipe';
+import {RecipesRepository} from '../../repositories';
 
-export class RecipeSyncStrategy implements SyncStrategy {
-  constructor(private repo: RecipesRepository) {
+export class RecipeSyncStrategy
+  implements SyncStrategy {
+  constructor(
+    private repo: RecipesRepository,
+  ) {
   }
 
-  async prepareSyncData(forceAll: boolean): Promise<any[]> {
+  async prepareSyncData(): Promise<any[]> {
     const recipes = await this.repo.getRecipes();
-    return (forceAll ? recipes : recipes.filter((r: any) => r.dirtyToSync)).map(r=>r.toDTO());
+
+    return recipes.filter((r: any) => r.dirtyToSync)
+      .map(r => r.toDTO());
   }
 
   async markAllAsSynced(items: any[]): Promise<void> {
@@ -21,7 +26,7 @@ export class RecipeSyncStrategy implements SyncStrategy {
     }
   }
 
-  async syncFromCloud(serverData: any[], localData: any[]){
+  async syncFromCloud(serverData: any[], localData: any[]) {
     const localUuids = new Set((localData || []).map((item: any) => item.uuid));
     const newItems = (serverData || []).filter((item: any) => !localUuids.has(item.uuid));
     // await this.repo.addMany(newItems.map(item => Recipe.fromRaw(item)));

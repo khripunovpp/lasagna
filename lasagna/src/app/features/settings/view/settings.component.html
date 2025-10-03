@@ -39,8 +39,7 @@
         <lg-backup-settings></lg-backup-settings>
       </ng-template>
 
-      <ng-template [display]="!!authService.currentUser()?.username"
-                   alias="sync"
+      <ng-template alias="sync"
                    label="{{ 'sync.title'|translate }}"
                    lgTab>
         <lg-sync-settings></lg-sync-settings>

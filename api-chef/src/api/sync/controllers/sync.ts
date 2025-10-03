@@ -11,24 +11,18 @@ export default {
         return ctx.unauthorized('Authentication required');
       }
 
-      const {data} = ctx.request.body;
+      const {afterDate} = ctx.request.body;
       const userId = ctx.state.user.id;
 
-      console.log('[syncData] userId:', userId);
-      console.log('[syncData] incoming data:', JSON.stringify(data, null, 2));
-
-      if (!data) {
-        console.log('[syncData] No data in request body');
-        return ctx.badRequest('Data is required');
+      if (!afterDate) {
+        return ctx.badRequest('afterDate is required');
       }
 
       const syncService = strapi.service('api::sync.sync');
-      const result = await syncService.syncData(data, userId, strapi);
-      
-      console.log('[syncData] result:', JSON.stringify(result, null, 2));
+      const result = await syncService.syncData(afterDate, userId, strapi);
+
       return ctx.send(result);
     } catch (error) {
-      console.error('[syncData] Error:', error);
       return ctx.badRequest('Sync failed', {error: error.message});
     }
   },

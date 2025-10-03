@@ -112,12 +112,11 @@ export class Product extends BaseModel {
       source: dto?.source || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
-      cloud_uuid: dto?.cloud_uuid,
+      cloud_uuid: dto?.documentId,
       createdAt: createdAt?.getTime(),
       updatedAt: updatedAt?.getTime(),
       syncedAt: syncedAt?.getTime(),
       color: dto?.color,
-      dirtyToSync: dto?.dirtyToSync ?? false,
       system: dto?.system || false,
     });
   }
@@ -200,9 +199,6 @@ export class Product extends BaseModel {
       unit: this.unit,
       color: this.color || estimateColor(this.name),
       uuid: this.uuid,
-      cloud_uuid: this.cloud_uuid,
-      syncedAt: this.syncedAt,
-      dirtyToSync: this.dirtyToSync,
       category_id: this.category_id?.toUUID(),
       system: this.system || false,
     };

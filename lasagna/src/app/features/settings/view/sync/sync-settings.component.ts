@@ -3,7 +3,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {AuthService} from '../../../../shared/service/services/auth.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {SyncLog, SyncService} from '../../../../shared/service/services/sync.service';
+import {SyncLog, SyncService} from '../../../../shared/service/services/sync/sync.service';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {FormsModule} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
@@ -23,24 +23,12 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
         <lg-flex-column [size]="'small'">
           <p class="no-margin">{{ 'sync.description' | translate }}</p>
 
-          <lg-flex-row [center]="true" [mobileMode]="true">
-            <lg-control-box lgShrink>
-              <lg-control flow="row-reverse"
-                          label="Add witch you don't have"
-                          labelFor="addWitchYouDontHave-">
-                <lg-checkbox name="addWitchYouDontHave"
-                             [(ngModel)]="addWitchYouDontHave"
-                             size="small"></lg-checkbox>
-              </lg-control>
-            </lg-control-box>
-
-            <lg-button
-              (click)="onSync()"
-              [style]="'success'"
-              [disabled]="syncService.isSyncing()">
-              {{ 'sync.sync-btn' | translate }}
-            </lg-button>
-          </lg-flex-row>
+          <lg-button
+            (click)="onSync()"
+            [style]="'success'"
+            [disabled]="syncService.isSyncing()">
+            {{ 'sync.sync-btn' | translate }}
+          </lg-button>
 
           @for (log of logs(); track log.entityIdentifier) {
             <pre style="white-space: break-spaces">{{ log | json }}</pre>
@@ -66,12 +54,12 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
               <p>{{ status.products?.dirty }} {{ 'sync.status.dirty' | translate }}</p>
             </div>
 
-            <div class="sync-status-item">
-              <h5>{{ 'sync.status.recipes' | translate }}</h5>
-              <p>{{ status.recipes?.total }} {{ 'sync.status.total' | translate }}</p>
-              <p>{{ status.recipes?.synced }} {{ 'sync.status.synced' | translate }}</p>
-              <p>{{ status.recipes?.dirty }} {{ 'sync.status.dirty' | translate }}</p>
-            </div>
+            <!--            <div class="sync-status-item">-->
+            <!--              <h5>{{ 'sync.status.recipes' | translate }}</h5>-->
+            <!--              <p>{{ status.recipes?.total }} {{ 'sync.status.total' | translate }}</p>-->
+            <!--              <p>{{ status.recipes?.synced }} {{ 'sync.status.synced' | translate }}</p>-->
+            <!--              <p>{{ status.recipes?.dirty }} {{ 'sync.status.dirty' | translate }}</p>-->
+            <!--            </div>-->
           </div>
         </lg-flex-column>
       }
@@ -127,7 +115,6 @@ export class SyncSettingsComponent implements OnInit {
   syncService = inject(SyncService);
   notificationsService = inject(NotificationsService);
   authService = inject(AuthService);
-  addWitchYouDontHave = model<boolean>(false);
   logs = signal<SyncLog[]>([]);
 
   ngOnInit() {
@@ -136,10 +123,8 @@ export class SyncSettingsComponent implements OnInit {
   async onSync() {
     const loader = this.notificationsService.loading('Syncing data...');
     try {
-      const result = await this.syncService.syncData({
-        forceAll: this.addWitchYouDontHave(),
-        withAdding: this.addWitchYouDontHave(),
-      });
+      const result = await this.syncService.syncData();
+      console.log({result})
       const logs = this.syncService.makeLogs(result);
       this.logs.set(logs);
       this.notificationsService.success('Sync completed successfully');

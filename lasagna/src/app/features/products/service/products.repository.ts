@@ -1,19 +1,15 @@
 import {inject, Injectable} from "@angular/core";
-import {RepositoryAbstract} from "../../settings/service/repositories/repository.abstract";
-import {RepositoryInterface} from "../../settings/service/repositories/repository.inerface";
+import {RepositoryAbstract} from "../../../shared/service/services/repository.abstract";
+import {RepositoryInterface} from "../../../shared/service/services/repository.inerface";
 import {Product} from "./Product";
 import {DexieIndexDbService} from "../../../shared/service/db/dexie-index-db.service";
 import {CategoryProductsRepository} from "../../../shared/service/repositories";
-import {ProductsApiService} from "../../api/products-api.service";
 import {DraftFormsService, UsingHistoryService} from "../../../shared/service/services";
 import {ProductFactory} from "./product.factory";
 import {CloudSyncService} from "../../api/cloud-sync.service";
-import { OnboardingService } from "../../onboarding/onboarding.service";
-import { Subject } from "rxjs";
+import {OnboardingService} from "../../onboarding/onboarding.service";
 import {Stores} from '../../../shared/service/db/const/stores';
-import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {Product} from './Product';
+import {BehaviorSubject} from 'rxjs';
 import {ProductDTO} from './Product.scheme';
 
 
@@ -26,7 +22,6 @@ export class ProductsRepository
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryProductsRepository,
-    private _productsApiService: ProductsApiService,
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
     private _productFactory: ProductFactory,

@@ -464,12 +464,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   attributes: {
     amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     category_id: Schema.Attribute.String;
-    cloud_uuid: Schema.Attribute.String & Schema.Attribute.Unique;
     color: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    dirtyToSync: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -480,8 +478,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     source: Schema.Attribute.String;
-    syncedAt: Schema.Attribute.DateTime;
-    unit: Schema.Attribute.Enumeration<['gram', 'portion', 'piece']> &
+    system: Schema.Attribute.Boolean;
+    unit: Schema.Attribute.Enumeration<['gram', 'kilogram', 'piece']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

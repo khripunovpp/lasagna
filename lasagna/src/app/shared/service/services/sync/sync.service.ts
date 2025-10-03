@@ -1,26 +1,20 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {DexieIndexDbService} from '../db/dexie-index-db.service';
-import {LoggerService} from '../../../features/logger/logger.service';
-import {AuthService} from './auth.service';
-import {RestService} from '../../../features/api/rest.service';
+import {DexieIndexDbService} from '../../db/dexie-index-db.service';
+import {LoggerService} from '../../../../features/logger/logger.service';
+import {AuthService} from '../auth.service';
+import {RestService} from '../../../../features/api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {ProductSyncStrategy} from './product-sync-strategy';
 import {SyncStrategy} from './sync-strategy';
-import {ProductsRepository} from '../../../features/products/service/products.repository';
-import {RecipesRepository} from '../../../features/recipes/service/providers/recipes.repository';
+import {ProductsRepository} from '../../../../features/products/service/products.repository';
+import {RecipesRepository} from '../../../../features/recipes/service/providers/recipes.repository';
 
 export interface SyncLog {
   entityIdentifier: string
   body: string
 }
 
-export type SyncResponse = Record<string, {
-  created?: number
-  updated?: number
-  errors?: any[]
-  toCreate?: Record<string, any[]>[]
-  toRemove?: Record<string, any[]>[]
-}>
+export type SyncResponse = Record<string, Record<string, any[]>[]>
 
 @Injectable({
   providedIn: 'root'
@@ -50,13 +44,7 @@ export class SyncService {
   });
   private strategies: Record<string, SyncStrategy>;
 
-  async syncData(props: {
-    forceAll: boolean
-    withAdding?: boolean
-  } = {
-    forceAll: false,
-    withAdding: false
-  }): Promise<any> {
+  async syncData(): Promise<any> {
     this.isSyncing.set(true);
     const currentUserId = this._authService.getUserId();
     if (!currentUserId) throw new Error('User ID is required for sync');
@@ -64,19 +52,19 @@ export class SyncService {
     try {
       if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync');
       // Собираем данные по стратегиям
-      const syncData = await this.#_prepare(props.forceAll);
+      // const syncData = await this.#_prepare();
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
-      const result = await this._restService.post<SyncResponse>(`http://localhost:1337/api/sync/data`, {data: syncData}, headers);
+
+      const result = await this._restService.post<SyncResponse>(`http://localhost:1337/api/sync/data`, {
+        afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
+      }, headers);
+
       if (result) {
-        if (props.withAdding) {
-          for (const [key, strategy] of Object.entries(this.strategies)) {
-            const syncResult = result[key]?.['toCreate'] || [];
-            await strategy.syncFromCloud(syncResult, syncData[key]);
-          }
-        }
-        // После успешного sync сбрасываем dirtyToSync
         for (const [key, strategy] of Object.entries(this.strategies)) {
-          await strategy.markAllAsSynced(syncData[key]);
+          debugger
+          const syncResult = result[key] || [];
+          await strategy.syncFromCloud(syncResult, []);
+          await strategy.markAllAsSynced([]);
         }
         this.logger.log('Sync completed successfully:', result);
         this.updateLastSyncTime();
@@ -99,16 +87,17 @@ export class SyncService {
     const logs: SyncLog[] = [];
 
     for (const [key, data] of Object.entries(result)) {
-      if (data.errors && data.errors.length > 0) {
-        const errorLogs = this._parseErrorsToLog(data.errors);
-        logs.push(...errorLogs);
-      }
+      // if (data.errors && data.errors.length > 0) {
+      //   const errorLogs = this._parseErrorsToLog(data.errors);
+      //   logs.push(...errorLogs);
+      // }
 
     }
     return logs;
   }
 
   async getSyncStatus(): Promise<any> {
+    debugger
     const status: Record<string, any> = {};
     for (const [key, strategy] of Object.entries(this.strategies)) {
       status[key] = await strategy.getSyncStatus();
@@ -117,15 +106,13 @@ export class SyncService {
     return status;
   }
 
-  async #_prepare(
-    forceAll: boolean = false
-  ) {
-    const syncData: Record<string, any[]> = {};
-    for (const [key, strategy] of Object.entries(this.strategies)) {
-      syncData[key] = await strategy.prepareSyncData(forceAll);
-    }
-    return syncData;
-  }
+  // async #_prepare() {
+  //   const syncData: Record<string, any[]> = {};
+  //   for (const [key, strategy] of Object.entries(this.strategies)) {
+  //     syncData[key] = await strategy.prepareSyncData();
+  //   }
+  //   return syncData;
+  // }
 
   private _parseErrorsToLog(errors: any[]): SyncLog[] {
     return errors.map(error => ({
@@ -135,6 +122,7 @@ export class SyncService {
   }
 
   private async updateLocalSyncStatus(): Promise<void> {
+    debugger
     await this.getSyncStatus();
   }
 

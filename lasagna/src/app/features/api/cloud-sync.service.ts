@@ -15,7 +15,7 @@ export class CloudSyncService {
     [Stores.PRODUCTS]: this.productsApiService
   }
 
-  addDataToSync<T>(
+  addDataToSync<T,R>(
     store: Stores,
     data: T,
   ) {
@@ -23,7 +23,7 @@ export class CloudSyncService {
     if (!api) {
       throw new Error(`No API agent found for store: ${store}`);
     }
-    return api.post(data as any) as Promise<T>;
+    return api.post(data as any) as Promise<R>;
   }
 
   patchData(
