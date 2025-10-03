@@ -12,10 +12,11 @@
 
         <lg-control [label]="'recipe.form.description.placeholder'|translate"
                     lgExpand>
-          <lg-textarea formControlName="description"
-                       lgExpand
-                       placeholder=""></lg-textarea>
-
+          <lg-control-box lgExpand
+                          style="--control-box-bg: var(--control-bg)">
+            <lg-html-editor [placeholder]="''"
+                            formControlName="description"></lg-html-editor>
+          </lg-control-box>
         </lg-control>
       </lg-flex-column>
     </lg-card>

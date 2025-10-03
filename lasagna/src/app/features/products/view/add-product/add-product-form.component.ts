@@ -50,6 +50,8 @@ import {TextareaComponent} from '../../../controls/form/textarea.component';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {errorHandler} from '../../../../shared/helpers';
+import {ControlBoxComponent} from '../../../controls/form/control-box.component';
+import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 
 
 @Component({
@@ -83,6 +85,8 @@ import {errorHandler} from '../../../../shared/helpers';
     TranslateDirective,
     DecimalPipe,
     TextareaComponent,
+    ControlBoxComponent,
+    HtmlEditorComponent,
   ],
   styles: [
     `
