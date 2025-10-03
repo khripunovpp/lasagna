@@ -63,58 +63,62 @@
     </lg-card>
 
     <lg-flex-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: var(--hr-bg-strong)">
-      <lg-control [label]="'product.form.source.placeholder'|translate">
-        <lg-flex-column size="small">
-          <lg-autocomplete #sourceInput
-                           (onSelected)="sourceChips.clearSelected()"
-                           [noLoad]="true"
-                           [resource]="'sources'"
-                           appendTo="body"
-                           formControlName="source"
-                           placeholder=""></lg-autocomplete>
-          <div [hidden]="!topSources().length">
-            <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
-          </div>
-        </lg-flex-column>
-      </lg-control>
+      <lg-flex-column>
+        <lg-control [label]="'product.form.notes.placeholder'|translate">
+          <lg-control-box lgExpand
+                          style="--control-box-bg: var(--control-bg)">
+            <lg-html-editor [placeholder]="''"
+                            formControlName="notes"></lg-html-editor>
+          </lg-control-box>
+        </lg-control>
+      </lg-flex-column>
 
-      <lg-control [label]="'product.form.brand.placeholder'|translate">
-        <lg-flex-column size="small">
-          <lg-autocomplete #brandInput
-                           (onSelected)="brandChips.clearSelected()"
-                           [noLoad]="true"
-                           [resource]="'brands'"
-                           appendTo="body"
-                           formControlName="brand"
-                           placeholder=""></lg-autocomplete>
-          <div [hidden]="!topBrands().length">
-            <lg-chips-list #brandChips [control]="brandInput" [items]="topBrands()"></lg-chips-list>
-          </div>
-        </lg-flex-column>
-      </lg-control>
-    </lg-flex-row>
+      <lg-flex-column>
+        <lg-control [label]="'product.form.source.placeholder'|translate">
+          <lg-flex-column size="small">
+            <lg-autocomplete #sourceInput
+                             (onSelected)="sourceChips.clearSelected()"
+                             [noLoad]="true"
+                             [resource]="'sources'"
+                             appendTo="body"
+                             formControlName="source"
+                             placeholder=""></lg-autocomplete>
+            <div [hidden]="!topSources().length">
+              <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+            </div>
+          </lg-flex-column>
+        </lg-control>
 
-    <lg-flex-row [equal]="true" [mobileMode]="true" [top]="true" style="--control-bg: var(--hr-bg-strong)">
-      <lg-control [label]="'product.form.notes.placeholder'|translate">
-        <lg-textarea [rows]="3"
-                     formControlName="notes"
-                     placeholder=""></lg-textarea>
-      </lg-control>
+        <lg-control [label]="'product.form.brand.placeholder'|translate">
+          <lg-flex-column size="small">
+            <lg-autocomplete #brandInput
+                             (onSelected)="brandChips.clearSelected()"
+                             [noLoad]="true"
+                             [resource]="'brands'"
+                             appendTo="body"
+                             formControlName="brand"
+                             placeholder=""></lg-autocomplete>
+            <div [hidden]="!topBrands().length">
+              <lg-chips-list #brandChips [control]="brandInput" [items]="topBrands()"></lg-chips-list>
+            </div>
+          </lg-flex-column>
+        </lg-control>
 
-      <lg-control [label]="'product.form.category_id.placeholder'|translate">
-        <lg-flex-column size="small">
-          <lg-multiselect #categorySelect
-                          [resource]="'product-categories'"
-                          appendTo="body"
-                          formControlName="category_id"
-                          placeholder="">
-          </lg-multiselect>
+        <lg-control [label]="'product.form.category_id.placeholder'|translate">
+          <lg-flex-column size="small">
+            <lg-multiselect #categorySelect
+                            [resource]="'product-categories'"
+                            appendTo="body"
+                            formControlName="category_id"
+                            placeholder="">
+            </lg-multiselect>
 
-          @if (topCategories().length) {
-            <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
-          }
-        </lg-flex-column>
-      </lg-control>
+            @if (topCategories().length) {
+              <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+            }
+          </lg-flex-column>
+        </lg-control>
+      </lg-flex-column>
     </lg-flex-row>
   </lg-flex-column>
 </form>
