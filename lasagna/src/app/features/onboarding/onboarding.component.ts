@@ -31,9 +31,9 @@ interface OnboardingStep {
         <lg-flex-column size="medium">
           <lg-title [level]="4">{{ 'onboarding.title' | translate }}</lg-title>
 
-          <p class="no-margin">
-            {{ 'onboarding.welcome' | translate }}
-          </p>
+          <p class="no-margin text-wrap">{{ 'onboarding.about' | translate }}</p>
+
+          <p class="no-margin text-wrap">{{ 'onboarding.welcome' | translate }}</p>
 
           <lg-flex-column [size]="'medium'">
             @for (step of steps(); track step.key) {
