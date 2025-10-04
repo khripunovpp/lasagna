@@ -2,7 +2,7 @@ import {Component, Signal, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from '../ui/button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
-import {Location} from '@angular/common';
+import {Location, NgOptimizedImage} from '@angular/common';
 import {GlobalSearchService} from '../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -23,17 +23,21 @@ import {FadeInComponent} from '../ui/fade-in.component';
               <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
             </button>
           }
+
+          <a [routerLinkActiveOptions]="{ exact: false }"
+             [routerLinkActive]="['route-active']"
+             [routerLink]="'/home'"
+             class="lg-header__logo">
+
+            <img height="50"
+                 ngSrc="./logomark.svg"
+                 width="50"/>
+          </a>
         </div>
 
         <div class="lg-header__leftToMiddle">
 
           <lg-demo-informer></lg-demo-informer>
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/home'"
-             class="lg-header__icon">
-            <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
-          </a>
 
           <button (click)="globalSearchService.showBar()"
                   class="lg-header__icon">
@@ -195,6 +199,12 @@ import {FadeInComponent} from '../ui/fade-in.component';
       }
     }
 
+    .lg-header__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .lg-header__icon.route-active {
       background-color: var(--header-active-bg);
       color: #fff;
@@ -206,7 +216,8 @@ import {FadeInComponent} from '../ui/fade-in.component';
     MatIcon,
     TranslatePipe,
     DemoInformerComponent,
-    FadeInComponent
+    FadeInComponent,
+    NgOptimizedImage
   ]
 })
 export class HeaderComponent {
