@@ -1,8 +1,8 @@
 {
   "name": "What does lasagna cost?",
   "short_name": "Lasagna",
-  "theme_color": "#ef4529",
-  "background_color": "#fafafa",
+  "theme_color": "#F6B0DB",
+  "background_color": "#F6B0DB",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
