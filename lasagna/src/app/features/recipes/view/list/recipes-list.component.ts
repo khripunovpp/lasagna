@@ -78,9 +78,11 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
           <lg-title>
             {{ 'recipes.list-title'|translate }}
 
-            <span [translateParams]="{length:recipes()?.length}"
-                  [translate]="'filters.results.length'"
-                  class="text-muted text-small"></span>
+            @if (!groupingTiles.empty()) {
+              <span [translateParams]="{length:recipes()?.length}"
+                    [translate]="'filters.results.length'"
+                    class="text-muted text-small"></span>
+            }
           </lg-title>
         </lg-flex-row>
 
