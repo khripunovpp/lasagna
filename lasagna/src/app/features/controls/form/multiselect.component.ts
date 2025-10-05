@@ -19,7 +19,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../shared/service/services/select-resources.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ControlTemplateDirective} from './control-template.directive';
-import {NgTemplateOutlet} from '@angular/common';
+import {JsonPipe, NgTemplateOutlet} from '@angular/common';
 
 
 export interface MultiselectItem {
@@ -33,11 +33,11 @@ export interface MultiselectItem {
     <div class="multiselect">
       <ng-select (change)="onChangeSelect($event)"
                  (ngModelChange)="onChangeInput($event)"
+                 [appendTo]="appendTo()"
                  [compareWith]="compareWith"
                  [items]="loadedList()"
-                 [appendTo]="appendTo()"
                  [multiple]="multi()"
-                 [ngModel]="value"
+                 [ngModel]="value()"
                  [placeholder]="placeholder"
                  [searchFn]="searchFn">
         <ng-template let-item="item" ng-label-tmp>
@@ -65,6 +65,7 @@ export interface MultiselectItem {
     NgLabelTemplateDirective,
     TranslatePipe,
     NgTemplateOutlet,
+    JsonPipe,
   ],
   styles: [
     `
@@ -152,7 +153,7 @@ export class MultiselectComponent
   staticItems = input<unknown[]>([]);
   loadedList = signal<unknown[]>([]);
   onSelected = output<unknown>();
-  value?: unknown = null
+  value = signal<unknown>(null)
   selectComponent = viewChild(NgSelectComponent);
   templates = contentChildren(ControlTemplateDirective);
   labelTemplate = computed(() => this.templates().find(t => t.type() === 'label'));
@@ -195,8 +196,8 @@ export class MultiselectComponent
   }
 
   change(value: unknown) {
-    this.value = value;
-    this.onChange(this.value);
+    this.value.set(value);
+    this.onChange(this.value());
   }
 
   registerOnChange(fn: any) {
