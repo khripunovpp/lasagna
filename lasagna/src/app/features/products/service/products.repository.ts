@@ -3,7 +3,7 @@ import {CategoryProductsRepository} from '../../settings/service/repositories/ca
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {DraftFormsService, UsingHistoryService} from '../../../shared/service/services';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {Product} from './Product';
 import {ProductDTO} from './Product.scheme';
 import {OnboardingService} from '../../onboarding/onboarding.service';
@@ -23,7 +23,7 @@ export class ProductsRepository {
   }
 
   private _onboardingService = inject(OnboardingService);
-  private _stream$ = new Subject<Product[]>();
+  private _stream$ = new BehaviorSubject<Product[]>([]);
 
   get products$() {
     return this._stream$.asObservable();
