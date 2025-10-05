@@ -4,7 +4,6 @@ import {LanguageService} from './language.service';
 import {Settings} from '../models/Settings';
 import {SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
-import {getEstimatedCurrency} from '../../../../shared/helpers/localization.helpers';
 import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
 
 @Injectable({
@@ -68,8 +67,7 @@ export class SettingsService {
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data) {
-      const currency = getEstimatedCurrency(this.settingsModel?.getSetting<string>(SettingsKeysConst.lang)?.data || this._localisationService.lang());
-      this.settingsModel?.addSetting(SettingsKeysConst.currency, currency[0].code);
+      this.settingsModel?.addSetting(SettingsKeysConst.currency, 'USD');
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.invoicePrefix)?.data) {
