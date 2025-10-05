@@ -94,7 +94,7 @@ import {FadeInComponent} from '../ui/fade-in.component';
       right: 0;
       top: 12px;
       transform: translateX(-50%);
-      max-width: var(--container-width);
+      max-width: calc(var(--container-width) + 32px);
       width: calc(100% - 32px);
       @media (max-width: 768px) {
         width: 100%;
