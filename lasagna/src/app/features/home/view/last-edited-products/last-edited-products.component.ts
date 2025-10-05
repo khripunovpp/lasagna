@@ -48,7 +48,6 @@ import {productLabelFactoryProvider} from '../../../../shared/factories/entity-l
       }
     `,
   ],
-  standalone: true,
   imports: [
     FlexColumnComponent,
     RouterLink,
