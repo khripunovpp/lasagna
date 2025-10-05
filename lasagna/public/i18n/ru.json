@@ -143,7 +143,7 @@
   "export-label": "Экспорт",
   "faq.title": "Вопросы и ответы",
   "file-input.upload-file": "Загрузить файл",
-  "filters.results.length": "{{ length }} штук",
+  "filters.results.length": "найдено: {{ length }}",
   "footer.agree": "Используя это приложение, вы соглашаетесь с нашими ",
   "footer.and": "и",
   "footer.cookie": "Политикой использования файлов cookie",

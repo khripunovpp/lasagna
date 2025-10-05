@@ -143,7 +143,7 @@
   "export-label": "Exportar",
   "faq.title": "Perguntas e Respostas",
   "file-input.upload-file": "Carregar arquivo",
-  "filters.results.length": "{{ length }} unidades",
+  "filters.results.length": "encontrado: {{length}}",
   "footer.agree": "Ao usar este aplicativo, você concorda com nossa ",
   "footer.and": "e",
   "footer.cookie": "Política de Cookies",

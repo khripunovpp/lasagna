@@ -93,9 +93,11 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
         <lg-title>
           {{ 'products.list-title'|translate }}
 
-          <span [translateParams]="{length:products()?.length}"
-                [translate]="'filters.results.length'"
-                class="text-muted text-small"></span>
+          @if (products()?.length) {
+            <span [translateParams]="{length:products()?.length}"
+                  [translate]="'filters.results.length'"
+                  class="text-muted text-small"></span>
+          }
         </lg-title>
 
         <lg-draft-products-list></lg-draft-products-list>
