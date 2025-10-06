@@ -16,7 +16,7 @@ import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
 import {AccountSettingsComponent} from './account/account-settings.component';
 import {AuthService} from '../../../shared/service/services/auth.service';
-import {SyncSettingsComponent} from './sync/sync-settings.component';
+import {SyncSettingsComponent} from '../../sync/view/sync-settings.component';
 
 @Component({
   selector: 'lg-settings',

@@ -1,18 +1,14 @@
-import {Component, inject, model, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal, viewChild} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
-import {NotificationsService} from '../../../../shared/service/services/notifications.service';
-import {AuthService} from '../../../../shared/service/services/auth.service';
-import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {SyncLog, SyncService} from '../../../../shared/service/services/sync/sync.service';
-import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
+import {NotificationsService} from '../../../shared/service/services/notifications.service';
+import {AuthService} from '../../../shared/service/services/auth.service';
+import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
+import {SyncLog, SyncCloudResponse, SyncService, SyncResponse} from '../service/sync.service';
 import {FormsModule} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
-import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
-import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
-import {ControlBoxComponent} from '../../../controls/form/control-box.component';
-import {ControlComponent} from '../../../controls/form/control-item/control.component';
-import {CheckboxComponent} from '../../../controls/form/chckbox.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {ButtonComponent} from '../../../shared/view/ui/button.component';
+import {SyncResultDialogComponent} from "./sync-result-dialog.component";
 
 @Component({
   selector: 'lg-sync-settings',
@@ -24,9 +20,9 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
           <p class="no-margin">{{ 'sync.description' | translate }}</p>
 
           <lg-button
-            (click)="onSync()"
-            [style]="'success'"
-            [disabled]="syncService.isSyncing()">
+              (click)="onSync()"
+              [style]="'success'"
+              [disabled]="syncService.isSyncing()">
             {{ 'sync.sync-btn' | translate }}
           </lg-button>
 
@@ -70,6 +66,8 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
         </div>
       </lg-flex-column>
     </lg-flex-column>
+
+    <lg-sync-result-dialog [syncResponse]="syncResponse()"></lg-sync-result-dialog>
   `,
   styles: [
     `.sync-status-grid {
@@ -98,17 +96,13 @@ import {CheckboxComponent} from '../../../controls/form/chckbox.component';
     }
     `],
   imports: [
-    FlexRowComponent,
     FlexColumnComponent,
     ButtonComponent,
     TranslatePipe,
     TimeAgoPipe,
-    ControlBoxComponent,
-    ControlComponent,
-    CheckboxComponent,
-    ShrinkDirective,
     FormsModule,
-    JsonPipe
+    JsonPipe,
+    SyncResultDialogComponent
   ]
 })
 export class SyncSettingsComponent implements OnInit {
@@ -116,6 +110,8 @@ export class SyncSettingsComponent implements OnInit {
   notificationsService = inject(NotificationsService);
   authService = inject(AuthService);
   logs = signal<SyncLog[]>([]);
+  syncResponse = signal<SyncResponse>({});
+  syncDialog = viewChild(SyncResultDialogComponent);
 
   ngOnInit() {
   }
@@ -125,8 +121,10 @@ export class SyncSettingsComponent implements OnInit {
     try {
       const result = await this.syncService.syncData();
       console.log({result})
-      const logs = this.syncService.makeLogs(result);
-      this.logs.set(logs);
+      this.syncResponse.set(result);
+      // const logs = this.syncService.makeLogs(result);
+      // this.logs.set(logs);
+      this.syncDialog()?.open();
       this.notificationsService.success('Sync completed successfully');
     } catch (error) {
       this.notificationsService.error(`Sync failed: ${(error as Error).message}`);

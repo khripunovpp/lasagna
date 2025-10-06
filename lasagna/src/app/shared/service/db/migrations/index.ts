@@ -172,5 +172,37 @@ export const migrations: {
       [Stores.CREDENTIALS]: '++uuid,type',
       [Stores.CHANGES_LOG]: '++uuid,entity,entityId,timestamp',
     },
+  },
+  {
+    version: 7,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand,cloud_uuid',
+      [Stores.RECIPES]: '++uuid,name,*ingredientsUUIDs,cloud_uuid',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name,cloud_uuid',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name,cloud_uuid',
+      [Stores.INDICES]: '++uuid',
+      [Stores.DOCUMENTATION]: '++key',
+      [Stores.FAQ]: '++key',
+      [Stores.TAGS]: '++name,cloud_uuid',
+      [Stores.TAXES]: '++uuid,cloud_uuid',
+      [Stores.SETTINGS]: '++key,cloud_uuid',
+      [Stores.INVOICES]: '++uuid,cloud_uuid',
+      [Stores.CREDENTIALS]: '++uuid,type,cloud_uuid',
+      [Stores.CHANGES_LOG]: '++uuid,entity,entityId,timestamp,cloud_uuid',
+    },
+    update: tx => {
+      return new Promise(async (resolve) => {
+        const table = tx.table(Stores.PRODUCTS);
+        const array = await table.toArray();
+
+        await Promise.all(array.map((item: any) => {
+          return table.update(item.uuid, {
+            cloud_uuid: '',
+          });
+        }));
+
+        resolve();
+      })
+    },
   }
 ]

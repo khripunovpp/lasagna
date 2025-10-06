@@ -1,20 +1,23 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {DexieIndexDbService} from '../../db/dexie-index-db.service';
-import {LoggerService} from '../../../../features/logger/logger.service';
-import {AuthService} from '../auth.service';
-import {RestService} from '../../../../features/api/rest.service';
+import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
+import {LoggerService} from '../../logger/logger.service';
+import {AuthService} from '../../../shared/service/services/auth.service';
+import {RestService} from '../../api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {ProductSyncStrategy} from './product-sync-strategy';
 import {SyncStrategy} from './sync-strategy';
-import {ProductsRepository} from '../../../../features/products/service/products.repository';
-import {RecipesRepository} from '../../../../features/recipes/service/providers/recipes.repository';
+import {ProductsRepository} from '../../products/service/products.repository';
+import {RecipesRepository} from '../../recipes/service/providers/recipes.repository';
+import {SyncTransactionResult} from "./estimate-sync-changes-transaction";
 
 export interface SyncLog {
   entityIdentifier: string
   body: string
 }
 
-export type SyncResponse = Record<string, Record<string, any[]>[]>
+export type SyncCloudResponse = Record<string, Record<string, any[]>[]>
+
+export type SyncResponse = Record<string, SyncTransactionResult>;
 
 @Injectable({
   providedIn: 'root'
@@ -45,35 +48,41 @@ export class SyncService {
   });
   private strategies: Record<string, SyncStrategy>;
 
-  async syncData(): Promise<any> {
+  async syncData(): Promise<SyncResponse> {
     this.isSyncing.set(true);
     const currentUserId = this._authService.getUserId();
     if (!currentUserId) throw new Error('User ID is required for sync');
+
     this.logger.log('Starting sync for user:', currentUserId);
     try {
+      debugger
       if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync');
-      // Собираем данные по стратегиям
-      // const syncData = await this.#_prepare();
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
 
-      const result = await this._restService.post<SyncResponse>(`http://localhost:1337/api/sync/data`, {
-        afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
+      const result = await this._restService.post<SyncCloudResponse>(`http://localhost:1337/api/sync/data`, {
+        // afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
+        afterDate: new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
       }, headers);
+
+      const response: SyncResponse = {};
 
       if (result) {
         for (const [key, strategy] of Object.entries(this.strategies)) {
-          debugger
-          const syncResult = result[key] || [];
-          await strategy.syncFromCloud(syncResult, []);
-          await strategy.markAllAsSynced([]);
+          response[key] = await strategy.getEntities(
+            result[key] || [],
+            []
+          );
+          console.log({key, response: response[key]});
+          // await strategy.markAllAsSynced([]);
         }
         this.logger.log('Sync completed successfully:', result);
         this.updateLastSyncTime();
         await this.updateLocalSyncStatus();
-        return result;
+        return response;
       }
       throw new Error('No response from server');
     } catch (error) {
+      console.error('Sync error:', error);
       this.logger.error('Sync failed:', error);
       throw error;
     } finally {
@@ -83,7 +92,7 @@ export class SyncService {
 
 
   makeLogs(
-    result: SyncResponse
+    result: SyncCloudResponse
   ) {
     const logs: SyncLog[] = [];
 

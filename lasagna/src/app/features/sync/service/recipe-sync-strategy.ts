@@ -1,6 +1,6 @@
 import {SyncStrategy} from './sync-strategy';
-import {Recipe} from '../../../../features/recipes/service/models/Recipe';
-import {RecipesRepository} from '../../repositories';
+import {Recipe} from '../../recipes/service/models/Recipe';
+import {RecipesRepository} from '../../../shared/service/repositories';
 
 export class RecipeSyncStrategy
   implements SyncStrategy {
@@ -26,7 +26,7 @@ export class RecipeSyncStrategy
     }
   }
 
-  async syncFromCloud(serverData: any[], localData: any[]) {
+  async getEntities(serverData: any[], localData: any[]) {
     const localUuids = new Set((localData || []).map((item: any) => item.uuid));
     const newItems = (serverData || []).filter((item: any) => !localUuids.has(item.uuid));
     // await this.repo.addMany(newItems.map(item => Recipe.fromRaw(item)));
