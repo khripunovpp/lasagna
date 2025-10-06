@@ -23,8 +23,9 @@ export class SyncService {
   constructor() {
     const productsRepo = inject(ProductsRepository);
     const recipesRepo = inject(RecipesRepository);
+    const dbService = inject(DexieIndexDbService);
     this.strategies = {
-      products: new ProductSyncStrategy(productsRepo),
+      products: new ProductSyncStrategy(productsRepo, dbService),
       // recipes: new RecipeSyncStrategy(recipesRepo),
     };
     this.loadLastSyncTime();

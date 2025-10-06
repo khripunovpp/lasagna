@@ -11,8 +11,6 @@ import {OnboardingService} from "../../onboarding/onboarding.service";
 import {Stores} from '../../../shared/service/db/const/stores';
 import {BehaviorSubject} from 'rxjs';
 import {ProductDTO} from './Product.scheme';
-import {OnboardingService} from '../../onboarding/onboarding.service';
-import {ProductFactory} from './product.factory';
 import {updateProductTransaction} from './update-product.transaction';
 import {ChangesLogService} from '../../history/changes-log.service';
 
@@ -51,34 +49,6 @@ export class ProductsRepository
       this._stream$.next(products.map(product => this._productFactory.fromRaw(product)));
       return products;
     });
-  }
-
-  async addOne(
-    product: Product,
-  ) {
-    const dto = product.toDTO();
-    const uuid = await this._indexDbService.addData(Stores.PRODUCTS, dto);
-    dto.uuid = uuid;
-    this._saveSomeHistoryData(dto);
-    // Онбординг: если это первый продукт, отмечаем шаг завершённым TODO перенести во вью
-    if (!this._onboardingService.isProductDone()) {
-      this._onboardingService.markProductDone();
-    }
-
-    return uuid;
-  }
-
-  async updateOne(
-    uuid: string,
-    product: Product
-  ) {
-   const dto = await this._indexDbService.withTransaction<ProductDTO>(
-      [Stores.PRODUCTS, Stores.CHANGES_LOG],
-      (tx) => updateProductTransaction(tx, uuid, product)
-    );
-    await this._indexDbService.saveIndex(Stores.PRODUCTS);
-
-    this._saveSomeHistoryData(dto);
   }
 
   async getOne(
@@ -121,7 +91,7 @@ export class ProductsRepository
     const dto = product.toDTO();
     const uuid = await this._indexDbService.addData(Stores.PRODUCTS, dto);
     dto.uuid = uuid;
-    const newProduct = Product.fromRaw(dto);
+    const newProduct = this._productFactory.fromRaw(dto);
     await this.safetyPutToCloud(Stores.PRODUCTS, newProduct);
     this._saveSomeHistoryData(dto);
     // Онбординг: если это первый продукт, отмечаем шаг завершённым
@@ -140,13 +110,19 @@ export class ProductsRepository
     return this._indexDbService.balkAdd(Stores.PRODUCTS, products.map(product => product.toDTO()), autoUUID);
   }
 
-  async replaceOne(
+  async updateOne(
     uuid: string,
     product: Product
   ) {
-    await this._indexDbService.replaceData(Stores.PRODUCTS, uuid, product.toDTO());
-    await this.safetyPutToCloud(Stores.PRODUCTS, product);
-    this._saveProductToHistory(uuid);
+    const dto = await this._indexDbService.withTransaction<ProductDTO>(
+      [Stores.PRODUCTS, Stores.CHANGES_LOG],
+      (tx) => updateProductTransaction(tx, uuid, product)
+    );
+    const newProduct = this._productFactory.fromRaw(dto);
+    await this._indexDbService.saveIndex(Stores.PRODUCTS);
+    await this.safetyPutToCloud(Stores.PRODUCTS, newProduct);
+
+    this._saveSomeHistoryData(dto);
   }
 
   async editOne(

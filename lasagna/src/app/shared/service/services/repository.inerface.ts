@@ -3,7 +3,7 @@ export interface RepositoryInterface<ModelType> {
   getAll: () => Promise<unknown>
   addOne: (data: ModelType) => Promise<unknown>
   editOne: (id: string, data: ModelType) => Promise<unknown>
-  replaceOne: (id: string, data: ModelType) => Promise<unknown>
+  updateOne: (id: string, data: ModelType) => Promise<unknown>
   deleteOne: (id: string) => Promise<unknown>
   deleteMany: (ids: string[]) => Promise<unknown>
 }

@@ -2,41 +2,44 @@ import {ProductsRepository} from '../../../../features/products/service/products
 import {SyncStrategy} from './sync-strategy';
 import {Product} from '../../../../features/products/service/Product';
 import {ProductDTO} from '../../../../features/products/service/Product.scheme';
+import {DexieIndexDbService} from "../../db/dexie-index-db.service";
+import {Stores} from "../../db/const/stores";
+import {updateProductTransaction} from "../../../../features/products/service/update-product.transaction";
+import {CanSync} from "../../../../features/settings/service/models/Syncable.abstract";
+import {syncTransaction} from "./sync.transaction";
 
 export class ProductSyncStrategy
   implements SyncStrategy {
   constructor(
-    private repo: ProductsRepository,
+    private _repo: ProductsRepository,
+    private _indexedDB: DexieIndexDbService,
   ) {
   }
 
   async prepareSyncData(): Promise<any[]> {
-    const products = await this.repo.getAll();
+    const products = await this._repo.getAll();
 
     return products.filter((p: any) => p.dirtyToSync)
       .map(p => p.toDTO());
   }
 
   async markAllAsSynced(items: any[]): Promise<void> {
-    for (const product of items) {
-      debugger
-      await this.repo.editOne(product.uuid, Product.fromRaw({
-        ...product,
-        dirtyToSync: false,
-        syncedAt: Date.now()
-      }));
-    }
+
   }
 
   async syncFromCloud(
     cloudData: ProductDTO[]
   ) {
-
+   const dto = await this._indexedDB.withTransaction(
+      [Stores.PRODUCTS],
+      (tx) => syncTransaction(tx, Stores.PRODUCTS, cloudData)
+    );
+    console.log({dto})
     // await this.repo.addMany(cloudData.map(item => Product.fromCloud(item)), false);
   }
 
   async getSyncStatus(): Promise<{ total: number; synced: number; dirty: number; lastSync: number | null }> {
-    const products = await this.repo.getAll();
+    const products = await this._repo.getAll();
 
     return products.reduce((acc, p) => {
       acc.total++;

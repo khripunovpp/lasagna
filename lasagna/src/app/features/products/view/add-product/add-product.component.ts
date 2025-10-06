@@ -19,9 +19,7 @@ import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
-import {SyncSingleButtonComponent} from '../../../api/sync-button.component';
 import {CloudSyncService} from '../../../api/cloud-sync.service';
-import {Stores} from '../../../../shared/service/db/const/stores';
 import {errorHandler} from '../../../../shared/helpers';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
@@ -57,7 +55,6 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
     MatIcon,
     DeleteConfirmationPopoverComponent,
     InlineSeparatedGroupDirective,
-    SyncSingleButtonComponent,
     FlexColumnComponent,
     FlexRowComponent,
   ],
@@ -124,10 +121,10 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
 
         </lg-flex-column>
 
-<!--        @if (product()?.uuid) {-->
-<!--          <lg-sync-single-button (onClick)="sync()"-->
-<!--                                 [needSync]="!!product()?.needSync()"></lg-sync-single-button>-->
-<!--        }-->
+        <!--        @if (product()?.uuid) {-->
+        <!--          <lg-sync-single-button (onClick)="sync()"-->
+        <!--                                 [needSync]="!!product()?.needSync()"></lg-sync-single-button>-->
+        <!--        }-->
 
         <lg-add-product-form [editMode]="editMode()"
                              [product]="product()"></lg-add-product-form>
@@ -200,19 +197,6 @@ export class AddProductComponent
       || (this.draftRef() && this.draftByExistingProduct()))
   })
   private _routerManager = inject(ROUTER_MANAGER);
-
-  async sync() {
-    try {
-      if (!this.product()?.uuid) {
-        return;
-      }
-
-      await this._productsRepository.safetyPutToCloud(Stores.PRODUCTS, this.product()!);
-      this._notificationsService.success('notifications.product.synced');
-    } catch (error) {
-      this._notificationsService.error(errorHandler(error));
-    }
-  }
 
   ngOnDestroy() {
   }
