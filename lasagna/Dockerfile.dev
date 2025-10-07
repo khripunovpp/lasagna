@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Устанавливаем зависимости (с кэшем)
+COPY package*.json ./
+RUN npm install
+
+# Копируем проект (исключая node_modules)
+COPY . .
+
+# Angular live reload работает на 4200 и использует WebSocket
+EXPOSE 4200
+
+# Запуск вотчера
+CMD ["npm", "run", "start-docker"]
