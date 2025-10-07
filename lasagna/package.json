@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --no-hmr --configuration local",
+    "start-docker": "ng serve --no-hmr --configuration local  --host 0.0.0.0 --port 4200",
     "start-prod": "ng serve --no-hmr --configuration production",
     "start-host": "ng serve --no-hmr --host 192.168.1.244 --port 4200 --disable-host-check",
     "prebuild": "node scripts/generate-ver.js && node scripts/inject-translations.js",

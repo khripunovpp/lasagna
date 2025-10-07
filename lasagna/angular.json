@@ -104,7 +104,11 @@
               "buildTarget": "lasagna:build:development"
             },
             "local": {
-              "buildTarget": "lasagna:build:local"
+              "buildTarget": "lasagna:build:local",
+              "allowedHosts": [
+                "angular-dev.lasagna.orb.local",
+                "localhost"
+              ]
             }
           },
           "defaultConfiguration": "development"
