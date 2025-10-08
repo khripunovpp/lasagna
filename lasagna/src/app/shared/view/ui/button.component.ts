@@ -26,6 +26,7 @@ export type ButtonSizes =
     @if (link()) {
       <a [class.active]="active()"
          [class.flat]="flat()"
+         [class.transparent]="transparent()"
          [class.disabled]="disabled()"
          [class.outlined]="outlined()"
          [class.icon]="icon()"
@@ -45,6 +46,7 @@ export type ButtonSizes =
       <button (click)="onClickHandler($event)"
               [class.active]="active()"
               [class.flat]="flat()"
+              [class.transparent]="transparent()"
               [attr.type]="type()"
               [class.disabled]="disabled()"
               [class.outlined]="outlined()"
@@ -173,6 +175,10 @@ export type ButtonSizes =
         }
       }
 
+      .button.transparent {
+        background-color: transparent !important;
+      }
+
       .button.default {
         background-color: var(--button-default-bg);
         color: var(--button-default-text);
@@ -269,6 +275,10 @@ export type ButtonSizes =
         &.flat {
           color: var(--button-warning-bg);
         }
+
+        &.transparent {
+          color: var(--button-warning-bg);
+        }
       }
 
       .button.info {
@@ -357,6 +367,7 @@ export class ButtonComponent {
   outlined = input<boolean>(false);
   icon = input<boolean>(false);
   flat = input<boolean>(false);
+  transparent = input<boolean>(false);
   link = input<string>('');
   noRightRadius = input<boolean>(false);
   noLeftRadius = input<boolean>(false);

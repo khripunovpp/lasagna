@@ -14,8 +14,8 @@ import {SettingsService} from '../service/services/settings.service';
 import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/invoices-settings.component";
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
-import {AccountSettingsComponent} from './account/account-settings.component';
-import {AuthService} from '../../../shared/service/services/auth.service';
+import {AccountSettingsComponent} from '../../account/account-settings.component';
+import {AuthService} from '../../account/auth.service';
 import {SyncSettingsComponent} from '../../sync/view/sync-settings.component';
 
 @Component({

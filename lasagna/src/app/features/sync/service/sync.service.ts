@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {LoggerService} from '../../logger/logger.service';
-import {AuthService} from '../../../shared/service/services/auth.service';
+import {AuthService} from '../../account/auth.service';
 import {RestService} from '../../api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {ProductSyncStrategy} from './product-sync-strategy';

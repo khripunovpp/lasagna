@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
-import { RestService } from '../../../features/api/rest.service';
+import { RestService } from '../api/rest.service';
 import { HttpHeaders } from '@angular/common/http';
-import { LoggerService } from '../../../features/logger/logger.service';
-import { TokenService } from './token.service';
+import { LoggerService } from '../logger/logger.service';
+import { TokenService } from '../../shared/service/services/token.service';
 
 export interface AuthUser {
   id: string;
