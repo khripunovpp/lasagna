@@ -82,16 +82,14 @@ export class SignupFormComponent {
   toLogin = output();
 
   async onRegister() {
-    if (this.registerEmail.value || this.registerPassword.value || this.registerName.value) {
+    if (!this.registerEmail.value
+      || !this.registerPassword.value
+      || !this.registerName.value) {
       this.notificationsService.error('Please fill in all fields');
       return;
     }
     this.isLoading.set(true);
     try {
-      if (!this.registerEmail.value || !this.registerPassword.value) {
-        this.notificationsService.error('Email and password are required');
-        return;
-      }
       await this.authService.register(this.registerName.value!, this.registerEmail.value!, this.registerPassword.value!);
       this.notificationsService.success('Registration successful');
       this.toLogin.emit();
