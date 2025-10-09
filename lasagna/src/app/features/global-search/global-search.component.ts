@@ -4,7 +4,7 @@ import {AdditionalData, GlobalSearchService, SearchResultContext} from './global
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {combineLatestWith, debounceTime, defer, from, Observable, of, startWith, switchMap, tap} from 'rxjs';
-import {AsyncPipe, JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {FadeInComponent} from '../../shared/view/ui/fade-in.component';
 import {FocusTrapDirective} from '../../shared/view/directives/focus-trap.directive';
 import {TitleComponent} from '../../shared/view/layout/title.component';
@@ -297,7 +297,6 @@ import {ExpanderComponent} from '../../shared/view/ui/expander.component';
     TimeAgoPipe,
     FlexColumnComponent,
     NgTemplateOutlet,
-    JsonPipe,
     ExpanderComponent
   ]
 })

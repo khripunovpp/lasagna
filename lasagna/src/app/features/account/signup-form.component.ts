@@ -1,7 +1,7 @@
 import {Component, inject, output, signal} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslatePipe} from '@ngx-translate/core';
-import {FlexRowComponent} from '../../shared/view/layout/flex-row.component';
+
 import {AuthService} from './auth.service';
 import {NotificationsService} from '../../shared/service/services';
 import {ControlComponent} from '../controls/form/control-item/control.component';
@@ -55,7 +55,6 @@ import {WidthDirective} from '../../shared/view/directives/width.directive';
   imports: [
     FormsModule,
     TranslatePipe,
-    FlexRowComponent,
     ControlComponent,
     InputComponent,
     ReactiveFormsModule,

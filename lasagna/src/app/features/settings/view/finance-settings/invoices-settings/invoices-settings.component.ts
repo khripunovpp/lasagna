@@ -4,7 +4,7 @@ import {InputComponent} from '../../../../controls/form/input.component';
 
 
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
+
 import {SettingsService} from '../../../service/services/settings.service';
 
 import {NumberInputComponent} from '../../../../controls/form/number-input.component';
@@ -62,7 +62,6 @@ import {ControlComponent} from '../../../../controls/form/control-item/control.c
     FlexColumnComponent,
     InputComponent,
     ReactiveFormsModule,
-    FlexRowComponent,
     NumberInputComponent,
     FileInputComponent,
     TranslatePipe,

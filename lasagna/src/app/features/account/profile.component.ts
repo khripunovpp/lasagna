@@ -1,8 +1,8 @@
 import {Component, inject} from "@angular/core";
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
-import {TitleComponent} from '../../shared/view/layout/title.component';
+
 import {ButtonComponent} from '../../shared/view/ui/button.component';
-import {FlexRowComponent} from '../../shared/view/layout/flex-row.component';
+
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from './auth.service';
 import {NotificationsService} from '../../shared/service/services';
@@ -32,9 +32,7 @@ import {NotificationsService} from '../../shared/service/services';
   ],
   imports: [
     FlexColumnComponent,
-    TitleComponent,
     ButtonComponent,
-    FlexRowComponent,
     TranslatePipe
   ]
 })

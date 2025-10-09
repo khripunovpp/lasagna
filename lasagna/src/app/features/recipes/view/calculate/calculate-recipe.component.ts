@@ -40,7 +40,7 @@ import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../service/models/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
-import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
+
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
@@ -80,7 +80,6 @@ import {
     TranslatePipe,
     ReactiveFormsModule,
     CalculationPriceModifiersComponent,
-    SelfStartDirective,
     UnitStringPipe,
     TranslateDirective,
     CurrencySymbolPipe,

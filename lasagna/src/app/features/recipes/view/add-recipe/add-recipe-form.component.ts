@@ -13,7 +13,7 @@ import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Val
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button.component';
-import {TextareaComponent} from '../../../controls/form/textarea.component';
+
 import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
@@ -61,7 +61,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     ControlGroupComponent,
     FlexColumnComponent,
     ButtonComponent,
-    TextareaComponent,
     MultiselectComponent,
     NumberInputComponent,
     ExpandDirective,

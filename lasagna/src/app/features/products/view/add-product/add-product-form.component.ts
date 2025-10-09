@@ -45,7 +45,7 @@ import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
 import {DecimalPipe} from '@angular/common';
-import {TextareaComponent} from '../../../controls/form/textarea.component';
+
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {errorHandler} from '../../../../shared/helpers';
@@ -83,7 +83,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     ControlLabelTemplateDirective,
     TranslateDirective,
     DecimalPipe,
-    TextareaComponent,
     PriceChangesComponent,
     ControlBoxComponent,
     HtmlEditorComponent,
