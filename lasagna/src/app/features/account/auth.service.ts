@@ -11,11 +11,16 @@ export interface AuthUser {
   // ... другие поля ...
 }
 
+export interface Profile {
+  canBuy: boolean
+  user: AuthUser
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly API_BASE = 'http://localhost:1337/api';
 
-  currentUser = signal<AuthUser | null>(null);
+  currentUser = signal<Profile | null>(null);
 
   constructor(
     private _restService: RestService,
@@ -94,10 +99,10 @@ export class AuthService {
     }
   }
 
-  async getCurrentUser(): Promise<AuthUser> {
+  async getCurrentUser(): Promise<Profile> {
     if (!this.isAuthenticated()) throw new Error('Not authenticated');
     const headers = new HttpHeaders(this.getAuthHeaders());
-    const response: any = await this._restService.get(`${this.API_BASE}/users/me`, undefined, headers);
+    const response: any = await this._restService.get(`${this.API_BASE}/me`, undefined, headers);
     if (response) {
       return response;
     }

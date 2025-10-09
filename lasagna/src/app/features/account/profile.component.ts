@@ -12,10 +12,10 @@ import {NotificationsService} from '../../shared/service/services';
   standalone: true,
   template: `
     <lg-flex-column [size]="'small'">
-      @if ((authService.currentUser()); as user) {
+      @if ((authService.currentUser()); as profile) {
         <lg-flex-column [size]="'small'">
-          <div><b>{{ 'account.username' | translate }}:</b> {{ user.username }}</div>
-          <div><b>{{ 'account.email' | translate }}:</b> {{ user.email }}</div>
+          <div><b>{{ 'account.username' | translate }}:</b> {{ profile.user.username }}</div>
+          <div><b>{{ 'account.email' | translate }}:</b> {{ profile.user.email }}</div>
           <lg-button (click)="onLogout()" [style]="'danger'">
             {{ 'account.logout' | translate }}
           </lg-button>

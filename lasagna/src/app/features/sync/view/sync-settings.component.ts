@@ -1,9 +1,9 @@
-import {Component, inject, OnInit, signal, viewChild} from '@angular/core';
+import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../shared/service/services/notifications.service';
 import {AuthService} from '../../account/auth.service';
 import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
-import {SyncLog, SyncCloudResponse, SyncService, SyncResponse} from '../service/sync.service';
+import {SyncLog, SyncResponse, SyncService} from '../service/sync.service';
 import {FormsModule} from '@angular/forms';
 import {JsonPipe} from '@angular/common';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
@@ -15,14 +15,14 @@ import {SyncResultDialogComponent} from "./sync-result-dialog.component";
   standalone: true,
   template: `
     <lg-flex-column>
-      @if (authService.isAuthenticated()) {
+      @if (canSync()) {
         <lg-flex-column [size]="'small'">
           <p class="no-margin">{{ 'sync.description' | translate }}</p>
 
           <lg-button
-              (click)="onSync()"
-              [style]="'success'"
-              [disabled]="syncService.isSyncing()">
+            (click)="onSync()"
+            [style]="'success'"
+            [disabled]="syncService.isSyncing()">
             {{ 'sync.sync-btn' | translate }}
           </lg-button>
 
@@ -112,6 +112,10 @@ export class SyncSettingsComponent implements OnInit {
   logs = signal<SyncLog[]>([]);
   syncResponse = signal<SyncResponse>({});
   syncDialog = viewChild(SyncResultDialogComponent);
+  canSync = computed(() => {
+    return this.authService.isAuthenticated()
+      && this.authService.currentUser()?.canBuy;
+  })
 
   ngOnInit() {
   }
