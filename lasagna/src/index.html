@@ -171,10 +171,10 @@
       };
 
       // --- Глобальные ошибки ---
-      window.addEventListener('error', e => {
+      window.addEventListener('error', function (e) {
         logs.push({type: 'window.error', msg: e.message, filename: e.filename, lineno: e.lineno});
       });
-      window.addEventListener('unhandledrejection', e => {
+      window.addEventListener('unhandledrejection', function (e) {
         logs.push({type: 'unhandledrejection', reason: e.reason});
       });
 
@@ -183,13 +183,13 @@
         return !!document.querySelector('[ng-version]');
       }
 
-      window.addEventListener('AngularStarted', () => {
+      window.addEventListener('AngularStarted', function (e) {
         console.log('AngularStarted event detected');
         started = true;
       });
 
       const t0 = Date.now();
-      const timer = setInterval(() => {
+      const timer = setInterval(function () {
         if (started || hasAngularStarted()) {
           clearInterval(timer);
           return;
@@ -203,12 +203,14 @@
 
       function handleTimeout() {
         const resources = performance.getEntriesByType('resource')
-          .map(r => ({
-            name: r.name,
-            type: r.initiatorType,
-            duration: Math.round(r.duration),
-            transferSize: r.transferSize
-          }));
+          .map(function (r) {
+            return {
+              name: r.name,
+              type: r.initiatorType,
+              duration: Math.round(r.duration),
+              transferSize: r.transferSize
+            }
+          });
 
         const payload = {
           message: 'Angular app failed to start within 10s',
@@ -259,10 +261,10 @@
         const emailInput = modal.querySelector('#emailInput');
         const statusMsg = modal.querySelector('#statusMsg');
 
-        btn.onclick = async () => {
+        btn.onclick = function () {
           btn.disabled = true;
           btn.textContent = 'Отправляем...';
-          await sendToSentry(data, true, emailInput.value);
+          sendToSentry(data, true, emailInput.value);
           btn.style.display = 'none';
           emailInput.style.display = 'none';
           statusMsg.textContent = 'Спасибо! Зайдите в приложение позднее 💙';
@@ -271,7 +273,7 @@
       }
 
       // --- Отправка в Sentry ---
-      async function sendToSentry(data, showDialog = false, email = null) {
+      function sendToSentry(data, showDialog = false, email = null) {
         if (!window.Sentry) {
           console.warn('Sentry SDK not loaded yet.');
           return;
@@ -302,14 +304,19 @@
       // --- Подключаем Sentry, если не подключен ---
       if (!window.Sentry) {
         const script = document.createElement('script');
-        script.src = 'https://browser.sentry-cdn.com/8.39.0/bundle.min.js';
+        script.src = 'https://browser.sentry-cdn.com/10.19.0/bundle.tracing.replay.min.js';
         script.crossOrigin = 'anonymous';
-        script.onload = () => {
+        script.integrity = 'sha384-9jBRZL7VtE2wKJdi3L8yhjcqeXGUASfuWtw7t6fTPhWBrF8Gcom99en+s9OiqBUA';
+        script.onload = function () {
           window.Sentry.init({
             dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",
             release: 'pwa-watchdog@1.0.0',
             sendDefaultPii: true,
             tracesSampleRate: 0,
+            integrations: [
+              Sentry.replayIntegration()
+            ],
+            replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
             beforeSend(event) {
               if (event.extra?.resources?.length > 50) {
                 event.extra.resources = event.extra.resources.slice(-50);
