@@ -149,6 +149,179 @@
   <link href="/img/splash_screens/8.3__iPad_Mini_portrait.png"
         media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
         rel="apple-touch-startup-image">
+
+  <script>
+    (function () {
+      const START_TIMEOUT = 10000; // 10 секунд
+      const CHECK_INTERVAL = 300;  // каждые 300 мс
+      let started = false;
+      const logs = [];
+
+      // --- Перехват console ошибок ---
+      const origConsoleError = console.error;
+      console.error = function (...args) {
+        logs.push({type: 'console.error', args, time: Date.now()});
+        origConsoleError.apply(console, args);
+      };
+
+      const origConsoleWarn = console.warn;
+      console.warn = function (...args) {
+        logs.push({type: 'console.warn', args, time: Date.now()});
+        origConsoleWarn.apply(console, args);
+      };
+
+      // --- Глобальные ошибки ---
+      window.addEventListener('error', e => {
+        logs.push({type: 'window.error', msg: e.message, filename: e.filename, lineno: e.lineno});
+      });
+      window.addEventListener('unhandledrejection', e => {
+        logs.push({type: 'unhandledrejection', reason: e.reason});
+      });
+
+      // --- Проверка, запустился ли Angular ---
+      function hasAngularStarted() {
+        return !!document.querySelector('[ng-version]');
+      }
+
+      window.addEventListener('AngularStarted', () => {
+        console.log('AngularStarted event detected');
+        started = true;
+      });
+
+      const t0 = Date.now();
+      const timer = setInterval(() => {
+        if (started || hasAngularStarted()) {
+          clearInterval(timer);
+          return;
+        }
+
+        if (Date.now() - t0 > START_TIMEOUT) {
+          clearInterval(timer);
+          handleTimeout();
+        }
+      }, CHECK_INTERVAL);
+
+      function handleTimeout() {
+        const resources = performance.getEntriesByType('resource')
+          .map(r => ({
+            name: r.name,
+            type: r.initiatorType,
+            duration: Math.round(r.duration),
+            transferSize: r.transferSize
+          }));
+
+        const payload = {
+          message: 'Angular app failed to start within 10s',
+          userAgent: navigator.userAgent,
+          online: navigator.onLine,
+          connection: navigator.connection?.effectiveType,
+          url: location.href,
+          resources,
+          consoleLogs: logs.slice(-50)
+        };
+
+        console.warn('Startup timeout detected', payload);
+
+        showFailureModal(payload);
+        sendToSentry(payload);
+      }
+
+      // --- Кастомная модалка ---
+      function showFailureModal(data) {
+        const modal = document.createElement('div');
+        Object.assign(modal.style, {
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.65)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          fontFamily: 'sans-serif'
+        });
+
+        modal.innerHTML = `
+      <div style="background:#fff;padding:24px 28px;border-radius:12px;max-width:440px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.25)">
+        <h2 style="margin-top:0;">Приложение не загрузилось 😕</h2>
+        <p>Кажется, что-то пошло не так. Хотите отправить отчёт, чтобы мы починили?</p>
+        <input id="emailInput" type="email" placeholder="Ваш email (необязательно)"
+          style="width:100%;padding:8px 10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;font-size:14px;"/>
+        <button id="sendReportBtn"
+          style="background:#007bff;color:#fff;border:none;border-radius:6px;padding:10px 18px;margin-top:8px;cursor:pointer;font-size:14px;">
+          Отправить отчёт
+        </button>
+        <p id="statusMsg" style="margin-top:12px;color:#444;font-size:14px;display:none;"></p>
+      </div>
+    `;
+        document.body.appendChild(modal);
+
+        const btn = modal.querySelector('#sendReportBtn');
+        const emailInput = modal.querySelector('#emailInput');
+        const statusMsg = modal.querySelector('#statusMsg');
+
+        btn.onclick = async () => {
+          btn.disabled = true;
+          btn.textContent = 'Отправляем...';
+          await sendToSentry(data, true, emailInput.value);
+          btn.style.display = 'none';
+          emailInput.style.display = 'none';
+          statusMsg.textContent = 'Спасибо! Зайдите в приложение позднее 💙';
+          statusMsg.style.display = 'block';
+        };
+      }
+
+      // --- Отправка в Sentry ---
+      async function sendToSentry(data, showDialog = false, email = null) {
+        if (!window.Sentry) {
+          console.warn('Sentry SDK not loaded yet.');
+          return;
+        }
+
+        if (email) {
+          // Устанавливаем email для контекста пользователя
+          window.Sentry.setUser({email});
+        }
+
+        const err = new Error(data.message);
+
+        window.Sentry.captureException(err, {
+          level: 'error',
+          tags: {
+            stage: 'pwa_startup',
+            cause: 'timeout_10s'
+          },
+          extra: data
+        });
+
+        // После отправки очищаем, чтобы не “прилипло” к следующему событию
+        if (email) {
+          window.Sentry.setUser(null);
+        }
+      }
+
+      // --- Подключаем Sentry, если не подключен ---
+      if (!window.Sentry) {
+        const script = document.createElement('script');
+        script.src = 'https://browser.sentry-cdn.com/8.39.0/bundle.min.js';
+        script.crossOrigin = 'anonymous';
+        script.onload = () => {
+          window.Sentry.init({
+            dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",
+            release: 'pwa-watchdog@1.0.0',
+            sendDefaultPii: true,
+            tracesSampleRate: 0,
+            beforeSend(event) {
+              if (event.extra?.resources?.length > 50) {
+                event.extra.resources = event.extra.resources.slice(-50);
+              }
+              return event;
+            }
+          });
+        };
+        document.head.appendChild(script);
+      }
+    })();
+  </script>
 </head>
 <body>
 <app-root></app-root>
