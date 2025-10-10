@@ -1,8 +1,7 @@
 # Privacy Policy for Lasagna
 
-**Effective date:** 15 July 2025 00:00 UTC
-
-**Last updated:** 15 July 2025 00:00 UTC
+**Effective date:** 15 July 2025 00:00 UTC  
+**Last updated:** 10 October 2025 00:00 UTC
 
 ---
 
@@ -16,93 +15,91 @@ You can contact us at: support@lasagnacost.com
 
 ---
 
-## 2. Data We Do **Not** Collect
+## 2. What We Collect
 
-We do **not collect or store any personal information**, such as your name, email address, phone number, or account data.
+We do **not collect or store personal data by default**. Your recipes, ingredient lists, prices, and calculations stay **only on your device**.
 
----
-
-## 3. What You Input and Where It Stays
-
-All the data you enter in the app — including ingredient lists, recipes, prices, and invoice calculations — is stored **locally on your device** (in your browser storage or device cache).  
-We do **not** transmit or store this data on our servers.
+We **only receive data** if you voluntarily provide it:
+- Via the support form on the website  
+- Via error reports in the app (Sentry)
 
 ---
 
-## 4. Google Analytics
+## 3. Support Requests
 
-We use **Google Analytics 4 (GA4)** to help us understand how users interact with the app and improve your experience. GA may collect anonymous technical data such as:
-- Device type and operating system
-- Browser language
-- Approximate location (city-level)
-- Session duration and behavior (e.g. which pages/screens were visited)
+If you contact us through the support form, we may receive:
+- Your email (if you provide it)  
+- The content of your message  
 
-GA uses cookies such as:
-- `_ga`: Stores a client identifier (expires in 2 years)
-- `_gid`: Stores session information (expires in 24 hours)
-
-> **We do not share any of your app data (like recipes or costs) with Google.**
-
-### How to Opt Out
-You can opt out by:
-- Rejecting analytics cookies via the consent banner (if shown),
-- Disabling cookies in your browser settings,
-- Installing the [Google Analytics Opt-Out Browser Add-on](https://tools.google.com/dlpage/gaoptout).
+This is used only to respond to your inquiry. We **do not share it with third parties** or use it for marketing.
 
 ---
 
-## 5. Crash Reporting with Sentry
+## 4. Error Reports via Sentry
 
-We use **Sentry** to detect and fix errors in the app.  
-Crash reports may include technical details like:
-- Browser and device type
-- Application version
-- Error messages and stack traces
+If you submit an error report or the app sends crash data, it may include:
+- Browser and device information  
+- Error messages and stack traces  
+- Your email, **if you included it in the report**  
 
-> Sentry reports **do not contain any user-generated content** (e.g., your recipes, ingredients, or prices).
+> Your recipes, ingredients, and prices are **never sent** to Sentry.
 
 ---
 
-## 6. No User Accounts or Registration
+## 5. Google Analytics
 
-You can use the app **without creating an account**.  
-We do not ask for or store any usernames, emails, or login information.
+We use **Google Analytics 4 (GA4)** to understand how users interact with the app. GA collects **anonymous technical data**:
+- Device type and OS  
+- Browser language  
+- Approximate location (city-level)  
+- Session duration and behavior  
+
+GA uses cookies (`_ga`, `_gid`). We **never share your recipes or costs**.
+
+### Opting Out
+- Reject analytics cookies via consent banner (if shown)  
+- Disable cookies in your browser  
+- Use the [Google Analytics Opt-Out Browser Add-on](https://tools.google.com/dlpage/gaoptout)
+
+---
+
+## 6. No Accounts Needed
+
+You can use the app **without signing up**.  
+We do **not ask for or store** usernames, emails, or passwords unless you provide them via support or error reporting.
 
 ---
 
 ## 7. Data Deletion
 
-Since all your input is stored locally, **you have full control** over your data. You can delete your data by:
-- Clearing browser storage and cache for the app,
-- Uninstalling the PWA from your device.
+Local data: clear your browser storage/cache or uninstall the PWA.  
+
+Support or error report data: contact us at **support@lasagnacost.com** to request deletion.
 
 ---
 
 ## 8. Your Rights Under GDPR
 
-If you are located in the EU, you have the right to:
-- Know what data is collected and why,
-- Withdraw consent (e.g. for analytics),
-- Request access or deletion of any personal data (if ever applicable).
+If you are in the EU, you can:
+- Know what data is collected and why  
+- Withdraw consent for analytics, support, or error reporting  
+- Request access or deletion of personal data  
 
-As we do not collect personal data, most of these rights are fulfilled by design.
+Most rights are fulfilled by design since we do **not collect data by default**.
 
 ---
 
 ## 9. Changes to This Policy
 
-This policy may be updated in the future, especially if we introduce features like cloud sync or premium plans.  
-The date at the top will reflect the most recent version.
-
-We recommend you check this page periodically.
+We may update this policy, especially if features like cloud sync or premium plans are added.  
+The top date shows the latest version. Please check periodically.
 
 ---
 
 ## 10. Contact Us
 
-For questions, requests, or privacy concerns, please contact us:  
 **Email:** support@lasagnacost.com
 
 ---
 
-*We are committed to building respectful, privacy-first tools for small creators and businesses. Thank you for using Lasagna.*
+*We are committed to building privacy-first tools for small creators and businesses. Thank you for using Lasagna.*
