@@ -4,6 +4,9 @@ import {AppComponent} from './app/app.component';
 import * as Sentry from '@sentry/angular';
 import {enableProfiling} from '@angular/core';
 import './polyfils/to-sorted';
+import {injectSpeedInsights} from '@vercel/speed-insights';
+
+injectSpeedInsights();
 
 Sentry.init({
   dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",

@@ -50,6 +50,7 @@
     "@ngxpert/hot-toast": "4.1.2",
     "@sentry/angular": "9.29.0",
     "@sentry/cli": "2.43.0",
+    "@vercel/speed-insights": "^1.2.0",
     "@zxing/browser": "0.1.5",
     "date-fns": "4.1.0",
     "decimal.js": "^10.6.0",
