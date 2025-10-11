@@ -39,7 +39,7 @@ import {injectFragment} from '../../../helpers';
           </header>
           @if (groupingTileDirective()) {
             <div class="grouping-tiles__content">
-              @for (tile of items; track tile) {
+              @for (tile of items; track tile.uuid) {
                 <div class="grouping-tiles__item">
                   @if (selectable()) {
                     <lg-selectable-section [key]="tile.uuid">

@@ -1,4 +1,4 @@
-import {Component, computed, forwardRef, input, model,} from '@angular/core';
+import {Component, computed, forwardRef, inject, input, model,} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule,} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import {MultiselectComponent} from './multiselect.component';
 import {ControlComponent} from './control-item/control.component';
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {APP_SERVER_IS_RU} from '../../../shared/service/tokens/app-server-region.token';
 
 interface CurrencyOption {
   code: string;
@@ -67,7 +68,7 @@ export class CurrencySelectComponent implements ControlValueAccessor {
 
   // Язык передаётся через input-сигнал
   lang = input<string>('en');
-  readonly currencyList = computed<CurrencyOption[]>(() => {
+  readonly globalCurrencyList = computed<CurrencyOption[]>(() => {
     return [
       {code: 'USD', name: this._translate.instant('currency.USD')},
       {code: 'EUR', name: this._translate.instant('currency.EUR')},
@@ -81,6 +82,17 @@ export class CurrencySelectComponent implements ControlValueAccessor {
       {code: 'PLN', name: this._translate.instant('currency.PLN')},
       {code: 'TRY', name: this._translate.instant('currency.TRY')},
     ]
+  });
+  readonly ruRegion = inject(APP_SERVER_IS_RU);
+  readonly ruRegionCurrency = computed<CurrencyOption[]>(() => {
+    return [
+      {code: 'RUB', name: this._translate.instant('currency.RUB')},
+      {code: 'USD', name: this._translate.instant('currency.USD')},
+      {code: 'EUR', name: this._translate.instant('currency.EUR')},
+    ]
+  });
+  readonly currencyList = computed<CurrencyOption[]>(() => {
+    return this.ruRegion ? this.ruRegionCurrency() : this.globalCurrencyList();
   });
 
   selectedCurrency = model<string | Partial<CurrencyOption>>('USD');

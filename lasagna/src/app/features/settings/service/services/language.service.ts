@@ -1,5 +1,6 @@
-import {Injectable, signal} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
 
 const allowedLanguages = ['pt', 'ru', 'en'];
 
@@ -11,13 +12,13 @@ export class LanguageService {
     private translate: TranslateService,
   ) {
     this.translate.addLangs(allowedLanguages);
-    this.translate.setDefaultLang('en');
-
     const lang = this._defaultLang;
+    this.translate.setDefaultLang(lang);
     this.changeLang(lang);
   }
 
   private readonly _lang = signal(this._defaultLang);
+  private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
 
   get lang() {
     return this._lang;
@@ -32,6 +33,9 @@ export class LanguageService {
   }
 
   private get _defaultLang(): string {
+    if (this._isRuRegion) {
+      return 'ru';
+    }
     return this.translate?.getBrowserLang() || "en"
   }
 
