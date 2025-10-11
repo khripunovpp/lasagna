@@ -38,6 +38,7 @@ const setEnv = () => {
   // `environment.ts` file structure
   const envConfigFile = `export const environment = {
     production: true,
+    region: '${process.env['LG_APP_REGION'] || 'global'}',
     googleSheets: {
       appsScriptUrl: '${process.env['NG_APP_APPS_SCRIPT_URL'] || ''}'
     },
