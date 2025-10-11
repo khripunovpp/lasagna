@@ -31,7 +31,7 @@ export class SettingsService {
 
   get languages(): string[] {
     if (this._isRuRegion) {
-      return ['ru'];
+      return Array.from(new Set(['ru', this._localisationService.currentLang]))
     }
     return this._localisationService.languages;
   }
