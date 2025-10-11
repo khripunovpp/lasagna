@@ -269,6 +269,10 @@
           emailInput.style.display = 'none';
           statusMsg.textContent = 'Спасибо! Зайдите в приложение позднее 💙';
           statusMsg.style.display = 'block';
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000)
         };
       }
 
