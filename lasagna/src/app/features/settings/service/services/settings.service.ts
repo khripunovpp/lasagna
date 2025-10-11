@@ -5,6 +5,7 @@ import {Settings} from '../models/Settings';
 import {SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
 import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
+import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,17 @@ export class SettingsService {
     label: 'SettingsService',
     color: '#4CAF50',
   })
+  private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
 
   get lang() {
     return this._localisationService.lang;
   }
 
   get languages(): string[] {
+    if (this._isRuRegion) {
+      return ['ru'];
+    }
     return this._localisationService.languages;
-
   }
 
   loadSettings() {
@@ -67,7 +71,8 @@ export class SettingsService {
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data) {
-      this.settingsModel?.addSetting(SettingsKeysConst.currency, 'USD');
+      const currency = this._isRuRegion ? 'RUB' : 'USD';
+      this.settingsModel?.addSetting(SettingsKeysConst.currency, currency);
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.invoicePrefix)?.data) {

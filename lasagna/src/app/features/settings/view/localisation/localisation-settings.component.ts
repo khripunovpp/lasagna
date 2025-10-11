@@ -24,17 +24,21 @@ import {ControlComponent} from '../../../controls/form/control-item/control.comp
               <lg-flex-row [center]="true"
                            [mobileMode]="true"
                            [size]="'small'">
-                <lg-radio [markOnHover]="true"
-                          [radio]="true"
-                          lgSelfStart
-                          [name]="'lang'"
-                          [value]="lang.code"
-                          [ngModel]="selectedLangModel()[i]"
-                          (change)="changeLang(lang.code)"
-                          [size]="'small'"
-                          [noMark]="true">
-                  {{ lang.name | translate }}
-                </lg-radio>
+                @if (onlyOneLanguage()) {
+                  <span> {{ lang.name | translate }}</span>
+                } @else {
+                  <lg-radio [markOnHover]="true"
+                            [radio]="true"
+                            lgSelfStart
+                            [name]="'lang'"
+                            [value]="lang.code"
+                            [ngModel]="selectedLangModel()[i]"
+                            (change)="changeLang(lang.code)"
+                            [size]="'small'"
+                            [noMark]="true">
+                    {{ lang.name | translate }}
+                  </lg-radio>
+                }
               </lg-flex-row>
             }
           </lg-flex-column>
@@ -87,6 +91,7 @@ export class LocalisationSettingsComponent {
         name: this.langsMap[lang] ? this.langsMap[lang] : lang,
       }));
   });
+  readonly onlyOneLanguage = computed(() => this.languages().length <= 1);
 
   async changeLang(lang: string) {
     try {

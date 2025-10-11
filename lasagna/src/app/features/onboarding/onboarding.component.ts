@@ -6,6 +6,7 @@ import {TitleComponent} from '../../shared/view/layout/title.component';
 import {OnboardingService} from '../onboarding/onboarding.service';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
+import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.token';
 
 interface OnboardingStep {
   key: string;
@@ -116,47 +117,50 @@ interface OnboardingStep {
   ]
 })
 export class OnboardingComponent {
+  // Текущий активный шаг (первый незавершённый)
+  currentStep = computed(() => {
+    return this.steps().find(step => !step.done);
+  });
   private _router = inject(Router);
   private _onboarding = inject(OnboardingService);
-
-  steps = computed<OnboardingStep[]>(() => [
-    {
+  // Используем сигнал из сервиса напрямую
+  allDone = this._onboarding.isOnboardingComplete;
+  private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
+  steps = computed<OnboardingStep[]>(() => {
+    const settingsItems = {
       key: 'settings',
       label: 'onboarding.settings.label',
       description: 'onboarding.settings.description',
       done: this._onboarding.isSettingsDone(),
       action: () => this.goToSettings()
-    },
-    {
-      key: 'product',
-      label: 'onboarding.product.label',
-      description: 'onboarding.product.description',
-      done: this._onboarding.isProductDone(),
-      action: () => this.goToAddProduct()
-    },
-    {
-      key: 'recipe',
-      label: 'onboarding.recipe.label',
-      description: 'onboarding.recipe.description',
-      done: this._onboarding.isRecipeDone(),
-      action: () => this.goToAddRecipe()
-    },
-    {
-      key: 'faq',
-      label: 'onboarding.faq.label',
-      description: 'onboarding.faq.description',
-      done: this._onboarding.isFaqDone(),
-      action: () => this.goToFaq()
-    },
-  ]);
+    };
 
-  // Текущий активный шаг (первый незавершённый)
-  currentStep = computed(() => {
-    return this.steps().find(step => !step.done);
+    const steps: OnboardingStep[] = [
+      {
+        key: 'product',
+        label: 'onboarding.product.label',
+        description: 'onboarding.product.description',
+        done: this._onboarding.isProductDone(),
+        action: () => this.goToAddProduct()
+      },
+      {
+        key: 'recipe',
+        label: 'onboarding.recipe.label',
+        description: 'onboarding.recipe.description',
+        done: this._onboarding.isRecipeDone(),
+        action: () => this.goToAddRecipe()
+      },
+      {
+        key: 'faq',
+        label: 'onboarding.faq.label',
+        description: 'onboarding.faq.description',
+        done: this._onboarding.isFaqDone(),
+        action: () => this.goToFaq()
+      },
+    ];
+
+    return this._isRuRegion ? steps : [settingsItems].concat(steps);
   });
-
-  // Используем сигнал из сервиса напрямую
-  allDone = this._onboarding.isOnboardingComplete;
 
   // Проверка, является ли шаг текущим активным
   isCurrentStep(step: OnboardingStep): boolean {

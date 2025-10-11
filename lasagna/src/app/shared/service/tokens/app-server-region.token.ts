@@ -7,7 +7,7 @@ export const APP_SERVER_REGION = new InjectionToken('App Server Region', {
   }
 });
 
-export const APP_SERVER_IS_RU = new InjectionToken('App Server is RU Server', {
+export const APP_SERVER_IS_RU = new InjectionToken<boolean>('App Server is RU Server', {
   factory: () => {
     return environment.region === 'ru';
   }
