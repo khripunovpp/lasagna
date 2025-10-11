@@ -230,8 +230,7 @@ if ('serviceWorker' in navigator) {
     })
   };
   const messageListener = (event) => {
-    const versionDetected = event?.data?.type === "VERSION_DETECTED"
-      || event?.data?.type === "UPDATE_AVAILABLE";
+    const versionDetected = event?.data?.type === "VERSION_READY";
 
     if (!versionDetected) return;
     banner.style.display = 'flex';
