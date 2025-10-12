@@ -51,11 +51,16 @@ function generateTranslationFunction(translations) {
 // Auto-generated translations - DO NOT EDIT MANUALLY
 function getTranslation(key, params = {}) {
   const TRANSLATIONS = ${JSON.stringify(translations, null, 2)};
+  let lang = 'en';
 
-  // Get language with fallback chain
-  const lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
-    ? window.getCurrentLanguage()
-    : (localStorage.getItem('lang') || 'en');
+  try {
+    // Get language with fallback chain
+    lang = (typeof window !== 'undefined' && window.getCurrentLanguage)
+      ? window.getCurrentLanguage()
+      : (localStorage.getItem('lang') || 'en');
+  } catch (e) {
+    console.log('e', e);
+  }
 
   const translation = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['en']?.[key] || key;
 
@@ -138,4 +143,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { main };
+module.exports = {main};

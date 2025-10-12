@@ -32,8 +32,13 @@ export class FormTemplateService {
   }
 
   getTemplates<T extends TemplateType>(type: T): Template<T>[] {
-    const data = localStorage.getItem(this.getStorageKey(type));
-    return data ? JSON.parse(data) : [];
+    try {
+      const data = localStorage.getItem(this.getStorageKey(type));
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+      return [];
+    }
   }
 
   getTemplateById<T extends TemplateType>(type: T, id: string): Template<T> | undefined {
@@ -87,6 +92,10 @@ export class FormTemplateService {
   }
 
   private _storeTemplates<T extends TemplateType>(type: T, data: Template<T>[]): void {
-    localStorage.setItem(this.getStorageKey(type), JSON.stringify(data));
+    try {
+      localStorage.setItem(this.getStorageKey(type), JSON.stringify(data));
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
   }
 }

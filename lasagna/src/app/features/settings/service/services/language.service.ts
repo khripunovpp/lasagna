@@ -44,10 +44,15 @@ export class LanguageService {
   }
 
   changeLang(lang: string): void {
-    if (!this.languages.includes(lang)) return;
-    this.translate.use(lang);
-    this._lang.set(lang);
-    // Store language in localStorage for JavaScript files
-    localStorage.setItem('lang', lang);
+    try {
+      if (!this.languages.includes(lang)) return;
+      this.translate.use(lang);
+      this._lang.set(lang);
+      // Store language in localStorage for JavaScript files
+      localStorage.setItem('lang', lang);
+    } catch (e) {
+      console.error('Error changing language:', e);
+      this.translate.use(this._defaultLang);
+    }
   }
 }

@@ -73,7 +73,7 @@ export class AnalyticsService {
   trackEvent(eventName: string, parameters: AnalyticsEvent): void {
     if (typeof window !== 'undefined' && window.gtag && window.gtagLoaded) {
       // Check if analytics storage is granted
-      const consent = localStorage.getItem('cookie-consent');
+      const consent = this._getCookieConsent();
       if (consent === 'all' || consent === 'analytics') {
         window.gtag('event', eventName, {
           ...parameters,
@@ -273,7 +273,7 @@ export class AnalyticsService {
   isAnalyticsAvailable(): boolean {
     if (typeof window === 'undefined') return false;
 
-    const consent = localStorage.getItem('cookie-consent');
+    const consent = this._getCookieConsent();
     const hasConsent = consent === 'all' || consent === 'analytics';
     const hasGtag = typeof window.gtag === 'function';
 
@@ -288,7 +288,7 @@ export class AnalyticsService {
       return {available: false, consent: null, gtag: false};
     }
 
-    const consent = localStorage.getItem('cookie-consent');
+    const consent = this._getCookieConsent();
     const hasGtag = typeof window.gtag === 'function';
 
     return {
@@ -296,6 +296,14 @@ export class AnalyticsService {
       consent,
       gtag: hasGtag
     };
+  }
+
+  private _getCookieConsent(): string {
+    try {
+      return String(localStorage.getItem('cookie-consent')).trim() || 'unknown';
+    } catch {
+      return 'unknown';
+    }
   }
 
   private _getUserUUID(): string {

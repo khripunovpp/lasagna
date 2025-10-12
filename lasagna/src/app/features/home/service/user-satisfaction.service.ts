@@ -1,6 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {FeedbackData, GoogleSheetsConfig, GoogleSheetsService} from '../../../shared/service/services/google-sheets.service';
+import {
+  FeedbackData,
+  GoogleSheetsConfig,
+  GoogleSheetsService
+} from '../../../shared/service/services/google-sheets.service';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
 import {VersionService} from '../../../shared/service/services/version.service';
 
@@ -84,7 +88,11 @@ export class UserSatisfactionService {
    * Сбрасывает данные о взаимодействиях (для тестирования)
    */
   resetInteractionData(): void {
-    localStorage.removeItem(this.storageKey);
+    try {
+      localStorage.removeItem(this.storageKey);
+    } catch (error) {
+      console.error('Error resetting interaction data:', error);
+    }
   }
 
   /**
@@ -256,7 +264,7 @@ export class UserSatisfactionService {
       feedback?: string;
     }>;
   } {
-    const stored = localStorage.getItem(this.storageKey);
+    const stored = this.getStoredData();
 
     if (stored) {
       try {
@@ -303,6 +311,15 @@ export class UserSatisfactionService {
     try {
       return localStorage.getItem('user-id') || undefined;
     } catch {
+      return undefined;
+    }
+  }
+
+  private getStoredData() {
+    try {
+      return localStorage.getItem(this.storageKey);
+    } catch (error) {
+      console.error('Error reading storage data:', error);
       return undefined;
     }
   }

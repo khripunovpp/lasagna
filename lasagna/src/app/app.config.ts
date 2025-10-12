@@ -20,23 +20,10 @@ import 'hammerjs';
 import * as Sentry from '@sentry/angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CategoryRecipesRepository, RecipesRepository} from './shared/service/repositories';
 import {DB_NAME} from './shared/service/tokens/db-name.token';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
 import {USER_LANGUAGE} from './features/settings/service/providers/user-language.token';
 import {SETTINGS} from './features/settings/service/providers/settings.token';
-import {CATEGORIZED_RECIPES_LIST} from './features/recipes/service/providers/categorized-recipes-list.token';
-import {from, map, shareReplay, switchMap} from 'rxjs';
-import {Recipe} from './features/recipes/service/models/Recipe';
-import {RecipeDTO} from './features/recipes/service/schemes/Recipe.scheme';
-import {GroupSortService} from './shared/service/services/grouping-sorting.service';
-import {
-  CategoryRecipeSortStrategy,
-  RecipeAlphabeticalSortStrategy,
-  RecipeCreatedAtMonthSortStrategy,
-  TagsRecipeSortStrategy
-} from './shared/service/groupings/recipes.grouping';
-import {injectQueryParams} from './shared/helpers';
 import {LoggerService} from './features/logger/logger.service';
 import {DISABLE_LOGGER} from './features/logger/logger-context.provider';
 import {supportInitializer} from './shared/service/initializers/support.initializer';
@@ -45,7 +32,6 @@ import {SettingsService} from './features/settings/service/services/settings.ser
 import {ROUTER_MANAGER_PROVIDER} from './shared/service/providers/router-manager.provider';
 import {DEMO_MODE} from './shared/service/tokens/demo-mode.token';
 import {appInitializer} from './app.initializer';
-import {SortStrategy} from './shared/service/types/sorting.types';
 import localeRu from '@angular/common/locales/ru';
 import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
@@ -96,7 +82,7 @@ export const appConfig: ApplicationConfig = {
             try {
               const userUUID = localStorage.getItem('userUUID');
               if (userUUID) {
-                Sentry.setUser({ user_weak_uuid: userUUID });
+                Sentry.setUser({user_weak_uuid: userUUID});
               }
             } catch {
               // Ignore localStorage errors
@@ -134,9 +120,15 @@ export const appConfig: ApplicationConfig = {
     {
       provide: DEMO_MODE,
       useFactory: () => {
-        const isDemoFromLocalStorage = localStorage.getItem('demo') === 'true';
-        const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
-        return isDemoFromLocalStorage || isDemoFromQueryParams;
+        try {
+
+          const isDemoFromLocalStorage = localStorage.getItem('demo') === 'true';
+          const isDemoFromQueryParams = new URLSearchParams(window.location.search).get('demo') === 'true';
+          return isDemoFromLocalStorage || isDemoFromQueryParams;
+        } catch (e) {
+          console.error(e);
+          return false;
+        }
       }
     },
     provideCharts(withDefaultRegisterables()),
