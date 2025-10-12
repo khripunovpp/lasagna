@@ -4,6 +4,7 @@ import {catchError, map} from 'rxjs/operators';
 import {SendPulseEmailData, SendPulseService} from '../../../shared/service/services/sendpulse.service';
 import {LoggerService} from '../../logger/logger.service';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
+
 export interface SupportMessageData {
   name: string;
   email: string;
@@ -188,8 +189,12 @@ export class SupportService {
    * Clear rate limit data (for testing purposes)
    */
   clearRateLimit(): void {
-    localStorage.removeItem(this.rateLimitKey);
-    this.logger.log('Rate limit data cleared');
+    try {
+      localStorage.removeItem(this.rateLimitKey);
+      this.logger.log('Rate limit data cleared');
+    } catch (error) {
+      console.error('Error clearing rate limit data', error);
+    }
   }
 
   /**

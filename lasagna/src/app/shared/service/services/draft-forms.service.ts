@@ -22,11 +22,16 @@ export class DraftFormsService {
   }
 
   getDraftForms = <T extends Record<string, any>>(store: string): Record<string, DraftForm<T>> | null => {
-    const draftForm = localStorage.getItem(store);
-    if (!draftForm) {
+    try {
+      const draftForm = localStorage.getItem(store);
+      if (!draftForm) {
+        return null;
+      }
+      return JSON.parse(draftForm);
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
       return null;
     }
-    return JSON.parse(draftForm);
   }
 
 
@@ -53,7 +58,11 @@ export class DraftFormsService {
       [uuid]: value,
     };
 
-    localStorage.setItem(store, JSON.stringify(valueToStore));
+    try {
+      localStorage.setItem(store, JSON.stringify(valueToStore));
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
 
     return value;
   }
@@ -83,31 +92,38 @@ export class DraftFormsService {
       valueToStore![key] = newFormValue;
     }
 
-
-    localStorage.setItem(store, JSON.stringify(valueToStore));
+    try {
+      localStorage.setItem(store, JSON.stringify(valueToStore));
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
   }
 
   removeDraftForm = async (
     store: string,
     key?: string | string[]
   ) => {
-    const draftForm = this.getDraftForms(store);
-    if (!draftForm) {
-      return;
-    }
-    if (key) {
-      if (Array.isArray(key)) {
-        key.forEach((k) => {
-          delete draftForm[k];
-        });
-      } else if (draftForm[key]) {
-        delete draftForm[key];
+    try {
+      const draftForm = this.getDraftForms(store);
+      if (!draftForm) {
+        return;
       }
-    } else {
-      localStorage.removeItem(store);
-      return;
-    }
+      if (key) {
+        if (Array.isArray(key)) {
+          key.forEach((k) => {
+            delete draftForm[k];
+          });
+        } else if (draftForm[key]) {
+          delete draftForm[key];
+        }
+      } else {
+        localStorage.removeItem(store);
+        return;
+      }
 
-    localStorage.setItem(store, JSON.stringify(draftForm));
+      localStorage.setItem(store, JSON.stringify(draftForm));
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
   }
 }

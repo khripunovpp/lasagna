@@ -21,9 +21,14 @@ export class TransferDataService {
   }
 
   get currenBackupDate() {
-    const date = localStorage.getItem('lastBackupDate');
-    if (!date) return null;
-    return new Date(Number(date));
+    try {
+      const date = localStorage.getItem('lastBackupDate');
+      if (!date) return null;
+      return new Date(Number(date));
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+      return null;
+    }
   }
 
   async exportTable(

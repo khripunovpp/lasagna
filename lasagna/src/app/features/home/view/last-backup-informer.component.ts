@@ -1,4 +1,4 @@
-import {Component, computed, HostBinding, HostListener, inject, signal} from '@angular/core';
+import {Component, computed, HostListener, inject, signal} from '@angular/core';
 import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
 import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
@@ -22,7 +22,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     }
   `,
   styles: [`
-    :host { display: contents; }
+    :host {
+      display: contents;
+    }
 
     a {
       background-image: linear-gradient(45deg, #de2c51, #fff400);
@@ -55,7 +57,7 @@ export class LastBackupInformerComponent {
 
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
   userService = inject(UserService);
-  storedBackupDate = signal<string | null>(localStorage.getItem('lastBackupDate'));
+  storedBackupDate = signal<string | null>(this._getStoredDate());
   today: Date = new Date();
   lastBackupDate = computed(() => this.storedBackupDate()
     ? new Date(this.storedBackupDate()!) :
@@ -93,7 +95,16 @@ export class LastBackupInformerComponent {
 
   @HostListener('click', ['$event']) onClick(event: Event) {
     setTimeout(() => {
-      this.storedBackupDate.set(localStorage.getItem('lastBackupDate'));
+      this.storedBackupDate.set(this._getStoredDate());
     }, 500);
+  }
+
+  private _getStoredDate() {
+    try {
+      return localStorage.getItem('lastBackupDate')
+    } catch (e) {
+      console.log('e', e);
+      return null
+    }
   }
 }

@@ -10,7 +10,12 @@ export class UserService {
   isUserFirstTime = !this.isUserFirstTimeValue;
 
   get isUserFirstTimeValue() {
-    return localStorage.getItem('isUserFirstTime')
+    try {
+      return localStorage.getItem('isUserFirstTime')
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+      return null;
+    }
   }
 
   get isUserFirstDate() {
@@ -27,6 +32,10 @@ export class UserService {
   }
 
   setUserFirstTime(value: boolean) {
-    localStorage.setItem('isUserFirstTime', Date.now().toString());
+    try {
+      localStorage.setItem('isUserFirstTime', Date.now().toString());
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+    }
   }
 }

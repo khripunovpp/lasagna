@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
-import {Observable, of} from 'rxjs';
+import {of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +17,11 @@ export class LocalstorageSelectLoaderService
       throw new Error('Localstorage name is required');
     }
     return new Promise<any[]>((resolve, reject) => {
-      const data = localStorage.getItem(name);
-      if (data) {
-
-        try {
-          const parsedData = JSON.parse(data);
-          resolve(parsedData);
-        } catch (e) {
-          reject(e);
-        }
-      } else {
-        resolve([]);
+      try {
+        const parsedData = JSON.parse(localStorage.getItem(name) || '[]');
+        resolve(parsedData);
+      } catch (e) {
+        reject(e);
       }
     });
   }

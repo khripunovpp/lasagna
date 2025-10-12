@@ -36,15 +36,23 @@ export class DemoService {
   }
 
   switchOnDemoMode() {
-    localStorage.setItem('demo', 'true');
-    const url = new URL(window.location.href);
-    url.searchParams.delete('demo');
-    window.history.replaceState({}, '', url.toString());
-    window.location.reload();
+    try {
+      localStorage.setItem('demo', 'true');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('demo');
+      window.history.replaceState({}, '', url.toString());
+      window.location.reload();
+    } catch (e) {
+      console.error('Error switching to demo mode:', e);
+    }
   }
 
   switchOffDemoMode() {
-    localStorage.removeItem('demo');
-    window.location.reload();
+    try {
+      localStorage.removeItem('demo');
+      window.location.reload();
+    } catch (e) {
+      console.error('Error switching off demo mode:', e);
+    }
   }
 }

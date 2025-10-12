@@ -71,7 +71,11 @@ export class LogCenterService {
    * Очищает все логи
    */
   clearLogs(): void {
-    localStorage.removeItem(this.STORAGE_KEY);
+    try {
+      localStorage.removeItem(this.STORAGE_KEY);
+    } catch (error) {
+      console.error('Error clearing logs:', error);
+    }
   }
 
   /**
