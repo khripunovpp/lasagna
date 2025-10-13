@@ -152,8 +152,8 @@
 
   <script>
     (function () {
-      const START_TIMEOUT = 10000; // 10 секунд
-      const CHECK_INTERVAL = 300;  // каждые 300 мс
+      const START_TIMEOUT = 20000;
+      const CHECK_INTERVAL = 300;
       let started = false;
       const logs = [];
 
@@ -246,14 +246,16 @@
       <div style="background:#fff;padding:24px 28px;border-radius:12px;max-width:440px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.25)">
         <h2 style="margin-top:0;">Приложение не загрузилось 😕</h2>
         <p>Кажется, что-то пошло не так. Хотите отправить отчёт, чтобы мы починили?</p>
-        <input id="emailInput" type="email" placeholder="Ваш email (необязательно)"
-          style="width:100%;padding:8px 10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;font-size:14px;"/>
+        <input id="emailInput" placeholder="Ваш email (необязательно)" style="width:100%;padding:8px 10px;margin:8px 0;border:1px solid #ccc;border-radius:6px;font-size:14px;"
+          type="email"/>
         <button id="sendReportBtn"
           style="background:#007bff;color:#fff;border:none;border-radius:6px;padding:10px 18px;margin-top:8px;cursor:pointer;font-size:14px;">
           Отправить отчёт
         </button>
         <p id="statusMsg" style="margin-top:12px;color:#444;font-size:14px;display:none;"></p>
-      </div>
+        <br><br>
+       <a href="https://lasagnacost.ru/home" style="font-size: 12px; opacity: 0.8">Если вы находитесь в России, для вас будет удобнее использовать оптимизированное приложение lasagnacost.ru</a>
+     </div>
     `;
         document.body.appendChild(modal);
 
