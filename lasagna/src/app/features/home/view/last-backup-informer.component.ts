@@ -56,6 +56,7 @@ export class LastBackupInformerComponent {
   }
 
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+  twoWeeksInMilliseconds = 14 * this.oneDayInMilliseconds;
   userService = inject(UserService);
   storedBackupDate = signal<string | null>(this._getStoredDate());
   today: Date = new Date();
@@ -76,7 +77,7 @@ export class LastBackupInformerComponent {
     if (diffInMilliseconds < 0) {
       return false; // Since date is in the future
     }
-    if (diffInMilliseconds < this.oneDayInMilliseconds) {
+    if (diffInMilliseconds < this.twoWeeksInMilliseconds) {
       return false
     }
 
@@ -86,7 +87,7 @@ export class LastBackupInformerComponent {
     const lastBackupDateTs = this.lastBackupDate()!.getTime();
 
     return lastBackupDateTs < sinceDateTs ||
-      lastBackupDateTs < todayTs - this.oneDayInMilliseconds;
+      lastBackupDateTs < todayTs - this.twoWeeksInMilliseconds;
   });
 
   hide() {
