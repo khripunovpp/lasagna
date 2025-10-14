@@ -22,9 +22,11 @@ Sentry.init({
     // Set user context with userUUID from localStorage for each event
     try {
       const userUUID = localStorage.getItem('userUUID');
+      const buildVersion = document.querySelector('[data-build-version]')?.getAttribute('data-build-version');
       if (userUUID) {
         event.user = {
-          user_weak_uuid: userUUID
+          user_weak_uuid: userUUID,
+          build_version: buildVersion || 'Unknown',
         };
       }
     } catch {
