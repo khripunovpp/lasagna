@@ -1,4 +1,4 @@
-import {Injectable, signal} from '@angular/core';
+import {effect, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {firstValueFrom} from 'rxjs';
 
@@ -16,6 +16,10 @@ export class VersionService {
   get version() {
     return this.versionSignal;
   }
+
+  private _windowEffect = effect(() => {
+    document.body.setAttribute('data-build-version', this.versionSignal());
+  });
 
   async load(): Promise<void> {
     try {
