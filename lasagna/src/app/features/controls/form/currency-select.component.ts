@@ -81,6 +81,7 @@ export class CurrencySelectComponent implements ControlValueAccessor {
       {code: 'UAH', name: this._translate.instant('currency.UAH')},
       {code: 'PLN', name: this._translate.instant('currency.PLN')},
       {code: 'TRY', name: this._translate.instant('currency.TRY')},
+      {code: 'ILS', name: this._translate.instant('currency.ILS')},
     ]
   });
   readonly ruRegion = inject(APP_SERVER_IS_RU);
