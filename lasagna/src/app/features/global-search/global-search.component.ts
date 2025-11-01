@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, computed, effect, HostListener, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, HostListener, inject} from '@angular/core';
 import {InputComponent} from '../controls/form/input.component';
 import {AdditionalData, GlobalSearchService, SearchResultContext} from './global-search.service';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {combineLatestWith, debounceTime, defer, from, Observable, of, startWith, switchMap, tap} from 'rxjs';
-import {AsyncPipe, JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {FadeInComponent} from '../../shared/view/ui/fade-in.component';
 import {FocusTrapDirective} from '../../shared/view/directives/focus-trap.directive';
 import {TitleComponent} from '../../shared/view/layout/title.component';
@@ -297,7 +297,6 @@ import {ExpanderComponent} from '../../shared/view/ui/expander.component';
     TimeAgoPipe,
     FlexColumnComponent,
     NgTemplateOutlet,
-    JsonPipe,
     ExpanderComponent
   ]
 })
@@ -372,7 +371,7 @@ export class GlobalSearchComponent {
     this.searchControl.markAsPristine();
   }
 
-  @HostListener('document:click', ['$event']) private _onClickOutside(event: MouseEvent) {
+  @HostListener('document:click', ['$event']) onClickOutside(event: Event) {
     event.stopPropagation();
     if (!this.showBar()) {
       return;
@@ -385,13 +384,13 @@ export class GlobalSearchComponent {
     }
   }
 
-  @HostListener('document:keydown', ['$event']) private _onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
+  @HostListener('document:keydown', ['$event']) onKeydown(event: Event) {
+    if ((event as KeyboardEvent).key === 'Escape') {
       this.hideBar();
     }
   }
 
-  @HostListener('click', ['$event']) private _onClick(event: MouseEvent) {
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
     if (!this.showBar()) {
       return;
     }

@@ -1,5 +1,5 @@
 import {Component, computed, forwardRef, inject, input, model,} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule,} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {MultiselectComponent} from './multiselect.component';
@@ -17,7 +17,6 @@ interface CurrencyOption {
   selector: 'lg-currency-select',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     TranslatePipe,
@@ -25,7 +24,7 @@ interface CurrencyOption {
     ControlComponent,
     ExpandDirective,
     FlexColumnComponent
-  ],
+],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

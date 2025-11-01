@@ -123,7 +123,7 @@ export class SwitchComponent implements ControlValueAccessor {
 
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
-  onKeydown(event: KeyboardEvent) {
+  onKeydown(event: Event) {
     event.preventDefault();
     this.onChangeSwitch(!this.modelValue);
   }

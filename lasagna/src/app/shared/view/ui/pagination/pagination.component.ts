@@ -10,7 +10,7 @@ import {
   signal,
   SimpleChanges
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {ButtonComponent} from '../button.component';
 import {FlexRowComponent} from '../../layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -25,11 +25,10 @@ export interface PaginationConfig {
   selector: 'lg-pagination',
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     FlexRowComponent,
     TranslatePipe
-  ],
+],
   template: `
     @if (totalPages() > 1) {
       <div class="pagination">

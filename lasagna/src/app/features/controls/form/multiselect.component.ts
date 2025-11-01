@@ -19,7 +19,7 @@ import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/for
 import {SelectResourcesService} from '../../../shared/service/services/select-resources.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ControlTemplateDirective} from './control-template.directive';
-import {JsonPipe, NgTemplateOutlet} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 
 
 export interface MultiselectItem {
@@ -65,8 +65,7 @@ export interface MultiselectItem {
     NgLabelTemplateDirective,
     TranslatePipe,
     NgTemplateOutlet,
-    JsonPipe,
-  ],
+    ],
   styles: [
     `
       lg-multiselect {

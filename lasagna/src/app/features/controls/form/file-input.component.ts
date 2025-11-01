@@ -1,37 +1,39 @@
 import {Component, ElementRef, forwardRef, input, signal, ViewChild, inject} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+
 import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/button.component';
 import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-file-input',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, TranslatePipe],
+  imports: [ButtonComponent, TranslatePipe],
   template: `
       <div [class.contrast]="theme() === 'contrast'" class="lg-file-input">
-          <input #fileInput
-                 (change)="onFileChange($event)"
-                 [attr.accept]="accept()"
-                 [attr.multiple]="multiple() ? '' : null"
-                 [disabled]="disable()"
-                 class="hidden-input"
-                 type="file">
-
-          <lg-button (onClick)="fileInput.click()"
-                     [disabled]="disable()"
-                     [style]="buttonStyle()"
-                     [outlined]="true"
-                     size="small">
-              {{ buttonText() | translate }}
-          </lg-button>
-
-          <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'" class="lg-file-input__after">
-              <ng-content select="after"></ng-content>
-              <span *ngIf="errorMessage()" class="error-message">{{ errorMessage() }}</span>
-          </div>
+        <input #fileInput
+          (change)="onFileChange($event)"
+          [attr.accept]="accept()"
+          [attr.multiple]="multiple() ? '' : null"
+          [disabled]="disable()"
+          class="hidden-input"
+          type="file">
+      
+        <lg-button (onClick)="fileInput.click()"
+          [disabled]="disable()"
+          [style]="buttonStyle()"
+          [outlined]="true"
+          size="small">
+          {{ buttonText() | translate }}
+        </lg-button>
+      
+        <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'" class="lg-file-input__after">
+          <ng-content select="after"></ng-content>
+          @if (errorMessage()) {
+            <span class="error-message">{{ errorMessage() }}</span>
+          }
+        </div>
       </div>
-  `,
+      `,
   styles: [`
     :host {
       display: flex;

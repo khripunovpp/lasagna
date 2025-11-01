@@ -153,7 +153,7 @@ export class CheckboxComponent
 
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
-  onKeydown(event: KeyboardEvent) {
+  onKeydown(event: Event) {
     event.preventDefault();
     this.onChangeCheckbox(!this.modelValue);
   }

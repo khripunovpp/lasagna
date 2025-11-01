@@ -18,7 +18,7 @@ import {SelectResourcesService} from '../../../../shared/service/services/select
 import {Router} from '@angular/router';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
-import {TooltipComponent} from '../../../../shared/view/ui/tooltip.component';
+
 import {AmountWidgetsComponent} from '../../../widgets/amount-widgets.component';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -31,8 +31,8 @@ import {hasMicroPrice, productToFormValue} from '../../../../shared/helpers/prod
 import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {MatIcon} from '@angular/material/icon';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+
+
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
@@ -46,7 +46,7 @@ import {ReadonlyControlComponent} from '../../../controls/form/readonly-control.
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {ControlLabelTemplateDirective} from '../../../controls/form/control-item/control-label-template.directive';
 import {DecimalPipe} from '@angular/common';
-import {TextareaComponent} from '../../../controls/form/textarea.component';
+
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {errorHandler} from '../../../../shared/helpers';
@@ -62,7 +62,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     FlexColumnComponent,
     MultiselectComponent,
     NumberInputComponent,
-    TooltipComponent,
     AmountWidgetsComponent,
     ParseMathDirective,
     FlexRowComponent,
@@ -71,8 +70,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     AutocompleteComponent,
     TranslatePipe,
     CardComponent,
-    MatIcon,
-    ButtonComponent,
     WidthDirective,
     UnitSwitcherComponent,
     CurrencySymbolPipe,
@@ -84,7 +81,6 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     ControlLabelTemplateDirective,
     TranslateDirective,
     DecimalPipe,
-    TextareaComponent,
     ControlBoxComponent,
     HtmlEditorComponent,
   ],

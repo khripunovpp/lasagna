@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, signal, viewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {UserSatisfactionService} from '../service/user-satisfaction.service';
@@ -14,7 +14,7 @@ import {environment} from '../../../../environments/environment';
 @Component({
   selector: 'lg-satisfaction-popup',
   standalone: true,
-  imports: [CommonModule, FormsModule, DialogComponent, TranslatePipe, TitleComponent, FlexColumnComponent, ExpandDirective, TextareaComponent],
+  imports: [FormsModule, DialogComponent, TranslatePipe, TitleComponent, FlexColumnComponent, ExpandDirective, TextareaComponent],
   template: `
     <lg-dialog #dialog
                (click)="onDialogBackdropClick($event)"

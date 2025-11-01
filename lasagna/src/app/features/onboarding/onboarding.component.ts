@@ -1,5 +1,5 @@
 import {Component, computed, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {Router} from '@angular/router';
 import {ButtonComponent} from '../../shared/view/ui/button.component';
 import {TitleComponent} from '../../shared/view/layout/title.component';
@@ -20,12 +20,11 @@ interface OnboardingStep {
   selector: 'lg-onboarding',
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     TitleComponent,
     FlexColumnComponent,
     TranslatePipe
-  ],
+],
   template: `
     @if (!allDone()) {
       <section class="onboarding">

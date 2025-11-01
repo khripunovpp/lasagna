@@ -12,7 +12,7 @@ export class ParseMathDirective {
   ) {
   }
 
-  @HostListener('keydown.enter', ['$event']) onEnter(e: KeyboardEvent) {
+  @HostListener('keydown.enter', ['$event']) onEnter(e: Event) {
     this._writeValue();
   }
 
