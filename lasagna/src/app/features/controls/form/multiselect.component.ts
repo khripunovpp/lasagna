@@ -93,8 +93,13 @@ export interface MultiselectItem {
           border-radius: 12px;
           background-color: var(--control-bg);
 
+          .ng-value-container {
+            padding-left: 16px !important;
+          }
+
           .ng-input {
             top: 16px !important;
+            padding-left: 16px !important;
 
             & > input {
               color: var(--text);

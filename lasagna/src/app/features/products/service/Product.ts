@@ -104,7 +104,7 @@ export class Product {
       notes: undefined,
       category_id: '',
       uuid: undefined,
-      createdAt: undefined,
+      createdAt: Date.now(),
       updatedAt: undefined,
       color: undefined,
     });

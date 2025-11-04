@@ -4,6 +4,6 @@ export * from "./error.helper";
 export * from "./grouping.helper";
 export * from "./number.helper";
 export * from "./product.helpers";
-export * from "./recipe.helpers";
+export * from "../../features/recipes/service/helpers/recipe.helpers";
 export * from "./route.helpers";
 export * from "./taxes.helper";

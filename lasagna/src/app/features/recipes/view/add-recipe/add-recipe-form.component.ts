@@ -31,7 +31,7 @@ import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
-import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
+import {getIngredientGroup, recipeToFormValue} from '../../service/helpers/recipe.helpers';
 import {MatIcon} from '@angular/material/icon';
 import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';

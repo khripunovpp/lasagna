@@ -1,8 +1,42 @@
-import {Recipe} from '../../service/models/Recipe';
+import {Recipe} from '../models/Recipe';
+import {CategoryRecipe} from '../../../settings/service/models/CategoryRecipe';
+import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {Ingredient} from '../../service/models/Ingredient';
 import {UnitValue} from '../../../../shared/view/const/units.const';
-import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
+import {Ingredient} from '../models/Ingredient';
+import {RecipeDTO} from '../schemes/Recipe.scheme';
+
+export const recipeToFormValue = (recipe: Recipe) => {
+  return {
+    name: recipe.name,
+    description: recipe.description,
+    ingredients: recipe.ingredients.map((ingredient) => {
+      return {
+        amount: ingredient.amount,
+        unit: ingredient.unit,
+      };
+    }),
+    portions: recipe.portions,
+    uuid: recipe.uuid,
+    category_id: recipe.category_id?.uuid ? {
+      uuid: recipe.category_id?.uuid,
+    } : null,
+    tags: recipe.tags?.map((tag) => tag.toString()) || [],
+    master: recipe.master || false,
+  }
+}
+
+export const categoryRecipeToFormValue = (category: CategoryRecipe) => {
+  return {
+    name: category.name,
+  }
+};
+
+export const categoryRecipeDTOFromFormValue = (categoryFormValue: any): CategoryRecipeDTO => {
+  return {
+    name: categoryFormValue.name,
+  }
+}
 
 export const getIngredientGroup = (
   form: FormGroup,
@@ -18,7 +52,6 @@ export const getIngredientGroup = (
   }
 
   return new FormGroup({
-    name: new FormControl(ingredient?.name),
     amount: new FormControl(ingredient?.amount?.toString() ?? null),
     product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
     recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
@@ -27,7 +60,8 @@ export const getIngredientGroup = (
     unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
   }, (group) => {
     const ingredient = Ingredient.fromRaw(group.value);
-    if (ingredient.allEmpty) {
+    if (ingredient.allEmpty
+      || group.value.new_product_name) {
       return null
     }
     if (ingredient.typeSelected && !ingredient.amountValid) {
@@ -62,7 +96,6 @@ export const checkCycleRecipe = (
   }
   return match;
 }
-
 
 export const getLastRowType = (
   form: FormGroup,
