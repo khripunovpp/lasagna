@@ -183,4 +183,20 @@ export class Ingredient {
       amount: parseFloatingNumber(amount),
     });
   }
+
+  replaceProduct(product: Product) {
+    this.update({
+      product_id: product,
+      recipe_id: undefined,
+      name: undefined,
+    });
+  }
+
+  replaceRecipe(recipe: Recipe) {
+    this.update({
+      recipe_id: recipe,
+      product_id: undefined,
+      name: undefined,
+    });
+  }
 }

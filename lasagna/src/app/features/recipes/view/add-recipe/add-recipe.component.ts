@@ -215,7 +215,7 @@ export class AddRecipeComponent
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl(''),
     portions: new FormControl<number | string | null>(null),
-    ingredients: new FormArray([]),
+    ingredients: new FormArray<FormGroup>([]),
     category_id: new FormControl<any>(null),
     tags: new FormControl<string[]>([]),
     master: new FormControl<boolean>(false),
@@ -365,13 +365,17 @@ export class AddRecipeComponent
 
   private async _addRecipe(recipe: Recipe) {
     try {
-      const newUUID = await this._recipesRepository.addRecipe(recipe);
-      // Track recipe creation analytics
-      this._analyticsService.trackRecipeCreated(recipe.name, {
+      const newRecipe = await this._recipesRepository.addRelatedProducts(
+        recipe,
+        this.form.value.ingredients ?? []
+      );
+      const newUUID = await this._recipesRepository.addRecipe(newRecipe);
+
+      this._analyticsService.trackRecipeCreated(newRecipe.name, {
         recipe_uuid: newUUID,
-        ingredients_count: recipe.ingredients?.length || 0,
-        portions: recipe.portions,
-        category: recipe.category_id?.name
+        ingredients_count: newRecipe.ingredients?.length || 0,
+        portions: newRecipe.portions,
+        category: newRecipe.category_id?.name
       });
 
       this.formComponent()?.resetForm();
@@ -380,7 +384,6 @@ export class AddRecipeComponent
       if (this.draftRef()) {
         this._removeDraft();
       }
-
 
       await this._routerManager.replace(['recipes', 'edit', newUUID]);
 

@@ -27,7 +27,8 @@ export const getIngredientGroup = (
     unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
   }, (group) => {
     const ingredient = Ingredient.fromRaw(group.value);
-    if (ingredient.allEmpty) {
+    if (ingredient.allEmpty
+      || group.value.new_product_name) {
       return null
     }
     if (ingredient.typeSelected && !ingredient.amountValid) {

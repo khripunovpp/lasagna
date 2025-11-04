@@ -14,6 +14,7 @@ import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {Filters} from '../../../../shared/types/filter.types';
 import {copyRecipeFactory} from '../factories/recipe.factory';
 import {TranslateService} from '@ngx-translate/core';
+import {ProductFactory} from '../../../products/service/product.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class RecipesRepository {
     private _draftFormsService: DraftFormsService,
     private _tagsRepository: TagsRepository,
     private _productsRepository: ProductsRepository,
+    private _productFactory: ProductFactory,
     private _translate: TranslateService,
   ) {
     this._copyPrefix = this._translate.instant('recipes.copy.prefix');
@@ -230,6 +232,40 @@ export class RecipesRepository {
         count: top[recipe.uuid].count,
       }))
     })
+  }
+
+  async addProductByName(
+    productName: string,
+  ) {
+    const uuid = await this._productsRepository.addOne(this._productFactory.fromRaw({
+      name: productName,
+    }));
+
+    return this._productFactory.fromRaw({
+      uuid: uuid,
+      name: productName,
+    });
+  }
+
+  async addRelatedProducts(
+    recipe: Recipe,
+    formIngredients: any[],
+  ) {
+    if (recipe.ingredients.length != formIngredients.length) {
+      throw new Error('Ingredients count mismatch');
+    }
+
+    for (let i = 0; i < recipe.ingredients.length; i++) {
+      const ingredient = recipe.ingredients[i];
+      const formIngredient = formIngredients[i];
+      if (formIngredient.new_product_name) {
+        const newProd = await this.addProductByName(formIngredient.new_product_name);
+        newProd.name = formIngredient.new_product_name;
+        ingredient.replaceProduct(newProd);
+      }
+    }
+
+    return recipe.clone();
   }
 
   private _saveCategory(uuid: string) {
