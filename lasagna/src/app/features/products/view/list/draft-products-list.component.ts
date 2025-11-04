@@ -106,7 +106,7 @@ import {
     ``
   ]
 })
-export class DraftProductsListCompoent
+export class DraftProductsListComponent
   implements OnInit {
   constructor(
     public _productsRepository: ProductsRepository,
@@ -120,6 +120,17 @@ export class DraftProductsListCompoent
 
   @HostBinding('attr.hidden') get hidden() {
     return this.drafts()?.length === 0 ? true : null;
+  }
+
+  ngOnInit() {
+    const draft = this._productsRepository.getDraftProducts();
+    if (draft) {
+      this.drafts.set(draft.toSorted((a, b) => {
+        const dateA = a.updatedAt || a.createdAt;
+        const dateB = b.updatedAt || b.createdAt;
+        return dateB - dateA;
+      }));
+    }
   }
 
   deleteDraft(
@@ -152,13 +163,4 @@ export class DraftProductsListCompoent
       this._notificationsService.success('notifications.drafts.deleted');
     })
   }
-
-
-  ngOnInit() {
-    const draft = this._productsRepository.getDraftProducts();
-    if (draft) {
-      this.drafts.set(draft);
-    }
-  }
-
 }
