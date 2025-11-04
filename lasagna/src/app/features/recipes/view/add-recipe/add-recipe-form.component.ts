@@ -9,11 +9,10 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ControlContainer, FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
-
 import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
@@ -27,8 +26,7 @@ import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
-import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
-import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
+import {getIngredientGroup, recipeToFormValue} from '../../service/helpers/recipe.helpers';
 import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
@@ -48,6 +46,11 @@ import {productLabelFactoryProvider} from '../../../../shared/factories/entity-l
 import {errorHandler} from '../../../../shared/helpers';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
+import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
+import {getIngredientGroup} from './add-recipe.helpers';
 import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-per-unit.component';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
@@ -99,6 +102,8 @@ export class AddRecipeFormComponent
     public _recipesRepository: RecipesRepository,
     public _selectResourcesService: SelectResourcesService,
     private _notificationsService: NotificationsService,
+    private _settingsService: SettingsService,
+    private _controlContainer: ControlContainer,
     private _translateService: TranslateService,
   ) {
   }
@@ -106,17 +111,7 @@ export class AddRecipeFormComponent
   editMode = input(false);
   recipe = input<Recipe | undefined>(undefined);
   uuid = injectParams<string>('uuid');
-  form = new FormGroup({
-    name: new FormControl<string | null>(null, Validators.required),
-    description: new FormControl(''),
-    portions: new FormControl<number | string | null>(null),
-    ingredients: new FormArray([
-      this._getIngredientGroup(),
-    ]),
-    category_id: new FormControl<any>(null),
-    tags: new FormControl<string[]>([]),
-    master: new FormControl<boolean>(false),
-  })
+  form?: FormGroup;
   recipeFieldState = signal<Record<number, boolean>>({});
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
@@ -130,17 +125,28 @@ export class AddRecipeFormComponent
   });
 
   get ingredients() {
-    return this.form.get('ingredients') as FormArray;
+    return this.form?.get('ingredients') as FormArray || undefined;
   }
 
-  private get _formValid() {
-    return this.form.valid && !this.checkCycleRecipe(this.form.getRawValue().ingredients, this.uuid());
+  ngOnInit() {
+    this.form = this._controlContainer.control as FormGroup;
+    this._loadUsingHistory();
+  }
+
+  ngAfterViewInit() {
+    this._selectResourcesService.load().then(resources => {
+      if (!this.editMode()) {
+        this.nameField()!.focus();
+      }
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
+    });
   }
 
   fillForm(
     recipe?: Recipe
   ) {
-    this.form.reset({
+    this.form?.reset({
       ingredients: [],
     });
     this.ingredients.clear();
@@ -148,7 +154,7 @@ export class AddRecipeFormComponent
     if (!recipe) {
       return;
     }
-    this.form.reset({
+    this.form?.reset({
       ...recipeToFormValue(recipe),
       ingredients: [],
     });
@@ -165,8 +171,8 @@ export class AddRecipeFormComponent
       this.ingredients.push(this._getIngredientGroup());
     }
 
-    this.form.updateValueAndValidity();
-    this.form.markAsPristine();
+    this.form?.updateValueAndValidity();
+    this.form?.markAsPristine();
   }
 
   resetForm(
@@ -174,7 +180,7 @@ export class AddRecipeFormComponent
   ) {
     this.fillForm(recipe);
     this._loadUsingHistory();
-    this.form.markAsPristine();
+    this.form?.markAsPristine();
   }
 
   validateForm() {
@@ -241,12 +247,12 @@ export class AddRecipeFormComponent
 
   addIngredient() {
     this.ingredients.push(this._getIngredientGroup());
-    this.form.markAsDirty();
+    this.form?.markAsDirty();
   }
 
   deleteIngredient(index: number) {
     this.ingredients.removeAt(index);
-    this.form.markAsDirty();
+    this.form?.markAsDirty();
   }
 
   onIngredientSelected(
@@ -289,28 +295,14 @@ export class AddRecipeFormComponent
     });
   }
 
-  checkCycleRecipe(
-    ingredients: RecipeDTO['ingredients'],
-    recipeUUID: string
-  ) {
-    let match = false;
-    for (const ingr of ingredients) {
-      const hasSubRecipe = ingr.recipe_id?.uuid;
-      if (hasSubRecipe && hasSubRecipe === recipeUUID) {
-        match = true;
-        break;
-      }
-    }
-    return match;
-  }
-
-  private _getLastRowType(): string {
-    if (!this.form) return 'product';
-    const lastRow = this.ingredients.at(this.ingredients.length - 1);
-    if (lastRow && lastRow.value) {
-      return lastRow.value.active_tab;
-    }
-    return 'product';
+  private _getIngredientGroup = (
+    ingredient?: Recipe['ingredients'][number],
+  ) => {
+    return getIngredientGroup(
+      this.form!,
+      ingredient,
+      this.uuid(),
+    );
   }
 
   private _loadUsingHistory() {
@@ -328,45 +320,4 @@ export class AddRecipeFormComponent
     });
   }
 
-  private _getIngredientGroup(
-    ingredient?: Recipe['ingredients'][number]
-  ) {
-    let active_tab = this._getLastRowType();
-
-    if (ingredient?.recipe_id) {
-      active_tab = 'recipe';
-    } else if (ingredient?.product_id) {
-      active_tab = 'product';
-    }
-
-    return new FormGroup({
-      name: new FormControl(ingredient?.name),
-      amount: new FormControl(ingredient?.amount?.toString() ?? null),
-      product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
-      recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
-      active_tab: new FormControl(active_tab),
-      unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
-    }, (group) => {
-      const ingredient = Ingredient.fromRaw(group.value);
-      if (ingredient.allEmpty) {
-        return null
-      }
-      if (ingredient.typeSelected && !ingredient.amountValid) {
-        return {
-          ingredientAmountRequired: true
-        }
-      }
-      if (!this.uuid) return null;
-      const uuid = this.uuid();
-      if (this.checkCycleRecipe([group.value], uuid)) {
-        return {cycleRecipe: true};
-      }
-
-      if (!ingredient.typeSelected) {
-        return {ingredientRequired: true};
-      }
-
-      return null;
-    });
-  }
 }

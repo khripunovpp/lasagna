@@ -55,6 +55,13 @@ export class ProductsRepository {
     return uuid;
   }
 
+  async addMany(
+    products: Product[],
+  ) {
+    const dtos = products.map(product => product.toDTO());
+    return this._indexDbService.balkAdd(Stores.PRODUCTS, dtos)
+  }
+
   async updateOne(
     uuid: string,
     product: Product

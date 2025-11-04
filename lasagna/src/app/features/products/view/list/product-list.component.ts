@@ -22,7 +22,7 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
-import {DraftProductsListCompoent} from './draft-products-list.compoent';
+import {DraftProductsListComponent} from './draft-products-list.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -169,7 +169,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     TimeAgoPipe,
     ExpandDirective,
     TranslatePipe,
-    DraftProductsListCompoent,
+    DraftProductsListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     UserCurrencyPipe,

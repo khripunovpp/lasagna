@@ -397,7 +397,7 @@ export class DexieIndexDbService extends Dexie {
     }
   }
 
-  async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<void> {
+  async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<string[]> {
     this.logger.log(`Bulk adding ${values.length} items to ${storeKey}`, {autoUUID});
 
     const valuesWithUuid = values.map(value => ({
@@ -406,10 +406,10 @@ export class DexieIndexDbService extends Dexie {
     }));
 
     // @ts-ignore
-    await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid);
+    const resp = await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid, {allKeys: true});
 
     if (storeKey === Stores.INDICES) {
-      return;
+      return resp;
     }
 
     this.logger.log(`Adding ${valuesWithUuid.length} items to index for ${storeKey}`);
@@ -423,6 +423,7 @@ export class DexieIndexDbService extends Dexie {
       }
     }
     this.logger.log(`Successfully bulk added ${valuesWithUuid.length} items to ${storeKey}`);
+    return resp;
   }
 
   async bulkPatch(storeKey: Stores, changes: Partial<any>[], keyField = 'uuid'): Promise<void> {

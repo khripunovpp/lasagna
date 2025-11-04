@@ -1,170 +1,172 @@
-<form [formGroup]="form">
-  <lg-flex-column>
-    <lg-card>
-      <lg-flex-column [position]="'start'">
-        <lg-control [label]="'recipe.form.name.placeholder'|translate"
-                    lgExpand>
-          <lg-input #nameField
-                    formControlName="name"
-                    name="name"
-                    placeholder=""></lg-input>
-        </lg-control>
+@if (form) {
+  <form [formGroup]="form">
+    <lg-flex-column>
+      <lg-card>
+        <lg-flex-column [position]="'start'">
+          <lg-control [label]="'recipe.form.name.placeholder'|translate"
+                      lgExpand>
+            <lg-input #nameField
+                      formControlName="name"
+                      name="name"
+                      placeholder=""></lg-input>
+          </lg-control>
 
-        <lg-control [label]="'recipe.form.description.placeholder'|translate"
-                    lgExpand>
-          <lg-control-box lgExpand
-                          style="--control-box-bg: var(--control-bg)">
-            <lg-html-editor [placeholder]="''"
-                            name="description"
-                            formControlName="description"></lg-html-editor>
+          <lg-control [label]="'recipe.form.description.placeholder'|translate"
+                      lgExpand>
+            <lg-control-box lgExpand
+                            style="--control-box-bg: var(--control-bg)">
+              <lg-html-editor [placeholder]="''"
+                              name="description"
+                              formControlName="description"></lg-html-editor>
 
-          </lg-control-box>
-        </lg-control>
-      </lg-flex-column>
-    </lg-card>
-    <lg-card>
-
-      <lg-flex-column [position]="'start'">
-        <lg-control [label]="'recipe.form.outcome_amount.placeholder'|translate"
-                    lgExpand>
-          <lg-number-input #amount
-                           formControlName="portions"
-                            name="portions"
-                           lgParseMath
-                           placeholder=""></lg-number-input>
-        </lg-control>
-
-        <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
-          <lg-flex-column [position]="'start'">
-            <lg-flex-column [size]="'medium'"
-                            formArrayName="ingredients"
-                            lgExpand>
-              @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
-                last = $last) {
-                <ng-container [formGroupName]="i">
-                  <lg-flex-row [bottom]="true"
-                               [attr.data-u2e]="'ingredient-row.' + i"
-                               size="medium"
-                               [mobileMode]="true">
-                    <lg-entity-item-selector lgExpand
-                                             formControlName="active_tab">
-                      <lg-multiselect [resource]="'recipes'"
-                                      name="recipe_id"
-                                      appendTo="body"
-                                      [placeholder]="'invoices.find-recipe' | translate"
-                                      formControlName="recipe_id"
-                                      ngProjectAs="recipes"
-                                      [autoLoad]="true"></lg-multiselect>
-
-                      <lg-multiselect [resource]="'products'"
-                                      appendTo="body"
-                                      name="product_id"
-                                      [optionFactory]="productLabelFactory"
-                                      formControlName="product_id"
-                                      [placeholder]="'invoices.find-product' | translate"
-                                      ngProjectAs="products"
-                                      [autoLoad]="true">
-                        <ng-template lgControlTpl type="label" let-item>
-                          {{ productLabelFactory(item) }}
-                          @let price = item.pricePerUnit;
-                          @if (price) {
-                            -
-                            <lg-price-per-unit [price]="price"
-                                               [unit]="item?.unit"></lg-price-per-unit>
-                          }
-                        </ng-template>
-                        <ng-template lgControlTpl type="option" let-item>
-                          {{ productLabelFactory(item) }}
-                          @let price = item.pricePerUnit;
-                          @if (price) {
-                            -
-                            <lg-price-per-unit [price]="price"
-                                               [unit]="item?.unit"></lg-price-per-unit>
-                          }
-                        </ng-template>
-                      </lg-multiselect>
-                    </lg-entity-item-selector>
-
-                    <lg-number-input #amount
-                                     lgParseMath
-                                     lgWidth="40%"
-                                     name="amount"
-                                     (onKeydown)="addLast()"
-                                     [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.ingredients?.[i]?.unit || UnitValue.GRAM)|translate)}"
-                                     formControlName="amount">
-                      <ng-template lgExtraTpl place="after">
-                        <lg-unit-switcher formControlName="unit">
-                        </lg-unit-switcher>
-                      </ng-template>
-                    </lg-number-input>
-
-                    <div>
-                      <lg-button [style]="'danger'"
-                                 [flat]="true"
-                                 data-u2e="delete-ingredient-btn"
-                                 [icon]="true"
-                                 (click)="deleteIngredient(i)">
-                        <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
-                      </lg-button>
-                    </div>
-
-                  </lg-flex-row>
-                  @if (!last) {
-                    <hr size="2" lgExpand color="#fafafa"/>
-                  }
-                </ng-container>
-              }
-            </lg-flex-column>
-
-            <lg-button (click)="addIngredient()"
-                       [outlined]="true"
-                        data-u2e="add-ingredient-btn"
-                       [size]="'small'">
-              <mat-icon [inline]="true"
-                        aria-hidden="false"
-                        fontIcon="add"></mat-icon>
-              {{ 'recipe.form.ingredients.add-btn'|translate }}
-            </lg-button>
-          </lg-flex-column>
-        </lg-control-group>
-      </lg-flex-column>
-    </lg-card>
-
-    <lg-flex-row [mobileMode]="true">
-      <lg-control-box lgSelfStart lgWidth="50%" style="--control-box-bg: var(--hr-bg-strong)">
-        <lg-switch name="chunk-master-switch"
-          formControlName="master">
-          <span class="text-center" slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
-          <span class="text-center" slot="right">{{ 'recipe.form.master.label' | translate }}</span>
-        </lg-switch>
-      </lg-control-box>
-    </lg-flex-row>
-
-    <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
-      <lg-control [label]="'recipe.form.tags.placeholder'|translate">
-        <lg-tags-control [multi]="true"
-                         name="tags"
-                         [resource]="'tags'"
-                         formControlName="tags"></lg-tags-control>
-      </lg-control>
-
-      <lg-control [label]="'recipe.form.category.placeholder'|translate">
-        <lg-flex-column [position]="'start'" [size]="'medium'">
-          <lg-multiselect #categorySelect
-                          [resource]="'recipes-categories'"
-                          appendTo="body"
-                          name="category_id"
-                          formControlName="category_id"
-                          lgExpand>
-          </lg-multiselect>
-
-          @if (topCategories().length) {
-            <lg-chips-list [control]="categorySelect"
-                           name="topCategoriesChips"
-                           [items]="topCategories()"></lg-chips-list>
-          }
+            </lg-control-box>
+          </lg-control>
         </lg-flex-column>
-      </lg-control>
-    </lg-flex-row>
-  </lg-flex-column>
-</form>
+      </lg-card>
+      <lg-card>
+
+        <lg-flex-column [position]="'start'">
+          <lg-control [label]="'recipe.form.outcome_amount.placeholder'|translate"
+                      lgExpand>
+            <lg-number-input #amount
+                             formControlName="portions"
+                             name="portions"
+                             lgParseMath
+                             placeholder=""></lg-number-input>
+          </lg-control>
+
+          <lg-control-group label="{{ 'recipe.form.ingredients.label'|translate }}" lgExpand>
+            <lg-flex-column [position]="'start'">
+              <lg-flex-column [size]="'medium'"
+                              formArrayName="ingredients"
+                              lgExpand>
+                @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
+                  last = $last) {
+                  <ng-container [formGroupName]="i">
+                    <lg-flex-row [bottom]="true"
+                                 [attr.data-u2e]="'ingredient-row.' + i"
+                                 size="medium"
+                                 [mobileMode]="true">
+                      <lg-entity-item-selector lgExpand
+                                               formControlName="active_tab">
+                        <lg-multiselect [resource]="'recipes'"
+                                        name="recipe_id"
+                                        appendTo="body"
+                                        [placeholder]="'invoices.find-recipe' | translate"
+                                        formControlName="recipe_id"
+                                        ngProjectAs="recipes"
+                                        [autoLoad]="true"></lg-multiselect>
+
+                        <lg-multiselect [resource]="'products'"
+                                        appendTo="body"
+                                        name="product_id"
+                                        [optionFactory]="productLabelFactory"
+                                        formControlName="product_id"
+                                        [placeholder]="'invoices.find-product' | translate"
+                                        ngProjectAs="products"
+                                        [autoLoad]="true">
+                          <ng-template lgControlTpl type="label" let-item>
+                            {{ productLabelFactory(item) }}
+                            @let price = item.pricePerUnit;
+                            @if (price) {
+                              -
+                              <lg-price-per-unit [price]="price"
+                                                 [unit]="item?.unit"></lg-price-per-unit>
+                            }
+                          </ng-template>
+                          <ng-template lgControlTpl type="option" let-item>
+                            {{ productLabelFactory(item) }}
+                            @let price = item.pricePerUnit;
+                            @if (price) {
+                              -
+                              <lg-price-per-unit [price]="price"
+                                                 [unit]="item?.unit"></lg-price-per-unit>
+                            }
+                          </ng-template>
+                        </lg-multiselect>
+                      </lg-entity-item-selector>
+
+                      <lg-number-input #amount
+                                       lgParseMath
+                                       lgWidth="40%"
+                                       name="amount"
+                                       (onKeydown)="addLast()"
+                                       [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.ingredients?.[i]?.unit || UnitValue.GRAM)|translate)}"
+                                       formControlName="amount">
+                        <ng-template lgExtraTpl place="after">
+                          <lg-unit-switcher formControlName="unit">
+                          </lg-unit-switcher>
+                        </ng-template>
+                      </lg-number-input>
+
+                      <div>
+                        <lg-button [style]="'danger'"
+                                   [flat]="true"
+                                   data-u2e="delete-ingredient-btn"
+                                   [icon]="true"
+                                   (click)="deleteIngredient(i)">
+                          <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
+                        </lg-button>
+                      </div>
+
+                    </lg-flex-row>
+                    @if (!last) {
+                      <hr size="2" lgExpand color="#fafafa"/>
+                    }
+                  </ng-container>
+                }
+              </lg-flex-column>
+
+              <lg-button (click)="addIngredient()"
+                         [outlined]="true"
+                         data-u2e="add-ingredient-btn"
+                         [size]="'small'">
+                <mat-icon [inline]="true"
+                          aria-hidden="false"
+                          fontIcon="add"></mat-icon>
+                {{ 'recipe.form.ingredients.add-btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
+          </lg-control-group>
+        </lg-flex-column>
+      </lg-card>
+
+      <lg-flex-row [mobileMode]="true">
+        <lg-control-box lgSelfStart lgWidth="50%" style="--control-box-bg: var(--hr-bg-strong)">
+          <lg-switch name="chunk-master-switch"
+                     formControlName="master">
+            <span class="text-center" slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
+            <span class="text-center" slot="right">{{ 'recipe.form.master.label' | translate }}</span>
+          </lg-switch>
+        </lg-control-box>
+      </lg-flex-row>
+
+      <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
+        <lg-control [label]="'recipe.form.tags.placeholder'|translate">
+          <lg-tags-control [multi]="true"
+                           name="tags"
+                           [resource]="'tags'"
+                           formControlName="tags"></lg-tags-control>
+        </lg-control>
+
+        <lg-control [label]="'recipe.form.category.placeholder'|translate">
+          <lg-flex-column [position]="'start'" [size]="'medium'">
+            <lg-multiselect #categorySelect
+                            [resource]="'recipes-categories'"
+                            appendTo="body"
+                            name="category_id"
+                            formControlName="category_id"
+                            lgExpand>
+            </lg-multiselect>
+
+            @if (topCategories().length) {
+              <lg-chips-list [control]="categorySelect"
+                             name="topCategoriesChips"
+                             [items]="topCategories()"></lg-chips-list>
+            }
+          </lg-flex-column>
+        </lg-control>
+      </lg-flex-row>
+    </lg-flex-column>
+  </form>
+}

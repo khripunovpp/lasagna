@@ -127,7 +127,11 @@ export class DraftRecipesListComponent
   ngOnInit() {
     const draft = this._recipesRepository.getDraftRecipe();
     if (draft) {
-      this.drafts.set(draft);
+      this.drafts.set(draft.toSorted((a, b) => {
+        const dateA = a.updatedAt || a.createdAt;
+        const dateB = b.updatedAt || b.createdAt;
+        return dateB - dateA;
+      }));
     }
   }
 
