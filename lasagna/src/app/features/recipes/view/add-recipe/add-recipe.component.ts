@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, DestroyRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
@@ -14,7 +14,7 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Recipe} from '../../service/models/Recipe';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {errorHandler} from '../../../../shared/helpers';
+import {errorHandler, injectParams} from '../../../../shared/helpers';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -32,6 +32,9 @@ import {
 import {
   DeleteConfirmationService
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {checkCycleRecipe} from './add-recipe.helpers';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -57,6 +60,7 @@ import {
     ControlsBarComponent,
     MatIcon,
     DeleteConfirmationPopoverComponent,
+    ReactiveFormsModule,
   ],
   template: `
     @if (editMode()) {
@@ -72,7 +76,7 @@ import {
     }
 
     <lg-fade-in>
-      <lg-container>
+      <lg-container [formGroup]="form">
         <lg-flex-column size="medium">
           @if (addedRecipeInformerUUID(); as uuid) {
             <p>
@@ -89,7 +93,7 @@ import {
             </lg-flex-row>
 
             <lg-inline-separated-group>
-              @if (draftRef() && formComponent()?.form?.dirty) {
+              @if (draftRef() && form.dirty) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-fade-in>
                     <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
@@ -155,22 +159,22 @@ import {
 
         <lg-flex-row [mobileMode]="true" [relaxed]="true">
           @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+            <lg-button [disabled]="!form.dirty && !draftRef()"
                        lgShrink
                        [style]="'primary'"
                        (click)="onEditRecipe()">
-              @if (formComponent()?.form?.dirty || draftRef()) {
+              @if (form.dirty || draftRef()) {
                 {{ 'recipe.form.save-btn.edit.active'|translate }}
               } @else {
                 {{ 'recipe.form.save-btn.edit.disabled'|translate }}
               }
             </lg-button>
           } @else {
-            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+            <lg-button [disabled]="!form.dirty && !draftRef()"
                        lgShrink
                        [style]="'primary'"
                        (click)="onAddRecipe()">
-              @if (formComponent()?.form?.dirty || draftRef()) {
+              @if (form.dirty || draftRef()) {
                 {{ 'recipe.form.save-btn.add.active'|translate }}
               } @else {
                 {{ 'recipe.form.save-btn.add.disabled'|translate }}
@@ -199,29 +203,50 @@ export class AddRecipeComponent
   ) {
   }
 
+  uuid = injectParams<string>('uuid');
   readonly deleteConfirmationService = inject(DeleteConfirmationService);
-  draftOrRecipeUUID = signal<string | undefined>(undefined);
-  recipe = signal<Recipe | undefined>(undefined);
+  readonly draftOrRecipeUUID = signal<string | undefined>(undefined);
+  readonly recipe = signal<Recipe | undefined>(undefined);
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
-  draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
+  readonly draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
   draftByExistingRecipe = computed(() => {
     return this.draftRef()?.meta?.['uuid'];
   });
-  isDraftRoute = signal(false);
-  draftRecipeModel?: Recipe;
-  addedRecipeInformerUUID = signal<null | string>(null);
+  readonly form = new FormGroup({
+    name: new FormControl<string | null>(null, Validators.required),
+    description: new FormControl(''),
+    portions: new FormControl<number | string | null>(null),
+    ingredients: new FormArray([]),
+    category_id: new FormControl<any>(null),
+    tags: new FormControl<string[]>([]),
+    master: new FormControl<boolean>(false),
+  });
+  readonly isDraftRoute = signal(false);
+  readonly addedRecipeInformerUUID = signal<null | string>(null);
   readonly editMode = computed(() => {
     return (this.recipe()?.uuid && !this.draftRef()) || (this.draftRef() && this.draftByExistingRecipe())
   })
   protected readonly RecipeScheme = RecipeScheme;
   protected readonly Stores = Stores;
   private _routerManager = inject(ROUTER_MANAGER);
+  private readonly _destroyRef = inject(DestroyRef);
+
+  get ingredients() {
+    return this.form.get('ingredients') as FormArray;
+  }
+
+  private get _formValid() {
+    return this.form.valid
+      && !checkCycleRecipe(this.form?.getRawValue().ingredients, this.uuid());
+  }
 
   ngOnInit() {
     combineLatest([
       this._aRoute.params,
       this._aRoute.data
-    ]).subscribe(([params, data]) => {
+    ]).pipe(
+      takeUntilDestroyed(this._destroyRef),
+    ).subscribe(([params, data]) => {
       const draft = data['draft'] as DraftForm<Recipe>;
       this.draftOrRecipeUUID.set(params['uuid']);
 
@@ -240,13 +265,20 @@ export class AddRecipeComponent
   }
 
   ngAfterViewInit() {
-
-    this.formComponent()?.form.valueChanges.pipe(
+    this.form.valueChanges.pipe(
       debounceTime(500),
+      takeUntilDestroyed(this._destroyRef),
     ).subscribe((value) => {
-      if (!this.formComponent()!.form.dirty) {
+      if (!this.form.dirty) {
         return
       }
+
+      this.recipe()?.update(this.form?.getRawValue());
+      const hasCycledRecipe = checkCycleRecipe(this.form?.getRawValue().ingredients, this.uuid());
+      if (hasCycledRecipe) {
+        this._notificationsService.error('notifications.recipe.cycle-error');
+      }
+
       if (this.draftRef()?.uuid) {
         this._recipesRepository.updateDraftRecipe(
           this.draftRef()!.uuid,
@@ -267,8 +299,8 @@ export class AddRecipeComponent
 
   async onAddRecipe() {
     try {
-      if (!this.formComponent()?.validateForm()
-        || !this.recipe()) {
+      if (!this.recipe()
+        || !this._validateForm()) {
         return;
       }
       const newUUID = await this._addRecipe(this.recipe()!);
@@ -279,8 +311,8 @@ export class AddRecipeComponent
   }
 
   async onEditRecipe() {
-    if (!this.formComponent()?.validateForm()
-      || !this.recipe()) {
+    if (!this.recipe()
+      || !this._validateForm()) {
       return;
     }
     await this._editRecipe(this.recipe()!);
@@ -322,6 +354,14 @@ export class AddRecipeComponent
       await this._loadRecipe(newUUID);
       return newUUID;
     });
+  }
+
+  private _validateForm() {
+    if (!this._formValid) {
+      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form!).join(', '));
+      return false;
+    }
+    return true
   }
 
   private async _addRecipe(recipe: Recipe) {

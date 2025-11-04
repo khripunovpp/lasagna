@@ -12,7 +12,11 @@ import {TranslatePipe} from '@ngx-translate/core';
           <button class="entity-item-selector__tab"
                   [class.active]="activeIndex() === index"
                   (click)="onClickItem(item, index)">
-            {{ item.title | translate }}
+            @if (item.slug === 'custom') {
+              <ng-content select="custom-title"></ng-content>
+            } @else {
+              {{ item.title | translate }}
+            }
           </button>
         }
       </div>
@@ -23,7 +27,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                [class.active]="activeIndex() === index">
             <div class="entity-item-selector__control">
               @if (item.slug === 'custom') {
-                <ng-content select="freeStyle"></ng-content>
+                <ng-content select="custom"></ng-content>
               }
               @if (item.slug === 'product') {
                 <ng-content select="products"></ng-content>
@@ -112,7 +116,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           }
 
           &:nth-child(3) {
-            --part-color: rgba(198, 213, 255, var(--part-color-opacity, 0.5));
+            --part-color: rgba(249, 189, 90, var(--part-color-opacity, 0.5));
           }
         }
 
@@ -156,6 +160,10 @@ export class EntityItemSelectorComponent
       slug: 'product',
       title: 'entity-item.selector.product',
     },
+    {
+      slug: 'custom',
+      title: 'entity-item.selector.custom_item',
+    }
   ]);
   activeIndex = signal<number>(0);
   value = signal<string>('');

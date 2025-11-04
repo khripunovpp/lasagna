@@ -32,7 +32,7 @@ import {Product} from '../../service/Product';
 import {ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
-import {DraftProductsListCompoent} from './draft-products-list.compoent';
+import {DraftProductsListComponent} from './draft-products-list.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -168,7 +168,7 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
     TimeAgoPipe,
     ExpandDirective,
     TranslatePipe,
-    DraftProductsListCompoent,
+    DraftProductsListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     UserCurrencyPipe,
