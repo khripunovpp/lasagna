@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {provideRouter, Router, withInMemoryScrolling} from '@angular/router';
 import {routes} from './app.routes';
-import {HammerModule} from '@angular/platform-browser';
+import {HammerModule, provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {provideHotToastConfig} from '@ngxpert/hot-toast';
 import {provideServiceWorker} from '@angular/service-worker';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
@@ -176,5 +176,6 @@ export const appConfig: ApplicationConfig = {
     },
     provideNativeDateAdapter(),
     ROUTER_MANAGER_PROVIDER,
+    provideClientHydration(withEventReplay()),
   ]
 };

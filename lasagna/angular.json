@@ -113,6 +113,29 @@
           },
           "defaultConfiguration": "development"
         },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "../docs/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "externalDependencies": ["@zxing/library"]
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "lasagna:build:production",
+            "serverTarget": "lasagna:server:production",
+            "routes": [
+              "/docs",
+              "/home"
+            ]
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
