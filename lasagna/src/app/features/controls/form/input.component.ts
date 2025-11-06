@@ -38,6 +38,14 @@ import {NgTemplateOutlet} from '@angular/common';
              class="input"
              [type]="inputType()">
 
+      @if (value && !disable()) {
+       <button class="lg-input__clear"
+               (click)="clear()"
+               type="button">
+         ×
+       </button>
+      }
+
       @if (afterExtraTpl()?.templateRef) {
         <div class="lg-input__after">
           <ng-container *ngTemplateOutlet="afterExtraTpl()!.templateRef"></ng-container>
@@ -81,6 +89,18 @@ import {NgTemplateOutlet} from '@angular/common';
         padding: 0 16px;
         white-space: nowrap;
         flex: 0 0 auto;
+      }
+
+      .lg-input__clear {
+        color: #999;
+        font-size: 18px;
+        line-height: 1;
+        font-family: inherit;
+        padding: 0;
+        border: none;
+        appearance: none;
+        background-color: transparent;
+        margin-right: 16px;
       }
 
       .input {
@@ -184,5 +204,10 @@ export class InputComponent
   private _change(value: string) {
     this.value = String(value || '').trim();
     this.onChange(this.value);
+  }
+
+  clear() {
+    this._change('');
+    this.focus();
   }
 }
