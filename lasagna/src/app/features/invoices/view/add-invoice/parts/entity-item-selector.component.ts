@@ -70,7 +70,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           font-family: inherit;
           font-weight: 400;
           font-size: 16px;
-          transform: translateY(9px) scale(0.95);
+          transform: translateY(8px) scale(0.95);
           transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 
           &.active,
