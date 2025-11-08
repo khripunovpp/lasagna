@@ -40,6 +40,7 @@ import {NgClass} from '@angular/common';
     `
       .lg-checkbox {
         display: flex;
+        align-items: center;
         border-radius: 12px;
         gap: 8px;
       }

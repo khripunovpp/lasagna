@@ -13,7 +13,11 @@ import {TranslatePipe} from '@ngx-translate/core';
         @if (!once()) {
           <div class="expander__header">
             <div (click)="toggle($event)" class="expander__close">
-              {{ (closeLabel ?? 'close-label') | translate }}
+              @if (flat()) {
+                {{ (openLabel ?? 'open-label') | translate }}
+              } @else {
+                {{ (closeLabel ?? 'close-label') | translate }}
+              }
             </div>
           </div>
         }
@@ -72,6 +76,16 @@ import {TranslatePipe} from '@ngx-translate/core';
       .expander.flat {
         background-color: transparent;
         border-radius: 0;
+      }
+
+      .expander.flat.opened {
+        .expander__header {
+          background-color: transparent;
+        }
+
+        .expander__close {
+          text-align: left;
+        }
       }
 
       .expander.flat .expander__content {

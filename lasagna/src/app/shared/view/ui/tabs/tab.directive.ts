@@ -2,7 +2,6 @@ import {Directive, Input, TemplateRef} from '@angular/core';
 
 @Directive({
   selector: 'ng-template[lgTab]',
-  standalone: true,
 })
 export class TabDirective {
   constructor(
@@ -12,4 +11,5 @@ export class TabDirective {
 
   @Input({required: true}) label!: string;
   @Input({required: true}) alias!: string;
+  @Input({required: false}) display: boolean = true;
 }

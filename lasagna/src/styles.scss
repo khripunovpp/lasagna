@@ -63,7 +63,9 @@
   --tabs-label-bg:var(--secondary-light-color);
   --tabs-label-active-bg: var(--p-1);
   --tabs-label-active-text: var(--p-2);
+  --tabs-label-flat-active-hover-bg: color-mix(in srgb, var(--p-4) 20%, #ffffff);
   --tabs-label-flat-text: var(--p-1);
+  --tabs-label-flat-active-bg: var(--p-4);
 
   --tabs-label-hover-bg: #f0f0f0;
   --tabs-label-focus: #007bff;

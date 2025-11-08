@@ -4,6 +4,7 @@ import {NotificationsService} from '../../shared/service/services';
 import {errorHandler} from '../../shared/helpers';
 import {SettingsService} from '../settings/service/services/settings.service';
 import {PageTitleService} from '../../shared/service/services/page-title.service';
+import {ActivatedRoute} from '@angular/router';
 
 export const setupDefaultsInitializer = async () => {
   const setupDefaultsService = inject(SetupDefaultsService);
@@ -11,11 +12,13 @@ export const setupDefaultsInitializer = async () => {
   const settingsService = inject(SettingsService);
   const title = inject(PageTitleService);
 
+  const disableSetupProducts = new URLSearchParams(window.location.search).get('dsp') === '';
+
   try {
     return await Promise.all([
       setupDefaultsService.setupRecipesCategories(),
       setupDefaultsService.setupProductsCategories(),
-      setupDefaultsService.setupProducts(),
+      (disableSetupProducts ? Promise.resolve() : setupDefaultsService.setupProducts()),
       setupDefaultsService.setUserUUID(),
       settingsService.loadSettings()
         .then((settings) => settingsService.setDefaultSettings())

@@ -1,13 +1,4 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  effect,
-  inject, input,
-  QueryList,
-  signal,
-  ViewEncapsulation,
-} from '@angular/core';
+import {Component, contentChildren, effect, inject, input, signal, ViewEncapsulation,} from '@angular/core';
 import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {FlexColumnComponent} from '../../layout/flex-column.component';
@@ -21,36 +12,38 @@ import {Router} from '@angular/router';
   imports: [
     NgTemplateOutlet,
     FlexColumnComponent,
-    ],
+  ],
   template: `
-      <div [attr.aria-label]="'Tabs'"
-           [attr.role]="'tablist'"
-           [class.scrollable]="scrollable()"
-           [class.flat]="flat()"
-           class="tabs">
-          <div class="tabs__labels">
-              @for (tab of tabs();track tab.label;let i = $index) {
-                  <button (click)="selectTab(i)"
-                          [class.active]="activated()[i]"
-                          [attr.aria-selected]="activated()[i]"
-                          [attr.aria-controls]="'tab-' + i"
-                          [attr.id]="'tab-' + i">
-                      {{ tab.label }}
-                  </button>
-              }
-          </div>
-
-          <div class="tabs__body">
-              @if (tabs().length > 0) {
-                  @if (activated()[selectedIndex()]) {
-                      <lg-flex-column [size]="'small'">
-                          <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
-                          </ng-container>
-                      </lg-flex-column>
-                  }
-              }
-          </div>
+    <div [attr.aria-label]="'Tabs'"
+         [attr.role]="'tablist'"
+         [class.flat]="flat()"
+         [class.scrollable]="scrollable()"
+         class="tabs">
+      <div class="tabs__labels">
+        @for (tab of tabs(); track tab.label; let i = $index) {
+          @if (tab.display) {
+            <button (click)="selectTab(i)"
+                    [class.active]="activated()[i]"
+                    [attr.aria-selected]="activated()[i]"
+                    [attr.aria-controls]="'tab-' + i"
+                    [attr.id]="'tab-' + i">
+              {{ tab.label }}
+            </button>
+          }
+        }
       </div>
+
+      <div class="tabs__body">
+        @if (tabs().length > 0) {
+          @if (activated()[selectedIndex()]) {
+            <lg-flex-column [size]="'small'">
+              <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
+              </ng-container>
+            </lg-flex-column>
+          }
+        }
+      </div>
+    </div>
   `,
   styles: [`
     .tabs {
@@ -74,19 +67,9 @@ import {Router} from '@angular/router';
 
     .tabs.flat .tabs__labels {
       border-radius: 0;
-      border-bottom: none;
-      padding: 2px;
+      border-bottom: 1px solid #f5f5f5;
+      padding: 2px 2px 12px;
       background-color: transparent;
-    }
-
-    .tabs.flat .tabs__body {
-      border-radius: 0;
-      background-color: transparent;
-      padding: 0;
-    }
-
-    .tabs.flat .tabs__labels button:not(.active) {
-      background-color: #efefef;
     }
 
     .tabs__labels {
@@ -104,7 +87,7 @@ import {Router} from '@angular/router';
       border-radius: 16px;
       padding: 12px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 14px;
       transition: background-color 0.3s ease;
       font-family: inherit;
       text-decoration: none;
@@ -125,14 +108,22 @@ import {Router} from '@angular/router';
       color: var(--tabs-label-active-text);
     }
 
+    .tabs.flat .tabs__labels button {
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
+
     .tabs.flat .tabs__labels button:not(.active) {
       background-color: transparent;
       color: var(--tabs-label-flat-text);
     }
 
+    .tabs.flat .tabs__labels button:not(.active):hover {
+      background-color: var(--tabs-label-flat-active-hover-bg);
+    }
+
     .tabs.flat .tabs__labels button.active {
-      background-color: #fff;
-      border-color: var(--tabs-label-active-bg);
+      background-color: var(--tabs-label-flat-active-bg);
       color: var(--tabs-label-flat-text);
     }
 
@@ -147,14 +138,19 @@ import {Router} from '@angular/router';
     .tabs__body > * {
       flex: 1;
     }
+
+    .tabs.flat .tabs__body {
+      border-radius: 0;
+      background-color: transparent;
+      padding: 0;
+    }
   `],
   encapsulation: ViewEncapsulation.None,
 })
-export class TabsComponent implements AfterContentInit {
-  @ContentChildren(TabDirective) tabTemplates!: QueryList<TabDirective>;
-
+export class TabsComponent {
+  readonly tabTemplates = contentChildren(TabDirective);
   readonly router = inject(Router);
-  readonly tabs = signal<TabDirective[]>([]);
+  readonly tabs = signal<readonly TabDirective[]>([]);
   readonly flat = input(false)
   readonly silent = input(false)
   readonly scrollable = input(true)
@@ -171,11 +167,11 @@ export class TabsComponent implements AfterContentInit {
     }
   });
 
-  ngAfterContentInit() {
-    const allTabs = this.tabTemplates.toArray();
+  tabsEffect = effect(() => {
+    const allTabs = this.tabTemplates();
     this.tabs.set(allTabs);
-    this.activated.set(allTabs.map((_, i) => i === 0));
-  }
+    this.activated.set(allTabs.map((_, i) => i === this.selectedIndex()));
+  });
 
   selectTab(index: number) {
     this.selectedIndex.set(index);
