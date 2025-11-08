@@ -50,6 +50,7 @@ function loadGoogleAnalytics(
   callback = () => {
   }
 ) {
+  if (window.location.hostname === 'localhost') return;
   if (window.gtagLoaded) return;
   // Create and load gtag script
   const script = document.createElement('script');
