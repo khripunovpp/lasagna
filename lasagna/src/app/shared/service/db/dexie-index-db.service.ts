@@ -1,5 +1,5 @@
 import {inject, Inject, Injectable} from '@angular/core';
-import Dexie, {Table} from 'dexie';
+import Dexie, {Table, Transaction} from 'dexie';
 import {Stores} from './const/stores';
 import {migrations} from './migrations';
 import {generateUuid} from '../../helpers/attribute.helper';
@@ -422,6 +422,32 @@ export class DexieIndexDbService extends Dexie {
     this.logger.log(`Successfully bulk added ${valuesWithUuid.length} items to ${storeKey}`);
   }
 
+  async bulkPatch(storeKey: Stores, changes: Partial<any>[], keyField = 'uuid'): Promise<void> {
+    this.logger.log(`Bulk patching ${changes.length} items in ${storeKey}`, {keyField});
+    const obj = changes.map(change =>
+      ({
+        key: change[keyField],
+        changes: change,
+      })
+    );
+    console.log({obj});
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).bulkUpdate(obj);
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    await this._addBalkIndexWithTransform(storeKey, changes);
+    // Сохраняем индекс только если есть данные
+    if (changes.length > 0) {
+      try {
+        await this.saveIndex(storeKey);
+      } catch (error) {
+        this.logger.error(`Error saving index for ${storeKey}:`, error);
+      }
+    }
+    this.logger.log(`Successfully bulk patched ${changes.length} items in ${storeKey}`);
+  }
+
   async uniqueKeys(storeKey: Stores, indexField: string): Promise<any[]> {
     // @ts-ignore
     return (this[storeKey] as Table<any>).orderBy(indexField).uniqueKeys();
@@ -461,6 +487,10 @@ export class DexieIndexDbService extends Dexie {
 
   async deleteAllData(): Promise<void> {
     this.delete();
+  }
+
+  async withTransaction<T = any>(storeKeys: Stores[], fn: (tx: Transaction) => Promise<T>): Promise<T> {
+    return this.transaction<T>('rw', storeKeys, fn);
   }
 
   private async _addBalkIndexWithTransform(storeKey: Stores, data: any[]) {

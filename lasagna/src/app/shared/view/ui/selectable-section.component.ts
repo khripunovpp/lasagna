@@ -1,11 +1,11 @@
-import {Component, ContentChildren, effect, input, Optional, output, QueryList, SkipSelf} from '@angular/core';
+import {Component, ContentChildren, effect, input, Optional, QueryList, SkipSelf} from '@angular/core';
 import {CardListItemDirective} from './card/card-list-item.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CheckboxComponent} from '../../../features/controls/form/chckbox.component';
-import {ButtonComponent} from './button.component';
-import {MatIcon} from '@angular/material/icon';
 import {SelectionZoneService} from '../../service/services';
 import {generateUuid} from '../../helpers/attribute.helper';
+import {ButtonComponent} from './button.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-selectable-section',
@@ -25,7 +25,7 @@ import {generateUuid} from '../../helpers/attribute.helper';
         <lg-button [style]="'danger'"
                    [size]="'tiny'"
                    [icon]="true"
-                   (click)="selectionZoneService.putDelete(key())">
+                   (click)="selectionZoneService.putDelete(key(),data())">
           <mat-icon aria-hidden="false"
                     fontIcon="close"></mat-icon>
         </lg-button>
@@ -65,6 +65,7 @@ export class SelectableSectionComponent {
   }
 
   key = input<string>(generateUuid());
+  data = input<any>(null);
   @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
   selected = new FormControl()
 
@@ -85,6 +86,6 @@ export class SelectableSectionComponent {
   onChanges(
     event: boolean | string | null | undefined
   ) {
-    this.selectionZoneService.putSelected([!!event, this.key()]);
+    this.selectionZoneService.putSelected([!!event, this.key(), this.data()]);
   }
 }

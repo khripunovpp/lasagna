@@ -17,7 +17,7 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     ButtonComponent,
     MatIcon,
-    ],
+  ],
   template: `
     <section [formGroup]="selected" class="lg-card-list">
       <section class="lg-card-list__inner" formArrayName="items">
@@ -31,7 +31,7 @@ import {MatIcon} from '@angular/material/icon';
                            (onCheckboxChanged)="onChanges($event,i)"></lg-checkbox>
             }
             <div [style.--card-list-bg]="item.bgColor"
-              class="lg-card-list__item__inner">
+                 class="lg-card-list__item__inner">
               <ng-container [ngTemplateOutlet]="item.template"></ng-container>
             </div>
             @if (mode() === 'selection') {
@@ -112,7 +112,7 @@ export class CardListComponent {
   mode = input<'default' | 'selection'>('default');
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
-  onSelected = output<[boolean, string]>();
+  onSelected = output<[boolean, string, any]>();
   onDeleteOne = output<{
     uuid: string, type: string
   }>();
@@ -160,6 +160,6 @@ export class CardListComponent {
     index: number
   ) {
     const item = this.items.toArray()?.[index];
-    this.onSelected.emit([value as boolean, item?.uuid || '']);
+    this.onSelected.emit([value as boolean, item?.uuid || '', item]);
   }
 }

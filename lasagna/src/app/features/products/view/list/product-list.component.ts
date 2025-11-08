@@ -202,7 +202,7 @@ export class ProductListComponent
   ) {
     this.selectionZoneService.onDelete.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(key => {
+    ).subscribe(([key]) => {
       this.deleteProduct(key);
     });
   }

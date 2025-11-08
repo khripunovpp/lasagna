@@ -189,7 +189,7 @@ export class RecipesListComponent {
   ) {
     this.selectionZoneService.onDelete.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(key => {
+    ).subscribe(([key]) => {
       this.deleteRecipe(key);
     });
   }

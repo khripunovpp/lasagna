@@ -42,7 +42,7 @@ import {injectFragment} from '../../../helpers';
               @for (tile of items; track tile.uuid) {
                 <div class="grouping-tiles__item">
                   @if (selectable()) {
-                    <lg-selectable-section [key]="tile.uuid">
+                    <lg-selectable-section [key]="tile.uuid" [data]="tile">
                       <div class="grouping-tiles__item-inner">
                         <ng-container [ngTemplateOutlet]="groupingTileDirective()?.templateRef"
                                       [ngTemplateOutletContext]="{ $implicit: tile }">
