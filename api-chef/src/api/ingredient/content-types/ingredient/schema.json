@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingredients",
+  "info": {
+    "singularName": "ingredient",
+    "pluralName": "ingredients",
+    "displayName": "Ingredient",
+    "description": "Recipe ingredients"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "gram",
+        "portion",
+        "piece"
+      ],
+      "required": true
+    },
+    "uuid": {
+      "type": "string",
+      "unique": true
+    },
+    "cloud_uuid": {
+      "type": "string",
+      "unique": true
+    },
+    "syncedAt": {
+      "type": "datetime"
+    },
+    "dirtyToSync": {
+      "type": "boolean",
+      "default": false
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "recipe_id": {
+      "type": "string"
+    }
+  }
+} 
