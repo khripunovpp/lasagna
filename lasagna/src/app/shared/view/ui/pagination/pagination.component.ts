@@ -11,7 +11,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
-import {ButtonComponent} from '../button.component';
+import {ButtonComponent} from '../button/button.component';
 import {FlexRowComponent} from '../../layout/flex-row.component';
 import {TranslatePipe} from '@ngx-translate/core';
 

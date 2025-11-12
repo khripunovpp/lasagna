@@ -53,12 +53,21 @@
 
                       <lg-multiselect [resource]="'products'"
                                       appendTo="body"
-                                      [labelFactory]="productLabelFactory"
                                       [optionFactory]="productLabelFactory"
                                       formControlName="product_id"
                                       [placeholder]="'invoices.find-product' | translate"
                                       ngProjectAs="products"
                                       [autoLoad]="true">
+                        <ng-template lgControlTpl type="label" let-item>
+                          {{ productLabelFactory(item) }} / {{ item.pricePerUnit | userCurrency:pipesDigits() }}
+                          <span [translateParams]="{unit:$any(item)?.unit | unitString | translate}"
+                                [translate]="'per-unit.label'"></span>
+                        </ng-template>
+                        <ng-template lgControlTpl type="option" let-item>
+                          {{ productLabelFactory(item) }} / {{ item.pricePerUnit | userCurrency:pipesDigits() }}
+                          <span [translateParams]="{unit:$any(item)?.unit | unitString | translate}"
+                                [translate]="'per-unit.label'"></span>
+                        </ng-template>
                       </lg-multiselect>
                     </lg-entity-item-selector>
 

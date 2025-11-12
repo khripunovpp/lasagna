@@ -8,28 +8,38 @@
       </ng-template>
 
       <ng-template alias="categoires" label="{{ 'categories.settings-title'|translate }}" lgTab>
-        <lg-flex-row [mobileMode]="true" [top]="true">
-          <a lgExpand routerLink="/settings/categories/products" routerLinkActive="active">
-            {{ 'categories.products.link-label'|translate }}
-          </a>
+        <lg-tabs [flat]="true"
+                 [scrollable]="false"
+                 [silent]="true">
+          <ng-template [label]="'categories.products.link-label' | translate" alias="system" lgTab>
+            <lg-flex-column>
+              <lg-add-category-form (onSaved)="editedCategoryProduct.set('')"
+                                    [uuid]="editedCategoryProduct()"></lg-add-category-form>
+              <lg-category-list (onEdit)="editedCategoryProduct.set($event)"></lg-category-list>
+            </lg-flex-column>
+          </ng-template>
 
-          <a lgExpand routerLink="/settings/categories/recipes" routerLinkActive="active">
-            {{ 'categories.recipes.link-label'|translate }}
-          </a>
-        </lg-flex-row>
+          <ng-template [label]="'categories.recipes.link-label' | translate" alias="system" lgTab>
+            <lg-flex-column>
+              <lg-add-category-recipe-form (onSaved)="editedCategoryRecipe.set('')"
+                                           [uuid]="editedCategoryRecipe()"></lg-add-category-recipe-form>
+              <lg-category-recipe-list (onEdit)="editedCategoryRecipe.set($event)"></lg-category-recipe-list>
+            </lg-flex-column>
+          </ng-template>
+        </lg-tabs>
       </ng-template>
 
       <ng-template [label]="'settings.invoice.title' | translate" alias="invoice" lgTab>
         <lg-invoices-settings></lg-invoices-settings>
       </ng-template>
 
-<!--      <ng-template [label]="'settings.credentials.title' | translate" alias="credentials" lgTab>-->
-<!--        <lg-credentials-settings></lg-credentials-settings>-->
-<!--      </ng-template>-->
+      <!--      <ng-template [label]="'settings.credentials.title' | translate" alias="credentials" lgTab>-->
+      <!--        <lg-credentials-settings></lg-credentials-settings>-->
+      <!--      </ng-template>-->
 
-<!--      <ng-template [label]="'settings.taxes.title' | translate" alias="taxes" lgTab>-->
-<!--        <lg-taxes-settings></lg-taxes-settings>-->
-<!--      </ng-template>-->
+      <!--      <ng-template [label]="'settings.taxes.title' | translate" alias="taxes" lgTab>-->
+      <!--        <lg-taxes-settings></lg-taxes-settings>-->
+      <!--      </ng-template>-->
 
       <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
         <lg-backup-settings></lg-backup-settings>

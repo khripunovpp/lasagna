@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  effect, inject,
+  computed,
+  effect,
+  inject,
   input,
   OnInit,
   signal,
@@ -12,7 +14,7 @@ import {
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 
 import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
@@ -33,7 +35,7 @@ import {Ingredient} from '../../service/models/Ingredient';
 import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
 import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
@@ -50,6 +52,11 @@ import {WidthDirective} from '../../../../shared/view/directives/width.directive
 import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {errorHandler} from '../../../../shared/helpers';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
+import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
+import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
+import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -81,7 +88,11 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     ControlBoxComponent,
     SelfStartDirective,
     WidthDirective,
-    HtmlEditorComponent
+    HtmlEditorComponent,
+    ControlTemplateDirective,
+    UserCurrencyPipe,
+    UnitStringPipe,
+    TranslateDirective
   ],
   providers: [
     {
@@ -98,10 +109,13 @@ export class AddRecipeFormComponent
     public _selectResourcesService: SelectResourcesService,
     private _router: Router,
     private _aRoute: ActivatedRoute,
-    private _notificationsService: NotificationsService
+    private _notificationsService: NotificationsService,
+    private _settingsService: SettingsService,
   ) {
   }
 
+  readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
+  readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   editMode = input(false);
   recipe = input<Recipe | undefined>(undefined);
   uuid = injectParams<string>('uuid');

@@ -9,7 +9,7 @@ import {
   Signal
 } from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ProductsRepository} from '../../service/products.repository';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';

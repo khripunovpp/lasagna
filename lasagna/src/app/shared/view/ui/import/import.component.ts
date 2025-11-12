@@ -1,7 +1,7 @@
 import {Component, contentChild, inject, Input, input, model, output, viewChild, ViewChild} from '@angular/core';
 
 import {UploadComponent} from '../../../../features/controls/form/upload.component';
-import {ButtonComponent} from '../button.component';
+import {ButtonComponent} from '../button/button.component';
 import {ZodObject} from 'zod';
 import {Stores} from '../../../service/db/const/stores';
 import {CsvReaderService} from '../../../service/services/csv-reader.service';

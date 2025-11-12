@@ -3,7 +3,7 @@ import {ContainerComponent} from '../../../../shared/view/layout/container.compo
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddRecipeFormComponent} from './add-recipe-form.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {RecipesRepository} from '../../../../shared/service/repositories';
@@ -60,10 +60,11 @@ import {
   ],
   template: `
     @if (editMode()) {
-      <lg-controls-bar>
+      <lg-controls-bar size="small">
         <lg-button [icon]="true"
                    [link]="'/recipes/add'"
-                   [size]="'medium'"
+                   [size]="'small'"
+                   [label]="'recipe.form.add-new-btn'|translate"
                    [style]="'primary'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>

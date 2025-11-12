@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostBinding, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, Input, OnDestroy} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -6,6 +6,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
   template: `
     <div #bar
          @fromLeft
+         [class]="['lg-controls-bar--' + size]"
          class="lg-controls-bar">
       <div class="lg-controls-bar__content">
         <ng-content></ng-content>
@@ -27,9 +28,16 @@ import {animate, style, transition, trigger} from '@angular/animations';
         border-radius: 100px;
         backdrop-filter: blur(4px);
         background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px 12px;
+        padding: 10px;
         align-items: center;
         justify-content: center;
+      }
+
+      .lg-controls-bar--large {
+        padding: 12px;
+      }
+      .lg-controls-bar--small {
+        padding: 8px;
       }
 
       .lg-controls-bar__content {
@@ -59,7 +67,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 export class ControlsBarComponent
   implements AfterViewInit, OnDestroy {
   @HostBinding('style.--controls-bar-shift') bottomPosition = '40px';
-
+  @Input() size: 'small' | 'medium' | 'large' = 'large';
 
   ngAfterViewInit() {
   }

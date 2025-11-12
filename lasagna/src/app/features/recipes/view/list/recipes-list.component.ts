@@ -1,7 +1,7 @@
 import {Component, DestroyRef, inject} from '@angular/core';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';

@@ -16,7 +16,7 @@ import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CalculateRecipeService, Calculation} from '../../service/providers/calulate-recipe.service';
 import {TableCardComponent} from '../../../../shared/view/ui/card/table-card.component';
 import {CurrencyPipe, DecimalPipe, NgClass} from '@angular/common';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ChartData, ChartEvent, ChartOptions, ChartType} from 'chart.js';

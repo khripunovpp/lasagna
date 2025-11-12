@@ -6,7 +6,7 @@ import {AuthService} from './auth.service';
 import {NotificationsService} from '../../shared/service/services';
 import {ControlComponent} from '../controls/form/control-item/control.component';
 import {InputComponent} from '../controls/form/input.component';
-import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {WidthDirective} from '../../shared/view/directives/width.directive';

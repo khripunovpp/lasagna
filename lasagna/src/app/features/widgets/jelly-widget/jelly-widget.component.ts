@@ -14,7 +14,7 @@ import {ParseMathDirective} from '../../../shared/view/directives/parse-math.dir
 import {ControlExtraTemplateDirective} from '../../controls/form/control-extra-template.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {PullDirective} from '../../../shared/view/directives/pull.directive';
-import {ButtonComponent} from '../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 
 
 @Component({

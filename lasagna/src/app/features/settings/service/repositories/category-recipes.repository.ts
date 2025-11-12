@@ -4,6 +4,7 @@ import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryRecipe} from '../models/CategoryRecipe';
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {CategoryRecipeFactory} from '../factories/category-recipe.factory';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,20 @@ export class CategoryRecipesRepository {
     public _indexDbService: DexieIndexDbService,
     private _categoryRecipeFactory: CategoryRecipeFactory,
   ) {
+  }
+
+  private _stream$ = new BehaviorSubject<CategoryRecipe[]>([]);
+
+  get categories$() {
+    return this._stream$.asObservable();
+  }
+
+  loadAll() {
+    return this._indexDbService.getAll(Stores.RECIPES_CATEGORIES).then(categories => {
+      const items = categories.map(category => this._categoryRecipeFactory.fromRaw(category));
+      this._stream$.next(items);
+      return items;
+    });
   }
 
   addCategory(category: CategoryRecipe) {

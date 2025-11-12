@@ -1,5 +1,5 @@
 import {Component, Input, Optional} from '@angular/core';
-import {ButtonComponent} from '../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 
 
 import {SelectionZoneService} from '../../../shared/service/services/selection-zone.service';

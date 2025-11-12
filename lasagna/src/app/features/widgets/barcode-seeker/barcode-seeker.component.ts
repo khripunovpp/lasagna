@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
 import {InputComponent} from '../../controls/form/input.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
-import {ButtonComponent} from '../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../shared/view/directives/parse-math.directive';

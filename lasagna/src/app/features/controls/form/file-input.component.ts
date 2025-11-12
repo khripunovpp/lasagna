@@ -1,7 +1,7 @@
 import {Component, ElementRef, forwardRef, input, signal, ViewChild, inject} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
-import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/button.component';
+import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/button/button.component';
 import {TranslateService, TranslatePipe} from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +17,7 @@ import {TranslateService, TranslatePipe} from '@ngx-translate/core';
           [disabled]="disable()"
           class="hidden-input"
           type="file">
-      
+
         <lg-button (onClick)="fileInput.click()"
           [disabled]="disable()"
           [style]="buttonStyle()"
@@ -25,7 +25,7 @@ import {TranslateService, TranslatePipe} from '@ngx-translate/core';
           size="small">
           {{ buttonText() | translate }}
         </lg-button>
-      
+
         <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'" class="lg-file-input__after">
           <ng-content select="after"></ng-content>
           @if (errorMessage()) {

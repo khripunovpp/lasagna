@@ -1,7 +1,7 @@
 import {Component, inject} from "@angular/core";
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 
-import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from './auth.service';

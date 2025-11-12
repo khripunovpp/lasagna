@@ -2,7 +2,7 @@ import {Component, output, signal, viewChild} from '@angular/core';
 import {EggsWidgetComponent} from './eggs-widget/eggs-widget.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {DialogComponent} from '../../shared/view/ui/dialogs/dialog.component';
-import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({

@@ -11,7 +11,7 @@ import {
   viewChild
 } from '@angular/core';
 import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column.component';
-import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
 import {Tax} from '../../../../settings/service/models/Tax';
 import {DialogComponent} from '../../../../../shared/view/ui/dialogs/dialog.component';

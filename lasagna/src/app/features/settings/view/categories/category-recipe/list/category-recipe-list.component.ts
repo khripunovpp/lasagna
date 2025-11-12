@@ -1,8 +1,7 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
-import {ButtonComponent} from '../../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
 import {CardListComponent} from '../../../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../../../shared/view/ui/card/card-list-item.directive';
@@ -12,35 +11,27 @@ import {CategoryRecipesRepository} from '../../../../../../shared/service/reposi
 import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ExpandDirective} from '../../../../../../shared/view/directives/expand.directive';
-import {RouterLink} from '@angular/router';
+import {defer} from 'rxjs';
+import {errorHandler} from '../../../../../../shared/helpers';
+import {AsyncPipe} from '@angular/common';
+import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
 
 @Component({
   selector: 'lg-category-recipe-list',
   standalone: true,
   template: `
     <lg-fade-in>
-      <lg-container>
-        <lg-flex-row [center]="true">
-          <lg-title>
-            {{ 'categories.recipes.title' | translate }}
-          </lg-title>
-
-          <lg-button [link]="'/settings/categories/recipes/add'"
-                     [size]="'tiny'"
-                     [outlined]="true"
-                     [style]="'default'">
-            {{ 'add-label' | translate }}
-          </lg-button>
-        </lg-flex-row>
+      <lg-flex-column [size]="'medium'">
+        <div> {{ 'categories.recipes.title' | translate }}</div>
 
         <lg-card-list>
-          @for (category of categories(); track $index; let i = $index) {
+          @let cats = (categories | async) ?? [];
+          @for (category of cats; track i; let i = $index) {
             <ng-template lgCardListItem>
               <lg-flex-row [center]="true">
-                <a [routerLink]="'/settings/categories/recipes/edit/' + category.uuid"
-                   lgExpand>
+                <div lgExpand (click)="onEdit.emit(category.uuid)" style="cursor: pointer;">
                   {{ category.name }}
-                </a>
+                </div>
 
                 <lg-button [style]="'danger'"
                            [size]="'tiny'"
@@ -53,21 +44,21 @@ import {RouterLink} from '@angular/router';
             </ng-template>
           }
         </lg-card-list>
-      </lg-container>
+      </lg-flex-column>
     </lg-fade-in>
   `,
   imports: [
     FlexRowComponent,
     ButtonComponent,
     MatIcon,
-    ContainerComponent,
     TitleComponent,
     CardListComponent,
     CardListItemDirective,
     FadeInComponent,
     TranslatePipe,
     ExpandDirective,
-    RouterLink
+    AsyncPipe,
+    FlexColumnComponent
   ],
   styles: [
     `:host {
@@ -85,27 +76,34 @@ export class CategoryRecipeListComponent
 
   }
 
-  categories = signal<CategoryRecipe[]>([])
+  @Output() onEdit = new EventEmitter<string>();
+  categories = defer(() => this.categoryRepository.categories$);
 
   deleteCategory(
     category: CategoryRecipe,
   ) {
+
     if (!category.uuid) return Promise.resolve();
-    return this.categoryRepository.deleteCategory(category.uuid).then(() => {
-      this.loadCategory();
-      this._notificationsService.success('categories.deleted');
-    });
+    return this.categoryRepository.deleteCategory(category.uuid)
+      .then(() => {
+        this.loadCategory();
+        this._notificationsService.success('categories.deleted');
+      })
+      .catch(e => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 
-  async ngOnInit() {
-    await this.loadCategory();
+  ngOnInit() {
+    this.loadCategory();
   }
 
-  loadCategory() {
-    this.categoryRepository.getCategories().then((categories) => {
-      const sorted = categories.toSorted((a, b) => a?.name?.localeCompare(b?.name));
-      this.categories.set(sorted);
-    });
+  async loadCategory() {
+    try {
+      await this.categoryRepository.loadAll();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
 }

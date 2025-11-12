@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {injectQueryParams} from '../../../../shared/helpers';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {DropdownComponent} from '../../../controls/dropdown/dropdown.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 
