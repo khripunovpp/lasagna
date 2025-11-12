@@ -9,7 +9,7 @@ import {InputComponent} from '../../../../controls/form/input.component';
 import {TextareaComponent} from '../../../../controls/form/textarea.component';
 import {CheckboxComponent} from '../../../../controls/form/chckbox.component';
 import {NumberInputComponent} from '../../../../controls/form/number-input.component';
-import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button/button.component';
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 
 import {MatIcon} from '@angular/material/icon';

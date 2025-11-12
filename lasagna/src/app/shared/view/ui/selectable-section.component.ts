@@ -4,7 +4,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CheckboxComponent} from '../../../features/controls/form/chckbox.component';
 import {SelectionZoneService} from '../../service/services';
 import {generateUuid} from '../../helpers/attribute.helper';
-import {ButtonComponent} from './button.component';
+import {ButtonComponent} from './button/button.component';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({

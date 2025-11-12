@@ -4,7 +4,7 @@ import {
   AddCategoryFormComponent
 } from '../../shared/view/settings/categories/category-product/add-category/add-category-form.component';
 import {CategoryProductsRepository} from '../../shared/service/repositories';
-import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {InputComponent} from '../../features/controls/form/input.component';
 import {ControlComponent} from '../../features/controls/form/control-item/control.component';
 import {FlexRowComponent} from '../../shared/view/layout/flex-row.component';

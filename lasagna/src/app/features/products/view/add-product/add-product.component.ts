@@ -9,7 +9,7 @@ import {DraftForm} from '../../../../shared/service/services/draft-forms.service
 import {ProductsRepository} from '../../service/products.repository';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {combineLatest, debounceTime, take} from 'rxjs';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe} from '@angular/common';
@@ -58,10 +58,11 @@ import {
   ],
   template: `
     @if (editMode()) {
-      <lg-controls-bar>
+      <lg-controls-bar size="small">
         <lg-button [icon]="true"
                    [link]="'/products/add'"
-                   [size]="'medium'"
+                   [size]="'small'"
+                   [label]=" 'product.form.add-new-btn'|translate"
                    [style]="'primary'">
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
@@ -147,6 +148,14 @@ import {
             </lg-button>
           }
 
+          @if (formComponent()?.form?.dirty) {
+            <lg-button (click)="onResetForm()"
+                       [outlined]="true"
+                       [style]="'primary'"
+                       lgShrink>
+              {{ 'product.form.reset-btn.edit.active'|translate }}
+            </lg-button>
+          }
         </lg-flex-row>
       </lg-container>
     </lg-fade-in>
@@ -187,6 +196,7 @@ export class AddProductComponent
     return Boolean((this.product()?.uuid && !this.draftRef())
       || (this.draftRef() && this.draftByExistingProduct()))
   })
+  firstState?: any;
   private _routerManager = inject(ROUTER_MANAGER);
 
   ngOnDestroy() {
@@ -235,6 +245,11 @@ export class AddProductComponent
         // }
       }
     });
+  }
+
+  onResetForm() {
+    this._removeDraft();
+    window.location.reload();
   }
 
   onAddProduct() {

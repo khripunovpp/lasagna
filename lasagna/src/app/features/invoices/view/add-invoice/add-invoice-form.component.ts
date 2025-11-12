@@ -5,7 +5,7 @@ import {NotificationsService, SelectResourcesService} from '../../../../shared/s
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {debounceTime} from 'rxjs';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ControlsRowComponent} from '../../../controls/form/controls-row.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';

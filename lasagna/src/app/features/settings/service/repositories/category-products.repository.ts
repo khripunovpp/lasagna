@@ -4,6 +4,7 @@ import {Stores} from '../../../../shared/service/db/const/stores';
 import {CategoryProduct} from '../models/CategoryProduct';
 import {CategoryProductDTO} from '../../../../shared/service/db/shemes/CategoryProduct.scheme';
 import {CategoryProductFactory} from '../factories/category-product.factory';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,20 @@ export class CategoryProductsRepository {
     public _indexDbService: DexieIndexDbService,
     private _categoryProductFactory: CategoryProductFactory,
   ) {
+  }
+
+  private _stream$ = new BehaviorSubject<CategoryProduct[]>([]);
+
+  get categories$() {
+    return this._stream$.asObservable();
+  }
+
+  loadAll() {
+    return this._indexDbService.getAll(Stores.PRODUCTS_CATEGORIES).then(categories => {
+      const items = categories.map(category => this._categoryProductFactory.fromRaw(category));
+      this._stream$.next(items);
+      return items;
+    });
   }
 
   addOne(product: CategoryProduct) {

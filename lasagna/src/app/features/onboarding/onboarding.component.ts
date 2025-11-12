@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core';
 
 import {Router} from '@angular/router';
-import {ButtonComponent} from '../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {TitleComponent} from '../../shared/view/layout/title.component';
 import {OnboardingService} from '../onboarding/onboarding.service';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';

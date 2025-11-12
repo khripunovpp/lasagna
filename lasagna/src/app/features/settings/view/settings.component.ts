@@ -1,10 +1,7 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ContainerComponent} from '../../../shared/view/layout/container.component';
-import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
-import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
-import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {LocalisationSettingsComponent} from './localisation/localisation-settings.component';
 import {BackupSettingsComponent} from './backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -17,6 +14,13 @@ import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/in
 
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
+import {CategoryListComponent} from './categories/category-product/list/category-list.component';
+import {CategoryRecipeListComponent} from './categories/category-recipe/list/category-recipe-list.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {AddCategoryFormComponent} from './categories/category-product/add-category/add-category-form.component';
+import {
+  AddCategoryRecipeFormComponent
+} from './categories/category-recipe/add-category/add-category-recipe-form.component';
 
 @Component({
   selector: 'lg-settings',
@@ -25,28 +29,31 @@ import {LogCenterPageComponent} from './log-center/log-center-page.component';
   styleUrls: ['./settings.component.scss'],
   imports: [
     ContainerComponent,
-    FlexRowComponent,
     TitleComponent,
-    RouterLink,
-    RouterLinkActive,
     FadeInComponent,
-    ExpandDirective,
     LocalisationSettingsComponent,
     BackupSettingsComponent,
     TranslatePipe,
     TabDirective,
     TabsComponent,
     InvoicesSettingsComponent,
-    LogCenterPageComponent
+    LogCenterPageComponent,
+    CategoryListComponent,
+    CategoryRecipeListComponent,
+    FlexColumnComponent,
+    AddCategoryFormComponent,
+    AddCategoryRecipeFormComponent
   ]
 })
 export class SettingsComponent implements OnInit {
-  private _onboardingService = inject(OnboardingService);
-
   constructor(
     public settingsService: SettingsService,
   ) {
   }
+
+  editedCategoryProduct = signal('')
+  editedCategoryRecipe = signal('')
+  private _onboardingService = inject(OnboardingService);
 
   ngOnInit() {
     // Отмечаем шаг настроек как завершённый при посещении страницы

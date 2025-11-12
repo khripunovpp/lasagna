@@ -1,5 +1,5 @@
 import {Component, effect, forwardRef, Input, input, signal, ViewEncapsulation} from '@angular/core';
-import {ButtonComponent, ButtonSizes, ButtonStyle} from '../../../shared/view/ui/button.component';
+import {ButtonComponent, ButtonSizes, ButtonStyle} from '../../../shared/view/ui/button/button.component';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {TranslatePipe} from '@ngx-translate/core';
 

@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {NotificationsService} from '../../../../shared/service/services';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe, NgClass} from '@angular/common';

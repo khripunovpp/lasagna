@@ -1,8 +1,8 @@
-import {Component, effect, Inject, input, OnInit, signal} from '@angular/core';
+import {Component, effect, EventEmitter, Inject, input, OnInit, Output, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../../../controls/form/input.component';
 import {ControlComponent} from '../../../../../controls/form/control-item/control.component';
-import {ButtonComponent} from '../../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
 import {ExpandDirective} from '../../../../../../shared/view/directives/expand.directive';
 import {NoWrapDirective} from '../../../../../../shared/view/directives/no-wrap.directive';
@@ -10,46 +10,59 @@ import {NotificationsService, SelectResourcesService} from '../../../../../../sh
 import {CategoryRecipesRepository} from '../../../../../../shared/service/repositories';
 import {Router} from '@angular/router';
 import {CategoryRecipe} from '../../../../service/models/CategoryRecipe';
-import {categoryRecipeDTOFromFormValue, categoryRecipeToFormValue} from '../../../../../../shared/helpers';
+import {
+  categoryRecipeDTOFromFormValue,
+  categoryRecipeToFormValue,
+  errorHandler
+} from '../../../../../../shared/helpers';
 import {TranslatePipe} from '@ngx-translate/core';
+import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
+import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
+import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
 
 @Component({
   selector: 'lg-add-category-recipe-form',
   standalone: true,
   template: `
-    <form [formGroup]="form">
-      <lg-flex-row [bottom]="true" [mobileMode]="true">
-        <lg-control [label]="'settings.category.name' | translate" lgExpand>
-          <lg-input (onEnter)="onEnter()"
-                    [placeholder]="'settings.category.placeholder' | translate"
-                    formControlName="name"></lg-input>
-        </lg-control>
+    <lg-fade-in>
+      <lg-flex-column [size]="'medium'">
+        <div>{{ 'categories.add-product' | translate }}</div>
 
-        <div lgNoWrap>
-          @if (uuid()) {
-            <lg-button [disabled]="!form.dirty"
-                       [style]="'primary'"
-                       (click)="editCategory()">
-              @if (form.dirty) {
-                {{ 'settings.category.save' | translate }}
+        <form [formGroup]="form">
+          <lg-flex-row [bottom]="true" [mobileMode]="true">
+            <lg-control lgExpand>
+              <lg-input (onEnter)="onEnter()"
+                        [placeholder]="'settings.category.placeholder' | translate"
+                        formControlName="name"></lg-input>
+            </lg-control>
+
+            <div lgNoWrap>
+              @if (uuid()) {
+                <lg-button [disabled]="!form.dirty"
+                           [style]="'primary'"
+                           (click)="editCategory()">
+                  @if (form.dirty) {
+                    {{ 'settings.category.save' | translate }}
+                  } @else {
+                    {{ 'settings.category.no-changes' | translate }}
+                  }
+                </lg-button>
               } @else {
-                {{ 'settings.category.no-changes' | translate }}
+                <lg-button [disabled]="!form.dirty"
+                           [style]="'primary'"
+                           (click)="addCategory()">
+                  @if (form.dirty) {
+                    {{ 'settings.category.add' | translate }}
+                  } @else {
+                    {{ 'settings.category.enter-name' | translate }}
+                  }
+                </lg-button>
               }
-            </lg-button>
-          } @else {
-            <lg-button [disabled]="!form.dirty"
-                       [style]="'primary'"
-                       (click)="addCategory()">
-              @if (form.dirty) {
-                {{ 'settings.category.add' | translate }}
-              } @else {
-                {{ 'settings.category.enter-name' | translate }}
-              }
-            </lg-button>
-          }
-        </div>
-      </lg-flex-row>
-    </form>
+            </div>
+          </lg-flex-row>
+        </form>
+      </lg-flex-column>
+    </lg-fade-in>
   `,
   imports: [
     ReactiveFormsModule,
@@ -59,7 +72,10 @@ import {TranslatePipe} from '@ngx-translate/core';
     FlexRowComponent,
     ExpandDirective,
     NoWrapDirective,
-    TranslatePipe
+    TranslatePipe,
+    FadeInComponent,
+    FlexColumnComponent,
+    TitleComponent
   ],
   styles: [
     `
@@ -81,16 +97,21 @@ export class AddCategoryRecipeFormComponent
   });
   category = signal<CategoryRecipe | undefined>(undefined);
   uuid = input<string>('');
+  @Output() onSaved = new EventEmitter<string>();
   private uuidEffect = effect(() => {
     if (!this.uuid()) {
       this.category.set(CategoryRecipe.empty());
       return;
     }
-    this._categoryRepository.getOne(this.uuid()).then(category => {
-      this.form.reset(categoryRecipeToFormValue(category));
-      this.category.set(category);
-      this.form.markAsPristine();
-    });
+    this._categoryRepository.getOne(this.uuid())
+      .then(category => {
+        this.form.reset(categoryRecipeToFormValue(category));
+        this.category.set(category);
+        this.form.markAsPristine();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   });
 
   ngOnInit() {
@@ -103,23 +124,40 @@ export class AddCategoryRecipeFormComponent
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.addCategory(this.category()!).then(() => {
-      this.form.reset({
-        name: '',
+
+    return this._categoryRepository.addCategory(this.category()!)
+      .then(() => {
+        this.onSaved.emit(this.uuid());
+        this.form.reset({
+          name: '',
+        });
+        this._notificationsService.success('settings.category.added');
+        this.form.markAsPristine();
+        this._categoryRepository.loadAll();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
       });
-      this._notificationsService.success('settings.category.added');
-      this.form.markAsPristine();
-    });
   }
 
   editCategory() {
     if (!this.category() || !this.form.dirty) {
       return Promise.resolve();
     }
-    return this._categoryRepository.editCategory(this.uuid(), this.category()!).then(() => {
-      this._notificationsService.success('settings.category.edited');
-      this.form.markAsPristine();
-    });
+
+    return this._categoryRepository.editCategory(this.uuid(), this.category()!)
+      .then(() => {
+        this.onSaved.emit(this.uuid());
+        this.form.reset({
+          name: '',
+        });
+        this._notificationsService.success('settings.category.edited');
+        this.form.markAsPristine();
+        this._categoryRepository.loadAll();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 
   onEnter() {

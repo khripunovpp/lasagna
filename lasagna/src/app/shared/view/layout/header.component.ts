@@ -1,5 +1,5 @@
 import {Component, Signal, signal, viewChildren} from '@angular/core';
-import {ButtonComponent} from '../ui/button.component';
+import {ButtonComponent} from '../ui/button/button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {Location, NgOptimizedImage} from '@angular/common';
@@ -115,11 +115,27 @@ import {FadeInComponent} from '../ui/fade-in.component';
       overflow-x: auto;
       white-space: nowrap;
       padding: 0 16px;
+      scroll-snap-type: x mandatory;
       @media (max-width: 768px) {
         justify-content: normal;
         scroll-snap-type: both mandatory;
         overscroll-behavior-x: contain;
         scrollbar-width: none;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+        width: 100dvw;
+        height: 100px;
+        pointer-events: none;
+        backdrop-filter: blur(3px);
+        z-index: -1;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+        will-change: transform;
       }
     }
 

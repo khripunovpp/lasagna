@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LogCenterService} from '../../service/services/log-center.service';
 import {LogEntryModel, LogLevel} from '../../service/models/LogEntry';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {LogsByMinuteGroupingStrategy} from '../../service/providers/logs.grouping';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';

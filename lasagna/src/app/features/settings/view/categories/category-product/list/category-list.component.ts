@@ -1,8 +1,7 @@
-import {Component, OnInit, signal} from '@angular/core';
-import {ButtonComponent} from '../../../../../../shared/view/ui/button.component';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ButtonComponent} from '../../../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
 import {MatIcon} from '@angular/material/icon';
-import {ContainerComponent} from '../../../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
 import {CardListComponent} from '../../../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../../../shared/view/ui/card/card-list-item.directive';
@@ -11,36 +10,28 @@ import {CategoryProductsRepository} from '../../../../../../shared/service/repos
 import {NotificationsService} from '../../../../../../shared/service/services';
 import {CategoryProduct} from '../../../../service/models/CategoryProduct';
 import {TranslatePipe} from '@ngx-translate/core';
-import {RouterLink} from '@angular/router';
 import {ExpandDirective} from '../../../../../../shared/view/directives/expand.directive';
+import {errorHandler} from '../../../../../../shared/helpers';
+import {defer} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
 
 @Component({
   selector: 'lg-category-list',
   standalone: true,
   template: `
     <lg-fade-in>
-      <lg-container>
-        <lg-flex-row [center]="true">
-          <lg-title>
-            {{ 'categories.products.title' | translate }}
-          </lg-title>
-
-          <lg-button [link]="'/settings/categories/products/add'"
-                     [size]="'tiny'"
-                     [outlined]="true"
-                     [style]="'default'">
-            {{ 'add-label' | translate }}
-          </lg-button>
-        </lg-flex-row>
+      <lg-flex-column [size]="'medium'">
+        <div>{{ 'categories.products.title' | translate }}</div>
 
         <lg-card-list>
-          @for (category of categories(); track $index; let i = $index) {
+          @let cats = (categories | async) ?? [];
+          @for (category of cats; track i; let i = $index) {
             <ng-template lgCardListItem>
               <lg-flex-row [center]="true">
-                <a [routerLink]="'/settings/categories/products/edit/' + category.uuid"
-                   lgExpand>
+                <div lgExpand (click)="onEdit.emit(category.uuid)" style="cursor: pointer;">
                   {{ category.name }}
-                </a>
+                </div>
 
                 <lg-button [style]="'danger'"
                            [size]="'tiny'"
@@ -53,21 +44,21 @@ import {ExpandDirective} from '../../../../../../shared/view/directives/expand.d
             </ng-template>
           }
         </lg-card-list>
-      </lg-container>
+      </lg-flex-column>
     </lg-fade-in>
   `,
   imports: [
     FlexRowComponent,
     ButtonComponent,
     MatIcon,
-    ContainerComponent,
     TitleComponent,
     CardListComponent,
     CardListItemDirective,
     FadeInComponent,
     TranslatePipe,
-    RouterLink,
-    ExpandDirective
+    ExpandDirective,
+    AsyncPipe,
+    FlexColumnComponent
   ],
   styles: [
     `:host {
@@ -85,7 +76,8 @@ export class CategoryListComponent
 
   }
 
-  categories = signal<CategoryProduct[]>([])
+  @Output() onEdit = new EventEmitter<string>();
+  categories = defer(() => this.categoryRepository.categories$);
 
   deleteCategory(
     category: CategoryProduct,
@@ -93,21 +85,25 @@ export class CategoryListComponent
     if (!category.uuid) {
       return Promise.resolve()
     }
-    return this.categoryRepository.deleteOne(category.uuid).then(() => {
-      this.loadCategory();
-      this._notificationsService.success('categories.deleted');
-    });
+    return this.categoryRepository.deleteOne(category.uuid)
+      .then(() => {
+        this.loadCategory();
+        this._notificationsService.success('categories.deleted');
+      })
+      .catch(e => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 
-  async ngOnInit() {
-    await this.loadCategory();
+  ngOnInit() {
+    this.loadCategory();
   }
 
-  loadCategory() {
-    this.categoryRepository.getAll().then((categories) => {
-      const sorted = categories.toSorted((a: CategoryProduct, b: CategoryProduct) => a?.name?.localeCompare(b?.name));
-      this.categories.set(sorted);
-    });
+  async loadCategory() {
+    try {
+      await this.categoryRepository.loadAll();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
-
 }

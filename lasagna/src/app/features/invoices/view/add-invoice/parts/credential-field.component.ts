@@ -1,7 +1,7 @@
 import {Component, forwardRef, input, output} from '@angular/core';
 
 import {CredentialsType} from '../../../../settings/service/types/credentials.types';
-import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button/button.component';
 import {CredentialsDialogComponent} from '@invoices/view/add-invoice/parts/credentials-dialog.component';
 
 import {

@@ -190,58 +190,6 @@ export const routes: Routes = [{
           title: defTitleResolver,
         },
         {
-          path: 'categories',
-          children: [
-            {
-              path: 'products',
-              children: [
-                {
-                  path: '',
-                  loadComponent: () => import('./features/settings/view/categories/category-product/list/category-list.component')
-                    .then(m => m.CategoryListComponent),
-                  title: defTitleResolver,
-                },
-                {
-                  path: 'add',
-                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
-                    .then(m => m.AddCategoryComponent),
-                  title: defTitleResolver,
-                },
-                {
-                  path: 'edit/:uuid',
-                  loadComponent: () => import('./features/settings/view/categories/category-product/add-category/add-category.component')
-                    .then(m => m.AddCategoryComponent),
-                  title: defTitleResolver,
-                }
-              ]
-            },
-            {
-              path: 'recipes',
-              children: [
-                {
-                  path: '',
-                  loadComponent: () => import('./features/settings/view/categories/category-recipe/list/category-recipe-list.component')
-                    .then(m => m.CategoryRecipeListComponent),
-                  title: defTitleResolver,
-                },
-                {
-                  path: 'add',
-                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
-                    .then(m => m.AddCategoryRecipeComponent),
-                  title: defTitleResolver,
-
-                },
-                {
-                  path: 'edit/:uuid',
-                  loadComponent: () => import('./features/settings/view/categories/category-recipe/add-category/add-category-recipe.component')
-                    .then(m => m.AddCategoryRecipeComponent),
-                  title: defTitleResolver,
-                }
-              ]
-            }
-          ]
-        },
-        {
           path: 'taxes',
           children: [
             {

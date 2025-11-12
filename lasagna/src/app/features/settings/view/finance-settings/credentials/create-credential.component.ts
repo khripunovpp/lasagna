@@ -3,7 +3,7 @@ import {FlexColumnComponent} from '../../../../../shared/view/layout/flex-column
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {InputComponent} from '../../../../controls/form/input.component';
-import {ButtonComponent} from '../../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../../shared/view/ui/button/button.component';
 
 import {ShrinkDirective} from '../../../../../shared/view/directives/shrink.directive';
 import {MatIcon} from '@angular/material/icon';

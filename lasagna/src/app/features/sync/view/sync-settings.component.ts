@@ -5,7 +5,7 @@ import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
 import {SyncEstimation, SyncLog, SyncService} from '../service/sync.service';
 import {FormsModule} from '@angular/forms';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {ButtonComponent} from '../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 import {SyncResultDialogComponent} from "./sync-result-dialog.component";
 import {CAN_SYNC} from '../service/can-sync.token';
 import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
