@@ -79,6 +79,7 @@ import {Router} from '@angular/router';
       background-color: var(--tabs-labels-bg);
 
       border-radius: 32px 32px 0 0;
+      border-bottom: 1px solid #ececec;
     }
 
     .tabs__labels button {

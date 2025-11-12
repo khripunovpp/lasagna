@@ -59,9 +59,9 @@
   --onboarding-success-bg: var(--p-4);
 
   // TABS
-  --tabs-labels-bg: var(--p-3);
-  --tabs-label-bg:var(--secondary-light-color);
-  --tabs-label-active-bg: var(--p-1);
+  --tabs-labels-bg: white;
+  --tabs-label-bg: transparent;
+  --tabs-label-active-bg: var(--p-3);
   --tabs-label-active-text: var(--p-2);
   --tabs-label-flat-active-hover-bg: color-mix(in srgb, var(--p-4) 20%, #ffffff);
   --tabs-label-flat-text: var(--p-1);
