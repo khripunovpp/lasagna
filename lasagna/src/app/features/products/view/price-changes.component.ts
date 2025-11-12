@@ -3,7 +3,7 @@ import {DialogComponent} from '../../../shared/view/ui/dialogs/dialog.component'
 import {ProductsRepository} from '../service/products.repository';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
-import {DatePipe, NgClass} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {Product} from '../service/Product';
 import {ProductFactory} from '../service/product.factory';
 import {ProductChangesChartComponent} from './price-chnages-chart.component';
@@ -99,7 +99,6 @@ export interface PriceChange {
   imports: [
     DialogComponent,
     DatePipe,
-    NgClass,
     ProductChangesChartComponent,
     TitleComponent,
     FlexColumnComponent,

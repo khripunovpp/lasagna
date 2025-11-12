@@ -16,6 +16,7 @@ import {isPwa} from './shared/helpers/match-media.helper';
 import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {getURLWithoutParams} from './shared/helpers';
+import {CheckingDeleteDialogComponent} from './shared/view/deleting/checking-delete-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ import {getURLWithoutParams} from './shared/helpers';
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent,
+    CheckingDeleteDialogComponent,
   ],
   templateUrl: './app.component.html',
   standalone: true,

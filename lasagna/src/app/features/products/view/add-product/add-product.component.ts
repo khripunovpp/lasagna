@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
-
+import {AfterViewInit, Component, computed, inject, OnInit, Renderer2, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {DraftForm} from '../../../../shared/service/services/draft-forms.service';
 import {ProductsRepository} from '../../service/products.repository';
@@ -17,23 +15,27 @@ import {Product} from '../../service/Product';
 import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
+import {CloudSyncService} from '../../../api/cloud-sync.service';
+import {errorHandler} from '../../../../shared/helpers';
 import {ROUTER_MANAGER} from '../../../../shared/service/providers/router-manager.provider';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {MatIcon} from '@angular/material/icon';
-import {errorHandler} from '../../../../shared/helpers';
 import {
   DeleteConfirmationService
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
 import {
   DeleteConfirmationPopoverComponent
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 
 @Component({
   selector: 'lg-add-product',
@@ -42,7 +44,6 @@ import {
     ContainerComponent,
     TitleComponent,
     AddProductFormComponent,
-    FlexRowComponent,
     FadeInComponent,
     ButtonComponent,
     ShrinkDirective,
@@ -55,6 +56,10 @@ import {
     ControlsBarComponent,
     MatIcon,
     DeleteConfirmationPopoverComponent,
+    InlineSeparatedGroupDirective,
+    FlexColumnComponent,
+    FlexRowComponent,
+    SyncBadgeComponent,
   ],
   template: `
     @if (editMode()) {
@@ -72,11 +77,13 @@ import {
     <lg-fade-in>
       <lg-container>
         <lg-flex-column size="medium">
-          <lg-flex-row [center]="true" [mobileMode]="true">
+          <lg-flex-row [center]="true">
             @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
               <lg-title lgSelfStart>
                 {{ product()?.name }}
               </lg-title>
+
+               <lg-sync-badge [entity]="product()!"></lg-sync-badge>
             } @else {
               <lg-title lgSelfStart>
                 {{ 'product.form.title'|translate }}
@@ -101,7 +108,7 @@ import {
                   {{ 'product.form.delete-draft-btn'|translate }}
                 </lg-button>
               </ng-template>
-            } @else if (product()?.uuid) {
+            } @else if (product()?.uuid && !product()?.deleted) {
               <ng-template lgInlineSeparatedGroup>
                 <lg-button lgShrink [style]="'danger'"
                            [flat]="true"
@@ -119,6 +126,11 @@ import {
           }
 
         </lg-flex-column>
+
+        <!--        @if (product()?.uuid) {-->
+        <!--          <lg-sync-single-button (onClick)="sync()"-->
+        <!--                                 [needSync]="!!product()?.needSync()"></lg-sync-single-button>-->
+        <!--        }-->
 
         <lg-add-product-form [editMode]="editMode()"
                              [product]="product()"></lg-add-product-form>
@@ -180,6 +192,8 @@ export class AddProductComponent
     private _notificationsService: NotificationsService,
     private _analyticsService: AnalyticsService,
     private _translateService: TranslateService,
+    private _renderer: Renderer2,
+    private _cloudSyncService: CloudSyncService,
   ) {
   }
 
@@ -198,6 +212,7 @@ export class AddProductComponent
   })
   firstState?: any;
   private _routerManager = inject(ROUTER_MANAGER);
+  private _onboardingService = inject(OnboardingService);
 
   ngOnDestroy() {
   }
@@ -274,15 +289,14 @@ export class AddProductComponent
   }
 
   onDeleteProduct() {
-    if (!this.product()?.uuid) {
-      return;
-    }
-
-
     this.deleteConfirmationService.configure({
       message: this._translateService.instant('product.form.delete-confirm-message'),
       onSuccess: () => {
-        this._productsRepository.deleteProduct(this.product()!.uuid!).then(() => {
+        if (!this.product()?.uuid) {
+          return;
+        }
+
+        this._productsRepository.deleteOne(this.product()!).then(() => {
           this._notificationsService.success('notifications.product.deleted');
           this._routerManager.navigate(['products']);
         }).catch(error => {
@@ -292,50 +306,72 @@ export class AddProductComponent
       onCancel: () => {
       }
     });
-
   }
 
   private _addProduct(product: Product) {
-    this._productsRepository.addOne(product).then((newUUID) => {
-      // Track product creation analytics
-      this._analyticsService.trackProductCreated(product.name, {
-        product_uuid: newUUID,
-        price_per_unit: product.pricePerUnit,
-        unit: product.unit,
-        category: product.category_id?.name
-      });
+    this._productsRepository.addOne(product)
+      .then(({data, message}) => {
+        if (data) {
+          // Track product creation analytics
+          this._analyticsService.trackProductCreated(product.name, {
+            product_uuid: data,
+            price_per_unit: product.pricePerUnit,
+            unit: product.unit,
+            category: product.category_id?.name
+          });
 
-      this.formComponent()?.resetForm();
-      this._notificationsService.success('notifications.product.added');
-      this.product.set(null);
+          // Онбординг: если это первый продукт, отмечаем шаг завершённым
+          if (!this._onboardingService.isProductDone()) {
+            this._onboardingService.markProductDone();
+          }
 
-      if (this.draftRef()) {
-        this._removeDraft();
-      }
+          this.formComponent()?.resetForm();
+          this._notificationsService.success('notifications.product.added');
+          if (message) {
+            this._notificationsService.warning(message);
+          }
+          this.product.set(null);
 
-      this._routerManager.replace(['products/edit/' + newUUID]);
-    }).catch(error => {
+          if (this.draftRef()) {
+            this._removeDraft();
+          }
+
+          this._routerManager.replace(['products/edit/' + data]);
+        }
+
+        if (message) {
+          this._notificationsService.error(message);
+        }
+      }).catch(error => {
       this._notificationsService.error(errorHandler(error));
     });
   }
 
-  private _editProduct(product: Product) {
-    if (!this.draftOrProductUUID()) {
-      return;
-    }
-    let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
-    this._productsRepository.updateOne(productUUID as string, product).then(() => {
-      this.formComponent()?.resetForm(product);
-      this._notificationsService.success('notifications.product.edited');
+  private async _editProduct(product: Product) {
+    try {
+      if (!this.draftOrProductUUID()) {
+        return;
+      }
+      let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
+      const resp = await this._productsRepository.updateOne(productUUID as string, product);
 
-      if (this.draftRef()) {
-        this._removeDraft();
+      if (resp.data) {
+        this.formComponent()?.resetForm(product);
+        this._notificationsService.success('notifications.product.edited');
+
+        if (this.draftRef()) {
+          this._removeDraft();
+        }
+
+        this._routerManager.replace(['products', 'edit', productUUID]);
       }
 
-      this._routerManager.replace(['products', 'edit', productUUID]);
-    }).catch(error => {
+      if (resp.message) {
+        this._notificationsService.warning(resp.message);
+      }
+    } catch (error) {
       this._notificationsService.error(errorHandler(error));
-    });
+    }
   }
 
   private _removeDraft() {

@@ -17,7 +17,7 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
+import {RecipeDTO, RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {DraftRecipesListComponent} from './draft-recipes-list.component';
@@ -34,6 +34,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {RecipesFiltersComponent} from './recipes-filters.component';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
+import {Recipe} from '../../service/models/Recipe';
 
 
 @Component({
@@ -189,8 +190,8 @@ export class RecipesListComponent {
   ) {
     this.selectionZoneService.onDelete.pipe(
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe(([key]) => {
-      this.deleteRecipe(key);
+    ).subscribe(([key, data]) => {
+      this.deleteRecipe(data);
     });
   }
 
@@ -204,18 +205,20 @@ export class RecipesListComponent {
     this.loadRecipes();
   }
 
-  deleteRecipe(uuid: string | undefined) {
-    if (!uuid) {
+  deleteRecipe(
+    recipe: RecipeDTO,
+  ) {
+    if (!recipe.uuid) {
       return;
     }
-    this._recipesRepository.deleteOne(uuid).then(() => {
+    this._recipesRepository.deleteOne(Recipe.fromRaw(recipe)).then(() => {
       this._notificationsService.success('recipe.deleted');
       this.loadRecipes();
     });
   }
 
   loadRecipes() {
-    return this._recipesRepository.loadRecipes();
+    return this._recipesRepository.loadAll();
   }
 
   exportRecipes(

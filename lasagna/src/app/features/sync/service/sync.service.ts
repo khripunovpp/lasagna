@@ -1,4 +1,4 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {effect, inject, Injectable, signal} from '@angular/core';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
 import {LoggerService} from '../../logger/logger.service';
 import {AuthService} from '../../account/auth.service';
@@ -10,31 +10,41 @@ import {ProductsRepository} from '../../products/service/products.repository';
 import {RecipesRepository} from '../../recipes/service/providers/recipes.repository';
 import {SyncTransactionResult} from "./estimate-sync-changes-transaction";
 import {RecipeSyncStrategy} from '../../recipes/service/providers/recipe-sync-strategy';
+import {SyncKey} from './sync-key.enum';
+import {environment} from '../../../../environments/environment';
 
 export interface SyncLog {
   entityIdentifier: string
   body: string
 }
 
-export type SyncCloudResponse = Record<string, Record<string, any[]>[]>
+export type SyncCloudResponse = Record<SyncKey, Record<string, any[]>[]>
 
-export type SyncEstimation = Record<string, SyncTransactionResult>;
+export type SyncEstimation = Partial<Record<SyncKey, SyncTransactionResult>>;
+
+export interface SyncSettings {
+  entities: SyncKey[]
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SyncService {
   constructor() {
-    const productsRepo = inject(ProductsRepository);
-    const recipesRepo = inject(RecipesRepository);
-    const dbService = inject(DexieIndexDbService);
-    this.strategies = {
-      products: new ProductSyncStrategy(productsRepo, dbService),
-      recipes: new RecipeSyncStrategy(recipesRepo, dbService),
-    };
+
     this._loadLastSyncTime();
   }
 
+  productsRepo = inject(ProductsRepository);
+  recipesRepo = inject(RecipesRepository);
+  dbService = inject(DexieIndexDbService);
+  strategiesMap: Partial<Record<SyncKey, SyncStrategy>> = {
+    [SyncKey.products]: new ProductSyncStrategy(this.productsRepo, this.dbService),
+    [SyncKey.recipes]: new RecipeSyncStrategy(this.recipesRepo, this.dbService),
+  };
+  syncSettings = signal<SyncSettings>({
+    entities: [SyncKey.products, SyncKey.recipes],
+  });
   isSyncing = signal<boolean>(false);
   lastSyncTime = signal<number | null>(null);
   private _restService = inject(RestService);
@@ -44,7 +54,24 @@ export class SyncService {
     color: '#ff6b6b',
     label: 'SyncService'
   });
-  private strategies: Record<string, SyncStrategy>;
+  private strategies: Partial<Record<SyncKey, SyncStrategy>> = {};
+  strategiesEffect = effect(() => {
+    console.log('Synchronization strategies updated based on settings.');
+    this.strategies = this.syncSettings().entities
+      .reduce((acc, entity) => {
+        const strategy = this.strategiesMap[entity];
+        if (strategy) {
+          acc[entity] = strategy;
+        } else {
+          this.logger.warn(`No sync strategy found for entity: ${entity}`);
+        }
+        return acc;
+      }, {} as Partial<Record<SyncKey, SyncStrategy>>);
+
+    console.log(this.strategies);
+  })
+
+  private readonly _syncRoute = `${environment.api.baseUrl}/sync`;
 
   /**
    * Получает предварительную оценку синхронизации между локальными и облачными данными.
@@ -60,7 +87,7 @@ export class SyncService {
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
 
       // Запрос данных из облака, изменённых после lastSyncTime
-      const cloudResponse = await this._restService.post<SyncCloudResponse>(`http://localhost:1337/api/sync/data`, {
+      const cloudResponse = await this._restService.post<SyncCloudResponse>(`${this._syncRoute}/data`, {
         // afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
         afterDate: new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
       }, headers);
@@ -70,7 +97,7 @@ export class SyncService {
       if (cloudResponse) {
         // Оценка изменений для каждой стратегии синхронизации
         for (const [strategyKey, strategy] of Object.entries(this.strategies)) {
-          syncResponse[strategyKey] = await strategy.estimateChanges(cloudResponse[strategyKey] || []);
+          syncResponse[strategyKey as SyncKey] = await strategy.estimateChanges(cloudResponse[strategyKey as SyncKey] || []);
         }
         this.logger.log('Sync completed successfully:', {cloudResponse, syncResponse});
         this._updateLastSyncTime();
@@ -93,6 +120,7 @@ export class SyncService {
   async performSync(
     syncMap: PerformSyncMap
   ) {
+    debugger
     this.isSyncing.set(true);
     const result: PerformSyncResult = {};
 
@@ -100,7 +128,22 @@ export class SyncService {
     if (!currentUserId) throw new Error('User ID is required for sync');
 
     for (const [key, strategy] of Object.entries(this.strategies)) {
-      result[key] = await strategy.performSync(syncMap[key]);
+      if (syncMap[key]) {
+        result[key] = await strategy.performSync(syncMap[key]);
+      } else {
+        result[key] = {
+          toAdd: {message: 'Unknown sync strategy',},
+          toUpdate: {message: 'Unknown sync strategy',},
+          notSynced: {
+            cloud: {
+              message: 'Unknown sync strategy',
+            },
+            local: {
+              message: 'Unknown sync strategy',
+            },
+          },
+        };
+      }
     }
 
     return result;

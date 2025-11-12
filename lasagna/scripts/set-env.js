@@ -56,6 +56,9 @@ const setEnv = () => {
       senderEmail: '${process.env['SENDER_EMAIL']}',
       senderName: '${process.env['SENDER_NAME']}'
     },
+    api: {
+      baseUrl: '${process.env['API_BASE_URL'] || ''}'
+    },
     version: '${appVersion}'
   };
   `;

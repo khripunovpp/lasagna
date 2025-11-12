@@ -32,8 +32,21 @@ export default (
         if (!data) {
           return ctx.throw(400, 'Missing data query parameter');
         }
+        const method = ctx.request.method.toLowerCase();
+        let result;
+        switch (method) {
+          case 'post':
+            result = await strapi.service(name)
+              .batchAdd(data, ctx.state.user.id);
+            break;
+          case 'put':
+            result = await strapi.service(name)
+              .batchUpdate(data, ctx.state.user.id);
+            break;
+          default:
+            return ctx.throw(405, 'Method not allowed');
+        }
 
-        const result = await strapi.service(name).batchAdd(data, ctx.state.user.id);
         console.log(data);
         return ctx.send(result);
       } catch (error) {

@@ -8,5 +8,13 @@ export default {
         auth: {strategies: ['users-permissions']}
       }
     },
+    {
+      method: 'PUT',
+      path: '/products/batch',
+      handler: 'product.batch',
+      config: {
+        auth: {strategies: ['users-permissions']}
+      }
+    },
   ],
 };

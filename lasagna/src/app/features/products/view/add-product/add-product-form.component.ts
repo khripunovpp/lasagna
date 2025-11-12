@@ -53,6 +53,8 @@ import {errorHandler} from '../../../../shared/helpers';
 import {PriceChangesComponent} from '../price-changes.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
+import {MatIcon} from '@angular/material/icon';
 
 
 @Component({
@@ -85,6 +87,8 @@ import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-e
     PriceChangesComponent,
     ControlBoxComponent,
     HtmlEditorComponent,
+    ButtonComponent,
+    MatIcon,
   ],
   styles: [
     `

@@ -12,6 +12,7 @@ export * from './select-resources.service';
 export * from './selection-zone.service';
 export * from './transfer-data.service';
 export * from './using-history.service';
+export * from '../../../features/sync/service/sync.service';
 export * from './version.service';
 export * from './page-time-tracker.service';
 export * from '../../../features/home/service/storage-quota.service';

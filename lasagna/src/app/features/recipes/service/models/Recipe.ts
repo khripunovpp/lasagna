@@ -5,11 +5,14 @@ import {estimateColor, isColorString, parseFloatingNumber} from '../../../../sha
 import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRecipe.scheme';
 import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from './PriceModifier';
+import {BaseModel} from '../../../sync/service/BaseModel';
 
-export class Recipe {
+export class Recipe
+  extends BaseModel {
   constructor(
     props: Partial<RecipeDTO>
   ) {
+    super();
     this.update(props);
   }
 
@@ -17,10 +20,7 @@ export class Recipe {
   description: string = '';
   ingredients: Ingredient[] = [];
   portions: number = 0;
-  uuid?: string | undefined = undefined;
   category_id?: CategoryRecipe;
-  createdAt?: number | undefined;
-  updatedAt?: number | undefined;
   tags?: Tag[];
   color?: string | undefined;
   priceModifiers: RecipePriceModifier[] = [];
@@ -133,6 +133,28 @@ export class Recipe {
           );
         }) : [],
       master: dto?.master || false,
+      cloud_uuid: dto?.cloud_uuid,
+      syncedAt: dto?.syncedAt,
+      dirtyToSync: dto?.dirtyToSync ?? false,
+      deleted: dto?.deleted,
+      deletedAt: dto?.deletedAt,
+    });
+  }
+
+
+  static fromCloud(dto: any) {
+    const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
+    const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
+    const syncedAt = dto?.syncedAt ? new Date(dto?.syncedAt) : undefined;
+
+    return Recipe.fromRaw({
+      ...dto,
+      createdAt: createdAt?.getTime(),
+      updatedAt: updatedAt?.getTime(),
+      syncedAt: syncedAt?.getTime(),
+      cloud_uuid: dto?.documentId,
+      deleted: dto?.deleted,
+      deletedAt: dto?.deletedAt,
     });
   }
 
@@ -144,11 +166,14 @@ export class Recipe {
       portions: 0,
       uuid: undefined,
       category_id: null,
-      createdAt: undefined,
+      createdAt: Date.now(),
       updatedAt: undefined,
       tags: [],
       color: undefined,
       master: false,
+      cloud_uuid: '',
+      syncedAt: undefined,
+      dirtyToSync: false,
     });
   }
 
@@ -172,14 +197,14 @@ export class Recipe {
     return new Recipe(this.toDTO());
   }
 
-  toDTO(): RecipeDTO {
+  override toDTO(): RecipeDTO {
     return {
       name: this.name,
       description: this.description,
       ingredients: this.ingredients.map((ingredient) => ingredient.toDTO()),
       portions: this.portions,
       uuid: this.uuid,
-      category_id: this.category_id?.toUUID(),
+      category_id: this.category_id?.toUUID() || '',
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       tags: this.tags?.map((tag) => {
@@ -189,10 +214,34 @@ export class Recipe {
       priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
       master: this.master || false,
       ingredientsUUIDs: this._ingredientsUUIDs(),
+      dirtyToSync: this.dirtyToSync,
+      cloud_uuid: this.cloud_uuid || '',
+      syncedAt: this.syncedAt,
+      deleted: this.deleted ? 1 : 0,
+      deletedAt: this.deletedAt,
     };
   }
 
-  update(
+  override toCloudDTO() {
+    return {
+      name: this.name,
+      uuid: this.uuid,
+      description: this.description,
+      ingredients: this.ingredients.map((ingredient) => ingredient.toDTO()),
+      portions: this.portions,
+      category_id: this.category_id?.toUUID(),
+      tags: this.tags?.map((tag) => {
+        return tag.toString();
+      }),
+      color: this.color || estimateColor(this.name),
+      priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
+      master: this.master || false,
+      deleted: this.deleted ?? false,
+      deletedAt: this.deletedAt ?? null,
+    };
+  }
+
+  override update(
     dto: any,
   ) {
     this.name = dto?.name || this.name;
@@ -208,8 +257,6 @@ export class Recipe {
         uuid: dto.category_id,
       } : dto.category_id as CategoryRecipeDTO,
     ) : this.category_id;
-    this.createdAt = dto?.createdAt || this.createdAt;
-    this.updatedAt = dto?.updatedAt || Date.now();
     this.tags = Array.isArray(dto?.tags)
       ? dto.tags.map((tag: any) => {
         return Tag.fromRaw(tag);
@@ -225,6 +272,7 @@ export class Recipe {
         );
       }) : this.priceModifiers;
     this.master = dto?.master ?? this.master;
+    super.update(dto);
     return this;
   }
 

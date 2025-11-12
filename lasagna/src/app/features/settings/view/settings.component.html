@@ -41,12 +41,32 @@
       <!--        <lg-taxes-settings></lg-taxes-settings>-->
       <!--      </ng-template>-->
 
-      <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
-        <lg-backup-settings></lg-backup-settings>
+      <ng-template alias="data" label="{{ 'data.settings-title'|translate }}" lgTab>
+        <lg-tabs [flat]="true"
+                 [scrollable]="false"
+                 [silent]="true">
+          @if (canSync()) {
+            <ng-template alias="sync" label="{{ 'sync.title'|translate }}" lgTab>
+              <lg-sync-settings></lg-sync-settings>
+            </ng-template>
+          }
+
+          <ng-template alias="deleted" label="{{ 'deleted-data.settings-title'|translate }}" lgTab>
+            <lg-deleted-data-storage-view></lg-deleted-data-storage-view>
+          </ng-template>
+
+          <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
+            <lg-backup-settings></lg-backup-settings>
+          </ng-template>
+        </lg-tabs>
       </ng-template>
 
       <ng-template alias="logs" label="{{ 'log-center.title'|translate }}" lgTab>
         <lg-log-center-page></lg-log-center-page>
+      </ng-template>
+
+      <ng-template alias="account" label="{{ 'account.title'|translate }}" lgTab>
+        <lg-account-settings></lg-account-settings>
       </ng-template>
     </lg-tabs>
   </lg-container>

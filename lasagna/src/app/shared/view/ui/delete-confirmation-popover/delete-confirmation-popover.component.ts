@@ -20,7 +20,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                [confirmButtonStyle]="'secondary'"
                [confirmButtonText]="settings()?.confirmText ?? ('delete-confirm-label'|translate)">
       <lg-flex-column [position]="'center'" [size]="'small'">
-        <div>{{ settings()?.message }}</div>
+        <div class="text-wrap">{{ settings()?.message }}</div>
 
         @if (settings()?.withLock) {
           <lg-checkbox [formControl]="locked"

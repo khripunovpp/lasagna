@@ -40,6 +40,7 @@ export class SettingsService {
     return this._settingsRepository.getAll().then((settings) => {
       this.settingsModel = settings;
       this.settingsSignal.set(settings);
+      debugger
       // Sync language to localStorage for JavaScript files
       const lang = settings?.getSetting<string>(SettingsKeysConst.lang)?.data;
       if (lang) {
@@ -63,6 +64,7 @@ export class SettingsService {
 
   setDefaultSettings() {
     let changed = false;
+    debugger
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.lang)?.data) {
       const defaultLang = this._localisationService.lang();
       this.settingsModel?.addSetting(SettingsKeysConst.lang, defaultLang);

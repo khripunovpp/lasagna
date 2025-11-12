@@ -36,7 +36,10 @@ Sentry.init({
   }
 });
 
-enableProfiling();
+
+if (environment.production) {
+  enableProfiling();
+}
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

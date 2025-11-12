@@ -1,17 +1,22 @@
-import {Component, computed, DestroyRef, effect, inject, input, OnInit} from '@angular/core';
-import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {CheckboxComponent} from '../../controls/form/chckbox.component';
 import {
-  ControlContainer,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormRecord,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
-import {AsyncPipe, DatePipe, JsonPipe, NgTemplateOutlet} from '@angular/common';
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  Injector,
+  Input,
+  input,
+  OnInit,
+  runInInjectionContext,
+  Signal
+} from '@angular/core';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {TranslatePipe} from '@ngx-translate/core';
+import {CheckboxComponent} from '../../controls/form/chckbox.component';
+import {FormBuilder, FormControl, FormGroup, FormRecord, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DatePipe, JsonPipe, NgTemplateOutlet} from '@angular/common';
 import {ExpanderComponent} from '../../../shared/view/ui/expander.component';
 import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {UnitStringPipe} from '../../../shared/view/pipes/unitString.pipe';
@@ -20,14 +25,17 @@ import {SyncEstimation} from '../service/sync.service';
 import {SETTINGS} from '../../settings/service/providers/settings.token';
 import {SettingsKeysConst} from '../../settings/const/settings-keys.const';
 import {SyncView} from './sync-result-dialog.component';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {defer, map, Observable, of, startWith} from 'rxjs';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
+import {map, startWith} from 'rxjs';
+import {Stores} from '../../../shared/service/db/const/stores';
+import {SyncKey} from '../service/sync-key.enum';
 
 export interface SyncViewGroup {
   toAdd: Record<string, boolean>
   toUpdate: Record<string, boolean>
   toSkip: Record<string, boolean>
   notSynced: Record<string, boolean>
+  toDelete: Record<string, boolean>
 }
 
 @Component({
@@ -35,6 +43,7 @@ export interface SyncViewGroup {
   host: {
     class: 'lg-sync-result-group'
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .lg-sync-result-group__item {
       background-color: var(--p-2);
@@ -73,16 +82,48 @@ export interface SyncViewGroup {
     UnitStringPipe,
     UserCurrencyPipe,
     FormsModule,
-    AsyncPipe,
     JsonPipe
   ],
   template: `
     @if (selectionForm && sizes) {
       <lg-flex-column [formGroup]="selectionForm">
         @let view = syncView();
-        @let sz = sizes | async;
+        @let sz = sizes();
 
-        <pre>{{ sz|json }}</pre>
+        @if (view.rows.toDelete.length > 0) {
+          <lg-flex-column [size]="'small'" formGroupName="toDelete">
+            <div>{{ 'sync.result.to-delete' | translate }} ({{ sz?.toDelete }})</div>
+
+            <lg-expander [flat]="true"
+                         [once]="true"
+                         [openLabel]="'Click for details'">
+              <lg-flex-column [size]="'tiny'">
+                <!--                <lg-checkbox [formControl]="$any(allStateCheckboxes.get('toAdd.all'))"-->
+                <!--                             [name]="'toAdd-all'"-->
+                <!--                             [size]="'medium'">-->
+                <!--                  All-->
+                <!--                </lg-checkbox>-->
+
+                @for (item of view.rows.toDelete; track item[0].uuid) {
+                  @let caption = 'sync.result.to-delete-caption' | translate;
+
+                  @if (item[0]?.uuid) {
+                    <lg-checkbox [formControlName]="item[0]?.uuid"
+                                 [name]="'toDelete-' + item[0]?.uuid"
+                                 [size]="'medium'">
+                      <ng-container
+                        *ngTemplateOutlet="itemTpl; context: {
+                  $implicit: item,
+                  label: labelFactory(item[0]),
+                  caption: caption }"></ng-container>
+                    </lg-checkbox>
+                  }
+                }
+              </lg-flex-column>
+            </lg-expander>
+
+          </lg-flex-column>
+        }
 
         @if (view.rows.toAdd.length > 0) {
           <lg-flex-column [size]="'small'" formGroupName="toAdd">
@@ -101,15 +142,17 @@ export interface SyncViewGroup {
                 @for (item of view.rows.toAdd; track item[0].uuid) {
                   @let caption = 'sync.result.to-add-caption' | translate;
 
-                  <lg-checkbox [formControlName]="item[0]?.uuid??''"
-                               [name]="'toAdd-' + item[0]?.uuid"
-                               [size]="'medium'">
-                    <ng-container
-                      *ngTemplateOutlet="itemTpl; context: {
+                  @if (item[0]?.uuid) {
+                    <lg-checkbox [formControlName]="item[0]?.uuid"
+                                 [name]="'toAdd-' + item[0]?.uuid"
+                                 [size]="'medium'">
+                      <ng-container
+                        *ngTemplateOutlet="itemTpl; context: {
                   $implicit: item,
                   label: labelFactory(item[0]),
                   caption: caption }"></ng-container>
-                  </lg-checkbox>
+                    </lg-checkbox>
+                  }
                 }
               </lg-flex-column>
             </lg-expander>
@@ -134,15 +177,17 @@ export interface SyncViewGroup {
                 @for (item of view.rows.toUpdate; track item[0].uuid) {
                   @let caption = 'sync.result.to-update-caption' | translate;
 
-                  <lg-checkbox [formControlName]="item[0]?.uuid??''"
-                               [name]="'toUpdate-' + item[0]?.uuid"
-                               [size]="'medium'">
-                    <ng-container
-                      *ngTemplateOutlet="itemTpl; context: {
+                  @if (item[0]?.uuid) {
+                    <lg-checkbox [formControlName]="item[0]?.uuid"
+                                 [name]="'toUpdate-' + item[0]?.uuid"
+                                 [size]="'medium'">
+                      <ng-container
+                        *ngTemplateOutlet="itemTpl; context: {
                       label: labelFactory(item[0]),
                       $implicit: item,
                        caption: caption }"></ng-container>
-                  </lg-checkbox>
+                    </lg-checkbox>
+                  }
                 }
               </lg-flex-column>
             </lg-expander>
@@ -167,15 +212,17 @@ export interface SyncViewGroup {
                 @for (item of view.rows.notSynced; track item[1].uuid) {
                   @let caption = 'sync.result.not-synced-caption' | translate;
 
-                  <lg-checkbox [formControlName]="item[1]?.uuid??''"
-                               [name]="'notSynced-' + item[1]?.uuid"
-                               [size]="'medium'">
-                    <ng-container
-                      *ngTemplateOutlet="itemTpl; context: {
+                  @if (item[1]?.uuid) {
+                    <lg-checkbox [formControlName]="item[1]?.uuid"
+                                 [name]="'notSynced-' + item[1]?.uuid"
+                                 [size]="'medium'">
+                      <ng-container
+                        *ngTemplateOutlet="itemTpl; context: {
                       $implicit: item,
                       label: labelFactory(item[1]),
                       caption: caption }"></ng-container>
-                  </lg-checkbox>
+                    </lg-checkbox>
+                  }
                 }
               </lg-flex-column>
             </lg-expander>
@@ -213,7 +260,8 @@ export interface SyncViewGroup {
                 <lg-flex-row [size]="'medium'">
                   <lg-flex-column [size]="'tiny'"
                                   class="lg-sync-result-group__item-view lg-sync-result-group__item-view--local">
-                    <ng-container *ngTemplateOutlet="viewTpl; context: { $implicit: item[1] }"></ng-container>
+                    <b>{{ 'sync.result.local-version' | translate }}</b>
+                    <ng-container *ngTemplateOutlet="viewTpl; context: { $implicit: item[0] }"></ng-container>
                   </lg-flex-column>
 
                   <lg-flex-column [size]="'tiny'"
@@ -254,17 +302,15 @@ export interface SyncViewGroup {
   ]
 })
 export class SyncResultGroupComponent implements OnInit {
-  constructor(
-    private _translateService: TranslateService,
-  ) {
+  constructor() {
   }
 
   readonly userSettings = inject(SETTINGS);
-  readonly controlContainer = inject(ControlContainer);
-  syncEstimation = input.required<SyncEstimation[string]>();
-  selectionForm?: FormGroup;
-  sizes?: Observable<any>;
+  syncEstimation = input.required<SyncEstimation[SyncKey]>();
+  @Input({required: true}) selectionForm!: FormGroup;
+  rootForm = input.required<FormGroup>();
   readonly pipesDigits = computed(() => `1.0-${this.userSettings()[SettingsKeysConst.pricePrecision] ?? 2}`);
+  sizes?: Signal<any>
   private readonly _allStateEffect = effect(() => {
     // const [prev, curr] = this._allStateValue();
     //
@@ -313,7 +359,7 @@ export class SyncResultGroupComponent implements OnInit {
     this._clearRecord(this.selectionForm.get('toAdd') as FormRecord<any>);
     this._clearRecord(this.selectionForm.get('toUpdate') as FormRecord<any>);
     this._clearRecord(this.selectionForm.get('notSynced') as FormRecord<any>);
-
+    this._clearRecord(this.selectionForm.get('toDelete') as FormRecord<any>);
 
     this._addToRecord(
       this.selectionForm.get('toAdd') as FormRecord<any>,
@@ -330,14 +376,19 @@ export class SyncResultGroupComponent implements OnInit {
       sourceRows.notSynced || [],
       (item) => item[1]?.uuid
     );
+    this._addToRecord(
+      this.selectionForm.get('toDelete') as FormRecord<any>,
+      sourceRows.toDelete || [],
+      (item) => item[0]?.uuid
+    );
 
     this.selectionForm.get('toAdd_All')?.setValue(true);
     this.selectionForm.get('toUpdate_All')?.setValue(true);
     this.selectionForm.get('notSynced_All')?.setValue(true);
     this.selectionForm.updateValueAndValidity();
 
-    console.log('sync result group sync effect', this.selectionForm, sourceRows);
   });
+  private readonly _injector = inject(Injector);
 
   labelFactory: (item: any) => string = (item: any) => item.name || 'Unnamed';
 
@@ -346,22 +397,24 @@ export class SyncResultGroupComponent implements OnInit {
   dualFactory: (data: any) => [any, any] = (data: any) => [undefined, undefined];
 
   ngOnInit() {
-    this.selectionForm = this.controlContainer.control as FormGroup;
-
-    this.sizes = this.selectionForm.valueChanges.pipe(
-      takeUntilDestroyed(this._destroyRef),
-      map((selected: any) => ({
-          toAdd: Object.values(selected?.['toAdd'] ?? {}).filter(Boolean).length,
-          toUpdate: Object.values(selected?.['toUpdate'] ?? {}).filter(Boolean).length,
-          notSynced: Object.values(selected?.['notSynced'] ?? {}).filter(Boolean).length,
+    runInInjectionContext(this._injector, () => {
+      this.sizes = toSignal(this.selectionForm.valueChanges.pipe(
+        takeUntilDestroyed(this._destroyRef),
+        map((selected: any) => ({
+            toAdd: Object.values(selected?.['toAdd'] ?? {}).filter(Boolean).length,
+            toUpdate: Object.values(selected?.['toUpdate'] ?? {}).filter(Boolean).length,
+            notSynced: Object.values(selected?.['notSynced'] ?? {}).filter(Boolean).length,
+            toDelete: Object.values(selected?.['toDelete'] ?? {}).filter(Boolean).length,
+          }),
+        ),
+        startWith({
+          toAdd: 0,
+          toUpdate: 0,
+          notSynced: 0,
+          toDelete: 0,
         }),
-      ),
-      startWith({
-        toAdd: 0,
-        toUpdate: 0,
-        notSynced: 0,
-      }),
-    )
+      ))
+    });
   }
 
   private _clearRecord(record: FormRecord<any>) {
@@ -398,14 +451,14 @@ export class SyncResultGroupComponent implements OnInit {
 
   readonly syncView = computed<SyncView<any>>(() => {
     const resp = this.syncEstimation();
+
     const rows = {
       toAdd: (resp?.toAdd.map(d => this.dualFactory?.(d)) || []).toSorted((a, b) => this._sortFn(a[0], b[0])),
       toUpdate: (resp?.toUpdate.map(d => this.dualFactory?.(d)) || []).toSorted((a, b) => this._sortFn(a[0], b[0])),
       toSkip: (resp?.toSkip.map(d => this.dualFactory?.(d)) || []).toSorted((a, b) => this._sortFn(a[0], b[0])),
       notSynced: (resp?.notSynced.map(d => this.dualFactory?.(d)) || []).toSorted((a, b) => this._sortFn(a[1], b[1])),
+      toDelete: (resp?.toDelete.map(d => this.dualFactory?.(d)) || []).toSorted((a, b) => this._sortFn(a[0], b[0])),
     };
-
-    console.log('sync result group view computed', rows);
 
     return {
       entity: 'Title here',

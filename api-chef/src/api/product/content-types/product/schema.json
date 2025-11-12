@@ -16,11 +16,11 @@
       "required": true
     },
     "price": {
-      "type": "decimal",
+      "type": "biginteger",
       "required": true
     },
     "amount": {
-      "type": "decimal",
+      "type": "biginteger",
       "required": true
     },
     "source": {
@@ -58,6 +58,13 @@
       "relation": "manyToOne",
       "target": "api::recipe.recipe",
       "inversedBy": "ingredients"
+    },
+    "deleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "deletedAt": {
+      "type": "datetime"
     }
   }
 }

@@ -1,20 +1,21 @@
 import {estimateSyncChangesTransaction, SyncTransactionResult} from "./estimate-sync-changes-transaction";
 import {Stores} from '../../../shared/service/db/const/stores';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
-import {ProductDTO} from '../../products/service/Product.scheme';
-import {Product} from '../../products/service/Product';
 import {errorHandler} from '../../../shared/helpers';
-import {ProductBatchAddResponse} from '../../products/service/products-api.service';
-import {RepositoryAbstract} from '../../../shared/service/services/repository.abstract';
+import {RepositoryAbstract} from '../../../shared/service/services/repository/repository.abstract';
+import {CanSync} from './CanSync.abstract';
+import {StrapiBatchResponse} from '../../api/strapi.service';
 
 export interface SyncStrategyNotSyncedResult {
   cloud: {
     message: string
+    warning?: string
     errors?: Record<string, any>
     hasErrors?: boolean
   }
   local?: {
     message: string
+    warning?: string
     errors?: Record<string, any>
     hasErrors?: boolean
   }
@@ -22,12 +23,21 @@ export interface SyncStrategyNotSyncedResult {
 
 export interface SyncStrategyAddResult {
   message: string
+  warning?: string
   errors?: Record<string, any>
   hasErrors?: boolean
 }
 
 export interface SyncStrategyUpdateResult {
   message: string
+  warning?: string
+  errors?: Record<string, any>
+  hasErrors?: boolean
+}
+
+export interface SyncStrategyDeleteResult {
+  message: string
+  warning?: string
   errors?: Record<string, any>
   hasErrors?: boolean
 }
@@ -36,6 +46,7 @@ export type PerformSyncMap<T = any> = Record<string, {
   toAdd: T[]
   toUpdate: T[]
   notSynced: T[]
+  toDelete: T[]
 }>
 
 
@@ -43,6 +54,7 @@ export type PerformSyncResult = Record<string, {
   toAdd?: SyncStrategyAddResult
   toUpdate?: SyncStrategyUpdateResult
   notSynced?: SyncStrategyNotSyncedResult
+  toDelete?: SyncStrategyDeleteResult
 }>
 
 export interface SyncStrategy {
@@ -74,6 +86,12 @@ export interface SyncStrategy {
   notSyncedLocalHandler(items: any[]): Promise<SyncStrategyNotSyncedResult>;
 
   /**
+   * Удаляет локальные элементы на основе предоставленных данных.
+   * @param items
+   */
+  toDeleteLocalHandler(items: any[]): Promise<SyncStrategyDeleteResult>;
+
+  /**
    * Выполняет синхронизацию на основе предоставленной карты синхронизации.
    * @param syncMap
    */
@@ -84,13 +102,13 @@ export class BaseSyncStrategy
   implements SyncStrategy {
   constructor(
     public table: Stores,
-    private _repo: RepositoryAbstract<any,any>,
+    private _repo: RepositoryAbstract<any, any>,
     private _indexedDB: DexieIndexDbService,
   ) {
   }
 
   estimateChanges(
-    cloudData: ProductDTO[]
+    cloudData: unknown[]
   ) {
     return this._indexedDB.withTransaction(
       [this.table],
@@ -101,20 +119,23 @@ export class BaseSyncStrategy
   async performSync(
     syncMap: PerformSyncMap[string],
   ) {
+    debugger
     const result: PerformSyncResult[string] = {
       notSynced: undefined,
       toAdd: undefined,
       toUpdate: undefined,
+      toDelete: undefined,
     };
 
     result.notSynced = await this.notSyncedLocalHandler(syncMap.notSynced || []);
     result.toAdd = await this.toAddLocalHandler(syncMap.toAdd || []);
     result.toUpdate = await this.toUpdateLocalHandler(syncMap.toUpdate || []);
+    result.toDelete = await this.toDeleteLocalHandler(syncMap.toDelete || []);
 
     return result;
   }
 
-  async toAddLocalHandler(items: [Product, Product][]) {
+  async toAddLocalHandler(items: [CanSync, CanSync][]) {
     if (!items.length) return {
       message: 'No items from cloud to add locally',
     };
@@ -144,10 +165,11 @@ export class BaseSyncStrategy
     return result;
   }
 
-  async toUpdateLocalHandler(items: [Product, Product][]) {
+  async toUpdateLocalHandler(items: [CanSync, CanSync][]) {
     if (!items.length) return {
       message: 'No items to update locally',
     }
+    debugger
 
     const result: SyncStrategyUpdateResult = {
       message: '',
@@ -174,7 +196,7 @@ export class BaseSyncStrategy
     return result;
   }
 
-  async notSyncedLocalHandler(items: Product[]) {
+  async notSyncedLocalHandler(items: CanSync[]) {
     if (!items.length) return {
       cloud: {
         message: 'No new items to sync',
@@ -187,8 +209,8 @@ export class BaseSyncStrategy
       }
     };
 
-    const itemsToCloud = items.map(product => product.toCloudDTO());
-    const resp = await this._repo.batchCreateToCloud<ProductBatchAddResponse>(this.table, itemsToCloud);
+    const itemsToCloud = items.map(item => item.toCloudDTO());
+    const resp = await this._repo.batchCreateToCloud<StrapiBatchResponse>(this.table, itemsToCloud);
     if (!resp) return {
       cloud: {
         message: 'No new items added to cloud',
@@ -219,12 +241,38 @@ export class BaseSyncStrategy
     try {
       await this._indexedDB.bulkPatch(this.table, itemsToUpdate);
       result.local = {
-        message: 'Selected products synced to cloud and updated locally successfully',
+        message: 'Selected items synced to cloud and updated locally successfully',
       };
     } catch (error) {
       result.local = {
         message: errorHandler(error),
       };
+    }
+
+    return result;
+  }
+
+  async toDeleteLocalHandler(items: [CanSync, CanSync][]) {
+    if (!items.length) return {
+      message: 'No items to delete locally',
+    };
+
+    const result: SyncStrategyDeleteResult = {
+      message: '',
+    };
+
+    try {
+      const uuidsToDelete = items.map(([cloud, local]) => local.uuid)
+        .filter(Boolean) as string[];
+      if (!uuidsToDelete.length) {
+        result.message = 'No valid items to delete locally';
+        return result;
+      }
+      await this._indexedDB.removeMany(this.table, uuidsToDelete);
+      result.message = 'Local items deleted successfully';
+    } catch (error) {
+      result.message = errorHandler(error);
+      result.hasErrors = true;
     }
 
     return result;

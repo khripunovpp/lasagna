@@ -1,13 +1,14 @@
 import {computed, inject, InjectionToken} from '@angular/core';
 import {AuthService} from '../../account/auth.service';
+import {ACCOUNT, AUTHENTICATED} from '../../account/account.token';
 
 export const CAN_SYNC = new InjectionToken('canSync', {
   factory: () => {
-    const authService = inject(AuthService);
+    const auth = inject(AUTHENTICATED);
+    const acc = inject(ACCOUNT);
     return computed(() => {
-      const user = authService.currentUser();
-      return !!(authService.isAuthenticated()
-        && user?.canBuy);
+      return !!(acc()?.canBuy
+        && auth());
     });
   }
 });

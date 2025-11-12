@@ -29,7 +29,9 @@ export class SettingsRepository {
   }
 
   getAll() {
-    return this._indexDbService.getAll(Stores.SETTINGS).then((settings) => {
+    return this._indexDbService.getAll(Stores.SETTINGS)
+      .then((settings) => {
+        debugger
       return Settings.fromRaw(settings);
     })
   }

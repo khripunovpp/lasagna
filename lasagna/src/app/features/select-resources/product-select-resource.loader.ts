@@ -15,7 +15,7 @@ export class ProductsSelectResourceLoader
   private readonly _productsRepository = inject(ProductsRepository);
 
   async load() {
-    return this._productsRepository.getProducts();
+    return this._productsRepository.getAll(true);
   }
 
   search(token: string): Promise<unknown[]> {

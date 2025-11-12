@@ -4,5 +4,5 @@ export interface RepositoryInterface<ModelType> {
   addOne: (data: ModelType) => Promise<any>
   updateOne: (id: string, data: ModelType) => Promise<any>
   deleteOne: (...args: any[]) => Promise<any>
-  deleteMany: (ids: string[]) => Promise<any>
+  deleteMany: (...args: any[]) => Promise<any>
 }

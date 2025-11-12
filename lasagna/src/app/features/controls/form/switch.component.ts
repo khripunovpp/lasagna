@@ -1,10 +1,4 @@
-import {
-  Component,
-  forwardRef,
-  HostListener,
-  ViewEncapsulation,
-  input
-} from '@angular/core';
+import {Component, forwardRef, HostListener, input, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NgClass} from '@angular/common';
 
@@ -13,6 +7,7 @@ import {NgClass} from '@angular/common';
   standalone: true,
   template: `
     <label class="lg-switch"
+           [class.disabled]="disabled"
            [ngClass]="size()"
            [attr.for]="name()"
            tabindex="0">
@@ -22,6 +17,7 @@ import {NgClass} from '@angular/common';
       <input type="checkbox"
              class="switch"
              [attr.id]="name()"
+             [disabled]="disabled"
              [attr.name]="name()"
              [ngModel]="modelValue"
              (ngModelChange)="onChangeSwitch($event)"/>
@@ -40,6 +36,12 @@ import {NgClass} from '@angular/common';
       gap: 8px;
       cursor: pointer;
       border-radius: 9999px;
+    }
+
+    .lg-switch.disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      user-select: none;
     }
 
     .switch {
@@ -64,7 +66,7 @@ import {NgClass} from '@angular/common';
       height: 20px;
       background-color: #fff;
       border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       transition: transform 0.2s ease-in-out;
     }
 
@@ -81,11 +83,13 @@ import {NgClass} from '@angular/common';
       width: 28px;
       height: 16px;
     }
+
     .lg-switch.small .lg-switch__thumb {
       width: 12px;
       height: 12px;
       left: 2px;
     }
+
     .lg-switch.small .switch:checked + .lg-switch__track .lg-switch__thumb {
       transform: translateX(12px);
     }
@@ -94,11 +98,13 @@ import {NgClass} from '@angular/common';
       width: 36px;
       height: 20px;
     }
+
     .lg-switch.medium .lg-switch__thumb {
       width: 16px;
       height: 16px;
       left: 2px;
     }
+
     .lg-switch.medium .switch:checked + .lg-switch__track .lg-switch__thumb {
       transform: translateX(16px);
     }
@@ -118,8 +124,12 @@ export class SwitchComponent implements ControlValueAccessor {
   value = input<string | number>('');
   name = input<string>('lg-switch');
   size = input<'small' | 'medium' | 'default'>('default');
-
   modelValue = false;
+  disabled: boolean = false;
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])
@@ -128,8 +138,10 @@ export class SwitchComponent implements ControlValueAccessor {
     this.onChangeSwitch(!this.modelValue);
   }
 
-  onChange: (value: boolean) => void = () => {};
-  onTouched: () => void = () => {};
+  onChange: (value: boolean) => void = () => {
+  };
+  onTouched: () => void = () => {
+  };
 
   writeValue(value: boolean): void {
     this._change(value);

@@ -12,4 +12,5 @@ export enum Stores {
   INVOICES = 'invoices',
   CREDENTIALS = 'credentials',
   CHANGES_LOG = 'changes_log',
+  DELETES_STORE = 'deletes_store',
 }

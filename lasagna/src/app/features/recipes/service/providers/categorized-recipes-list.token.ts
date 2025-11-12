@@ -25,12 +25,12 @@ export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult
     const filterValue = injectQueryParams('filterValue');
     const filterOperator = injectQueryParams('filterOperator');
     const categoryRepository = inject(CategoryRecipesRepository);
-    const recipes = from(recipesRepository.loadRecipes({
+    const recipes = from(recipesRepository.loadAll({
       key: filterField() as keyof Recipe,
       value: filterValue(),
       operator: 'equals'
     })).pipe(
-      switchMap(() => recipesRepository.recipes$),
+      switchMap(() => recipesRepository.getStream$),
       map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
     );
     const groupingMap: Record<string, () => any> = {

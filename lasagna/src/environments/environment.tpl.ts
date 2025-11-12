@@ -9,4 +9,7 @@ export const environment = {
     senderEmail: '',
     senderName: '',
   },
+  api: {
+    baseUrl: '',
+  },
 };

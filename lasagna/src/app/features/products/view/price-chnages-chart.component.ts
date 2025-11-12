@@ -59,6 +59,9 @@ export class ProductChangesChartComponent
   }
 
   private buildChart() {
+    if (!this.chartCanvas) {
+      return;
+    }
     if (this.chart) {
       this.chart.destroy();
     }
@@ -203,7 +206,7 @@ export class ProductChangesChartComponent
       }
     };
 
-    this.chart = new Chart(this.chartCanvas.nativeElement, config);
+    this.chart = new Chart(this.chartCanvas.nativeElement, config) as Chart;
   }
 
 

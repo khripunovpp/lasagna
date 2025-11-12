@@ -234,9 +234,26 @@ export class DexieIndexDbService extends Dexie {
     };
   }
 
-  async getAll<T = any>(storeKey: Stores): Promise<T[]> {
+  ref(
+    storeKey: string
+  ) {
     // @ts-ignore
-    return (this[storeKey] as Table<any>).toArray();
+    return (this[storeKey] as Table<any>)
+  }
+
+  async getAll<T = any>(
+    storeKey: Stores,
+    skipDeleted = false
+  ): Promise<T[]> {
+    if (skipDeleted) {
+      return this.ref(storeKey)
+        .where('deleted')
+        .equals(0)
+        .toArray();
+    } else {
+      return this.ref(storeKey)
+        .toArray();
+    }
   }
 
   async getAllWithRelations<T = any>(storeKey: Stores): Promise<{
@@ -314,6 +331,19 @@ export class DexieIndexDbService extends Dexie {
       } catch (error) {
         this.logger.error(`Error saving index for ${storeKey}:`, error);
       }
+    }
+  }
+
+  async patchData<T = any>(storeKey: Stores, uuid: string, changes: Partial<T>): Promise<void> {
+    // @ts-ignore
+    await (this[storeKey] as Table<any>).update(uuid, changes);
+    if (storeKey === Stores.INDICES) {
+      return;
+    }
+    try {
+      await this.saveIndex(storeKey);
+    } catch (error) {
+      this.logger.error(`Error saving index for ${storeKey}:`, error);
     }
   }
 
@@ -564,9 +594,5 @@ export class DexieIndexDbService extends Dexie {
       tableName,
       key,
     };
-  }
-
-  async withTransaction<T = any>(storeKeys: Stores[], fn: (tx: Transaction) => Promise<T>): Promise<T> {
-    return this.transaction<T>('rw', storeKeys, fn);
   }
 }

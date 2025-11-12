@@ -1,4 +1,4 @@
-import {Component, contentChildren, Directive, TemplateRef} from '@angular/core';
+import {Component, contentChildren, Directive, HostBinding, TemplateRef} from '@angular/core';
 import {NgTemplateOutlet} from '@angular/common';
 import {generateUuid} from '../../helpers/attribute.helper';
 
@@ -54,5 +54,9 @@ export class InlineSeparatedGroupComponent {
   constructor() {
   }
 
-  items = contentChildren(InlineSeparatedGroupDirective)
+  items = contentChildren(InlineSeparatedGroupDirective);
+
+  @HostBinding('attr.hidden') get hidden() {
+    return this.items().length === 0 ? 'true' : null;
+  }
 }

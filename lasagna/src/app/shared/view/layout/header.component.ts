@@ -1,4 +1,4 @@
-import {Component, Signal, signal, viewChildren} from '@angular/core';
+import {Component, computed, inject, Signal, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from '../ui/button/button.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
@@ -6,9 +6,9 @@ import {Location, NgOptimizedImage} from '@angular/common';
 import {GlobalSearchService} from '../../service/services';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
-import {LanguageService} from '../../../features/settings/service/services/language.service';
 import {DemoInformerComponent} from '../../../features/home/view/demo-informer.component';
 import {FadeInComponent} from '../ui/fade-in.component';
+import {ACCOUNT, AUTHENTICATED} from '../../../features/account/account.token';
 
 @Component({
   selector: 'lg-header',
@@ -33,6 +33,16 @@ import {FadeInComponent} from '../ui/fade-in.component';
                  ngSrc="./logomark.svg"
                  width="50"/>
           </a>
+
+          @if (authenticated()) {
+            <a [routerLinkActiveOptions]="{ exact: false }"
+               [routerLinkActive]="['route-active']"
+               [queryParams]="{ tab: 'account' }"
+               [routerLink]="'/settings'"
+               class="lg-header__account">
+              {{ shortName() }}
+            </a>
+          }
         </div>
 
         <div class="lg-header__leftToMiddle">
@@ -225,6 +235,18 @@ import {FadeInComponent} from '../ui/fade-in.component';
       background-color: var(--header-active-bg);
       color: #fff;
     }
+
+    .lg-header__account {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      scroll-snap-align: center;
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+    }
   `],
   imports: [
     RouterLink,
@@ -240,7 +262,6 @@ export class HeaderComponent {
   constructor(
     public location: Location,
     public globalSearchService: GlobalSearchService,
-    private _localizationService: LanguageService,
   ) {
     this.items = signal([
       {
@@ -258,9 +279,22 @@ export class HeaderComponent {
     ]);
   }
 
+  readonly account = inject(ACCOUNT);
+  readonly authenticated = inject(AUTHENTICATED);
   items: Signal<{ label: string, link: string }[]>
   activeIndex = signal(0);
   links = viewChildren(ButtonComponent)
+  shortName = computed(() => {
+    const name = this.account()?.user?.username || '';
+    const parts = name.split(' ');
+    if (parts.length === 1) {
+      return (name.charAt(0) + name.charAt(1)).toUpperCase();
+    }
+    return parts
+      .map(n => n.charAt(0))
+      .join('')
+      .toUpperCase()
+  });
   protected readonly window = window;
   protected readonly document = document;
 

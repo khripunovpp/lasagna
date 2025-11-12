@@ -7,11 +7,8 @@ import {BackupSettingsComponent} from './backup/backup-settings.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {TabDirective} from '../../../shared/view/ui/tabs/tab.directive';
 import {TabsComponent} from '../../../shared/view/ui/tabs/tabs.component';
-
 import {SettingsService} from '../service/services/settings.service';
 import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/invoices-settings.component";
-
-
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
 import {CategoryListComponent} from './categories/category-product/list/category-list.component';
@@ -21,6 +18,11 @@ import {AddCategoryFormComponent} from './categories/category-product/add-catego
 import {
   AddCategoryRecipeFormComponent
 } from './categories/category-recipe/add-category/add-category-recipe-form.component';
+import {AccountSettingsComponent} from '../../account/account-settings.component';
+import {SyncSettingsComponent} from '../../sync/view/sync-settings.component';
+import {CAN_SYNC} from '../../sync/service/can-sync.token';
+import {CreateCredentialComponent} from './finance-settings/credentials/create-credential.component';
+import {DeletedDataStorageViewComponent} from '../../../shared/view/deleting/deleted-data-storage-view.component';
 
 @Component({
   selector: 'lg-settings',
@@ -42,7 +44,12 @@ import {
     CategoryRecipeListComponent,
     FlexColumnComponent,
     AddCategoryFormComponent,
-    AddCategoryRecipeFormComponent
+    AddCategoryRecipeFormComponent,
+    LogCenterPageComponent,
+    SyncSettingsComponent,
+    AccountSettingsComponent,
+    CreateCredentialComponent,
+    DeletedDataStorageViewComponent
   ]
 })
 export class SettingsComponent implements OnInit {
@@ -54,6 +61,8 @@ export class SettingsComponent implements OnInit {
   editedCategoryProduct = signal('')
   editedCategoryRecipe = signal('')
   private _onboardingService = inject(OnboardingService);
+
+  canSync = inject(CAN_SYNC);
 
   ngOnInit() {
     // Отмечаем шаг настроек как завершённый при посещении страницы

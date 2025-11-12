@@ -19,6 +19,7 @@ import {NotificationsService} from '../../../shared/service/services/notificatio
 import {Product} from '../../products/service/Product';
 import {TranslatePipe} from '@ngx-translate/core';
 import {Unit} from '../../../shared/service/types/Unit.types';
+import {errorHandler} from '../../../shared/helpers';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class BarcodeSeekerWidgetComponent
     name: string
   }>();
   barcode = signal('');
-  product:{
+  product: {
     name: string
     price: number
     amount: number
@@ -163,20 +164,24 @@ export class BarcodeSeekerWidgetComponent
       category_id: '',
       tags: [],
       createdAt: Date.now(),
-    })).then((uuid) => {
-      this.productAdded.emit({
-        uuid: uuid,
-        name: this.product.name,
+    }))
+      .then(({data, message}) => {
+        this.productAdded.emit({
+          uuid: data?.uuid ?? '',
+          name: this.product.name,
+        });
+        this.product = {
+          name: '',
+          price: 0,
+          amount: 0,
+          unit: 'gram'
+        };
+        this.barcode.set('');
+        this.lockRequest = false;
+      })
+      .catch(error => {
+        this._notificationService.error(errorHandler(error));
       });
-      this.product = {
-        name: '',
-        price: 0,
-        amount: 0,
-        unit: 'gram'
-      };
-      this.barcode.set('');
-      this.lockRequest = false;
-    });
   }
 
   startCamera() {
