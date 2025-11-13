@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/service/const/badges.const.ts"],
+  "sourcesContent": ["export const stateToBadgeClassMap: Record<string, string> = {\n  draft: 'text-secondary',\n  paid: 'text-success',\n  cancelled: 'text-danger',\n  issued: 'text-info'\n}\nexport const stateToLabelMap: Record<string, string> = {\n  draft: 'invoices.state.draft',\n  paid: 'invoices.state.paid',\n  cancelled: 'invoices.state.cancelled',\n  issued: 'invoices.state.issued'\n};\n"],
+  "mappings": ";AAAO,IAAM,uBAA+C;EAC1D,OAAO;EACP,MAAM;EACN,WAAW;EACX,QAAQ;;AAEH,IAAM,kBAA0C;EACrD,OAAO;EACP,MAAM;EACN,WAAW;EACX,QAAQ;;",
+  "names": []
+}

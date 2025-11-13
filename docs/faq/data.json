@@ -1,0 +1,296 @@
+[
+  {
+    "type": "file",
+    "name": "00-beta-version[en].md",
+    "language": "en",
+    "path": "00-beta-version[en].md",
+    "title": "🚧 Beta Version",
+    "order": -2,
+    "data": {
+      "title": "🚧 Beta Version",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>What does beta version mean?</summary><div><p>The app is in active development. Core functionality is stable and ready for use, but new features and improvements may appear. We don&#39;t make drastic changes that would break your data or workflow.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is my data safe in the beta version?</summary><div><p>Yes, completely. All data is stored locally on your device, and we have backup systems in place. We take data stability very seriously.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What might change?</summary><div><p>We may add new features, improve the interface, or optimize performance. All changes are aimed at improving the user experience.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How will I know about updates?</summary><div><p>The app automatically checks for updates when launched. If a new version is available, you&#39;ll see a notification with the option to update.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[pt].md",
+    "language": "pt",
+    "path": "00-beta-version[pt].md",
+    "title": "🚧 Versão Beta",
+    "order": -2,
+    "data": {
+      "title": "🚧 Versão Beta",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>O que significa versão beta?</summary><div><p>O aplicativo está em desenvolvimento ativo. A funcionalidade principal é estável e pronta para uso, mas novos recursos e melhorias podem aparecer. Não fazemos mudanças drásticas que quebrariam seus dados ou fluxo de trabalho.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Meus dados estão seguros na versão beta?</summary><div><p>Sim, completamente. Todos os dados são armazenados localmente em seu dispositivo, e temos sistemas de backup. Levamos a estabilidade dos dados muito a sério.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que pode mudar?</summary><div><p>Podemos adicionar novos recursos, melhorar a interface ou otimizar o desempenho. Todas as mudanças visam melhorar a experiência do usuário.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Como saberei sobre atualizações?</summary><div><p>O aplicativo verifica automaticamente por atualizações quando iniciado. Se uma nova versão estiver disponível, você verá uma notificação com a opção de atualizar.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[ru].md",
+    "language": "ru",
+    "path": "00-beta-version[ru].md",
+    "title": "🚧 Бета версия",
+    "order": -2,
+    "data": {
+      "title": "🚧 Бета версия",
+      "order": -2
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Что означает бета версия?</summary><div><p>Приложение находится в активной разработке. Основной функционал стабилен и готов к использованию, но могут появляться новые возможности и улучшения. Мы не вносим кардинальных изменений, которые нарушили бы ваши данные или рабочий процесс.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Безопасны ли мои данные в бета версии?</summary><div><p>Да, полностью. Все данные хранятся локально на вашем устройстве, и у нас есть система резервного копирования. Мы очень серьёзно относимся к стабильности данных.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что может измениться?</summary><div><p>Мы можем добавлять новые функции, улучшать интерфейс или оптимизировать производительность. Все изменения направлены на улучшение пользовательского опыта.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Как я узнаю об обновлениях?</summary><div><p>При запуске приложения автоматически проверяются обновления. Если доступна новая версия, вы увидите уведомление с возможностью обновить.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[en].md",
+    "language": "en",
+    "path": "00-browser-recommendations[en].md",
+    "title": "🌐 Browser Recommendations",
+    "order": -1,
+    "data": {
+      "title": "🌐 Browser Recommendations",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Which browser should I use?</summary><div><p>For the best experience, we recommend modern browsers: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+), or Opera (74+). These browsers fully support all app features.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Why is it important to keep my browser updated?</summary><div><p>New browser versions include performance improvements, security updates, and support for modern web technologies. This ensures more stable and faster app performance.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What if my browser is outdated?</summary><div><p>Update your browser to the latest version. If that&#39;s not possible, try another modern browser. The app may work on older versions, but some features might be unavailable.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are mobile browsers supported?</summary><div><p>Yes, the app works excellently in mobile browsers: Safari on iOS (14+), Chrome on Android (88+), Samsung Internet (13+), and other modern mobile browsers.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Can I use the app in private/incognito mode?</summary><div><p>Yes, but note that in private mode, data may not persist between sessions. For full functionality, we recommend using normal browser mode.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>⚠️ Be careful when clearing browser cache!</summary><div><p><strong>Be careful</strong> when clearing your browser cache! If you choose &quot;Clear everything&quot; (advanced, &quot;all site data&quot;) or &quot;Cookies and other site data&quot; options, this will delete all your app data, including recipes, products, and settings. IndexedDB (where your data is stored) gets deleted along with cookies and site data. For safe cache clearing, use only &quot;Cached images and files&quot; option - this won&#39;t affect your data.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[pt].md",
+    "language": "pt",
+    "path": "00-browser-recommendations[pt].md",
+    "title": "🌐 Recomendações de Navegador",
+    "order": -1,
+    "data": {
+      "title": "🌐 Recomendações de Navegador",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Qual navegador devo usar?</summary><div><p>Para a melhor experiência, recomendamos navegadores modernos: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+) ou Opera (74+). Estes navegadores suportam completamente todos os recursos do aplicativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Por que é importante manter meu navegador atualizado?</summary><div><p>Novas versões dos navegadores incluem melhorias de desempenho, atualizações de segurança e suporte para tecnologias web modernas. Isso garante um desempenho mais estável e rápido do aplicativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>E se meu navegador estiver desatualizado?</summary><div><p>Atualize seu navegador para a versão mais recente. Se isso não for possível, tente outro navegador moderno. O aplicativo pode funcionar em versões mais antigas, mas alguns recursos podem não estar disponíveis.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Navegadores móveis são suportados?</summary><div><p>Sim, o aplicativo funciona excelentemente em navegadores móveis: Safari no iOS (14+), Chrome no Android (88+), Samsung Internet (13+) e outros navegadores móveis modernos.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Posso usar o aplicativo no modo privado/incógnito?</summary><div><p>Sim, mas note que no modo privado, os dados podem não persistir entre sessões. Para funcionalidade completa, recomendamos usar o modo normal do navegador.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>⚠️ Cuidado ao limpar o cache do navegador!</summary><div><p><strong>Tenha cuidado</strong> ao limpar o cache do seu navegador! Se você escolher &quot;Limpar tudo&quot; (avançado, &quot;todos os dados do site&quot;) ou &quot;Cookies e outros dados do site&quot;, isso excluirá todos os dados do seu aplicativo, incluindo receitas, produtos e configurações. O IndexedDB (onde seus dados são armazenados) é excluído junto com cookies e dados do site. Para limpeza segura do cache, use apenas a opção &quot;Imagens e arquivos em cache&quot; - isso não afetará seus dados.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[ru].md",
+    "language": "ru",
+    "path": "00-browser-recommendations[ru].md",
+    "title": "🌐 Рекомендации по браузерам",
+    "order": -1,
+    "data": {
+      "title": "🌐 Рекомендации по браузерам",
+      "order": -1
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Какой браузер лучше использовать?</summary><div><p>Для наилучшего опыта рекомендуем использовать современные браузеры: Google Chrome (88+), Mozilla Firefox (85+), Safari (14+), Microsoft Edge (88+) или Opera (74+). Эти браузеры полностью поддерживают все функции приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Почему важно обновлять браузер?</summary><div><p>Новые версии браузеров содержат улучшения производительности, безопасности и поддержку современных веб-технологий. Это обеспечивает более стабильную и быструю работу приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что делать, если браузер устарел?</summary><div><p>Обновите браузер до последней версии. Если это невозможно, попробуйте другой современный браузер. Приложение может работать на старых версиях, но некоторые функции могут быть недоступны.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Поддерживаются ли мобильные браузеры?</summary><div><p>Да, приложение отлично работает в мобильных браузерах: Safari на iOS (14+), Chrome на Android (88+), Samsung Internet (13+) и других современных мобильных браузерах.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Можно ли использовать приложение в приватном режиме?</summary><div><p>Да, но учтите, что в приватном режиме данные могут не сохраняться между сессиями. Для полноценной работы рекомендуем обычный режим браузера.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>⚠️ Осторожно с очисткой кеша браузера!</summary><div><p><strong>Будьте внимательны</strong> при очистке кеша браузера! Если вы выберете опцию &quot;Очистка всего&quot; (advanced, &quot;all site data&quot;) или &quot;Куки и другие данные сайтов&quot;, это удалит все ваши данные приложения, включая рецепты, продукты и настройки. IndexedDB (где хранятся ваши данные) удаляется вместе с cookies и site data. Для безопасной очистки используйте только &quot;Очистка кешированных изображений и файлов&quot; - это не затронет ваши данные.</p>\n</div></details>\n"
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[en].md",
+    "language": "en",
+    "path": "01-offline-and-installation[en].md",
+    "title": "📶 Offline & Installation",
+    "order": 0,
+    "data": {
+      "title": "📶 Offline & Installation"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Do I need an internet connection to use the app?</summary><div><p>No. The app works fully offline. Internet is only needed for updates, optional sync, or cloud storage.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What does it mean to “install as an app”?</summary><div><p>It means you&#39;re using a PWA — a Progressive Web App. It&#39;s installed directly from the site, runs like a native app, launches from your menu or home screen, and doesn&#39;t require an app store.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are there any technical differences from native apps?</summary><div><p>Minor differences mostly relate to background processes and system integration. For recipes and invoices, the experience is the same.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What happens if I lose internet while using the app?</summary><div><p>Nothing — the app continues working. It&#39;s built offline-first, so all functions remain available.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Why is the app so fast?</summary><div><p>Because everything is processed locally on your device. No network delays.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[pt].md",
+    "language": "pt",
+    "path": "01-offline-and-installation[pt].md",
+    "title": "📶 Offline e Instalação",
+    "order": 0,
+    "data": {
+      "title": "📶 Offline e Instalação"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Preciso de internet para usar o app?</summary><div><p>Não. O aplicativo funciona totalmente offline. A internet só é necessária para atualizações ou sincronização opcional.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que significa “instalar como aplicativo”?</summary><div><p>Significa que você está usando um PWA — um aplicativo progressivo. Ele é instalado direto do site e funciona como um app nativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Existe alguma diferença técnica dos apps nativos?</summary><div><p>Algumas diferenças menores, como notificações ou processos em segundo plano. Na prática, funciona igual.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que acontece se a internet cair?</summary><div><p>Nada. O app continuará funcionando normalmente.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Por que o aplicativo é tão rápido?</summary><div><p>Tudo é processado localmente. Não depende de conexão com servidores.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[ru].md",
+    "language": "ru",
+    "path": "01-offline-and-installation[ru].md",
+    "title": "📶 Оффлайн и установка",
+    "order": 0,
+    "data": {
+      "title": "📶 Оффлайн и установка"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Нужно ли подключение к интернету для работы?</summary><div><p>Нет. Приложение работает полностью офлайн. Подключение к интернету требуется только для обновлений, синхронизации (если вы её включите), или если вы используете облачное хранилище.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что вообще означает “установить как приложение”?</summary><div><p>Это означает, что вы используете PWA — прогрессивное веб-приложение. Оно устанавливается прямо с сайта, работает как обычное приложение, запускается из меню или с главного экрана, и не требует магазина приложений. Функционально оно очень близко к нативным приложениям, и в повседневной работе разницы вы не почувствуете.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Есть ли какие-то технические отличия от обычных приложений?</summary><div><p>Есть, но они касаются в основном фоновых процессов, уведомлений и глубокой интеграции с системой. Эти отличия не влияют на повседневное использование — рецепты, расчёты и документы работают точно так же, как в обычном приложении.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что будет, если во время работы пропадёт интернет?</summary><div><p>Ничего страшного — всё продолжит работать. Приложение изначально спроектировано как offline-first: все функции, включая расчёт рецептов, списки, инвойсы и т.д., работают без подключения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Почему всё работает так быстро?</summary><div><p>Потому что данные обрабатываются локально, прямо на вашем устройстве. Нет задержек из-за сервера или сети — только вы и ваше приложение.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[en].md",
+    "language": "en",
+    "path": "02-storage-and-safety[en].md",
+    "title": "💾 Data & Safety",
+    "order": 0,
+    "data": {
+      "title": "💾 Data & Safety"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Where is my data stored?</summary><div><p>Your data is stored locally on your device. If installed as a standalone app, data is kept with it — no server involved.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Will my data be lost if I clear browser data?</summary><div><p>If used in-browser, clearing cache or history may remove data. Installed apps store data separately.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What happens if I uninstall the app?</summary><div><p>Like any other app, uninstalling removes its local data. We recommend enabling sync or exporting backups.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is the app safe to use?</summary><div><p>Yes. It runs locally and doesn’t send anything to servers unless you choose to sync.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Who can access my data?</summary><div><p>Only you. Sync is encrypted and optional. Nothing is uploaded without your consent.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[pt].md",
+    "language": "pt",
+    "path": "02-storage-and-safety[pt].md",
+    "title": "💾 Armazenamento e Segurança",
+    "order": 0,
+    "data": {
+      "title": "💾 Armazenamento e Segurança"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Onde os dados são armazenados?</summary><div><p>Os dados ficam no seu dispositivo. Se o app estiver instalado, os dados ficam com ele — sem uso de servidores.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Perco os dados se limpar o navegador?</summary><div><p>Sim, se estiver usando no navegador. Mas apps instalados mantêm os dados separadamente.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que acontece ao desinstalar?</summary><div><p>Os dados locais são apagados, como em qualquer app. Recomendamos ativar backup ou sincronização.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>É seguro usar o app?</summary><div><p>Sim. Nada é enviado a servidores sem sua permissão.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Quem tem acesso aos meus dados?</summary><div><p>Só você. A sincronização é opcional e criptografada.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[ru].md",
+    "language": "ru",
+    "path": "02-storage-and-safety[ru].md",
+    "title": "💾 Хранение и безопасность",
+    "order": 0,
+    "data": {
+      "title": "💾 Хранение и безопасность"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Где хранятся мои данные?</summary><div><p>Ваши данные хранятся прямо на устройстве, в так называемом локальном хранилище браузера. Если вы установили приложение как самостоятельное (через «Добавить на главный экран» или «Установить»), то данные остаются с ним и обрабатываются локально — без отправки на сервер.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Удалятся ли мои данные при очистке браузера?</summary><div><p>Если вы используете приложение прямо в браузере, то при очистке кэша или истории данные могут быть затронуты.\nНо если приложение установлено на устройство (как PWA), данные хранятся отдельно и не зависят от настроек браузера.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что произойдёт, если удалить установленное приложение?</summary><div><p>Как и с любым другим приложением, все связанные с ним локальные данные будут удалены. Мы рекомендуем сохранять резервные копии или включить синхронизацию, если вы хотите защитить важную информацию.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Насколько безопасно использовать приложение?</summary><div><p>Приложение работает локально, без отправки данных на сервер без вашего согласия. При синхронизации используется защищённое соединение. Все данные принадлежат только вам.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Кто имеет доступ к моим данным?</summary><div><p>Только вы. Ни одно действие по отправке данных не происходит автоматически. Если вы решите включить синхронизацию, данные будут храниться в зашифрованном виде в облаке, доступные только вам.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[en].md",
+    "language": "en",
+    "path": "03-features-and-pricing[en].md",
+    "title": "💰 Features & Pricing",
+    "order": 0,
+    "data": {
+      "title": "💰 Features & Pricing"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>What features are free?</summary><div><p>All basic features — recipes, product management, cost calculation, invoice generation, offline access — are free.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What features are paid?</summary><div><p><span class=\"badge badge--success\">Coming Soon</span> Cloud sync, <span class=\"badge badge--success\">Coming Soon</span> backups, <span class=\"badge badge--success\">Coming Soon</span> PDF export with templates, <span class=\"badge badge--success\">Coming Soon</span> analytics, <span class=\"badge badge--success\">Coming Soon</span> team access and <span class=\"badge badge--success\">Coming Soon</span> customization.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How much data can I store?</summary><div><p>Usually tens of megabytes — enough for hundreds of recipes and products. Installed PWAs are more persistent.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How often does the app update?</summary><div><p>Regularly. Installed apps auto-update when online.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What if development stops?</summary><div><p>You can still use the installed version — it doesn&#39;t rely on servers.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[pt].md",
+    "language": "pt",
+    "path": "03-features-and-pricing[pt].md",
+    "title": "💰 Recursos e Preços",
+    "order": 0,
+    "data": {
+      "title": "💰 Recursos e Preços"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Quais recursos são gratuitos?</summary><div><p>Tudo o que é essencial: receitas, produtos, cálculo de custo, faturas e uso offline.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que é pago?</summary><div><p><span class=\"badge badge--success\">Em Breve</span> Sincronização, <span class=\"badge badge--success\">Em Breve</span> backups, <span class=\"badge badge--success\">Em Breve</span> exportação em PDF com modelos, <span class=\"badge badge--success\">Em Breve</span> relatórios, <span class=\"badge badge--success\">Em Breve</span> equipe e <span class=\"badge badge--success\">Em Breve</span> personalização.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Quanto posso armazenar?</summary><div><p>Várias dezenas de MB, o suficiente para centenas de receitas. PWAs instalados são mais persistentes.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Com que frequência há atualizações?</summary><div><p>O app atualiza regularmente. Versões instaladas se atualizam sozinhas.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>E se o app deixar de ser mantido?</summary><div><p>Você poderá continuar usando a versão instalada sem problemas.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[ru].md",
+    "language": "ru",
+    "path": "03-features-and-pricing[ru].md",
+    "title": "💰 Функции и обновления",
+    "order": 0,
+    "data": {
+      "title": "💰 Функции и обновления"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Какие функции бесплатны?</summary><div><p>Все базовые возможности — создание рецептов, управление продуктами, расчёт себестоимости, генерация инвойсов, оффлайн-режим — бесплатны.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>А что будет платным?</summary><div><p>Некоторые расширенные функции: <span class=\"badge badge--success\">Скоро</span> синхронизация между устройствами, <span class=\"badge badge--success\">Скоро</span> резервные копии в облаке, <span class=\"badge badge--success\">Скоро</span> экспорт в PDF с шаблонами, <span class=\"badge badge--success\">Скоро</span> аналитика, <span class=\"badge badge--success\">Скоро</span> работа в команде и <span class=\"badge badge--success\">Скоро</span> кастомизация.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Сколько информации можно хранить?</summary><div><p>Обычно это десятки мегабайт — достаточно для сотен рецептов, продуктов и документов. На установленных приложениях (PWA) хранилище более устойчиво и не подвержено случайной очистке системой.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Как часто выходят обновления?</summary><div><p>Приложение обновляется регулярно. Установленные версии получают обновления автоматически при подключении к интернету.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что будет, если приложение перестанет развиваться?</summary><div><p>Вы по-прежнему сможете использовать установленную версию — она не зависит от сервера и будет работать офлайн так долго, как установлена на вашем устройстве.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[en].md",
+    "language": "en",
+    "path": "04-accounts-and-support[en].md",
+    "title": "🛠️ Accounts & Support",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Accounts & Support"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Can I transfer my data to another device?</summary><div><p>Yes, by exporting manually or using <span class=\"badge badge--success\">Coming Soon</span> cloud sync.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Can I use it on multiple devices?</summary><div><p>Yes, with sync enabled — changes are shared across devices.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Is support available?</summary><div><p>Yes. We respond via email, Telegram, and in-app help.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Are there plans for integrations?</summary><div><p>Yes — starting with PDF/Excel export, followed by accounting and payment system integrations.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[pt].md",
+    "language": "pt",
+    "path": "04-accounts-and-support[pt].md",
+    "title": "🛠️ Contas e Suporte",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Contas e Suporte"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Posso transferir meus dados?</summary><div><p>Sim, exportando manualmente ou com <span class=\"badge badge--success\">Em Breve</span> sincronização.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Posso usar em vários dispositivos?</summary><div><p>Sim, com sincronização ativada, as mudanças são compartilhadas.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Existe suporte?</summary><div><p>Sim. Respondemos por e-mail, Telegram e dentro do app.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Planejam integrações?</summary><div><p>Sim — começando com exportação e depois integração com contabilidade e pagamentos.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[ru].md",
+    "language": "ru",
+    "path": "04-accounts-and-support[ru].md",
+    "title": "🛠️ Учётные записи и поддержка",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Учётные записи и поддержка"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Я смогу перенести данные на другое устройство?</summary><div><p>Да. Вы можете экспортировать их вручную или использовать <span class=\"badge badge--success\">Скоро</span> облачную синхронизацию.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Можно ли работать с несколькими устройствами?</summary><div><p>Да, с помощью синхронизации. Все изменения будут автоматически подхватываться, если устройство подключено к интернету.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Есть ли поддержка?</summary><div><p>Да. Мы отвечаем на все вопросы по электронной почте, через Telegram и через встроенную форму поддержки в приложении.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Планируется ли интеграция с другими сервисами (например, бухгалтерией)?</summary><div><p>Да, такие планы есть. Сначала — экспорт в PDF и Excel, затем — интеграции с онлайн-бухгалтериями и платёжными системами.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[en].md",
+    "language": "en",
+    "path": "05-how-to-install[en].md",
+    "title": "🧩 Installation Guide",
+    "order": 0,
+    "data": {
+      "title": "🧩 Installation Guide"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>📱 Android (Chrome, Samsung Internet)</summary><div><ol>\n<li>Open the site.</li>\n<li>Tap the menu (⋮).</li>\n<li>Select &quot;Install app&quot; or &quot;Add to Home screen&quot;.</li>\n<li>Confirm.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 Android (Firefox)</summary><div><p>Firefox does not support PWA installation. Use Chrome instead.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 iOS (Safari)</summary><div><ol>\n<li>Open the site in Safari.</li>\n<li>Tap &quot;Share&quot;.</li>\n<li>Tap &quot;Add to Home Screen&quot;.</li>\n<li>Confirm.</li>\n</ol>\n<p>📌 Chrome/Firefox on iOS do not support PWA.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Chrome, Edge)</summary><div><ol>\n<li>Open the site.</li>\n<li>Click the &quot;Install app&quot; icon in the address bar.</li>\n<li>Confirm.\nApp will appear in Start menu.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Firefox)</summary><div><p>Firefox does not support PWA. Use Chrome or Edge.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Chrome)</summary><div><ol>\n<li>Open the site.</li>\n<li>Click the &quot;Install app&quot; icon.</li>\n<li>App launches separately and appears in Launchpad.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Safari, Firefox)</summary><div><p>Safari and Firefox on macOS do not support PWA installation. Use Chrome.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[pt].md",
+    "language": "pt",
+    "path": "05-how-to-install[pt].md",
+    "title": "🧩 Como Instalar",
+    "order": 0,
+    "data": {
+      "title": "🧩 Como Instalar"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>📱 Android (Chrome, Samsung Internet)</summary><div><ol>\n<li>Acesse o site.</li>\n<li>Toque no menu (⋮).</li>\n<li>Escolha &quot;Instalar app&quot; ou &quot;Adicionar à tela inicial&quot;.</li>\n<li>Confirme.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 Android (Firefox)</summary><div><p>Firefox não suporta instalação de PWA. Use o Chrome.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 iOS (Safari)</summary><div><ol>\n<li>Acesse o site no Safari.</li>\n<li>Toque em &quot;Compartilhar&quot;.</li>\n<li>Escolha &quot;Adicionar à Tela de Início&quot;.</li>\n<li>Confirme.</li>\n</ol>\n<p>📌 Chrome/Firefox no iOS não suportam PWA.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Chrome, Edge)</summary><div><ol>\n<li>Acesse o site.</li>\n<li>Clique no ícone &quot;Instalar app&quot; na barra de endereços.</li>\n<li>Confirme.\nO app aparecerá no menu Iniciar.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Firefox)</summary><div><p>Firefox não suporta PWA. Use Chrome ou Edge.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Chrome)</summary><div><ol>\n<li>Acesse o site.</li>\n<li>Clique em &quot;Instalar app&quot;.</li>\n<li>O app será aberto e aparecerá no Launchpad.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Safari, Firefox)</summary><div><p>Safari e Firefox no macOS não suportam PWA. Use o Chrome.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[ru].md",
+    "language": "ru",
+    "path": "05-how-to-install[ru].md",
+    "title": "🧩 Как установить приложение",
+    "order": 0,
+    "data": {
+      "title": "🧩 Как установить приложение"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>📱 Android (Chrome, Samsung Internet)</summary><div><ol>\n<li>Откройте сайт приложения.</li>\n<li>Нажмите на три точки в правом верхнем углу.</li>\n<li>Выберите «Установить приложение» или «Добавить на главный экран».</li>\n<li>Подтвердите установку.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 Android (Firefox)</summary><div><p>Firefox пока не поддерживает автоматическую установку PWA. Можно использовать Chrome для установки.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>📱 iOS (Safari)</summary><div><ol>\n<li>Откройте сайт приложения.</li>\n<li>Нажмите кнопку «Поделиться» (иконка с квадратом и стрелкой вверх).</li>\n<li>Пролистайте вниз и выберите «На экран «Домой»».</li>\n<li>Подтвердите, нажав «Добавить».</li>\n</ol>\n<p>📌 iOS не поддерживает PWA в Chrome или Firefox — только через Safari.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Chrome, Edge)</summary><div><ol>\n<li>Откройте сайт.</li>\n<li>В адресной строке появится иконка «Установить приложение».</li>\n<li>Нажмите на неё и подтвердите установку.\nПриложение появится в меню «Пуск» и будет вести себя как отдельное окно.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 Windows (Firefox)</summary><div><p>Firefox не поддерживает установку PWA. Можно использовать Chrome или Edge.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Chrome)</summary><div><ol>\n<li>Откройте сайт.</li>\n<li>В адресной строке нажмите иконку «Установить приложение».</li>\n<li>Приложение откроется в отдельном окне и будет доступно из Launchpad и Spotlight.</li>\n</ol>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>💻 macOS (Safari, Firefox)</summary><div><p>Safari и Firefox на macOS не поддерживают установку PWA. Используйте Chrome.</p>\n</div></details>\n\n"
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[en].md",
+    "language": "en",
+    "path": "06-fraud-warning[en].md",
+    "title": "⚠️ Fraud Warning",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Fraud Warning"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Can someone request my data on behalf of Lasagna?</summary><div><p>No, never. We have no paid features and don&#39;t collect personal data for verification. We will never email you proactively and will never request any personal information.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What to do if I receive a suspicious email?</summary><div><p>If you receive an email allegedly from Lasagna asking for data, passwords, or payment — this is fraud. Don&#39;t click links and don&#39;t provide any information.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>How to verify message authenticity?</summary><div><p>All official notifications come only through the app itself. We don&#39;t send emails, even if you provided your email in the app settings.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Where to report fraud?</summary><div><p>If you encounter fraud attempts on behalf of Lasagna, report to us through the support form in the app or write to our official support email.</p>\n</div></details>\n\n\n"
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[pt].md",
+    "language": "pt",
+    "path": "06-fraud-warning[pt].md",
+    "title": "⚠️ Aviso de Fraude",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Aviso de Fraude"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Alguém pode solicitar meus dados em nome do Lasagna?</summary><div><p>Não, nunca. Não temos recursos pagos e não coletamos dados pessoais para verificação. Nunca enviaremos emails proativamente e nunca solicitaremos informações pessoais.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que fazer se receber um email suspeito?</summary><div><p>Se você receber um email supostamente do Lasagna pedindo dados, senhas ou pagamento — isso é fraude. Não clique em links e não forneça nenhuma informação.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Como verificar a autenticidade da mensagem?</summary><div><p>Todas as notificações oficiais vêm apenas através do próprio aplicativo. Não enviamos emails, mesmo que você tenha fornecido seu email nas configurações do aplicativo.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Onde reportar fraude?</summary><div><p>Se encontrar tentativas de fraude em nome do Lasagna, reporte através do formulário de suporte no aplicativo ou escreva para nosso email oficial de suporte.</p>\n</div></details>\n\n\n"
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[ru].md",
+    "language": "ru",
+    "path": "06-fraud-warning[ru].md",
+    "title": "⚠️ Предупреждение о мошенничестве",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Предупреждение о мошенничестве"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Может ли кто-то от имени Lasagna просить мои данные?</summary><div><p>Нет, никогда. У нас нет ни одной платной функции, и мы не собираем личные данные для верификации. Мы никогда не будем писать вам на почту самостоятельно и не будем запрашивать никакие личные данные.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что делать, если получил подозрительное письмо?</summary><div><p>Если вы получили письмо якобы от Lasagna с просьбой предоставить данные, пароли или оплатить что-либо — это мошенничество. Не переходите по ссылкам и не предоставляйте никакую информацию.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Как проверить подлинность сообщения?</summary><div><p>Все официальные уведомления приходят только через само приложение. Мы не отправляем письма на электронную почту, даже если вы её указывали в настройках приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Куда сообщить о мошенничестве?</summary><div><p>Если вы столкнулись с попытками мошенничества от имени Lasagna, сообщите нам через форму поддержки в приложении или напишите на официальную почту поддержки.</p>\n</div></details>\n\n\n"
+  }
+]

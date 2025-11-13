@@ -1,0 +1,272 @@
+[
+  {
+    "type": "file",
+    "name": "00-beta-version[en].md",
+    "language": "en",
+    "path": "00-beta-version[en].md",
+    "title": "🚧 Beta Version",
+    "order": -2,
+    "data": {
+      "title": "🚧 Beta Version",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[pt].md",
+    "language": "pt",
+    "path": "00-beta-version[pt].md",
+    "title": "🚧 Versão Beta",
+    "order": -2,
+    "data": {
+      "title": "🚧 Versão Beta",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-beta-version[ru].md",
+    "language": "ru",
+    "path": "00-beta-version[ru].md",
+    "title": "🚧 Бета версия",
+    "order": -2,
+    "data": {
+      "title": "🚧 Бета версия",
+      "order": -2
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[en].md",
+    "language": "en",
+    "path": "00-browser-recommendations[en].md",
+    "title": "🌐 Browser Recommendations",
+    "order": -1,
+    "data": {
+      "title": "🌐 Browser Recommendations",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[pt].md",
+    "language": "pt",
+    "path": "00-browser-recommendations[pt].md",
+    "title": "🌐 Recomendações de Navegador",
+    "order": -1,
+    "data": {
+      "title": "🌐 Recomendações de Navegador",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
+    "name": "00-browser-recommendations[ru].md",
+    "language": "ru",
+    "path": "00-browser-recommendations[ru].md",
+    "title": "🌐 Рекомендации по браузерам",
+    "order": -1,
+    "data": {
+      "title": "🌐 Рекомендации по браузерам",
+      "order": -1
+    }
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[en].md",
+    "language": "en",
+    "path": "01-offline-and-installation[en].md",
+    "title": "📶 Offline & Installation",
+    "order": 0,
+    "data": {
+      "title": "📶 Offline & Installation"
+    }
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[pt].md",
+    "language": "pt",
+    "path": "01-offline-and-installation[pt].md",
+    "title": "📶 Offline e Instalação",
+    "order": 0,
+    "data": {
+      "title": "📶 Offline e Instalação"
+    }
+  },
+  {
+    "type": "file",
+    "name": "01-offline-and-installation[ru].md",
+    "language": "ru",
+    "path": "01-offline-and-installation[ru].md",
+    "title": "📶 Оффлайн и установка",
+    "order": 0,
+    "data": {
+      "title": "📶 Оффлайн и установка"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[en].md",
+    "language": "en",
+    "path": "02-storage-and-safety[en].md",
+    "title": "💾 Data & Safety",
+    "order": 0,
+    "data": {
+      "title": "💾 Data & Safety"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[pt].md",
+    "language": "pt",
+    "path": "02-storage-and-safety[pt].md",
+    "title": "💾 Armazenamento e Segurança",
+    "order": 0,
+    "data": {
+      "title": "💾 Armazenamento e Segurança"
+    }
+  },
+  {
+    "type": "file",
+    "name": "02-storage-and-safety[ru].md",
+    "language": "ru",
+    "path": "02-storage-and-safety[ru].md",
+    "title": "💾 Хранение и безопасность",
+    "order": 0,
+    "data": {
+      "title": "💾 Хранение и безопасность"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[en].md",
+    "language": "en",
+    "path": "03-features-and-pricing[en].md",
+    "title": "💰 Features & Pricing",
+    "order": 0,
+    "data": {
+      "title": "💰 Features & Pricing"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[pt].md",
+    "language": "pt",
+    "path": "03-features-and-pricing[pt].md",
+    "title": "💰 Recursos e Preços",
+    "order": 0,
+    "data": {
+      "title": "💰 Recursos e Preços"
+    }
+  },
+  {
+    "type": "file",
+    "name": "03-features-and-pricing[ru].md",
+    "language": "ru",
+    "path": "03-features-and-pricing[ru].md",
+    "title": "💰 Функции и обновления",
+    "order": 0,
+    "data": {
+      "title": "💰 Функции и обновления"
+    }
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[en].md",
+    "language": "en",
+    "path": "04-accounts-and-support[en].md",
+    "title": "🛠️ Accounts & Support",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Accounts & Support"
+    }
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[pt].md",
+    "language": "pt",
+    "path": "04-accounts-and-support[pt].md",
+    "title": "🛠️ Contas e Suporte",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Contas e Suporte"
+    }
+  },
+  {
+    "type": "file",
+    "name": "04-accounts-and-support[ru].md",
+    "language": "ru",
+    "path": "04-accounts-and-support[ru].md",
+    "title": "🛠️ Учётные записи и поддержка",
+    "order": 0,
+    "data": {
+      "title": "🛠️ Учётные записи и поддержка"
+    }
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[en].md",
+    "language": "en",
+    "path": "05-how-to-install[en].md",
+    "title": "🧩 Installation Guide",
+    "order": 0,
+    "data": {
+      "title": "🧩 Installation Guide"
+    }
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[pt].md",
+    "language": "pt",
+    "path": "05-how-to-install[pt].md",
+    "title": "🧩 Como Instalar",
+    "order": 0,
+    "data": {
+      "title": "🧩 Como Instalar"
+    }
+  },
+  {
+    "type": "file",
+    "name": "05-how-to-install[ru].md",
+    "language": "ru",
+    "path": "05-how-to-install[ru].md",
+    "title": "🧩 Как установить приложение",
+    "order": 0,
+    "data": {
+      "title": "🧩 Как установить приложение"
+    }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[en].md",
+    "language": "en",
+    "path": "06-fraud-warning[en].md",
+    "title": "⚠️ Fraud Warning",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Fraud Warning"
+    }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[pt].md",
+    "language": "pt",
+    "path": "06-fraud-warning[pt].md",
+    "title": "⚠️ Aviso de Fraude",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Aviso de Fraude"
+    }
+  },
+  {
+    "type": "file",
+    "name": "06-fraud-warning[ru].md",
+    "language": "ru",
+    "path": "06-fraud-warning[ru].md",
+    "title": "⚠️ Предупреждение о мошенничестве",
+    "order": 0,
+    "data": {
+      "title": "⚠️ Предупреждение о мошенничестве"
+    }
+  }
+]

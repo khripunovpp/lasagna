@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/app.component.scss"],
+  "sourcesContent": [":host {\n  display: flex;\n  flex-direction: column;\n  height: 100dvh;\n}\n\n.app {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  background-color: var(--background-color);\n\n  &--pwa {\n    border-radius: 16px;\n  }\n}\n\n.app-content {\n  --app-content-top-padding: calc(var(--header-height) + 44px);\n  padding-top: var(--app-content-top-padding);\n}\n\n.app-footer {\n  margin-top: auto;\n}\n"],
+  "mappings": ";AAAA;AACE,WAAA;AACA,kBAAA;AACA,UAAA;;AAGF,CAAA;AACE,QAAA;AACA,WAAA;AACA,kBAAA;AACA,oBAAA,IAAA;;AAEA,CAAA;AACE,iBAAA;;AAIJ,CAAA;AACE,6BAAA,KAAA,IAAA,iBAAA,EAAA;AACA,eAAA,IAAA;;AAGF,CAAA;AACE,cAAA;;",
+  "names": []
+}

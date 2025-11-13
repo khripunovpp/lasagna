@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/environments/environment.development.ts", "src/app/shared/service/tokens/app-server-region.token.ts"],
+  "sourcesContent": ["export const environment = {\n  production: false,\n  region: 'global',\n  googleSheets: {\n    appsScriptUrl: ''\n  },\n  policies: {\n    privacyPolicyUrl: 'https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md',\n    termsOfServiceUrl: 'https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md',\n    cookiePolicyUrl: 'https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md',\n  },\n smtp: {\n    apiKey: '',\n    apiSecret: '',\n    domain: '',\n    supportEmail: '',\n    senderEmail: '',\n    senderName: '',\n  },\n  version: '0.0.0'\n};\n", "import {InjectionToken} from '@angular/core';\nimport {environment} from '../../../../environments/environment';\n\nexport const APP_SERVER_REGION = new InjectionToken('App Server Region', {\n  factory: () => {\n    return environment.region;\n  }\n});\n\nexport const APP_SERVER_IS_RU = new InjectionToken<boolean>('App Server is RU Server', {\n  factory: () => {\n    return environment.region === 'ru';\n  }\n});\n"],
+  "mappings": ";;;;;AAAO,IAAM,cAAc;EACzB,YAAY;EACZ,QAAQ;EACR,cAAc;IACZ,eAAe;;EAEjB,UAAU;IACR,kBAAkB;IAClB,mBAAmB;IACnB,iBAAiB;;EAEpB,MAAM;IACH,QAAQ;IACR,WAAW;IACX,QAAQ;IACR,cAAc;IACd,aAAa;IACb,YAAY;;EAEd,SAAS;;;;AChBJ,IAAM,oBAAoB,IAAI,eAAe,qBAAqB;EACvE,SAAS,MAAK;AACZ,WAAO,YAAY;EACrB;CACD;AAEM,IAAM,mBAAmB,IAAI,eAAwB,2BAA2B;EACrF,SAAS,MAAK;AACZ,WAAO,YAAY,WAAW;EAChC;CACD;",
+  "names": []
+}

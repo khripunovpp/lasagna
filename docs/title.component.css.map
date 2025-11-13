@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/layout/title.component.ts"],
+  "sourcesContent": ["\n      .title {\n        font-size: 1.9em;\n        line-height: 1.2;\n        font-weight: bold;\n        margin: 0;\n      }\n\n\n      .title--2 {\n        font-size: 1.75em;\n      }\n\n      .title--3 {\n        font-size: 1.5em;\n      }\n\n      .title--4 {\n        font-size: 1.25em;\n      }\n\n      .title--5 {\n        font-size: 1.125em;\n      }\n\n      .title--6 {\n        font-size: 1em;\n      }\n\n      .title--flat {\n        font-weight: normal;\n      }\n    "],
+  "mappings": ";AACM,CAAA;AACE,aAAA;AACA,eAAA;AACA,eAAA;AACA,UAAA;;AAIF,CAAA;AACE,aAAA;;AAGF,CAAA;AACE,aAAA;;AAGF,CAAA;AACE,aAAA;;AAGF,CAAA;AACE,aAAA;;AAGF,CAAA;AACE,aAAA;;AAGF,CAAA;AACE,eAAA;;",
+  "names": []
+}

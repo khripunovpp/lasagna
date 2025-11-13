@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/onboarding/onboarding.component.ts"],
+  "sourcesContent": [":host {\n      display: block;\n    }\n\n    .onboarding__step {\n      display: flex;\n      align-items: center;\n      justify-content: space-between;\n      gap: 8px;\n      background: var(--onboarding-bg);\n      border-radius: 16px;\n      padding: 16px;\n      border: 1px solid var(--onboarding-border);\n      transition: background 0.2s;\n\n      @media screen and (max-width: 600px) {\n        flex-direction: column;\n\n        lg-button {\n          align-self: flex-end;\n        }\n      }\n    }\n\n    .onboarding__step--done {\n\n      .onboarding__step-content {\n        opacity: 0.5;\n      }\n    }\n\n    .onboarding__step--disabled .onboarding__step-content {\n      opacity: 0.5;\n    }\n\n    .onboarding__step-content {\n      display: flex;\n      flex-direction: column;\n      gap: 4px;\n    }\n\n    .onboarding__step-label {\n      font-weight: 600;\n    }\n\n    .onboarding__step-desc {\n      color: var(--onboarding-text);\n    }\n    "],
+  "mappings": ";AAAA;AACM,WAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,mBAAA;AACA,OAAA;AACA,cAAA,IAAA;AACA,iBAAA;AACA,WAAA;AACA,UAAA,IAAA,MAAA,IAAA;AACA,cAAA,WAAA;;AAEA,OAAA,OAAA,IAAA,CAAA,SAAA,EAAA;AAXF,GAAA;AAYI,oBAAA;;AAEA,GAdJ,iBAcI;AACE,gBAAA;;;AAOJ,CAAA,uBAAA,CAAA;AACE,WAAA;;AAIJ,CAAA,2BAAA,CALE;AAMA,WAAA;;AAGF,CATE;AAUA,WAAA;AACA,kBAAA;AACA,OAAA;;AAGF,CAAA;AACE,eAAA;;AAGF,CAAA;AACE,SAAA,IAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/error-page-404.component.ts"],
+  "sourcesContent": ["import {Component} from '@angular/core';\nimport {FlexColumnComponent} from '../layout/flex-column.component';\nimport {TitleComponent} from '../layout/title.component';\n\n@Component({\n  selector: 'lg-error-page-404',\n  template: `\n      <lg-flex-column [position]=\"'center'\">\n          <lg-title>404</lg-title>\n          <span>Page not found</span>\n      </lg-flex-column>\n  `,\n  standalone: true,\n  imports: [\n    FlexColumnComponent,\n    TitleComponent\n  ]\n})\n\nexport class ErrorPage404Component {\n  constructor() {\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;AAmBM,IAAO,wBAAP,MAAO,uBAAqB;EAChC,cAAA;EACA;;qCAFW,wBAAqB;EAAA;yEAArB,wBAAqB,WAAA,CAAA,CAAA,mBAAA,CAAA,GAAA,OAAA,GAAA,MAAA,GAAA,QAAA,CAAA,CAAA,GAAA,UAAA,CAAA,GAAA,UAAA,SAAA,+BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAZ5B,MAAA,yBAAA,GAAA,kBAAA,CAAA,EAAsC,GAAA,UAAA;AACxB,MAAA,iBAAA,GAAA,KAAA;AAAG,MAAA,uBAAA;AACb,MAAA,yBAAA,GAAA,MAAA;AAAM,MAAA,iBAAA,GAAA,gBAAA;AAAc,MAAA,uBAAA,EAAO;;;AAFf,MAAA,qBAAA,YAAA,QAAA;;;IAOlB;IACA;EAAc,GAAA,eAAA,EAAA,CAAA;;;sEAIL,uBAAqB,CAAA;UAfjC;WAAU;MACT,UAAU;MACV,UAAU;;;;;;MAMV,YAAY;MACZ,SAAS;QACP;QACA;;KAEH;;;;6EAEY,uBAAqB,EAAA,WAAA,yBAAA,UAAA,sDAAA,YAAA,GAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

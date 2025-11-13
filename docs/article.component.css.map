@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/documentation/view/article.component.ts"],
+  "sourcesContent": ["\n      .lg-article {\n        display: flex;\n      }\n    "],
+  "mappings": ";AACM,CAAA;AACE,WAAA;;",
+  "names": []
+}

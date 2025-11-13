@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/file-input.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: flex;\n      flex: 1;\n    }\n\n    .lg-file-input {\n      display: flex;\n      flex-direction: row;\n      align-items: center;\n      gap: 16px;\n      flex: 1;\n    }\n\n    .lg-file-input__after {\n      display: flex;\n      align-items: center;\n      gap: 16px;\n      padding: 0 16px;\n      white-space: nowrap;\n      flex: 0 0 auto;\n    }\n\n    .hidden-input {\n      display: none;\n    }\n\n    .error-message {\n      color: #d32f2f;\n      font-size: 13px;\n      white-space: nowrap;\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;AACA,QAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,eAAA;AACA,OAAA;AACA,QAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA;AACA,WAAA,EAAA;AACA,eAAA;AACA,QAAA,EAAA,EAAA;;AAGF,CAAA;AACE,WAAA;;AAGF,CAAA;AACE,SAAA;AACA,aAAA;AACA,eAAA;;",
+  "names": []
+}
