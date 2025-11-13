@@ -130,7 +130,7 @@ import {FadeInComponent} from '../ui/fade-in.component';
         left: 50%;
         transform: translate3d(-50%, 0, 0);
         width: 100dvw;
-        height: 100px;
+        height: 80px;
         pointer-events: none;
         backdrop-filter: blur(3px);
         z-index: -1;

@@ -18,20 +18,24 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
+import {matchMediaSignal} from '../../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints';
 
 @Component({
   selector: 'lg-add-category-form',
   standalone: true,
   template: `
     <lg-fade-in>
-      <lg-flex-column [size]="'medium'">
-        <div>{{ 'categories.add-recipe' | translate }}</div>
+      <lg-flex-column [size]="'small'">
+        <div class="text-small">{{ 'categories.add-recipe' | translate }}</div>
 
         <form [formGroup]="form">
-          <lg-flex-row [bottom]="true" [mobileMode]="true">
+          <lg-flex-row [bottom]="true"
+                       [size]="'medium'">
             <lg-control lgExpand>
               <lg-input (onEnter)="onEnter()"
                         [placeholder]="'settings.category.placeholder' | translate"
+                        [size]="isMobile() ? 'small' : 'normal'"
                         formControlName="name"></lg-input>
             </lg-control>
 
@@ -39,6 +43,7 @@ import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-col
               @if (uuid()) {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           [size]="isMobile() ? 'small' : 'regular'"
                            (click)="editCategory()">
                   @if (form.dirty) {
                     {{ 'settings.category.save' | translate }}
@@ -49,6 +54,7 @@ import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-col
               } @else {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           [size]="isMobile() ? 'small' : 'regular'"
                            (click)="addCategory()">
                   @if (form.dirty) {
                     {{ 'settings.category.add' | translate }}
@@ -87,6 +93,7 @@ export class AddCategoryFormComponent
   ) {
   }
 
+  isMobile = matchMediaSignal(mobileBreakpoint);
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });

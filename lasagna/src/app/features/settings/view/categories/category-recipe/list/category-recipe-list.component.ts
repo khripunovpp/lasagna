@@ -21,10 +21,10 @@ import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-col
   standalone: true,
   template: `
     <lg-fade-in>
-      <lg-flex-column [size]="'medium'">
-        <div> {{ 'categories.recipes.title' | translate }}</div>
+     <lg-flex-column [size]="'small'">
+        <div class="text-small"> {{ 'categories.recipes.title' | translate }}</div>
 
-        <lg-card-list>
+        <lg-card-list style="--card-list-bg: var(--control-bg)">
           @let cats = (categories | async) ?? [];
           @for (category of cats; track i; let i = $index) {
             <ng-template lgCardListItem>

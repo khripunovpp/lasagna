@@ -19,20 +19,24 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
 import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
 import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
+import {matchMediaSignal} from '../../../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints';
 
 @Component({
   selector: 'lg-add-category-recipe-form',
   standalone: true,
   template: `
     <lg-fade-in>
-      <lg-flex-column [size]="'medium'">
-        <div>{{ 'categories.add-product' | translate }}</div>
+     <lg-flex-column [size]="'small'">
+        <div class="text-small">{{ 'categories.add-product' | translate }}</div>
 
         <form [formGroup]="form">
-          <lg-flex-row [bottom]="true" [mobileMode]="true">
+          <lg-flex-row [bottom]="true"
+                       [size]="'medium'">
             <lg-control lgExpand>
               <lg-input (onEnter)="onEnter()"
                         [placeholder]="'settings.category.placeholder' | translate"
+                        [size]="isMobile() ? 'small' : 'normal'"
                         formControlName="name"></lg-input>
             </lg-control>
 
@@ -40,6 +44,7 @@ import {TitleComponent} from '../../../../../../shared/view/layout/title.compone
               @if (uuid()) {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           [size]="isMobile() ? 'small' : 'regular'"
                            (click)="editCategory()">
                   @if (form.dirty) {
                     {{ 'settings.category.save' | translate }}
@@ -50,6 +55,7 @@ import {TitleComponent} from '../../../../../../shared/view/layout/title.compone
               } @else {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           [size]="isMobile() ? 'small' : 'regular'"
                            (click)="addCategory()">
                   @if (form.dirty) {
                     {{ 'settings.category.add' | translate }}
@@ -92,6 +98,7 @@ export class AddCategoryRecipeFormComponent
   ) {
   }
 
+  isMobile = matchMediaSignal(mobileBreakpoint);
   form = new FormGroup({
     name: new FormControl('', Validators.required),
   });

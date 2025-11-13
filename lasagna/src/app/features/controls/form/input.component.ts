@@ -20,6 +20,7 @@ import {NgTemplateOutlet} from '@angular/common';
   standalone: true,
   template: `
     <div [class.contrast]="theme() === 'contrast'"
+         [class]="['lg-input--'+size()]"
          class="lg-input">
       @if (beforeExtraTpl()?.templateRef) {
         <div class="lg-input__before">
@@ -34,16 +35,16 @@ import {NgTemplateOutlet} from '@angular/common';
              (keydown.enter)="onEnter.emit(value)"
              [disabled]="disable()"
              [placeholder]="placeholder()"
+             [type]="inputType()"
              [value]="value"
-             class="input"
-             [type]="inputType()">
+             class="input">
 
       @if (value && !disable()) {
-       <button class="lg-input__clear"
-               (click)="clear()"
-               type="button">
-         ×
-       </button>
+        <button class="lg-input__clear"
+                (click)="clear()"
+                type="button">
+          ×
+        </button>
       }
 
       @if (afterExtraTpl()?.templateRef) {
@@ -71,6 +72,12 @@ import {NgTemplateOutlet} from '@angular/common';
         background-color: var(--control-bg);
         border-radius: 12px;
         gap: 16px;
+      }
+
+      .lg-input--small .input {
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
       }
 
       .lg-input__after {
@@ -153,6 +160,9 @@ export class InputComponent
   theme = input<
     'default' | 'contrast'
   >('default');
+  size = input<
+    'normal' | 'small'
+  >('normal');
   noAfter = signal(false);
   extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
   afterExtraTpl = computed(() => {
