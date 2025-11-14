@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/layout/container.component.ts"],
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        height: 100%;\n        padding: 0 32px;\n\n        @media (max-width: 768px) {\n          padding: 0 16px;\n        }\n      }\n\n      .container {\n        display: flex;\n        flex-direction: column;\n        margin: 0 auto;\n        width: 100%;\n        max-width: var(--container-width);\n        gap: 32px;\n      }\n\n      @media (max-width:768px) {\n        .container {\n          gap: 16px;\n        }\n      }\n\n      .container.compact {\n        gap: 0 !important;\n      }\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,UAAA;AACA,WAAA,EAAA;;AAEA,OAAA,CAAA,SAAA,EAAA;AALF;AAMI,aAAA,EAAA;;;AAIJ,CAAA;AACE,WAAA;AACA,kBAAA;AACA,UAAA,EAAA;AACA,SAAA;AACA,aAAA,IAAA;AACA,OAAA;;AAGF,OAAA,CAAA,SAAA,EAAA;AACE,GAVF;AAWI,SAAA;;;AAIJ,CAfA,SAeA,CAAA;AACE,OAAA;;",
+  "names": []
+}

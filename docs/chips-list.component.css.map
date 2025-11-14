@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/chips-list.component.ts"],
+  "sourcesContent": ["\n      .chips-list {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 8px;\n      }\n\n      .chip {\n        background-color: var(--chip-color);\n        color: #fff;\n        padding: 4px 8px;\n        border-radius: 16px;\n        font-size: 0.875rem;\n        display: inline-block;\n        cursor: pointer;\n        transition: all 0.2s;\n        transition-timing-function: cubic-bezier(.47, 1.64, .41, .8);\n      }\n\n      .chip.selected {\n        opacity: 0.5;\n      }\n\n      .chip:hover {\n        transform: scale(1.1);\n      }\n    "],
+  "mappings": ";AACM,CAAA;AACE,WAAA;AACA,aAAA;AACA,OAAA;;AAGF,CAAA;AACE,oBAAA,IAAA;AACA,SAAA;AACA,WAAA,IAAA;AACA,iBAAA;AACA,aAAA;AACA,WAAA;AACA,UAAA;AACA,cAAA,IAAA;AACA,8BAAA,aAAA,IAAA,EAAA,IAAA,EAAA,IAAA,EAAA;;AAGF,CAZA,IAYA,CAAA;AACE,WAAA;;AAGF,CAhBA,IAgBA;AACE,aAAA,MAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/home/view/last-backup-informer.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: contents;\n    }\n\n    a {\n      background-image: linear-gradient(45deg, #de2c51, #fff400);\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      cursor: pointer;\n      text-align: center;\n      text-decoration: none;\n      border-radius: 0 16px 16px 0;\n      background-size: calc(100% + 70px) 100%;\n      transition: background-position 0.3s ease;\n      white-space: nowrap;\n    }\n\n    a:hover {\n      background-position: -70px 0;\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;;AAGF;AACE;IAAA;MAAA,KAAA;MAAA,OAAA;MAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,cAAA;AACA,mBAAA;AACA,iBAAA,EAAA,KAAA,KAAA;AACA,mBAAA,KAAA,KAAA,EAAA,MAAA;AACA,cAAA,oBAAA,KAAA;AACA,eAAA;;AAGF,CAAA;AACE,uBAAA,MAAA;;",
+  "names": []
+}

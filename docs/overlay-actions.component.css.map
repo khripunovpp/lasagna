@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts"],
+  "sourcesContent": ["\n\n    .overlay-actions {\n      position: fixed;\n      top: 50%;\n      left: 0;\n      transform: translateY(-50%);\n      z-index: 20;\n      display: flex;\n      gap: 8px;\n      flex-direction: column;\n      justify-content: flex-start;\n      align-items: flex-start;\n      pointer-events: none;\n    }\n\n    .overlay-actions * {\n      pointer-events: auto;\n    }\n\n    @media (max-width: 599px) {\n      :host {\n        inset: auto 8px 12px 8px;\n      }\n      .overlay-actions {\n        justify-content: flex-start;\n        flex-wrap: wrap;\n      }\n    }\n  "],
+  "mappings": ";AAEI,CAAA;AACE,YAAA;AACA,OAAA;AACA,QAAA;AACA,aAAA,WAAA;AACA,WAAA;AACA,WAAA;AACA,OAAA;AACA,kBAAA;AACA,mBAAA;AACA,eAAA;AACA,kBAAA;;AAGF,CAdA,gBAcA;AACE,kBAAA;;AAGF,OAAA,CAAA,SAAA,EAAA;AACE;AACE,WAAA,KAAA,IAAA,KAAA;;AAEF,GAtBF;AAuBI,qBAAA;AACA,eAAA;;;",
+  "names": []
+}

@@ -1,0 +1,1775 @@
+[
+  {
+    "store": "productsStore",
+    "data": [
+      {
+        "uuid": "prod-001a",
+        "name": "Natural vanilla extract",
+        "amount": 250,
+        "price": 12.5,
+        "unit": "ml",
+        "source": "PureFlavors",
+        "category_id": "flavors-spices",
+        "color": "#f5e1a4",
+        "createdAt": 1751400000000,
+        "updatedAt": 1751400000000
+      },
+      {
+        "uuid": "prod-002b",
+        "name": "Gluten-free coconut flour",
+        "amount": 1000,
+        "price": 8.7,
+        "unit": "gram",
+        "source": "GlutenFreeCo",
+        "category_id": "gluten-free",
+        "color": "#d8f0d4",
+        "createdAt": 1751400001000,
+        "updatedAt": 1751400001000
+      },
+      {
+        "uuid": "prod-003c",
+        "name": "Organic oat milk",
+        "amount": 1000,
+        "price": 3.9,
+        "unit": "ml",
+        "source": "VeganLife",
+        "category_id": "vegan-alternatives",
+        "color": "#a4d7c8",
+        "createdAt": 1751400002000,
+        "updatedAt": 1751400002000
+      },
+      {
+        "uuid": "prod-004d",
+        "name": "Dark chocolate glaze",
+        "amount": 500,
+        "price": 7.2,
+        "unit": "gram",
+        "source": "SweetCoats",
+        "category_id": "glazes-coatings",
+        "color": "#4b2c20",
+        "createdAt": 1751400003000,
+        "updatedAt": 1751400003000
+      },
+      {
+        "uuid": "prod-005e",
+        "name": "Crystalline erythritol",
+        "amount": 750,
+        "price": 6.3,
+        "unit": "gram",
+        "source": "DietSugar",
+        "category_id": "dietary-low-calorie",
+        "color": "#f0e68c",
+        "createdAt": 1751400004000,
+        "updatedAt": 1751400004000
+      },
+      {
+        "uuid": "prod-006f",
+        "name": "Food-grade sheet gelatin",
+        "amount": 200,
+        "price": 4,
+        "unit": "gram",
+        "source": "GelatoMasters",
+        "category_id": "gelling-agents",
+        "color": "#fff1cc",
+        "createdAt": 1751400005000,
+        "updatedAt": 1751400005000
+      },
+      {
+        "uuid": "prod-007g",
+        "name": "Cold-pressed coconut oil",
+        "amount": 1000,
+        "price": 11.7,
+        "unit": "ml",
+        "source": "TropicalOils",
+        "category_id": "fats-oils",
+        "color": "#fff5e1",
+        "createdAt": 1751400006000,
+        "updatedAt": 1751400006000
+      },
+      {
+        "uuid": "prod-008h",
+        "name": "Beef dumplings",
+        "amount": 1500,
+        "price": 14.2,
+        "unit": "gram",
+        "source": "FrozenDelights",
+        "category_id": "frozen-semi-finished",
+        "color": "#c2dfff",
+        "createdAt": 1751400007000,
+        "updatedAt": 1751400007000
+      },
+      {
+        "uuid": "prod-009i",
+        "name": "Soy lecithin food grade",
+        "amount": 250,
+        "price": 5.8,
+        "unit": "gram",
+        "source": "EmulsifyPro",
+        "category_id": "confectionery-additives",
+        "color": "#f7cac9",
+        "createdAt": 1751400008000,
+        "updatedAt": 1751400008000
+      },
+      {
+        "uuid": "prod-010j",
+        "name": "Vanilla buttercream",
+        "amount": 1000,
+        "price": 9.9,
+        "unit": "gram",
+        "source": "CreamDeluxe",
+        "category_id": "creams-fillings",
+        "color": "#f8f1e4",
+        "createdAt": 1751400009000,
+        "updatedAt": 1751400009000
+      },
+      {
+        "uuid": "prod-011k",
+        "name": "Fresh ricotta cheese",
+        "amount": 500,
+        "price": 6.5,
+        "unit": "gram",
+        "source": "DairyBest",
+        "category_id": "dairy",
+        "color": "#fffbe6",
+        "createdAt": 1751400010000,
+        "updatedAt": 1751400010000
+      },
+      {
+        "uuid": "prod-012l",
+        "name": "Yellow cornmeal",
+        "amount": 1000,
+        "price": 2.4,
+        "unit": "gram",
+        "source": "GrainHarvest",
+        "category_id": "flour-starches",
+        "color": "#f3eac2",
+        "createdAt": 1751400011000,
+        "updatedAt": 1751400011000
+      },
+      {
+        "uuid": "prod-013m",
+        "name": "Orange liqueur",
+        "amount": 700,
+        "price": 18,
+        "unit": "ml",
+        "source": "SpiritFarms",
+        "category_id": "beverages-liqueurs",
+        "color": "#f08a5d",
+        "createdAt": 1751400012000,
+        "updatedAt": 1751400012000
+      },
+      {
+        "uuid": "prod-014n",
+        "name": "Fresh carrots",
+        "amount": 800,
+        "price": 2.1,
+        "unit": "gram",
+        "source": "VeggieFarm",
+        "category_id": "vegetables",
+        "color": "#ffa07a",
+        "createdAt": 1751400013000,
+        "updatedAt": 1751400013000
+      },
+      {
+        "uuid": "prod-015o",
+        "name": "Roasted almonds",
+        "amount": 300,
+        "price": 9.5,
+        "unit": "gram",
+        "source": "NuttyWorld",
+        "category_id": "nuts-seeds",
+        "color": "#f4a261",
+        "createdAt": 1751400014000,
+        "updatedAt": 1751400014000
+      },
+      {
+        "uuid": "prod-016p",
+        "name": "Homemade tomato paste",
+        "amount": 500,
+        "price": 5.3,
+        "unit": "gram",
+        "source": "TomatoDelight",
+        "category_id": "pasta",
+        "color": "#d94f4f",
+        "createdAt": 1751400015000,
+        "updatedAt": 1751400015000
+      },
+      {
+        "uuid": "prod-017q",
+        "name": "Natural forest honey",
+        "amount": 750,
+        "price": 7.7,
+        "unit": "gram",
+        "source": "BeeFriends",
+        "category_id": "sweeteners",
+        "color": "#ffc107",
+        "createdAt": 1751400016000,
+        "updatedAt": 1751400016000
+      },
+      {
+        "uuid": "prod-018r",
+        "name": "Calcium baking powder",
+        "amount": 250,
+        "price": 3,
+        "unit": "gram",
+        "source": "BakeRight",
+        "category_id": "leavening-stabilizers",
+        "color": "#e0e0e0",
+        "createdAt": 1751400017000,
+        "updatedAt": 1751400017000
+      },
+      {
+        "uuid": "prod-019s",
+        "name": "Pure maple syrup",
+        "amount": 500,
+        "price": 14.5,
+        "unit": "ml",
+        "source": "MapleGold",
+        "category_id": "syrups-soaking",
+        "color": "#a0522d",
+        "createdAt": 1751400018000,
+        "updatedAt": 1751400018000
+      },
+      {
+        "name": "Coarse sea salt",
+        "amount": 1000,
+        "price": 2,
+        "unit": "gram",
+        "source": "SaltSea",
+        "category_id": "salt",
+        "uuid": "prod-020t",
+        "createdAt": 1751400019000,
+        "updatedAt": 1752414939233,
+        "color": "#78b99c"
+      },
+      {
+        "uuid": "prod-021u",
+        "name": "Colored sugar sprinkles",
+        "amount": 250,
+        "price": 4.5,
+        "unit": "gram",
+        "source": "DecorSweet",
+        "category_id": "decorations",
+        "color": "#ff69b4",
+        "createdAt": 1751400020000,
+        "updatedAt": 1751400020000
+      },
+      {
+        "uuid": "prod-022v",
+        "name": "Silicone cupcake mold",
+        "amount": 1,
+        "price": 15,
+        "unit": "piece",
+        "source": "BakeTools",
+        "category_id": "baking-forms",
+        "color": "#ffb347",
+        "createdAt": 1751400021000,
+        "updatedAt": 1751400021000
+      },
+      {
+        "uuid": "prod-023w",
+        "name": "Frozen strawberry puree",
+        "amount": 1000,
+        "price": 8,
+        "unit": "gram",
+        "source": "BerryFresh",
+        "category_id": "fruit-berry",
+        "color": "#fc5a8d",
+        "createdAt": 1751400022000,
+        "updatedAt": 1751400022000
+      },
+      {
+        "uuid": "prod-024x",
+        "name": "Dark chocolate 70%",
+        "amount": 500,
+        "price": 10.5,
+        "unit": "gram",
+        "source": "ChocoLove",
+        "category_id": "chocolate-cocoa",
+        "color": "#2e1a1a",
+        "createdAt": 1751400023000,
+        "updatedAt": 1751400023000
+      },
+      {
+        "uuid": "prod-025y",
+        "name": "Fresh chicken eggs",
+        "amount": 12,
+        "price": 3.2,
+        "unit": "piece",
+        "source": "FarmFresh",
+        "category_id": "eggs-egg-products",
+        "color": "#fff5e1",
+        "createdAt": 1751400024000,
+        "updatedAt": 1751400024000
+      },
+      {
+        "name": "Ground cardamom",
+        "amount": 100,
+        "price": 14,
+        "unit": "gram",
+        "source": "SpiceWorld",
+        "category_id": "flavors-spices",
+        "uuid": "prod-026z",
+        "createdAt": 1751400025000,
+        "updatedAt": 1751742357434,
+        "color": "#a6f841"
+      },
+      {
+        "uuid": "prod-027aa",
+        "name": "Gluten-free cornstarch",
+        "amount": 1000,
+        "price": 4.8,
+        "unit": "gram",
+        "source": "GlutenFreeCo",
+        "category_id": "gluten-free",
+        "color": "#fffacd",
+        "createdAt": 1751400026000,
+        "updatedAt": 1751400026000
+      },
+      {
+        "uuid": "prod-028bb",
+        "name": "Natural almond milk",
+        "amount": 1000,
+        "price": 5.2,
+        "unit": "ml",
+        "source": "VeganLife",
+        "category_id": "vegan-alternatives",
+        "color": "#d7ccc8",
+        "createdAt": 1751400027000,
+        "updatedAt": 1751400027000
+      },
+      {
+        "uuid": "prod-029cc",
+        "name": "White vanilla glaze",
+        "amount": 500,
+        "price": 7.5,
+        "unit": "gram",
+        "source": "SweetCoats",
+        "category_id": "glazes-coatings",
+        "color": "#fffafa",
+        "createdAt": 1751400028000,
+        "updatedAt": 1751400028000
+      },
+      {
+        "uuid": "prod-030dd",
+        "name": "Stevia sweetener",
+        "amount": 250,
+        "price": 6,
+        "unit": "gram",
+        "source": "DietSugar",
+        "category_id": "dietary-low-calorie",
+        "color": "#b4eeb4",
+        "createdAt": 1751400029000,
+        "updatedAt": 1751400029000
+      },
+      {
+        "uuid": "prod-031ee",
+        "name": "Agar-agar powder",
+        "amount": 100,
+        "price": 5.5,
+        "unit": "gram",
+        "source": "GelatoMasters",
+        "category_id": "gelling-agents",
+        "color": "#e3f6f5",
+        "createdAt": 1751400030000,
+        "updatedAt": 1751400030000
+      },
+      {
+        "uuid": "prod-032ff",
+        "name": "Extra virgin olive oil",
+        "amount": 1000,
+        "price": 15,
+        "unit": "ml",
+        "source": "TropicalOils",
+        "category_id": "fats-oils",
+        "color": "#a3c86d",
+        "createdAt": 1751400031000,
+        "updatedAt": 1751400031000
+      },
+      {
+        "uuid": "prod-033gg",
+        "name": "Frozen raspberries",
+        "amount": 1000,
+        "price": 10.2,
+        "unit": "gram",
+        "source": "FrozenDelights",
+        "category_id": "frozen-semi-finished",
+        "color": "#d64f4f",
+        "createdAt": 1751400032000,
+        "updatedAt": 1751400032000
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594839
+  },
+  {
+    "store": "recipesStore",
+    "data": [
+      {
+        "name": "Chocolate cake with cream",
+        "description": "Classic chocolate cake with delicate cream. Perfect for holidays and special occasions.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-024x",
+            "unit": "gram"
+          },
+          {
+            "amount": 4,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 150,
+            "product_id": "prod-012l",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 50,
+            "product_id": "prod-007g",
+            "unit": "ml"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 800,
+        "outcome_unit": "gram",
+        "uuid": "recipe-001",
+        "category_id": "cakes",
+        "createdAt": 1751400100000,
+        "updatedAt": 1751400100000,
+        "tags": [
+          "chocolate",
+          "cake",
+          "dessert"
+        ],
+        "color": "#8B4513",
+        "priceModifiers": []
+      },
+      {
+        "name": "Vanilla cupcakes",
+        "description": "Delicate vanilla cupcakes with crispy crust. Simple recipe for beginner pastry chefs.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-012l",
+            "unit": "gram"
+          },
+          {
+            "amount": 2,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 80,
+            "product_id": "prod-007g",
+            "unit": "ml"
+          },
+          {
+            "amount": 2,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          },
+          {
+            "amount": 5,
+            "product_id": "prod-018r",
+            "unit": "gram"
+          }
+        ],
+        "outcome_amount": 6,
+        "outcome_unit": "piece",
+        "uuid": "recipe-002",
+        "category_id": "cupcakes-muffins",
+        "createdAt": 1751400200000,
+        "updatedAt": 1751400200000,
+        "tags": [
+          "cupcakes",
+          "vanilla",
+          "baking"
+        ],
+        "color": "#F5DEB3",
+        "priceModifiers": []
+      },
+      {
+        "name": "Cream cheesecake",
+        "description": "Classic New York cheesecake with delicate texture and rich flavor.",
+        "ingredients": [
+          {
+            "amount": 500,
+            "product_id": "prod-011k",
+            "unit": "gram"
+          },
+          {
+            "amount": 3,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 200,
+            "product_id": "prod-010j",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 1000,
+        "outcome_unit": "gram",
+        "uuid": "recipe-003",
+        "category_id": "cheesecakes",
+        "createdAt": 1751400300000,
+        "updatedAt": 1751400300000,
+        "tags": [
+          "cheesecake",
+          "dessert",
+          "cream"
+        ],
+        "color": "#FFF8DC",
+        "priceModifiers": []
+      },
+      {
+        "name": "Meringues with berries",
+        "description": "Airy meringues with fresh berries. Light and elegant dessert.",
+        "ingredients": [
+          {
+            "amount": 4,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 200,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-023w",
+            "unit": "gram"
+          }
+        ],
+        "outcome_amount": 8,
+        "outcome_unit": "piece",
+        "uuid": "recipe-004",
+        "category_id": "meringues",
+        "createdAt": 1751400400000,
+        "updatedAt": 1751400400000,
+        "tags": [
+          "meringues",
+          "berries",
+          "light"
+        ],
+        "color": "#FFE4E1",
+        "priceModifiers": []
+      },
+      {
+        "name": "Chocolate mousse",
+        "description": "Delicate chocolate mousse with rich flavor. Perfect for romantic dinner.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-024x",
+            "unit": "gram"
+          },
+          {
+            "amount": 3,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 50,
+            "product_id": "prod-013m",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 400,
+        "outcome_unit": "gram",
+        "uuid": "recipe-005",
+        "category_id": "mousses",
+        "createdAt": 1751400500000,
+        "updatedAt": 1751400500000,
+        "tags": [
+          "mousse",
+          "chocolate",
+          "romantic"
+        ],
+        "color": "#654321",
+        "priceModifiers": []
+      },
+      {
+        "name": "Nut cookies",
+        "description": "Crispy cookies with almonds and walnuts. Classic recipe.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-012l",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-015o",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 2,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 80,
+            "product_id": "prod-007g",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 20,
+        "outcome_unit": "piece",
+        "uuid": "recipe-006",
+        "category_id": "cookies",
+        "createdAt": 1751400600000,
+        "updatedAt": 1751400600000,
+        "tags": [
+          "cookies",
+          "nuts",
+          "crispy"
+        ],
+        "color": "#DEB887",
+        "priceModifiers": []
+      },
+      {
+        "name": "Tiramisu",
+        "description": "Classic Italian dessert with coffee and mascarpone. Elegant and delicious.",
+        "ingredients": [
+          {
+            "amount": 500,
+            "product_id": "prod-011k",
+            "unit": "gram"
+          },
+          {
+            "amount": 6,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 200,
+            "product_id": "prod-013m",
+            "unit": "ml"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 800,
+        "outcome_unit": "gram",
+        "uuid": "recipe-007",
+        "category_id": "author-desserts",
+        "createdAt": 1751400700000,
+        "updatedAt": 1751400700000,
+        "tags": [
+          "tiramisu",
+          "italian",
+          "coffee"
+        ],
+        "color": "#8B7355",
+        "priceModifiers": []
+      },
+      {
+        "name": "Vegan chocolate cake",
+        "description": "Delicious chocolate cake without eggs and milk. Suitable for vegans.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-024x",
+            "unit": "gram"
+          },
+          {
+            "amount": 200,
+            "product_id": "prod-028bb",
+            "unit": "ml"
+          },
+          {
+            "amount": 150,
+            "product_id": "prod-027aa",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-030dd",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 600,
+        "outcome_unit": "gram",
+        "uuid": "recipe-008",
+        "category_id": "vegan-desserts",
+        "createdAt": 1751400800000,
+        "updatedAt": 1751400800000,
+        "tags": [
+          "vegan",
+          "chocolate",
+          "egg-free"
+        ],
+        "color": "#654321",
+        "priceModifiers": []
+      },
+      {
+        "name": "Gluten-free cupcakes",
+        "description": "Delicious gluten-free cupcakes. Suitable for people with celiac disease.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-002b",
+            "unit": "gram"
+          },
+          {
+            "amount": 2,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 80,
+            "product_id": "prod-007g",
+            "unit": "ml"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 6,
+        "outcome_unit": "piece",
+        "uuid": "recipe-009",
+        "category_id": "gluten-free-baking",
+        "createdAt": 1751400900000,
+        "updatedAt": 1751400900000,
+        "tags": [
+          "gluten-free",
+          "cupcakes",
+          "dietary"
+        ],
+        "color": "#F5DEB3",
+        "priceModifiers": []
+      },
+      {
+        "name": "Berry jelly",
+        "description": "Refreshing jelly from fresh berries. Light summer dessert.",
+        "ingredients": [
+          {
+            "amount": 500,
+            "product_id": "prod-023w",
+            "unit": "gram"
+          },
+          {
+            "amount": 20,
+            "product_id": "prod-031ee",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 500,
+            "product_id": "prod-013m",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 1000,
+        "outcome_unit": "ml",
+        "uuid": "recipe-010",
+        "category_id": "jellies-jams",
+        "createdAt": 1751401000000,
+        "updatedAt": 1751401000000,
+        "tags": [
+          "jelly",
+          "berries",
+          "summer"
+        ],
+        "color": "#FF69B4",
+        "priceModifiers": []
+      },
+      {
+        "name": "Caramel sauce",
+        "description": "Thick caramel sauce for desserts. Perfectly pairs with ice cream.",
+        "ingredients": [
+          {
+            "amount": 200,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-007g",
+            "unit": "ml"
+          },
+          {
+            "amount": 100,
+            "product_id": "prod-013m",
+            "unit": "ml"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          }
+        ],
+        "outcome_amount": 300,
+        "outcome_unit": "ml",
+        "uuid": "recipe-011",
+        "category_id": "caramel",
+        "createdAt": 1751401100000,
+        "updatedAt": 1751401100000,
+        "tags": [
+          "caramel",
+          "sauce",
+          "ice cream"
+        ],
+        "color": "#D2691E",
+        "priceModifiers": []
+      },
+      {
+        "name": "Classic sponge cake",
+        "description": "Airy sponge cake for cakes and pastries. Foundation of many desserts.",
+        "ingredients": [
+          {
+            "amount": 4,
+            "product_id": "prod-025y",
+            "unit": "piece"
+          },
+          {
+            "amount": 120,
+            "product_id": "prod-017q",
+            "unit": "gram"
+          },
+          {
+            "amount": 120,
+            "product_id": "prod-012l",
+            "unit": "gram"
+          },
+          {
+            "amount": 1,
+            "product_id": "prod-001a",
+            "unit": "ml"
+          },
+          {
+            "amount": 5,
+            "product_id": "prod-020t",
+            "unit": "gram"
+          }
+        ],
+        "outcome_amount": 0,
+        "outcome_unit": "gram",
+        "uuid": "recipe-013",
+        "category_id": "biscuits",
+        "createdAt": 1751406200000,
+        "updatedAt": 1752414756271,
+        "tags": [],
+        "color": "#ffe4c4",
+        "priceModifiers": []
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594839
+  },
+  {
+    "store": "categoryStore",
+    "data": [
+      {
+        "uuid": "238288eb05ac479ab739",
+        "name": "Superfoods and supplements"
+      },
+      {
+        "uuid": "510494d2e91b45c1ba6d",
+        "name": "Grain bases"
+      },
+      {
+        "uuid": "8421e7d8e7784d45acd6",
+        "name": "Gluten-free baking"
+      },
+      {
+        "uuid": "ac4ddc73cc454565a1a1",
+        "name": "Plant-based creams"
+      },
+      {
+        "uuid": "b790b99abbb9429ebd9e",
+        "name": "Matcha desserts"
+      },
+      {
+        "uuid": "ef65359f7907453ca46b",
+        "name": "Nut pastes"
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594839
+  },
+  {
+    "store": "categoryProductsStore",
+    "data": [
+      {
+        "uuid": "flavors-spices",
+        "name": "flavors-spices",
+        "system": true
+      },
+      {
+        "uuid": "gluten-free",
+        "name": "gluten-free",
+        "system": true
+      },
+      {
+        "uuid": "vegan-alternatives",
+        "name": "vegan-alternatives",
+        "system": true
+      },
+      {
+        "uuid": "glazes-coatings",
+        "name": "glazes-coatings",
+        "system": true
+      },
+      {
+        "uuid": "dietary-low-calorie",
+        "name": "dietary-low-calorie",
+        "system": true
+      },
+      {
+        "uuid": "gelling-agents",
+        "name": "gelling-agents",
+        "system": true
+      },
+      {
+        "uuid": "fats-oils",
+        "name": "fats-oils",
+        "system": true
+      },
+      {
+        "uuid": "frozen-semi-finished",
+        "name": "frozen-semi-finished",
+        "system": true
+      },
+      {
+        "uuid": "confectionery-additives",
+        "name": "confectionery-additives",
+        "system": true
+      },
+      {
+        "uuid": "creams-fillings",
+        "name": "creams-fillings",
+        "system": true
+      },
+      {
+        "uuid": "dairy",
+        "name": "dairy",
+        "system": true
+      },
+      {
+        "uuid": "flour-starches",
+        "name": "flour-starches",
+        "system": true
+      },
+      {
+        "uuid": "beverages-liqueurs",
+        "name": "beverages-liqueurs",
+        "system": true
+      },
+      {
+        "uuid": "vegetables",
+        "name": "vegetables",
+        "system": true
+      },
+      {
+        "uuid": "nuts-seeds",
+        "name": "nuts-seeds",
+        "system": true
+      },
+      {
+        "uuid": "pasta",
+        "name": "pasta",
+        "system": true
+      },
+      {
+        "uuid": "sweeteners",
+        "name": "sweeteners",
+        "system": true
+      },
+      {
+        "uuid": "leavening-stabilizers",
+        "name": "leavening-stabilizers",
+        "system": true
+      },
+      {
+        "uuid": "syrups-soaking",
+        "name": "syrups-soaking",
+        "system": true
+      },
+      {
+        "uuid": "salt",
+        "name": "salt",
+        "system": true
+      },
+      {
+        "uuid": "decorations",
+        "name": "decorations",
+        "system": true
+      },
+      {
+        "uuid": "baking-forms",
+        "name": "baking-forms",
+        "system": true
+      },
+      {
+        "uuid": "fruit-berry",
+        "name": "fruit-berry",
+        "system": true
+      },
+      {
+        "uuid": "chocolate-cocoa",
+        "name": "chocolate-cocoa",
+        "system": true
+      },
+      {
+        "uuid": "eggs-egg-products",
+        "name": "eggs-egg-products",
+        "system": true
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594839
+  },
+  {
+    "store": "categoryRecipesStore",
+    "data": [
+      {
+        "uuid": "author-desserts",
+        "name": "author-desserts",
+        "system": true
+      },
+      {
+        "uuid": "biscuits",
+        "name": "biscuits",
+        "system": true
+      },
+      {
+        "uuid": "brioche-sweet-bread",
+        "name": "brioche-sweet-bread",
+        "system": true
+      },
+      {
+        "uuid": "vegan-desserts",
+        "name": "vegan-desserts",
+        "system": true
+      },
+      {
+        "uuid": "gluten-free-baking",
+        "name": "gluten-free-baking",
+        "system": true
+      },
+      {
+        "uuid": "sugar-free-baking",
+        "name": "sugar-free-baking",
+        "system": true
+      },
+      {
+        "uuid": "glazes-coatings",
+        "name": "glazes-coatings",
+        "system": true
+      },
+      {
+        "uuid": "glass-desserts",
+        "name": "glass-desserts",
+        "system": true
+      },
+      {
+        "uuid": "yeast-dough",
+        "name": "yeast-dough",
+        "system": true
+      },
+      {
+        "uuid": "jellies-jams",
+        "name": "jellies-jams",
+        "system": true
+      },
+      {
+        "uuid": "caramel",
+        "name": "caramel",
+        "system": true
+      },
+      {
+        "uuid": "cupcakes-muffins",
+        "name": "cupcakes-muffins",
+        "system": true
+      },
+      {
+        "uuid": "creams",
+        "name": "creams",
+        "system": true
+      },
+      {
+        "uuid": "cakes",
+        "name": "cakes",
+        "system": true
+      },
+      {
+        "uuid": "cookies",
+        "name": "cookies",
+        "system": true
+      },
+      {
+        "uuid": "pastries",
+        "name": "pastries",
+        "system": true
+      },
+      {
+        "uuid": "fillings",
+        "name": "fillings",
+        "system": true
+      },
+      {
+        "uuid": "meringues",
+        "name": "meringues",
+        "system": true
+      },
+      {
+        "uuid": "mousses",
+        "name": "mousses",
+        "system": true
+      },
+      {
+        "uuid": "macarons",
+        "name": "macarons",
+        "system": true
+      },
+      {
+        "uuid": "chocolate-products",
+        "name": "chocolate-products",
+        "system": true
+      },
+      {
+        "uuid": "cheesecakes",
+        "name": "cheesecakes",
+        "system": true
+      },
+      {
+        "uuid": "tarts",
+        "name": "tarts",
+        "system": true
+      },
+      {
+        "uuid": "rolls",
+        "name": "rolls",
+        "system": true
+      },
+      {
+        "uuid": "shortcrust-pastry",
+        "name": "shortcrust-pastry",
+        "system": true
+      },
+      {
+        "uuid": "choux-pastry",
+        "name": "choux-pastry",
+        "system": true
+      },
+      {
+        "uuid": "puff-pastry",
+        "name": "puff-pastry",
+        "system": true
+      },
+      {
+        "uuid": "panna-cotta",
+        "name": "panna-cotta",
+        "system": true
+      },
+      {
+        "uuid": "souffles",
+        "name": "souffles",
+        "system": true
+      },
+      {
+        "uuid": "breakfasts",
+        "name": "breakfasts",
+        "system": true
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594839
+  },
+  {
+    "store": "invoices",
+    "data": [
+      {
+        "name": "Vanilla Dawn Magic",
+        "uuid": "inv-uuid-1001",
+        "prefix": "HW-EM",
+        "invoice_number": "20250701-VR1",
+        "credential_from_string": "Pavel Khripunov, Rua das Flores 12, Portugal",
+        "credential_to_string": "Sweet Treats Co., 77 Candy Lane, UK",
+        "date_issued": 1751409000000,
+        "date_due": 1753996800000,
+        "rows": [
+          {
+            "type": "recipe",
+            "amount": 10,
+            "unit": "piece",
+            "product_id": null,
+            "recipe_id": "recipe-001"
+          },
+          {
+            "type": "recipe",
+            "amount": 8,
+            "unit": "portion",
+            "product_id": null,
+            "recipe_id": "recipe-002"
+          },
+          {
+            "type": "recipe",
+            "amount": 5,
+            "unit": "piece",
+            "product_id": null,
+            "recipe_id": "recipe-003"
+          },
+          {
+            "type": "recipe",
+            "amount": 24,
+            "unit": "piece",
+            "product_id": null,
+            "recipe_id": "recipe-004"
+          },
+          {
+            "type": "product",
+            "amount": 10,
+            "unit": "piece",
+            "product_id": "prod-008h",
+            "recipe_id": null
+          }
+        ],
+        "notes": "Best desserts for a sweet mood. Packaging included.",
+        "terms": "Payment within 30 days from invoice date.",
+        "updatedAt": 1751409000000,
+        "createdAt": 1751409000000
+      },
+      {
+        "name": "Chocolate Heart of Night",
+        "uuid": "inv-uuid-1007",
+        "prefix": "HW-EM",
+        "invoice_number": "20250707-SSN7",
+        "credential_from_string": "Pavel Khripunov, Rua das Flores 12, Portugal",
+        "credential_to_string": "Dark Delight Bakery, 56 Cocoa Avenue, Belgium",
+        "system_credential_id": null,
+        "customer_credential_id": null,
+        "date_issued": 1751430800000,
+        "date_due": 1754030400000,
+        "rows": [
+          {
+            "type": "recipe",
+            "amount": 20,
+            "unit": "piece",
+            "recipe_id": "recipe-009",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 20,
+              "unit": "piece",
+              "type": "recipe",
+              "entity_id": "recipe-009",
+              "entity_name": "Chocolate cake with glaze",
+              "pricePerUnit": 1.2161666666666668
+            }
+          },
+          {
+            "type": "recipe",
+            "amount": 10,
+            "unit": "piece",
+            "recipe_id": "recipe-013",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 10,
+              "unit": "piece",
+              "type": "recipe",
+              "entity_id": "recipe-013",
+              "entity_name": "Classic sponge cake",
+              "pricePerUnit": 0.33166666666666667
+            }
+          },
+          {
+            "type": "product",
+            "product_id": "prod-008h",
+            "amount": 15,
+            "unit": "piece",
+            "recipe_id": null,
+            "pinnedDto": {
+              "amount": 15,
+              "unit": "piece",
+              "type": "product",
+              "entity_id": "prod-008h",
+              "entity_name": "Beef dumplings",
+              "pricePerUnit": 2.5
+            }
+          }
+        ],
+        "notes": "Immerse yourself in a chocolate night with our desserts.",
+        "terms": "Payment within 30 days.",
+        "updatedAt": 1752414127993,
+        "createdAt": 1752414127993,
+        "state": "issued",
+        "pinnedDto": {
+          "system_credential_string": "",
+          "customer_credential_string": ""
+        },
+        "taxes_and_fees": [
+          {
+            "name": "Standard rate 23%",
+            "amount": 23,
+            "percentage": true,
+            "description": "Applied to all products and recipes by default",
+            "items": [],
+            "uuid": "tax001default"
+          }
+        ],
+        "taxesIncluded": false
+      },
+      {
+        "name": "Cashew and Vanilla Tenderness",
+        "uuid": "inv-uuid-1008",
+        "prefix": "HW-EM",
+        "invoice_number": "20250708-NKV8",
+        "credential_from_string": "",
+        "credential_to_string": "",
+        "system_credential_id": "uuid-pavel-002",
+        "customer_credential_id": null,
+        "date_issued": 1751434400000,
+        "date_due": 1754034000000,
+        "rows": [
+          {
+            "type": "recipe",
+            "amount": 8,
+            "unit": "portion",
+            "recipe_id": "recipe-006",
+            "product_id": null,
+            "pinnedDto": null
+          },
+          {
+            "type": "recipe",
+            "amount": 12,
+            "unit": "piece",
+            "recipe_id": "recipe-011",
+            "product_id": null,
+            "pinnedDto": null
+          },
+          {
+            "type": "product",
+            "product_id": "prod-008h",
+            "amount": 12,
+            "unit": "piece",
+            "recipe_id": null,
+            "pinnedDto": null
+          }
+        ],
+        "notes": "Tender creams and packaging for your comfort.",
+        "terms": "Payment within 30 days.",
+        "updatedAt": 1752611749069,
+        "createdAt": 1752611749069,
+        "state": "draft",
+        "taxes_and_fees": [
+          {
+            "name": "Eco rate 10%",
+            "amount": 10,
+            "percentage": true,
+            "description": "For products with eco-labeling",
+            "items": [],
+            "uuid": "tax007eco"
+          }
+        ],
+        "taxesIncluded": false
+      },
+      {
+        "name": "Autumn Taste of Carrot Cake",
+        "uuid": "inv-uuid-1009",
+        "prefix": "HW-EM",
+        "invoice_number": "20250709-OVMT9",
+        "credential_from_string": "Pavel Khripunov, Rua das Flores 12, Portugal",
+        "credential_to_string": "Cozy Cakes Ltd., 22 Maple Street, USA",
+        "system_credential_id": null,
+        "customer_credential_id": null,
+        "date_issued": 1751438000000,
+        "date_due": 1754037600000,
+        "rows": [
+          {
+            "type": "recipe",
+            "amount": 10,
+            "unit": "piece",
+            "recipe_id": "recipe-003",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 10,
+              "unit": "piece",
+              "type": "recipe",
+              "entity_id": "recipe-003",
+              "entity_name": "Carrot cake with cream",
+              "pricePerUnit": 0.6804166666666667
+            }
+          },
+          {
+            "type": "recipe",
+            "amount": 10,
+            "unit": "piece",
+            "recipe_id": "recipe-013",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 10,
+              "unit": "piece",
+              "type": "recipe",
+              "entity_id": "recipe-013",
+              "entity_name": "Classic sponge cake",
+              "pricePerUnit": 0.33166666666666667
+            }
+          },
+          {
+            "type": "product",
+            "product_id": "prod-008h",
+            "amount": 20,
+            "unit": "piece",
+            "recipe_id": null,
+            "pinnedDto": {
+              "amount": 20,
+              "unit": "piece",
+              "type": "product",
+              "entity_id": "prod-008h",
+              "entity_name": "Beef dumplings",
+              "pricePerUnit": 2.5
+            }
+          }
+        ],
+        "notes": "Warm autumn flavors with reliable packaging.",
+        "terms": "Payment within 30 days.",
+        "updatedAt": 1752414142722,
+        "createdAt": 1752414142722,
+        "state": "cancelled",
+        "pinnedDto": {
+          "system_credential_string": "",
+          "customer_credential_string": ""
+        },
+        "taxes_and_fees": [],
+        "taxesIncluded": false
+      },
+      {
+        "name": "Golden Dawn Panna Cotta",
+        "uuid": "inv-uuid-1010",
+        "prefix": "HW-EM",
+        "invoice_number": "20250710-ZRP10",
+        "credential_from_string": "",
+        "credential_to_string": "",
+        "system_credential_id": "uuid-pavel-003",
+        "customer_credential_id": null,
+        "date_issued": 1751441600000,
+        "date_due": 1754041200000,
+        "rows": [
+          {
+            "type": "recipe",
+            "amount": 6,
+            "unit": "portion",
+            "recipe_id": "recipe-010",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 6,
+              "unit": "portion",
+              "type": "recipe",
+              "entity_id": "recipe-010",
+              "entity_name": "Panna cotta with maple syrup",
+              "pricePerUnit": 0.9169999999999999
+            }
+          },
+          {
+            "type": "recipe",
+            "amount": 10,
+            "unit": "piece",
+            "recipe_id": "recipe-009",
+            "product_id": null,
+            "pinnedDto": {
+              "amount": 10,
+              "unit": "piece",
+              "type": "recipe",
+              "entity_id": "recipe-009",
+              "entity_name": "Chocolate cake with glaze",
+              "pricePerUnit": 1.2161666666666668
+            }
+          }
+        ],
+        "notes": "Creamy panna cottas with golden syrup and packaging.",
+        "terms": "Payment within 30 days.",
+        "updatedAt": 1752414151936,
+        "createdAt": 1752414151936,
+        "state": "paid",
+        "pinnedDto": {
+          "system_credential_string": "\nPavel Consulting\nRua do Sol 78, Portugal\n+351934567890\nconsulting@pavel.pt\nTax ID: PT564738291",
+          "customer_credential_string": ""
+        },
+        "taxes_and_fees": [],
+        "taxesIncluded": false
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594841
+  },
+  {
+    "store": "credentials",
+    "data": [
+      {
+        "name": "Solaris Industries",
+        "privateName": "Customer 1",
+        "country": "USA",
+        "address": "1234 Elm Street, Springfield, IL",
+        "taxId": "US123456789",
+        "phone": "+13125550123",
+        "email": "info@solarisind.com",
+        "uuid": "uuid-fake-001",
+        "type": "customer"
+      },
+      {
+        "name": "Nimbus Solutions",
+        "privateName": "Customer 2",
+        "country": "Germany",
+        "address": "Hauptstrasse 100, Berlin",
+        "taxId": "DE987654321",
+        "phone": "+49301234567",
+        "email": "contact@nimbussol.de",
+        "uuid": "uuid-fake-002",
+        "type": "customer"
+      },
+      {
+        "name": "Vertex Innovations",
+        "privateName": "Customer 3",
+        "country": "UK",
+        "address": "10 Queen's Road, London",
+        "taxId": "GB564738291",
+        "phone": "+442071234567",
+        "email": "hello@vertexinn.co.uk",
+        "uuid": "uuid-fake-003",
+        "type": "customer"
+      },
+      {
+        "name": "Apex Dynamics",
+        "privateName": "Customer 4",
+        "country": "Canada",
+        "address": "456 Maple Avenue, Toronto",
+        "taxId": "CA123987456",
+        "phone": "+14165551234",
+        "email": "support@apexdyn.ca",
+        "uuid": "uuid-fake-004",
+        "type": "customer"
+      },
+      {
+        "name": "Lumina Enterprises",
+        "privateName": "Customer 5",
+        "country": "France",
+        "address": "12 Rue Lafayette, Paris",
+        "taxId": "FR987123654",
+        "phone": "+33123456789",
+        "email": "contact@lumina.fr",
+        "uuid": "uuid-fake-005",
+        "type": "customer"
+      },
+      {
+        "name": "Zephyr Tech",
+        "privateName": "Customer 6",
+        "country": "Australia",
+        "address": "789 Kangaroo Road, Sydney",
+        "taxId": "AU564738291",
+        "phone": "+61234567890",
+        "email": "info@zephytech.au",
+        "uuid": "uuid-fake-006",
+        "type": "customer"
+      },
+      {
+        "name": "Orion Logistics",
+        "privateName": "Customer 7",
+        "country": "Netherlands",
+        "address": "34 Tulip Street, Amsterdam",
+        "taxId": "NL123987456",
+        "phone": "+31201234567",
+        "email": "sales@orionlogistics.nl",
+        "uuid": "uuid-fake-007",
+        "type": "customer"
+      },
+      {
+        "name": "Nova Marketing",
+        "privateName": "Customer 8",
+        "country": "Spain",
+        "address": "56 Plaza Real, Madrid",
+        "taxId": "ES987123654",
+        "phone": "+34912345678",
+        "email": "contact@novamkt.es",
+        "uuid": "uuid-fake-008",
+        "type": "customer"
+      },
+      {
+        "name": "Vega Design",
+        "privateName": "Customer 9",
+        "country": "Italy",
+        "address": "23 Via Roma, Rome",
+        "taxId": "IT564738291",
+        "phone": "+390612345678",
+        "email": "info@vegadesign.it",
+        "uuid": "uuid-fake-009",
+        "type": "customer"
+      },
+      {
+        "name": "Orca Finance",
+        "privateName": "Customer 10",
+        "country": "Switzerland",
+        "address": "77 Bahnhofstrasse, Zurich",
+        "taxId": "CH123987456",
+        "phone": "+41512345678",
+        "email": "support@orcafinance.ch",
+        "uuid": "uuid-fake-010",
+        "type": "customer"
+      },
+      {
+        "name": "Pavel Khripunov",
+        "privateName": "My first credential",
+        "country": "Portugal",
+        "address": "Rua das Flores 12",
+        "taxId": "PT123456789",
+        "phone": "+351912345678",
+        "email": "pavel.k@example.com",
+        "uuid": "uuid-pavel-001",
+        "type": "system"
+      },
+      {
+        "name": "Khripunov Tech",
+        "privateName": "My second credential",
+        "country": "Portugal",
+        "address": "Av. dos Oceanos 45",
+        "taxId": "PT987654321",
+        "phone": "+351923456789",
+        "email": "contact@khripunovtech.pt",
+        "uuid": "uuid-pavel-002",
+        "type": "system"
+      },
+      {
+        "name": "Pavel Consulting",
+        "privateName": "My third credential",
+        "country": "Portugal",
+        "address": "Rua do Sol 78",
+        "taxId": "PT564738291",
+        "phone": "+351934567890",
+        "email": "consulting@pavel.pt",
+        "uuid": "uuid-pavel-003",
+        "type": "system"
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752612594841
+  },
+  {
+    "store": "taxes",
+    "data": [
+      {
+        "name": "Стандартная ставка 23%",
+        "amount": 23,
+        "percentage": true,
+        "description": "Применяется ко всем продуктам и рецептам по умолчанию",
+        "items": [],
+        "uuid": "tax001default"
+      },
+      {
+        "name": "Низкая ставка 6%",
+        "amount": 6,
+        "percentage": false,
+        "description": "Для базовых ингредиентов (молоко, яйца)",
+        "items": [],
+        "uuid": "tax002low"
+      },
+      {
+        "name": "Без НДС 0%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для промо-акций или экспортных товаров",
+        "items": [],
+        "uuid": "tax003zero"
+      },
+      {
+        "name": "Суперсниженная 2%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для социально значимых товаров",
+        "items": [],
+        "uuid": "tax004superReduced"
+      },
+      {
+        "name": "Роскошные товары 30%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Применяется к деликатесам",
+        "items": [],
+        "uuid": "tax005luxury"
+      },
+      {
+        "name": "Услуги 13%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Например, упаковка, доставка",
+        "items": [],
+        "uuid": "tax006service"
+      },
+      {
+        "name": "Эко-ставка 10%",
+        "amount": 0,
+        "percentage": false,
+        "description": "Для продуктов с экомаркировкой",
+        "items": [],
+        "uuid": "tax007eco"
+      }
+    ],
+    "version": 0,
+    "createdAt": 1752415013627
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/documentation/view/docs-three.component.ts"],
+  "sourcesContent": ["\n    .lg-documentation-container {\n      font-size: 14px;\n      line-height: 1.5;\n    }\n\n    .doc-tree-item {\n      display: flex;\n      align-items: center;\n      gap: 4px;\n      cursor: pointer;\n      user-select: none;\n      padding: 2px 0;\n      white-space: nowrap;\n    }\n\n    .doc-tree-toggle {\n      width: 16px;\n      display: inline-block;\n      cursor: pointer;\n      font-size: 12px;\n    }\n\n    .doc-tree-empty-icon {\n      width: 16px;\n      display: inline-block;\n    }\n\n    .doc-tree-link {\n      color: #2a2a2a;\n      text-decoration: none;\n      transition: color 0.2s;\n    }\n\n    .doc-tree-link:hover {\n      text-decoration: underline;\n      color: #000;\n    }\n\n    .doc-tree-folder-name {\n      font-weight: 600;\n    }\n  "],
+  "mappings": ";AACI,CAAA;AACE,aAAA;AACA,eAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA;AACA,UAAA;AACA,uBAAA;AAAA,eAAA;AACA,WAAA,IAAA;AACA,eAAA;;AAGF,CAAA;AACE,SAAA;AACA,WAAA;AACA,UAAA;AACA,aAAA;;AAGF,CAAA;AACE,SAAA;AACA,WAAA;;AAGF,CAAA;AACE,SAAA;AACA,mBAAA;AACA,cAAA,MAAA;;AAGF,CANA,aAMA;AACE,mBAAA;AACA,SAAA;;AAGF,CAAA;AACE,eAAA;;",
+  "names": []
+}

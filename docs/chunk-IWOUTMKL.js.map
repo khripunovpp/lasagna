@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/helpers/strings.helper.ts"],
+  "sourcesContent": ["// remove except letters in all cases numbers - : ( ) spaces\nexport const removeAllNonLetters = (str: string) => {\n  return str.replace(/[^a-zA-Zа-яА-ЯёЁ0-9\\s-:()]/g, '');\n}\n\nexport const removeAllNonMathSymbols = (str: string) => {\n  return String(str || '')\n    .replace(/[^0-9%.,+\\-*/^() ]/g, '')  // разрешаем цифры, буквы, %, ., ,, + - * / ^ скобки и пробел\n    .replace(',', '.')                           // заменяем запятую на точку\n}\n\nexport const toString = (value: any) => {\n  return String(value || '').trim();\n}\n"],
+  "mappings": ";AACO,IAAM,sBAAsB,CAAC,QAAe;AACjD,SAAO,IAAI,QAAQ,+BAA+B,EAAE;AACtD;AAEO,IAAM,0BAA0B,CAAC,QAAe;AACrD,SAAO,OAAO,OAAO,EAAE,EACpB,QAAQ,uBAAuB,EAAE,EACjC,QAAQ,KAAK,GAAG;AACrB;AAEO,IAAM,WAAW,CAAC,UAAc;AACrC,SAAO,OAAO,SAAS,EAAE,EAAE,KAAI;AACjC;",
+  "names": []
+}

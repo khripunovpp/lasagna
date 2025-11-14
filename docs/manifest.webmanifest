@@ -1,0 +1,21 @@
+{
+  "name": "What does lasagna cost?",
+  "short_name": "Lasagna",
+  "theme_color": "#F6B0DB",
+  "background_color": "#F6B0DB",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

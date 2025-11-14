@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/currency-select.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: flex;\n\n      flex: 1;\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;AAEA,QAAA;;",
+  "names": []
+}
