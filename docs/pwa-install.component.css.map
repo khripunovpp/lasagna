@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/home/view/pwa-install.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: contents;\n    }\n\n    button {\n      background-image: linear-gradient(45deg, #3F51B5, #9C27B0);\n      color: white;\n      border: none;\n      padding: 10px 20px;\n      cursor: pointer;\n      box-shadow: -15px 6px 8px 0px #eed2f0;\n      border-radius: 0 16px 16px 0;\n      background-size: calc(100% + 70px) 100%;\n      transition: background-position 0.3s ease;\n      text-decoration: none;\n      white-space: nowrap;\n    }\n\n    button:hover {\n      background-position: -70px 0;\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;;AAGF;AACE;IAAA;MAAA,KAAA;MAAA,OAAA;MAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,cAAA,MAAA,IAAA,IAAA,IAAA;AACA,iBAAA,EAAA,KAAA,KAAA;AACA,mBAAA,KAAA,KAAA,EAAA,MAAA;AACA,cAAA,oBAAA,KAAA;AACA,mBAAA;AACA,eAAA;;AAGF,MAAA;AACE,uBAAA,MAAA;;",
+  "names": []
+}

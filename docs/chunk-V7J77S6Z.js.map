@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/directives/shrink.directive.ts"],
+  "sourcesContent": ["import {Directive, HostBinding} from '@angular/core';\n\n@Directive({\n  standalone: true,\n  selector: '[lgShrink]',\n})\nexport class ShrinkDirective {\n  constructor() {\n  }\n\n  @HostBinding('style.flex-shrink') flexShrink = '1';\n  // @HostBinding('style.align-self') alignSelf = 'flex-start';\n  @HostBinding('style.width') width = 'auto';\n}\n"],
+  "mappings": ";;;;;;;;;AAMM,IAAO,kBAAP,MAAO,iBAAe;EAC1B,cAAA;EACA;EAEkC,aAAa;;EAEnB,QAAQ;;qCANzB,kBAAe;EAAA;yEAAf,kBAAe,WAAA,CAAA,CAAA,IAAA,YAAA,EAAA,CAAA,GAAA,UAAA,GAAA,cAAA,SAAA,6BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAAf,MAAA,sBAAA,eAAA,IAAA,UAAA,EAAe,SAAA,IAAA,KAAA;;;;;sEAAf,iBAAe,CAAA;UAJ3B;WAAU;MACT,YAAY;MACZ,UAAU;KACX;kBAKmC,YAAU,CAAA;UAA3C;WAAY,mBAAmB;MAEJ,OAAK,CAAA;UAAhC;WAAY,aAAa;;;",
+  "names": []
+}

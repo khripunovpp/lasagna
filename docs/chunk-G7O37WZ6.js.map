@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/pipes/unitString.pipe.ts"],
+  "sourcesContent": ["import {Pipe} from '@angular/core';\nimport {getUnitMarker} from '../../helpers/unit.helper';\n\n@Pipe({\n  name: 'unitString',\n  standalone: true,\n})\nexport class UnitStringPipe {\n  transform(value?: string) {\n    return getUnitMarker(value);\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;AAOM,IAAO,iBAAP,MAAO,gBAAc;EACzB,UAAU,OAAc;AACtB,WAAO,cAAc,KAAK;EAC5B;;qCAHW,iBAAc;EAAA;yFAAd,iBAAc,MAAA,KAAA,CAAA;;;sEAAd,gBAAc,CAAA;UAJ1B;WAAK;MACJ,MAAM;MACN,YAAY;KACb;;;",
+  "names": []
+}

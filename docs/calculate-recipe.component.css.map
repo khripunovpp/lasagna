@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/recipes/view/calculate/calculate-recipe.component.ts"],
+  "sourcesContent": ["\n    lg-number-input .lg-number-input {\n      width: 100px;\n    }\n  "],
+  "mappings": ";AACI,gBAAA,CAAA;AACE,SAAA;;",
+  "names": []
+}

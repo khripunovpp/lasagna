@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/products/view/add-product-form/add-product-form.component.ts"],
+  "sourcesContent": ["\n      lg-eggs-widget {\n        min-width: 300px;\n      }\n    "],
+  "mappings": ";AACM;AACE,aAAA;;",
+  "names": []
+}

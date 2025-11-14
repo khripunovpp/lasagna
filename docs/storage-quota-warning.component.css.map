@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/home/view/storage-quota-warning.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: contents;\n    }\n\n    a {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      border: 0;\n      padding: 10px 16px;\n      cursor: pointer;\n      border-radius: 0 16px 16px 0;\n      color: var(--text-color-inverse);\n      background: linear-gradient(45deg, #ff6b6b, #ffd93d);\n      background-size: calc(100% + 70px) 100%;\n      box-shadow: 0 2px 6px rgba(0, 0, 0, .15);\n      transition: background-position 0.3s ease;\n      text-decoration: none;\n      white-space: nowrap;\n    }\n\n    a:hover {\n      background-position: -70px 0;\n    }\n\n    .overlay-actions__item--danger {\n      background: var(--button-danger-bg);\n      color: var(--button-danger-text);\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;;AAGF;AACE,WAAA;AACA,eAAA;AACA,mBAAA;AACA,UAAA;AACA,WAAA,KAAA;AACA,UAAA;AACA,iBAAA,EAAA,KAAA,KAAA;AACA,SAAA,IAAA;AACA;IAAA;MAAA,KAAA;MAAA,OAAA;MAAA;AACA,mBAAA,KAAA,KAAA,EAAA,MAAA;AACA,cAAA,EAAA,IAAA,IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA;AACA,cAAA,oBAAA,KAAA;AACA,mBAAA;AACA,eAAA;;AAGF,CAAA;AACE,uBAAA,MAAA;;AAGF,CAAA;AACE,cAAA,IAAA;AACA,SAAA,IAAA;;",
+  "names": []
+}

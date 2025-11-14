@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/control-item/control.component.ts"],
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        width: 100%;\n      }\n\n      .control {\n        display: flex;\n        flex-direction: column;\n        gap: 8px;\n      }\n\n      .control__label {\n        font-size: 14px;\n        display: flex;\n        align-items: flex-end;\n        gap: 8px;\n        min-width: 0;\n\n        &-string {\n        }\n      }\n\n      .control__label-end {\n        display: flex;\n        align-items: flex-end;\n        gap: 8px;\n        margin-left: auto;\n      }\n\n      .control__label-end:empty {\n        display: none;\n      }\n\n      .control__label-string:empty {\n        display: none;\n      }\n\n      .control__content {\n        display: flex;\n      }\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,SAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAGF,CAAA;AACE,aAAA;AACA,WAAA;AACA,eAAA;AACA,OAAA;AACA,aAAA;;AAMF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA;AACA,eAAA;;AAGF,CAPA,kBAOA;AACE,WAAA;;AAGF,CAAA,qBAAA;AACE,WAAA;;AAGF,CAAA;AACE,WAAA;;",
+  "names": []
+}

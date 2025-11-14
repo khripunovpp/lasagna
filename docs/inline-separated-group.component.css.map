@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/inline-separated-group.component.ts"],
+  "sourcesContent": ["\n      .inline-separated-group {\n        display: flex;\n        gap: 8px;\n        align-items: center;\n        white-space: nowrap;\n        flex-wrap: wrap;\n      }\n\n      .inline-separated-group__separator {\n        color: var(--color-text);\n        font-size: 12px;\n        font-weight: 500;\n        opacity: 0.5;\n      }\n    "],
+  "mappings": ";AACM,CAAA;AACE,WAAA;AACA,OAAA;AACA,eAAA;AACA,eAAA;AACA,aAAA;;AAGF,CAAA;AACE,SAAA,IAAA;AACA,aAAA;AACA,eAAA;AACA,WAAA;;",
+  "names": []
+}

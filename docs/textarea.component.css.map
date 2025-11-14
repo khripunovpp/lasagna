@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/textarea.component.ts"],
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        flex: 1;\n        position: relative;\n        opacity: 0.99;\n      }\n\n      .textarea {\n\n        flex: 1;\n        border: none;\n        border-radius: 12px;\n        padding: 16px;\n        background-color: var(--control-bg);\n        font-family: inherit;\n        font-size: inherit;\n      }\n\n      .textarea::placeholder {\n        color: var(--placeholder);\n      }\n\n      .textarea:focus {\n        outline: none;\n        box-shadow: var(--focus-shadow);\n      }\n\n      .textarea[readonly] {\n        background-color: transparent;\n        border: 1px solid var(--control-bg);\n      }\n\n      :host.readonly::after {\n        content: \"\";\n        position: absolute;\n        z-index: -1;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background-color: var(--control-bg);\n        border-radius: 12px;\n        opacity: 0.4;\n      }\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,QAAA;AACA,YAAA;AACA,WAAA;;AAGF,CAAA;AAEE,QAAA;AACA,UAAA;AACA,iBAAA;AACA,WAAA;AACA,oBAAA,IAAA;AACA,eAAA;AACA,aAAA;;AAGF,CAXA,QAWA;AACE,SAAA,IAAA;;AAGF,CAfA,QAeA;AACE,WAAA;AACA,cAAA,IAAA;;AAGF,CApBA,QAoBA,CAAA;AACE,oBAAA;AACA,UAAA,IAAA,MAAA,IAAA;;AAGF,KAAA,CAAA,QAAA;AACE,WAAA;AACA,YAAA;AACA,WAAA;AACA,OAAA;AACA,QAAA;AACA,SAAA;AACA,UAAA;AACA,oBAAA,IAAA;AACA,iBAAA;AACA,WAAA;;",
+  "names": []
+}

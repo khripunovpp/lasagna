@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/control-box.component.ts"],
+  "sourcesContent": ["import {Component} from '@angular/core';\n\n@Component({\n  selector: 'lg-control-box',\n  template: `\n    <ng-content></ng-content>\n  `,\n  styles: [\n    `\n      :host {\n        display: flex;\n        flex: 1;\n        background-color: var(--control-box-bg);\n        border-radius: 12px;\n        gap: 8px;\n        padding: 16px;\n      }\n    `,\n  ],\n})\nexport class ControlBoxComponent {\n\n}\n"],
+  "mappings": ";;;;;;;;;;;AAoBM,IAAO,sBAAP,MAAO,qBAAmB;;qCAAnB,sBAAmB;EAAA;yEAAnB,sBAAmB,WAAA,CAAA,CAAA,gBAAA,CAAA,GAAA,oBAAA,KAAA,OAAA,GAAA,MAAA,GAAA,UAAA,SAAA,6BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;;AAf5B,MAAA,uBAAA,CAAA;;;;;sEAeS,qBAAmB,CAAA;UAlB/B;uBACW,kBAAgB,UAChB;;KAET,QAAA,CAAA,uZAAA,EAAA,CAAA;;;;6EAcU,qBAAmB,EAAA,WAAA,uBAAA,UAAA,2DAAA,YAAA,GAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

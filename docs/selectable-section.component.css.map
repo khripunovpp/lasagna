@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/selectable-section.component.ts"],
+  "sourcesContent": ["\n\n      .lg-card-list {\n      }\n\n      .lg-checkbox {\n        --control-bg: #abc2ff;\n        --control-bg-selected: #abc2ff;\n      }\n\n      .lg-selectable-section {\n        display: flex;\n        gap: 8px;\n        align-items: center;\n      }\n\n    "],
+  "mappings": ";AAKM,CAAA;AACE,gBAAA;AACA,yBAAA;;AAGF,CAAA;AACE,WAAA;AACA,OAAA;AACA,eAAA;;",
+  "names": []
+}
