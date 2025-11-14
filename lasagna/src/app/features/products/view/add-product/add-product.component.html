@@ -1,8 +1,9 @@
 @if (editMode()) {
-  <lg-controls-bar>
+  <lg-controls-bar size="small">
     <lg-button [icon]="true"
                [link]="'/products/add'"
-               [size]="'medium'"
+               [size]="'small'"
+               [label]=" 'product.form.add-new-btn'|translate"
                [style]="'primary'">
       <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
     </lg-button>
@@ -88,6 +89,14 @@
         </lg-button>
       }
 
+      @if (formComponent()?.form?.dirty) {
+        <lg-button (click)="onResetForm()"
+                   [outlined]="true"
+                   [style]="'primary'"
+                   lgShrink>
+          {{ 'product.form.reset-btn.edit.active'|translate }}
+        </lg-button>
+      }
     </lg-flex-row>
   </lg-container>
 </lg-fade-in>

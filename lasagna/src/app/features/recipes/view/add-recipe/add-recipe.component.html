@@ -1,8 +1,9 @@
 @if (editMode()) {
-  <lg-controls-bar>
+  <lg-controls-bar size="small">
     <lg-button [icon]="true"
                [link]="'/recipes/add'"
-               [size]="'medium'"
+               [size]="'small'"
+               [label]="'recipe.form.add-new-btn'|translate"
                [style]="'primary'">
       <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
     </lg-button>

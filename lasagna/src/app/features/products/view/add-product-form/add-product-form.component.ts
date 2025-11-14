@@ -48,7 +48,7 @@ import {errorHandler} from '../../../../shared/helpers';
 import {PriceChangesComponent} from '../price-changes.component';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
-import {ButtonComponent} from '../../../../shared/view/ui/button.component';
+import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({

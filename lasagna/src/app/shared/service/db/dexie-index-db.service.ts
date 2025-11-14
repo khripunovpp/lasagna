@@ -566,8 +566,4 @@ export class DexieIndexDbService extends Dexie {
       key,
     };
   }
-
-  async withTransaction<T = any>(storeKeys: Stores[], fn: (tx: Transaction) => Promise<T>): Promise<T> {
-    return this.transaction<T>('rw', storeKeys, fn);
-  }
 }

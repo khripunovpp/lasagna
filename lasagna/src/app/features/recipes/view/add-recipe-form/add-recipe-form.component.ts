@@ -15,7 +15,6 @@ import {ControlContainer, FormArray, FormGroup, FormsModule, ReactiveFormsModule
 import {ControlGroupComponent} from '../../../controls/form/control-group.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
-import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
@@ -55,7 +54,6 @@ import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
-import {getIngredientGroup} from './add-recipe.helpers';
 
 @Component({
   selector: 'lg-add-recipe-form',
