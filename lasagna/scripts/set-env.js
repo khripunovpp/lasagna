@@ -1,7 +1,8 @@
 const setEnv = () => {
   const fs = require('fs');
   const writeFile = fs.writeFile;
-  const prefix = process.argv.find(arg => arg.startsWith('--prefix=')).split('=')[1];
+  const prefix = process.argv
+    .find(arg => arg.startsWith('--prefix='))?.split('=')[1];
 
   // Configure Angular `environment.ts` file path
   const targetPath = `./src/environments/environment.${prefix ? prefix + '.' : ''}ts`;

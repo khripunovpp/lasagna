@@ -152,8 +152,8 @@
 
   <script>
     (function () {
-      const START_TIMEOUT = 20000;
-      const CHECK_INTERVAL = 300;
+      const START_TIMEOUT = 60000; // 60 секунд
+      const CHECK_INTERVAL = 300;  // каждые 300 мс
       let started = false;
       const logs = [];
 
@@ -213,7 +213,7 @@
           });
 
         const payload = {
-          message: 'Angular app failed to start within 10s',
+          message: 'Angular app failed to start within 60s',
           userAgent: navigator.userAgent,
           online: navigator.onLine,
           connection: navigator.connection?.effectiveType,
@@ -252,6 +252,10 @@
           style="background:#007bff;color:#fff;border:none;border-radius:6px;padding:10px 18px;margin-top:8px;cursor:pointer;font-size:14px;">
           Отправить отчёт
         </button>
+        <button id="closeBtn"
+          style="background:#eee;color:#333;border:none;border-radius:6px;padding:10px 18px;margin-top:8px;cursor:pointer;font-size:14px;margin-left:8px;">
+          Закрыть
+        </button>
         <p id="statusMsg" style="margin-top:12px;color:#444;font-size:14px;display:none;"></p>
         <br><br>
        <a href="https://lasagnacost.ru/home" style="font-size: 12px; opacity: 0.8">Если вы находитесь в России, для вас будет удобнее использовать оптимизированное приложение lasagnacost.ru</a>
@@ -260,6 +264,7 @@
         document.body.appendChild(modal);
 
         const btn = modal.querySelector('#sendReportBtn');
+        const closeBtn = modal.querySelector('#closeBtn');
         const emailInput = modal.querySelector('#emailInput');
         const statusMsg = modal.querySelector('#statusMsg');
 
@@ -275,6 +280,10 @@
           setTimeout(() => {
             window.location.reload();
           }, 2000)
+        };
+
+        closeBtn.onclick = function () {
+          document.body.removeChild(modal);
         };
       }
 
