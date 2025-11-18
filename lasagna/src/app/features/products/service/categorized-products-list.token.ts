@@ -1,5 +1,5 @@
 import {inject, InjectionToken} from '@angular/core';
-import {from, map, mergeMap, Observable, switchMap} from 'rxjs';
+import {from, map, mergeMap, Observable, shareReplay, switchMap} from 'rxjs';
 import {groupBy} from '../../../shared/helpers/grouping.helper';
 import {ProductsRepository} from './products.repository';
 import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
@@ -21,7 +21,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResul
     return products.pipe(
       map((products: Product[]) => products.toSorted((a: Product, b: Product) => a?.name?.localeCompare(b?.name))),
       map((products: Product[]) => groupBy(products, 'category_id')),
-      mergeMap(async (grouped: Record<string, Product[]>) => {
+      switchMap(async (grouped: Record<string, Product[]>) => {
         const list: {
           category: string
           products: Product[]
@@ -66,6 +66,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResul
         notificationsService.error(errorHandler(error));
         return caught;
       }),
+      shareReplay(1),
     );
   }
 })

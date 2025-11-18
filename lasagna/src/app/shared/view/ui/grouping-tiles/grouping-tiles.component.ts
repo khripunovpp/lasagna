@@ -37,7 +37,7 @@ import {injectFragment} from '../../../helpers';
 
             <mat-icon [fontIcon]="collapsedStates()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
           </header>
-          @if (groupingTileDirective()) {
+          @if (groupingTileDirective() && collapsedStates()[i]) {
             <div class="grouping-tiles__content">
               @for (tile of items; track tile.uuid) {
                 <div class="grouping-tiles__item">
