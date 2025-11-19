@@ -122,21 +122,22 @@ import {FadeInComponent} from '../ui/fade-in.component';
         overscroll-behavior-x: contain;
         scrollbar-width: none;
       }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translate3d(-50%, 0, 0);
-        width: 100dvw;
-        height: 80px;
-        pointer-events: none;
-        backdrop-filter: blur(3px);
-        z-index: -1;
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-        will-change: transform;
-      }
+      //
+      //&::after {
+      //  content: '';
+      //  position: fixed;
+      //  top: 0;
+      //  left: 50%;
+      //  transform: translate3d(-50%, -12px, 0);
+      //  width: 100dvw;
+      //  height: 80px;
+      //  pointer-events: none;
+      //  backdrop-filter: blur(3px);
+      //  z-index: -1;
+      //  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+      //  will-change: transform;
+      //  padding-top: env(safe-area-inset-bottom);
+      //}
     }
 
     .lg-header__left,
