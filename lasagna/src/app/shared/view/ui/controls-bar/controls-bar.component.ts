@@ -31,6 +31,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
         padding: 10px;
         align-items: center;
         justify-content: center;
+        box-shadow: 0px -9px 80px 30px rgb(143 143 143 / 10%);
       }
 
       .lg-controls-bar--large {

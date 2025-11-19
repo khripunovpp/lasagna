@@ -187,7 +187,8 @@ import {FadeInComponent} from '../ui/fade-in.component';
       align-items: center;
       justify-content: center;
       scroll-snap-align: center;
-      transition: all 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+      transition-property: background-color, color;
       appearance: none;
     }
 
