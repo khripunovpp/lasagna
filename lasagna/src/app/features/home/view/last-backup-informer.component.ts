@@ -4,6 +4,8 @@ import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {UserService} from '../../settings/service/services/user.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NotificationsService} from '../../../shared/service/services';
+import {errorHandler} from '../../../shared/helpers';
 
 @Component({
   selector: 'lg-last-backup-informer',
@@ -63,31 +65,37 @@ export class LastBackupInformerComponent {
   lastBackupDate = computed(() => this.storedBackupDate()
     ? new Date(this.storedBackupDate()!) :
     undefined);
+  private readonly _notificationsService = inject(NotificationsService);
   showButton = computed(() => {
-    if (location.hostname === 'localhost') {
+    try {
+      if (location.hostname === 'localhost') {
+        return false;
+      }
+      const sinceDate = this.userService.isUserFirstDate;
+      if (!sinceDate) {
+        return false
+      }
+      const todayTs = this.today.getTime();
+      const sinceDateTs = sinceDate.getTime();
+      const diffInMilliseconds = todayTs - sinceDateTs;
+      if (diffInMilliseconds < 0) {
+        return false; // Since date is in the future
+      }
+      if (diffInMilliseconds < this.twoWeeksInMilliseconds) {
+        return false
+      }
+
+      if (!this.lastBackupDate()) {
+        return true
+      }
+      const lastBackupDateTs = this.lastBackupDate()!.getTime();
+
+      return lastBackupDateTs < sinceDateTs ||
+        lastBackupDateTs < todayTs - this.twoWeeksInMilliseconds;
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
       return false;
     }
-    const sinceDate = this.userService.isUserFirstDate;
-    if (!sinceDate) {
-      return false
-    }
-    const todayTs = this.today.getTime();
-    const sinceDateTs = sinceDate.getTime();
-    const diffInMilliseconds = todayTs - sinceDateTs;
-    if (diffInMilliseconds < 0) {
-      return false; // Since date is in the future
-    }
-    if (diffInMilliseconds < this.twoWeeksInMilliseconds) {
-      return false
-    }
-
-    if (!this.lastBackupDate()) {
-      return true
-    }
-    const lastBackupDateTs = this.lastBackupDate()!.getTime();
-
-    return lastBackupDateTs < sinceDateTs ||
-      lastBackupDateTs < todayTs - this.twoWeeksInMilliseconds;
   });
 
   hide() {

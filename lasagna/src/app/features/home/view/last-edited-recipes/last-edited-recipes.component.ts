@@ -1,5 +1,5 @@
-import {Component, signal} from '@angular/core';
-import { RecipesRepository} from '../../../recipes/service/providers/recipes.repository';
+import {Component, inject, signal} from '@angular/core';
+import {RecipesRepository} from '../../../recipes/service/providers/recipes.repository';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {RouterLink} from '@angular/router';
 
@@ -9,31 +9,33 @@ import {Recipe} from '../../../recipes/service/models/Recipe';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NotificationsService} from '../../../../shared/service/services';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-last-edited-recipes',
   template: `
-      <lg-flex-column size="medium">
-          <lg-title [level]="4">{{ 'main.last-recipes'|translate }}</lg-title>
+    <lg-flex-column size="medium">
+      <lg-title [level]="4">{{ 'main.last-recipes'|translate }}</lg-title>
 
-          <lg-flex-column [size]="'medium'">
-              @for (item of recipes();track item.recipe.uuid) {
-                  <lg-flex-row [size]="'medium'" [mobileMode]="true">
-                      <a [routerLink]="['/recipes/edit/', item.recipe.uuid]" class="last-edited-recipe">
-                          {{ item.recipe.name }}
-                      </a>
+      <lg-flex-column [size]="'medium'">
+        @for (item of recipes(); track item.recipe.uuid) {
+          <lg-flex-row [size]="'medium'" [mobileMode]="true">
+            <a [routerLink]="['/recipes/edit/', item.recipe.uuid]" class="last-edited-recipe">
+              {{ item.recipe.name }}
+            </a>
 
-                      <small class="text-muted text-right text-cursive" lgPull>
-                          {{ (item?.updatedAt) | timeAgo }}
-                      </small>
-                  </lg-flex-row>
-              } @empty {
-                  <div class="last-edited-recipe-name">
-                      {{ 'no-recipes'|translate }}
-                  </div>
-              }
-          </lg-flex-column>
+            <small class="text-muted text-right text-cursive" lgPull>
+              {{ (item?.updatedAt) | timeAgo }}
+            </small>
+          </lg-flex-row>
+        } @empty {
+          <div class="last-edited-recipe-name">
+            {{ 'no-recipes'|translate }}
+          </div>
+        }
       </lg-flex-column>
+    </lg-flex-column>
   `,
   styles: [
     `
@@ -67,9 +69,15 @@ export class LastEditedRecipesComponent {
     count: number
   }[]>([]);
 
+  private readonly _notificationsService = inject(NotificationsService);
+
   ngOnInit() {
-    this._recipesRepository.getLastRecipes().then(recipes => {
-      this.recipes.set(recipes);
-    });
+    this._recipesRepository.getLastRecipes()
+      .then(recipes => {
+        this.recipes.set(recipes);
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 }

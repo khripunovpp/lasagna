@@ -10,6 +10,7 @@ import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.compo
 import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
 import {TextareaComponent} from '../../controls/form/textarea.component';
 import {environment} from '../../../../environments/environment';
+import {errorHandler} from '../../../shared/helpers';
 
 @Component({
   selector: 'lg-satisfaction-popup',
@@ -258,22 +259,34 @@ export class SatisfactionPopupComponent
   }
 
   closeWithRecord(): void {
-    this.satisfactionService.recordPopupClosed();
-    this.dialog()?.close();
+    try {
+      this.satisfactionService.recordPopupClosed();
+      this.dialog()?.close();
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   onPositiveFeedback(): void {
-    this.showThankYou.set(true);
-    this.satisfactionService.handlePositiveFeedback();
+    try {
+      this.showThankYou.set(true);
+      this.satisfactionService.handlePositiveFeedback();
 
-    setTimeout(() => {
-      this.closeInternal();
-    }, 2000);
+      setTimeout(() => {
+        this.closeInternal();
+      }, 2000);
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   onNegativeFeedback(): void {
-    this.satisfactionService.handleNegativeClick();
-    this.showFeedbackForm.set(true);
+    try {
+      this.satisfactionService.handleNegativeClick();
+      this.showFeedbackForm.set(true);
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   onBackToRating(): void {
@@ -300,9 +313,7 @@ export class SatisfactionPopupComponent
         },
         error: (error) => {
           this.isSubmitting.set(false);
-          this.notificationsService.error(
-            this.translateService.instant('satisfaction.notifications.error')
-          );
+          this.notificationsService.error(errorHandler(error));
 
           this.closeWithRecord();
         }
@@ -316,8 +327,12 @@ export class SatisfactionPopupComponent
   }
 
   closeInternal(): void {
-    this.dialog()?.close();
-    this.resetForm();
+    try {
+      this.dialog()?.close();
+      this.resetForm();
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   private resetForm(): void {

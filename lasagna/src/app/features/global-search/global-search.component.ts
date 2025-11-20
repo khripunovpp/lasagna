@@ -12,9 +12,11 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {TimeAgoPipe} from '../../shared/view/pipes/time-ago.pipe';
 import {BODY_LOCKER} from '../../shared/service/providers/body-locker.provider';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
-import {injectQueryParams} from '../../shared/helpers';
+import {errorHandler, injectQueryParams} from '../../shared/helpers';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {ExpanderComponent} from '../../shared/view/ui/expander.component';
+import {catchError} from 'rxjs/operators';
+import {NotificationsService} from '../../shared/service/services';
 
 @Component({
   selector: 'lg-global-search',
@@ -355,7 +357,12 @@ export class GlobalSearchComponent {
     tap(results => {
       this._globalSearchService.runSecondSearch(results);
     }),
+    catchError((error) => {
+      this._notificationsService.error(errorHandler(error));
+      return of([]);
+    }),
   );
+  private readonly _notificationsService = inject(NotificationsService);
   readonly #_bodyLocker = inject(BODY_LOCKER);
   readonly #_displayedEffect = effect(() => {
     if (this.showBar()) {

@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
 import {isPwa} from '../../../shared/helpers/match-media.helper';
+import {NotificationsService} from '../../../shared/service/services';
+import {errorHandler} from '../../../shared/helpers';
 
 @Component({
   selector: 'lg-pwa-install',
@@ -44,6 +46,7 @@ export class PwaInstallComponent implements OnInit {
   readonly showButton = signal(false);
   readonly isPwa = isPwa;
   private readonly analyticsService = inject(AnalyticsService);
+  private readonly _notificationsService = inject(NotificationsService);
   private _deferredPrompt: any = null;
 
   ngOnInit(): void {
@@ -64,20 +67,24 @@ export class PwaInstallComponent implements OnInit {
   }
 
   async installPWA(): Promise<void> {
-    if (!this._deferredPrompt) return;
-    this._deferredPrompt.preventDefault();
+    try {
+      if (!this._deferredPrompt) return;
+      this._deferredPrompt.preventDefault();
 
-    this._deferredPrompt.prompt();
+      this._deferredPrompt.prompt();
 
-    const {outcome} = await this._deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      this._onSuccess();
-    } else {
-      this._onDecline();
+      const {outcome} = await this._deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        this._onSuccess();
+      } else {
+        this._onDecline();
+      }
+
+      this._deferredPrompt = null;
+      this.showButton.set(false);
+    } catch (error) {
+      this._notificationsService.error(errorHandler(error));
     }
-
-    this._deferredPrompt = null;
-    this.showButton.set(false);
   }
 
   private _alreadyDeclined(): boolean {

@@ -1,16 +1,17 @@
-import { Component, inject, signal, viewChild, computed } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { SupportService, SupportMessageData } from '../service/support.service';
-import { NotificationsService } from '../../../shared/service/services';
-import { DialogComponent } from '../../../shared/view/ui/dialogs/dialog.component';
-import { TitleComponent } from '../../../shared/view/layout/title.component';
-import { FlexColumnComponent } from '../../../shared/view/layout/flex-column.component';
-import { ControlComponent } from '../../controls/form/control-item/control.component';
-import { InputComponent } from '../../controls/form/input.component';
-import { TextareaComponent } from '../../controls/form/textarea.component';
-import { ControlsRowComponent } from '../../controls/form/controls-row.component';
+import {Component, computed, inject, signal, viewChild} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {SupportMessageData, SupportService} from '../service/support.service';
+import {NotificationsService} from '../../../shared/service/services';
+import {DialogComponent} from '../../../shared/view/ui/dialogs/dialog.component';
+import {TitleComponent} from '../../../shared/view/layout/title.component';
+import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
+import {ControlComponent} from '../../controls/form/control-item/control.component';
+import {InputComponent} from '../../controls/form/input.component';
+import {TextareaComponent} from '../../controls/form/textarea.component';
+import {ControlsRowComponent} from '../../controls/form/controls-row.component';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {errorHandler} from '../../../shared/helpers';
 
 @Component({
   selector: 'lg-support-popup',
@@ -211,43 +212,43 @@ import {toSignal} from '@angular/core/rxjs-interop';
   `]
 })
 export class SupportPopupComponent {
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly supportService = inject(SupportService);
-  private readonly notificationsService = inject(NotificationsService);
-  private readonly translateService = inject(TranslateService);
-
   readonly dialog = viewChild(DialogComponent);
   readonly showForm = signal(true);
   readonly showThankYou = signal(false);
   readonly showRateLimited = signal(false);
   readonly isSubmitting = signal(false);
   readonly remainingMessages = signal<number | null>(null);
-
+  readonly messageLength = computed(() => {
+    return this.formValueChanges().message ? this.formValueChanges().message.length : 0;
+  });
+  private readonly formBuilder = inject(FormBuilder);
   readonly supportForm: FormGroup = this.formBuilder.group({
     name: [''],
     email: ['', [Validators.required, Validators.email]],
     subject: [''],
     message: ['', [Validators.required, Validators.minLength(10)]]
   });
-  readonly formValueChanges = toSignal(this.supportForm.valueChanges, { initialValue: this.supportForm.value });
-
-  readonly messageLength = computed(() => {
-    return this.formValueChanges().message ? this.formValueChanges().message.length : 0;
-  });
-
+  readonly formValueChanges = toSignal(this.supportForm.valueChanges, {initialValue: this.supportForm.value});
   readonly hasFormErrors = computed(() => {
     const form = this.supportForm;
     return (form.get('email')?.invalid && form.get('email')?.touched) ||
-           (form.get('message')?.invalid && form.get('message')?.touched);
+      (form.get('message')?.invalid && form.get('message')?.touched);
   });
+  private readonly supportService = inject(SupportService);
+  private readonly notificationsService = inject(NotificationsService);
+  private readonly translateService = inject(TranslateService);
 
   /**
    * Open support popup
    */
   open(): void {
-    this.resetForm();
-    this.updateRemainingMessages();
-    this.dialog()?.open();
+    try {
+      this.resetForm();
+      this.updateRemainingMessages();
+      this.dialog()?.open();
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   /**
@@ -308,9 +309,7 @@ export class SupportPopupComponent {
       },
       error: (error) => {
         this.isSubmitting.set(false);
-        this.notificationsService.error(
-          this.translateService.instant('support.notifications.send-error')
-        );
+        this.notificationsService.error(errorHandler(error));
       }
     });
   }
@@ -329,8 +328,12 @@ export class SupportPopupComponent {
    * Update remaining messages count
    */
   private updateRemainingMessages(): void {
-    const remaining = this.supportService.getRemainingMessages();
-    this.remainingMessages.set(remaining);
+    try {
+      const remaining = this.supportService.getRemainingMessages();
+      this.remainingMessages.set(remaining);
+    } catch (error) {
+      this.notificationsService.error(errorHandler(error));
+    }
   }
 
   /**
