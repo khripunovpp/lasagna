@@ -20,7 +20,6 @@ import {debounceTime} from 'rxjs';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {MultiselectComponent} from '../../../controls/form/multiselect.component';
 import {SelectResourcesService} from '../../../../shared/service/services/select-resources.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {NumberInputComponent} from '../../../controls/form/number-input.component';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {ParseMathDirective} from '../../../../shared/view/directives/parse-math.directive';
@@ -35,7 +34,7 @@ import {Ingredient} from '../../service/models/Ingredient';
 import {recipeToFormValue} from '../../../../shared/helpers/recipe.helpers';
 import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
 import {MatIcon} from '@angular/material/icon';
-import {TranslateDirective, TranslatePipe} from "@ngx-translate/core";
+import {TranslateDirective, TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {ControlExtraTemplateDirective} from "../../../controls/form/control-extra-template.directive";
@@ -107,10 +106,9 @@ export class AddRecipeFormComponent
   constructor(
     public _recipesRepository: RecipesRepository,
     public _selectResourcesService: SelectResourcesService,
-    private _router: Router,
-    private _aRoute: ActivatedRoute,
     private _notificationsService: NotificationsService,
     private _settingsService: SettingsService,
+    private _translateService: TranslateService,
   ) {
   }
 
@@ -194,7 +192,22 @@ export class AddRecipeFormComponent
 
   validateForm() {
     if (!this._formValid) {
-      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      const errors = this._notificationsService.parseFormErrors(this.form, {
+        keysMap: {
+          required: this._translateService.instant('form.error.required'),
+          ingredientAmountRequired: this._translateService.instant('recipe.form.error.ingredient-amount-required'),
+          ingredientRequired: this._translateService.instant('recipe.form.error.ingredient-required'),
+          cycleRecipe: this._translateService.instant('recipe.form.error.cycle-recipe'),
+        },
+        controlsMap: {
+          name: this._translateService.instant('recipe.form.validation-name.name'),
+          portions: this._translateService.instant('recipe.form.validation-name.portions'),
+          ingredients: this._translateService.instant('recipe.form.validation-name.ingredients'),
+          category_id: this._translateService.instant('recipe.form.validation-name.category'),
+          tags: this._translateService.instant('recipe.form.validation-name.tags'),
+        },
+      });
+      this._notificationsService.error(errors.join('\n'));
       return false;
     }
     return true
@@ -220,7 +233,7 @@ export class AddRecipeFormComponent
         this.recipe()?.update(this.form.getRawValue());
         const hasCycledRecipe = this.checkCycleRecipe(this.form.getRawValue().ingredients, this.uuid());
         if (hasCycledRecipe) {
-          this._notificationsService.error('notifications.recipe.cycle-error');
+          this._notificationsService.error('recipe.form.error.cycle-recipe');
         }
       }
     });
@@ -311,14 +324,17 @@ export class AddRecipeFormComponent
   }
 
   private _loadUsingHistory() {
-    this._recipesRepository.getTopCategories().then(categories => {
-      this.topCategories.set(categories.map(category => ({
-        label: category.name,
-        value: {
-          uuid: category.uuid,
-          name: category.name,
-        },
-      })));
+    this._recipesRepository.getTopCategories()
+      .then(categories => {
+        this.topCategories.set(categories.map(category => ({
+          label: category.name,
+          value: {
+            uuid: category.uuid,
+            name: category.name,
+          },
+        })));
+      }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
   }
 

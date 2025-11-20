@@ -29,7 +29,7 @@ import {AutocompleteComponent} from '../../../controls/form/autocomplete.compone
 import {Product} from '../../service/Product';
 import {hasMicroPrice, productToFormValue} from '../../../../shared/helpers/product.helpers';
 import {debounceTime} from 'rxjs';
-import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 
 
@@ -103,6 +103,7 @@ export class AddProductFormComponent
     private _router: Router,
     private _notificationsService: NotificationsService,
     private _settingsService: SettingsService,
+    private _translateService: TranslateService,
   ) {
   }
 
@@ -179,6 +180,7 @@ export class AddProductFormComponent
     })
   }
 
+
   resetForm(
     value?: Product
   ) {
@@ -189,7 +191,22 @@ export class AddProductFormComponent
 
   validateForm() {
     if (!this._formValid) {
-      this._notificationsService.error(this._notificationsService.parseFormErrors(this.form).join(', '));
+      const errors = this._notificationsService.parseFormErrors(this.form, {
+        keysMap: {
+          required: this._translateService.instant('form.error.required'),
+        },
+        controlsMap: {
+          name: this._translateService.instant('product.form.validation-name.name'),
+          amount: this._translateService.instant('product.form.validation-name.amount'),
+          price: this._translateService.instant('product.form.validation-name.price'),
+          unit: this._translateService.instant('product.form.validation-name.unit'),
+          category_id: this._translateService.instant('product.form.validation-name.category'),
+          source: this._translateService.instant('product.form.validation-name.source'),
+          brand: this._translateService.instant('product.form.validation-name.brand'),
+          notes: this._translateService.instant('product.form.validation-name.notes'),
+        }
+      });
+      this._notificationsService.error(errors.join('\n'));
       return false;
     }
     return true
@@ -227,6 +244,8 @@ export class AddProductFormComponent
         value: category.uuid ?? '',
         color: category.ownColor,
       })));
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
 
     this._productsRepository.getTopSources().then(sources => {
@@ -234,6 +253,8 @@ export class AddProductFormComponent
         label: source,
         value: source,
       })));
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
 
     this._productsRepository.getTopBrands().then(brands => {
@@ -241,6 +262,8 @@ export class AddProductFormComponent
         label: brand,
         value: brand,
       })));
+    }).catch(err => {
+      this._notificationsService.error(errorHandler(err));
     });
   }
 }

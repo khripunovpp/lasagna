@@ -93,29 +93,45 @@ export class NotificationsService {
 
   parseFormErrors(
     control: FormGroup | FormArray,
-    logToCenter: boolean = true,
-    source?: string
+    options: {
+      logToCenter?: boolean,
+      source?: string
+      controlsMap?: Record<string, string>
+      keysMap?: Record<string, string>
+    } = {
+      logToCenter: true
+    }
   ): string[] {
     const errors = [];
     if (control.errors) {
-      errors.push(...Object.entries(control.errors).map(([key, value]) => {
-        return `Form: ${key}`;
-      }));
+      errors.push(...Object.entries(control.errors)
+        .map(([key, value]) => {
+          debugger
+          return this._translate.instant('form.error', {key: options?.keysMap?.[key] ?? key});
+        }));
     }
     for (const controlKey in control.controls) {
       const childControl = (control.controls as any)[controlKey];
       if (childControl instanceof FormGroup || childControl instanceof FormArray) {
-        errors.push(...this.parseFormErrors(childControl as any));
+        errors.push(...this.parseFormErrors(childControl as any, options));
       }
       if (childControl.errors) {
-        errors.push(...Object.entries(childControl.errors).map(([key, value]) => {
-          return `${controlKey}: ${key}`;
-        }));
+        errors.push(...Object.entries(childControl.errors)
+          .map(([key, value]) => {
+            const mappedControlKey = options?.controlsMap?.[controlKey] ?? controlKey;
+            const mappedKey = options?.keysMap?.[key] ?? key;
+            const isNumber = !isNaN(Number(mappedControlKey));
+            if (isNumber) {
+              return `${this._translate.instant('form.error.array-control.counter', {number: +mappedControlKey + 1})}: ${mappedKey}`;
+            }
+
+            return `${mappedControlKey}: ${mappedKey}`;
+          }));
       }
     }
 
-    if (logToCenter && errors.length > 0) {
-      this._logCenter.addLog(LogLevel.ERROR, `Form validation errors: ${errors.join(', ')}`, errors, source);
+    if (options?.logToCenter && errors.length > 0) {
+      this._logCenter.addLog(LogLevel.ERROR, `Form validation errors: ${errors.join(', ')}`, errors, options?.source);
     }
 
     return errors;
