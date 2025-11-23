@@ -6,8 +6,7 @@
                     lgExpand>
           <lg-input #nameField
                     formControlName="name"
-                    placeholder=""
-          ></lg-input>
+                    placeholder=""></lg-input>
         </lg-control>
 
         <lg-control [label]="'recipe.form.description.placeholder'|translate"
@@ -59,14 +58,22 @@
                                       ngProjectAs="products"
                                       [autoLoad]="true">
                         <ng-template lgControlTpl type="label" let-item>
-                          {{ productLabelFactory(item) }} / {{ item.pricePerUnit | userCurrency:pipesDigits() }}
-                          <span [translateParams]="{unit:$any(item)?.unit | unitString | translate}"
-                                [translate]="'per-unit.label'"></span>
+                          {{ productLabelFactory(item) }}
+                          @let price = item.pricePerUnit;
+                          @if (price) {
+                            -
+                            <lg-price-per-unit [price]="price"
+                                               [unit]="item?.unit"></lg-price-per-unit>
+                          }
                         </ng-template>
                         <ng-template lgControlTpl type="option" let-item>
-                          {{ productLabelFactory(item) }} / {{ item.pricePerUnit | userCurrency:pipesDigits() }}
-                          <span [translateParams]="{unit:$any(item)?.unit | unitString | translate}"
-                                [translate]="'per-unit.label'"></span>
+                          {{ productLabelFactory(item) }}
+                          @let price = item.pricePerUnit;
+                          @if (price) {
+                            -
+                            <lg-price-per-unit [price]="price"
+                                               [unit]="item?.unit"></lg-price-per-unit>
+                          }
                         </ng-template>
                       </lg-multiselect>
                     </lg-entity-item-selector>
