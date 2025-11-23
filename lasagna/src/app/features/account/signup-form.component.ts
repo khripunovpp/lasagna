@@ -10,31 +10,32 @@ import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {WidthDirective} from '../../shared/view/directives/width.directive';
+import {errorHandler} from '../../shared/helpers';
 
 @Component({
   selector: 'lg-signup-form',
   template: `
     <form (ngSubmit)="onRegister()">
       <lg-flex-column [position]="'center'">
-         <lg-flex-column [position]="'center'" [size]="'medium'" lgExpand lgWidth="50%">
-        <lg-control lgExpand
-                    label="{{ 'account.email' | translate }}">
-          <lg-input [formControl]="registerEmail"
-                    placeholder=""></lg-input>
-        </lg-control>
+        <lg-flex-column [position]="'center'" [size]="'medium'" lgExpand lgWidth="50%">
+          <lg-control lgExpand
+                      label="{{ 'account.email' | translate }}">
+            <lg-input [formControl]="registerEmail"
+                      placeholder=""></lg-input>
+          </lg-control>
 
-        <lg-control lgExpand
-                    label="{{ 'account.username' | translate }}">
-          <lg-input [formControl]="registerName"
-                    placeholder=""></lg-input>
-        </lg-control>
+          <lg-control lgExpand
+                      label="{{ 'account.username' | translate }}">
+            <lg-input [formControl]="registerName"
+                      placeholder=""></lg-input>
+          </lg-control>
 
-        <lg-control lgExpand
-                    label="{{ 'account.password' | translate }}">
-          <lg-input [formControl]="registerPassword"
-                    placeholder=""></lg-input>
-        </lg-control>
-         </lg-flex-column>
+          <lg-control lgExpand
+                      label="{{ 'account.password' | translate }}">
+            <lg-input [formControl]="registerPassword"
+                      placeholder=""></lg-input>
+          </lg-control>
+        </lg-flex-column>
 
         <lg-flex-column [position]="'center'" [size]="'small'">
           <lg-button [disabled]="isLoading()"
@@ -94,7 +95,7 @@ export class SignupFormComponent {
       this.notificationsService.success('Registration successful');
       this.toLogin.emit();
     } catch (e: any) {
-      this.notificationsService.error(e?.message || 'Registration failed');
+      this.notificationsService.error(errorHandler(e));
     } finally {
       this.isLoading.set(false);
     }

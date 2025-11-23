@@ -1,5 +1,6 @@
 // services/form-template.service.ts
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 // models/template.model.ts
 
@@ -31,9 +32,11 @@ export class FormTemplateService {
   constructor() {
   }
 
+  private readonly _window = inject(WINDOW);
+
   getTemplates<T extends TemplateType>(type: T): Template<T>[] {
     try {
-      const data = localStorage.getItem(this.getStorageKey(type));
+      const data = this._window?.localStorage.getItem(this.getStorageKey(type));
       return data ? JSON.parse(data) : [];
     } catch (e) {
       console.error('Error accessing localStorage:', e);
@@ -93,7 +96,7 @@ export class FormTemplateService {
 
   private _storeTemplates<T extends TemplateType>(type: T, data: Template<T>[]): void {
     try {
-      localStorage.setItem(this.getStorageKey(type), JSON.stringify(data));
+      this._window?.localStorage.setItem(this.getStorageKey(type), JSON.stringify(data));
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }

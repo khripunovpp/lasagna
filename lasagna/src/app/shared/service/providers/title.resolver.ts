@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRouteSnapshot} from '@angular/router';
 import {ProductsRepository} from '../../../features/products/service/products.repository';
 import {Calculation} from '../../../features/recipes/service/providers/calulate-recipe.service';
+import {IS_CLIENT} from '../tokens/isClient.token';
 
 export const defTitleResolver = () => {
   const translateService = inject(TranslateService);
@@ -33,6 +34,10 @@ const dataResolver = <T = any>(route: ActivatedRouteSnapshot, dataKey: string) =
 }
 
 export const productTitleResolver = async (route: ActivatedRouteSnapshot) => {
+  const isBrowser = inject(IS_CLIENT);
+  if (!isBrowser) {
+    return Promise.resolve('');
+  }
   const translateService = inject(TranslateService);
   const productsRepository = inject(ProductsRepository);
 

@@ -1,0 +1,691 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>app.title</title>
+  <base href="https://khripunovpp.github.io/lasagna/">
+  <meta content="width=device-width, initial-scale=1,viewport-fit=cover" name="viewport">
+  <link href="favicon.png" rel="icon" type="image/png">
+  <link href="logo.png" rel="apple-touch-icon">
+  <link href="manifest.webmanifest" rel="manifest">
+  <meta content="#F6B0DB" name="theme-color">
+
+  <meta content="yes" name="mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="Lasagna" name="apple-mobile-web-app-title">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="default" name="apple-mobile-web-app-status-bar-style">
+
+  <link rel="preload" href="styles.css" as="style">
+
+  <link href="/img/splash_screens/iPhone_17_Pro_Max__iPhone_16_Pro_Max_landscape.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro__iPhone_17__iPhone_16_Pro_landscape.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16_Plus__iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_landscape.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_Air_landscape.png" media="screen and (device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16__iPhone_15_Pro__iPhone_15__iPhone_14_Pro_landscape.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_landscape.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16e__iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_landscape.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_landscape.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_landscape.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11__iPhone_XR_landscape.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_landscape.png" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_landscape.png" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/13__iPad_Pro_M4_landscape.png" media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/12.9__iPad_Pro_landscape.png" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro_M4_landscape.png" media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro__10.5__iPad_Pro_landscape.png" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.9__iPad_Air_landscape.png" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.5__iPad_Air_landscape.png" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.2__iPad_landscape.png" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_landscape.png" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/8.3__iPad_Mini_landscape.png" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro_Max__iPhone_16_Pro_Max_portrait.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro__iPhone_17__iPhone_16_Pro_portrait.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16_Plus__iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_portrait.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_Air_portrait.png" media="screen and (device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16__iPhone_15_Pro__iPhone_15__iPhone_14_Pro_portrait.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16e__iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11__iPhone_XR_portrait.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_portrait.png" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/13__iPad_Pro_M4_portrait.png" media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/12.9__iPad_Pro_portrait.png" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro_M4_portrait.png" media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.9__iPad_Air_portrait.png" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.5__iPad_Air_portrait.png" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.2__iPad_portrait.png" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/8.3__iPad_Mini_portrait.png" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+<link rel="stylesheet" href="styles.css"><style ng-app-id="ng">
+
+[_nghost-ng-c1772031796] {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+.app[_ngcontent-ng-c1772031796] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+}
+.app--pwa[_ngcontent-ng-c1772031796] {
+  border-radius: 16px;
+}
+.app-content[_ngcontent-ng-c1772031796] {
+  --app-content-top-padding: calc(var(--header-height) + 44px);
+  padding-top: var(--app-content-top-padding);
+}
+.app-footer[_ngcontent-ng-c1772031796] {
+  margin-top: auto;
+}
+/*# sourceMappingURL=/lasagna/app.component.css.map */</style><style ng-app-id="ng">
+
+[_nghost-ng-c1690768704] {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  right: 0;
+  top: 12px;
+  transform: translateX(-50%);
+  max-width: calc(var(--container-width) + 32px);
+  width: calc(100% - 32px);
+}
+@media (max-width: 768px) {
+  [_nghost-ng-c1690768704] {
+    width: 100%;
+  }
+}
+.lg-header[_ngcontent-ng-c1690768704] {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 16px;
+  scroll-snap-type: x mandatory;
+}
+@media (max-width: 768px) {
+  .lg-header[_ngcontent-ng-c1690768704] {
+    justify-content: normal;
+    scroll-snap-type: both mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+}
+.lg-header__left[_ngcontent-ng-c1690768704], 
+.lg-header__right[_ngcontent-ng-c1690768704], 
+.lg-header__leftToMiddle[_ngcontent-ng-c1690768704], 
+.lg-header__rightToMiddle[_ngcontent-ng-c1690768704], 
+.lg-header__middle[_ngcontent-ng-c1690768704] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  gap: 8px;
+  min-width: 40px;
+}
+@media (max-width: 768px) {
+  .lg-header__left[_ngcontent-ng-c1690768704], 
+   .lg-header__right[_ngcontent-ng-c1690768704], 
+   .lg-header__leftToMiddle[_ngcontent-ng-c1690768704], 
+   .lg-header__rightToMiddle[_ngcontent-ng-c1690768704], 
+   .lg-header__middle[_ngcontent-ng-c1690768704] {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+}
+.lg-header__leftToMiddle[_ngcontent-ng-c1690768704] {
+  margin-left: auto;
+}
+.lg-header__rightToMiddle[_ngcontent-ng-c1690768704] {
+  margin-right: auto;
+}
+.lg-header__inner[_ngcontent-ng-c1690768704] {
+  display: flex;
+  border-radius: 35px;
+  padding: 8px;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.lg-header__link[_ngcontent-ng-c1690768704] {
+  font-size: 1rem;
+  font-family: inherit;
+  text-decoration: none;
+  padding: 8px 24px;
+  border-radius: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  transition: 0.3s ease-in-out;
+  transition-property: background-color, color;
+  appearance: none;
+}
+.lg-header__link.route-active[_ngcontent-ng-c1690768704] {
+  background-color: var(--header-active-bg);
+  color: #fff;
+}
+.lg-header__icon[_ngcontent-ng-c1690768704] {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  scroll-snap-align: center;
+  border: none;
+  appearance: none;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: inherit;
+}
+.lg-header__logo[_ngcontent-ng-c1690768704] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lg-header__icon.route-active[_ngcontent-ng-c1690768704] {
+  background-color: var(--header-active-bg);
+  color: #fff;
+}
+/*# sourceMappingURL=/lasagna/header.component.css.map */</style><style ng-app-id="ng">@charset "UTF-8";
+
+
+
+.lg-footer[_ngcontent-ng-c214029305] {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  padding: 1em;
+  line-height: 1.6;
+  padding-top: 100px;
+}
+.lg-footer__bottom[_ngcontent-ng-c214029305] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 0.5em;
+}
+.lg-footer__version[_ngcontent-ng-c214029305] {
+  color: #888;
+  opacity: 0.7;
+}
+.lg-footer__support-link[_ngcontent-ng-c214029305] {
+  background: none;
+  border: none;
+  color: #888;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.lg-footer__support-link[_ngcontent-ng-c214029305]:hover {
+  opacity: 1;
+}
+.footer-credit[_ngcontent-ng-c214029305] {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.footer-credit[_ngcontent-ng-c214029305]    > *[_ngcontent-ng-c214029305]:first-child::after {
+  content: "\2022";
+  margin-left: 8px;
+}
+@media (max-width: 600px) {
+  .footer-credit[_ngcontent-ng-c214029305] {
+    flex-direction: column;
+    gap: 0;
+  }
+  .footer-credit[_ngcontent-ng-c214029305]    > *[_ngcontent-ng-c214029305]:first-child::after {
+    display: none;
+  }
+}
+.gradient-text[_ngcontent-ng-c214029305] {
+  background:
+    linear-gradient(
+      90deg,
+      #9C27B0,
+      #E91E63);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/*# sourceMappingURL=/lasagna/footer.component.css.map */</style><style ng-app-id="ng">mat-icon,mat-icon.mat-primary,mat-icon.mat-accent,mat-icon.mat-warn{color:var(--mat-icon-color, inherit)}.mat-icon{-webkit-user-select:none;user-select:none;background-repeat:no-repeat;display:inline-block;fill:currentColor;height:24px;width:24px;overflow:hidden}.mat-icon.mat-icon-inline{font-size:inherit;height:inherit;line-height:inherit;width:inherit}.mat-icon.mat-ligature-font[fontIcon]::before{content:attr(fontIcon)}[dir=rtl] .mat-icon-rtl-mirror{transform:scale(-1, 1)}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon{display:block}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button .mat-icon{margin:auto}
+</style><link _ngcontent-ng-c1690768704="" as="image" href="./logomark.svg" rel="preload" fetchpriority="high"><style ng-app-id="ng">
+
+.menu[_ngcontent-ng-c2588992262]   ul[_ngcontent-ng-c2588992262] {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+.menu[_ngcontent-ng-c2588992262]   ul[_ngcontent-ng-c2588992262]   li[_ngcontent-ng-c2588992262] {
+  flex: 1;
+}
+/*# sourceMappingURL=/lasagna/application.component.css.map */</style><style ng-app-id="ng">
+
+[_nghost-ng-c3858452314] {
+  display: flex;
+  height: 100%;
+  padding: 0 32px;
+}
+@media (max-width: 768px) {
+  [_nghost-ng-c3858452314] {
+    padding: 0 16px;
+  }
+}
+.container[_ngcontent-ng-c3858452314] {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--container-width);
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .container[_ngcontent-ng-c3858452314] {
+    gap: 16px;
+  }
+}
+.container.compact[_ngcontent-ng-c3858452314] {
+  gap: 0 !important;
+}
+/*# sourceMappingURL=/lasagna/container.component.css.map */</style><style ng-app-id="ng">
+
+.title[_ngcontent-ng-c3854167631] {
+  font-size: 1.9em;
+  line-height: 1.2;
+  font-weight: bold;
+  margin: 0;
+}
+.title--2[_ngcontent-ng-c3854167631] {
+  font-size: 1.75em;
+}
+.title--3[_ngcontent-ng-c3854167631] {
+  font-size: 1.5em;
+}
+.title--4[_ngcontent-ng-c3854167631] {
+  font-size: 1.25em;
+}
+.title--5[_ngcontent-ng-c3854167631] {
+  font-size: 1.125em;
+}
+.title--6[_ngcontent-ng-c3854167631] {
+  font-size: 1em;
+}
+.title--flat[_ngcontent-ng-c3854167631] {
+  font-weight: normal;
+}
+/*# sourceMappingURL=/lasagna/title.component.css.map */</style><meta name="description" content="Welcome to Lasagna - Cost Calculator Application"><meta name="keywords" content="Lasagna, Cost Calculator, Recipes, Ingredients"><style ng-app-id="ng">
+
+[_nghost-ng-c3233163816] {
+  display: flex;
+  width: 100%;
+}
+.card[_ngcontent-ng-c3233163816] {
+  background-color: var(--card-bg);
+  padding: 24px;
+  border-radius: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.card.flat[_ngcontent-ng-c3233163816] {
+  padding: 0;
+}
+.card.center[_ngcontent-ng-c3233163816] {
+  justify-content: center;
+  align-items: center;
+}
+.card.small[_ngcontent-ng-c3233163816] {
+  padding: 16px;
+  border-radius: 16px;
+}
+/*# sourceMappingURL=/lasagna/card.component.css.map */</style><style ng-app-id="ng">
+
+[_nghost-ng-c1225144729] {
+  display: block;
+}
+.onboarding__step[_ngcontent-ng-c1225144729] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--onboarding-bg);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--onboarding-border);
+  transition: background 0.2s;
+}
+@media screen and (max-width: 600px) {
+  .onboarding__step[_ngcontent-ng-c1225144729] {
+    flex-direction: column;
+  }
+  .onboarding__step[_ngcontent-ng-c1225144729]   lg-button[_ngcontent-ng-c1225144729] {
+    align-self: flex-end;
+  }
+}
+.onboarding__step--done[_ngcontent-ng-c1225144729]   .onboarding__step-content[_ngcontent-ng-c1225144729] {
+  opacity: 0.5;
+}
+.onboarding__step--disabled[_ngcontent-ng-c1225144729]   .onboarding__step-content[_ngcontent-ng-c1225144729] {
+  opacity: 0.5;
+}
+.onboarding__step-content[_ngcontent-ng-c1225144729] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.onboarding__step-label[_ngcontent-ng-c1225144729] {
+  font-weight: 600;
+}
+.onboarding__step-desc[_ngcontent-ng-c1225144729] {
+  color: var(--onboarding-text);
+}
+/*# sourceMappingURL=/lasagna/onboarding.component.css.map */</style><style ng-app-id="ng">
+
+[_nghost-ng-c434711063] {
+  flex: 1;
+}
+@media (max-width: 768px) {
+  [_nghost-ng-c434711063] {
+    width: 100%;
+  }
+}
+.gap-column[_ngcontent-ng-c434711063] {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.gap-column.small[_ngcontent-ng-c434711063] {
+  gap: 8px;
+}
+.gap-column.medium[_ngcontent-ng-c434711063] {
+  gap: 16px;
+}
+.gap-column.tiny[_ngcontent-ng-c434711063] {
+  gap: 4px;
+}
+.gap-column.fill[_ngcontent-ng-c434711063] {
+  justify-content: space-between;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .gap-column[_ngcontent-ng-c434711063] {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .gap-column.small[_ngcontent-ng-c434711063] {
+    gap: 4px;
+  }
+  .gap-column.medium[_ngcontent-ng-c434711063] {
+    gap: 8px;
+  }
+  .gap-column.tiny[_ngcontent-ng-c434711063] {
+    gap: 2px;
+  }
+}
+/*# sourceMappingURL=/lasagna/flex-column.component.css.map */</style><style ng-app-id="ng">/* src/app/shared/view/ui/button/button.component.scss */
+.button-wrap {
+  display: flex;
+  gap: 8px;
+  position: relative;
+}
+.button-wrap:hover {
+  cursor: pointer;
+}
+.button {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  appearance: none;
+  text-decoration: none;
+  transition: all 0.4s;
+  transition-timing-function: var(--bounce-bezier);
+  white-space: nowrap;
+}
+.button__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.button.disabled {
+  opacity: 0.5;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+.button:focus {
+  outline-color: var(--active-color);
+}
+.button:active:not(.no-scale) {
+  transform: scale(0.95);
+}
+@media (hover: hover) {
+  .button:hover:not(.no-scale) {
+    transform: scale(0.95);
+  }
+}
+.button.no-radius {
+  border-radius: 0 !important;
+}
+.button.no-top-radius {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.button.no-bottom-radius {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.button.no-right-radius {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.button.no-left-radius {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.button.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--button-flat-overlay);
+  border-radius: inherit;
+}
+.button.active.flat {
+  color: var(--active-color);
+}
+.button.active.flat::before {
+  display: none;
+}
+.button.transparent {
+  background-color: transparent !important;
+}
+.button.default {
+  background-color: var(--button-default-bg);
+  color: var(--button-default-text);
+}
+.button.default.flat {
+  color: var(--button-default-bg);
+}
+.button.default.outlined {
+  background-color: transparent;
+  border-color: var(--button-default-bg);
+  color: var(--button-default-bg);
+}
+.button.solid {
+  background-color: var(--button-solid-text);
+  color: var(--button-solid-text);
+}
+.button.solid.flat {
+  color: var(--button-solid-bg);
+}
+.button.solid.outlined {
+  background-color: transparent;
+  border-color: var(--button-solid-bg);
+}
+.button.primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+.button.primary.flat {
+  color: var(--button-primary-bg);
+}
+.button.primary.outlined {
+  background-color: transparent;
+  border-color: var(--button-primary-bg);
+  color: var(--button-primary-bg);
+}
+.button.secondary {
+  background-color: var(--button-secondary-bg);
+}
+.button.secondary.flat {
+  color: var(--button-secondary-bg);
+}
+.button.secondary.outlined {
+  background-color: transparent;
+  border-color: var(--button-secondary-bg);
+  color: var(--button-secondary-bg);
+}
+.button.secondary-dark {
+  background-color: var(--button-secondary-dark-bg);
+}
+.button.secondary-dark.flat {
+  color: var(--button-secondary-dark-bg);
+}
+.button.secondary-dark.outlined {
+  background-color: transparent;
+  border-color: var(--button-secondary-dark-bg);
+  color: var(--button-secondary-dark-bg);
+}
+.button.success {
+  background-color: var(--button-success-bg);
+  color: var(--button-success-text);
+}
+.button.success.flat {
+  color: var(--button-success-bg);
+}
+.button.danger {
+  background-color: var(--button-danger-bg);
+  color: var(--button-danger-text);
+}
+.button.danger.flat {
+  color: var(--button-danger-bg);
+}
+.button.warning {
+  background-color: var(--button-warning-bg);
+}
+.button.warning.flat {
+  color: var(--button-warning-bg);
+}
+.button.warning.transparent {
+  color: var(--button-warning-bg);
+}
+.button.info {
+  background-color: var(--button-info-bg);
+}
+.button.info.flat {
+  color: var(--button-info-bg);
+}
+.button.small {
+  padding: 11px 16px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.button.tiny {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+.button.transcluent {
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  background-color: var(--button-transcluent-bg);
+}
+.button.icon {
+  border-radius: 50%;
+  padding: 16px;
+}
+.button.icon.medium {
+  padding: 10px;
+}
+.button.icon.medium .mat-icon {
+  font-size: 16px;
+}
+.button.icon.small {
+  padding: 0;
+}
+.button.icon.small .mat-icon {
+  font-size: 16px;
+}
+.button.icon.tiny {
+  padding: 2px;
+}
+.button.icon.tiny .mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+.button.icon .mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button.flat {
+  padding: 0;
+  background-color: transparent;
+}
+/*# sourceMappingURL=/lasagna/button.component.css.map */
+</style></head>
+<body>
+<app-root ng-version="21.0.0" _nghost-ng-c1772031796="" ng-server-context="ssg"><!--container--><!--container--><main _ngcontent-ng-c1772031796="" class="app" hidden=""><lg-header _ngcontent-ng-c1772031796="" _nghost-ng-c1690768704=""><header _ngcontent-ng-c1690768704="" class="lg-header"><div _ngcontent-ng-c1690768704="" class="lg-header__left"><!--container--><a _ngcontent-ng-c1690768704="" class="lg-header__logo route-active" href="https://khripunovpp.github.io/lasagna/home"><img _ngcontent-ng-c1690768704="" height="50" ngsrc="./logomark.svg" priority="" alt="Logo" width="50" loading="eager" fetchpriority="high" decoding="sync" ng-img="true" src="./logomark.svg"></a></div><div _ngcontent-ng-c1690768704="" class="lg-header__leftToMiddle"><!--container--><!--container--><button _ngcontent-ng-c1690768704="" class="lg-header__icon"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="search" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="search"></mat-icon></button></div><div _ngcontent-ng-c1690768704="" class="lg-header__middle"><div _ngcontent-ng-c1690768704="" class="lg-header__inner"><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/recipes"> recipes.menu-label </a><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/products"> products.menu-label </a><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/invoices"> invoices.menu-label </a><!--container--></div></div><div _ngcontent-ng-c1690768704="" class="lg-header__rightToMiddle"><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/settings"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="settings" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="settings"></mat-icon></a><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/widgets"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="widgets" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="widgets"></mat-icon></a><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/documents"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="question_mark" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="question_mark"></mat-icon></a></div><div _ngcontent-ng-c1690768704="" class="lg-header__right"></div></header></lg-header><div _ngcontent-ng-c1772031796="" class="app-content"><router-outlet _ngcontent-ng-c1772031796=""></router-outlet><app-application _nghost-ng-c2588992262="" class="ng-star-inserted"><lg-fade-in _ngcontent-ng-c2588992262="" class="ng-tns-c3121460675-1 ng-star-inserted"><div class="fade-in ng-tns-c3121460675-1 ng-trigger ng-trigger-fadeIn"><lg-container _ngcontent-ng-c2588992262="" _nghost-ng-c3858452314="" class="ng-tns-c3121460675-1"><section _ngcontent-ng-c3858452314="" class="container"><lg-title _ngcontent-ng-c2588992262="" _nghost-ng-c3854167631=""><p _ngcontent-ng-c3854167631="" role="heading" class="title title--1" aria-level="1">main.title</p></lg-title><lg-card _ngcontent-ng-c2588992262="" _nghost-ng-c3233163816="" class="ng-star-inserted" style=""><div _ngcontent-ng-c3233163816="" class="card default"><lg-onboarding _ngcontent-ng-c2588992262="" _nghost-ng-c1225144729=""><section _ngcontent-ng-c1225144729="" class="onboarding ng-star-inserted"><lg-flex-column _ngcontent-ng-c1225144729="" size="medium" _nghost-ng-c434711063=""><div _ngcontent-ng-c434711063="" class="gap-column medium" style="align-items: stretch;"><lg-title _ngcontent-ng-c1225144729="" _nghost-ng-c3854167631=""><p _ngcontent-ng-c3854167631="" role="heading" class="title title--4" aria-level="4">onboarding.title</p></lg-title><p _ngcontent-ng-c1225144729="" class="no-margin text-wrap">onboarding.about</p><p _ngcontent-ng-c1225144729="" class="no-margin text-wrap">onboarding.welcome</p><lg-flex-column _ngcontent-ng-c1225144729="" _nghost-ng-c434711063=""><div _ngcontent-ng-c434711063="" class="gap-column medium" style="align-items: stretch;"><div _ngcontent-ng-c1225144729="" class="onboarding__step ng-star-inserted"><div _ngcontent-ng-c1225144729="" class="onboarding__step-content"><span _ngcontent-ng-c1225144729="" class="onboarding__step-label">onboarding.settings.label</span><span _ngcontent-ng-c1225144729="" class="onboarding__step-desc">onboarding.settings.description</span></div><lg-button _ngcontent-ng-c1225144729=""><div class="button-wrap"><!--container--><button type="button" class="button primary regular ng-star-inserted"><div class="button__content ng-star-inserted"><!--container--> onboarding.go <!--container--><!--container--></div><!--container--></button><!--container--><!--container--><!--container--></div></lg-button></div><div _ngcontent-ng-c1225144729="" class="onboarding__step onboarding__step--disabled ng-star-inserted"><div _ngcontent-ng-c1225144729="" class="onboarding__step-content"><span _ngcontent-ng-c1225144729="" class="onboarding__step-label">onboarding.product.label</span><span _ngcontent-ng-c1225144729="" class="onboarding__step-desc">onboarding.product.description</span></div><lg-button _ngcontent-ng-c1225144729=""><div class="button-wrap"><!--container--><button type="button" class="button disabled primary regular ng-star-inserted" disabled=""><div class="button__content ng-star-inserted"><!--container--><!--container--> onboarding.unavailable <!--container--></div><!--container--></button><!--container--><!--container--><!--container--></div></lg-button></div><div _ngcontent-ng-c1225144729="" class="onboarding__step onboarding__step--disabled ng-star-inserted"><div _ngcontent-ng-c1225144729="" class="onboarding__step-content"><span _ngcontent-ng-c1225144729="" class="onboarding__step-label">onboarding.recipe.label</span><span _ngcontent-ng-c1225144729="" class="onboarding__step-desc">onboarding.recipe.description</span></div><lg-button _ngcontent-ng-c1225144729=""><div class="button-wrap"><!--container--><button type="button" class="button disabled primary regular ng-star-inserted" disabled=""><div class="button__content ng-star-inserted"><!--container--><!--container--> onboarding.unavailable <!--container--></div><!--container--></button><!--container--><!--container--><!--container--></div></lg-button></div><div _ngcontent-ng-c1225144729="" class="onboarding__step onboarding__step--disabled ng-star-inserted"><div _ngcontent-ng-c1225144729="" class="onboarding__step-content"><span _ngcontent-ng-c1225144729="" class="onboarding__step-label">onboarding.faq.label</span><span _ngcontent-ng-c1225144729="" class="onboarding__step-desc">onboarding.faq.description</span></div><lg-button _ngcontent-ng-c1225144729=""><div class="button-wrap"><!--container--><button type="button" class="button disabled primary regular ng-star-inserted" disabled=""><div class="button__content ng-star-inserted"><!--container--><!--container--> onboarding.unavailable <!--container--></div><!--container--></button><!--container--><!--container--><!--container--></div></lg-button></div><!--container--></div></lg-flex-column></div></lg-flex-column></section><!--container--></lg-onboarding></div></lg-card><!--container--><!--container--><!--container--><!--container--></section></lg-container></div></lg-fade-in></app-application><!--container--></div><div _ngcontent-ng-c1772031796="" class="app-footer"><lg-footer _ngcontent-ng-c1772031796="" _nghost-ng-c214029305=""><lg-fade-in _ngcontent-ng-c214029305="" class="ng-tns-c3121460675-0"><div class="fade-in ng-trigger ng-trigger-fadeIn"><footer _ngcontent-ng-c214029305="" class="lg-footer"><!--container--> footer.agree <a _ngcontent-ng-c214029305="" target="_blank" href="https://github.com/khripunovpp/lasagna/blob/master/privacy-policy.md">footer.privacy</a>, <a _ngcontent-ng-c214029305="" target="_blank" href="https://github.com/khripunovpp/lasagna/blob/master/terms-of-service.md">footer.terms</a>, footer.and <a _ngcontent-ng-c214029305="" target="_blank" href="https://github.com/khripunovpp/lasagna/blob/master/cookie-policy.md">footer.cookie</a>. <!--container--><div _ngcontent-ng-c214029305="" class="lg-footer__bottom"><button _ngcontent-ng-c214029305="" type="button" class="lg-footer__support-link"> footer.support </button><div _ngcontent-ng-c214029305="" class="lg-footer__version"> vUnknown <a _ngcontent-ng-c214029305="" routerlink="./documents" target="_blank" href="https://khripunovpp.github.io/lasagna/documents">beta</a>. </div></div></footer></div></lg-fade-in><!--container--><!--container--></lg-footer></div></main></app-root>
+<noscript>Please enable JavaScript to continue using this application.</noscript>
+<script defer="" src="detect-language.js"></script>
+<script defer="" src="pwa-update-compoent.js"></script>
+<script defer="" src="google-analytics-consent.js"></script>
+<link rel="modulepreload" href="chunk-YWPUYK7V.js"><link rel="modulepreload" href="chunk-CMRNWKEI.js"><link rel="modulepreload" href="chunk-W6AWSB7K.js"><link rel="modulepreload" href="chunk-M24NKERW.js"><link rel="modulepreload" href="chunk-RJSN5CQV.js"><link rel="modulepreload" href="chunk-UL7MTHQO.js"><link rel="modulepreload" href="chunk-USP6G3VL.js"><link rel="modulepreload" href="chunk-UFGIB7QO.js"><link rel="modulepreload" href="chunk-34RUQXNH.js"><link rel="modulepreload" href="chunk-KXZ2SBHP.js"><script src="main.js" type="module"></script>
+<link rel="modulepreload" href="chunk-6N3IP5K7.js">
+<link rel="modulepreload" href="chunk-DB3CLH5P.js">
+
+
+</body></html>

@@ -1,14 +1,17 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {LogEntry, LogEntryModel, LogLevel} from '../models/LogEntry';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogCenterService {
+  constructor() {
+  }
+
   private readonly STORAGE_KEY = 'app_logs';
   private readonly MAX_LOGS = 1000; // Максимальное количество логов для хранения
-
-  constructor() {}
+  private readonly _window = inject(WINDOW);
 
   /**
    * Добавляет новую запись в лог
@@ -32,7 +35,7 @@ export class LogCenterService {
    */
   getLogs(): LogEntryModel[] {
     try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
+      const stored = this._window?.localStorage.getItem(this.STORAGE_KEY);
       if (!stored) return [];
 
       const logs = JSON.parse(stored);
@@ -72,7 +75,7 @@ export class LogCenterService {
    */
   clearLogs(): void {
     try {
-      localStorage.removeItem(this.STORAGE_KEY);
+      this._window?.localStorage.removeItem(this.STORAGE_KEY);
     } catch (error) {
       console.error('Error clearing logs:', error);
     }
@@ -141,13 +144,13 @@ export class LogCenterService {
   }
 
   private getCurrentUrl(): string {
-    return window.location.href;
+    return this._window?.location.href || '';
   }
 
   private saveLogs(logs: LogEntryModel[]): void {
     try {
       const jsonData = logs.map(log => log.toJSON());
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(jsonData));
+      this._window?.localStorage.setItem(this.STORAGE_KEY, JSON.stringify(jsonData));
     } catch (error) {
       console.error('Error saving logs:', error);
     }

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/signals/match-media.signal.ts", "src/app/shared/view/const/breakpoints.ts"],
+  "sourcesContent": ["import {effect, inject, signal} from '@angular/core';\nimport {WINDOW} from '../../service/tokens/window.token';\n\nexport function matchMediaSignal(\n    width: number,\n    direction: 'max' | 'min' = 'max'\n) {\n  const windowRef = inject(WINDOW);\n  if (!windowRef) {\n    return signal<boolean>(false);\n  }\n  const result = signal<boolean>(false);\n\n  const query = `(${direction}-width: ${direction === 'min' ? width + 1 : width}px)`;\n  const mediaQuery = windowRef.matchMedia(query);\n\n  result.set(mediaQuery.matches);\n\n  const listener = (e: MediaQueryListEvent) => {\n    result.set(e.matches);\n  };\n\n  mediaQuery.addEventListener('change', listener);\n\n  effect(() => {\n    return () => {\n      mediaQuery.removeEventListener('change', listener);\n    };\n  });\n\n  return result;\n}\n", "export const mobileBreakpoint = 768;\n"],
+  "mappings": ";;;;;;;;;;AAGM,SAAU,iBACZ,OACA,YAA2B,OAAK;AAElC,QAAM,YAAY,OAAO,MAAM;AAC/B,MAAI,CAAC,WAAW;AACd,WAAO,OAAgB,KAAK;EAC9B;AACA,QAAM,SAAS,OAAgB,OAAK,GAAA,YAAA,CAAA,EAAA,WAAA,SAAA,CAAA,IAAA,CAAA,CAAA;AAEpC,QAAM,QAAQ,IAAI,SAAS,WAAW,cAAc,QAAQ,QAAQ,IAAI,KAAK;AAC7E,QAAM,aAAa,UAAU,WAAW,KAAK;AAE7C,SAAO,IAAI,WAAW,OAAO;AAE7B,QAAM,WAAW,CAAC,MAA0B;AAC1C,WAAO,IAAI,EAAE,OAAO;EACtB;AAEA,aAAW,iBAAiB,UAAU,QAAQ;AAE9C,SAAO,MAAK;AACV,WAAO,MAAK;AACV,iBAAW,oBAAoB,UAAU,QAAQ;IACnD;EACF,CAAC;AAED,SAAO;AACT;;;AC/BO,IAAM,mBAAmB;",
+  "names": []
+}

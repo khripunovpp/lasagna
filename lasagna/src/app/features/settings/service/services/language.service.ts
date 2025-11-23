@@ -1,6 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 const allowedLanguages = ['pt', 'ru', 'en'];
 
@@ -19,6 +20,7 @@ export class LanguageService {
 
   private readonly _lang = signal(this._defaultLang);
   private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
+  private readonly _window = inject(WINDOW);
 
   get lang() {
     return this._lang;
@@ -49,7 +51,7 @@ export class LanguageService {
       this.translate.use(lang);
       this._lang.set(lang);
       // Store language in localStorage for JavaScript files
-      localStorage.setItem('lang', lang);
+      this._window?.localStorage.setItem('lang', lang);
     } catch (e) {
       console.error('Error changing language:', e);
       this.translate.use(this._defaultLang);

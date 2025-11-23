@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  linkedSignal,
-  OnInit,
-  Signal
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ProductsRepository} from '../../service/products.repository';
@@ -28,7 +19,6 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {Product} from '../../service/Product';
 import {ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
@@ -43,81 +33,82 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {SortResult} from '../../../../shared/service/types/sorting.types';
 import {errorHandler, hasMicroPrice} from '../../../../shared/helpers';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-product-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (products()?.length) {
-      <lg-controls-bar>
-        <lg-button [icon]="true"
-                   [link]="'/products/add'"
-                   [size]="'medium'"
-                   [style]="'primary'">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        </lg-button>
+    @defer {
+      @if (products()?.length) {
+        <lg-controls-bar>
+          <lg-button [icon]="true"
+                     [link]="'/products/add'"
+                     [size]="'medium'"
+                     [style]="'primary'">
+            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          </lg-button>
 
-        <lg-inline-separated-group>
-          <ng-template lgInlineSeparatedGroup>
-            <lg-button (click)="exportProducts(selectionZoneService.selected())"
-                       [flat]="true"
-                       [size]="'small'"
-                       [style]="'solid'">
-              {{ 'export-label'|translate }}
-            </lg-button>
-          </ng-template>
+          <lg-inline-separated-group>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (click)="exportProducts(selectionZoneService.selected())"
+                         [flat]="true"
+                         [size]="'small'"
+                         [style]="'solid'">
+                {{ 'export-label'|translate }}
+              </lg-button>
+            </ng-template>
 
-          <ng-template lgInlineSeparatedGroup>
-            <lg-import (onDone)="loadProducts()"
-                       [label]="('import-label'|translate)"
-                       [schema]="ProductScheme"
-                       [storeName]="Stores.PRODUCTS">
-              <ng-template let-flow="flow" let-row lgImportRowTpl>
-                <span>{{ row?.name }}</span>
-              </ng-template>
-            </lg-import>
-          </ng-template>
-        </lg-inline-separated-group>
-      </lg-controls-bar>
-    }
+            <ng-template lgInlineSeparatedGroup>
+              <lg-import (onDone)="loadProducts()"
+                         [label]="('import-label'|translate)"
+                         [schema]="ProductScheme"
+                         [storeName]="Stores.PRODUCTS">
+                <ng-template let-flow="flow" let-row lgImportRowTpl>
+                  <span>{{ row?.name }}</span>
+                </ng-template>
+              </lg-import>
+            </ng-template>
+          </lg-inline-separated-group>
+        </lg-controls-bar>
+      }
 
-    <lg-fade-in>
-      <lg-container>
-        <lg-title>
-          {{ 'products.list-title'|translate }}
+      <lg-fade-in>
+        <lg-container>
+          <lg-title>
+            {{ 'products.list-title'|translate }}
 
-          @if (products()?.length) {
-            <span [translateParams]="{length:products()?.length}"
-                  [translate]="'filters.results.length'"
-                  class="text-muted text-small"></span>
+            @if (products()?.length) {
+              <span [translateParams]="{length:products()?.length}"
+                    [translate]="'filters.results.length'"
+                    class="text-muted text-small"></span>
+            }
+          </lg-title>
+
+          <lg-draft-products-list></lg-draft-products-list>
+
+          @if (!groupingTiles.empty()) {
+            <lg-flex-column [size]="'medium'">
+              <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
+            </lg-flex-column>
           }
-        </lg-title>
 
-        <lg-draft-products-list></lg-draft-products-list>
-
-        @if (!groupingTiles.empty()) {
-          <lg-flex-column [size]="'medium'">
-            <lg-selection-tools [selectionTypes]="['product']"></lg-selection-tools>
-          </lg-flex-column>
-        }
-
-        <lg-grouping-tiles #groupingTiles
-                           [selectable]="true"
-                           [sortResult]="products()">
-          <ng-template let-product lgGroupingTile>
-            <lg-card>
-              <lg-flex-column size="medium">
-                <lg-flex-row [center]="true" lgExpand>
-                  <a [routerLink]="'/products/edit/' + product.uuid">
-                    {{ productLabelFactory(product) }}
-                  </a>
+          <lg-grouping-tiles #groupingTiles
+                             [selectable]="true"
+                             [sortResult]="products()">
+            <ng-template let-product lgGroupingTile>
+              <lg-card>
+                <lg-flex-column size="medium">
+                  <lg-flex-row [center]="true" lgExpand>
+                    <a [routerLink]="'/products/edit/' + product.uuid">
+                      {{ productLabelFactory(product) }}
+                    </a>
 
                   <div>
                     @if (hasMicroPrice(product.pricePerUnit)) {
@@ -131,27 +122,30 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
                   </div>
                 </lg-flex-row>
 
-                <small class="text-muted text-cursive">
-                  {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
-                </small>
-              </lg-flex-column>
-            </lg-card>
-          </ng-template>
+                  <small class="text-muted text-cursive">
+                    {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
+                  </small>
+                </lg-flex-column>
+              </lg-card>
+            </ng-template>
 
-          <lg-flex-column empty-state
-                          position="center"
-                          size="medium">
-            {{ 'products.empty-state.text'|translate }}
+            <lg-flex-column empty-state
+                            position="center"
+                            size="medium">
+              {{ 'products.empty-state.text'|translate }}
 
-            <lg-button [link]="'/products/add'"
-                       [size]="'medium'"
-                       [style]="'primary'">
-              {{ 'products.empty-state.btn'|translate }}
-            </lg-button>
-          </lg-flex-column>
-        </lg-grouping-tiles>
-      </lg-container>
-    </lg-fade-in>
+              <lg-button [link]="'/products/add'"
+                         [size]="'medium'"
+                         [style]="'primary'">
+                {{ 'products.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
+          </lg-grouping-tiles>
+        </lg-container>
+      </lg-fade-in>
+    } @error {
+      {{ 'products-list.defer-load-error' | translate }}
+    }
   `,
   imports: [
     FlexRowComponent,
@@ -212,6 +206,7 @@ export class ProductListComponent
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   readonly destroyRef = inject(DestroyRef);
   readonly products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
+  isClient = inject(IS_CLIENT);
   protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
@@ -241,6 +236,9 @@ export class ProductListComponent
   }
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this.loadProducts();
   }
 

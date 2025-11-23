@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
+import {Component, computed, DestroyRef, effect, inject, OnInit, signal, viewChild} from '@angular/core';
 
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddProductFormComponent} from './add-product-form.component';
@@ -34,6 +34,9 @@ import {
 import {
   DeleteConfirmationPopoverComponent
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lg-add-product',
@@ -57,110 +60,114 @@ import {
     DeleteConfirmationPopoverComponent,
   ],
   template: `
-    @if (editMode()) {
-      <lg-controls-bar size="small">
-        <lg-button [icon]="true"
-                   [link]="'/products/add'"
-                   [size]="'small'"
-                   [label]=" 'product.form.add-new-btn'|translate"
-                   [style]="'primary'">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        </lg-button>
-      </lg-controls-bar>
-    }
+    @defer {
+      @if (editMode()) {
+        <lg-controls-bar size="small">
+          <lg-button [icon]="true"
+                     [link]="'/products/add'"
+                     [size]="'small'"
+                     [label]=" 'product.form.add-new-btn'|translate"
+                     [style]="'primary'">
+            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          </lg-button>
+        </lg-controls-bar>
+      }
 
-    <lg-fade-in>
-      <lg-container>
-        <lg-flex-column size="medium">
-          <lg-flex-row [center]="true" [mobileMode]="true">
-            @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-              <lg-title lgSelfStart>
-                {{ product()?.name }}
-              </lg-title>
+      <lg-fade-in>
+        <lg-container>
+          <lg-flex-column size="medium">
+            <lg-flex-row [center]="true" [mobileMode]="true">
+              @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+                <lg-title lgSelfStart>
+                  {{ product()?.name }}
+                </lg-title>
+              } @else {
+                <lg-title lgSelfStart>
+                  {{ 'product.form.title'|translate }}
+                </lg-title>
+              }
+            </lg-flex-row>
+
+            <lg-inline-separated-group>
+              @if (draftRef() && formComponent()?.form?.dirty) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-fade-in>
+                    <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
+                  </lg-fade-in>
+                </ng-template>
+              }
+
+              @if (isDraftRoute()) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onRemoveDraft()">
+                    {{ 'product.form.delete-draft-btn'|translate }}
+                  </lg-button>
+                </ng-template>
+              } @else if (product()?.uuid) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink [style]="'danger'"
+                             [flat]="true"
+                             (click)="onDeleteProduct()">
+                    {{ 'product.form.delete-btn'|translate }}
+                  </lg-button>
+                </ng-template>
+              }
+            </lg-inline-separated-group>
+
+            @if (editMode() && product()?.updatedAt) {
+              <small class="text-muted text-cursive">
+                {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
+              </small>
+            }
+
+          </lg-flex-column>
+
+          <lg-add-product-form [editMode]="editMode()"
+                               [product]="product()"></lg-add-product-form>
+
+          <lg-flex-row [mobileMode]="true" [relaxed]="true">
+            @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+              <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                         lgShrink
+                         [style]="'primary'"
+                         (click)="onEditProduct()">
+                @if (formComponent()?.form?.dirty || draftRef()) {
+                  {{ 'product.form.save-btn.edit.active'|translate }}
+                } @else {
+                  {{ 'product.form.save-btn.edit.disabled'|translate }}
+                }
+              </lg-button>
             } @else {
-              <lg-title lgSelfStart>
-                {{ 'product.form.title'|translate }}
-              </lg-title>
+              <lg-button lgShrink
+                         [style]="'primary'"
+                         [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                         (click)="onAddProduct()">
+                @if (formComponent()?.form?.dirty || draftRef()) {
+                  {{ 'product.form.save-btn.add.active'|translate }}
+                } @else {
+                  {{ 'product.form.save-btn.add.disabled'|translate }}
+                }
+              </lg-button>
+            }
+
+            @if (formComponent()?.form?.dirty) {
+              <lg-button (click)="onResetForm()"
+                         [outlined]="true"
+                         [style]="'primary'"
+                         lgShrink>
+                {{ 'product.form.reset-btn.edit.active'|translate }}
+              </lg-button>
             }
           </lg-flex-row>
+        </lg-container>
+      </lg-fade-in>
 
-          <lg-inline-separated-group>
-            @if (draftRef() && formComponent()?.form?.dirty) {
-              <ng-template lgInlineSeparatedGroup>
-                <lg-fade-in>
-                  <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
-                </lg-fade-in>
-              </ng-template>
-            }
-
-            @if (isDraftRoute()) {
-              <ng-template lgInlineSeparatedGroup>
-                <lg-button lgShrink [style]="'danger'"
-                           [flat]="true"
-                           (click)="onRemoveDraft()">
-                  {{ 'product.form.delete-draft-btn'|translate }}
-                </lg-button>
-              </ng-template>
-            } @else if (product()?.uuid) {
-              <ng-template lgInlineSeparatedGroup>
-                <lg-button lgShrink [style]="'danger'"
-                           [flat]="true"
-                           (click)="onDeleteProduct()">
-                  {{ 'product.form.delete-btn'|translate }}
-                </lg-button>
-              </ng-template>
-            }
-          </lg-inline-separated-group>
-
-          @if (editMode() && product()?.updatedAt) {
-            <small class="text-muted text-cursive">
-              {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
-            </small>
-          }
-
-        </lg-flex-column>
-
-        <lg-add-product-form [editMode]="editMode()"
-                             [product]="product()"></lg-add-product-form>
-
-        <lg-flex-row [mobileMode]="true" [relaxed]="true">
-          @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-            <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                       lgShrink
-                       [style]="'primary'"
-                       (click)="onEditProduct()">
-              @if (formComponent()?.form?.dirty || draftRef()) {
-                {{ 'product.form.save-btn.edit.active'|translate }}
-              } @else {
-                {{ 'product.form.save-btn.edit.disabled'|translate }}
-              }
-            </lg-button>
-          } @else {
-            <lg-button lgShrink
-                       [style]="'primary'"
-                       [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                       (click)="onAddProduct()">
-              @if (formComponent()?.form?.dirty || draftRef()) {
-                {{ 'product.form.save-btn.add.active'|translate }}
-              } @else {
-                {{ 'product.form.save-btn.add.disabled'|translate }}
-              }
-            </lg-button>
-          }
-
-          @if (formComponent()?.form?.dirty) {
-            <lg-button (click)="onResetForm()"
-                       [outlined]="true"
-                       [style]="'primary'"
-                       lgShrink>
-              {{ 'product.form.reset-btn.edit.active'|translate }}
-            </lg-button>
-          }
-        </lg-flex-row>
-      </lg-container>
-    </lg-fade-in>
-
-    <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
+      <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
+    } @error {
+      {{ 'add-product.defer-load-error' | translate }}
+    }
   `,
   styles: [
     `
@@ -172,7 +179,7 @@ import {
   ],
 })
 export class AddProductComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit {
   constructor(
     public _router: Router,
     private _aRoute: ActivatedRoute,
@@ -197,33 +204,14 @@ export class AddProductComponent
       || (this.draftRef() && this.draftByExistingProduct()))
   })
   firstState?: any;
+  isClient = inject(IS_CLIENT);
   private _routerManager = inject(ROUTER_MANAGER);
-
-  ngOnDestroy() {
-  }
-
-  ngOnInit() {
-    combineLatest([
-      this._aRoute.params,
-      this._aRoute.data,
-    ]).pipe(take(1)).subscribe(([params, data]) => {
-      this.draftOrProductUUID.set(params['uuid']);
-      if (data['draft']) {
-        this.draftRef.set(data['draft']);
-        this.product.set(Product.fromRaw(data['draft'].data));
-      } else if (this.draftOrProductUUID()) {
-        this._loadProduct(this.draftOrProductUUID());
-      } else {
-        this.product.set(Product.empty());
-      }
-      this.isDraftRoute.set(!!data['draftRoute']);
-    });
-  }
-
-  ngAfterViewInit() {
-
+  private readonly _window = inject(WINDOW);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _formComponentEffect = effect(() => {
     this.formComponent()?.form.valueChanges.pipe(
       debounceTime(500),
+      takeUntilDestroyed(this._destroyRef),
     ).subscribe((value) => {
       if (!this.formComponent()!.form.dirty || !this.product()) {
         return
@@ -245,11 +233,32 @@ export class AddProductComponent
         // }
       }
     });
+  })
+
+  ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
+    combineLatest([
+      this._aRoute.params,
+      this._aRoute.data,
+    ]).pipe(take(1)).subscribe(([params, data]) => {
+      this.draftOrProductUUID.set(params['uuid']);
+      if (data['draft']) {
+        this.draftRef.set(data['draft']);
+        this.product.set(Product.fromRaw(data['draft'].data));
+      } else if (this.draftOrProductUUID()) {
+        this._loadProduct(this.draftOrProductUUID());
+      } else {
+        this.product.set(Product.empty());
+      }
+      this.isDraftRoute.set(!!data['draftRoute']);
+    });
   }
 
   onResetForm() {
     this._removeDraft();
-    window.location.reload();
+    this._window?.location.reload();
   }
 
   onAddProduct() {

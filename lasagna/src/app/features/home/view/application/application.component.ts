@@ -32,8 +32,8 @@ import {OnboardingService} from '../../../onboarding/onboarding.service';
 })
 export class ApplicationComponent {
   title = 'lasagna';
-  recipes = inject(RecipesRepository).length;
-  products = inject(ProductsRepository).length;
+  recipes = inject(RecipesRepository);
+  products = inject(ProductsRepository);
   private _onboardingService = inject(OnboardingService);
   // Используем сигнал из сервиса напрямую
   isOnboardingComplete = this._onboardingService.isOnboardingComplete;

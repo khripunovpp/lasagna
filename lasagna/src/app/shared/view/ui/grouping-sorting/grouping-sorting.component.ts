@@ -7,6 +7,7 @@ import {GroupingSortingContainerComponent} from './grouping-sorting.directive';
 import {ActivatedRoute, Router} from '@angular/router';
 import {injectQueryParams} from '../../../helpers/route.helpers';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {WINDOW} from '../../../service/tokens/window.token';
 
 @Component({
   selector: 'lg-grouping-sorting',
@@ -119,13 +120,13 @@ export class GroupingSortingComponent {
   ) {
   }
 
-  readonly groupingToLabel:Record<string, string> = {
+  readonly groupingToLabel: Record<string, string> = {
     category: 'grouping.by-category',
     tag: 'grouping.by-tag',
     createdAt: 'grouping.by-creation-date',
     alphabetical: 'grouping.by-first-letter'
   };
-  readonly groupingDirectionToLabel:Record<string, string> = {
+  readonly groupingDirectionToLabel: Record<string, string> = {
     asc: 'grouping.direction.asc',
     desc: 'grouping.direction.desc'
   };
@@ -150,6 +151,7 @@ export class GroupingSortingComponent {
     const sort = this.sorting();
     this.sortChange.emit(sort);
   });
+  private readonly _window = inject(WINDOW);
 
   ngOnInit() {
     const params = this.aRouter.snapshot.queryParams;
@@ -190,7 +192,7 @@ export class GroupingSortingComponent {
       queryParamsHandling: 'merge',
     }).then(() => {
       // update page
-      window.location.reload();
+      this._window?.location.reload();
     })
   }
 

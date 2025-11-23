@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BarcodeFormat, DecodeHintType} from '@zxing/library';
 import {BrowserMultiFormatReader} from '@zxing/browser';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class BarcodeReaderService {
   hints = new Map();
   codeReader: BrowserMultiFormatReader;
   controls: any;
+  private readonly _window = inject(WINDOW);
 
   stopCamera() {
     this.controls?.stop();
@@ -29,10 +31,10 @@ export class BarcodeReaderService {
     videoElement: string,
     callback: (result: string | null) => void
   ) {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const videoInputs = devices.filter(d => d.kind === 'videoinput');
+    const devices = await this._window?.navigator.mediaDevices.enumerateDevices();
+    const videoInputs = devices?.filter(d => d.kind === 'videoinput');
 
-    if (videoInputs.length) {
+    if (videoInputs?.length) {
       const backCam = videoInputs.find(d => d.label.toLowerCase().includes('back')) || videoInputs[0];
       this.controls = await this._decodeFromVideoDevice(
         backCam.deviceId,

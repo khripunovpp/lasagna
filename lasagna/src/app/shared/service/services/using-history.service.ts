@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ export class UsingHistoryService {
 
   constructor() {
   }
+
+  private readonly _window = inject(WINDOW);
 
   read(
     prefix: string
@@ -21,8 +24,8 @@ export class UsingHistoryService {
     }>;
   } {
     try {
-      const topValue = JSON.parse(localStorage.getItem(prefix + '_top') || '{}');
-      const recentValue = JSON.parse(localStorage.getItem(prefix + '_recent') || '{}');
+      const topValue = JSON.parse(this._window?.localStorage.getItem(prefix + '_top') || '{}');
+      const recentValue = JSON.parse(this._window?.localStorage.getItem(prefix + '_recent') || '{}');
       return {
         top: topValue,
         recent: recentValue
@@ -51,7 +54,7 @@ export class UsingHistoryService {
       let sources: Record<string, {
         count: number;
         updatedAt: number
-      }> = JSON.parse(localStorage.getItem(key) || '{}');
+      }> = JSON.parse(this._window?.localStorage.getItem(key) || '{}');
 
       const now = Date.now();
       const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000; // 30 дней в миллисекундах
@@ -78,9 +81,9 @@ export class UsingHistoryService {
         .slice(0, 5);
 
       // Преобразуем обратно в объект и сохраняем
-      localStorage.setItem(key, JSON.stringify(Object.fromEntries(filteredSources)));
-      localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentSources)));
-      localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topSources)));
+      this._window?.localStorage.setItem(key, JSON.stringify(Object.fromEntries(filteredSources)));
+      this._window?.localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentSources)));
+      this._window?.localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topSources)));
     } catch (e) {
       console.error('Error updating localStorage:', e);
       return;

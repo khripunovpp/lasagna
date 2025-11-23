@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {CsvReaderService} from './csv-reader.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
+import {WINDOW} from '../tokens/window.token';
 
 export interface BuckupData {
   store: string
@@ -20,9 +21,10 @@ export class TransferDataService {
   ) {
   }
 
+  private readonly _window = inject(WINDOW);
   get currenBackupDate() {
     try {
-      const date = localStorage.getItem('lastBackupDate');
+      const date = this._window?.localStorage.getItem('lastBackupDate');
       if (!date) return null;
       return new Date(Number(date));
     } catch (e) {

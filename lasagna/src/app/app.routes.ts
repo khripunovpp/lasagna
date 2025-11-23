@@ -12,7 +12,8 @@ import {BrowserTabTrackingService} from './shared/service/services/browser-tab-t
 import {NotificationsService} from './shared/service/services';
 import {TranslateService} from '@ngx-translate/core';
 import {
-  defTitleResolver, productTitleResolver,
+  defTitleResolver,
+  productTitleResolver,
   recipeCalculationTitleResolver,
   recipeTitleResolver
 } from './shared/service/providers/title.resolver';
@@ -20,10 +21,15 @@ import {
 export const routes: Routes = [{
   path: '',
   children: [
+    // этот роут дублирует home для корректной работы SSG
     {
       path: '',
-      redirectTo: 'home',
-      pathMatch: 'full',
+      loadComponent: () => import('./features/home/view/application/application.component')
+        .then(m => m.ApplicationComponent),
+      data: {
+        canSeePolicies: true,
+      },
+      title: defTitleResolver,
     },
     {
       path: 'home',
@@ -189,20 +195,19 @@ export const routes: Routes = [{
             .then(m => m.SettingsComponent),
           title: defTitleResolver,
         },
-        {
-          path: 'taxes',
-          children: [
-            {
-              path: '',
-              loadComponent: () => import('./features/settings/view/finance-settings/taxes/taxes-settings.component')
-                .then(m => m.TaxesSettingsComponent),
-              title: defTitleResolver,
-            },
-          ],
-        }
+        // {
+        //   path: 'taxes',
+        //   children: [
+        //     {
+        //       path: '',
+        //       loadComponent: () => import('./features/settings/view/finance-settings/taxes/taxes-settings.component')
+        //         .then(m => m.TaxesSettingsComponent),
+        //       title: defTitleResolver,
+        //     },
+        //   ],
+        // }
       ]
     },
-
 
     {
       path: 'widgets',
@@ -212,7 +217,7 @@ export const routes: Routes = [{
     },
 
     {
-      path: 'docs',
+      path: 'documents',
       loadComponent: () => import('./features/documentation/view/documentation-container.component')
         .then(m => m.DocumentationContainerComponent),
 

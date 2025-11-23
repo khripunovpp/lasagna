@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/shared/view/directives/pull.directive.ts"],
-  "sourcesContent": ["import {Directive, HostBinding} from '@angular/core';\n\n@Directive({\n  standalone: true,\n  selector: '[lgPull]'\n})\nexport class PullDirective {\n  constructor() {\n  }\n\n  @HostBinding('style.margin-left') marginLeft = 'auto';\n}\n"],
-  "mappings": ";;;;;;;;;AAMM,IAAO,gBAAP,MAAO,eAAa;EACxB,cAAA;EACA;EAEkC,aAAa;;qCAJpC,gBAAa;EAAA;yEAAb,gBAAa,WAAA,CAAA,CAAA,IAAA,UAAA,EAAA,CAAA,GAAA,UAAA,GAAA,cAAA,SAAA,2BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAAb,MAAA,sBAAA,eAAA,IAAA,UAAA;;;;;sEAAA,eAAa,CAAA;UAJzB;WAAU;MACT,YAAY;MACZ,UAAU;KACX;kBAKmC,YAAU,CAAA;UAA3C;WAAY,mBAAmB;;;",
-  "names": []
-}

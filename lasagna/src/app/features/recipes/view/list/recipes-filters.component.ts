@@ -6,6 +6,7 @@ import {injectQueryParams} from '../../../../shared/helpers';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {DropdownComponent} from '../../../controls/dropdown/dropdown.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-recipes-filters',
@@ -77,6 +78,7 @@ export class RecipesFiltersComponent {
     }
     return this.translateService.instant('recipes.filters.all');
   });
+  private readonly _window = inject(WINDOW);
 
   ngOnInit() {
     const value = this.filterValue();
@@ -103,8 +105,7 @@ export class RecipesFiltersComponent {
       queryParamsHandling: 'merge',
     }).then(() => {
       // update page
-      window.location.reload();
+      this._window?.location.reload();
     })
   }
-
 }

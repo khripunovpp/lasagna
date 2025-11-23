@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 export interface StorageQuotaSnapshot {
   timestamp: number;
@@ -22,29 +23,33 @@ export interface StorageQuotaSnapshot {
   };
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class StorageQuotaService {
-  private static readonly DEFAULT_LOCAL_STORAGE_QUOTA_BYTES = 5 * 1024 * 1024; // ~5MB
+  constructor() {
+    this.refresh();
+  }
 
+  private static readonly DEFAULT_LOCAL_STORAGE_QUOTA_BYTES = 5 * 1024 * 1024; // ~5MB
+  private readonly _window = inject(WINDOW);
   private readonly snapshotSignal = signal<StorageQuotaSnapshot>({
     timestamp: Date.now(),
-    supported: {
-      storageEstimate: typeof navigator !== 'undefined' && !!navigator.storage && !!navigator.storage.estimate,
-      indexedDB: typeof indexedDB !== 'undefined',
-      localStorage: typeof localStorage !== 'undefined',
+    supported: this._window ? {
+      storageEstimate: typeof this._window.navigator !== 'undefined' && !!this._window.navigator.storage && !!this._window.navigator.storage.estimate,
+      indexedDB: typeof this._window.indexedDB !== 'undefined',
+      localStorage: typeof this._window.localStorage !== 'undefined',
+    } : {
+      storageEstimate: false,
+      indexedDB: false,
+      localStorage: false,
     },
-    total: { usageBytes: null, quotaBytes: null, availableBytes: null },
-    indexedDb: { usageBytes: null },
+    total: {usageBytes: null, quotaBytes: null, availableBytes: null},
+    indexedDb: {usageBytes: null},
     localStorage: {
       usageBytes: 0,
       quotaBytesApprox: StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES,
       availableBytesApprox: StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES,
     },
   });
-
-  constructor() {
-    this.refresh();
-  }
 
   get snapshot() {
     return this.snapshotSignal;
@@ -57,23 +62,23 @@ export class StorageQuotaService {
   // No periodic tracking by design; call refresh() manually when needed
 
   private async refreshEstimatePart(): Promise<void> {
-    const supportsEstimate = typeof navigator !== 'undefined' && !!navigator.storage && !!navigator.storage.estimate;
+    const supportsEstimate = typeof this._window?.navigator !== 'undefined' && !!this._window.navigator.storage && !!this._window.navigator.storage.estimate;
 
     if (!supportsEstimate) {
       this.snapshotSignal.update((prev) => ({
         ...prev,
         timestamp: Date.now(),
-        supported: { ...prev.supported, storageEstimate: false },
-        total: { usageBytes: null, quotaBytes: null, availableBytes: null },
-        indexedDb: { usageBytes: null },
+        supported: {...prev.supported, storageEstimate: false},
+        total: {usageBytes: null, quotaBytes: null, availableBytes: null},
+        indexedDb: {usageBytes: null},
       }));
       return;
     }
 
     try {
-      const estimate = await navigator.storage.estimate();
-      const usage = estimate.usage ?? null;
-      const quota = estimate.quota ?? null;
+      const estimate = await this._window?.navigator.storage.estimate();
+      const usage = estimate?.usage ?? null;
+      const quota = estimate?.quota ?? null;
       const usageDetails: any = (estimate as any).usageDetails;
       const idbUsage = usageDetails?.['indexedDB'] ?? null;
 
@@ -82,28 +87,28 @@ export class StorageQuotaService {
       this.snapshotSignal.update((prev) => ({
         ...prev,
         timestamp: Date.now(),
-        supported: { ...prev.supported, storageEstimate: true },
-        total: { usageBytes: usage, quotaBytes: quota, availableBytes: available },
-        indexedDb: { usageBytes: idbUsage },
+        supported: {...prev.supported, storageEstimate: true},
+        total: {usageBytes: usage, quotaBytes: quota, availableBytes: available},
+        indexedDb: {usageBytes: idbUsage},
       }));
     } catch {
       this.snapshotSignal.update((prev) => ({
         ...prev,
         timestamp: Date.now(),
-        supported: { ...prev.supported, storageEstimate: true },
-        total: { usageBytes: null, quotaBytes: null, availableBytes: null },
-        indexedDb: { usageBytes: null },
+        supported: {...prev.supported, storageEstimate: true},
+        total: {usageBytes: null, quotaBytes: null, availableBytes: null},
+        indexedDb: {usageBytes: null},
       }));
     }
   }
 
   private refreshLocalStoragePart(): void {
-    const supportsLs = typeof localStorage !== 'undefined';
+    const supportsLs = typeof this._window?.localStorage !== 'undefined';
     if (!supportsLs) {
       this.snapshotSignal.update((prev) => ({
         ...prev,
         timestamp: Date.now(),
-        supported: { ...prev.supported, localStorage: false },
+        supported: {...prev.supported, localStorage: false},
         localStorage: {
           usageBytes: 0,
           quotaBytesApprox: StorageQuotaService.DEFAULT_LOCAL_STORAGE_QUOTA_BYTES,
@@ -120,19 +125,22 @@ export class StorageQuotaService {
     this.snapshotSignal.update((prev) => ({
       ...prev,
       timestamp: Date.now(),
-      supported: { ...prev.supported, localStorage: true },
-      localStorage: { usageBytes, quotaBytesApprox, availableBytesApprox },
+      supported: {...prev.supported, localStorage: true},
+      localStorage: {usageBytes, quotaBytesApprox, availableBytesApprox},
     }));
   }
 
   private computeLocalStorageUsageBytesSafely(): number {
     try {
+      if (!this._window) {
+        return 0;
+      }
       const encoder = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
       let bytes = 0;
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
+      for (let i = 0; i < this._window.localStorage.length; i++) {
+        const key = this._window.localStorage.key(i);
         if (!key) continue;
-        const value = localStorage.getItem(key) ?? '';
+        const value = this._window.localStorage.getItem(key) ?? '';
         if (encoder) {
           // Count both key and value bytes
           bytes += encoder.encode(key).length + encoder.encode(value).length;

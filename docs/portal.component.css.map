@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["src/app/shared/view/ui/portal.component.ts"],
-  "sourcesContent": ["\n        :host {\n            display: flex;\n            height: 100%;\n            width: 100%;\n        }\n    "],
-  "mappings": ";AACQ;AACI,WAAA;AACA,UAAA;AACA,SAAA;;",
+  "sourcesContent": ["\n      :host {\n        display: flex;\n        height: 100%;\n        width: 100%;\n      }\n    "],
+  "mappings": ";AACM;AACE,WAAA;AACA,UAAA;AACA,SAAA;;",
   "names": []
 }

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/directives/expand.directive.ts"],
+  "sourcesContent": ["import {Directive, HostBinding} from '@angular/core';\n\n@Directive({\n  standalone: true,\n  selector: '[lgExpand]'\n})\nexport class ExpandDirective {\n  constructor() {\n  }\n\n  @HostBinding('style.width') width = '100%';\n  @HostBinding('style.flex') flex = '1 1 100%';\n}\n"],
+  "mappings": ";;;;;;;;;AAMM,IAAO,kBAAP,MAAO,iBAAe;EAC1B,cAAA;EACA;EAE4B,QAAQ;EACT,OAAO;;qCALvB,kBAAe;EAAA;yEAAf,kBAAe,WAAA,CAAA,CAAA,IAAA,YAAA,EAAA,CAAA,GAAA,UAAA,GAAA,cAAA,SAAA,6BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAAf,MAAA,sBAAA,SAAA,IAAA,KAAA,EAAe,QAAA,IAAA,IAAA;;;;;sEAAf,iBAAe,CAAA;UAJ3B;WAAU;MACT,YAAY;MACZ,UAAU;KACX;;UAKE;WAAY,aAAa;;UACzB;WAAY,YAAY;;;",
+  "names": []
+}

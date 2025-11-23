@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/grouping-tiles/grouping-tile.directive.ts"],
+  "sourcesContent": ["import {Directive, TemplateRef} from '@angular/core';\n\n@Directive({\n  selector: '[lgGroupingTile]',\n  standalone: true\n})\nexport class GroupingTileDirective {\n  constructor(\n    public templateRef: TemplateRef<any>,\n  ) {\n  }\n}\n"],
+  "mappings": ";;;;;;;;;AAMM,IAAO,wBAAP,MAAO,uBAAqB;EAEvB;EADT,YACS,aAA6B;AAA7B,SAAA,cAAA;EAET;;qCAJW,wBAAqB,4BAAA,WAAA,CAAA;EAAA;yEAArB,wBAAqB,WAAA,CAAA,CAAA,IAAA,kBAAA,EAAA,CAAA,EAAA,CAAA;;;sEAArB,uBAAqB,CAAA;UAJjC;WAAU;MACT,UAAU;MACV,YAAY;KACb;;;",
+  "names": []
+}

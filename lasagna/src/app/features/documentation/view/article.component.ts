@@ -4,15 +4,20 @@ import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {USER_LANGUAGE} from '../../settings/service/providers/user-language.token';
 import {DocsService} from '../service/docs.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-article',
   template: `
-    <div class="lg-article">
-      @if (content | async; as contentHTML) {
-        <div [innerHTML]="contentHTML"></div>
-      }
-    </div>
+    @defer {
+      <div class="lg-article">
+        @if (content | async; as contentHTML) {
+          <div [innerHTML]="contentHTML"></div>
+        }
+      </div>
+    } @error {
+      {{ 'article.defer-load-error' | translate }}
+    }
   `,
   styles: [
     `
@@ -22,7 +27,8 @@ import {DocsService} from '../service/docs.service';
     `
   ],
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    TranslatePipe
   ]
 })
 export class ArticleComponent {

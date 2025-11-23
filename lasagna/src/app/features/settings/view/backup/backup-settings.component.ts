@@ -17,6 +17,7 @@ import {
 import {
   DeleteConfirmationPopoverComponent
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -104,6 +105,7 @@ export class BackupSettingsComponent
   readonly notificationsService = inject(NotificationsService);
   readonly dexieIndexDbService = inject(DexieIndexDbService);
   readonly translate = inject(TranslateService);
+  private readonly _window = inject(WINDOW);
 
   ngAfterViewInit() {
     if (this.downloadBackupParam()) {
@@ -116,7 +118,7 @@ export class BackupSettingsComponent
     try {
       await this.transferDataService.exportAll('json');
       this.notificationsService.success(this.translate.instant('backup.created'));
-      localStorage.setItem('lastBackupDate', Date.now().toString());
+      this._window?.localStorage.setItem('lastBackupDate', Date.now().toString());
     } catch (e) {
       this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.failed'));
       console.error(e);
@@ -154,7 +156,7 @@ export class BackupSettingsComponent
         try {
           await this.dexieIndexDbService.flushCache();
           this.notificationsService.success(this.translate.instant('backup.flushed'));
-          window.location.reload();
+          this._window?.location.reload();
         } catch (e) {
           this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.flush-failed'));
           console.error(e);
@@ -171,10 +173,10 @@ export class BackupSettingsComponent
       onSuccess: async () => {
         try {
           await this.dexieIndexDbService.deleteAllData();
-          localStorage.clear();
+          this._window?.localStorage.clear();
           this.notificationsService.success(this.translate.instant('all-data.deleted'));
           setTimeout(() => {
-            window.location.reload();
+            this._window?.location.reload();
           }, 1000);
         } catch (e) {
           this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('all-data.delete-failed'));

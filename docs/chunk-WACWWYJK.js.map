@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/overlay-actions/overlay-actions.component.ts"],
+  "sourcesContent": ["import {Component, ViewEncapsulation} from '@angular/core';\n\n@Component({\n  selector: 'lg-overlay-actions',\n  standalone: true,\n  encapsulation: ViewEncapsulation.None,\n  template: `\n    <div class=\"overlay-actions\">\n      <ng-content></ng-content>\n    </div>\n  `,\n  styles: [`\n\n    .overlay-actions {\n      position: fixed;\n      top: 50%;\n      left: 0;\n      transform: translateY(-50%);\n      z-index: 20;\n      display: flex;\n      gap: 8px;\n      flex-direction: column;\n      justify-content: flex-start;\n      align-items: flex-start;\n      pointer-events: none;\n    }\n\n    .overlay-actions * {\n      pointer-events: auto;\n    }\n\n    @media (max-width: 599px) {\n      :host {\n        inset: auto 8px 12px 8px;\n      }\n      .overlay-actions {\n        justify-content: flex-start;\n        flex-wrap: wrap;\n      }\n    }\n  `]\n})\nexport class OverlayActionsComponent {\n}\n\n"],
+  "mappings": ";;;;;;;;;;;;;;;AA0CM,IAAO,0BAAP,MAAO,yBAAuB;;qCAAvB,0BAAuB;EAAA;yEAAvB,0BAAuB,WAAA,CAAA,CAAA,oBAAA,CAAA,GAAA,oBAAA,KAAA,OAAA,GAAA,MAAA,GAAA,QAAA,CAAA,CAAA,GAAA,iBAAA,CAAA,GAAA,UAAA,SAAA,iCAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;;AAnChC,MAAA,4BAAA,GAAA,OAAA,CAAA;AACE,MAAA,uBAAA,CAAA;AACF,MAAA,0BAAA;;;;;sEAiCS,yBAAuB,CAAA;UAxCnC;uBACW,sBAAoB,YAClB,MAAI,eACD,kBAAkB,MAAI,UAC3B;;;;KAIT,QAAA,CAAA,ivBAAA,EAAA,CAAA;;;;6EAgCU,yBAAuB,EAAA,WAAA,2BAAA,UAAA,uEAAA,YAAA,GAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

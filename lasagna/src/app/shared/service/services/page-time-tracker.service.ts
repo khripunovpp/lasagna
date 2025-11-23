@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 /**
  * Service for tracking active time spent on specific pages.
@@ -17,6 +18,7 @@ export class PageTimeTrackerService {
     visibilityHandler?: () => void;
     cleanupTimeout?: number;
   }>();
+  private readonly _window = inject(WINDOW);
 
   /**
    * Start tracking time for a specific page
@@ -31,7 +33,7 @@ export class PageTimeTrackerService {
     }
 
     const existingTracker = this._trackers.get(pageKey);
-    
+
     // If tracker exists and is active, don't restart
     if (existingTracker?.isActive) {
       return;
@@ -55,7 +57,7 @@ export class PageTimeTrackerService {
    */
   stopTracking(pageKey: string): void {
     const tracker = this._trackers.get(pageKey);
-    
+
     if (!tracker || !tracker.isActive) {
       return;
     }
@@ -96,14 +98,14 @@ export class PageTimeTrackerService {
   getProgress(pageKey: string): number {
     const tracker = this._trackers.get(pageKey);
     if (!tracker) return 0;
-    
+
     let currentTotal = tracker.totalTime;
-    
+
     // Add current session time if active
     if (tracker.isActive && tracker.startTime) {
       currentTotal += Date.now() - tracker.startTime;
     }
-    
+
     return Math.min(currentTotal / tracker.requiredTime, 1);
   }
 
@@ -115,14 +117,14 @@ export class PageTimeTrackerService {
   getTotalTime(pageKey: string): number {
     const tracker = this._trackers.get(pageKey);
     if (!tracker) return 0;
-    
+
     let currentTotal = tracker.totalTime;
-    
+
     // Add current session time if active
     if (tracker.isActive && tracker.startTime) {
       currentTotal += Date.now() - tracker.startTime;
     }
-    
+
     return currentTotal;
   }
 
@@ -132,7 +134,7 @@ export class PageTimeTrackerService {
    */
   resetTracking(pageKey: string): void {
     const tracker = this._trackers.get(pageKey);
-    
+
     if (tracker) {
       this._cleanupVisibilityHandler(pageKey);
       this._trackers.delete(pageKey);
@@ -156,7 +158,7 @@ export class PageTimeTrackerService {
       const currentTracker = this._trackers.get(pageKey);
       if (!currentTracker?.isActive) return;
 
-      if (document.hidden) {
+      if (this._window?.document.hidden) {
         // Tab became inactive - pause tracking
         if (currentTracker.startTime) {
           const sessionTime = Date.now() - currentTracker.startTime;
@@ -176,19 +178,19 @@ export class PageTimeTrackerService {
 
     // Store the handler for cleanup
     tracker.visibilityHandler = handleVisibilityChange;
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    this._window?.document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Auto-cleanup after 10 minutes to prevent memory leaks
-    tracker.cleanupTimeout = window.setTimeout(() => {
+    tracker.cleanupTimeout = this._window?.setTimeout(() => {
       this._cleanupVisibilityHandler(pageKey);
     }, 600000);
   }
 
   private _cleanupVisibilityHandler(pageKey: string): void {
     const tracker = this._trackers.get(pageKey);
-    
+
     if (tracker?.visibilityHandler) {
-      document.removeEventListener('visibilitychange', tracker.visibilityHandler);
+      this._window?.document.removeEventListener('visibilitychange', tracker.visibilityHandler);
       tracker.visibilityHandler = undefined;
     }
 

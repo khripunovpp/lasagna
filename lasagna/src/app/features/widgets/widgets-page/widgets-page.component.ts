@@ -7,7 +7,6 @@ import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
 
 
-
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
 
 import {TabDirective} from '../../../shared/view/ui/tabs/tab.directive';
@@ -20,29 +19,33 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-widgets-page',
   standalone: true,
   template: `
-    <lg-fade-in>
-      <lg-container>
-        <lg-flex-row [center]="true">
-          <lg-title>
-            {{ 'widgets.page.title' | translate }}
-          </lg-title>
-        </lg-flex-row>
+    @defer {
+      <lg-fade-in>
+        <lg-container>
+          <lg-flex-row [center]="true">
+            <lg-title>
+              {{ 'widgets.page.title' | translate }}
+            </lg-title>
+          </lg-flex-row>
 
-        <lg-tabs>
-          <ng-template [label]="'widgets.page.jelly-calculator' | translate" alias="jelly-calculator" lgTab>
-             <lg-jelly-widget></lg-jelly-widget>
-          </ng-template>
+          <lg-tabs>
+            <ng-template [label]="'widgets.page.jelly-calculator' | translate" alias="jelly-calculator" lgTab>
+              <lg-jelly-widget></lg-jelly-widget>
+            </ng-template>
 
-          <ng-template [label]="'widgets.page.eggs-calculator' | translate" alias="eggs-calculator" lgTab>
-             <lg-eggs-widget></lg-eggs-widget>
-          </ng-template>
+            <ng-template [label]="'widgets.page.eggs-calculator' | translate" alias="eggs-calculator" lgTab>
+              <lg-eggs-widget></lg-eggs-widget>
+            </ng-template>
 
-<!--          <ng-template [label]="'widgets.page.barcode-seeker' | translate" alias="barcode-seeker" lgTab>-->
-<!--              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>-->
-<!--          </ng-template>-->
-        </lg-tabs>
-      </lg-container>
-    </lg-fade-in>
+            <!--          <ng-template [label]="'widgets.page.barcode-seeker' | translate" alias="barcode-seeker" lgTab>-->
+            <!--              <lg-barcode-add-product-widget></lg-barcode-add-product-widget>-->
+            <!--          </ng-template>-->
+          </lg-tabs>
+        </lg-container>
+      </lg-fade-in>
+    } @error {
+      {{ 'widgets.defer-load-error' | translate }}
+    }
   `,
   imports: [
     EggsWidgetComponent,
@@ -54,7 +57,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     TabsComponent,
     JellyWidgetComponent,
     TranslatePipe
-]
+  ]
 })
 export class WidgetsPageComponent {
 }

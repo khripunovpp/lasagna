@@ -9,6 +9,7 @@ import {ButtonComponent} from '../../shared/view/ui/button/button.component';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {ExpandDirective} from '../../shared/view/directives/expand.directive';
 import {WidthDirective} from '../../shared/view/directives/width.directive';
+import {errorHandler} from '../../shared/helpers';
 
 @Component({
   selector: 'lg-login-form',
@@ -79,8 +80,8 @@ export class LoginFormComponent {
       }
       await this.authService.login(this.loginEmail.value, this.loginPassword.value);
       this.notificationsService.success('Login successful');
-    } catch (e: any) {
-      this.notificationsService.error(e?.message || 'Login failed');
+    } catch (e) {
+      this.notificationsService.error(errorHandler(e));
     } finally {
       this.isLoading.set(false);
     }

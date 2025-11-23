@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   AfterViewInit,
   Component,
   computed,
@@ -52,6 +53,7 @@ import {SettingsService} from '../../../settings/service/services/settings.servi
 import {errorHandler} from '../../../../shared/helpers';
 import {ControlBoxComponent} from '../../../controls/form/control-box.component';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 
 @Component({
@@ -105,6 +107,9 @@ export class AddProductFormComponent
     private _settingsService: SettingsService,
     private _translateService: TranslateService,
   ) {
+    afterNextRender(() => {
+      this._focusFirstEmptyControl();
+    })
   }
 
   readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
@@ -135,6 +140,7 @@ export class AddProductFormComponent
   nameField = viewChild<InputComponent>('nameField');
   amountField = viewChild<NumberInputComponent>('amountField');
   priceField = viewChild<NumberInputComponent>('priceField');
+  isClient = inject(IS_CLIENT);
   protected readonly smaller = smaller;
   protected readonly UnitValue = UnitValue;
   private productEffect = effect(() => {
@@ -169,6 +175,9 @@ export class AddProductFormComponent
   }
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
       debounceTime(100),
@@ -213,10 +222,13 @@ export class AddProductFormComponent
   }
 
   ngAfterViewInit() {
-    this._selectResourcesService.load().then(resources => {
-      this._focusFirstEmptyControl();
-      this.form.markAsPristine()
-    }).catch(err => {
+    if (!this.isClient) {
+      return;
+    }
+    this._selectResourcesService.load()
+      .then(resources => {
+        this.form.markAsPristine()
+      }).catch(err => {
       this._notificationsService.error(errorHandler(err));
     });
   }
@@ -227,13 +239,13 @@ export class AddProductFormComponent
     }
 
     if (!this.form.value.name?.length) {
-      this.nameField()!.focus();
+      this.nameField()?.focus();
     } else if (!this.form.value.amount) {
-      this.amountField()!.focus();
+      this.amountField()?.focus();
     } else if (!this.form.value.price) {
-      this.priceField()!.focus();
+      this.priceField()?.focus();
     } else {
-      this.nameField()!.focus();
+      this.nameField()?.focus();
     }
   }
 

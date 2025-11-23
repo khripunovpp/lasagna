@@ -1,4 +1,4 @@
-import {inject, Inject, Injectable} from '@angular/core';
+import {inject, Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import Dexie, {Table, Transaction} from 'dexie';
 import {Stores} from './const/stores';
 import {migrations} from './migrations';
@@ -9,6 +9,7 @@ import {relationsMap} from './const/relations-maps';
 import {DB_NAME} from '../tokens/db-name.token';
 import {LoggerService} from '../../../features/logger/logger.service';
 import {IndexHandlersManager} from './handlers/index-handlers.manager';
+import {isPlatformBrowser} from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,10 @@ export class DexieIndexDbService extends Dexie {
     private flexsearchIndexService: FlexsearchIndexService,
     private indexHandlersManager: IndexHandlersManager,
     @Inject(DB_NAME) dbName: string,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     super(dbName);
+    if (!isPlatformBrowser(platformId)) return;
 
     const seen = new Set();
     for (const migration of migrations) {

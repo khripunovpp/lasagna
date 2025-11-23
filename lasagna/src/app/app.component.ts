@@ -4,7 +4,6 @@ import {PwaInstallComponent} from './features/home/view/pwa-install.component';
 import {GlobalSearchComponent} from './features/global-search/global-search.component';
 import {LastBackupInformerComponent} from './features/home/view/last-backup-informer.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {FontTesterComponent} from './features/home/view/font-tester.component';
 import {DemoService} from './shared/service/services/demo.service';
 import {FooterComponent} from './shared/view/layout/footer.component';
 import {HeaderComponent} from './shared/view/layout/header.component';
@@ -12,10 +11,11 @@ import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-
 import {StorageQuotaWarningComponent} from './features/home/view/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/satisfaction-popup.component';
 import {DecimalPipe, ViewportScroller} from '@angular/common';
-import {isPwa} from './shared/helpers/match-media.helper';
+import {IS_PWA} from './shared/helpers/match-media.helper';
 import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {getURLWithoutParams} from './shared/helpers';
+import {IS_CLIENT} from './shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,6 @@ import {getURLWithoutParams} from './shared/helpers';
     GlobalSearchComponent,
     LastBackupInformerComponent,
     TranslateModule,
-    FontTesterComponent,
     FooterComponent,
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
@@ -66,10 +65,13 @@ export class AppComponent
       this._viewportScroller.scrollToPosition(this.scrollingPosition()!);
     }
   });
-  readonly isPwa = isPwa;
+  readonly isPwa = inject(IS_PWA);
   private readonly demoService = inject(DemoService);
-
+  readonly isBrowser = inject(IS_CLIENT);
   async ngOnInit() {
+    if (!this.isBrowser) {
+      return;
+    }
     await this.demoService.loadDemoData();
   }
 }

@@ -3481,6 +3481,9 @@ video {
       #059669 70%,
       #22c55e 100%);
 }
+.hot-toast-message {
+  white-space: pre-wrap;
+}
 
 /* angular:styles/global:styles */
 /*# sourceMappingURL=styles.css.map */

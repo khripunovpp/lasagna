@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 export interface AnalyticsEvent {
   event_category: string;
@@ -67,15 +68,17 @@ export class AnalyticsService {
     }
   };
 
+  private readonly _window = inject(WINDOW);
+
   /**
    * Track a custom event
    */
   trackEvent(eventName: string, parameters: AnalyticsEvent): void {
-    if (typeof window !== 'undefined' && window.gtag && window.gtagLoaded) {
+    if (typeof this._window !== 'undefined' && this._window['gtag'] && this._window['gtagLoaded']) {
       // Check if analytics storage is granted
       const consent = this._getCookieConsent();
       if (consent === 'all' || consent === 'analytics') {
-        window.gtag('event', eventName, {
+        (this._window['gtag'] as any)?.('event', eventName, {
           ...parameters,
           user_weak_uuid: this._getUserUUID(),
         });
@@ -271,11 +274,11 @@ export class AnalyticsService {
    * Check if analytics is available and consented
    */
   isAnalyticsAvailable(): boolean {
-    if (typeof window === 'undefined') return false;
+    if (typeof this._window === 'undefined') return false;
 
     const consent = this._getCookieConsent();
     const hasConsent = consent === 'all' || consent === 'analytics';
-    const hasGtag = typeof window.gtag === 'function';
+    const hasGtag = typeof this._window['gtag'] === 'function';
 
     return hasConsent && hasGtag;
   }
@@ -284,12 +287,12 @@ export class AnalyticsService {
    * Get analytics status for debugging
    */
   getAnalyticsStatus(): { available: boolean; consent: string | null; gtag: boolean } {
-    if (typeof window === 'undefined') {
+    if (typeof this._window === 'undefined') {
       return {available: false, consent: null, gtag: false};
     }
 
     const consent = this._getCookieConsent();
-    const hasGtag = typeof window.gtag === 'function';
+    const hasGtag = typeof this._window['gtag'] === 'function';
 
     return {
       available: (consent === 'all' || consent === 'analytics') && hasGtag,
@@ -300,7 +303,7 @@ export class AnalyticsService {
 
   private _getCookieConsent(): string {
     try {
-      return String(localStorage.getItem('cookie-consent')).trim() || 'unknown';
+      return String(this._window?.localStorage.getItem('cookie-consent')).trim() || 'unknown';
     } catch {
       return 'unknown';
     }
@@ -308,17 +311,9 @@ export class AnalyticsService {
 
   private _getUserUUID(): string {
     try {
-      return String(localStorage.getItem('userUUID')).trim() || 'unknown';
+      return String(this._window?.localStorage.getItem('userUUID')).trim() || 'unknown';
     } catch {
       return 'unknown';
     }
-  }
-}
-
-// Extend Window interface for TypeScript
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void
-    gtagLoaded: boolean
   }
 }

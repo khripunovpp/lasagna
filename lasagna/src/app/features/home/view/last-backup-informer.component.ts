@@ -6,6 +6,7 @@ import {UserService} from '../../settings/service/services/user.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-last-backup-informer',
@@ -68,7 +69,7 @@ export class LastBackupInformerComponent {
   private readonly _notificationsService = inject(NotificationsService);
   showButton = computed(() => {
     try {
-      if (location.hostname === 'localhost') {
+      if (this._window?.location.hostname === 'localhost') {
         return false;
       }
       const sinceDate = this.userService.isUserFirstDate;
@@ -97,6 +98,7 @@ export class LastBackupInformerComponent {
       return false;
     }
   });
+  private readonly _window = inject(WINDOW);
 
   hide() {
     this.storedBackupDate.set(null);
@@ -110,7 +112,7 @@ export class LastBackupInformerComponent {
 
   private _getStoredDate() {
     try {
-      return localStorage.getItem('lastBackupDate')
+      return this._window?.localStorage.getItem('lastBackupDate') || null;
     } catch (e) {
       console.log('e', e);
       return null

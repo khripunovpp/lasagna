@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/service/types/sorting.types.ts"],
+  "sourcesContent": ["export interface SortStrategy<T> {\n  groupBy(item: T): string | string[]\n\n  innerSort?(a: T, b: T, direction: 'asc' | 'desc', field: string): number\n\n  groupingSort?(a: string, b: string, direction: 'asc' | 'desc'): number\n\n  fieldTransform?: (field: string) => Promise<string> | string;\n}\n\nexport interface SortResultGroup<T> {\n  field: string;\n  items: T[];\n}\n\nexport class SortResult<T> {\n  constructor(\n    public groups: SortResultGroup<T>[],\n  ) {\n  }\n\n  get length() {\n    return this.groups.reduce((acc, group) => acc + group.items.length, 0);\n  }\n}\n"],
+  "mappings": ";AAeM,IAAO,aAAP,MAAiB;EAEZ;EADT,YACS,QAA4B;AAA5B,SAAA,SAAA;EAET;EAEA,IAAI,SAAM;AACR,WAAO,KAAK,OAAO,OAAO,CAAC,KAAK,UAAU,MAAM,MAAM,MAAM,QAAQ,CAAC;EACvE;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/const/units.const.ts"],
+  "sourcesContent": ["export const UnitValue = {\n  GRAM: 'gram',\n  KILOGRAM: 'kilogram',\n  PIECE: 'piece',\n} as const;\n"],
+  "mappings": ";AAAO,IAAM,YAAY;EACvB,MAAM;EACN,UAAU;EACV,OAAO;;",
+  "names": []
+}

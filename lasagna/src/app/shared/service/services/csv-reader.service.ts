@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,8 @@ import {Injectable} from '@angular/core';
 export class CsvReaderService {
   constructor() {
   }
+
+  private readonly _window = inject(WINDOW);
 
   readFromCSVFile(file: File): Promise<any[]> {
     return new Promise((resolve, reject) => {
@@ -69,12 +72,15 @@ export class CsvReaderService {
   }
 
   saveToCSVFile(data: any[], filename: string) {
+    if (!this._window) {
+      throw new Error('Window is not available');
+    }
     const csv = this.makeCsv(data);
     const blob = new Blob([csv], {type: 'text/csv'});
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
-    document.body.appendChild(link);
+    const link = this._window.document.createElement('a');
+    this._window.document.body.appendChild(link);
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     link.click();
@@ -82,12 +88,15 @@ export class CsvReaderService {
   }
 
   saveToJSONFile(data: any, filename: string) {
+    if (!this._window) {
+      throw new Error('Window is not available');
+    }
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
-    document.body.appendChild(link);
+    const link = this._window.document.createElement('a');
+    this._window.document.body.appendChild(link);
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     link.click();

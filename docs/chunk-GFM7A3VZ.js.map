@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/card/card-list-item.directive.ts"],
+  "sourcesContent": ["import {Directive, Input, TemplateRef} from '@angular/core';\n\n@Directive({\n  selector: '[lgCardListItem]',\n  standalone: true,\n})\nexport class CardListItemDirective {\n  constructor(\n    public template: TemplateRef<any>\n  ) {\n  }\n\n  @Input() uuid: string | undefined | null = '';\n  @Input() type: string = '';\n  @Input() bgColor: string = '';\n}\n"],
+  "mappings": ";;;;;;;;;;AAMM,IAAO,wBAAP,MAAO,uBAAqB;EAEvB;EADT,YACS,UAA0B;AAA1B,SAAA,WAAA;EAET;EAES,OAAkC;EAClC,OAAe;EACf,UAAkB;;qCARhB,wBAAqB,4BAAA,WAAA,CAAA;EAAA;yEAArB,wBAAqB,WAAA,CAAA,CAAA,IAAA,kBAAA,EAAA,CAAA,GAAA,QAAA,EAAA,MAAA,QAAA,MAAA,QAAA,SAAA,UAAA,EAAA,CAAA;;;sEAArB,uBAAqB,CAAA;UAJjC;WAAU;MACT,UAAU;MACV,YAAY;KACb;;UAOE;;UACA;;UACA;;;",
+  "names": []
+}

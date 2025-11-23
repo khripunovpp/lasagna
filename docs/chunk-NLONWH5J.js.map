@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/settings/service/providers/user-language.token.ts"],
+  "sourcesContent": ["import {InjectionToken, Signal} from '@angular/core';\n\nexport const USER_LANGUAGE = new InjectionToken<Signal<string>>('UserLanguage');\n"],
+  "mappings": ";;;;;AAEO,IAAM,gBAAgB,IAAI,eAA+B,cAAc;",
+  "names": []
+}

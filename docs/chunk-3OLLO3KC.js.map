@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/directives/self-start.directive.ts"],
+  "sourcesContent": ["import {Directive, HostBinding, input} from '@angular/core';\n\n@Directive({\n  standalone: true,\n  selector: '[lgSelfStart]',\n})\nexport class SelfStartDirective {\n  constructor() {\n  }\n\n  lgSelfStartDisabled = input(false);\n\n  @HostBinding('style.align-self') get selfAlign() {\n    return this.lgSelfStartDisabled() ? null : 'start';\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;AAMM,IAAO,qBAAP,MAAO,oBAAkB;EAC7B,cAAA;EACA;EAEA,sBAAsB,MAAM,OAAK,GAAA,YAAA,CAAA,EAAA,WAAA,sBAAA,CAAA,IAAA,CAAA,CAAA;EAEjC,IAAqC,YAAS;AAC5C,WAAO,KAAK,oBAAmB,IAAK,OAAO;EAC7C;;qCARW,qBAAkB;EAAA;yEAAlB,qBAAkB,WAAA,CAAA,CAAA,IAAA,eAAA,EAAA,CAAA,GAAA,UAAA,GAAA,cAAA,SAAA,gCAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;AAAlB,MAAA,sBAAA,cAAA,IAAA,SAAA;;;;;sEAAA,oBAAkB,CAAA;UAJ9B;WAAU;MACT,YAAY;MACZ,UAAU;KACX;;UAOE;WAAY,kBAAkB;;;",
+  "names": []
+}

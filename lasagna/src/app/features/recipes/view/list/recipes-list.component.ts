@@ -34,115 +34,120 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {RecipesFiltersComponent} from './recipes-filters.component';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 
 @Component({
   selector: 'lg-recipes-list',
   standalone: true,
   template: `
-    @if (!groupingTiles.empty()) {
-      <lg-controls-bar>
-        <lg-button [icon]="true"
-                   [link]="'/recipes/add'"
-                   [size]="'medium'"
-                   [style]="'primary'">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        </lg-button>
+    @defer {
+      @if (!groupingTiles.empty()) {
+        <lg-controls-bar>
+          <lg-button [icon]="true"
+                     [link]="'/recipes/add'"
+                     [size]="'medium'"
+                     [style]="'primary'">
+            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          </lg-button>
 
-        <lg-inline-separated-group>
-          <ng-template lgInlineSeparatedGroup>
-            <lg-button (click)="exportRecipes(selectionZoneService.selected())"
-                       [flat]="true"
-                       [size]="'small'"
-                       [style]="'solid'">
-              {{ 'export-label'|translate }}
-            </lg-button>
-          </ng-template>
-          <ng-template lgInlineSeparatedGroup>
-            <lg-import (onDone)="loadRecipes()"
-                       [label]="('import-label'|translate)"
-                       [schema]="RecipeScheme"
-                       [storeName]="Stores.RECIPES">
-              <ng-template let-flow="flow" let-row lgImportRowTpl>
-                <span>{{ row?.name }}</span>
-              </ng-template>
-            </lg-import>
-          </ng-template>
-        </lg-inline-separated-group>
-      </lg-controls-bar>
-    }
+          <lg-inline-separated-group>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (click)="exportRecipes(selectionZoneService.selected())"
+                         [flat]="true"
+                         [size]="'small'"
+                         [style]="'solid'">
+                {{ 'export-label'|translate }}
+              </lg-button>
+            </ng-template>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-import (onDone)="loadRecipes()"
+                         [label]="('import-label'|translate)"
+                         [schema]="RecipeScheme"
+                         [storeName]="Stores.RECIPES">
+                <ng-template let-flow="flow" let-row lgImportRowTpl>
+                  <span>{{ row?.name }}</span>
+                </ng-template>
+              </lg-import>
+            </ng-template>
+          </lg-inline-separated-group>
+        </lg-controls-bar>
+      }
 
-    <lg-fade-in>
-      <lg-container>
-        <lg-flex-row [center]="true">
-          <lg-title>
-            {{ 'recipes.list-title'|translate }}
+      <lg-fade-in>
+        <lg-container>
+          <lg-flex-row [center]="true">
+            <lg-title>
+              {{ 'recipes.list-title'|translate }}
 
-            @if (!groupingTiles.empty()) {
-              <span [translateParams]="{length:recipes()?.length}"
-                    [translate]="'filters.results.length'"
-                    class="text-muted text-small"></span>
-            }
-          </lg-title>
-        </lg-flex-row>
-
-        <lg-draft-recipes-list></lg-draft-recipes-list>
-
-
-        <lg-flex-column [size]="'medium'">
-          <lg-flex-row [center]="!isMobile()"
-                       [mobileMode]="true"
-                       [size]="'medium'">
-            <lg-recipes-filters></lg-recipes-filters>
-
-            <lg-grouping-sorting></lg-grouping-sorting>
+              @if (!groupingTiles.empty()) {
+                <span [translateParams]="{length:recipes()?.length}"
+                      [translate]="'filters.results.length'"
+                      class="text-muted text-small"></span>
+              }
+            </lg-title>
           </lg-flex-row>
 
-          @if (!groupingTiles.empty()) {
-            <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-          }
-        </lg-flex-column>
+          <lg-draft-recipes-list></lg-draft-recipes-list>
 
-        <lg-grouping-tiles #groupingTiles
-                           [selectable]="true"
-                           [sortResult]="recipes()">
-          <ng-template let-recipe lgGroupingTile>
-            <lg-card>
-              <lg-flex-column size="medium">
-                <a [routerLink]="'/recipes/edit/' + recipe.uuid">
-                  {{ recipe.name }}
-                </a>
 
-                <lg-flex-row>
-                  <lg-button [flat]="true"
-                             [link]="'/recipes/calculate/' + recipe.uuid"
-                             [size]="'small'"
-                             [style]="'success'">
-                    {{ 'recipes.calculate-btn'|translate }}
-                  </lg-button>
+          <lg-flex-column [size]="'medium'">
+            <lg-flex-row [center]="!isMobile()"
+                         [mobileMode]="true"
+                         [size]="'medium'">
+              <lg-recipes-filters></lg-recipes-filters>
 
-                  <small class="text-muted text-cursive" lgPull>
-                    {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                  </small>
-                </lg-flex-row>
-              </lg-flex-column>
-            </lg-card>
-          </ng-template>
+              <lg-grouping-sorting></lg-grouping-sorting>
+            </lg-flex-row>
 
-          <lg-flex-column empty-state
-                          position="center"
-                          size="medium">
-            {{ 'recipes.empty-state.text'|translate }}
-
-            <lg-button [link]="'/recipes/add'"
-                       [size]="'medium'"
-                       [style]="'primary'">
-              {{ 'recipes.empty-state.btn'|translate }}
-            </lg-button>
+            @if (!groupingTiles.empty()) {
+              <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
+            }
           </lg-flex-column>
-        </lg-grouping-tiles>
-      </lg-container>
-    </lg-fade-in>
+
+          <lg-grouping-tiles #groupingTiles
+                             [selectable]="true"
+                             [sortResult]="recipes()">
+            <ng-template let-recipe lgGroupingTile>
+              <lg-card>
+                <lg-flex-column size="medium">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">
+                    {{ recipe.name }}
+                  </a>
+
+                  <lg-flex-row>
+                    <lg-button [flat]="true"
+                               [link]="'/recipes/calculate/' + recipe.uuid"
+                               [size]="'small'"
+                               [style]="'success'">
+                      {{ 'recipes.calculate-btn'|translate }}
+                    </lg-button>
+
+                    <small class="text-muted text-cursive" lgPull>
+                      {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                    </small>
+                  </lg-flex-row>
+                </lg-flex-column>
+              </lg-card>
+            </ng-template>
+
+            <lg-flex-column empty-state
+                            position="center"
+                            size="medium">
+              {{ 'recipes.empty-state.text'|translate }}
+
+              <lg-button [link]="'/recipes/add'"
+                         [size]="'medium'"
+                         [style]="'primary'">
+                {{ 'recipes.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
+          </lg-grouping-tiles>
+        </lg-container>
+      </lg-fade-in>
+    } @error {
+      {{ 'recipes-list.defer-load-error' | translate }}
+    }
   `,
   providers: [
     SelectionZoneService,
@@ -195,12 +200,16 @@ export class RecipesListComponent {
   }
 
   destroyRef = inject(DestroyRef);
+  isClient = inject(IS_CLIENT);
   recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
   readonly isMobile = matchMediaSignal(mobileBreakpoint);
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this.loadRecipes();
   }
 

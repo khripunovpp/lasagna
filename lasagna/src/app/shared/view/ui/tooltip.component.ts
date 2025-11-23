@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import {NgClass} from '@angular/common';
 import {PortalComponent} from './portal.component';
+import {WINDOW} from '../../service/tokens/window.token';
 
 @Component({
   selector: 'lg-tooltip',
@@ -141,12 +142,13 @@ export class TooltipComponent {
   onClose = output<void>();
   coordinates = signal<{ x: number, y: number }>({x: 0, y: 0});
   maxWidth = signal<number>(0);
+  private readonly _window = inject(WINDOW);
   coordinatesEffect = effect(() => {
 
     // [style.--tooltip-x]="coordinates().x"
     // [style.--tooltip-y]="coordinates().y"
 
-    this.renderer.setProperty(document.body, 'style',
+    this.renderer.setProperty(this._window?.document.body, 'style',
       `
       --tooltip-x: ${this.coordinates().x}px;
       --tooltip-y: ${this.coordinates().y}px;
@@ -207,12 +209,15 @@ export class TooltipComponent {
   private _calculateBoundaries() {
     const tooltip = this.element()?.nativeElement;
     if (!tooltip) return;
+    if (!this._window) {
+      throw new Error('Window is not available');
+    }
 
     const tooltipRect = tooltip.getBoundingClientRect();
     const tooltipWidth = tooltipRect.width;
     const tooltipHeight = tooltipRect.height;
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    const screenWidth = this._window.innerWidth;
+    const screenHeight = this._window.innerHeight;
     const offset = 16;
 
     let newX = this.coordinates().x;

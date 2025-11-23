@@ -8,21 +8,25 @@
       </lg-card>
     }
 
-    <lg-flex-row [mobileMode]="true"
-                 [top]="true"
-                 [wrap]="true"
-                 cols="2">
-      @if (recipes|async) {
-        <lg-card>
-          <lg-last-edited-recipes></lg-last-edited-recipes>
-        </lg-card>
-      }
+    @defer {
+      <lg-flex-row [mobileMode]="true"
+                   [top]="true"
+                   [wrap]="true"
+                   cols="2">
+        @if (recipes.length|async) {
+          <lg-card>
+            <lg-last-edited-recipes></lg-last-edited-recipes>
+          </lg-card>
+        }
 
-      @if (products|async) {
-        <lg-card>
-          <lg-last-edited-products></lg-last-edited-products>
-        </lg-card>
-      }
-    </lg-flex-row>
+        @if (products.length|async) {
+          <lg-card>
+            <lg-last-edited-products></lg-last-edited-products>
+          </lg-card>
+        }
+      </lg-flex-row>
+    } @error {
+      {{'main.defer-load-error' | translate }}
+    }
   </lg-container>
 </lg-fade-in>

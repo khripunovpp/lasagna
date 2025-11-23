@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Renderer2, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, Renderer2, signal, viewChild} from '@angular/core';
 import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
 import {NavigationEnd, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
@@ -7,6 +7,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 import {DropdownComponent} from '../../controls/dropdown/dropdown.component';
 import {DocsService} from '../service/docs.service';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 
 @Component({
@@ -170,11 +171,12 @@ export class DocsThreeComponent
     left: number
     position: string
   } | null>(null);
+  private readonly _window = inject(WINDOW);
 
   getPath(item: string) {
     const segments = item.split('/');
     const mapped = segments.map(segment => segment.replace('.md', ''));
-    return ['/docs'].concat(mapped.filter(Boolean)).join('/');
+    return ['/documents'].concat(mapped.filter(Boolean)).join('/');
   }
 
   toggle(item: any) {
@@ -184,12 +186,13 @@ export class DocsThreeComponent
 
   ngAfterViewInit() {
     setTimeout(() => {
+      if (!this._window) return;
       const dropdown = this.dropdownElementRef();
       if (dropdown) {
         const rect = dropdown.nativeElement.getBoundingClientRect();
         const height = rect.height;
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = this._window.pageYOffset || this._window.document.documentElement.scrollTop;
+        const scrollLeft = this._window.pageXOffset || this._window.document.documentElement.scrollLeft;
         this.placeholderHeight.set(height + 32);
         this.position.set({
           top: rect.top + scrollTop,

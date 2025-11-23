@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/delete-confirmation-popover/delete-confirmation.service.ts"],
+  "sourcesContent": ["import {Injectable, signal} from '@angular/core';\n\n@Injectable()\nexport class DeleteConfirmationService {\n  readonly settings = signal<{\n    onSuccess: () => void\n    onCancel?: () => void\n    message?: string\n    confirmText?: string\n    cancelText?: string\n    withLock?: boolean\n  } | null>(null);\n\n  configure({\n              onSuccess,\n              onCancel,\n              message,\n              confirmText ,\n              cancelText,\n    withLock,\n            }: {\n    onSuccess: () => void | Promise<void>,\n    onCancel?: () => void | Promise<void>,\n    message?: string,\n    confirmText?: string,\n    cancelText?: string,\n    withLock?: boolean\n  }) {\n    this.settings.set({onSuccess, onCancel, message, confirmText, cancelText,withLock});\n  }\n}\n"],
+  "mappings": ";;;;;;;;AAGM,IAAO,4BAAP,MAAO,2BAAyB;EAC3B,WAAW,OAOV,MAAI,GAAA,YAAA,CAAA,EAAA,WAAA,WAAA,CAAA,IAAA,CAAA,CAAA;EAEd,UAAU,EACE,WACA,UACA,SACA,aACA,YACV,SAAQ,GAQT;AACC,SAAK,SAAS,IAAI,EAAC,WAAW,UAAU,SAAS,aAAa,YAAW,SAAQ,CAAC;EACpF;;qCA1BW,4BAAyB;EAAA;4EAAzB,4BAAyB,SAAzB,2BAAyB,UAAA,CAAA;;;sEAAzB,2BAAyB,CAAA;UADrC;;;",
+  "names": []
+}
