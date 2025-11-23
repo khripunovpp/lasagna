@@ -191,7 +191,6 @@ export class MultiselectComponent
 
   writeValue(value: unknown): void {
     this.change(value);
-    this.selectComponent()!.searchTerm = '';
   }
 
   change(value: unknown) {

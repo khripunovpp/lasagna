@@ -205,7 +205,6 @@ export class AutocompleteComponent
 
   writeValue(value: unknown): void {
     this.change(value);
-    this.selectComponent()!.searchTerm = '';
   }
 
   change(value: unknown) {
@@ -249,9 +248,6 @@ export class AutocompleteComponent
     } else {
       this.loadedList.set(event.items as any);
     }
-
-    // Устанавливаем правильный текст в поиске
-    this.selectComponent()!.searchTerm = this._capitalizeFirstLetter(event.term);
   }
 
   onBlur() {
