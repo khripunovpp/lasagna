@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/products/service/Product.scheme.ts"],
+  "sourcesContent": ["import {z} from 'zod';\nimport {UnitScheme} from '../../recipes/service/schemes/Unit.scheme';\n\nexport const ProductScheme = z.object({\n  name: z.string(),\n  price: z.number().or(z.string()),\n  amount: z.number().or(z.string()),\n  source: z.string(),\n  brand: z.string(),\n  notes: z.string(),\n  category_id: z.string().nullable().optional(),\n  uuid: z.string().optional(),\n  unit: UnitScheme.or(z.string()).optional(),\n  createdAt: z.union([z.string(), z.number()]).optional(),\n  updatedAt: z.union([z.string(), z.number()]).optional(),\n  color: z.string().optional(),\n  system: z.boolean().optional(),\n});\n\n\nexport type ProductDTO = z.infer<typeof ProductScheme>;\n"],
+  "mappings": ";;;;;;AAGO,IAAM,gBAAgB,EAAE,OAAO;EACpC,MAAM,EAAE,OAAM;EACd,OAAO,EAAE,OAAM,EAAG,GAAG,EAAE,OAAM,CAAE;EAC/B,QAAQ,EAAE,OAAM,EAAG,GAAG,EAAE,OAAM,CAAE;EAChC,QAAQ,EAAE,OAAM;EAChB,OAAO,EAAE,OAAM;EACf,OAAO,EAAE,OAAM;EACf,aAAa,EAAE,OAAM,EAAG,SAAQ,EAAG,SAAQ;EAC3C,MAAM,EAAE,OAAM,EAAG,SAAQ;EACzB,MAAM,WAAW,GAAG,EAAE,OAAM,CAAE,EAAE,SAAQ;EACxC,WAAW,EAAE,MAAM,CAAC,EAAE,OAAM,GAAI,EAAE,OAAM,CAAE,CAAC,EAAE,SAAQ;EACrD,WAAW,EAAE,MAAM,CAAC,EAAE,OAAM,GAAI,EAAE,OAAM,CAAE,CAAC,EAAE,SAAQ;EACrD,OAAO,EAAE,OAAM,EAAG,SAAQ;EAC1B,QAAQ,EAAE,QAAO,EAAG,SAAQ;CAC7B;",
+  "names": []
+}

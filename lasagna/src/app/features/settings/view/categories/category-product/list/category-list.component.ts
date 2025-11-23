@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import {ButtonComponent} from '../../../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../../../shared/view/layout/flex-row.component';
 import {MatIcon} from '@angular/material/icon';
-import {TitleComponent} from '../../../../../../shared/view/layout/title.component';
 import {CardListComponent} from '../../../../../../shared/view/ui/card/card-list.component';
 import {CardListItemDirective} from '../../../../../../shared/view/ui/card/card-list-item.directive';
 import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.component';
@@ -15,6 +14,7 @@ import {errorHandler} from '../../../../../../shared/helpers';
 import {defer} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
+import {IS_CLIENT} from '../../../../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-category-list',
@@ -51,7 +51,6 @@ import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-col
     FlexRowComponent,
     ButtonComponent,
     MatIcon,
-    TitleComponent,
     CardListComponent,
     CardListItemDirective,
     FadeInComponent,
@@ -78,6 +77,7 @@ export class CategoryListComponent
 
   @Output() onEdit = new EventEmitter<string>();
   categories = defer(() => this.categoryRepository.categories$);
+  isClient = inject(IS_CLIENT);
 
   deleteCategory(
     category: CategoryProduct,
@@ -96,6 +96,9 @@ export class CategoryListComponent
   }
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this.loadCategory();
   }
 

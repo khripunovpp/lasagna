@@ -1,4 +1,4 @@
-import {Component, computed, signal, viewChild} from '@angular/core';
+import {Component, computed, inject, signal, viewChild} from '@angular/core';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddInvoiceFormComponent} from './add-invoice-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,6 +26,7 @@ import {InvoiceState} from '@invoices/service/Inovice/InvoiceState';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 
 @Component({
@@ -49,119 +50,123 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
     SelfStartDirective,
   ],
   template: `
-    <lg-fade-in>
-      <lg-container>
-        <lg-flex-column size="medium">
-          <lg-flex-row [center]="true"
-                       [mobileMode]="true"
-                       [mobileReverse]="true">
-            @if (currentInvoice()?.uuid) {
-              <lg-title lgSelfStart>
-                {{ currentInvoice()?.name }}
-              </lg-title>
-            } @else {
-              <lg-title lgSelfStart>
-                {{ 'invoices.new-invoice' | translate }}
-              </lg-title>
-            }
+    @defer {
+      <lg-fade-in>
+        <lg-container>
+          <lg-flex-column size="medium">
+            <lg-flex-row [center]="true"
+                         [mobileMode]="true"
+                         [mobileReverse]="true">
+              @if (currentInvoice()?.uuid) {
+                <lg-title lgSelfStart>
+                  {{ currentInvoice()?.name }}
+                </lg-title>
+              } @else {
+                <lg-title lgSelfStart>
+                  {{ 'invoices.new-invoice' | translate }}
+                </lg-title>
+              }
 
-            <span [ngClass]="stateBadgeClass()" lgSelfStart>
+              <span [ngClass]="stateBadgeClass()" lgSelfStart>
                 {{ stateLabel() }}
               </span>
 
 
-            <lg-inline-separated-group lgPull lgShrink>
-              @if (currentInvoice()?.canMarkPaid) {
-                <ng-template lgInlineSeparatedGroup>
-                  <lg-button (click)="changeState('paid')"
-                             [flat]="true"
-                             [style]="'success'"
-                             lgShrink>
-                    {{ 'invoices.mark-as-paid' | translate }}
-                  </lg-button>
-                </ng-template>
-              }
+              <lg-inline-separated-group lgPull lgShrink>
+                @if (currentInvoice()?.canMarkPaid) {
+                  <ng-template lgInlineSeparatedGroup>
+                    <lg-button (click)="changeState('paid')"
+                               [flat]="true"
+                               [style]="'success'"
+                               lgShrink>
+                      {{ 'invoices.mark-as-paid' | translate }}
+                    </lg-button>
+                  </ng-template>
+                }
 
-              @if (currentInvoice()?.canCancel) {
-                <ng-template lgInlineSeparatedGroup>
-                  <lg-button (click)="changeState('cancelled')"
-                             [flat]="true"
-                             [style]="'danger'"
-                             lgShrink>
-                    {{ 'invoices.mark-as-canceled' | translate }}
-                  </lg-button>
-                </ng-template>
-              }
-            </lg-inline-separated-group>
-          </lg-flex-row>
+                @if (currentInvoice()?.canCancel) {
+                  <ng-template lgInlineSeparatedGroup>
+                    <lg-button (click)="changeState('cancelled')"
+                               [flat]="true"
+                               [style]="'danger'"
+                               lgShrink>
+                      {{ 'invoices.mark-as-canceled' | translate }}
+                    </lg-button>
+                  </ng-template>
+                }
+              </lg-inline-separated-group>
+            </lg-flex-row>
 
 
-          <lg-inline-separated-group>
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button (onClick)="generatePDF()"
-                         [disabled]="!!currentInvoice()?.canBeUpdated"
-                         [flat]="true"
-                         [style]="'success'"
-                         lgShrink>
-                {{ 'invoices.generate-pdf' | translate }}
-              </lg-button>
-            </ng-template>
-
-            @if (currentInvoice()?.canCopy) {
+            <lg-inline-separated-group>
               <ng-template lgInlineSeparatedGroup>
-                <lg-button (onClick)="copyInvoice()"
+                <lg-button (onClick)="generatePDF()"
+                           [disabled]="!!currentInvoice()?.canBeUpdated"
                            [flat]="true"
-                           [style]="'warning'"
+                           [style]="'success'"
                            lgShrink>
-                  {{ 'invoices.copy' | translate }}
+                  {{ 'invoices.generate-pdf' | translate }}
                 </lg-button>
               </ng-template>
-            }
 
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button (onClick)="onDeleteInvoice()" [flat]="true"
-                         [style]="'danger'"
-                         lgShrink>
-                {{ 'invoices.delete' | translate }}
-              </lg-button>
-            </ng-template>
-          </lg-inline-separated-group>
-
-          @if (currentInvoice()?.updatedAt) {
-            <small class="text-muted text-cursive">
-              {{ 'edited-at-label'|translate }} {{ currentInvoice()?.updatedAt | timeAgo }}
-            </small>
-          }
-        </lg-flex-column>
-
-        <lg-add-invoice-form #formComponent></lg-add-invoice-form>
-
-        @if (currentInvoice()?.canBeUpdated) {
-          <lg-flex-row [mobileMode]="true"
-                       [relaxed]="true">
-            <lg-button (click)="editInvoice()"
-                       [disabled]="!formComponent?.form?.dirty || !currentInvoice()?.canBeUpdated"
-                       [style]="'primary'"
-                       [outlined]="!!currentInvoice()?.canIssue"
-                       lgShrink>
-              @if (formComponent?.form?.dirty && currentInvoice()?.canBeUpdated) {
-                {{ 'invoices.save-changes' | translate }}
-              } @else {
-                {{ 'invoices.nothing-to-save' | translate }}
+              @if (currentInvoice()?.canCopy) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button (onClick)="copyInvoice()"
+                             [flat]="true"
+                             [style]="'warning'"
+                             lgShrink>
+                    {{ 'invoices.copy' | translate }}
+                  </lg-button>
+                </ng-template>
               }
-            </lg-button>
 
-            @if (currentInvoice()?.canIssue) {
-              <lg-button (click)="issueInvoice()"
-                         [style]="'primary'"
-                         lgShrink>
-                {{ 'invoices.issue-and-download' | translate }}
-              </lg-button>
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button (onClick)="onDeleteInvoice()" [flat]="true"
+                           [style]="'danger'"
+                           lgShrink>
+                  {{ 'invoices.delete' | translate }}
+                </lg-button>
+              </ng-template>
+            </lg-inline-separated-group>
+
+            @if (currentInvoice()?.updatedAt) {
+              <small class="text-muted text-cursive">
+                {{ 'edited-at-label'|translate }} {{ currentInvoice()?.updatedAt | timeAgo }}
+              </small>
             }
-          </lg-flex-row>
-        }
-      </lg-container>
-    </lg-fade-in>
+          </lg-flex-column>
+
+          <lg-add-invoice-form #formComponent></lg-add-invoice-form>
+
+          @if (currentInvoice()?.canBeUpdated) {
+            <lg-flex-row [mobileMode]="true"
+                         [relaxed]="true">
+              <lg-button (click)="editInvoice()"
+                         [disabled]="!formComponent?.form?.dirty || !currentInvoice()?.canBeUpdated"
+                         [style]="'primary'"
+                         [outlined]="!!currentInvoice()?.canIssue"
+                         lgShrink>
+                @if (formComponent?.form?.dirty && currentInvoice()?.canBeUpdated) {
+                  {{ 'invoices.save-changes' | translate }}
+                } @else {
+                  {{ 'invoices.nothing-to-save' | translate }}
+                }
+              </lg-button>
+
+              @if (currentInvoice()?.canIssue) {
+                <lg-button (click)="issueInvoice()"
+                           [style]="'primary'"
+                           lgShrink>
+                  {{ 'invoices.issue-and-download' | translate }}
+                </lg-button>
+              }
+            </lg-flex-row>
+          }
+        </lg-container>
+      </lg-fade-in>
+    } @error {
+      {{ 'invoices.defer-load-error' | translate }}
+    }
   `,
   styles: [
     `
@@ -203,6 +208,7 @@ export class AddInvoiceComponent {
     const state = this.currentInvoice()!.state;
     return stateToBadgeClassMap[state || 'draft'];
   });
+  private readonly _window = inject(WINDOW);
 
   onDeleteInvoice() {
     if (!this.currentInvoice()?.uuid) {
@@ -230,7 +236,7 @@ export class AddInvoiceComponent {
     this._invoicesRepository.createCopy(this.currentInvoice()!).then((newUUID) => {
       this._notificationsService.success('invoices.copied');
       this.router.navigate(['invoices', 'edit', newUUID]).then(() => {
-        window.location.reload();
+        this._window?.location.reload();
       })
     }).catch(err => {
       this._notificationsService.error(errorHandler(err));

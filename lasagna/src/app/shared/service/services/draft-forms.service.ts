@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {generateUuid} from '../../helpers/attribute.helper';
+import {WINDOW} from '../tokens/window.token';
 
 // ключами временных форм будут timestamp
 
@@ -21,9 +22,11 @@ export class DraftFormsService {
   constructor() {
   }
 
+  private readonly _window = inject(WINDOW);
+
   getDraftForms = <T extends Record<string, any>>(store: string): Record<string, DraftForm<T>> | null => {
     try {
-      const draftForm = localStorage.getItem(store);
+      const draftForm = this._window?.localStorage.getItem(store);
       if (!draftForm) {
         return null;
       }
@@ -33,7 +36,6 @@ export class DraftFormsService {
       return null;
     }
   }
-
 
   setDraftForm = <T extends Record<string, any>>(
     store: string,
@@ -59,7 +61,7 @@ export class DraftFormsService {
     };
 
     try {
-      localStorage.setItem(store, JSON.stringify(valueToStore));
+      this._window?.localStorage.setItem(store, JSON.stringify(valueToStore));
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }
@@ -93,7 +95,7 @@ export class DraftFormsService {
     }
 
     try {
-      localStorage.setItem(store, JSON.stringify(valueToStore));
+      this._window?.localStorage.setItem(store, JSON.stringify(valueToStore));
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }
@@ -117,11 +119,11 @@ export class DraftFormsService {
           delete draftForm[key];
         }
       } else {
-        localStorage.removeItem(store);
+        this._window?.localStorage.removeItem(store);
         return;
       }
 
-      localStorage.setItem(store, JSON.stringify(draftForm));
+      this._window?.localStorage.setItem(store, JSON.stringify(draftForm));
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }

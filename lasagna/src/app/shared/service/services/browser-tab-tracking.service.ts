@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +24,13 @@ export class BrowserTabTrackingService {
   disableProtection(): void {
     this.hasUnsavedChanges = false;
   }
+  private readonly _window = inject(WINDOW);
 
   /**
    * Подписка на системное событие `beforeunload`
    */
   private initBeforeUnloadListener(): void {
-    window.addEventListener('beforeunload', (event) => {
+    this._window?.addEventListener('beforeunload', (event) => {
       if (this.hasUnsavedChanges) {
         event.preventDefault();
         event.returnValue = ''; // Стандартный текст будет показан браузером

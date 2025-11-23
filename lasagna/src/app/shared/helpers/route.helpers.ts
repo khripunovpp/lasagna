@@ -1,7 +1,8 @@
-import {assertInInjectionContext, computed, inject, signal, Signal} from '@angular/core';
+import {assertInInjectionContext, inject, Signal} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {filter, map, pairwise, take} from 'rxjs';
+import {filter, map, pairwise, startWith, take} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 export function injectParams<T = Params | string | null>(
   keyOrTransform?: string | ((params: Params) => T),
@@ -51,25 +52,20 @@ export function routeChangeSignal(
   router: Router,
   compareStrictly: boolean = true,
 ) {
-  const routes = signal<[string | null, string | null]>(['', '']);
-
-  router.events.pipe(
+  return toSignal(router.events.pipe(
     filter(event => event instanceof NavigationEnd),
+    startWith({url: ''}),
     map(event => {
       const url = (event as NavigationEnd).url;
 
-      return compareStrictly
+      return String(compareStrictly
         ? url
-        : url.split('?')[0].split('#')[0]
+        : url.split('?')[0].split('#')[0])
     }),
     pairwise(),
-  ).subscribe((urls) => {
-    if (urls[0] !== urls[1]) {
-      routes.set(urls);
-    }
-  });
-
-  return computed(() => routes());
+    filter((urls) => urls[0] !== urls[1]),
+    tap(event => console.log('Router event:', event)),
+  ))
 }
 
 export const getURLWithoutParams = (url: string): string => {

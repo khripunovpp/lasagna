@@ -26,112 +26,117 @@ import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/
 import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';
 
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-invoices-list',
   standalone: true,
   template: `
-    @if (invoices()?.length) {
-      <lg-controls-bar>
-        <lg-button (click)="onAddInvoice()"
-                   [icon]="true"
-                   [size]="'medium'"
-                   [style]="'primary'">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        </lg-button>
-      </lg-controls-bar>
+    @defer {
+      @if (invoices()?.length) {
+        <lg-controls-bar>
+          <lg-button (click)="onAddInvoice()"
+                     [icon]="true"
+                     [size]="'medium'"
+                     [style]="'primary'">
+            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          </lg-button>
+        </lg-controls-bar>
+      }
+
+      <lg-fade-in>
+        <lg-container>
+          <lg-title>
+            {{ 'invoices.list-title' | translate }}
+          </lg-title>
+
+          @if (isDevMode()) {
+
+            @if (invoices()?.length) {
+              <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
+            }
+
+            @for (category of invoices(); track ic; let ic = $index) {
+              <lg-title [level]="3">
+                {{ category?.group_key || ('without-category-label'|translate) }}
+              </lg-title>
+
+              <lg-card-list [mode]="selectionZoneService.selectionMode()"
+                            (onSelected)="selectionZoneService.putSelected($event)"
+                            (onDeleteOne)="deleteOne($event)"
+                            [selectAll]="selectionZoneService.selectAll()"
+                            [deselectAll]="selectionZoneService.deselectAll()">
+                @for (invoice of category.items; track (invoice.uuid ?? '') + i; let i = $index) {
+                  <ng-template lgCardListItem
+                               [uuid]="invoice.uuid"
+                               [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
+                               type="invoice">
+                    <lg-flex-column size="medium">
+                      <lg-flex-row [mobileMode]="true"
+                                   size="small"
+                                   [left]="true">
+                        <a [routerLink]="'/invoices/edit/' + invoice.uuid" lgExpand>
+                          {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
+                        </a>
+
+                        <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
+                          {{ stateLabels()?.[ic]?.[i] }}
+                        </div>
+
+                      </lg-flex-row>
+
+                      <lg-flex-row [mobileMode]="true"
+                                   size="small"
+                                   [left]="true">
+
+                        @if (!invoice.cancelled) {
+                          <div>
+                            {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
+                          </div>
+                        }
+
+                        @if (invoice.issued) {
+                          <div>
+                            {{ 'invoices.days-left' | translate }}:
+                            @if (invoice.overdue) {
+                              {{ 'invoices.days-left.overdue' | translate }}
+                            } @else {
+                              {{ invoice.daysLeft }}
+                            }
+                          </div>
+                        }
+
+
+                        <small class="text-muted text-cursive"
+                               lgPull
+                               [attr.title]="(invoice?.updatedAt || invoice?.createdAt) | date:'short'">
+                          {{ 'edited-at-label'|translate }} {{ (invoice?.updatedAt || invoice?.createdAt) | timeAgo }}
+                        </small>
+                      </lg-flex-row>
+                    </lg-flex-column>
+                  </ng-template>
+                }
+              </lg-card-list>
+            } @empty {
+              <lg-flex-column position="center"
+                              size="medium">
+                {{ 'invoices.empty-state.text'|translate }}
+
+                <lg-button (click)="onAddInvoice()"
+                           [style]="'primary'"
+                           [size]="'medium'">
+                  {{ 'invoices.empty-state.btn'|translate }}
+                </lg-button>
+              </lg-flex-column>
+            }
+          } @else {
+            {{ 'invoices.soon.text'|translate }}
+          }
+        </lg-container>
+      </lg-fade-in>
+    } @error {
+      {{ 'invoices-list.defer-load-error' | translate }}
     }
-
-    <lg-fade-in>
-      <lg-container>
-        <lg-title>
-          {{ 'invoices.list-title' | translate }}
-        </lg-title>
-
-        @if (isDevMode()) {
-
-          @if (invoices()?.length) {
-            <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
-          }
-
-          @for (category of invoices(); track $index; let ic = $index) {
-            <lg-title [level]="3">
-              {{ category?.group_key || ('without-category-label'|translate) }}
-            </lg-title>
-
-            <lg-card-list [mode]="selectionZoneService.selectionMode()"
-                          (onSelected)="selectionZoneService.putSelected($event)"
-                          (onDeleteOne)="deleteOne($event)"
-                          [selectAll]="selectionZoneService.selectAll()"
-                          [deselectAll]="selectionZoneService.deselectAll()">
-              @for (invoice of category.items; track (invoice.uuid ?? '') + $index; let i = $index) {
-                <ng-template lgCardListItem
-                             [uuid]="invoice.uuid"
-                             [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
-                             type="invoice">
-                  <lg-flex-column size="medium">
-                    <lg-flex-row [mobileMode]="true"
-                                 size="small"
-                                 [left]="true">
-                      <a [routerLink]="'/invoices/edit/' + invoice.uuid" lgExpand>
-                        {{ invoice.name }} - #{{ invoice.prefix }}/{{ invoice.invoice_number }}
-                      </a>
-
-                      <div [ngClass]="stateBadgeClasses()?.[ic]?.[i]">
-                        {{ stateLabels()?.[ic]?.[i] }}
-                      </div>
-
-                    </lg-flex-row>
-
-                    <lg-flex-row [mobileMode]="true"
-                                 size="small"
-                                 [left]="true">
-
-                      @if (!invoice.cancelled) {
-                        <div>
-                          {{ 'invoices.date-due' | translate }}: {{ invoice.date_due | date:'shortDate' }}
-                        </div>
-                      }
-
-                      @if (invoice.issued) {
-                        <div>
-                          {{ 'invoices.days-left' | translate }}:
-                          @if (invoice.overdue) {
-                            {{ 'invoices.days-left.overdue' | translate }}
-                          } @else {
-                            {{ invoice.daysLeft }}
-                          }
-                        </div>
-                      }
-
-
-                      <small class="text-muted text-cursive"
-                             lgPull
-                             [attr.title]="(invoice?.updatedAt || invoice?.createdAt) | date:'short'">
-                        {{ 'edited-at-label'|translate }} {{ (invoice?.updatedAt || invoice?.createdAt) | timeAgo }}
-                      </small>
-                    </lg-flex-row>
-                  </lg-flex-column>
-                </ng-template>
-              }
-            </lg-card-list>
-          } @empty {
-            <lg-flex-column position="center"
-                            size="medium">
-              {{ 'invoices.empty-state.text'|translate }}
-
-              <lg-button (click)="onAddInvoice()"
-                         [style]="'primary'"
-                         [size]="'medium'">
-                {{ 'invoices.empty-state.btn'|translate }}
-              </lg-button>
-            </lg-flex-column>
-          }
-        } @else {
-          {{ 'invoices.soon.text'|translate }}
-        }
-      </lg-container>
-    </lg-fade-in>
   `,
   imports: [
     FlexRowComponent,
@@ -189,6 +194,7 @@ export class InvoicesListComponent
       })
     });
   });
+  isClient = inject(IS_CLIENT);
   protected readonly Stores = Stores;
   private _userLang = inject(USER_LANGUAGE);
   stateLabels = computed(() => {
@@ -220,6 +226,9 @@ export class InvoicesListComponent
   }
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this.loadItems();
   }
 

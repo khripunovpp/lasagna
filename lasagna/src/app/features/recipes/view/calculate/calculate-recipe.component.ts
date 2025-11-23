@@ -56,6 +56,8 @@ import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -113,6 +115,8 @@ export class CalculateRecipeComponent
     private _analyticsService: AnalyticsService,
     private _settingsService: SettingsService,
   ) {
+    if (this.isClient) {
+
     this._aRoute.data.pipe(
       takeUntilDestroyed(),
     ).subscribe((data) => {
@@ -142,8 +146,10 @@ export class CalculateRecipeComponent
         type: recipePriceModifiers?.type,
       });
     });
+    }
   }
 
+  isClient = inject(IS_CLIENT);
   readonly userSettings = inject(SETTINGS)
   readonly precisions = computed(() => this._settingsService.settingsSignal()?.getSetting(SettingsKeysConst.pricePrecision)?.data ?? 2);
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
@@ -251,13 +257,15 @@ export class CalculateRecipeComponent
   });
   protected readonly difference = difference;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
+  private readonly _window = inject(WINDOW);
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    (window as any)['chartPrices'] = this.chartPrices;
-    (window as any)['chartWeight'] = this.chartWeight;
+    if (!this._window) return;
+    this._window['chartPrices'] = this.chartPrices;
+    this._window['chartWeight'] = this.chartWeight;
 
     this.recipePriceAdditionsForm.valueChanges
       .pipe(

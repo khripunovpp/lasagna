@@ -6,6 +6,7 @@ import {SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
 import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
 import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class SettingsService {
     color: '#4CAF50',
   })
   private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
+  private readonly _window = inject(WINDOW);
 
   get lang() {
     return this._localisationService.lang;
@@ -43,7 +45,7 @@ export class SettingsService {
       // Sync language to localStorage for JavaScript files
       const lang = settings?.getSetting<string>(SettingsKeysConst.lang)?.data;
       if (lang) {
-        localStorage.setItem('lang', lang);
+        this._window?.localStorage.setItem('lang', lang);
       }
       this._logger.log('Settings loaded', settings);
       return settings;
@@ -67,7 +69,7 @@ export class SettingsService {
       const defaultLang = this._localisationService.lang();
       this.settingsModel?.addSetting(SettingsKeysConst.lang, defaultLang);
       // Store language in localStorage for JavaScript files
-      localStorage.setItem('lang', defaultLang);
+      this._window?.localStorage.setItem('lang', defaultLang);
       changed = true;
     }
     if (!this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data) {
@@ -91,7 +93,7 @@ export class SettingsService {
     this._localisationService.changeLang(lang);
     this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
     // Store language in localStorage for JavaScript files
-    localStorage.setItem('lang', lang);
+    this._window?.localStorage.setItem('lang', lang);
     return this.saveSettings();
   }
 

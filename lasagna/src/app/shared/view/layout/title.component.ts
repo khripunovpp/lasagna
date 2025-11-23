@@ -8,7 +8,8 @@ import {NgClass} from '@angular/common';
       <p [class.title--flat]="flat()"
          [ngClass]="'title--' + level()"
          class="title"
-         role="heading">
+         role="heading"
+         aria-level="{{ level() }}">
           <ng-content></ng-content>
       </p>`,
   imports: [

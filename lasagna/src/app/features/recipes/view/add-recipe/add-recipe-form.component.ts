@@ -49,6 +49,7 @@ import {errorHandler} from '../../../../shared/helpers';
 import {HtmlEditorComponent} from '../../../../shared/view/ui/html-editor/html-editor.component';
 import {ControlTemplateDirective} from '../../../controls/form/control-template.directive';
 import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-per-unit.component';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -119,6 +120,7 @@ export class AddRecipeFormComponent
   recipeFieldState = signal<Record<number, boolean>>({});
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
+  isClient = inject(IS_CLIENT);
   protected readonly UnitValue = UnitValue;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   private recipeEffect = effect(() => {
@@ -207,6 +209,9 @@ export class AddRecipeFormComponent
   }
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     this._loadUsingHistory();
     this.form.valueChanges.pipe(
       debounceTime(100),

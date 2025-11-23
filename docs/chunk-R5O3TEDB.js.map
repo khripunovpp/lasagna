@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/helpers/assets/currency.helper.ts"],
+  "sourcesContent": ["export const currencyStringToSymbol = (currency: string): string => {\n  try {\n    const symbol = Intl.NumberFormat('en', {\n      style: 'currency',\n      currency: currency\n    }).formatToParts().find(part => part.type === 'currency')?.value ?? '';\n\n    return currencyMapToHumanReadable[currency] || symbol;\n  } catch {\n    return currency;\n  }\n}\n\nexport const currencyMapToHumanReadable: Record<string, string> = {\n  RUB: 'руб.',\n  USD: '$',\n  EUR: '€',\n  GBP: '£',\n  CNY: '¥',\n  JPY: '¥',\n  INR: '₹',\n  KRW: '₩',\n  AUD: 'A$',\n  CAD: 'C$',\n};\n"],
+  "mappings": ";AAAO,IAAM,yBAAyB,CAAC,aAA4B;AACjE,MAAI;AACF,UAAM,SAAS,KAAK,aAAa,MAAM;MACrC,OAAO;MACP;KACD,EAAE,cAAa,EAAG,KAAK,UAAQ,KAAK,SAAS,UAAU,GAAG,SAAS;AAEpE,WAAO,2BAA2B,QAAQ,KAAK;EACjD,QAAQ;AACN,WAAO;EACT;AACF;AAEO,IAAM,6BAAqD;EAChE,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;EACL,KAAK;;",
+  "names": []
+}

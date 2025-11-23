@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {SelectResourceLoader} from './select-resources.service';
 import {of} from 'rxjs';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class LocalstorageSelectLoaderService
   constructor() {
   }
 
+  private readonly _window = inject(WINDOW);
+
   load(
     name: string
   ) {
@@ -18,7 +21,7 @@ export class LocalstorageSelectLoaderService
     }
     return new Promise<any[]>((resolve, reject) => {
       try {
-        const parsedData = JSON.parse(localStorage.getItem(name) || '[]');
+        const parsedData = JSON.parse(this._window?.localStorage.getItem(name) || '[]');
         resolve(parsedData);
       } catch (e) {
         reject(e);

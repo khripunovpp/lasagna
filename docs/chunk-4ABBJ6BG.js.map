@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/controls/form/control-extra-template.directive.ts"],
+  "sourcesContent": ["import {Directive, input, TemplateRef} from '@angular/core';\n\n@Directive({\n  selector: '[lgExtraTpl]',\n  standalone: true,\n})\nexport class ControlExtraTemplateDirective {\n  constructor(\n    public templateRef: TemplateRef<any>,\n  ) {\n  }\n\n  place = input<'before' | 'after' | 'top' | 'bottom'>('after');\n}\n"],
+  "mappings": ";;;;;;;;;;;AAMM,IAAO,gCAAP,MAAO,+BAA6B;EAE/B;EADT,YACS,aAA6B;AAA7B,SAAA,cAAA;EAET;EAEA,QAAQ,MAA6C,SAAO,GAAA,YAAA,CAAA,EAAA,WAAA,QAAA,CAAA,IAAA,CAAA,CAAA;;qCANjD,gCAA6B,4BAAA,WAAA,CAAA;EAAA;yEAA7B,gCAA6B,WAAA,CAAA,CAAA,IAAA,cAAA,EAAA,CAAA,GAAA,QAAA,EAAA,OAAA,CAAA,GAAA,OAAA,EAAA,EAAA,CAAA;;;sEAA7B,+BAA6B,CAAA;UAJzC;WAAU;MACT,UAAU;MACV,YAAY;KACb;;;",
+  "names": []
+}

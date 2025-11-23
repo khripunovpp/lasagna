@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
-import {isPwa} from '../../../shared/helpers/match-media.helper';
+import {IS_PWA} from '../../../shared/helpers/match-media.helper';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-pwa-install',
@@ -44,16 +45,20 @@ import {errorHandler} from '../../../shared/helpers';
 })
 export class PwaInstallComponent implements OnInit {
   readonly showButton = signal(false);
-  readonly isPwa = isPwa;
+  readonly isPwa = inject(IS_PWA);
   private readonly analyticsService = inject(AnalyticsService);
   private readonly _notificationsService = inject(NotificationsService);
   private _deferredPrompt: any = null;
+  private readonly _window = inject(WINDOW);
 
   ngOnInit(): void {
     if (this._alreadyDeclined()) {
       return;
     }
-    window.addEventListener('beforeinstallprompt', (e: Event) => {
+    if (!this._window) {
+      return;
+    }
+    this._window.addEventListener('beforeinstallprompt', (e: Event) => {
       if (this._alreadyDeclined()) {
         return;
       }
@@ -61,7 +66,7 @@ export class PwaInstallComponent implements OnInit {
       this.showButton.set(true);
     });
 
-    window.addEventListener('appinstalled', () => {
+    this._window.addEventListener('appinstalled', () => {
       this._onSuccess();
     });
   }
@@ -89,7 +94,7 @@ export class PwaInstallComponent implements OnInit {
 
   private _alreadyDeclined(): boolean {
     try {
-      return localStorage.getItem('pwa-install-declined') === 'true';
+      return this._window?.localStorage.getItem('pwa-install-declined') === 'true';
     } catch {
       return false;
     }
@@ -97,7 +102,7 @@ export class PwaInstallComponent implements OnInit {
 
   private _setDeclinedStatus(value: boolean): void {
     try {
-      localStorage.setItem('pwa-install-declined', value ? 'true' : 'false');
+      this._window?.localStorage.setItem('pwa-install-declined', value ? 'true' : 'false');
     } catch {
       // ignore
     }

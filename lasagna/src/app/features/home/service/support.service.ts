@@ -4,6 +4,7 @@ import {catchError, map} from 'rxjs/operators';
 import {SendPulseEmailData, SendPulseService} from '../../../shared/service/services/sendpulse.service';
 import {LoggerService} from '../../logger/logger.service';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 export interface SupportMessageData {
   name: string;
@@ -190,13 +191,13 @@ export class SupportService {
    */
   clearRateLimit(): void {
     try {
-      localStorage.removeItem(this.rateLimitKey);
+      this._window?.localStorage.removeItem(this.rateLimitKey);
       this.logger.log('Rate limit data cleared');
     } catch (error) {
       console.error('Error clearing rate limit data', error);
     }
   }
-
+  private readonly _window = inject(WINDOW);
   /**
    * Send analytics event for support message
    * @param additionalData Дополнительные данные для события
@@ -229,7 +230,7 @@ export class SupportService {
    */
   private getRateLimitData(): RateLimitEntry[] {
     try {
-      const data = localStorage.getItem(this.rateLimitKey);
+      const data = this._window?.localStorage.getItem(this.rateLimitKey);
       return data ? JSON.parse(data) : [];
     } catch (error) {
       this.logger.error('Failed to parse rate limit data', error);
@@ -242,7 +243,7 @@ export class SupportService {
    */
   private saveRateLimitData(data: RateLimitEntry[]): void {
     try {
-      localStorage.setItem(this.rateLimitKey, JSON.stringify(data));
+      this._window?.localStorage.setItem(this.rateLimitKey, JSON.stringify(data));
     } catch (error) {
       this.logger.error('Failed to save rate limit data', error);
     }

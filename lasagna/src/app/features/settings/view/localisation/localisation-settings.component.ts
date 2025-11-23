@@ -10,6 +10,7 @@ import {SelfStartDirective} from '../../../../shared/view/directives/self-start.
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 
 @Component({
@@ -81,6 +82,7 @@ export class LocalisationSettingsComponent {
     'ru': 'settings.language.russian',
   };
   readonly selectedLangModel = model<boolean[]>([]);
+  readonly onlyOneLanguage = computed(() => this.languages().length <= 1);
   private readonly _notificationsService = inject(NotificationsService);
   private readonly _settingsService = inject(SettingsService);
   readonly selectedLang: Signal<string> = this._settingsService.lang;
@@ -91,13 +93,13 @@ export class LocalisationSettingsComponent {
         name: this.langsMap[lang] ? this.langsMap[lang] : lang,
       }));
   });
-  readonly onlyOneLanguage = computed(() => this.languages().length <= 1);
+  private readonly _window = inject(WINDOW);
 
   async changeLang(lang: string) {
     try {
       await this._settingsService.changeLang(lang);
       this._notificationsService.success('settings.language.changed');
-      window.location.reload();
+      this._window?.location.reload();
     } catch (error) {
       this._notificationsService.error(errorHandler(error));
     }
@@ -107,7 +109,7 @@ export class LocalisationSettingsComponent {
     try {
       await this._settingsService.changeCurrency(String(currency).toUpperCase());
       this._notificationsService.success('settings.currency.changed');
-      window.location.reload();
+      this._window?.location.reload();
     } catch (error) {
       this._notificationsService.error(errorHandler(error));
     }

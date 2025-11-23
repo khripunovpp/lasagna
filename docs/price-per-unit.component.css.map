@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/numbers/price-per-unit.component.ts"],
+  "sourcesContent": ["\n    :host {\n      display: inline\n    }\n  "],
+  "mappings": ";AACI;AACE,WAAA;;",
+  "names": []
+}

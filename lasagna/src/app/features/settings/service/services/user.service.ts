@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,11 @@ export class UserService {
   }
 
   isUserFirstTime = !this.isUserFirstTimeValue;
+  private readonly _window = inject(WINDOW);
 
   get isUserFirstTimeValue() {
     try {
-      return localStorage.getItem('isUserFirstTime')
+      return this._window?.localStorage.getItem('isUserFirstTime')
     } catch (e) {
       console.error('Error accessing localStorage:', e);
       return null;
@@ -33,7 +35,7 @@ export class UserService {
 
   setUserFirstTime(value: boolean) {
     try {
-      localStorage.setItem('isUserFirstTime', Date.now().toString());
+      this._window?.localStorage.setItem('isUserFirstTime', Date.now().toString());
     } catch (e) {
       console.error('Error accessing localStorage:', e);
     }

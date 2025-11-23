@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/features/widgets/product-widgets.component.ts"],
-  "sourcesContent": ["\n      .product-widgets {\n        display: flex;\n        gap: 16px;\n        flex-direction: column;\n      }\n\n      .product-widgets__input {\n        flex: 1;\n      }\n\n      .product-widgets__buttons {\n        display: flex;\n        gap: 16px;\n        flex-wrap: wrap;\n        padding: 16px;\n        background-color: #fafafa;\n        border-radius: 12px;\n        margin: -16px;\n      }\n\n      .product-widgets.selected .product-widgets__buttons {\n        margin-bottom: 0;\n      }\n\n      .product-widgets__button {\n        display: flex;\n        padding: 8px 16px;\n        border-radius: 16px;\n        background-color: #e5de38;\n        appearance: none;\n        border: none;\n        font-family: inherit;\n        font-size: inherit;\n      }\n    "],
-  "mappings": ";AACM,CAAA;AACE,WAAA;AACA,OAAA;AACA,kBAAA;;AAGF,CAAA;AACE,QAAA;;AAGF,CAAA;AACE,WAAA;AACA,OAAA;AACA,aAAA;AACA,WAAA;AACA,oBAAA;AACA,iBAAA;AACA,UAAA;;AAGF,CApBA,eAoBA,CAAA,SAAA,CAVA;AAWE,iBAAA;;AAGF,CAAA;AACE,WAAA;AACA,WAAA,IAAA;AACA,iBAAA;AACA,oBAAA;AACA,cAAA;AACA,UAAA;AACA,eAAA;AACA,aAAA;;",
-  "names": []
-}

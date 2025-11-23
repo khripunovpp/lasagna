@@ -171,7 +171,7 @@ export class OnboardingComponent {
   }
 
   goToFaq() {
-    this._router.navigate(['/docs']);
+    this._router.navigate(['/documents']);
   }
 
   goToAddProduct() {

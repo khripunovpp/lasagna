@@ -21,6 +21,7 @@ import {AddCategoryFormComponent} from './categories/category-product/add-catego
 import {
   AddCategoryRecipeFormComponent
 } from './categories/category-recipe/add-category/add-category-recipe-form.component';
+import {IS_CLIENT} from '../../../shared/service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-settings',
@@ -51,11 +52,15 @@ export class SettingsComponent implements OnInit {
   ) {
   }
 
+  isClient = inject(IS_CLIENT);
   editedCategoryProduct = signal('')
   editedCategoryRecipe = signal('')
   private _onboardingService = inject(OnboardingService);
 
   ngOnInit() {
+    if (!this.isClient) {
+      return;
+    }
     // Отмечаем шаг настроек как завершённый при посещении страницы
     this._onboardingService.markSettingsDone();
   }

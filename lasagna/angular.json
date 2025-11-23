@@ -14,11 +14,93 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+        "build-ssr": {
+          "builder": "@angular/build:application",
+          "options": {
+            "verbose": true,
+            "polyfills": [
+            ],
+            "preserveSymlinks": true,
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "node_modules/@ngxpert/hot-toast/src/styles/styles.css",
+              "src/styles.scss"
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            },
+            "scripts": [],
+            "serviceWorker": "ngsw-config.json"
+          },
+          "configurations": {
+            "production": {
+              "outputPath": "dist",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "10MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.dev.html",
+                "output": "index.html"
+              },
+              "outputPath": {
+                "base": "../docs/"
+              },
+              "baseHref": "https://khripunovpp.github.io/lasagna/"
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "index": {
+                "input": "src/index.dev.html",
+                "output": "index.html"
+              }
+            }
+          },
+          "defaultConfiguration": "production"
+        },
         "build": {
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "../docs/",
+              "base": "dist",
               "browser": ""
             },
             "index": "src/index.html",
@@ -43,10 +125,6 @@
           },
           "configurations": {
             "production": {
-              "outputPath": {
-                "base": "dist",
-                "browser": ""
-              },
               "budgets": [
                 {
                   "type": "initial",
@@ -62,6 +140,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "baseHref": "https://khripunovpp.github.io/lasagna/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -105,6 +184,25 @@
             },
             "local": {
               "buildTarget": "lasagna:build:local",
+              "allowedHosts": [
+                "angular-dev.lasagna.orb.local",
+                "localhost"
+              ]
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve-ssr": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "lasagna:build:production"
+            },
+            "development": {
+              "buildTarget": "lasagna:build:development"
+            },
+            "local": {
+              "buildTarget": "lasagna:build-ssr:local",
               "allowedHosts": [
                 "angular-dev.lasagna.orb.local",
                 "localhost"

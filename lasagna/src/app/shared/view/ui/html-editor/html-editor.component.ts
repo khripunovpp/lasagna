@@ -2,24 +2,30 @@ import {Component, DestroyRef, inject, input, OnDestroy, OnInit, ViewEncapsulati
 import {Editor, NgxEditorComponent, NgxEditorMenuComponent, Toolbar} from 'ngx-editor';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-html-editor',
   encapsulation: ViewEncapsulation.None,
   template: `
-    <ngx-editor-menu [editor]="editor"
-                     [toolbar]="toolbar"></ngx-editor-menu>
-    <ngx-editor [disabled]="false"
-                [editor]="editor"
-                [formControl]="htmlString"
-                [placeholder]="placeholder()"
-    ></ngx-editor>
+    @defer {
+      <ngx-editor-menu [editor]="editor"
+                       [toolbar]="toolbar"></ngx-editor-menu>
+      <ngx-editor [disabled]="false"
+                  [editor]="editor"
+                  [formControl]="htmlString"
+                  [placeholder]="placeholder()"
+      ></ngx-editor>
+    } @error {
+      {{ 'html-editor.defer-load-error' | translate }}
+    }
   `,
   imports: [
     NgxEditorMenuComponent,
     NgxEditorComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ],
   styles: [`
     lg-html-editor {

@@ -10,6 +10,7 @@ import {ProductsRepository} from '../../products/service/products.repository';
 import {RecipesRepository} from '../../recipes/service/providers/recipes.repository';
 import {SyncTransactionResult} from "./estimate-sync-changes-transaction";
 import {RecipeSyncStrategy} from '../../recipes/service/providers/recipe-sync-strategy';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 export interface SyncLog {
   entityIdentifier: string
@@ -45,6 +46,7 @@ export class SyncService {
     label: 'SyncService'
   });
   private strategies: Record<string, SyncStrategy>;
+  private readonly _window = inject(WINDOW);
 
   /**
    * Получает предварительную оценку синхронизации между локальными и облачными данными.
@@ -115,7 +117,7 @@ export class SyncService {
 
   private _loadLastSyncTime(): void {
     try {
-      const lastSync = localStorage.getItem('last_sync_time');
+      const lastSync = this._window?.localStorage.getItem('last_sync_time');
       if (lastSync) {
         this.lastSyncTime.set(parseInt(lastSync));
       }
@@ -127,7 +129,7 @@ export class SyncService {
   private _updateLastSyncTime(): void {
     try {
       const now = Date.now();
-      localStorage.setItem('last_sync_time', now.toString());
+      this._window?localStorage.setItem('last_sync_time', now.toString());
       this.lastSyncTime.set(now);
     } catch (error) {
       this._logger.error('Failed to update last sync time:', error);

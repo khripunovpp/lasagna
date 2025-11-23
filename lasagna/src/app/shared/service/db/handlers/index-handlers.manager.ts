@@ -7,6 +7,7 @@ import {Stores} from '../const/stores';
 import {ProductsIndexHandler} from './products-index.handler';
 import {ProductsCategoriesIndexHandler} from './products-categories-index.handler';
 import {RecipesCategoriesIndexHandler} from './recipes-categories-index.handler';
+import {IS_CLIENT} from '../../tokens/isClient.token';
 
 /**
  * Manager for handling index data transformations
@@ -20,6 +21,7 @@ export class IndexHandlersManager {
     this.initializeHandlers();
   }
 
+  readonly isBrowser = inject(IS_CLIENT);
   private readonly logger = inject(LoggerService).withContext({
     color: '#ff6b6b',
     label: 'IndexHandlers'
@@ -80,6 +82,9 @@ export class IndexHandlersManager {
    * Initialize all available handlers
    */
   private initializeHandlers(): void {
+    if (!this.isBrowser) {
+      return;
+    }
     // Register specific handlers
     this.registerHandler(Stores.DOCUMENTATION, new DocumentationIndexHandler());
     this.registerHandler(Stores.PRODUCTS, new ProductsIndexHandler());

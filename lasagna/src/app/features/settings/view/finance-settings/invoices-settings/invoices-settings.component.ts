@@ -13,6 +13,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {debounceTime} from 'rxjs';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ControlComponent} from '../../../../controls/form/control-item/control.component';
+import {WINDOW} from '../../../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-invoices-settings',
@@ -84,6 +85,7 @@ export class InvoicesSettingsComponent
   })
   logoBase64 = signal<string | null>(null);
   destroyRef = inject(DestroyRef);
+  private readonly _window = inject(WINDOW);
 
   ngAfterViewInit() {
     const precisions = this._settingsService.getInvoicePrecision();
@@ -116,9 +118,13 @@ export class InvoicesSettingsComponent
       const reader = new FileReader();
 
       reader.onload = () => {
+        if (!this._window) {
+          resolve('')
+          return;
+        }
         const img = new Image();
         img.onload = () => {
-          const canvas = document.createElement('canvas');
+          const canvas = this._window!.document.createElement('canvas');
           const ctx = canvas.getContext('2d')!;
           canvas.width = 200;
           canvas.height = 200;
@@ -131,7 +137,7 @@ export class InvoicesSettingsComponent
 
           ctx.drawImage(img, x, y);
           const base64 = canvas.toDataURL('image/png');
-          document.body.appendChild(canvas)
+          this._window!.document.body.appendChild(canvas)
           resolve(base64);
         };
         img.onerror = reject;

@@ -17,6 +17,7 @@ import {toObservable} from '@angular/core/rxjs-interop';
 import {ExpanderComponent} from '../../shared/view/ui/expander.component';
 import {catchError} from 'rxjs/operators';
 import {NotificationsService} from '../../shared/service/services';
+import {WINDOW} from '../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-global-search',
@@ -150,7 +151,7 @@ import {NotificationsService} from '../../shared/service/services';
                     </ng-template>
 
                     <ng-template #documentationItemTpl let-data>
-                      <a [routerLink]="['/docs', data?.path]">
+                      <a [routerLink]="['/documents', data?.path]">
                         {{ data?.title }}
                         @if (data?.language) {
                           <span class="lg-global-search__language-badge">({{ data?.language }})</span>
@@ -332,6 +333,7 @@ export class GlobalSearchComponent {
     }
   });
   readonly #_query$ = toObservable(this.searchQueryParams);
+  private readonly _notificationsService = inject(NotificationsService);
   readonly results$: Observable<{
     context: SearchResultContext;
     result: {
@@ -362,7 +364,6 @@ export class GlobalSearchComponent {
       return of([]);
     }),
   );
-  private readonly _notificationsService = inject(NotificationsService);
   readonly #_bodyLocker = inject(BODY_LOCKER);
   readonly #_displayedEffect = effect(() => {
     if (this.showBar()) {
@@ -371,6 +372,7 @@ export class GlobalSearchComponent {
       this.#_bodyLocker.unlock();
     }
   });
+  private readonly _window = inject(WINDOW);
 
   hideBar() {
     this._globalSearchService.hideBar();
@@ -410,10 +412,11 @@ export class GlobalSearchComponent {
   }
 
   #_replaceSearchQueryParams(value: string) {
-    window.history.replaceState(
+    if (!this._window) return;
+    this._window.history.replaceState(
       null,
       '',
-      window.location.pathname + (value ? `?search=${encodeURIComponent(value)}` : '')
+      this._window.location.pathname + (value ? `?search=${encodeURIComponent(value)}` : '')
     );
   }
 }

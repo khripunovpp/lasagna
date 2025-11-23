@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>What does lasagna cost?</title>
+  <base href="https://khripunovpp.github.io/lasagna/">
+  <meta content="width=device-width, initial-scale=1,viewport-fit=cover" name="viewport">
+  <link href="favicon.png" rel="icon" type="image/png">
+  <link href="logo.png" rel="apple-touch-icon">
+  <link href="manifest.webmanifest" rel="manifest">
+  <meta content="#F6B0DB" name="theme-color">
+
+  <meta content="yes" name="mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="Lasagna" name="apple-mobile-web-app-title">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="default" name="apple-mobile-web-app-status-bar-style">
+
+  <link rel="preload" href="styles.css" as="style">
+
+  <link href="/img/splash_screens/iPhone_17_Pro_Max__iPhone_16_Pro_Max_landscape.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro__iPhone_17__iPhone_16_Pro_landscape.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16_Plus__iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_landscape.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_Air_landscape.png" media="screen and (device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16__iPhone_15_Pro__iPhone_15__iPhone_14_Pro_landscape.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_landscape.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16e__iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_landscape.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_landscape.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_landscape.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11__iPhone_XR_landscape.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_landscape.png" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_landscape.png" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/13__iPad_Pro_M4_landscape.png" media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/12.9__iPad_Pro_landscape.png" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro_M4_landscape.png" media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro__10.5__iPad_Pro_landscape.png" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.9__iPad_Air_landscape.png" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.5__iPad_Air_landscape.png" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.2__iPad_landscape.png" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_landscape.png" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/8.3__iPad_Mini_landscape.png" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro_Max__iPhone_16_Pro_Max_portrait.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_17_Pro__iPhone_17__iPhone_16_Pro_portrait.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16_Plus__iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_portrait.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_Air_portrait.png" media="screen and (device-width: 420px) and (device-height: 912px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16__iPhone_15_Pro__iPhone_15__iPhone_14_Pro_portrait.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_16e__iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_11__iPhone_XR_portrait.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png" media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_portrait.png" media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/13__iPad_Pro_M4_portrait.png" media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/12.9__iPad_Pro_portrait.png" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro_M4_portrait.png" media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png" media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.9__iPad_Air_portrait.png" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.5__iPad_Air_portrait.png" media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/10.2__iPad_portrait.png" media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png" media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+  <link href="/img/splash_screens/8.3__iPad_Mini_portrait.png" media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" rel="apple-touch-startup-image">
+<link rel="stylesheet" href="styles.css"><style ng-app-id="ng">
+
+[_nghost-ng-c1772031796] {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+.app[_ngcontent-ng-c1772031796] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+}
+.app--pwa[_ngcontent-ng-c1772031796] {
+  border-radius: 16px;
+}
+.app-content[_ngcontent-ng-c1772031796] {
+  --app-content-top-padding: calc(var(--header-height) + 44px);
+  padding-top: var(--app-content-top-padding);
+}
+.app-footer[_ngcontent-ng-c1772031796] {
+  margin-top: auto;
+}
+/*# sourceMappingURL=/lasagna/app.component.css.map */</style><style ng-app-id="ng">
+
+[_nghost-ng-c1690768704] {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  right: 0;
+  top: 12px;
+  transform: translateX(-50%);
+  max-width: calc(var(--container-width) + 32px);
+  width: calc(100% - 32px);
+}
+@media (max-width: 768px) {
+  [_nghost-ng-c1690768704] {
+    width: 100%;
+  }
+}
+.lg-header[_ngcontent-ng-c1690768704] {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 16px;
+  scroll-snap-type: x mandatory;
+}
+@media (max-width: 768px) {
+  .lg-header[_ngcontent-ng-c1690768704] {
+    justify-content: normal;
+    scroll-snap-type: both mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+}
+.lg-header__left[_ngcontent-ng-c1690768704], 
+.lg-header__right[_ngcontent-ng-c1690768704], 
+.lg-header__leftToMiddle[_ngcontent-ng-c1690768704], 
+.lg-header__rightToMiddle[_ngcontent-ng-c1690768704], 
+.lg-header__middle[_ngcontent-ng-c1690768704] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  gap: 8px;
+  min-width: 40px;
+}
+@media (max-width: 768px) {
+  .lg-header__left[_ngcontent-ng-c1690768704], 
+   .lg-header__right[_ngcontent-ng-c1690768704], 
+   .lg-header__leftToMiddle[_ngcontent-ng-c1690768704], 
+   .lg-header__rightToMiddle[_ngcontent-ng-c1690768704], 
+   .lg-header__middle[_ngcontent-ng-c1690768704] {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+}
+.lg-header__leftToMiddle[_ngcontent-ng-c1690768704] {
+  margin-left: auto;
+}
+.lg-header__rightToMiddle[_ngcontent-ng-c1690768704] {
+  margin-right: auto;
+}
+.lg-header__inner[_ngcontent-ng-c1690768704] {
+  display: flex;
+  border-radius: 35px;
+  padding: 8px;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.lg-header__link[_ngcontent-ng-c1690768704] {
+  font-size: 1rem;
+  font-family: inherit;
+  text-decoration: none;
+  padding: 8px 24px;
+  border-radius: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  transition: 0.3s ease-in-out;
+  transition-property: background-color, color;
+  appearance: none;
+}
+.lg-header__link.route-active[_ngcontent-ng-c1690768704] {
+  background-color: var(--header-active-bg);
+  color: #fff;
+}
+.lg-header__icon[_ngcontent-ng-c1690768704] {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  scroll-snap-align: center;
+  border: none;
+  appearance: none;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.7);
+  color: inherit;
+}
+.lg-header__logo[_ngcontent-ng-c1690768704] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lg-header__icon.route-active[_ngcontent-ng-c1690768704] {
+  background-color: var(--header-active-bg);
+  color: #fff;
+}
+/*# sourceMappingURL=/lasagna/header.component.css.map */</style><style ng-app-id="ng">@charset "UTF-8";
+
+
+
+.lg-footer[_ngcontent-ng-c214029305] {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  padding: 1em;
+  line-height: 1.6;
+  padding-top: 100px;
+}
+.lg-footer__bottom[_ngcontent-ng-c214029305] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 0.5em;
+}
+.lg-footer__version[_ngcontent-ng-c214029305] {
+  color: #888;
+  opacity: 0.7;
+}
+.lg-footer__support-link[_ngcontent-ng-c214029305] {
+  background: none;
+  border: none;
+  color: #888;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.lg-footer__support-link[_ngcontent-ng-c214029305]:hover {
+  opacity: 1;
+}
+.footer-credit[_ngcontent-ng-c214029305] {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.footer-credit[_ngcontent-ng-c214029305]    > *[_ngcontent-ng-c214029305]:first-child::after {
+  content: "\2022";
+  margin-left: 8px;
+}
+@media (max-width: 600px) {
+  .footer-credit[_ngcontent-ng-c214029305] {
+    flex-direction: column;
+    gap: 0;
+  }
+  .footer-credit[_ngcontent-ng-c214029305]    > *[_ngcontent-ng-c214029305]:first-child::after {
+    display: none;
+  }
+}
+.gradient-text[_ngcontent-ng-c214029305] {
+  background:
+    linear-gradient(
+      90deg,
+      #9C27B0,
+      #E91E63);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/*# sourceMappingURL=/lasagna/footer.component.css.map */</style><style ng-app-id="ng">mat-icon,mat-icon.mat-primary,mat-icon.mat-accent,mat-icon.mat-warn{color:var(--mat-icon-color, inherit)}.mat-icon{-webkit-user-select:none;user-select:none;background-repeat:no-repeat;display:inline-block;fill:currentColor;height:24px;width:24px;overflow:hidden}.mat-icon.mat-icon-inline{font-size:inherit;height:inherit;line-height:inherit;width:inherit}.mat-icon.mat-ligature-font[fontIcon]::before{content:attr(fontIcon)}[dir=rtl] .mat-icon-rtl-mirror{transform:scale(-1, 1)}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon{display:block}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button .mat-icon,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button .mat-icon{margin:auto}
+</style><link _ngcontent-ng-c1690768704="" as="image" href="./logomark.svg" rel="preload" fetchpriority="high"><style ng-app-id="ng">
+
+.lg-color-palette[_ngcontent-ng-c204088657] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lg-color-palette__color[_ngcontent-ng-c204088657] {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+}
+/*# sourceMappingURL=/lasagna/color-palette.component.css.map */</style><meta name="author" content="Lasagna App Team"><meta name="description" content="Welcome to Lasagna - Cost Calculator Application"></head>
+<body>
+<app-root ng-version="21.0.0" _nghost-ng-c1772031796="" ng-server-context="ssg"><!--container--><!--container--><main _ngcontent-ng-c1772031796="" class="app" hidden=""><lg-header _ngcontent-ng-c1772031796="" _nghost-ng-c1690768704=""><header _ngcontent-ng-c1690768704="" class="lg-header"><div _ngcontent-ng-c1690768704="" class="lg-header__left"><!--container--><a _ngcontent-ng-c1690768704="" class="lg-header__logo" href="https://khripunovpp.github.io/lasagna/home"><img _ngcontent-ng-c1690768704="" height="50" ngsrc="./logomark.svg" priority="" alt="Logo" width="50" loading="eager" fetchpriority="high" decoding="sync" ng-img="true" src="./logomark.svg"></a></div><div _ngcontent-ng-c1690768704="" class="lg-header__leftToMiddle"><!--container--><!--container--><button _ngcontent-ng-c1690768704="" class="lg-header__icon"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="search" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="search"></mat-icon></button></div><div _ngcontent-ng-c1690768704="" class="lg-header__middle"><div _ngcontent-ng-c1690768704="" class="lg-header__inner"><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/recipes"> recipes.menu-label </a><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/products"> products.menu-label </a><a _ngcontent-ng-c1690768704="" class="lg-header__link" href="https://khripunovpp.github.io/lasagna/invoices"> invoices.menu-label </a><!--container--></div></div><div _ngcontent-ng-c1690768704="" class="lg-header__rightToMiddle"><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/settings"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="settings" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="settings"></mat-icon></a><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/widgets"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="widgets" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="widgets"></mat-icon></a><a _ngcontent-ng-c1690768704="" class="lg-header__icon" href="https://khripunovpp.github.io/lasagna/documents"><mat-icon _ngcontent-ng-c1690768704="" role="img" aria-hidden="false" fonticon="question_mark" class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color" data-mat-icon-type="font" data-mat-icon-name="question_mark"></mat-icon></a></div><div _ngcontent-ng-c1690768704="" class="lg-header__right"></div></header></lg-header><div _ngcontent-ng-c1772031796="" class="app-content"><router-outlet _ngcontent-ng-c1772031796=""></router-outlet><lg-color-palette _nghost-ng-c204088657="" class="ng-star-inserted"><div _ngcontent-ng-c204088657="" class="lg-color-palette"><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #4d5aa9;"> #4d5aa9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #daa297;"> #daa297 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3c8058;"> #3c8058 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #89c55e;"> #89c55e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #a3686c;"> #a3686c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #545bb4;"> #545bb4 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1f9d73;"> #1f9d73 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #9d7659;"> #9d7659 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1c8595;"> #1c8595 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #cf78a1;"> #cf78a1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #748ed1;"> #748ed1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #59b17f;"> #59b17f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #806b78;"> #806b78 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #84e564;"> #84e564 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1c7cee;"> #1c7cee </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #adaf52;"> #adaf52 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #56d95c;"> #56d95c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1e798c;"> #1e798c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0b6ed0;"> #0b6ed0 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #feaa6c;"> #feaa6c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #4e94f1;"> #4e94f1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5aa5b7;"> #5aa5b7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e5cb42;"> #e5cb42 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6b5dbb;"> #6b5dbb </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f5e1ed;"> #f5e1ed </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2c6568;"> #2c6568 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5cb993;"> #5cb993 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #169b9d;"> #169b9d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #63bef7;"> #63bef7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7e9a9a;"> #7e9a9a </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #02cdc6;"> #02cdc6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #85bb9f;"> #85bb9f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b2cdc1;"> #b2cdc1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #84f682;"> #84f682 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b389fa;"> #b389fa </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #088295;"> #088295 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ac94df;"> #ac94df </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #05ae8d;"> #05ae8d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7ee7d3;"> #7ee7d3 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #84873e;"> #84873e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #eded57;"> #eded57 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e65b45;"> #e65b45 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e47068;"> #e47068 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #01a966;"> #01a966 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #baeb97;"> #baeb97 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #eda1aa;"> #eda1aa </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #77feae;"> #77feae </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1672b7;"> #1672b7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b9c67b;"> #b9c67b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f4757b;"> #f4757b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2ef89e;"> #2ef89e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #9ed38f;"> #9ed38f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #85ae6b;"> #85ae6b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b2b276;"> #b2b276 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #659874;"> #659874 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7bdea9;"> #7bdea9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #98b983;"> #98b983 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0ad67b;"> #0ad67b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0b9074;"> #0b9074 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #237bd0;"> #237bd0 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7ca26c;"> #7ca26c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #49c645;"> #49c645 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #46c6eb;"> #46c6eb </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #a8716c;"> #a8716c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #888588;"> #888588 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #edfdc6;"> #edfdc6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #108ba7;"> #108ba7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #92d0c1;"> #92d0c1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #74f883;"> #74f883 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #017879;"> #017879 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e3db44;"> #e3db44 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d4c9f8;"> #d4c9f8 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2b71ec;"> #2b71ec </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #185c59;"> #185c59 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d8d8a2;"> #d8d8a2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6efead;"> #6efead </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ef68a2;"> #ef68a2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #726a52;"> #726a52 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2d9bf0;"> #2d9bf0 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6b5ff2;"> #6b5ff2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0497ea;"> #0497ea </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #59accd;"> #59accd </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #03f49d;"> #03f49d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #799d8a;"> #799d8a </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2c6b4d;"> #2c6b4d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #639983;"> #639983 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d4cdad;"> #d4cdad </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #57d766;"> #57d766 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #71db68;"> #71db68 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b77c41;"> #b77c41 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6dd99d;"> #6dd99d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #42a5d1;"> #42a5d1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #36ee42;"> #36ee42 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3a6878;"> #3a6878 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6f896f;"> #6f896f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7ea678;"> #7ea678 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7c8266;"> #7c8266 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d69cca;"> #d69cca </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7edf3e;"> #7edf3e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #68dfaa;"> #68dfaa </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #487d95;"> #487d95 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #44a8e6;"> #44a8e6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #4891f8;"> #4891f8 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ec6156;"> #ec6156 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #c6cdb2;"> #c6cdb2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ce77e3;"> #ce77e3 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f2607f;"> #f2607f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #adee80;"> #adee80 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #cd63aa;"> #cd63aa </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #afe2c1;"> #afe2c1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f0c891;"> #f0c891 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #766a97;"> #766a97 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #21dbe1;"> #21dbe1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #65d989;"> #65d989 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7dbacb;"> #7dbacb </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #25a3b5;"> #25a3b5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #78a85d;"> #78a85d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #92fba7;"> #92fba7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b1707d;"> #b1707d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2294ac;"> #2294ac </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5271cb;"> #5271cb </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7282a1;"> #7282a1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #afe663;"> #afe663 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #52db5c;"> #52db5c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #88f569;"> #88f569 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #fb6ef2;"> #fb6ef2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #a798ba;"> #a798ba </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5fbf93;"> #5fbf93 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #dcf57c;"> #dcf57c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #eea1ea;"> #eea1ea </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #24c38b;"> #24c38b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #677c8b;"> #677c8b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5277e9;"> #5277e9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #74a557;"> #74a557 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d4924f;"> #d4924f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #805ad1;"> #805ad1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7598c2;"> #7598c2 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #72a7b0;"> #72a7b0 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #7c5f4d;"> #7c5f4d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0f92f6;"> #0f92f6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e2c6cc;"> #e2c6cc </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #177d99;"> #177d99 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f5f756;"> #f5f756 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #159da4;"> #159da4 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1175ce;"> #1175ce </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5f62b5;"> #5f62b5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ceab9e;"> #ceab9e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #475ba3;"> #475ba3 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #677d91;"> #677d91 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1bb8e5;"> #1bb8e5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6d9e68;"> #6d9e68 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #35f442;"> #35f442 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6d8f8e;"> #6d8f8e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #74dc71;"> #74dc71 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #727b89;"> #727b89 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #85a4d5;"> #85a4d5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2488f6;"> #2488f6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #e08b71;"> #e08b71 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #62d7be;"> #62d7be </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3b5acd;"> #3b5acd </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6db7bc;"> #6db7bc </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #b06e63;"> #b06e63 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d6be80;"> #d6be80 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6acd72;"> #6acd72 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f78884;"> #f78884 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6cde44;"> #6cde44 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f991f9;"> #f991f9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #31da90;"> #31da90 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f4cdb9;"> #f4cdb9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #808992;"> #808992 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #fd9b9c;"> #fd9b9c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6bb2f6;"> #6bb2f6 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #5d7dcd;"> #5d7dcd </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3fd1a7;"> #3fd1a7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6cc7b5;"> #6cc7b5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #48fafe;"> #48fafe </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #719ba3;"> #719ba3 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d9d43f;"> #d9d43f </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0fde46;"> #0fde46 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #edf498;"> #edf498 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #bcf3ba;"> #bcf3ba </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6eacd1;"> #6eacd1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #ebf95b;"> #ebf95b </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #75aa9d;"> #75aa9d </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #77daad;"> #77daad </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #518de1;"> #518de1 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #6d5bad;"> #6d5bad </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #2475f9;"> #2475f9 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #79d35c;"> #79d35c </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3f84de;"> #3f84de </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #69eaa5;"> #69eaa5 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #43c968;"> #43c968 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #0bf3c4;"> #0bf3c4 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #a5c5fc;"> #a5c5fc </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #d271e8;"> #d271e8 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #1784f7;"> #1784f7 </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #3468ed;"> #3468ed </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #9ebc9e;"> #9ebc9e </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #f1b8bc;"> #f1b8bc </div><div _ngcontent-ng-c204088657="" class="lg-color-palette__color ng-star-inserted" style="background-color: #05b298;"> #05b298 </div><!--container--></div></lg-color-palette><!--container--></div><div _ngcontent-ng-c1772031796="" class="app-footer"><lg-footer _ngcontent-ng-c1772031796="" _nghost-ng-c214029305=""><lg-fade-in _ngcontent-ng-c214029305="" class="ng-tns-c3121460675-0"><div class="fade-in ng-trigger ng-trigger-fadeIn"><footer _ngcontent-ng-c214029305="" class="lg-footer"><!--container--><!--container--><div _ngcontent-ng-c214029305="" class="lg-footer__bottom"><button _ngcontent-ng-c214029305="" type="button" class="lg-footer__support-link"> footer.support </button><div _ngcontent-ng-c214029305="" class="lg-footer__version"> vUnknown <a _ngcontent-ng-c214029305="" routerlink="./documents" target="_blank" href="https://khripunovpp.github.io/lasagna/documents">beta</a>. </div></div></footer></div></lg-fade-in><!--container--><!--container--></lg-footer></div></main></app-root>
+<noscript>Please enable JavaScript to continue using this application.</noscript>
+<script defer="" src="detect-language.js"></script>
+<script defer="" src="pwa-update-compoent.js"></script>
+<script defer="" src="google-analytics-consent.js"></script>
+<link rel="modulepreload" href="chunk-YWPUYK7V.js"><link rel="modulepreload" href="chunk-CMRNWKEI.js"><link rel="modulepreload" href="chunk-W6AWSB7K.js"><link rel="modulepreload" href="chunk-M24NKERW.js"><link rel="modulepreload" href="chunk-RJSN5CQV.js"><link rel="modulepreload" href="chunk-UL7MTHQO.js"><link rel="modulepreload" href="chunk-USP6G3VL.js"><link rel="modulepreload" href="chunk-UFGIB7QO.js"><link rel="modulepreload" href="chunk-34RUQXNH.js"><link rel="modulepreload" href="chunk-KXZ2SBHP.js"><script src="main.js" type="module"></script>
+<link rel="modulepreload" href="chunk-36HSETI3.js">
+
+
+</body></html>

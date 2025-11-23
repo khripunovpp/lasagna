@@ -42,13 +42,15 @@ import {findRouteData} from '../../helpers';
           <div class="lg-footer__version">
             v{{ appVersion() }}
 
-            <a routerLink="./docs" target="_blank">beta</a>.
+            <a routerLink="./documents" target="_blank">beta</a>.
           </div>
         </div>
       </footer>
     </lg-fade-in>
 
-    <lg-support-popup #supportPopup></lg-support-popup>
+    @defer {
+      <lg-support-popup #supportPopup></lg-support-popup>
+    }
   `,
   styles: [`
     .lg-footer {

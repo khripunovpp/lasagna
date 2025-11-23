@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/view/ui/tabs/tab.directive.ts"],
+  "sourcesContent": ["import {Directive, Input, TemplateRef} from '@angular/core';\n\n@Directive({\n  selector: 'ng-template[lgTab]',\n})\nexport class TabDirective {\n  constructor(\n    public templateRef: TemplateRef<unknown>\n  ) {\n  }\n\n  @Input({required: true}) label!: string;\n  @Input({required: true}) alias!: string;\n  @Input({required: false}) display: boolean = true;\n}\n"],
+  "mappings": ";;;;;;;;;;AAKM,IAAO,eAAP,MAAO,cAAY;EAEd;EADT,YACS,aAAiC;AAAjC,SAAA,cAAA;EAET;EAEyB;EACA;EACC,UAAmB;;qCARlC,eAAY,4BAAA,WAAA,CAAA;EAAA;yEAAZ,eAAY,WAAA,CAAA,CAAA,eAAA,SAAA,EAAA,CAAA,GAAA,QAAA,EAAA,OAAA,SAAA,OAAA,SAAA,SAAA,UAAA,EAAA,CAAA;;;sEAAZ,cAAY,CAAA;UAHxB;WAAU;MACT,UAAU;KACX;;UAOE;WAAM,EAAC,UAAU,KAAI,CAAC;;UACtB;WAAM,EAAC,UAAU,KAAI,CAAC;;UACtB;WAAM,EAAC,UAAU,MAAK,CAAC;;;",
+  "names": []
+}

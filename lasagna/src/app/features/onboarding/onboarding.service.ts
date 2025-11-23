@@ -1,5 +1,6 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.token';
+import {WINDOW} from '../../shared/service/tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -7,14 +8,16 @@ import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.to
 export class OnboardingService {
   constructor() {
     try {
-      this._settingsDone = signal(!!localStorage.getItem('onboarding_settings_done'));
-      this._productDone = signal(!!localStorage.getItem('onboarding_product_done'));
-      this._recipeDone = signal(!!localStorage.getItem('onboarding_recipe_done'));
-      this._faqDone = signal(!!localStorage.getItem('onboarding_faq_done'));
+      this._settingsDone = signal(!!this._window?.localStorage.getItem('onboarding_settings_done'));
+      this._productDone = signal(!!this._window?.localStorage.getItem('onboarding_product_done'));
+      this._recipeDone = signal(!!this._window?.localStorage.getItem('onboarding_recipe_done'));
+      this._faqDone = signal(!!this._window?.localStorage.getItem('onboarding_faq_done'));
     } catch (e) {
       console.error('Failed to initialize onboarding service', e);
     }
   }
+
+  private readonly _window = inject(WINDOW);
 
   private _settingsDone = signal(false);
   private _productDone = signal(false);
@@ -33,7 +36,7 @@ export class OnboardingService {
 
   markProductDone() {
     try {
-      localStorage.setItem('onboarding_product_done', '1');
+      this._window?.localStorage.setItem('onboarding_product_done', '1');
       this._productDone.set(true);
     } catch (e) {
       console.error('Failed to mark product onboarding as done', e);
@@ -42,7 +45,7 @@ export class OnboardingService {
 
   markRecipeDone() {
     try {
-      localStorage.setItem('onboarding_recipe_done', '1');
+      this._window?.localStorage.setItem('onboarding_recipe_done', '1');
       this._recipeDone.set(true);
     } catch (e) {
       console.error('Failed to mark product onboarding as done', e);
@@ -51,7 +54,7 @@ export class OnboardingService {
 
   markSettingsDone() {
     try {
-      localStorage.setItem('onboarding_settings_done', '1');
+      this._window?.localStorage.setItem('onboarding_settings_done', '1');
       this._settingsDone.set(true);
     } catch (e) {
       console.error('Failed to mark product onboarding as done', e);
@@ -60,7 +63,7 @@ export class OnboardingService {
 
   markFaqDone() {
     try {
-      localStorage.setItem('onboarding_faq_done', '1');
+      this._window?.localStorage.setItem('onboarding_faq_done', '1');
       this._faqDone.set(true);
     } catch (e) {
       console.error('Failed to mark product onboarding as done', e);

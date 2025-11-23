@@ -7,6 +7,7 @@ import {
 } from '../../../shared/service/services/google-sheets.service';
 import {AnalyticsService} from '../../../shared/service/services/analytics.service';
 import {VersionService} from '../../../shared/service/services/version.service';
+import {WINDOW} from '../../../shared/service/tokens/window.token';
 
 export interface SatisfactionData {
   timestamp: string;
@@ -31,7 +32,7 @@ export class UserSatisfactionService {
 
   private readonly storageKey = 'user-satisfaction-data';
   private config: SatisfactionConfig | null = null;
-
+  private readonly _window = inject(WINDOW);
 
   /**
    * Инициализирует сервис с конфигурацией
@@ -89,7 +90,7 @@ export class UserSatisfactionService {
    */
   resetInteractionData(): void {
     try {
-      localStorage.removeItem(this.storageKey);
+      this._window?.localStorage.removeItem(this.storageKey);
     } catch (error) {
       console.error('Error resetting interaction data:', error);
     }
@@ -141,7 +142,7 @@ export class UserSatisfactionService {
    */
   private shouldWaitAfterFirstTime(): boolean {
     try {
-      const isFirstTime = localStorage.getItem('isUserFirstTime');
+      const isFirstTime = this._window?.localStorage.getItem('isUserFirstTime');
 
       if (!isFirstTime) {
         return false;
@@ -227,7 +228,7 @@ export class UserSatisfactionService {
       userId: this.getUserId() ?? 'anonymous',
       satisfied,
       feedback: feedback || '',
-      userAgent: navigator.userAgent,
+      userAgent: this._window?.navigator.userAgent || 'unknown',
       appVersion: this.versionService.version(),
     };
 
@@ -301,7 +302,7 @@ export class UserSatisfactionService {
 
   private saveStorageData(data: any): void {
     try {
-      localStorage.setItem(this.storageKey, JSON.stringify(data));
+      this._window?.localStorage.setItem(this.storageKey, JSON.stringify(data));
     } catch (error) {
       console.error('Error saving data to localStorage:', error);
     }
@@ -309,7 +310,7 @@ export class UserSatisfactionService {
 
   private getUserId(): string | undefined {
     try {
-      return localStorage.getItem('user-id') || undefined;
+      return this._window?.localStorage.getItem('user-id') || undefined;
     } catch {
       return undefined;
     }
@@ -317,7 +318,7 @@ export class UserSatisfactionService {
 
   private getStoredData() {
     try {
-      return localStorage.getItem(this.storageKey);
+      return this._window?.localStorage.getItem(this.storageKey);
     } catch (error) {
       console.error('Error reading storage data:', error);
       return undefined;

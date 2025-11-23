@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/service/tokens/window.token.ts"],
+  "sourcesContent": ["import {inject, InjectionToken, PLATFORM_ID} from '@angular/core';\nimport {isPlatformBrowser} from '@angular/common';\n\nexport const WINDOW = new InjectionToken<(Window & Record<string, unknown>) | undefined>('WindowToken', {\n  providedIn: 'root',\n  factory: () => {\n    const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));\n    if (!isBrowser) {\n      return undefined\n    }\n    return typeof window !== 'undefined'\n      ? window as any\n      : undefined\n  }\n});\n"],
+  "mappings": ";;;;;;;;;;AAGO,IAAM,SAAS,IAAI,eAA+D,eAAe;EACtG,YAAY;EACZ,SAAS,MAAK;AACZ,UAAM,YAAY,kBAAkB,OAAO,WAAW,CAAC;AACvD,QAAI,CAAC,WAAW;AACd,aAAO;IACT;AACA,WAAO,OAAO,WAAW,cACrB,SACA;EACN;CACD;",
+  "names": []
+}

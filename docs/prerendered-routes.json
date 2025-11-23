@@ -1,3 +1,14 @@
 {
-  "routes": {}
+  "routes": {
+    "/lasagna": {},
+    "/lasagna/dev": {},
+    "/lasagna/documents": {},
+    "/lasagna/home": {},
+    "/lasagna/invoices": {},
+    "/lasagna/products": {},
+    "/lasagna/products/add": {},
+    "/lasagna/recipes": {},
+    "/lasagna/recipes/add": {},
+    "/lasagna/widgets": {}
+  }
 }

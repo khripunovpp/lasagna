@@ -7,7 +7,7 @@ import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.servic
 import {CategoryProduct} from '../settings/service/models/CategoryProduct';
 import {Product} from '../products/service/Product';
 import {generateUuid} from '../../shared/helpers';
-import * as Sentry from '@sentry/angular';
+import {WINDOW} from '../../shared/service/tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,10 @@ export class SetupDefaultsService {
   private readonly _categoryRecipesRepository = inject(CategoryRecipesRepository);
   private readonly _categoryProductsRepository = inject(CategoryProductsRepository);
   private readonly _indexDbService = inject(DexieIndexDbService);
+  private readonly _window = inject(WINDOW);
 
   async setupRecipesCategories() {
-    const categoriesInstalled = localStorage.getItem('categoriesRecipesInstalled');
+    const categoriesInstalled = this._window?.localStorage.getItem('categoriesRecipesInstalled');
     if (categoriesInstalled) {
       return;
     }
@@ -64,11 +65,11 @@ export class SetupDefaultsService {
     }).toDTO());
 
     await this._indexDbService.balkAdd(Stores.RECIPES_CATEGORIES, defaultCategories, false);
-    localStorage.setItem('categoriesRecipesInstalled', 'true');
+    this._window?.localStorage.setItem('categoriesRecipesInstalled', 'true');
   }
 
   async setupProductsCategories() {
-    const categoriesInstalled = localStorage.getItem('categoriesInstalled');
+    const categoriesInstalled = this._window?.localStorage.getItem('categoriesInstalled');
     if (categoriesInstalled) {
       return;
     }
@@ -109,11 +110,11 @@ export class SetupDefaultsService {
     }).toDTO());
 
     await this._indexDbService.balkAdd(Stores.PRODUCTS_CATEGORIES, defaultCategories, false);
-    localStorage.setItem('categoriesInstalled', 'true');
+    this._window?.localStorage.setItem('categoriesInstalled', 'true');
   }
 
   async setupProducts() {
-    const productsInstalled = localStorage.getItem('productsInstalled');
+    const productsInstalled = this._window?.localStorage.getItem('productsInstalled');
     if (productsInstalled) {
       return;
     }
@@ -257,14 +258,14 @@ export class SetupDefaultsService {
     }).toDTO());
 
     await this._indexDbService.balkAdd(Stores.PRODUCTS, defaultProducts, false);
-    localStorage.setItem('productsInstalled', 'true');
+    this._window?.localStorage.setItem('productsInstalled', 'true');
   }
 
   async setUserUUID() {
-    let userUUID = localStorage.getItem('userUUID');
+    let userUUID = this._window?.localStorage.getItem('userUUID');
     if (!userUUID) {
       userUUID = generateUuid();
-      localStorage.setItem('userUUID', userUUID);
+      this._window?.localStorage.setItem('userUUID', userUUID);
     }
   }
 }

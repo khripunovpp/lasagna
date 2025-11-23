@@ -1,90 +1,92 @@
-import {Component, Signal, signal, viewChildren} from '@angular/core';
+import {Component, inject, Signal, signal, viewChildren} from '@angular/core';
 import {ButtonComponent} from '../ui/button/button.component';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {WINDOW} from '../../service/tokens/window.token';
+import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
-import {Location, NgOptimizedImage} from '@angular/common';
-import {GlobalSearchService} from '../../service/services';
-import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {TranslatePipe} from '@ngx-translate/core';
-import {LanguageService} from '../../../features/settings/service/services/language.service';
 import {DemoInformerComponent} from '../../../features/home/view/demo-informer.component';
+import {NgOptimizedImage} from '@angular/common';
 import {FadeInComponent} from '../ui/fade-in.component';
+import {GlobalSearchService} from '../../../features/global-search/global-search.service';
 
 @Component({
   selector: 'lg-header',
   standalone: true,
   template: `
-    <lg-fade-in>
-      <header class="lg-header">
-        <div class="lg-header__left">
-          @if (window.history.state && window.history.length > 1) {
-            <button (click)="location.back()"
-                    class="lg-header__icon lg-header__icon--left">
-              <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
-            </button>
-          }
-
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/home'"
-             class="lg-header__logo">
-
-            <img height="50"
-                 ngSrc="./logomark.svg"
-                 width="50"/>
-          </a>
-        </div>
-
-        <div class="lg-header__leftToMiddle">
-
-          <lg-demo-informer></lg-demo-informer>
-
-          <button (click)="globalSearchService.showBar()"
-                  class="lg-header__icon">
-            <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+    <header class="lg-header">
+      <div class="lg-header__left">
+        @if (window?.history?.state && (window?.history?.length ?? 0) > 1) {
+          <button (click)="window?.history?.back()"
+                  class="lg-header__icon lg-header__icon--left">
+            <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
           </button>
+        }
+
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/home'"
+           class="lg-header__logo">
+
+          <img height="50"
+               ngSrc="./logomark.svg"
+               priority
+               alt="Logo"
+               width="50"/>
+        </a>
+      </div>
+
+      <div class="lg-header__leftToMiddle">
+
+        @defer {
+          <lg-demo-informer></lg-demo-informer>
+        }
+
+        <button (click)="globalSearchService.showBar()"
+                class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+        </button>
+      </div>
+
+      <div class="lg-header__middle">
+        <div class="lg-header__inner">
+          @for (item of items(); track item.label) {
+            <a [routerLink]="item.link"
+               [routerLinkActive]="['route-active']"
+               [routerLinkActiveOptions]="{ exact: false }"
+               class="lg-header__link">
+              {{ item.label | translate }}
+            </a>
+          }
         </div>
+      </div>
+      <div class="lg-header__rightToMiddle">
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/settings'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
+        </a>
 
-        <div class="lg-header__middle">
-          <div class="lg-header__inner">
-            @for (item of items(); track item.label) {
-              <a [routerLink]="item.link"
-                 [routerLinkActive]="['route-active']"
-                 [routerLinkActiveOptions]="{ exact: false }"
-                 class="lg-header__link">
-                {{ item.label | translate }}
-              </a>
-            }
-          </div>
-        </div>
-        <div class="lg-header__rightToMiddle">
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/settings'"
-             class="lg-header__icon">
-            <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
-          </a>
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/widgets'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
+        </a>
 
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/widgets'"
-             class="lg-header__icon">
-            <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
-          </a>
+        <a [routerLinkActiveOptions]="{ exact: false }"
+           [routerLinkActive]="['route-active']"
+           [routerLink]="'/documents'"
+           class="lg-header__icon">
+          <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
+        </a>
+      </div>
 
-          <a [routerLinkActiveOptions]="{ exact: false }"
-             [routerLinkActive]="['route-active']"
-             [routerLink]="'/docs'"
-             class="lg-header__icon">
-            <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
-          </a>
-        </div>
+      <div class="lg-header__right">
 
-        <div class="lg-header__right">
-
-        </div>
-      </header>
-    </lg-fade-in>
+      </div>
+    </header>
   `,
   styles: [`
     :host {
@@ -235,14 +237,13 @@ import {FadeInComponent} from '../ui/fade-in.component';
     TranslatePipe,
     DemoInformerComponent,
     FadeInComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TranslatePipe
   ]
 })
 export class HeaderComponent {
   constructor(
-    public location: Location,
     public globalSearchService: GlobalSearchService,
-    private _localizationService: LanguageService,
   ) {
     this.items = signal([
       {
@@ -262,9 +263,8 @@ export class HeaderComponent {
 
   items: Signal<{ label: string, link: string }[]>
   activeIndex = signal(0);
-  links = viewChildren(ButtonComponent)
-  protected readonly window = window;
-  protected readonly document = document;
+  links = viewChildren(ButtonComponent);
+  readonly window = inject(WINDOW);
 
   setActive(index: number) {
     this.activeIndex.set(index);

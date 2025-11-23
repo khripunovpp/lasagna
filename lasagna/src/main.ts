@@ -13,30 +13,32 @@ if (environment.region === 'global' && environment.production) {
     });
 }
 
-Sentry.init({
-  dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",
-  // Setting this option to true will send default PII data to Sentry.
-  // For example, automatic IP address collection on events
-  sendDefaultPii: true,
-  beforeSend(event) {
-    // Set user context with userUUID from localStorage for each event
-    try {
-      const userUUID = localStorage.getItem('userUUID');
-      const buildVersion = document.querySelector('[data-build-version]')?.getAttribute('data-build-version');
-      if (userUUID) {
-        event.user = {
-          user_weak_uuid: userUUID,
-          build_version: buildVersion || 'Unknown',
-        };
+if (window) {
+  Sentry.init({
+    dsn: "https://6f5f68ff28550996e10e8c4a49edc46e@o4509209983057920.ingest.de.sentry.io/4509209987645520",
+    // Setting this option to true will send default PII data to Sentry.
+    // For example, automatic IP address collection on events
+    sendDefaultPii: true,
+    beforeSend(event) {
+      // Set user context with userUUID from localStorage for each event
+      try {
+        const userUUID = localStorage.getItem('userUUID');
+        const buildVersion = document.querySelector('[data-build-version]')?.getAttribute('data-build-version');
+        if (userUUID) {
+          event.user = {
+            user_weak_uuid: userUUID,
+            build_version: buildVersion || 'Unknown',
+          };
+        }
+      } catch (e) {
+        // Ignore localStorage errors
       }
-    } catch {
-      // Ignore localStorage errors
+      return event;
     }
-    return event;
-  }
-});
+  });
 
-enableProfiling();
+  // enableProfiling();
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+  bootstrapApplication(AppComponent, appConfig)
+    .catch((err) => console.error(err));
+}

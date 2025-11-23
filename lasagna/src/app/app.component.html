@@ -1,14 +1,16 @@
-<lg-overlay-actions>
-  <lg-pwa-install></lg-pwa-install>
-  <lg-last-backup-informer></lg-last-backup-informer>
-  <lg-storage-quota-warning></lg-storage-quota-warning>
-</lg-overlay-actions>
+@defer {
+  <lg-overlay-actions>
+    <lg-pwa-install></lg-pwa-install>
+    <lg-last-backup-informer></lg-last-backup-informer>
+    <lg-storage-quota-warning></lg-storage-quota-warning>
+  </lg-overlay-actions>
 
-<lg-satisfaction-popup></lg-satisfaction-popup>
-<lg-global-search></lg-global-search>
-<lg-font-tester></lg-font-tester>
+  <lg-satisfaction-popup></lg-satisfaction-popup>
+  <lg-global-search></lg-global-search>
+}
 
 <main [class.app--pwa]="isPwa()"
+      [hidden]="!isBrowser"
       class="app">
   <lg-header></lg-header>
 
@@ -20,4 +22,3 @@
     <lg-footer></lg-footer>
   </div>
 </main>
-
