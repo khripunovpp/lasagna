@@ -46,6 +46,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
         <lg-controls-bar>
           <lg-button [icon]="true"
                      [link]="'/recipes/add'"
+                     data-u2e="recipes.list.add-button"
                      [size]="'medium'"
                      [style]="'primary'">
             <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
@@ -90,7 +91,6 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
           <lg-draft-recipes-list></lg-draft-recipes-list>
 
-
           <lg-flex-column [size]="'medium'">
             <lg-flex-row [center]="!isMobile()"
                          [mobileMode]="true"
@@ -107,11 +107,13 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
           <lg-grouping-tiles #groupingTiles
                              [selectable]="true"
+                             data-u2e="recipes.list.grouping-tiles"
                              [sortResult]="recipes()">
-            <ng-template let-recipe lgGroupingTile>
+            <ng-template let-recipe let-index="index" lgGroupingTile>
               <lg-card>
                 <lg-flex-column size="medium">
-                  <a [routerLink]="'/recipes/edit/' + recipe.uuid">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid"
+                     [attr.data-u2e]="'recipes.list.item.' + index + '.link'">
                     {{ recipe.name }}
                   </a>
 
@@ -119,11 +121,14 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
                     <lg-button [flat]="true"
                                [link]="'/recipes/calculate/' + recipe.uuid"
                                [size]="'small'"
+                               [attr.data-u2e]="'recipes.list.item.' + index + '.calculate-btn'"
                                [style]="'success'">
                       {{ 'recipes.calculate-btn'|translate }}
                     </lg-button>
 
-                    <small class="text-muted text-cursive" lgPull>
+                    <small class="text-muted text-cursive"
+                           lgPull
+                           [attr.data-u2e]="'recipes.list.item.' + index + '.edited-at'">
                       {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
                     </small>
                   </lg-flex-row>
@@ -138,6 +143,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
               <lg-button [link]="'/recipes/add'"
                          [size]="'medium'"
+                         data-u2e="recipes.list.empty-state.add-button"
                          [style]="'primary'">
                 {{ 'recipes.empty-state.btn'|translate }}
               </lg-button>

@@ -64,6 +64,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
       @if (editMode()) {
         <lg-controls-bar size="small">
           <lg-button [icon]="true"
+                     data-u2e="product.form.add-new-btn"
                      [link]="'/products/add'"
                      [size]="'small'"
                      [label]=" 'product.form.add-new-btn'|translate"
@@ -92,7 +93,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               @if (draftRef() && formComponent()?.form?.dirty) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-fade-in>
-                    <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
+                    <span class="text-success"
+                          data-u2e="product.form.saved-draft-label">{{ 'saved-draft-label'|translate }}</span>
                   </lg-fade-in>
                 </ng-template>
               }
@@ -101,6 +103,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                 <ng-template lgInlineSeparatedGroup>
                   <lg-button lgShrink [style]="'danger'"
                              [flat]="true"
+                             data-u2e="product.form.delete-draft-btn"
                              (click)="onRemoveDraft()">
                     {{ 'product.form.delete-draft-btn'|translate }}
                   </lg-button>
@@ -109,6 +112,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                 <ng-template lgInlineSeparatedGroup>
                   <lg-button lgShrink [style]="'danger'"
                              [flat]="true"
+                             data-u2e="product.form.delete-btn"
                              (click)="onDeleteProduct()">
                     {{ 'product.form.delete-btn'|translate }}
                   </lg-button>
@@ -131,6 +135,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
             @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
               <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                          lgShrink
+                         data-u2e="product.form.save-btn"
                          [style]="'primary'"
                          (click)="onEditProduct()">
                 @if (formComponent()?.form?.dirty || draftRef()) {
@@ -141,6 +146,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               </lg-button>
             } @else {
               <lg-button lgShrink
+                         data-u2e="product.form.save-btn"
                          [style]="'primary'"
                          [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                          (click)="onAddProduct()">
@@ -156,6 +162,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               <lg-button (click)="onResetForm()"
                          [outlined]="true"
                          [style]="'primary'"
+                         data-u2e="product.form.reset-btn"
                          lgShrink>
                 {{ 'product.form.reset-btn.edit.active'|translate }}
               </lg-button>

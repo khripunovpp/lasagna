@@ -37,6 +37,7 @@ export interface TagsItem {
                  [addTagText]="addTagText | translate"
                  [addTag]="addTagFn"
                  [appendTo]="'body'"
+                 [attr.data-u2e]="'tags.' + name()"
                  [compareWith]="compareWith"
                  [items]="loadedList()"
                  [multiple]="multi()"
@@ -139,6 +140,7 @@ export class TagsControlComponent
   @Input() placeholder: string = '';
   @Input() addTagText: string = marker('tags.add-tag-text');
   resource = input<string>('');
+  name = input<string>('');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);
   loadedList = signal([]);
@@ -179,7 +181,6 @@ export class TagsControlComponent
       this.value = Tag.fromRaw(value).toDTO();
     }
 
-    console.log('new tags value', value);
     this.onChange(this.value);
   }
 

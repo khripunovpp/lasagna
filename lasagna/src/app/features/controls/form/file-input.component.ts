@@ -1,39 +1,42 @@
-import {Component, ElementRef, forwardRef, input, signal, ViewChild, inject} from '@angular/core';
+import {Component, ElementRef, forwardRef, inject, input, signal, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-
 import {ButtonComponent, ButtonStyle} from '../../../shared/view/ui/button/button.component';
-import {TranslateService, TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-file-input',
   standalone: true,
   imports: [ButtonComponent, TranslatePipe],
   template: `
-      <div [class.contrast]="theme() === 'contrast'" class="lg-file-input">
-        <input #fileInput
-          (change)="onFileChange($event)"
-          [attr.accept]="accept()"
-          [attr.multiple]="multiple() ? '' : null"
-          [disabled]="disable()"
-          class="hidden-input"
-          type="file">
+    <div [class.contrast]="theme() === 'contrast'" class="lg-file-input">
+      <input #fileInput
+             (change)="onFileChange($event)"
+             [attr.accept]="accept()"
+             [attr.data-u2e]="'file-input.' + name()"
+             [attr.multiple]="multiple() ? '' : null"
+             [attr.name]="name()"
+             [disabled]="disable()"
+             class="hidden-input"
+             type="file">
 
-        <lg-button (onClick)="fileInput.click()"
-          [disabled]="disable()"
-          [style]="buttonStyle()"
-          [outlined]="true"
-          size="small">
-          {{ buttonText() | translate }}
-        </lg-button>
+      <lg-button (onClick)="fileInput.click()"
+                 [attr.data-u2e]="'file-input.' + name() + '.button'"
+                 [disabled]="disable()"
+                 [outlined]="true"
+                 [style]="buttonStyle()"
+                 size="small">
+        {{ buttonText() | translate }}
+      </lg-button>
 
-        <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'" class="lg-file-input__after">
-          <ng-content select="after"></ng-content>
-          @if (errorMessage()) {
-            <span class="error-message">{{ errorMessage() }}</span>
-          }
-        </div>
+      <div [style.display]="noAfter() && !errorMessage() ? 'none' : 'flex'"
+           class="lg-file-input__after">
+        <ng-content select="after"></ng-content>
+        @if (errorMessage()) {
+          <span class="error-message">{{ errorMessage() }}</span>
+        }
       </div>
-      `,
+    </div>
+  `,
   styles: [`
     :host {
       display: flex;
@@ -74,11 +77,10 @@ import {TranslateService, TranslatePipe} from '@ngx-translate/core';
   }]
 })
 export class FileInputComponent implements ControlValueAccessor {
-  private readonly translateService = inject(TranslateService);
   @ViewChild('fileInput', {static: true}) fileInput!: ElementRef<HTMLInputElement>;
-
   accept = input<string>(''); // image/*, .pdf и т.п.
   multiple = input<boolean>(false);
+  name = input('');
   disable = input<boolean>(false);
   theme = input<'default' | 'contrast'>('default');
   base64Mode = input<boolean>(false);
@@ -87,6 +89,7 @@ export class FileInputComponent implements ControlValueAccessor {
   fileSizeLimitMb = input<number>(2); // Лимит по умолчанию: 2MB
   noAfter = signal(false);
   errorMessage = signal<string | null>(null);
+  private readonly translateService = inject(TranslateService);
 
   writeValue(value: any): void {
     // Ничего не делаем
@@ -110,7 +113,7 @@ export class FileInputComponent implements ControlValueAccessor {
 
     const overLimitFiles = Array.from(files).filter(file => file.size > this.fileSizeLimitMb() * 1024 * 1024);
     if (overLimitFiles.length > 0) {
-      this.errorMessage.set(this.translateService.instant('errors.file-input.size-exceeded', { limit: this.fileSizeLimitMb() }));
+      this.errorMessage.set(this.translateService.instant('errors.file-input.size-exceeded', {limit: this.fileSizeLimitMb()}));
       this.onChange(null);
       return;
     } else {

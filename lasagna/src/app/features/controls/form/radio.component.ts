@@ -6,37 +6,39 @@ import {NgClass} from '@angular/common';
   selector: 'lg-radio',
   standalone: true,
   template: `
-      <label [attr.for]="name()+'-'+value()"
-             [ngClass]="size()"
-             class="lg-radio"
-             tabindex="0">
-          <input (ngModelChange)="onChangeCheckbox($event)"
-                 [attr.id]="name()+'-'+value()"
-                 [attr.name]="name()"
-                 [attr.value]="radio() ? value() : modelValue"
-                 [checked]="modelValue"
-                 [ngModel]="modelValue"
-                 [type]="radio() ? 'radio' : 'checkbox'"
-                 class="checkbox">
-          <span [class.lg-radio__hoverOnly]="markOnHover()"
-                class="lg-radio__mark">
+    <label [attr.for]="name()+'-'+value()"
+           [ngClass]="size()"
+           [attr.data-u2e]="'radio.' + name() + '.label.' + value()"
+           class="lg-radio"
+           tabindex="0">
+      <input (ngModelChange)="onChangeCheckbox($event)"
+             [attr.data-u2e]="'radio.' + name() + '.input.' + value()"
+             [attr.id]="name()+'-'+value()"
+             [attr.name]="name()"
+             [attr.value]="radio() ? value() : modelValue"
+             [checked]="modelValue"
+             [ngModel]="modelValue"
+             [type]="radio() ? 'radio' : 'checkbox'"
+             class="checkbox">
+      <span [class.lg-radio__hoverOnly]="markOnHover()"
+            class="lg-radio__mark">
               <span class="lg-radio__mark-inner">
                   @if (!noMark()) {
-                      @if (customMark()) {
-                          <span [innerHTML]="customMark()"></span>
-                      } @else {
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                               viewBox="0 0 24 24">
+                    @if (customMark()) {
+                      <span [innerHTML]="customMark()"></span>
+                    } @else {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                           viewBox="0 0 24 24">
                       <path fill="currentColor"
                             d="M9.5 16.5l-4.25-4.25 1.4-1.4L9.5 13.7l7.35-7.35 1.4 1.4z"/>
                   </svg>
-                      }
+                    }
                   }
               </span>
           </span>
 
-          <ng-content></ng-content>
-      </label>
+      <ng-content></ng-content>
+    </label>
   `,
   styles: [
     `

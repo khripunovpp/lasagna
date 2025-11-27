@@ -316,11 +316,6 @@ export class ImportComponent {
 
   private async _validateData(data:any) {
     const currentDbVersion = await this._indexDbService.getVersion();
-    console.log({
-      schema: this.schema(),
-      data,
-      currentDbVersion,
-    })
     const dataValidated = await this.schema()?.safeParseAsync(data);
     if (!dataValidated?.success) {
       console.error(dataValidated?.error,{dataValidated});

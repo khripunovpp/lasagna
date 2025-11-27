@@ -10,6 +10,8 @@ import {TranslatePipe} from '@ngx-translate/core';
       <div class="entity-item-selector__tabs">
         @for (item of items(); track item.slug; let last = $last, first = $first, index = $index) {
           <button class="entity-item-selector__tab"
+                  [attr.data-u2e]="'entity-item-selector.tab.' + item.slug"
+                  type="button"
                   [class.active]="activeIndex() === index"
                   (click)="onClickItem(item, index)">
             {{ item.title | translate }}
@@ -19,6 +21,7 @@ import {TranslatePipe} from '@ngx-translate/core';
       <div class="entity-item-selector__body">
         @for (item of items(); track item.slug; let last = $last, first = $first, index = $index) {
           <div class="entity-item-selector__part"
+               [attr.data-u2e]="'entity-item-selector.part.' + item.slug"
                (click)="onClickItem(item, index)"
                [class.active]="activeIndex() === index">
             <div class="entity-item-selector__control">

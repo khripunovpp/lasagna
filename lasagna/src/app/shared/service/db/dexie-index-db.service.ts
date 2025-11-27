@@ -433,7 +433,6 @@ export class DexieIndexDbService extends Dexie {
         changes: change,
       })
     );
-    console.log({obj});
     // @ts-ignore
     await (this[storeKey] as Table<any>).bulkUpdate(obj);
     if (storeKey === Stores.INDICES) {

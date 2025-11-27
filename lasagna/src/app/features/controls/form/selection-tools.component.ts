@@ -18,6 +18,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
         <ng-template lgInlineSeparatedGroup>
           <lg-button (click)="selectionZoneService.onSelection()"
                      [flat]="true"
+                     data-u2e="selection-tools.hide-selection-button"
                      [size]="'small'"
                      [style]="'success'">
             {{ 'hide-selection-label'|translate }}
@@ -27,6 +28,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
         <ng-template lgInlineSeparatedGroup>
           <lg-button (click)="selectionZoneService.onAllSelection()"
                      [flat]="true"
+                     data-u2e="selection-tools.select-all-button"
                      [size]="'small'"
                      [style]="'warning'">
             {{ 'select-all-label'|translate }}
@@ -37,6 +39,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
           <ng-template lgInlineSeparatedGroup>
             <lg-button (click)="selectionZoneService.onDeselectAll()"
                        [flat]="true"
+                       data-u2e="selection-tools.deselect-all-button"
                        [disabled]="!selected?.size"
                        [size]="'small'"
                        [style]="'warning'">
@@ -45,29 +48,30 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
           </ng-template>
 
 
-        <!--        <ng-template lgInlineSeparatedGroup>-->
-          <!--          <lg-button [flat]="true"-->
-          <!--                     [size]="'small'"-->
-          <!--                     [style]="'danger'"-->
-          <!--                     (click)="selectionZoneService.onDeleteAll()">-->
-          <!--            {{ 'delete-all-label' | translate }}-->
-          <!--          </lg-button>-->
-          <!--        </ng-template>-->
+          <!--        <ng-template lgInlineSeparatedGroup>-->
+            <!--          <lg-button [flat]="true"-->
+            <!--                     [size]="'small'"-->
+            <!--                     [style]="'danger'"-->
+            <!--                     (click)="selectionZoneService.onDeleteAll()">-->
+            <!--            {{ 'delete-all-label' | translate }}-->
+            <!--          </lg-button>-->
+            <!--        </ng-template>-->
 
-<!--          <ng-template lgInlineSeparatedGroup>-->
-<!--            <lg-button [flat]="true"-->
-<!--                       [disabled]="!selected?.size"-->
-<!--                       [size]="'small'"-->
-<!--                       [style]="'danger'"-->
-<!--                       (click)="selectionZoneService.onDeleteSelected()">-->
-<!--              {{ 'delete-selected-label' | translate }}-->
-<!--            </lg-button>-->
-<!--          </ng-template>-->
+            <!--          <ng-template lgInlineSeparatedGroup>-->
+            <!--            <lg-button [flat]="true"-->
+            <!--                       [disabled]="!selected?.size"-->
+            <!--                       [size]="'small'"-->
+            <!--                       [style]="'danger'"-->
+            <!--                       (click)="selectionZoneService.onDeleteSelected()">-->
+            <!--              {{ 'delete-selected-label' | translate }}-->
+            <!--            </lg-button>-->
+            <!--          </ng-template>-->
         }
       } @else {
         <ng-template lgInlineSeparatedGroup>
           <lg-button (click)="selectionZoneService.onSelection()"
                      [flat]="true"
+                     data-u2e="selection-tools.select-many-button"
                      [size]="'small'"
                      [style]="'success'">
             {{ 'select-many-label'|translate }}

@@ -15,9 +15,10 @@ import {injectFragment} from '../../../helpers';
   selector: 'lg-grouping-tiles',
   standalone: true,
   template: `
-    <section class="grouping-tiles">
+    <section class="grouping-tiles" >
       @for (group of sortResult()?.groups; track group?.field; let i = $index) {
         <section class="grouping-tiles__section"
+                 [attr.data-u2e]="'grouping-tiles.section.' + i"
                  [class.grouping-tiles__section--collapsed]="!collapsedStates()[i]">
           @let items = group.items;
           <header class="grouping-tiles__header"
@@ -39,20 +40,20 @@ import {injectFragment} from '../../../helpers';
           </header>
           @if (groupingTileDirective() && collapsedStates()[i]) {
             <div class="grouping-tiles__content">
-              @for (tile of items; track tile.uuid) {
+              @for (tile of items; track tile.uuid; let j = $index) {
                 <div class="grouping-tiles__item">
                   @if (selectable()) {
                     <lg-selectable-section [key]="tile.uuid" [data]="tile">
                       <div class="grouping-tiles__item-inner">
                         <ng-container [ngTemplateOutlet]="groupingTileDirective()?.templateRef"
-                                      [ngTemplateOutletContext]="{ $implicit: tile }">
+                                      [ngTemplateOutletContext]="{ $implicit: tile ,index: j }">
                         </ng-container>
                       </div>
                     </lg-selectable-section>
                   } @else {
                     <div class="grouping-tiles__item-inner">
                       <ng-container [ngTemplateOutlet]="groupingTileDirective()?.templateRef"
-                                    [ngTemplateOutletContext]="{ $implicit: tile }">
+                                    [ngTemplateOutletContext]="{ $implicit: tile ,index: j }">
                       </ng-container>
                     </div>
                   }
@@ -157,10 +158,6 @@ export class GroupingTilesComponent {
         });
       }, 200);
     })
-
-    effect(() => {
-      console.log({sortResult: this.sortResult()});
-    });
   }
 
   readonly storedGroup = injectFragment();

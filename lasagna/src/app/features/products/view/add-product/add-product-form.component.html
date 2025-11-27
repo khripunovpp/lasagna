@@ -5,6 +5,7 @@
         <lg-control [label]="'product.form.name.placeholder'|translate">
           <lg-input #nameField
                     formControlName="name"
+                    name="name"
                     placeholder=""></lg-input>
         </lg-control>
 
@@ -16,6 +17,7 @@
                              (onInputChange)="priceField.focus()"
                              formControlName="amount"
                              lgParseMath
+                             name="amount"
                              placeholder="">
               <ng-template lgExtraTpl place="after">
                 <lg-flex-row [center]="true" [size]="'small'">
@@ -33,6 +35,7 @@
             <lg-number-input #priceField
                              formControlName="price"
                              lgParseMath
+                             name="price"
                              placeholder="">
               <ng-template lgExtraTpl place="after">
                 <span>{{ userSettings()?.['currency']|currencySymbol }}</span>
@@ -50,10 +53,12 @@
 
             @if (hasMicroPrice()) {
               <lg-readonly-control [placeholder]="''"
+                                   name="pricePerUnit"
                                    [value]="'micro-amount'|translate ">
               </lg-readonly-control>
             } @else {
               <lg-readonly-control [placeholder]="''"
+                                   name="pricePerUnit"
                                    [value]="product()?.pricePerUnit | number:pipesDigits() ">
               </lg-readonly-control>
             }
@@ -68,7 +73,8 @@
           <lg-control-box lgExpand
                           style="--control-box-bg: var(--control-bg)">
             <lg-html-editor [placeholder]="''"
-                            formControlName="notes"></lg-html-editor>
+                            formControlName="notes"
+                            name="notes"></lg-html-editor>
           </lg-control-box>
         </lg-control>
       </lg-flex-column>
@@ -82,9 +88,14 @@
                              [resource]="'sources'"
                              appendTo="body"
                              formControlName="source"
+                             name="source"
                              placeholder=""></lg-autocomplete>
             <div [hidden]="!topSources().length">
-              <lg-chips-list #sourceChips [control]="sourceInput" [items]="topSources()"></lg-chips-list>
+              <lg-chips-list #sourceChips
+                             [control]="sourceInput"
+                             [items]="topSources()"
+                             data-u2e="product.add.form.top-sources-chips"
+                             name="topSourcesChips"></lg-chips-list>
             </div>
           </lg-flex-column>
         </lg-control>
@@ -97,9 +108,14 @@
                              [resource]="'brands'"
                              appendTo="body"
                              formControlName="brand"
+                             name="brand"
                              placeholder=""></lg-autocomplete>
             <div [hidden]="!topBrands().length">
-              <lg-chips-list #brandChips [control]="brandInput" [items]="topBrands()"></lg-chips-list>
+              <lg-chips-list #brandChips
+                             [control]="brandInput"
+                             [items]="topBrands()"
+                             data-u2e="product.add.form.top-brands-chips"
+                             name="topBrandsChips"></lg-chips-list>
             </div>
           </lg-flex-column>
         </lg-control>
@@ -110,11 +126,15 @@
                             [resource]="'product-categories'"
                             appendTo="body"
                             formControlName="category_id"
+                            name="category_id"
                             placeholder="">
             </lg-multiselect>
 
             @if (topCategories().length) {
-              <lg-chips-list [control]="categorySelect" [items]="topCategories()"></lg-chips-list>
+              <lg-chips-list [control]="categorySelect"
+                             name="topCategoriesChips"
+                             data-u2e="product.add.form.top-categories-chips"
+                             [items]="topCategories()"></lg-chips-list>
             }
           </lg-flex-column>
         </lg-control>

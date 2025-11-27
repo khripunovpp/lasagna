@@ -23,8 +23,6 @@ export const estimateSyncChangesTransaction = async (
       // берем все локальные элементы с такими uuid
       const table = tx.table(store);
       const uuids = withItems.map(i => i.uuid);
-      console.log('Synchronizing items', {store, incomingCount: withItems.length, uuids});
-      // const allDtos = await table.toArray() as SyncLocalDbResponse[];
       const existingDtos = await table.bulkGet(uuids) as SyncLocalDbResponse[];
       const result: SyncTransactionResult = {
         toUpdate: [],

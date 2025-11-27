@@ -21,7 +21,7 @@ export class SettingsRepository {
   getOne(key: string) {
     return this._indexDbService.search(Stores.SETTINGS, 'key', key).then((settings) => {
       if (settings) {
-        return settings[0] as SettingsDTO['settings']
+        return settings[0] as SettingsDTO
       } else {
         return null;
       }

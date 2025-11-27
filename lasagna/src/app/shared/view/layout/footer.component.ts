@@ -26,23 +26,29 @@ import {findRouteData} from '../../helpers';
         @if (canSeePolicies()) {
           {{ 'footer.agree' | translate }}
           <a [attr.href]="environment.policies.privacyPolicyUrl"
+             data-u2e="nav.footer.privacy-link"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
           <a [attr.href]="environment.policies.termsOfServiceUrl"
+             data-u2e="nav.footer.terms-link"
              target="_blank">{{ 'footer.terms' | translate }}</a>,
           {{ 'footer.and' | translate }}
           <a [attr.href]="environment.policies.cookiePolicyUrl"
+             data-u2e="nav.footer.cookie-policy-link"
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }
         <div class="lg-footer__bottom">
           <button (click)="openSupport()"
                   class="lg-footer__support-link"
+                  data-u2e="nav.footer.support-link"
                   type="button">
             {{ 'footer.support' | translate }}
           </button>
           <div class="lg-footer__version">
             v{{ appVersion() }}
 
-            <a routerLink="./documents" target="_blank">beta</a>.
+            <a data-u2e="nav.footer.documents-link"
+               routerLink="./documents"
+               target="_blank">beta</a>.
           </div>
         </div>
       </footer>

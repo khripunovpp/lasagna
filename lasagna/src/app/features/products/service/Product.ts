@@ -104,7 +104,7 @@ export class Product {
       notes: undefined,
       category_id: '',
       uuid: undefined,
-      createdAt: undefined,
+      createdAt: Date.now(),
       updatedAt: undefined,
       color: undefined,
     });
@@ -138,17 +138,17 @@ export class Product {
 
   toDTO(): ProductDTO {
     return {
-      name: this.name,
-      amount: this.amount,
-      price: this.price,
-      unit: this.unit,
+      name: this.name ?? '',
+      amount: this.amount ?? 0,
+      price: this.price ?? 0,
+      unit: this.unit ?? 'gram',
       source: this.source ?? '',
       brand: this.brand ?? '',
       notes: this.notes ?? '',
-      category_id: this.category_id?.toUUID(),
-      uuid: this.uuid,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      category_id: this.category_id?.toUUID() ?? '',
+      uuid: this.uuid ?? '',
+      createdAt: this.createdAt ?? 0,
+      updatedAt: this.updatedAt ?? 0,
       color: this.color || estimateColor(this.name),
       system: this.system || false,
     };

@@ -24,6 +24,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
       <lg-dropdown>
         <lg-button [outlined]="true"
                    [size]="'small'"
+                   [attr.data-u2e]="'recipes.filters.button'"
                    [style]="'default'"
                    lgDropdownAnchor>
           {{ filterLabel() }}
@@ -32,6 +33,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
         <lg-flex-column [size]="'small'">
           <lg-button (click)="onFilterChange({field: 'master', value: 'true'})"
                      [flat]="true"
+                     data-u2e="recipes.filters.master"
                      [size]="'small'"
                      [style]="'warning'">
             {{ 'recipes.filters.master' | translate }}
@@ -39,6 +41,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
           <lg-button (click)="onFilterChange({field: 'master', value: 'false'})"
                      [flat]="true"
                      [size]="'small'"
+                     data-u2e="recipes.filters.chunk"
                      [style]="'warning'">
             {{ 'recipes.filters.chunk' | translate }}
           </lg-button>
@@ -46,6 +49,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
           <lg-button (click)="onFilterChange({field: undefined, value: undefined})"
                      [flat]="true"
                      [size]="'small'"
+                     data-u2e="recipes.filters.all"
                      [style]="'warning'">
             {{ 'recipes.filters.all' | translate }}
           </lg-button>

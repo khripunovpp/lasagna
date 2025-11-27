@@ -24,6 +24,7 @@ export interface UnitGroupItem {
                       [style]="item.style || 'default'"
                       [class.active]="activeIndex() == index"
                       class="unit-switcher__item"
+                      [attr.data-u2e]="'unit-switcher.item.' + item.value"
                       [class.unit-switcher__item--active]="activeIndex() == index">
                   {{ item.label | translate }}
               </button>@if (!last) {

@@ -15,17 +15,21 @@ import {Router} from '@angular/router';
   ],
   template: `
     <div [attr.aria-label]="'Tabs'"
+         [attr.data-u2e]="'tabs.' + name()"
          [attr.role]="'tablist'"
          [class.flat]="flat()"
          [class.scrollable]="scrollable()"
-         class="tabs">
+         class="tabs"
+         role="tablist">
       <div class="tabs__labels">
         @for (tab of tabs(); track tab.label; let i = $index) {
           @if (tab.display) {
             <button (click)="selectTab(i)"
                     [class.active]="activated()[i]"
+                    role="tab"
                     [attr.aria-selected]="activated()[i]"
                     [attr.aria-controls]="'tab-' + i"
+                    [attr.data-u2e]="'tabs.' + name() + '.label.' + i"
                     [attr.id]="'tab-' + i">
               {{ tab.label }}
             </button>
@@ -33,7 +37,10 @@ import {Router} from '@angular/router';
         }
       </div>
 
-      <div class="tabs__body">
+      <div [attr.aria-labelledby]="'tab-' + selectedIndex()" [attr.data-u2e]="'tabs.' + name() + '.body'"
+           [attr.id]="'tab-' + selectedIndex()"
+           class="tabs__body"
+           role="tabpanel">
         @if (tabs().length > 0) {
           @if (activated()[selectedIndex()]) {
             <lg-flex-column [size]="'small'">
@@ -154,6 +161,7 @@ export class TabsComponent {
   readonly router = inject(Router);
   readonly tabs = signal<readonly TabDirective[]>([]);
   readonly flat = input(false)
+  readonly name = input('')
   readonly silent = input(false)
   readonly scrollable = input(true)
   readonly activated = signal<boolean[]>([]);

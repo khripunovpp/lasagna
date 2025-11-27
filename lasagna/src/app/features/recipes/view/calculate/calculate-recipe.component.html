@@ -15,6 +15,7 @@
           <lg-inline-separated-group>
             <ng-template lgInlineSeparatedGroup>
               <lg-button [flat]="true"
+                         data-u2e="calculate-recipe.edit-recipe-btn"
                          [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
                          [style]="'default'">
                 {{ 'edit-label' | translate }}
@@ -23,6 +24,7 @@
 
             <ng-template lgInlineSeparatedGroup>
               <lg-button [flat]="true"
+                         data-u2e="calculate-recipe.pdf-generate-btn"
                          (onClick)="onPdfGenerate()"
                          [style]="'default'">
                 {{ 'pdf-generate-label' | translate }}
@@ -44,7 +46,7 @@
                              [relaxed]="true">
                   <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
 
-                  <lg-flex-row size="tiny">
+                  <lg-flex-row size="tiny" data-u2e="calculate-recipe.outcome-amount">
                     <div class="text-bold">
                       {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
                       {{ result()?.calculation?.outcomeUnit | unitString | translate }}
@@ -70,7 +72,8 @@
                     <b>{{ result()?.calculation?.outcomeUnit | unitString | translate }}</b>
                   </div>
 
-                  <lg-flex-row size="tiny">
+                  <lg-flex-row size="tiny"
+                               data-u2e="calculate-recipe.one-unit-price">
                     @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
                     <lg-flex-row [size]="'tiny'">
                       <div [class.text-bold]="!result()?.calculation?.hasPriceDifference">
@@ -112,7 +115,8 @@
                              [relaxed]="true">
                   <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
-                  <lg-flex-row [size]="'tiny'">
+                  <lg-flex-row [size]="'tiny'"
+                               data-u2e="calculate-recipe.total-price-amount">
                     @let diff = totalPriceDifference();
                     <lg-flex-row [class.text-bold]="!totalPriceDifference()"
                                  size="tiny">
@@ -148,6 +152,7 @@
                               [style.padding]="isMobile() ? '0' : '0 16px'"
                               style="--control-bg: var(--hr-bg-strong);">
                 <lg-number-input lgParseMath
+                                 name="recalculateTotals"
                                  [placeholder]="'recipe.calculation.recalculate.placeholder' | translate"
                                  [(ngModel)]="recalculateTotalsModel">
                   <ng-template lgExtraTpl place="before">
@@ -213,7 +218,7 @@
 
       @if (hasIngredients) {
         <lg-table-card>
-          <table>
+          <table data-u2e="calculate-recipe.ingredients-table">
             <colgroup>
               <col span="1" style="width: 1%;">
               <col span="1" style="width: 20%;">
@@ -233,12 +238,13 @@
             </thead>
 
             <tbody>
-              @for (row of result()?.table; track $index; let i = $index) {
+              @for (row of result()?.table; track row.name; let i = $index) {
                 <tr [ngClass]="row.type">
                   <td>{{ i + 1 }}</td>
 
                   <td width="200">
                     <div class="text-no-wrap"
+                         [attr.data-u2e]="'calculate-recipe.ingredient-name-' + i"
                          [ngClass]="'indent-' + row.indent">
                       <!--                      <pre>{{row.ingredient|json}}</pre>-->
                       @if (row.type === 'recipe-row') {
@@ -256,7 +262,7 @@
                     </div>
                   </td>
 
-                  <td>
+                  <td [attr.data-u2e]="'calculate-recipe.ingredient-amount-' + i">
                     @if (row.type !== 'total') {
                       {{ row.amount | number: pipesDigits() }}
                     } @else {
@@ -266,6 +272,7 @@
                   </td>
 
                   <td class="text-no-wrap"
+                      [attr.data-u2e]="'calculate-recipe.ingredient-price-per-unit-' + i"
                       [class.text-muted]="row.ingredient?.hasMicroPerUnitPrice">
                     @if (row.ingredient?.hasMicroPerUnitPrice) {
                       {{ 'micro-amount'|translate }}
@@ -277,7 +284,8 @@
                           [translate]="'per-unit.label'"></span>
                   </td>
 
-                  <td class="text-bold text-no-wrap">
+                  <td class="text-bold text-no-wrap"
+                      [attr.data-u2e]="'calculate-recipe.ingredient-total-price-' + i">
                     @if (row.type !== 'total') {
                       @if (row.ingredient?.hasMicroTotalPrice) {
                         {{ 'micro-amount'|translate }}
@@ -300,6 +308,7 @@
           {{ 'recipe.calculation.empty-state.text' | translate }}
 
           <lg-button [size]="'medium'"
+                     data-u2e="calculate-recipe.empty-state-edit-recipe-btn"
                      [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid">
             {{ 'recipe.calculation.empty-state.btn' | translate }}
           </lg-button>

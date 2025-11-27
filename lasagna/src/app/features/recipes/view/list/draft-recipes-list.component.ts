@@ -38,6 +38,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
   template: `
     @if (drafts()?.length) {
       <lg-expander [closeLabel]="'drafts-close-label'|translate"
+                   data-u2e="draft-recipes-list.expander"
                    [openLabel]="'drafts-label'|translate:{length:drafts()?.length}">
         <lg-inline-separated-group>
           <ng-template lgInlineSeparatedGroup>
@@ -76,20 +77,25 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
                       (onSelected)="selectionZoneService.putSelected($event)"
                       [selectAll]="selectionZoneService.selectAll()"
                       [deselectAll]="selectionZoneService.deselectAll()"
+                      data-u2e="draft-recipes-list.card-list"
                       style="--card-bg: var(--card-bg-draft)">
-          @for (item of drafts(); track item.uuid) {
-            <ng-template lgCardListItem [uuid]="item.uuid" type="draft">
-              <lg-flex-row [center]="true">
-                <a [routerLink]="'/recipes/draft/' + item?.uuid" lgExpand>
+          @for (item of drafts(); track item.uuid; let index = $index) {
+            <ng-template lgCardListItem
+                         [uuid]="item.uuid"
+                         type="draft">
+              <lg-flex-row [center]="true"
+                           [attr.data-u2e]="'draft-recipes-list.item-' + index">
+                <a [routerLink]="'/recipes/draft/' + item?.uuid"
+                   lgExpand>
                   @if (item?.meta?.['uuid']) {
                     {{ 'draft.list-prefix.existing'|translate }}
                   } @else {
                     {{ 'draft.list-prefix.new'|translate }}
-                  }
-                  {{ item?.data?.name ?? '' }}
+                  }{{ item?.data?.name ?? '' }}
                 </a>
 
-                <small class="text-muted text-cursive">
+                <small class="text-muted text-cursive"
+                       [attr.data-u2e]="'draft-recipes-list.item-edited-at-' + index">
                   {{ 'edited-at-label'|translate }} {{ (item?.updatedAt || item?.createdAt) | timeAgo }}
                 </small>
               </lg-flex-row>

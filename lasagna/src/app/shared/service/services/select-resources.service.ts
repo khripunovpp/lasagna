@@ -80,7 +80,6 @@ export class SelectResourcesService {
           if (indexDbCfg?.full) {
             return this._indexDbSelectLoaderService.fullLoad(indexDbCfg?.['storeName']!);
           }
-          console.log('Loading select resource', cfg.name, indexDbCfg);
           return this._indexDbSelectLoaderService.load(indexDbCfg?.['storeName']!)
         },
 

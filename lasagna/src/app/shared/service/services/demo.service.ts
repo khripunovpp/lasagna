@@ -30,7 +30,6 @@ export class DemoService {
       const dump = await firstValueFrom(this._http.get<any>('./dump/demo_dump.json'));
       await this._dbService.restoreAllData(dump);
       this._window?.localStorage.setItem('demo_data_loaded', 'true');
-      console.log({dump})
     } catch (error) {
       console.error('Error loading demo data:', error);
       throw new Error('Failed to load demo data');

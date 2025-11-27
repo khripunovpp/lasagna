@@ -168,7 +168,6 @@ export class TooltipComponent {
       event.stopPropagation();
       const [x, y] = [event.clientX, event.clientY];
 
-      console.log('x', x, 'y', y);
       setTimeout(() => {
         this.coordinates.set({x, y});
         this._calculateBoundaries();
@@ -222,9 +221,6 @@ export class TooltipComponent {
 
     let newX = this.coordinates().x;
     let newY = this.coordinates().y;
-    console.log({
-      newX, newY, tooltipWidth, tooltipHeight, screenWidth, screenHeight
-    })
 
     if (newX + tooltipWidth + offset > screenWidth) {
       newX = screenWidth - tooltipWidth - offset;

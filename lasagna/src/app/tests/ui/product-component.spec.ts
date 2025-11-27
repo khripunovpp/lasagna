@@ -109,8 +109,6 @@ describe('AddProductComponent', () => {
       fixture.detectChanges();
       tick();
 
-      console.log(component)
-
       expect(mockProductsRepo.getOne).toHaveBeenCalledTimes(0);
     }));
   });

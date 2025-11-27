@@ -18,6 +18,7 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
       <div class="lg-header__left">
         @if (window?.history?.state && (window?.history?.length ?? 0) > 1) {
           <button (click)="window?.history?.back()"
+                  data-u2e="nav.back-button"
                   class="lg-header__icon lg-header__icon--left">
             <mat-icon aria-hidden="false" fontIcon="arrow_back"></mat-icon>
           </button>
@@ -26,12 +27,13 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
         <a [routerLinkActiveOptions]="{ exact: false }"
            [routerLinkActive]="['route-active']"
            [routerLink]="'/home'"
-           class="lg-header__logo">
+           class="lg-header__logo"
+           data-u2e="nav.logo-link">
 
-          <img height="50"
+          <img alt="Logo"
+               height="50"
                ngSrc="./logomark.svg"
                priority
-               alt="Logo"
                width="50"/>
         </a>
       </div>
@@ -43,7 +45,8 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
         }
 
         <button (click)="globalSearchService.showBar()"
-                class="lg-header__icon">
+                class="lg-header__icon"
+                data-u2e="nav.global-search-button">
           <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
         </button>
       </div>
@@ -52,6 +55,7 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
         <div class="lg-header__inner">
           @for (item of items(); track item.label) {
             <a [routerLink]="item.link"
+               [attr.data-u2e]="'nav.link.'+item.label"
                [routerLinkActive]="['route-active']"
                [routerLinkActiveOptions]="{ exact: false }"
                class="lg-header__link">
@@ -64,21 +68,24 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
         <a [routerLinkActiveOptions]="{ exact: false }"
            [routerLinkActive]="['route-active']"
            [routerLink]="'/settings'"
-           class="lg-header__icon">
+           class="lg-header__icon"
+           data-u2e="nav.settings-link">
           <mat-icon aria-hidden="false" fontIcon="settings"></mat-icon>
         </a>
 
         <a [routerLinkActiveOptions]="{ exact: false }"
            [routerLinkActive]="['route-active']"
            [routerLink]="'/widgets'"
-           class="lg-header__icon">
+           class="lg-header__icon"
+           data-u2e="nav.widgets-link">
           <mat-icon aria-hidden="false" fontIcon="widgets"></mat-icon>
         </a>
 
         <a [routerLinkActiveOptions]="{ exact: false }"
            [routerLinkActive]="['route-active']"
            [routerLink]="'/documents'"
-           class="lg-header__icon">
+           class="lg-header__icon"
+           data-u2e="nav.documentation-link">
           <mat-icon aria-hidden="false" fontIcon="question_mark"></mat-icon>
         </a>
       </div>

@@ -119,8 +119,6 @@ export class GlobalSearchService {
 
     const flat = results.flat();
 
-    console.log({flat})
-
     const resultsPayload = [];
 
     for (const item of flat) {
@@ -136,8 +134,6 @@ export class GlobalSearchService {
         });
       }
     }
-
-    console.log({resultsPayload})
 
     this.resultsPayload.set(resultsPayload);
 

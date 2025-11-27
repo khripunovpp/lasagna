@@ -3,13 +3,14 @@
     <lg-container>
       <lg-title>{{ 'settings.title'|translate }}</lg-title>
 
-      <lg-tabs>
+      <lg-tabs name="settings">
         <ng-template alias="language" label="{{ 'language.settings-title'|translate }}" lgTab>
           <lg-language-settings></lg-language-settings>
         </ng-template>
 
         <ng-template alias="categoires" label="{{ 'categories.settings-title'|translate }}" lgTab>
           <lg-tabs [flat]="true"
+                   name="categories-settings"
                    [scrollable]="false"
                    [silent]="true">
             <ng-template [label]="'categories.products.link-label' | translate" alias="system" lgTab>

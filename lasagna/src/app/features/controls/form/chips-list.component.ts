@@ -6,17 +6,18 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   selector: 'lg-chips-list',
   standalone: true,
   template: `
-      <div class="chips-list">
-          @for (item of items;track item.label;let last = $last) {
-              <span class="chip"
-                    [style.--chip-color]="item.color"
-                    (click)="onSelect(item)"
-                    [class.selected]="item.value === value"
-                    [attr.data-last]="last ? true : null">
-                  {{ item.label }}
-              </span>
-          }
-      </div>
+    <div class="chips-list">
+      @for (item of items; track item.label; let last = $last, index = $index) {
+        <div class="chip"
+             [style.--chip-color]="item.color"
+             (click)="onSelect(item)"
+             [attr.data-u2e]="'chips.' + name() + '.' + index"
+             [class.selected]="item.value === value"
+             [attr.data-last]="last ? true : null">
+          {{ item.label }}
+        </div>
+      }
+    </div>
   `,
   styles: [
     `
@@ -64,6 +65,7 @@ export class ChipsListComponent
 
   @HostBinding('style.--chip-color') chipColor = 'var(--chip-default-bg)';
   control = input<ControlValueAccessor>()
+  name = input('');
   @Input() items: {
     label: string
     value: string

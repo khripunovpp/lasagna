@@ -27,12 +27,15 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
       <lg-flex-row [center]="true" [mobileMode]="true">
         <lg-button (click)="onBackup()"
                    [style]="'success'"
+                   data-u2e="backup.create-button"
                    lgSelfStart>
           {{ 'backup.make-btn'|translate }}
         </lg-button>
 
         @if (transferDataService.currenBackupDate) {
-          {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
+          <span data-u2e="backup.last-backup-label">
+            {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
+          </span>
         }
       </lg-flex-row>
 
@@ -42,20 +45,25 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
             {{ 'backup.flush-informer'|translate }}
           </div>
 
-          <lg-button (click)="onFlush()" [style]="'success'">
+          <lg-button (click)="onFlush()"
+                     [style]="'success'"
+                     data-u2e="backup.flush-button">
             {{ 'backup.flush-btn'|translate }}
           </lg-button>
         </lg-flex-column>
       </lg-card>
 
-      <lg-upload (filesSelected)="onRestore($event)" [accept]="'.json'">
+      <lg-upload (filesSelected)="onRestore($event)"
+                 [accept]="'.json'"
+                 name="restore-backup">
         <lg-card style="--card-bg:#e78888">
           <lg-flex-column [position]="'center'">
             <div class="text-center text-inverse">
               {{ 'backup.restore-informer'|translate }}
             </div>
 
-            <lg-button [style]="'danger'">
+            <lg-button [style]="'danger'"
+                       data-u2e="backup.restore-button">
               {{ 'backup.restore-btn'|translate }}
             </lg-button>
           </lg-flex-column>
@@ -68,7 +76,9 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
             {{ 'backup.delete-all.informer'|translate }}
           </div>
 
-          <lg-button (click)="onDeleteAll()" [style]="'danger'">
+          <lg-button (click)="onDeleteAll()"
+                     [style]="'danger'"
+                     data-u2e="backup.delete-all-button">
             {{ 'backup.delete-all.btn'|translate }}
           </lg-button>
         </lg-flex-column>

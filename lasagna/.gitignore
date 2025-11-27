@@ -9,6 +9,9 @@
 /src/environments/environment.development.ts
 /src/environments/environment.ts
 .env
+/tests/storage-snapshots
+/tests/screenshots
+/tests/downloads
 
 # Node
 /node_modules

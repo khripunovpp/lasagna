@@ -50,6 +50,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
         <lg-controls-bar>
           <lg-button [icon]="true"
                      [link]="'/products/add'"
+                     data-u2e="products.list.add-button"
                      [size]="'medium'"
                      [style]="'primary'">
             <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
@@ -59,6 +60,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
             <ng-template lgInlineSeparatedGroup>
               <lg-button (click)="exportProducts(selectionZoneService.selected())"
                          [flat]="true"
+                         data-u2e="products.list.export-button"
                          [size]="'small'"
                          [style]="'solid'">
                 {{ 'export-label'|translate }}
@@ -68,6 +70,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
             <ng-template lgInlineSeparatedGroup>
               <lg-import (onDone)="loadProducts()"
                          [label]="('import-label'|translate)"
+                         data-u2e="products.list.import-button"
                          [schema]="ProductScheme"
                          [storeName]="Stores.PRODUCTS">
                 <ng-template let-flow="flow" let-row lgImportRowTpl>
@@ -101,16 +104,18 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
           <lg-grouping-tiles #groupingTiles
                              [selectable]="true"
+                             data-u2e="products.list.grouping-tiles"
                              [sortResult]="products()">
-            <ng-template let-product lgGroupingTile>
+            <ng-template let-product let-index="index" lgGroupingTile>
               <lg-card>
                 <lg-flex-column size="medium">
                   <lg-flex-row [center]="true" lgExpand>
-                    <a [routerLink]="'/products/edit/' + product.uuid">
+                    <a [routerLink]="'/products/edit/' + product.uuid"
+                       [attr.data-u2e]="'products.list.item.' + index + '.link'">
                       {{ productLabelFactory(product) }}
                     </a>
 
-                  <div>
+                  <div [attr.data-u2e]="'products.list.item.' + index + '.price-per-unit'">
                     @if (hasMicroPrice(product.pricePerUnit)) {
                       {{ 'micro-amount'|translate }}
                       {{ userSettings()?.['currency']|currencySymbol }}
@@ -122,7 +127,8 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
                   </div>
                 </lg-flex-row>
 
-                  <small class="text-muted text-cursive">
+                  <small class="text-muted text-cursive"
+                         [attr.data-u2e]="'products.list.item.' + index + '.edited-at'">
                     {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
                   </small>
                 </lg-flex-column>
@@ -136,6 +142,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
               <lg-button [link]="'/products/add'"
                          [size]="'medium'"
+                         data-u2e="products.empty-state.add-button"
                          [style]="'primary'">
                 {{ 'products.empty-state.btn'|translate }}
               </lg-button>

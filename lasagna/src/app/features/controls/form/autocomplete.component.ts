@@ -43,6 +43,7 @@ export interface autocompleteItem {
                  [items]="loadedList()"
                  [multiple]="multi()"
                  [ngModel]="value"
+                 [attr.data-u2e]="'autocomplete.' + name()"
                  [placeholder]="placeholder"
                  [searchFn]="searchFn"
                  bindLabel="name"
@@ -149,6 +150,7 @@ export class AutocompleteComponent
   noLoad = input<boolean>(false);
   resource = input<string>('');
   key = input<string>('');
+  name = input<string>('');
   appendTo = input<string>('');
   strict = input<boolean>(false);
   multi = input<boolean>(false);

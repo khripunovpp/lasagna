@@ -30,16 +30,19 @@ import {WINDOW} from '../../../../../shared/service/tokens/window.token';
         }
 
         <lg-file-input [buttonStyle]="logoBase64() ? 'danger' : 'default'"
+                       name="invoice-logo"
                        [buttonText]="logoBase64() ? ('settings.invoices.replace-logo' | translate) : ('settings.invoices.upload-logo' | translate)"
                        formControlName="logo"></lg-file-input>
       </lg-control>
 
       <lg-control [label]=" 'settings.invoices.prefix' | translate">
-        <lg-input formControlName="prefix"></lg-input>
+        <lg-input formControlName="prefix"
+                  name="invoice-prefix"></lg-input>
       </lg-control>
 
       <lg-control [label]=" 'settings.invoices.precision' | translate">
-        <lg-number-input formControlName="precision"></lg-number-input>
+        <lg-number-input formControlName="precision"
+                         name="invoice-precision"></lg-number-input>
       </lg-control>
     </lg-flex-column>
   `,

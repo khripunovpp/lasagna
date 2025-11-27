@@ -11,6 +11,7 @@ import {ProductsRepository, RecipesRepository} from '../../../../shared/service/
 import {AsyncPipe} from '@angular/common';
 import {OnboardingComponent} from '../../../onboarding/onboarding.component';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
+import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class ApplicationComponent {
   recipes = inject(RecipesRepository);
   products = inject(ProductsRepository);
   private _onboardingService = inject(OnboardingService);
+  readonly isClient = inject(IS_CLIENT);
   // Используем сигнал из сервиса напрямую
   isOnboardingComplete = this._onboardingService.isOnboardingComplete;
 }
