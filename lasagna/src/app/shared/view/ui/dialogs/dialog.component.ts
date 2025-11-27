@@ -16,6 +16,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           <div class="dialog__box" lgFocusTrap>
             @if (closeButton()) {
               <button class="dialog__close-button"
+                      data-u2e="dialog.close-button"
                       aria-label="Close dialog">
                 {{ 'close-label' | translate }}
               </button>
@@ -32,6 +33,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                        [class.column]="columnButtons()"
                        [class.centered]="centerButtons()">
                     <lg-button (click)="onCancelClick()"
+                               data-u2e="dialog.cancel-button"
                                [style]="cancelButtonStyle()"
                                class="dialog__cancel-button">
                       {{ cancelButtonText() }}
@@ -39,6 +41,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
                     @if (showConfirmButton()) {
                       <lg-button (click)="onConfirmClick()"
+                                 data-u2e="dialog.confirm-button"
                                  [style]="confirmButtonStyle()"
                                  class="dialog__confirm-button">
                         {{ confirmButtonText() }}
@@ -170,7 +173,6 @@ export class DialogComponent {
   });
 
   onEscKeyDown(event: unknown) {
-    console.log(event)
     this.close();
   }
 

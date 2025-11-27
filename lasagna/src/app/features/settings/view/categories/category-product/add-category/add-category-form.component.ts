@@ -36,13 +36,15 @@ import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints'
               <lg-input (onEnter)="onEnter()"
                         [placeholder]="'settings.category.placeholder' | translate"
                         [size]="isMobile() ? 'small' : 'normal'"
-                        formControlName="name"></lg-input>
+                        formControlName="name"
+                        name="category-name"></lg-input>
             </lg-control>
 
             <div lgNoWrap>
               @if (uuid()) {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           data-u2e="category.form.save-button"
                            [size]="isMobile() ? 'small' : 'regular'"
                            (click)="editCategory()">
                   @if (form.dirty) {
@@ -54,6 +56,7 @@ import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints'
               } @else {
                 <lg-button [disabled]="!form.dirty"
                            [style]="'primary'"
+                           data-u2e="category.form.add-button"
                            [size]="isMobile() ? 'small' : 'regular'"
                            (click)="addCategory()">
                   @if (form.dirty) {

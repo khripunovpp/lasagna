@@ -66,8 +66,9 @@ export class AppComponent
     }
   });
   readonly isPwa = inject(IS_PWA);
-  private readonly demoService = inject(DemoService);
   readonly isBrowser = inject(IS_CLIENT);
+  private readonly demoService = inject(DemoService);
+
   async ngOnInit() {
     if (!this.isBrowser) {
       return;

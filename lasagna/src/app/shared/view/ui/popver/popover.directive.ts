@@ -26,7 +26,6 @@ export class PopoverDirective {
 
   show() {
     if (this.overlayRef()) return;
-    console.log('Show popover');
 
     const strategy = this.overlay.position()
       .flexibleConnectedTo(this.host)

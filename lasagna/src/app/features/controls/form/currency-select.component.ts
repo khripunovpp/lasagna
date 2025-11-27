@@ -42,12 +42,12 @@ interface CurrencyOption {
           [ngModel]="selectedCurrency()"
           [placeholder]="'currency.select-placeholder' | translate"
           [staticItems]="currencyList()"
-          compareField="code">
+          compareField="code"
+          name="currency-select">
         </lg-multiselect>
       </lg-control>
       <small class="text-small text-muted">
         {{ 'language.settings.currency-informer' | translate }}
-
       </small>
     </lg-flex-column>
   `,

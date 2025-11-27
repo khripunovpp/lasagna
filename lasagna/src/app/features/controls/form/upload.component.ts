@@ -4,15 +4,17 @@ import {Component, ElementRef, input, output, viewChild} from '@angular/core';
   selector: 'lg-upload',
   standalone: true,
   template: `
-      <div (click)="input.click()" class="lg-upload">
-          <input #input
-                 (change)="onFileChange($event)"
-                 [accept]="accept()"
-                 type="file">
-          <div class="lg-upload__content">
-              <ng-content></ng-content>
-          </div>
+    <div (click)="input.click()" class="lg-upload">
+      <input #input
+             (change)="onFileChange($event)"
+             [accept]="accept()"
+             [attr.data-u2e]="'upload.' + name()"
+             [name]="name()"
+             type="file">
+      <div class="lg-upload__content">
+        <ng-content></ng-content>
       </div>
+    </div>
   `,
   styles: [
     `
@@ -25,6 +27,7 @@ import {Component, ElementRef, input, output, viewChild} from '@angular/core';
 export class UploadComponent {
   filesSelected = output<File[]>();
   accept = input<string>('.csv');
+  name = input<string>('');
   input = viewChild<ElementRef>('input');
 
   onFileChange(event: Event) {

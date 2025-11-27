@@ -115,7 +115,6 @@ export class PwaInstallComponent implements OnInit {
   }
 
   private _onDecline() {
-    console.log('User declined installation');
     this.showButton.set(false);
     this._setDeclinedStatus(true);
     this.analyticsService.trackPwaInstallDeclined();

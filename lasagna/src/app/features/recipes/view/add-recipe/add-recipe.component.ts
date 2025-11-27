@@ -67,6 +67,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
           <lg-button [icon]="true"
                      [link]="'/recipes/add'"
                      [size]="'small'"
+                     data-u2e="recipe.form.add-new-btn"
                      [label]="'recipe.form.add-new-btn'|translate"
                      [style]="'primary'">
             <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
@@ -85,23 +86,29 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
             }
 
             @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-              <lg-flex-row [mobileMode]="true" [center]="true">
-                <lg-title lgSelfStart>
-                  {{ recipe()?.name }}
-                </lg-title>
-              </lg-flex-row>
+              <lg-title lgSelfStart>
+                {{ recipe()?.name }}
+              </lg-title>
+            } @else {
+              <lg-title lgSelfStart>
+                {{ 'recipe.form.title'|translate }}
+              </lg-title>
+            }
 
-              <lg-inline-separated-group>
-                @if (draftRef() && formComponent()?.form?.dirty) {
-                  <ng-template lgInlineSeparatedGroup>
-                    <lg-fade-in>
-                      <span class="text-success">{{ 'saved-draft-label'|translate }}</span>
-                    </lg-fade-in>
-                  </ng-template>
-                }
+            <lg-inline-separated-group>
+              @if (draftRef() && formComponent()?.form?.dirty) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-fade-in>
+                      <span class="text-success"
+                            data-u2e="recipe.form.saved-draft-label">{{ 'saved-draft-label'|translate }}</span>
+                  </lg-fade-in>
+                </ng-template>
+              }
 
+              @if (!draftRef() && editMode()) {
                 <ng-template lgInlineSeparatedGroup>
                   <lg-button [flat]="true"
+                             data-u2e="recipe.form.calculate-btn"
                              [disabled]="!!draftRef()"
                              [link]="'/recipes/calculate/' + recipe()?.uuid"
                              [style]="'default'">
@@ -109,47 +116,44 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                   </lg-button>
                 </ng-template>
 
-                @if (!draftRef() && editMode()) {
-                  <ng-template lgInlineSeparatedGroup>
-                    <lg-button lgShrink
-                               [style]="'default'"
-                               [flat]="true"
-                               (click)="onCloneRecipe()">
-                      {{ 'recipe.form.clone-btn'|translate }}
-                    </lg-button>
-                  </ng-template>
-                }
-
-                @if (isDraftRoute()) {
-                  <ng-template lgInlineSeparatedGroup>
-                    <lg-button lgShrink
-                               [style]="'danger'"
-                               [flat]="true"
-                               (click)="onRemoveDraft()">
-                      {{ 'recipe.form.delete-draft-btn'|translate }}
-                    </lg-button>
-                  </ng-template>
-                } @else if (recipe()?.uuid) {
-                  <ng-template lgInlineSeparatedGroup>
-                    <lg-button lgShrink
-                               [style]="'danger'"
-                               [flat]="true"
-                               (click)="onDeleteRecipe()">
-                      {{ 'recipe.form.delete-btn'|translate }}
-                    </lg-button>
-                  </ng-template>
-                }
-              </lg-inline-separated-group>
-
-              @if (recipe()?.updatedAt) {
-                <small class="text-muted text-cursive">
-                  {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
-                </small>
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'default'"
+                             data-u2e="recipe.form.clone-btn"
+                             [flat]="true"
+                             (click)="onCloneRecipe()">
+                    {{ 'recipe.form.clone-btn'|translate }}
+                  </lg-button>
+                </ng-template>
               }
-            } @else {
-              <lg-title>
-                {{ 'recipe.form.title'|translate }}
-              </lg-title>
+
+              @if (isDraftRoute()) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'danger'"
+                             [flat]="true"
+                             data-u2e="recipe.form.delete-draft-btn"
+                             (click)="onRemoveDraft()">
+                    {{ 'recipe.form.delete-draft-btn'|translate }}
+                  </lg-button>
+                </ng-template>
+              } @else if (recipe()?.uuid) {
+                <ng-template lgInlineSeparatedGroup>
+                  <lg-button lgShrink
+                             [style]="'danger'"
+                             [flat]="true"
+                             data-u2e="recipe.form.delete-btn"
+                             (click)="onDeleteRecipe()">
+                    {{ 'recipe.form.delete-btn'|translate }}
+                  </lg-button>
+                </ng-template>
+              }
+            </lg-inline-separated-group>
+
+            @if (editMode() && recipe()?.updatedAt) {
+              <small class="text-muted text-cursive">
+                {{ 'edited-at-label'|translate }} {{ recipe()?.updatedAt | timeAgo }}
+              </small>
             }
           </lg-flex-column>
 
@@ -160,6 +164,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
             @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
               <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                          lgShrink
+                         data-u2e="recipe.form.save-btn.edit"
                          [style]="'primary'"
                          (click)="onEditRecipe()">
                 @if (formComponent()?.form?.dirty || draftRef()) {
@@ -171,6 +176,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
             } @else {
               <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                          lgShrink
+                         data-u2e="recipe.form.save-btn.add"
                          [style]="'primary'"
                          (click)="onAddRecipe()">
                 @if (formComponent()?.form?.dirty || draftRef()) {

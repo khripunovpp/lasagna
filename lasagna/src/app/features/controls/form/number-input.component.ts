@@ -42,6 +42,8 @@ import {NgTemplateOutlet} from '@angular/common';
                (change)="onInputChange.emit(value)"
                (focus)="focused.set(true)"
                (input)="onChangeInput($event)"
+               [name]="name()"
+               [attr.data-u2e]="'number-input.' + name()"
                (keydown)="onKeydown.emit()"
                [disabled]="disable()"
                [placeholder]="placeholder()"
@@ -171,6 +173,7 @@ export class NumberInputComponent
   onInputChange = output<string>();
   onKeydown = output();
   placeholder = input('Enter text here');
+  name = input('');
   disable = input<boolean>(false);
   moveBeforeAbove = input<boolean>(false);
   focused = signal<boolean>(false);

@@ -11,6 +11,8 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
              [disabled]="true"
              [placeholder]="placeholder() | translate"
              [readonly]="true"
+             [name]="name()"
+             [attr.data-u2e]="'readonly-input.' + name()"
              [value]="value"
              class="input"
              type="text">
@@ -104,6 +106,7 @@ export class ReadonlyControlComponent
   @ViewChild('input', {static: true}) input: ElementRef<HTMLInputElement> | undefined;
   @Input() value: string | number | null | undefined = '';
   placeholder = input('Enter text here');
+  name = input('');
   noAfter = signal(false);
 
   focus() {

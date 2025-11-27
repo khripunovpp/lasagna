@@ -42,13 +42,12 @@ export const stringToColor = (str: string): string => {
   return color;
 };
 
-
 export const isColorString = (str: string) => {
-  const s = new Option().style;
-  s.color = str;
-  return s.color !== '';
-}
+  const s = str.trim().toLowerCase();
+  const hexRegex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/;
 
+  return hexRegex.test(s);
+}
 
 export const estimateColor = (
   name: string

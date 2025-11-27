@@ -3,7 +3,7 @@
     <lg-title>{{ 'main.title' | translate }}</lg-title>
 
     @if (!isOnboardingComplete()) {
-      <lg-card>
+      <lg-card [hidden]="!isClient">
         <lg-onboarding></lg-onboarding>
       </lg-card>
     }

@@ -31,6 +31,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   template: `
     <lg-flex-row [formGroup]="recipePriceAdditionsForm">
       <lg-number-input [moveBeforeAbove]="isMobile()"
+                       name="price-modifier"
                        [placeholder]="'price-modifier.placeholder' | translate"
                        formControlName="value"
                        lgParseMath>

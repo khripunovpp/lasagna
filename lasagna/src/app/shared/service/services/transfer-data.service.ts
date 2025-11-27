@@ -89,6 +89,7 @@ export class TransferDataService {
     }
     const data = await this._csvReaderService.readFromJSONFile<BuckupData[]>(files![0]);
     await this._indexDbService.restoreAllData(data);
+    await this._indexDbService.flushCache();
   }
 
   makeCsv(

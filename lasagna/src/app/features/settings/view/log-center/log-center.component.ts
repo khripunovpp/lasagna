@@ -40,6 +40,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
           <lg-button
             (click)="clearLogs()"
             [disabled]="stats().total === 0"
+            data-u2e="log-center.clear-all-button"
             size="small">
             {{ 'log-center.clear-all' | translate }}
           </lg-button>

@@ -26,6 +26,7 @@ import {WINDOW} from '../../../service/tokens/window.token';
         <lg-button [outlined]="true"
                    [size]="'small'"
                    [style]="'primary'"
+                   data-u2e="grouping.sorting.group.button"
                    lgDropdownAnchor>
           {{ getGroupingLabel(sorting().group) }}
         </lg-button>
@@ -36,28 +37,32 @@ import {WINDOW} from '../../../service/tokens/window.token';
           <lg-button (click)="onSortChange({group: 'category'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.group.by-category">
             {{ groupingToLabel['category']  | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'tag'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.group.by-tag">
             {{ groupingToLabel['tag']  | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'createdAt'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.group.by-creation-date">
             {{ groupingToLabel['createdAt'] | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({group: 'alphabetical'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.group.by-first-letter">
             {{ groupingToLabel['alphabetical'] | translate }}
           </lg-button>
         </lg-flex-column>
@@ -89,6 +94,7 @@ import {WINDOW} from '../../../service/tokens/window.token';
         <lg-button [outlined]="true"
                    [size]="'small'"
                    [style]="'primary'"
+                   data-u2e="grouping.sorting.direction.button"
                    lgDropdownAnchor>
           {{ getGroupingDirectionLabel(sorting().direction) }}
         </lg-button>
@@ -99,14 +105,16 @@ import {WINDOW} from '../../../service/tokens/window.token';
           <lg-button (click)="onSortChange({direction: 'asc'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.direction.asc">
             {{ groupingDirectionToLabel['asc'] | translate }}
           </lg-button>
 
           <lg-button (click)="onSortChange({direction: 'desc'})"
                      [flat]="true"
                      [size]="'small'"
-                     [style]="'warning'">
+                     [style]="'warning'"
+                     data-u2e="grouping.sorting.direction.desc">
             {{ groupingDirectionToLabel['desc']  | translate }}
           </lg-button>
         </lg-flex-column>

@@ -32,6 +32,7 @@ import {WINDOW} from '../../shared/service/tokens/window.token';
             <div class="lg-global-search__search" style="--control-bg:rgba(255,255,255,0.7)">
               <lg-input [placeholder]="'search.placeholder'|translate"
                         [autoFocus]="true"
+                        name="global-search"
                         [formControl]="searchControl"></lg-input>
             </div>
 

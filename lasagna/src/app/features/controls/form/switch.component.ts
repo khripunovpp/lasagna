@@ -12,19 +12,20 @@ import {NgClass} from '@angular/common';
   selector: 'lg-switch',
   standalone: true,
   template: `
-    <label class="lg-switch"
-           [ngClass]="size()"
+    <label [attr.data-u2e]="'switch.' + name() +'.label'"
            [attr.for]="name()"
+           [ngClass]="size()"
+           class="lg-switch"
            tabindex="0">
-
       <ng-content select="[slot='left']"></ng-content>
 
-      <input type="checkbox"
-             class="switch"
+      <input (ngModelChange)="onChangeSwitch($event)"
+             [attr.data-u2e]="'switch.' + name() +'.input'"
              [attr.id]="name()"
              [attr.name]="name()"
              [ngModel]="modelValue"
-             (ngModelChange)="onChangeSwitch($event)"/>
+             class="switch"
+             type="checkbox"/>
 
       <span class="lg-switch__track">
         <span class="lg-switch__thumb"></span>

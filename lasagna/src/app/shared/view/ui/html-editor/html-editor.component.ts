@@ -13,6 +13,7 @@ import {TranslatePipe} from '@ngx-translate/core';
                        [toolbar]="toolbar"></ngx-editor-menu>
       <ngx-editor [disabled]="false"
                   [editor]="editor"
+                  [attr.data-u2e]="'html-editor.' + name()"
                   [formControl]="htmlString"
                   [placeholder]="placeholder()"
       ></ngx-editor>
@@ -67,6 +68,7 @@ export class HtmlEditorComponent
 
   htmlString = new FormControl('');
   placeholder = input('');
+  name = input('');
   readonly editor = new Editor();
   readonly toolbar: Toolbar = [
     ['bold', 'italic'],

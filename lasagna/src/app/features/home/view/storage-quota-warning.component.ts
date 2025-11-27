@@ -63,4 +63,3 @@ export class StorageQuotaWarningComponent {
     return percent >= 85; // show near limit
   });
 }
-

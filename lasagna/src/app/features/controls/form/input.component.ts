@@ -37,6 +37,8 @@ import {NgTemplateOutlet} from '@angular/common';
              [placeholder]="placeholder()"
              [type]="inputType()"
              [value]="value"
+             [name]="name()"
+             [attr.data-u2e]="'input.' + name()"
              class="input">
 
       @if (value && !disable()) {
@@ -154,6 +156,7 @@ export class InputComponent
   placeholder = input('Enter text here');
   autoFocus = input(false);
   inputType = input<string>('text');
+  name = input<string>('');
   disable = input(false);
   onInputChanged = output<string>();
   onEnter = output<string>();

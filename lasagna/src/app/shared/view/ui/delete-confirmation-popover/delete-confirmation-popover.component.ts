@@ -16,6 +16,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                [cancelButtonStyle]="'primary'"
                [cancelButtonText]="settings()?.cancelText ?? ('delete-close-label'|translate)"
                [centerButtons]="true"
+               data-u2e="delete.confirmation.popover"
                [columnButtons]="false"
                [confirmButtonStyle]="'secondary'"
                [confirmButtonText]="settings()?.confirmText ?? ('delete-confirm-label'|translate)">

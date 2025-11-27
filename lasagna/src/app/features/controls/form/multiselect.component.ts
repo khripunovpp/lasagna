@@ -34,6 +34,7 @@ export interface MultiselectItem {
       <ng-select (change)="onChangeSelect($event)"
                  (ngModelChange)="onChangeInput($event)"
                  [appendTo]="appendTo()"
+                 [attr.data-u2e]="'multiselect.' + name()"
                  [compareWith]="compareWith"
                  [items]="loadedList()"
                  [multiple]="multi()"
@@ -146,6 +147,7 @@ export class MultiselectComponent
   optionFactory = input<((item: any) => string) | null>((item) => (item?.name ?? item?.value ?? item));
   resource = input<string>('');
   appendTo = input<string>('');
+  name = input<string>('');
   compareField = input<string>('uuid');
   autoLoad = input<boolean>(false);
   multi = input<boolean>(false);

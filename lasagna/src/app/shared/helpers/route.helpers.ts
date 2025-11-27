@@ -64,7 +64,6 @@ export function routeChangeSignal(
     }),
     pairwise(),
     filter((urls) => urls[0] !== urls[1]),
-    tap(event => console.log('Router event:', event)),
   ))
 }
 

@@ -69,11 +69,9 @@ export class RecipeCost {
   }
 
   get totalWeight(): number {
-    console.log('-----')
     return this.ingredients.reduce((acc, ingredient) => {
       // Не включаем в расчет позициии для которых не удалось вывести стоимость
       if (!ingredient.pricePerUnit) return acc;
-      console.log(ingredient, ingredient.totalWeightGram);
       // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
       return acc + (ingredient.totalWeightGram ?? 0);
     }, 0);
