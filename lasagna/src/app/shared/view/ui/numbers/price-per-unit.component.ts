@@ -19,7 +19,7 @@ import {SettingsKeysConst} from '../../../../features/settings/const/settings-ke
   template: `
     @if (hasMicroPrice(price())) {
       {{ 'micro-amount'|translate }}
-      {{ userSettings()['currency']|currencySymbol }}
+      {{ userSettings()?.['currency']|currencySymbol }}
     } @else {
       {{ price() | userCurrency:pipesDigits() }}
     }
@@ -39,7 +39,7 @@ export class PricePerUnitComponent {
   price = input.required<number>();
   unit = input<string>('');
   readonly userSettings = inject(SETTINGS);
-  readonly precisions = computed(() => this.userSettings()[SettingsKeysConst.pricePrecision] ?? 2);
+  readonly precisions = computed(() => this.userSettings()?.[SettingsKeysConst.pricePrecision] ?? 2);
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
   protected readonly hasMicroPrice = hasMicroPrice;
 }

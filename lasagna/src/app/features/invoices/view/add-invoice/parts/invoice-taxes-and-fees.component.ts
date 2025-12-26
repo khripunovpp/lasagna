@@ -118,7 +118,7 @@ import {SelfStartDirective} from '../../../../../shared/view/directives/self-sta
                                lgSelfEnd
                                lgWidth="30%"
                                placeholder="">
-            <div ngProjectAs="after">{{ tax.percentage ? '%' : userSettings()['currency']|currencySymbol }}</div>
+            <div ngProjectAs="after">{{ tax.percentage ? '%' : userSettings()?.['currency']|currencySymbol }}</div>
           </lg-readonly-control>
 
           @if (canBeUpdated) {

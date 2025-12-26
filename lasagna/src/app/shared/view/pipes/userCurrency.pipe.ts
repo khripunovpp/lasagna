@@ -12,7 +12,7 @@ export class UserCurrencyPipe {
   userSettings = inject(SETTINGS);
 
   transform(value?: string | number, digitInfo: string = '1.0-0') {
-    const currency: string = this.userSettings()['currency'] || 'USD';
+    const currency: string = this.userSettings()?.['currency'] || 'USD';
     const currencySymbol = currencyStringToSymbol(currency);
 
     return this.decimalPipe.transform(value, digitInfo) + ' ' + currencySymbol;

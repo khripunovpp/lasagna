@@ -52,7 +52,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
         @if (roundActionSelected()) {
           <ng-template lgExtraTpl place="after">
-            {{ userSettings()['currency']|currencySymbol }}
+            {{ userSettings()?.['currency']|currencySymbol }}
           </ng-template>
         } @else {
           <ng-template lgExtraTpl place="after">
@@ -92,7 +92,7 @@ export class CalculationPriceModifiersComponent
   userSettings = inject(SETTINGS);
   additionalPriceUnit: UnitGroupItem[] = [
     {
-      label: currencyStringToSymbol(this.userSettings()['currency'] || 'USD'),
+      label: currencyStringToSymbol(this.userSettings()?.['currency'] || 'USD'),
       value: 'currency',
       style: 'secondary',
     },

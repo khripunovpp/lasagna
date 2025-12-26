@@ -264,7 +264,7 @@ export class SyncResultGroupComponent implements OnInit {
   syncEstimation = input.required<SyncEstimation[string]>();
   selectionForm?: FormGroup;
   sizes?: Observable<any>;
-  readonly pipesDigits = computed(() => `1.0-${this.userSettings()[SettingsKeysConst.pricePrecision] ?? 2}`);
+  readonly pipesDigits = computed(() => `1.0-${this.userSettings()?.[SettingsKeysConst.pricePrecision] ?? 2}`);
   private readonly _allStateEffect = effect(() => {
     // const [prev, curr] = this._allStateValue();
     //

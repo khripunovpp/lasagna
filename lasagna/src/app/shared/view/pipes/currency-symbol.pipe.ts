@@ -7,7 +7,8 @@ import {currencyStringToSymbol} from '../../helpers/assets/currency.helper';
   standalone: true,
 })
 export class CurrencySymbolPipe implements PipeTransform {
-  transform(value: string): string {
+  transform(value?: string): string {
+    if (!value) return '';
     return currencyStringToSymbol(value);
   }
 }

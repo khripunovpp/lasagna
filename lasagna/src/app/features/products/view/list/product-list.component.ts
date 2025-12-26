@@ -122,7 +122,7 @@ import {SETTINGS} from '../../../settings/service/providers/settings.token';
                   <div>
                     @if (hasMicroPrice(product.pricePerUnit)) {
                       {{ 'micro-amount'|translate }}
-                      {{ userSettings()['currency']|currencySymbol }}
+                      {{ userSettings()?.['currency']|currencySymbol }}
                     } @else {
                       {{ $any(product).pricePerUnit | userCurrency: pipesDigits() }}
                     }

@@ -102,10 +102,10 @@
                      lgExpand>
           <div lgWidth="40%">{{ 'invoices.item' | translate }}</div>
           <div [lgWidth]="canBeUpdated ? '20%' : '12.5%'">{{ 'invoices.amount' | translate }}</div>
-          <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.price' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.total' | translate }}, <span>{{ userSettings()['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.price' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.total' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
         </lg-flex-row>
       }
 

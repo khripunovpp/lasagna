@@ -269,7 +269,7 @@
                       [class.text-muted]="row.ingredient?.hasMicroPerUnitPrice">
                     @if (row.ingredient?.hasMicroPerUnitPrice) {
                       {{ 'micro-amount'|translate }}
-                      {{ userSettings()['currency']|currencySymbol }}
+                      {{ userSettings()?.['currency']|currencySymbol }}
                     } @else {
                       {{ row.price_per_unit | userCurrency: pipesDigits() }}
                     }
@@ -281,7 +281,7 @@
                     @if (row.type !== 'total') {
                       @if (row.ingredient?.hasMicroTotalPrice) {
                         {{ 'micro-amount'|translate }}
-                        {{ userSettings()['currency']|currencySymbol }}
+                        {{ userSettings()?.['currency']|currencySymbol }}
                       } @else {
                         {{ row.total | userCurrency: pipesDigits() }}
                       }

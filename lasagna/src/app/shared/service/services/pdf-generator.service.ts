@@ -24,19 +24,19 @@ export class PdfGeneratorService {
   get invoiceSettings() {
     const settings = this.userSettings();
     return {
-      logo: settings[SettingsKeysConst.invoiceLogo],
-      rowsPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
-      totalPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
-      currency: currencyStringToSymbol(settings[SettingsKeysConst.currency] || 'USD'),
+      logo: settings?.[SettingsKeysConst.invoiceLogo] || null,
+      rowsPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
+      totalPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
+      currency: currencyStringToSymbol(settings?.[SettingsKeysConst.currency] || 'USD'),
     };
   }
 
   get calculationSettings() {
     const settings = this.userSettings();
     return {
-      rowsPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
-      totalPrecision: +settings[SettingsKeysConst.pricePrecision] || 2,
-      currency: currencyStringToSymbol(settings[SettingsKeysConst.currency] || 'USD'),
+      rowsPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
+      totalPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
+      currency: currencyStringToSymbol(settings?.[SettingsKeysConst.currency] || 'USD'),
     };
   }
 

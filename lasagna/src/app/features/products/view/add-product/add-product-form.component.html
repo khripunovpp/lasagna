@@ -35,7 +35,7 @@
                              lgParseMath
                              placeholder="">
               <ng-template lgExtraTpl place="after">
-                <span>{{ userSettings()['currency']|currencySymbol }}</span>
+                <span>{{ userSettings()?.['currency']|currencySymbol }}</span>
 
               </ng-template>
             </lg-number-input>
@@ -43,7 +43,7 @@
 
           <lg-control lgWidth="40%">
             <ng-template lgControlLabelTemplate>
-              <span>{{ userSettings()['currency']|currencySymbol }}</span>
+              <span>{{ userSettings()?.['currency']|currencySymbol }}</span>
               <span [translateParams]="{unit:product()?.unit | unitString | translate}"
                     [translate]="'per-unit.label'"></span>
             </ng-template>
