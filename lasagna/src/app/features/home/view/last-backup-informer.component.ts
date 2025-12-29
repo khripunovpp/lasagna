@@ -67,6 +67,7 @@ export class LastBackupInformerComponent {
     ? new Date(this.storedBackupDate()!) :
     undefined);
   private readonly _notificationsService = inject(NotificationsService);
+  private readonly _window = inject(WINDOW);
   showButton = computed(() => {
     try {
       if (this._window?.location.hostname === 'localhost') {
@@ -98,7 +99,6 @@ export class LastBackupInformerComponent {
       return false;
     }
   });
-  private readonly _window = inject(WINDOW);
 
   hide() {
     this.storedBackupDate.set(null);
@@ -114,7 +114,7 @@ export class LastBackupInformerComponent {
     try {
       return this._window?.localStorage.getItem('lastBackupDate') || null;
     } catch (e) {
-      console.log('e', e);
+      this._notificationsService.error(errorHandler(e));
       return null
     }
   }

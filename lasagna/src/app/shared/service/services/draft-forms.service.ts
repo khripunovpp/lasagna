@@ -1,6 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {generateUuid} from '../../helpers/attribute.helper';
 import {WINDOW} from '../tokens/window.token';
+import {errorHandler} from '../../helpers';
+import {NotificationsService} from './notifications.service';
 
 // ключами временных форм будут timestamp
 
@@ -23,6 +25,7 @@ export class DraftFormsService {
   }
 
   private readonly _window = inject(WINDOW);
+  private readonly _notificationsService = inject(NotificationsService);
 
   getDraftForms = <T extends Record<string, any>>(store: string): Record<string, DraftForm<T>> | null => {
     try {
@@ -32,7 +35,7 @@ export class DraftFormsService {
       }
       return JSON.parse(draftForm);
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
       return null;
     }
   }
@@ -63,7 +66,7 @@ export class DraftFormsService {
     try {
       this._window?.localStorage.setItem(store, JSON.stringify(valueToStore));
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
     }
 
     return value;
@@ -97,7 +100,7 @@ export class DraftFormsService {
     try {
       this._window?.localStorage.setItem(store, JSON.stringify(valueToStore));
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 
@@ -125,7 +128,7 @@ export class DraftFormsService {
 
       this._window?.localStorage.setItem(store, JSON.stringify(draftForm));
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 }

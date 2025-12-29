@@ -3,6 +3,8 @@ import {CsvReaderService} from './csv-reader.service';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
 import {WINDOW} from '../tokens/window.token';
+import {NotificationsService} from './notifications.service';
+import {errorHandler} from '../../helpers';
 
 export interface BuckupData {
   store: string
@@ -22,13 +24,15 @@ export class TransferDataService {
   }
 
   private readonly _window = inject(WINDOW);
+  private readonly _notificationsService = inject(NotificationsService);
+
   get currenBackupDate() {
     try {
       const date = this._window?.localStorage.getItem('lastBackupDate');
       if (!date) return null;
       return new Date(Number(date));
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
       return null;
     }
   }

@@ -1,5 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {WINDOW} from '../tokens/window.token';
+import {errorHandler} from '../../helpers';
+import {NotificationsService} from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ export class UsingHistoryService {
   }
 
   private readonly _window = inject(WINDOW);
+  private readonly _notificationsService = inject(NotificationsService);
 
   read(
     prefix: string
@@ -31,7 +34,7 @@ export class UsingHistoryService {
         recent: recentValue
       };
     } catch (e) {
-      console.error('Error reading from localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
       return {
         top: {},
         recent: {}
@@ -85,7 +88,7 @@ export class UsingHistoryService {
       this._window?.localStorage.setItem(recentKey, JSON.stringify(Object.fromEntries(recentSources)));
       this._window?.localStorage.setItem(topKey, JSON.stringify(Object.fromEntries(topSources)));
     } catch (e) {
-      console.error('Error updating localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
       return;
     }
   }

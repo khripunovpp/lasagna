@@ -1,6 +1,7 @@
 import {Transaction} from "dexie";
 import {Stores} from "../../../shared/service/db/const/stores";
 import {SyncCloudResponse} from "./sync.service";
+import {errorHandler} from '../../../shared/helpers';
 
 export type SyncLocalDbResponse = Record<string, any>;
 
@@ -70,7 +71,6 @@ export const estimateSyncChangesTransaction = async (
 
       resolve(result);
     } catch (e) {
-      console.error('Failed to estimate sync changes transaction:', e);
       reject(e);
     }
   });

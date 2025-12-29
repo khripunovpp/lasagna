@@ -1,6 +1,8 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.token';
 import {WINDOW} from '../../shared/service/tokens/window.token';
+import {errorHandler} from '../../shared/helpers';
+import {NotificationsService} from '../../shared/service/services';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class OnboardingService {
       this._recipeDone = signal(!!this._window?.localStorage.getItem('onboarding_recipe_done'));
       this._faqDone = signal(!!this._window?.localStorage.getItem('onboarding_faq_done'));
     } catch (e) {
-      console.error('Failed to initialize onboarding service', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 
@@ -34,12 +36,14 @@ export class OnboardingService {
     }
   );
 
+  private readonly _notificationsService = inject(NotificationsService);
+
   markProductDone() {
     try {
       this._window?.localStorage.setItem('onboarding_product_done', '1');
       this._productDone.set(true);
     } catch (e) {
-      console.error('Failed to mark product onboarding as done', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 
@@ -48,7 +52,7 @@ export class OnboardingService {
       this._window?.localStorage.setItem('onboarding_recipe_done', '1');
       this._recipeDone.set(true);
     } catch (e) {
-      console.error('Failed to mark product onboarding as done', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 
@@ -57,7 +61,7 @@ export class OnboardingService {
       this._window?.localStorage.setItem('onboarding_settings_done', '1');
       this._settingsDone.set(true);
     } catch (e) {
-      console.error('Failed to mark product onboarding as done', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 
@@ -66,7 +70,7 @@ export class OnboardingService {
       this._window?.localStorage.setItem('onboarding_faq_done', '1');
       this._faqDone.set(true);
     } catch (e) {
-      console.error('Failed to mark product onboarding as done', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 

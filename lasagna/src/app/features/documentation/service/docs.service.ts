@@ -3,6 +3,8 @@ import {Stores} from '../../../shared/service/db/const/stores';
 import {BehaviorSubject} from 'rxjs';
 import {inject, Injectable} from "@angular/core";
 import {USER_LANGUAGE} from '../../settings/service/providers/user-language.token';
+import {NotificationsService} from '../../../shared/service/services';
+import {errorHandler} from '../../../shared/helpers';
 
 @Injectable({providedIn: 'root'})
 export class DocsService {
@@ -20,6 +22,7 @@ export class DocsService {
   private tree$ = new BehaviorSubject<TreeNode[]>([]);
   private _userLang = inject(USER_LANGUAGE);
   private _sharedLoader = inject(SharedDocLoaderService);
+  private _notificationsService = inject(NotificationsService);
 
   getDocsView() {
     return this.docs$.getValue();
@@ -32,7 +35,7 @@ export class DocsService {
       this.tree$.next(this._sortTree(filteredTree));
       this.docs$.next(docs);
     } catch (e) {
-      console.error('DocsService init failed', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 

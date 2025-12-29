@@ -1,6 +1,8 @@
 // services/form-template.service.ts
 import {inject, Injectable} from '@angular/core';
 import {WINDOW} from '../tokens/window.token';
+import {errorHandler} from '../../helpers';
+import {NotificationsService} from './notifications.service';
 
 // models/template.model.ts
 
@@ -33,13 +35,14 @@ export class FormTemplateService {
   }
 
   private readonly _window = inject(WINDOW);
+  private readonly _notificationsService = inject(NotificationsService);
 
   getTemplates<T extends TemplateType>(type: T): Template<T>[] {
     try {
       const data = this._window?.localStorage.getItem(this.getStorageKey(type));
       return data ? JSON.parse(data) : [];
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
       return [];
     }
   }
@@ -98,7 +101,7 @@ export class FormTemplateService {
     try {
       this._window?.localStorage.setItem(this.getStorageKey(type), JSON.stringify(data));
     } catch (e) {
-      console.error('Error accessing localStorage:', e);
+      this._notificationsService.error(errorHandler(e));
     }
   }
 }
