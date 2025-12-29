@@ -498,7 +498,7 @@
   "pwa.install": "Instalar App",
   "pwa.update.banner-text": "Nova versão disponível! Clique para atualizar.",
   "pwa.update.dialog.close-btn": "Fechar sem atualizar",
-  "pwa.update.dialog.description": "Recomendamos salvar um backup dos seus dados antes de atualizar. Às vezes, o aplicativo não atualiza na primeira tentativa, então você pode ficar tranquilo e não fazer nada; ele será atualizado automaticamente.",
+  "pwa.update.dialog.description": "Recomendamos salvar um backup dos seus dados antes de atualizar",
   "pwa.update.dialog.save-backup": "Salvar Backup",
   "pwa.update.dialog.timeout": "Será atualizado em {seconds} segundos",
   "pwa.update.dialog.title": "Nova versão disponível!",
