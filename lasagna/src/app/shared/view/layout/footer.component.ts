@@ -79,6 +79,7 @@ import {findRouteData} from '../../helpers';
     .lg-footer__version {
       color: #888;
       opacity: 0.7;
+      white-space: nowrap;
     }
 
     .lg-footer__support-link {

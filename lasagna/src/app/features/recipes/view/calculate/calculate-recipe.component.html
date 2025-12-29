@@ -1,15 +1,13 @@
 <lg-fade-in>
-  <lg-container>
+  <lg-container class="calculation-page">
     <lg-flex-column>
       @let calculation = result()?.calculation;
       @let hasIngredients = (result()?.calculation?.ingredients?.length || 0) > 0;
 
       <lg-flex-column [size]="'medium'">
-        <lg-flex-row [center]="true" [mobileMode]="true">
-          <lg-title>
-            {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
-          </lg-title>
-        </lg-flex-row>
+        <lg-title>
+          {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
+        </lg-title>
 
         @if (hasIngredients) {
           <lg-inline-separated-group>
@@ -35,9 +33,7 @@
       </lg-flex-column>
 
       @if (result()?.calculation?.totalPrice) {
-        <lg-flex-row [mobileMode]="true"
-                     style="max-width: 1200px"
-                     lgExpand>
+        <div class="calculation-page__topStat">
           <lg-flex-column [position]="'stretch'">
             @if (calculation?.hasWeight) {
               <lg-card size="small">
@@ -173,42 +169,44 @@
             </lg-flex-column>
           </lg-flex-column>
 
-          <lg-card lgWidth="270px" size="small">
-            <lg-flex-column [fill]="true"
-                            [size]="'small'">
-              <lg-title [level]="5">
-                <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
-              </lg-title>
-
-              <canvas [data]="doughnutChartData().prices"
-                      [options]="doughnutChartOptions"
-                      [type]="doughnutChartType"
-                      (chartHover)="onChartHover('price', $event.event, $event.active)"
-                      #priceChart
-                      baseChart>
-              </canvas>
-            </lg-flex-column>
-          </lg-card>
-
-          @if (calculation?.hasWeight) {
-            <lg-card lgWidth="270px" size="small">
+          <div class="calculation-page__charts">
+            <lg-card size="small">
               <lg-flex-column [fill]="true"
                               [size]="'small'">
                 <lg-title [level]="5">
-                  <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
+                  <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
                 </lg-title>
 
-                <canvas [data]="doughnutChartData().weight"
+                <canvas [data]="doughnutChartData().prices"
                         [options]="doughnutChartOptions"
-                        (chartHover)="onChartHover('weight', $event.event, $event.active)"
                         [type]="doughnutChartType"
-                        #weightChart
+                        (chartHover)="onChartHover('price', $event.event, $event.active)"
+                        #priceChart
                         baseChart>
                 </canvas>
               </lg-flex-column>
             </lg-card>
-          }
-        </lg-flex-row>
+
+            @if (calculation?.hasWeight) {
+              <lg-card size="small">
+                <lg-flex-column [fill]="true"
+                                [size]="'small'">
+                  <lg-title [level]="5">
+                    <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
+                  </lg-title>
+
+                  <canvas [data]="doughnutChartData().weight"
+                          [options]="doughnutChartOptions"
+                          (chartHover)="onChartHover('weight', $event.event, $event.active)"
+                          [type]="doughnutChartType"
+                          #weightChart
+                          baseChart>
+                  </canvas>
+                </lg-flex-column>
+              </lg-card>
+            }
+          </div>
+        </div>
       }
 
 

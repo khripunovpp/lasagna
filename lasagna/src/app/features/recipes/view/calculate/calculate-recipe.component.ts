@@ -98,6 +98,44 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     lg-number-input .lg-number-input {
       width: 100px;
     }
+
+    .calculation-page {
+
+    }
+
+    .calculation-page__topStat {
+      display: flex;
+      gap: 32px;
+    }
+
+    .calculation-page__charts {
+      display: flex;
+      gap: 32px;
+    }
+
+    .calculation-page__charts > * {
+      max-width: 270px;
+    }
+
+    @media (max-width: 990px) {
+      .calculation-page__topStat {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .calculation-page__charts > * {
+        max-width: calc(50% - 16px);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .calculation-page__charts {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .calculation-page__charts > * {
+        max-width: 100%;
+      }
+    }
   `],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
