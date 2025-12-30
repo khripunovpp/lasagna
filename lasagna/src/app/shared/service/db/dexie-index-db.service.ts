@@ -185,6 +185,13 @@ export class DexieIndexDbService extends Dexie {
     return response
   }
 
+  async getFirst(
+    storeKey: Stores,
+  ) {
+    // @ts-ignore
+    return (this[storeKey] as Table<any>).limit(1).first();
+  }
+
   async getOneWithRelations<T = any>(storeKey: Stores, uuid: string): Promise<{
     data: T | null,
     relations: Record<string, Record<string, any>>,
@@ -351,6 +358,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async getLength(storeKey: Stores): Promise<number> {
+    debugger
     // @ts-ignore
     return (this[storeKey] as Table<any>).count();
   }

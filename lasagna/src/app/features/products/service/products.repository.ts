@@ -37,6 +37,10 @@ export class ProductsRepository {
     return this._indexDbService.getLength(Stores.PRODUCTS);
   }
 
+  hasRecords() {
+    return this._indexDbService.getFirst(Stores.RECIPES);
+  }
+
   loadAll() {
     return this._indexDbService.getAll(Stores.PRODUCTS).then(products => {
       this._stream$.next(products.map(product => this._productFactory.fromRaw(product)));
@@ -120,18 +124,17 @@ export class ProductsRepository {
       return Promise.resolve([]);
     }
 
-    return this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, keys).then(recipes => {
-      return recipes.toSorted((a, b) => {
-        if (!a.uuid || !b.uuid) {
-          return 0;
-        }
-        return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
-      }).map(product => ({
-        product: this._productFactory.fromRaw(product),
-        updatedAt: product.uuid ? top[product.uuid].updatedAt : 0,
-        count: product.uuid ? top[product.uuid].count : 0,
-      }))
-    })
+    return this._indexDbService.getMany<ProductDTO>(Stores.PRODUCTS, keys)
+      .then(recipes => {
+        return recipes
+          .toSorted((a, b) => {
+            if (!a.uuid || !b.uuid) {
+              return 0;
+            }
+            return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
+          })
+          .map(product => this._productFactory.fromRaw(product))
+      })
   }
 
   deleteProduct(uuid: string) {

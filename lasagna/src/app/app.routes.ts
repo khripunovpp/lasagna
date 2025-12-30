@@ -24,7 +24,7 @@ export const routes: Routes = [{
     // этот роут дублирует home для корректной работы SSG
     {
       path: '',
-      loadComponent: () => import('./features/home/view/application/application.component')
+      loadComponent: () => import('./features/home/view/application.component')
         .then(m => m.ApplicationComponent),
       data: {
         canSeePolicies: true,
@@ -36,7 +36,7 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./features/home/view/application/application.component')
+          loadComponent: () => import('./features/home/view/application.component')
             .then(m => m.ApplicationComponent),
           data: {
             canSeePolicies: true,

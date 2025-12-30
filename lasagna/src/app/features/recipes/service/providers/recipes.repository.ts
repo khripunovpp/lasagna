@@ -42,7 +42,12 @@ export class RecipesRepository {
   }
 
   get length() {
-    return this._indexDbService.getLength(Stores.RECIPES);
+    return this._indexDbService
+      .getLength(Stores.RECIPES);
+  }
+
+  hasRecords() {
+    return this._indexDbService.getFirst(Stores.RECIPES);
   }
 
   async addRecipe(
@@ -223,15 +228,14 @@ export class RecipesRepository {
       return Promise.resolve([]);
     }
 
-    return this._indexDbService.getMany(Stores.RECIPES, keys).then(recipes => {
-      return recipes.toSorted((a, b) => {
-        return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
-      }).map(recipe => ({
-        recipe: Recipe.fromRaw(recipe),
-        updatedAt: top[recipe.uuid].updatedAt,
-        count: top[recipe.uuid].count,
-      }))
-    })
+    return this._indexDbService.getMany(Stores.RECIPES, keys)
+      .then(recipes => {
+        return recipes
+          .toSorted((a, b) => {
+            return top[b.uuid].updatedAt > top[a.uuid].updatedAt ? 1 : -1;
+          })
+          .map(recipe => Recipe.fromRaw(recipe))
+      })
   }
 
   async addProductByName(
