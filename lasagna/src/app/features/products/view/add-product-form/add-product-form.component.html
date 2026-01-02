@@ -52,15 +52,17 @@
             </ng-template>
 
             <lg-readonly-control [placeholder]="''"
-                                 name="pricePerUnit"
-                                 [value]="hasMicroPrice() ? ('micro-amount'|translate) : (product()?.pricePerUnit | number:pipesDigits())">
-              <lg-button (click)="priceChangesComponent.open()"
-                         [flat]="true"
-                         [icon]="true"
-                         [style]="'success'"
-                         ngProjectAs="after">
-                <mat-icon aria-hidden="false" fontIcon="bar_chart"></mat-icon>
-              </lg-button>
+                                 [value]="hasMicroPrice() ? ('micro-amount'|translate) : (product()?.pricePerUnit | number:pipesDigits())"
+                                 name="pricePerUnit">
+              @if (product()?.uuid) {
+                <lg-button (click)="priceChangesComponent.open()"
+                           [flat]="true"
+                           [icon]="true"
+                           [style]="'success'"
+                           ngProjectAs="after">
+                  <mat-icon aria-hidden="false" fontIcon="bar_chart"></mat-icon>
+                </lg-button>
+              }
             </lg-readonly-control>
           </lg-control>
         </lg-flex-row>
@@ -132,9 +134,9 @@
 
             @if (topCategories().length) {
               <lg-chips-list [control]="categorySelect"
-                             name="topCategoriesChips"
+                             [items]="topCategories()"
                              data-u2e="product.add.form.top-categories-chips"
-                             [items]="topCategories()"></lg-chips-list>
+                             name="topCategoriesChips"></lg-chips-list>
             }
           </lg-flex-column>
         </lg-control>

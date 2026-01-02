@@ -52,7 +52,7 @@
                         <lg-multiselect [resource]="'recipes'"
                                         name="recipe_id"
                                         appendTo="body"
-                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'name'])"
+                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'new_product_name'])"
                                         [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
                                         formControlName="recipe_id"
                                         ngProjectAs="recipes"
@@ -62,7 +62,7 @@
                                         appendTo="body"
                                         name="product_id"
                                         [optionFactory]="productLabelFactory"
-                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'name'])"
+                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'new_product_name'])"
                                         [labelFactory]="productLabelFactory"
                                         formControlName="product_id"
                                         [placeholder]="'recipe.form.ingredients.product_id.label' | translate"
@@ -89,6 +89,7 @@
                         </lg-multiselect>
 
                         <lg-input ngProjectAs="custom"
+                                  (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
                                   formControlName="new_product_name"
                                   [placeholder]="'recipe.form.ingredients.new_product_name.label' | translate"></lg-input>
                         <div ngProjectAs="custom-title">
