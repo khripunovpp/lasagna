@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HotToastService, ToastOptions} from '@ngxpert/hot-toast';
 import {FormArray, FormGroup} from '@angular/forms';
 import {LogLevel} from '../../../features/settings/service/models/LogEntry';
 import {LogCenterService} from '../../../features/settings/service/services/log-center.service';
 import {TranslateService} from '@ngx-translate/core';
+import {WINDOW} from '../tokens/window.token';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,14 @@ export class NotificationsService {
     position: 'bottom-right' as const,
     dismissible: true,
   };
+  private readonly _window = inject(WINDOW);
 
   success(message: string, logToCenter: boolean = false, source?: string) {
     this._toast.success(this._withTranslation(message), this._options);
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.SUCCESS, this._withTranslation(message), undefined, source);
     }
+    this._tryHapticFeedback('success');
   }
 
   error(message: string, logToCenter: boolean = true, source?: string) {
@@ -34,6 +37,7 @@ export class NotificationsService {
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.ERROR, this._withTranslation(message), undefined, source);
     }
+    this._tryHapticFeedback('error');
   }
 
   warning(message: string, logToCenter: boolean = true, source?: string) {
@@ -41,6 +45,7 @@ export class NotificationsService {
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.WARNING, this._withTranslation(message), undefined, source);
     }
+    this._tryHapticFeedback('warning');
   }
 
   info(message: string, logToCenter: boolean = false, source?: string) {
@@ -48,6 +53,7 @@ export class NotificationsService {
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
+    this._tryHapticFeedback('success');
   }
 
   show(message: string, logToCenter: boolean = false, source?: string) {
@@ -55,6 +61,7 @@ export class NotificationsService {
     if (logToCenter) {
       this._logCenter.addLog(LogLevel.INFO, this._withTranslation(message), undefined, source);
     }
+    this._tryHapticFeedback('success');
   }
 
   loading(message: string) {
@@ -135,6 +142,16 @@ export class NotificationsService {
     }
 
     return errors;
+  }
+
+  private _tryHapticFeedback(
+    type: 'success' | 'error' | 'warning' = 'success'
+  ) {
+    try {
+      (this._window as any)?.TelegramWebApp?.HapticFeedback?.notificationOccurred(type);
+    } catch {
+      // Ignore errors
+    }
   }
 
   private _withTranslation(message: string): string {

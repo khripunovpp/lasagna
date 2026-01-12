@@ -362,5 +362,18 @@
 <script defer src="pwa-update-compoent.js"></script>
 <script defer src="google-analytics-consent.js"></script>
 <script defer src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      if (window.TelegramWebApp) {
+        window.TelegramWebApp.ready();
+        window.TelegramWebApp.expand();
+        window.TelegramWebApp.enableClosingConfirmation();
+      }
+    } catch (e) {
+      console.error('Telegram Web App initialization error:', e);
+    }
+  });
+</script>
 </body>
 </html>
