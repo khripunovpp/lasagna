@@ -1,17 +1,17 @@
 import {Component, inject} from '@angular/core';
-import {CardComponent} from '../../../shared/view/ui/card/card.component';
-import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {TitleComponent} from '../../../shared/view/layout/title.component';
-import {RecipesRepository} from '../../recipes/service/providers/recipes.repository';
+import {CardComponent} from '../../../../shared/view/ui/card/card.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
+import {RecipesRepository} from '../../../recipes/service/providers/recipes.repository';
 import {combineLatestWith, defer, from, map, of} from 'rxjs';
-import {ProductsRepository} from '../../products/service/products.repository';
+import {ProductsRepository} from '../../../products/service/products.repository';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AsyncPipe, NgTemplateOutlet} from '@angular/common';
-import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
-import {PullDirective} from '../../../shared/view/directives/pull.directive';
-import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
+import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {RouterLink} from '@angular/router';
-import {productLabelFactoryProvider} from '../../../shared/factories/entity-labels/product.label.factory';
+import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
 import {catchError} from 'rxjs/operators';
 
 @Component({

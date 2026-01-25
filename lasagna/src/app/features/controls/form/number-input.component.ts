@@ -20,6 +20,7 @@ import {NgTemplateOutlet} from '@angular/common';
   standalone: true,
   template: `
     <div [class.disabled]="disable()"
+         [class.centred]="centred()"
          [class.moveBeforeAbove]="moveBeforeAbove()"
          class="lg-number-input">
 
@@ -89,6 +90,10 @@ import {NgTemplateOutlet} from '@angular/common';
 
       .lg-number-input.moveBeforeAbove {
         flex-wrap: wrap;
+      }
+
+      .lg-number-input.centred .input {
+        text-align: center;
       }
 
       .lg-number-input.moveBeforeAbove .lg-number-input__before {
@@ -175,6 +180,7 @@ export class NumberInputComponent
   placeholder = input('Enter text here');
   name = input('');
   disable = input<boolean>(false);
+  centred = input<boolean>(false);
   moveBeforeAbove = input<boolean>(false);
   focused = signal<boolean>(false);
   extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});

@@ -1,17 +1,17 @@
 import {Component, computed, inject, signal, viewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {SupportMessageData, SupportService} from '../service/support.service';
-import {NotificationsService} from '../../../shared/service/services';
-import {DialogComponent} from '../../../shared/view/ui/dialogs/dialog.component';
-import {TitleComponent} from '../../../shared/view/layout/title.component';
-import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {ControlComponent} from '../../controls/form/control-item/control.component';
-import {InputComponent} from '../../controls/form/input.component';
-import {TextareaComponent} from '../../controls/form/textarea.component';
-import {ControlsRowComponent} from '../../controls/form/controls-row.component';
+import {SupportMessageData, SupportService} from '../../service/support.service';
+import {NotificationsService} from '../../../../shared/service/services';
+import {DialogComponent} from '../../../../shared/view/ui/dialogs/dialog.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {ControlComponent} from '../../../controls/form/control-item/control.component';
+import {InputComponent} from '../../../controls/form/input.component';
+import {TextareaComponent} from '../../../controls/form/textarea.component';
+import {ControlsRowComponent} from '../../../controls/form/controls-row.component';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {errorHandler} from '../../../shared/helpers';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-support-popup',

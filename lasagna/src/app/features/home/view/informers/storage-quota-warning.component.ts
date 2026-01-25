@@ -1,5 +1,5 @@
 import {Component, computed, inject} from '@angular/core';
-import {StorageQuotaService} from '../service/storage-quota.service';
+import {StorageQuotaService} from '../../service/storage-quota.service';
 import {RouterLink} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
 

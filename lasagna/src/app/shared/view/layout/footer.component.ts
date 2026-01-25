@@ -1,14 +1,17 @@
 import {Component, computed, inject, viewChild} from '@angular/core';
 import {FadeInComponent} from '../ui/fade-in.component';
 import {TranslatePipe} from '@ngx-translate/core';
-
 import {VersionService} from '../../service/services/version.service';
 import {environment} from '../../../../environments/environment';
-import {ActivatedRoute, Router, NavigationEnd, RouterLink} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouterLink} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {map, switchMap, startWith, filter} from 'rxjs';
-import {SupportPopupComponent} from '../../../features/home/view/support-popup.component';
+import {filter, startWith, switchMap} from 'rxjs';
+import {SupportPopupComponent} from '../../../features/home/view/dialogs/support-popup.component';
 import {findRouteData} from '../../helpers';
+import {IS_TELEGRAM} from '../../service/providers/is-telegram-env.token';
+import {
+  TelegramStarsDonationDialogComponent
+} from '../../../features/home/view/dialogs/telegram-stars-donation-dialog.component';
 
 
 @Component({
@@ -43,6 +46,16 @@ import {findRouteData} from '../../helpers';
                   type="button">
             {{ 'footer.support' | translate }}
           </button>
+
+          <!--          @if (isTG) {-->
+<!--          <button (click)="openDonation()"-->
+<!--                  class="lg-footer__support-link"-->
+<!--                  data-u2e="nav.footer.donation-link"-->
+<!--                  type="button">-->
+<!--            {{ 'footer.donation' | translate }}-->
+<!--          </button>-->
+          <!--          }-->
+
           <div class="lg-footer__version">
             v{{ appVersion() }}
 
@@ -55,7 +68,8 @@ import {findRouteData} from '../../helpers';
     </lg-fade-in>
 
     @defer {
-      <lg-support-popup #supportPopup></lg-support-popup>
+      <lg-support-popup></lg-support-popup>
+      <lg-telegram-start-donation-popup></lg-telegram-start-donation-popup>
     }
   `,
   styles: [`
@@ -132,17 +146,22 @@ import {findRouteData} from '../../helpers';
     FadeInComponent,
     TranslatePipe,
     SupportPopupComponent,
-    RouterLink
+    RouterLink,
+    SupportPopupComponent,
+    TelegramStarsDonationDialogComponent
   ]
 })
 export class FooterComponent {
   readonly environment = environment;
+  readonly isTG = inject(IS_TELEGRAM);
+  readonly supportPopup = viewChild(SupportPopupComponent);
+  readonly tgDonationPopup = viewChild(TelegramStarsDonationDialogComponent);
+  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
+  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
   private readonly versionService = inject(VersionService);
   readonly appVersion = this.versionService.version;
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
-  readonly supportPopup = viewChild(SupportPopupComponent);
-
   readonly routeData = toSignal(this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null), // Для первоначальной загрузки
@@ -152,14 +171,15 @@ export class FooterComponent {
     })
   ));
 
-  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
-  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
-
   /**
    * Open support popup
    */
   openSupport(): void {
     this.supportPopup()?.open();
+  }
+
+  openDonation(): void {
+    this.tgDonationPopup()?.open();
   }
 }
 

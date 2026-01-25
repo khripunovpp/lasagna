@@ -1,12 +1,12 @@
 import {Component, computed, HostListener, inject, signal} from '@angular/core';
-import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
+import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {UserService} from '../../settings/service/services/user.service';
+import {UserService} from '../../../settings/service/services/user.service';
 import {TranslatePipe} from '@ngx-translate/core';
-import {NotificationsService} from '../../../shared/service/services';
-import {errorHandler} from '../../../shared/helpers';
-import {WINDOW} from '../../../shared/service/tokens/window.token';
+import {NotificationsService} from '../../../../shared/service/services';
+import {errorHandler} from '../../../../shared/helpers';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-last-backup-informer',

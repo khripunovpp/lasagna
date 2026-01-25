@@ -26,8 +26,8 @@ export class RestService {
     }))
   }
 
-  post<T>(url: string, data?: Record<string, any>, headers?: HttpHeaders) {
-    return firstValueFrom(this.httpClient.post<T>(url, data, {
+  post<P = Record<string, any>, R = any>(url: string, data?: P, headers?: HttpHeaders) {
+    return firstValueFrom(this.httpClient.post<R>(url, data, {
       headers: this.withAuthHeaders(headers)
     }))
   }

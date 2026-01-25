@@ -5,7 +5,7 @@ import {WINDOW} from '../../service/tokens/window.token';
 import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
-import {DemoInformerComponent} from '../../../features/home/view/demo-informer.component';
+import {DemoInformerComponent} from '../../../features/home/view/informers/demo-informer.component';
 import {NgOptimizedImage} from '@angular/common';
 import {FadeInComponent} from '../ui/fade-in.component';
 import {GlobalSearchService} from '../../../features/global-search/global-search.service';

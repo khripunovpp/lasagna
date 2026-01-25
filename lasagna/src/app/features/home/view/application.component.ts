@@ -7,7 +7,8 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {OnboardingComponent} from '../../onboarding/onboarding.component';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {IS_CLIENT} from '../../../shared/service/tokens/isClient.token';
-import {LatestWidgetComponent} from './latest-widget.component';
+import {LatestWidgetComponent} from './widgets/latest-widget.component';
+import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.component';
 
 @Component({
   selector: 'app-application',
@@ -23,6 +24,7 @@ import {LatestWidgetComponent} from './latest-widget.component';
         }
 
         @defer {
+          <ls-promo-widgets-container></ls-promo-widgets-container>
           <lg-latest-widget></lg-latest-widget>
         } @error {
           {{ 'main.defer-load-error' | translate }}
@@ -40,7 +42,8 @@ import {LatestWidgetComponent} from './latest-widget.component';
     FadeInComponent,
     TranslatePipe,
     OnboardingComponent,
-    LatestWidgetComponent
+    LatestWidgetComponent,
+    PromoWidgetsContainerComponent
   ],
 })
 export class ApplicationComponent {

@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
-import {AnalyticsService} from '../../../shared/service/services/analytics.service';
-import {IS_PWA} from '../../../shared/helpers/match-media.helper';
-import {NotificationsService} from '../../../shared/service/services';
-import {errorHandler} from '../../../shared/helpers';
-import {WINDOW} from '../../../shared/service/tokens/window.token';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
+import {IS_PWA} from '../../../../shared/helpers/match-media.helper';
+import {NotificationsService} from '../../../../shared/service/services';
+import {errorHandler} from '../../../../shared/helpers';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Component({
   selector: 'lg-pwa-install',

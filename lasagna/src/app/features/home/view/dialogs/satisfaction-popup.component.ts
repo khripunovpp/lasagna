@@ -2,15 +2,15 @@ import {Component, inject, OnInit, signal, viewChild} from '@angular/core';
 
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {UserSatisfactionService} from '../service/user-satisfaction.service';
-import {NotificationsService} from '../../../shared/service/services';
-import {DialogComponent} from '../../../shared/view/ui/dialogs/dialog.component';
-import {TitleComponent} from '../../../shared/view/layout/title.component';
-import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {ExpandDirective} from '../../../shared/view/directives/expand.directive';
-import {TextareaComponent} from '../../controls/form/textarea.component';
-import {environment} from '../../../../environments/environment';
-import {errorHandler} from '../../../shared/helpers';
+import {UserSatisfactionService} from '../../service/user-satisfaction.service';
+import {NotificationsService} from '../../../../shared/service/services';
+import {DialogComponent} from '../../../../shared/view/ui/dialogs/dialog.component';
+import {TitleComponent} from '../../../../shared/view/layout/title.component';
+import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
+import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
+import {TextareaComponent} from '../../../controls/form/textarea.component';
+import {environment} from '../../../../../environments/environment';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-satisfaction-popup',
