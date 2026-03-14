@@ -16,6 +16,7 @@ import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
 } from '../../../../shared/view/ui/inline-separated-group.component';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-draft-products-list',
@@ -147,20 +148,28 @@ export class DraftProductsListComponent
 
 
   deleteAllDrafts() {
-    this._productsRepository.removeDraftMany(this.drafts().map((item) => item.uuid)).then(() => {
-      this.drafts.set([]);
-      this._notificationsService.success('notifications.drafts.deleted');
-    })
+    this._productsRepository.removeDraftMany(this.drafts().map((item) => item.uuid))
+      .then(() => {
+        this.drafts.set([]);
+        this._notificationsService.success('notifications.drafts.deleted');
+      })
+      .catch((e) => {
+       this._notificationsService.error(errorHandler(e));
+      })
   }
 
   deletedSelectedDrafts() {
     const selected = this.selectionZoneService.selected();
     if (!selected) return;
-    this._productsRepository.removeDraftMany(Array.from(selected)).then(() => {
-      this.drafts.update((drafts) => {
-        return drafts.filter((item) => !selected.has(item.uuid));
-      });
-      this._notificationsService.success('notifications.drafts.deleted');
-    })
+    this._productsRepository.removeDraftMany(Array.from(selected))
+      .then(() => {
+        this.drafts.update((drafts) => {
+          return drafts.filter((item) => !selected.has(item.uuid));
+        });
+        this._notificationsService.success('notifications.drafts.deleted');
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      })
   }
 }

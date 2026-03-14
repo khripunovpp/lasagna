@@ -3201,6 +3201,12 @@ html {
   --button-secondary-dark-bg: var(--secondary-color);
   --button-success-bg: var(--success-color);
   --button-danger-bg: var(--danger-color);
+  --button-success-text: #fff8fa;
+  --button-danger-text: #fff8fa;
+  --button-warning-bg: #ec7b1c;
+  --button-info-bg: #2531c2;
+  --button-flat-overlay: rgba(0, 0, 0, 0.3);
+  --button-transcluent-bg: rgba(255, 255, 255, 0.5);
   --header-active-bg: var(--p-1);
   --onboarding-text: var(--p-1);
   --onboarding-bg: var(--secondary-light-color);
@@ -3226,12 +3232,6 @@ html {
   --ingredient-recipe-bg: rgb(105, 185, 255);
   --accent-light-color: #d0e4b7;
   --focus-shadow: 0 0 0 2px var(--active-color);
-  --button-success-text: #fff8fa;
-  --button-danger-text: #fff8fa;
-  --button-warning-bg: #ec7b1c;
-  --button-info-bg: #2531c2;
-  --button-flat-overlay: rgba(0, 0, 0, 0.3);
-  --button-transcluent-bg: rgba(255, 255, 255, 0.5);
   --chip-default-bg: #007bff;
   --range-track-bg: #ddd;
   --range-tick-color: #666;

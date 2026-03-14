@@ -2,7 +2,6 @@ import {Component, HostBinding, OnInit, signal} from '@angular/core';
 import {RecipesRepository} from '../../../../shared/service/repositories';
 import {DraftForm, NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
 import {RecipeDTO} from '../../service/schemes/Recipe.scheme';
-import {ProductDTO} from '../../../products/service/Product.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
@@ -14,7 +13,11 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {ExpanderComponent} from '../../../../shared/view/ui/expander.component';
-import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../../../../shared/view/ui/inline-separated-group.component';
+import {
+  InlineSeparatedGroupComponent,
+  InlineSeparatedGroupDirective
+} from '../../../../shared/view/ui/inline-separated-group.component';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-draft-recipes-list',
@@ -31,7 +34,7 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
     ExpanderComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective
-],
+  ],
   providers: [
     SelectionZoneService,
   ],
@@ -136,21 +139,29 @@ export class DraftRecipesListComponent
   }
 
   deleteAllDrafts() {
-    this._recipesRepository.removeDraftMany(this.drafts().map((item) => item.uuid)).then(() => {
-      this.drafts.set([]);
-      this._notificationsService.success('notifications.drafts.deleted');
-    })
+    this._recipesRepository.removeDraftMany(this.drafts().map((item) => item.uuid))
+      .then(() => {
+        this.drafts.set([]);
+        this._notificationsService.success('notifications.drafts.deleted');
+      })
+      .catch(e => {
+        this._notificationsService.error(errorHandler(e));
+      })
   }
 
   deletedSelectedDrafts() {
     const selected = this.selectionZoneService.selected();
     if (!selected) return;
-    this._recipesRepository.removeDraftMany(Array.from(selected)).then(() => {
-      this.drafts.update((drafts) => {
-        return drafts.filter((item) => !selected.has(item.uuid));
+    this._recipesRepository.removeDraftMany(Array.from(selected))
+      .then(() => {
+        this.drafts.update((drafts) => {
+          return drafts.filter((item) => !selected.has(item.uuid));
+        });
+        this._notificationsService.success('notifications.drafts.deleted');
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
       });
-      this._notificationsService.success('notifications.drafts.deleted');
-    })
   }
 
   deleteDraft(

@@ -27,8 +27,6 @@ import {SelectResourcesService} from '../../../../shared/service/services/select
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {BaseChartDirective} from 'ng2-charts';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {WidthDirective} from '../../../../shared/view/directives/width.directive';
-import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {randomRGB} from '../../../../shared/helpers/color.helper';
 import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
@@ -76,8 +74,6 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     FadeInComponent,
     BaseChartDirective,
     CardComponent,
-    WidthDirective,
-    ExpandDirective,
     UserCurrencyPipe,
     TranslatePipe,
     ReactiveFormsModule,
@@ -155,35 +151,35 @@ export class CalculateRecipeComponent
   ) {
     if (this.isClient) {
 
-    this._aRoute.data.pipe(
-      takeUntilDestroyed(),
-    ).subscribe((data) => {
-      this.result.set(data['result']);
+      this._aRoute.data.pipe(
+        takeUntilDestroyed(),
+      ).subscribe((data) => {
+        this.result.set(data['result']);
 
-      // Track recipe calculation analytics
-      if (data['result']) {
-        const calculation = data['result'];
-        this._analyticsService.trackRecipeCalculated(
-          calculation.calculation?.recipe?.name,
-          calculation.calculation?.outcomeAmount,
-          {
-            recipe_uuid: this.uuid(),
-            total_price: calculation.calculation?.totalPrice,
-            ingredients_count: calculation.calculation?.ingredients?.length || 0,
-            outcome_unit: calculation.calculation?.outcomeUnit
-          }
-        );
-      }
+        // Track recipe calculation analytics
+        if (data['result']) {
+          const calculation = data['result'];
+          this._analyticsService.trackRecipeCalculated(
+            calculation.calculation?.recipe?.name,
+            calculation.calculation?.outcomeAmount,
+            {
+              recipe_uuid: this.uuid(),
+              total_price: calculation.calculation?.totalPrice,
+              ingredients_count: calculation.calculation?.ingredients?.length || 0,
+              outcome_unit: calculation.calculation?.outcomeUnit
+            }
+          );
+        }
 
-      const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
+        const [recipePriceModifiers] = this.result()?.calculation?.recipe?.priceModifiers || [];
 
-      this.recipePriceAdditionsForm.patchValue({
-        action: recipePriceModifiers?.action,
-        unit: recipePriceModifiers?.unit,
-        value: recipePriceModifiers?.value,
-        type: recipePriceModifiers?.type,
+        this.recipePriceAdditionsForm.patchValue({
+          action: recipePriceModifiers?.action,
+          unit: recipePriceModifiers?.unit,
+          value: recipePriceModifiers?.value,
+          type: recipePriceModifiers?.type,
+        });
       });
-    });
     }
   }
 
@@ -347,7 +343,7 @@ export class CalculateRecipeComponent
   async onPdfGenerate() {
     if (!this.result()) return;
     try {
-      await this._calculateRecipeService.generatePdf(this.result()!);
+      this._calculateRecipeService.generatePdf(this.result()!);
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }

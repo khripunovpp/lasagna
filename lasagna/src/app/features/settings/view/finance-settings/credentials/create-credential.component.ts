@@ -216,6 +216,9 @@ export class CreateCredentialComponent {
     this._credentialsRepository.getAllByType(this.type())
       .then((credentials) => {
         this.credentials.set(credentials);
+      })
+      .catch(e => {
+        this._notificationService.error(errorHandler(e));
       });
   });
 

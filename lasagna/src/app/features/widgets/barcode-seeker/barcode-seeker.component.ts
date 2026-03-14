@@ -19,6 +19,7 @@ import {NotificationsService} from '../../../shared/service/services/notificatio
 import {Product} from '../../products/service/Product';
 import {TranslatePipe} from '@ngx-translate/core';
 import {Unit} from '../../../shared/service/types/Unit.types';
+import {errorHandler} from '../../../shared/helpers';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class BarcodeSeekerWidgetComponent
     name: string
   }>();
   barcode = signal('');
-  product:{
+  product: {
     name: string
     price: number
     amount: number
@@ -89,6 +90,10 @@ export class BarcodeSeekerWidgetComponent
       return this._openFoodFactsService.getProductByBarcode(params.id).then(res => {
         this.showProductForm.set(true);
         return res;
+      }).catch(e => {
+        this._notificationService.error('Product not found');
+        this.showProductForm.set(false);
+        return null;
       });
     },
   });
@@ -176,6 +181,8 @@ export class BarcodeSeekerWidgetComponent
       };
       this.barcode.set('');
       this.lockRequest = false;
+    }).catch((e) => {
+      this._notificationService.error(errorHandler(e));
     });
   }
 

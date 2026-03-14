@@ -45,7 +45,7 @@ export class ChangesLogService {
           return this._indexDbService.remove(Stores.CHANGES_LOG, entry.id);
         }
         return Promise.resolve();
-      });
+      })
   }
 
   removeOne(id: string) {

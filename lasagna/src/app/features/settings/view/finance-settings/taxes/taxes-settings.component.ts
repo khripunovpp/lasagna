@@ -230,9 +230,13 @@ export class TaxesSettingsComponent {
   }
 
   ngOnInit() {
-    this._taxesRepository.getAll().then((taxes) => {
-      this.taxesAndFees.set(taxes.toSorted((a, b) => a?.name?.localeCompare(b?.name) && +b.percentage - +a.percentage));
-    });
+    this._taxesRepository.getAll()
+      .then((taxes) => {
+        this.taxesAndFees.set(taxes.toSorted((a, b) => a?.name?.localeCompare(b?.name) && +b.percentage - +a.percentage));
+      })
+      .catch((e) => {
+        this._notificationService.error(errorHandler(e));
+      });
   }
 
   onTaxValueChange(

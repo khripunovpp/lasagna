@@ -291,12 +291,14 @@ export class AddRecipeComponent
     this.deleteConfirmationService.configure({
       message: this._translateService.instant('recipe.form.delete-confirm-message'),
       onSuccess: () => {
-        this._recipesRepository.deleteOne(this.recipe()!.uuid!).then(() => {
-          this._notificationsService.success('notifications.recipe.deleted');
-          this._routerManager.navigate(['recipes']);
-        }).catch((e) => {
-          this._notificationsService.error(errorHandler(e));
-        });
+        this._recipesRepository.deleteOne(this.recipe()!.uuid!)
+          .then(() => {
+            this._notificationsService.success('notifications.recipe.deleted');
+            this._routerManager.navigate(['recipes']);
+          })
+          .catch((e) => {
+            this._notificationsService.error(errorHandler(e));
+          });
       },
       onCancel: () => {
       }

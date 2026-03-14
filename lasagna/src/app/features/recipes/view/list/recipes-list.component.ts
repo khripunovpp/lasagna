@@ -35,6 +35,7 @@ import {RecipesFiltersComponent} from './recipes-filters.component';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {errorHandler} from '../../../../shared/helpers';
 
 
 @Component({
@@ -223,14 +224,21 @@ export class RecipesListComponent {
     if (!uuid) {
       return;
     }
-    this._recipesRepository.deleteOne(uuid).then(() => {
-      this._notificationsService.success('recipe.deleted');
-      this.loadRecipes();
-    });
+    this._recipesRepository.deleteOne(uuid)
+      .then(() => {
+        this._notificationsService.success('recipe.deleted');
+        this.loadRecipes();
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      })
   }
 
   loadRecipes() {
-    return this._recipesRepository.loadRecipes();
+    return this._recipesRepository.loadRecipes()
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 
   exportRecipes(
@@ -238,6 +246,8 @@ export class RecipesListComponent {
   ) {
     return this._transferDataService.exportTable(Stores.RECIPES, 'json', {
       selected: Array.from(selected || []),
+    }).catch((e) => {
+      this._notificationsService.error(errorHandler(e));
     });
   }
 }

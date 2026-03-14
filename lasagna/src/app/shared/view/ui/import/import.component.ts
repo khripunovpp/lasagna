@@ -314,11 +314,11 @@ export class ImportComponent {
     }
   }
 
-  private async _validateData(data:any) {
+  private async _validateData(data: any) {
     const currentDbVersion = await this._indexDbService.getVersion();
     const dataValidated = await this.schema()?.safeParseAsync(data);
     if (!dataValidated?.success) {
-      console.error(dataValidated?.error,{dataValidated});
+      console.error(dataValidated?.error, {dataValidated});
       throw new Error(parseZodError(dataValidated?.error));
     }
   }
@@ -330,19 +330,23 @@ export class ImportComponent {
       data: any;
       duplicate: boolean
     }>((resolve, reject) => {
-      this._indexDbService.search(this.storeName() as Stores, 'name', data.name).then((result: any) => {
-        if (result.length) {
-          resolve({
-            data: result,
-            duplicate: true,
-          });
-        } else {
-          resolve({
-            data: null,
-            duplicate: false,
-          });
-        }
-      });
+      this._indexDbService.search(this.storeName() as Stores, 'name', data.name)
+        .then((result: any) => {
+          if (result.length) {
+            resolve({
+              data: result,
+              duplicate: true,
+            });
+          } else {
+            resolve({
+              data: null,
+              duplicate: false,
+            });
+          }
+        })
+        .catch((e) => {
+          reject(e);
+        });
     });
   }
 }
