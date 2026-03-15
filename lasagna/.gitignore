@@ -12,6 +12,7 @@
 /tests/storage-snapshots
 /tests/screenshots
 /tests/downloads
+/storage-snapshots
 
 # Node
 /node_modules

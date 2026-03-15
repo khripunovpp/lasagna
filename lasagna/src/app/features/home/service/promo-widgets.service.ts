@@ -26,7 +26,7 @@ export class PromoWidgetsService {
       .forEach((widget) => {
         try {
           this.widgets.update(value => {
-            value[widget[0] as PromoWidget].visible = localStorage.getItem(widget[0]) !== '1';
+            // value[widget[0] as PromoWidget].visible = localStorage.getItem(widget[0]) !== '1';
             return value;
           });
         } catch {

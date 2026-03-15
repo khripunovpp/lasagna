@@ -1,0 +1,11 @@
+name = "lasagna-bot"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+WEB_APP_URL = ""
+
+# Secrets (set via CLI, not stored here):
+# wrangler secret put BOT_TOKEN

@@ -6,7 +6,7 @@ api-chef/dist
 api-chef/.env
 api-chef/.strapi-updater.json
 
-bot/.env
+bot/.dev.vars
 
 dist
 .DS_Store
