@@ -245,7 +245,7 @@ export class JellyWidgetComponent {
         value?.ratio as any
       );
       const convertedAmount = model.convertToBase(value?.to?.type as any, amount, value?.to?.bloom as any);
-      const waterNeeded = model.convertToWater(value?.to?.type as any, convertedAmount);
+      const waterNeeded = model.getWaterIncluded(value?.to?.type as any, convertedAmount);
 
       this.result.set(convertedAmount);
       this.waterNeeded.set(waterNeeded);

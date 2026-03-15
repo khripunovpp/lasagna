@@ -11,10 +11,6 @@ import {TranslatePipe} from '@ngx-translate/core';
   standalone: true,
   template: `
     <lg-flex-column [size]="'medium'">
-      <lg-title>
-        {{ 'widgets.eggs.convert-title' | translate }}
-      </lg-title>
-
       <lg-input (ngModelChange)="changed.emit(calculated())"
                 [(ngModel)]="eggs"
                 [placeholder]="'widgets.eggs.placeholder' | translate"

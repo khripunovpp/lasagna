@@ -1,22 +1,27 @@
 export type JellyBaseType = 'powder' | 'leaf' | 'mass';
 
-export const convertPairs: Partial<Record<JellyBaseType, Partial<Record<JellyBaseType, (amount: number) => number>>>> = {
+export const convertPairs: Partial<Record<
+  JellyBaseType,
+  Partial<Record<
+    JellyBaseType,
+    (amount: number, divisor: number) => number>
+  >>> = {
   powder: {
-    mass: (amount: number) => {
-      return amount * 5 + amount;
+    mass: (amount: number, jellyToWaterRatio: number) => {
+      return amount * jellyToWaterRatio + amount;
     },
   },
   leaf: {
-    mass: (amount: number) => {
-      return amount * 5 + amount;
+    mass: (amount: number, jellyToWaterRatio: number) => {
+      return amount * jellyToWaterRatio + amount;
     },
   },
   mass: {
-    powder: (amount: number) => {
-      return amount / 6;
+    powder: (amount: number, jellyToWaterRatio: number) => {
+      return amount / (jellyToWaterRatio + 1);
     },
-    leaf: (amount: number) => {
-      return amount / 6;
+    leaf: (amount: number, jellyToWaterRatio: number) => {
+      return amount / (jellyToWaterRatio + 1);
     },
   },
 }
@@ -24,11 +29,11 @@ export const waterCalculationFromMass = (jellyAmount: number, ratio: number = 5)
   return jellyAmount * ratio;
 }
 
-export const waterCalculationToMass = (waterAmount: number, ratio: number = 5) => {
-  return waterAmount * ratio / 6;
+export const waterCalculationToMass = (jellyAmount: number, ratio: number = 5) => {
+  return jellyAmount * ratio / (ratio + 1);
 }
 
-export const bloomRatio = (fromBloom: number, toBloom: number) => {
+export const getBloomRatio = (fromBloom: number, toBloom: number) => {
   return fromBloom / toBloom;
 }
 
@@ -45,18 +50,20 @@ export class JellyCalculationModel {
     amount: number,
     bloomTo: number = 1,
   ): number {
-    const ratio = bloomRatio(this.bloom, bloomTo);
+    const bloomRatio = getBloomRatio(this.bloom, bloomTo);
     const handlers = convertPairs[this.type];
-    return (handlers?.[type]?.(amount) || amount) * ratio;
+
+    return (handlers?.[type]?.(amount, this.ratio) || amount) * bloomRatio;
   }
 
-  convertToWater(type: JellyBaseType, jellyAmount: number): number {
+  getWaterIncluded(type: JellyBaseType, jellyAmount: number): number {
     if (this.type === 'mass' && type === 'mass'
       || this.type === 'leaf'
       || type === 'leaf'
     ) {
       return 0
     }
+    debugger
     if (this.type === 'mass') {
       return waterCalculationFromMass(jellyAmount, this.ratio);
     } else if (type === 'mass') {
