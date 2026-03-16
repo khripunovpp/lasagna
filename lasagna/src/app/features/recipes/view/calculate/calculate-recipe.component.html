@@ -37,26 +37,54 @@
           <lg-flex-column [position]="'stretch'">
             @if (calculation?.hasWeight) {
               <lg-card size="small">
-                <lg-flex-row [size]="'small'"
-                             [mobileMode]="true"
-                             [relaxed]="true">
-                  <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
+                <lg-flex-column size="small">
+                  <lg-flex-row [size]="'small'"
+                               [mobileMode]="true"
+                               [relaxed]="true">
+                    <div>{{ (result()?.calculation?.hasShrinkage ? 'recipe.calculation.outcome.label.with-shrinkage' : 'recipe.calculation.outcome.label') | translate }}</div>
 
-                  <lg-flex-row size="tiny" data-u2e="calculate-recipe.outcome-amount">
-                    <div class="text-bold">
-                      {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
-                      {{ result()?.calculation?.outcomeUnit | unitString | translate }}
-                    </div>
+                    <lg-flex-row size="tiny" data-u2e="calculate-recipe.outcome-amount">
+                      @if (result()?.calculation?.hasShrinkage) {
+                        @let shrinkagePct = result()?.calculation?.shrinkagePercent ?? 0;
+                        <lg-flex-row size="tiny">
+                          <div>
+                            {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
+                            {{ result()?.calculation?.outcomeUnit | unitString | translate }}
+                          </div>
+                          <span>></span>
+                          <div class="text-bold text-underlined">
+                            {{ result()?.calculation?.totalWeightAfterShrinkage | number: pipesDigits() }}
+                            {{ 'gram' | unitString | translate }}
+                          </div>
+                        </lg-flex-row>
 
-                    @if (hasPortions()) {
-                      <span>/</span>
+                        <lg-flex-row size="tiny" class="text-bold text-danger">
+                          <span>(</span>
+                          <div>-{{ shrinkagePct | number: '1.0-1' }}%</div>
+                          <span>)</span>
+                        </lg-flex-row>
+                      } @else {
+                        <div class="text-bold">
+                          {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
+                          {{ result()?.calculation?.outcomeUnit | unitString | translate }}
+                        </div>
 
-                      <div>
-                        {{ result()?.calculation?.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}
-                      </div>
-                    }
+                        @if (hasPortions()) {
+                          <span>/</span>
+
+                          <div>
+                            {{ result()?.calculation?.weightForUnit | number: pipesDigits() }} {{ 'gram' | unitString | translate }}
+                          </div>
+                        }
+                      }
+                    </lg-flex-row>
                   </lg-flex-row>
-                </lg-flex-row>
+
+                  <lg-shrinkage-control
+                    [formControl]="shrinkageForm"
+                    [totalWeight]="result()?.calculation?.totalWeight ?? 0">
+                  </lg-shrinkage-control>
+                </lg-flex-column>
               </lg-card>
 
               <lg-card size="small">
@@ -82,8 +110,8 @@
 
                       @if (result()?.calculation?.hasPriceDifference) {
                         <span>></span>
-                        <div
-                          class="text-underlined text-bold">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency : pipesDigits() }}
+                        <div class="text-underlined text-bold">
+                          {{ result()?.calculation?.pricePerUnitFromTotal | userCurrency: pipesDigits() }}
                         </div>
                       }
                     </lg-flex-row>
@@ -94,7 +122,7 @@
                                    [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
                         <span>(</span>
                         <div>
-                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
+                          {{ diff > 0 ? '+' : '' }}{{ diff | userCurrency: pipesDigits() }}
                         </div>
                         <span>)</span>
                       </lg-flex-row>

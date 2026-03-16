@@ -56,6 +56,8 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.component';
+import {ShrinkageValue} from '../../service/models/Recipe';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -86,8 +88,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     ControlExtraTemplateDirective,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-
-
+    ShrinkageControlComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -179,6 +180,12 @@ export class CalculateRecipeComponent
           value: recipePriceModifiers?.value,
           type: recipePriceModifiers?.type,
         });
+
+        const shrinkage = data['result']?.calculation?.recipe?.shrinkage;
+        this.shrinkageForm.patchValue(
+          shrinkage || {value: 0, mode: 'percent'},
+          {emitEvent: false},
+        );
       });
     }
   }
@@ -267,6 +274,7 @@ export class CalculateRecipeComponent
     return !!this.result()?.calculation?.recipe?.portions;
   });
   recipePriceAdditionsForm = new FormControl();
+  shrinkageForm = new FormControl<ShrinkageValue>({value: 0, mode: 'percent'});
   readonly values = toSignal(this.recipePriceAdditionsForm.valueChanges);
   readonly isMobile = matchMediaSignal(mobileBreakpoint);
   readonly totalScaleFactor = computed(() => {
@@ -308,6 +316,14 @@ export class CalculateRecipeComponent
       .subscribe((value) => {
         this.updatePriceAdditions(value);
       });
+
+    this.shrinkageForm.valueChanges
+      .pipe(
+        debounceTime(300),
+      )
+      .subscribe((value) => {
+        if (value) this.updateShrinkage(value);
+      });
   }
 
   onChartHover(sourceChart: 'price' | 'weight', event: ChartEvent, activeElements: any[]) {
@@ -333,6 +349,16 @@ export class CalculateRecipeComponent
         ]
       } as any);
 
+      const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
+      this.result.set(result);
+    } catch (error) {
+      this._notificationService.error(errorHandler(error));
+    }
+  }
+
+  async updateShrinkage(value: ShrinkageValue) {
+    try {
+      await this._calculateRecipeService.updateRecipe({shrinkage: value} as any);
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
       this.result.set(result);
     } catch (error) {

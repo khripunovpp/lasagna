@@ -182,6 +182,8 @@ export class NumberInputComponent
   disable = input<boolean>(false);
   centred = input<boolean>(false);
   moveBeforeAbove = input<boolean>(false);
+  min = input<number | null>(null);
+  max = input<number | null>(null);
   focused = signal<boolean>(false);
   extraTpl = contentChildren(ControlExtraTemplateDirective, {descendants: true});
   afterExtraTpl = computed(() => {
@@ -233,7 +235,18 @@ export class NumberInputComponent
   }
 
   private _change(value: string) {
-    this.value = value ? removeAllNonMathSymbols(value) : '';
+    let cleaned = value ? removeAllNonMathSymbols(value) : '';
+    const num = parseFloat(cleaned);
+    if (!isNaN(num)) {
+      const minVal = this.min();
+      const maxVal = this.max();
+      const clamped = Math.min(
+        maxVal !== null ? maxVal : num,
+        Math.max(minVal !== null ? minVal : num, num),
+      );
+      if (clamped !== num) cleaned = String(clamped);
+    }
+    this.value = cleaned;
     if (this.input?.nativeElement) {
       this.input.nativeElement.value = this.value;
     }

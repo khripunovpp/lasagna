@@ -46,6 +46,9 @@ export class RecipeCost {
     }
 
     if (this.hasWeight) {
+      if (this.hasShrinkage) {
+        return this.totalPrice / this.totalWeightAfterShrinkage;
+      }
       return this.totalPrice / this.totalWeight;
     }
 
@@ -64,17 +67,12 @@ export class RecipeCost {
     if (this.recipe.portions) {
       return this.totalPrice / this.recipe.portions;
     } else {
-      return this.totalPrice / this.totalWeight;
+      return this.totalPrice / this.recipe.totalWeight;
     }
   }
 
   get totalWeight(): number {
-    return this.ingredients.reduce((acc, ingredient) => {
-      // Не включаем в расчет позициии для которых не удалось вывести стоимость
-      if (!ingredient.pricePerUnit) return acc;
-      // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
-      return acc + (ingredient.totalWeightGram ?? 0);
-    }, 0);
+    return this.recipe?.totalWeight ?? 0;
   }
 
   get outcomeAmount(): number {
@@ -151,4 +149,17 @@ export class RecipeCost {
   get weightForUnit(): number {
     return this.recipe?.weightForUnit || 0;
   }
+
+  get shrinkagePercent(): number {
+    return this.recipe?.shrinkagePercent ?? 0;
+  }
+
+  get hasShrinkage(): boolean {
+    return this.recipe?.hasShrinkage ?? false;
+  }
+
+  get totalWeightAfterShrinkage(): number {
+    return this.recipe?.totalWeightAfterShrinkage ?? 0;
+  }
+
 }

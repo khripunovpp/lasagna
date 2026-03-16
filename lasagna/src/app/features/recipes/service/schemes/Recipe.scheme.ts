@@ -19,6 +19,10 @@ export const RecipeScheme = z.object({
     unit: z.enum(['currency', 'percent']),
   })).optional(),
   master: z.boolean().optional(),
+  shrinkage: z.object({
+    value: z.number().or(z.string()),
+    mode: z.enum(['percent', 'weight']),
+  }).optional(),
 });
 
 

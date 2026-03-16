@@ -6,6 +6,11 @@ import {CategoryRecipeDTO} from '../../../../shared/service/db/shemes/CategoryRe
 import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from './PriceModifier';
 
+export interface ShrinkageValue {
+  value: number;
+  mode: 'percent' | 'weight';
+}
+
 export class Recipe {
   constructor(
     props: Partial<RecipeDTO>
@@ -25,6 +30,34 @@ export class Recipe {
   color?: string | undefined;
   priceModifiers: RecipePriceModifier[] = [];
   master?: boolean = false;
+  shrinkage?: ShrinkageValue;
+
+  get shrinkagePercent(): number {
+    if (!this.shrinkage?.value) return 0;
+    if (this.shrinkage.mode === 'percent') return parseFloatingNumber(this.shrinkage.value);
+    const tw = this.totalIngredientsWeight;
+    if (!tw || this.shrinkage.value >= tw) return 0;
+    return ((tw - this.shrinkage.value) / tw) * 100;
+  }
+
+
+  get hasShrinkage(): boolean {
+    return this.shrinkagePercent > 0;
+  }
+
+  get totalWeightAfterShrinkage(): number {
+    if (!this.hasShrinkage) return this.totalWeight;
+    return this.totalWeight * (1 - this.shrinkagePercent / 100);
+  }
+
+  get totalWeight(): number {
+    return this.ingredients.reduce((acc, ingredient) => {
+      // Не включаем в расчет позициии для которых не удалось вывести стоимость
+      if (!ingredient.pricePerUnit) return acc;
+      // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
+      return acc + (ingredient.totalWeightGram ?? 0);
+    }, 0);
+  }
 
   get perUnitPriceModified() {
     let value = this.pricePerUnit;
@@ -81,6 +114,7 @@ export class Recipe {
       return this.totalPrice / this.portions;
     }
     return this.pricePerGram;
+
   }
 
   get pricePerGram() {
@@ -133,6 +167,10 @@ export class Recipe {
           );
         }) : [],
       master: dto?.master || false,
+      shrinkage: dto?.shrinkage ? {
+        value: parseFloatingNumber(dto.shrinkage.value) || 0,
+        mode: dto.shrinkage.mode || 'percent',
+      } : undefined,
     });
   }
 
@@ -188,6 +226,7 @@ export class Recipe {
       color: this.color || estimateColor(this.name),
       priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
       master: this.master || false,
+      shrinkage: this.shrinkage,
       ingredientsUUIDs: this._ingredientsUUIDs(),
     };
   }
@@ -225,6 +264,10 @@ export class Recipe {
         );
       }) : this.priceModifiers;
     this.master = dto?.master ?? this.master;
+    this.shrinkage = dto?.shrinkage ? {
+      value: parseFloatingNumber(dto.shrinkage.value) || 0,
+      mode: dto.shrinkage.mode || 'percent',
+    } : this.shrinkage;
     return this;
   }
 
