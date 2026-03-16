@@ -11,13 +11,12 @@ import {NgClass} from '@angular/common';
            [attr.data-u2e]="'radio.' + name() + '.label.' + value()"
            class="lg-radio"
            tabindex="0">
-      <input (ngModelChange)="onChangeCheckbox($event)"
+      <input (change)="onChangeCheckbox($any($event.target).checked)"
              [attr.data-u2e]="'radio.' + name() + '.input.' + value()"
              [attr.id]="name()+'-'+value()"
              [attr.name]="name()"
              [attr.value]="radio() ? value() : modelValue"
              [checked]="modelValue"
-             [ngModel]="modelValue"
              [type]="radio() ? 'radio' : 'checkbox'"
              class="checkbox">
       <span [class.lg-radio__hoverOnly]="markOnHover()"
@@ -181,7 +180,7 @@ export class RadioComponent
     if (typeof value === 'boolean') {
       this.modelValue = value;
     } else {
-      this.modelValue = ['true', 'false'].includes(value) ? value === 'true' : value;
+      this.modelValue = ['true', 'false'].includes(value) ? value === 'true' : false;
     }
     this.onChange(this.modelValue);
     this.onCheckboxChanged.emit(this.modelValue);

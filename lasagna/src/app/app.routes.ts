@@ -242,6 +242,12 @@ export const routes: Routes = [{
     },
 
     {
+      path: 'feature-flags',
+      loadComponent: () => import('./features/settings/view/feature-flags/feature-flags.component')
+        .then(m => m.FeatureFlagsComponent),
+    },
+
+    {
       path: '**',
       loadComponent: () => import('./shared/view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),

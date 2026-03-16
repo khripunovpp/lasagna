@@ -8,6 +8,7 @@ import {FaqService} from './features/documentation/service/faq.service';
 import {PwaBackgroundUpdateService} from './shared/service/services/pwa-background-update.service';
 import {WINDOW} from './shared/service/tokens/window.token';
 import {isPlatformBrowser} from '@angular/common';
+import {FeatureFlagsService} from './shared/service/services/feature-flags.service';
 
 export const appInitializer = () => {
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -21,6 +22,7 @@ export const appInitializer = () => {
   const indexDbService = inject(DexieIndexDbService);
   const versionService = inject(VersionService);
   const pwaBackgroundUpdateService = inject(PwaBackgroundUpdateService);
+  const featureFlagsService = inject(FeatureFlagsService);
   const window = inject(WINDOW);
   pwaBackgroundUpdateService.observe();
 
@@ -41,5 +43,6 @@ export const appInitializer = () => {
   return Promise.all([
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
+    featureFlagsService.fillState(),
   ])
 };

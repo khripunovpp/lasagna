@@ -358,7 +358,6 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async getLength(storeKey: Stores): Promise<number> {
-    debugger
     // @ts-ignore
     return (this[storeKey] as Table<any>).count();
   }
