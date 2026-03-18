@@ -10,6 +10,7 @@ export const featureFlagsList = [
 export type FeatureFlag = typeof featureFlagsList[number];
 
 const STORAGE_KEY = 'feature_flags';
+const allowedFlags = Object.fromEntries(featureFlagsList.map(f => [f, true])) as Record<FeatureFlag, true>;
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class FeatureFlagsService {
   private readonly _window = inject(WINDOW);
 
   setFlag(flag: FeatureFlag, value: boolean): void {
+    if (!allowedFlags[flag]) {
+      return;
+    }
     try {
       const currentFlags = new Map(this.flags());
       currentFlags.set(flag, value);

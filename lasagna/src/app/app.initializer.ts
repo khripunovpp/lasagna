@@ -8,7 +8,8 @@ import {FaqService} from './features/documentation/service/faq.service';
 import {PwaBackgroundUpdateService} from './shared/service/services/pwa-background-update.service';
 import {WINDOW} from './shared/service/tokens/window.token';
 import {isPlatformBrowser} from '@angular/common';
-import {FeatureFlagsService} from './shared/service/services/feature-flags.service';
+import {FeatureFlag, FeatureFlagsService} from './shared/service/services/feature-flags.service';
+import {RecipeShareService} from './features/recipes/service/recipe-share.service';
 
 export const appInitializer = () => {
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -40,9 +41,19 @@ export const appInitializer = () => {
     docsService.init(),
   ];
 
+  const setFlagsParam = new URLSearchParams(window?.location.search).get('set-feature-flags');
+  const removeFlagsParam = new URLSearchParams(window?.location.search).get('remove-feature-flags');
+
   return Promise.all([
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
-    featureFlagsService.fillState(),
+    featureFlagsService.fillState().then(() => {
+      setFlagsParam?.split(',').forEach(flag => {
+        featureFlagsService.setFlag(flag.trim() as FeatureFlag, true)
+      });
+      removeFlagsParam?.split(',').forEach(flag => {
+        featureFlagsService.setFlag(flag.trim() as FeatureFlag, false)
+      });
+    }),
   ])
 };
