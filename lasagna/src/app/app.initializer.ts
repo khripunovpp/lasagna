@@ -9,7 +9,6 @@ import {PwaBackgroundUpdateService} from './shared/service/services/pwa-backgrou
 import {WINDOW} from './shared/service/tokens/window.token';
 import {isPlatformBrowser} from '@angular/common';
 import {FeatureFlag, FeatureFlagsService} from './shared/service/services/feature-flags.service';
-import {RecipeShareService} from './features/recipes/service/recipe-share.service';
 
 export const appInitializer = () => {
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));

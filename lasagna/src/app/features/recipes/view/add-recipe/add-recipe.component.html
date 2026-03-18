@@ -62,6 +62,16 @@
                 {{ 'recipe.form.clone-btn'|translate }}
               </lg-button>
             </ng-template>
+
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button lgShrink
+                         [style]="'default'"
+                         data-u2e="recipe.form.share-btn"
+                         [flat]="true"
+                         (click)="onShareRecipe()">
+                {{ 'recipe.form.share-btn'|translate }}
+              </lg-button>
+            </ng-template>
           }
 
           @if (isDraftRoute()) {
@@ -111,13 +121,15 @@
             }
           </lg-button>
         } @else {
-          <lg-button [disabled]="!form.dirty && !draftRef()"
+          <lg-button [disabled]="!form.dirty && !draftRef() && !sharedRecipe()"
                      lgShrink
                      data-u2e="recipe.form.save-btn.add"
                      [style]="'primary'"
                      (click)="onAddRecipe()">
             @if (form.dirty || draftRef()) {
               {{ 'recipe.form.save-btn.add.active'|translate }}
+            } @else if (sharedRecipe()) {
+              {{ 'recipe.form.save-btn.add.shared'|translate }}
             } @else {
               {{ 'recipe.form.save-btn.add.disabled'|translate }}
             }

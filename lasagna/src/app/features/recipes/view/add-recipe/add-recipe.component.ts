@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, DestroyRef, effect, inject, OnInit, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, DestroyRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddRecipeFormComponent} from '../add-recipe-form/add-recipe-form.component';
@@ -33,6 +33,7 @@ import {
   DeleteConfirmationService
 } from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -84,6 +85,7 @@ export class AddRecipeComponent
   readonly recipe = signal<Recipe | undefined>(undefined);
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
   readonly draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
+  readonly sharedRecipe = signal<string | undefined>(undefined);
   draftByExistingRecipe = computed(() => {
     return this.draftRef()?.meta?.['uuid'];
   });
@@ -104,33 +106,9 @@ export class AddRecipeComponent
   isClient = inject(IS_CLIENT);
   protected readonly RecipeScheme = RecipeScheme;
   protected readonly Stores = Stores;
+  private readonly _recipeShareService = inject(RecipeShareService);
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _formComponentEffect = effect(() => {
-    this.form.valueChanges.pipe(
-      debounceTime(500),
-      takeUntilDestroyed(this._destroyRef),
-    ).subscribe((value) => {
-      if (!this.form.dirty) {
-        return
-      }
-      if (this.draftRef()?.uuid) {
-        this._recipesRepository.updateDraftRecipe(
-          this.draftRef()!.uuid,
-          this.recipe()!,
-          this.draftRef()!.meta?.['uuid']
-        );
-      } else if (this.recipe()) {
-        this.draftRef.set(this._recipesRepository.saveDraftRecipe(
-          this.recipe()!,
-          this.draftOrRecipeUUID() ?? ''));
-
-        // if (!this.isDraftRoute()) {
-        //   this._routerManager.replace(['recipes/draft/' + this.draftRef()!.uuid]);
-        // }
-      }
-    });
-  })
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;
@@ -147,11 +125,13 @@ export class AddRecipeComponent
     }
     combineLatest([
       this._aRoute.params,
+      this._aRoute.queryParams,
       this._aRoute.data
     ]).pipe(
       takeUntilDestroyed(this._destroyRef),
-    ).subscribe(([params, data]) => {
+    ).subscribe(([params, query, data]) => {
       const draft = data['draft'] as DraftForm<Recipe>;
+      this.sharedRecipe.set(query[SHARE_RECIPE_PARAM] || undefined);
       this.draftOrRecipeUUID.set(params['uuid']);
 
       if (draft) {
@@ -161,9 +141,12 @@ export class AddRecipeComponent
         this.recipe.set(data['recipe']);
       } else if (this.draftOrRecipeUUID()) {
         this._loadRecipe(this.draftOrRecipeUUID());
+      } else if (this.sharedRecipe()) {
+        this._decodeRecipe(this.sharedRecipe()!);
       } else {
         this.recipe.set(Recipe.empty());
       }
+
       this.isDraftRoute.set(!!data['draftRoute']);
     });
   }
@@ -214,7 +197,9 @@ export class AddRecipeComponent
         recipe_uuid: newUUID,
         ingredients_count: newRecipe.ingredients?.length || 0,
         portions: newRecipe.portions,
-        category: newRecipe.category_id?.name
+        category: newRecipe.category_id?.name,
+        asDraft: !!this.draftRef(),
+        asShared: !!this.sharedRecipe(),
       });
 
       this.formComponent()?.resetForm();
@@ -305,6 +290,18 @@ export class AddRecipeComponent
     });
   }
 
+  onShareRecipe() {
+    const recipe = this.recipe();
+    if (!recipe) return;
+    this._recipeShareService.encode(recipe)
+      .then(encoded => {
+        const url = this._recipeShareService.generateUrl(encoded);
+        return navigator.clipboard.writeText(url);
+      })
+      .then(() => this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-copied')))
+      .catch((e) => this._notificationsService.error(errorHandler(e)));
+  }
+
   onCloneRecipe() {
     if (!this.recipe()) {
       return;
@@ -361,6 +358,28 @@ export class AddRecipeComponent
         this.recipe.set(recipe);
       })
       .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
+  }
+
+  private _decodeRecipe(
+    recipesString: string,
+  ) {
+    this._recipeShareService.decodeRecipe(recipesString)
+      .then(({recipe,message}) => {
+        if (recipe) {
+          this.recipe.set(recipe);
+          this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-loaded'));
+        } else {
+          this.recipe.set(Recipe.empty());
+          this._notificationsService.error(this._translateService.instant('notifications.recipe.share-link-invalid'));
+        }
+        if (message) {
+          this._notificationsService.warning(message);
+        }
+      })
+      .catch((e) => {
+        this.recipe.set(Recipe.empty());
         this._notificationsService.error(errorHandler(e));
       });
   }

@@ -49,13 +49,15 @@ export const getIngredientGroup = (
     active_tab = 'recipe';
   } else if (ingredient?.product_id) {
     active_tab = 'product';
+  } else if (ingredient?.new_product_name){
+    active_tab = 'custom';
   }
 
   return new FormGroup({
     amount: new FormControl(ingredient?.amount?.toString() ?? null),
     product_id: new FormControl(ingredient?.product_id ? ingredient.product_id : null),
     recipe_id: new FormControl(ingredient?.recipe_id ? ingredient.recipe_id : null),
-    new_product_name: new FormControl(''),
+    new_product_name: new FormControl(ingredient?.new_product_name ?? ''),
     active_tab: new FormControl(active_tab),
     unit: new FormControl(ingredient?.unit ?? UnitValue.GRAM),
   }, (group) => {

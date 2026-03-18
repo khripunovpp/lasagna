@@ -112,20 +112,20 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
                   <lg-flex-row [center]="true" lgExpand>
                     <a [routerLink]="'/products/edit/' + product.uuid"
                        [attr.data-u2e]="'products.list.item.' + index + '.link'">
-                      {{ productLabelFactory(product) }}
+                      {{ productLabelFactory(product) || 'products.untitled-product'|translate }}
                     </a>
 
-                  <div [attr.data-u2e]="'products.list.item.' + index + '.price-per-unit'">
-                    @if (hasMicroPrice(product.pricePerUnit)) {
-                      {{ 'micro-amount'|translate }}
-                      {{ userSettings()?.['currency']|currencySymbol }}
-                    } @else {
-                      {{ $any(product).pricePerUnit | userCurrency: pipesDigits() }}
-                    }
-                    <span [translateParams]="{unit:$any(product)?.unit | unitString | translate}"
-                          [translate]="'per-unit.label'"></span>
-                  </div>
-                </lg-flex-row>
+                    <div [attr.data-u2e]="'products.list.item.' + index + '.price-per-unit'">
+                      @if (hasMicroPrice(product.pricePerUnit)) {
+                        {{ 'micro-amount'|translate }}
+                        {{ userSettings()?.['currency']|currencySymbol }}
+                      } @else {
+                        {{ $any(product).pricePerUnit | userCurrency: pipesDigits() }}
+                      }
+                      <span [translateParams]="{unit:$any(product)?.unit | unitString | translate}"
+                            [translate]="'per-unit.label'"></span>
+                    </div>
+                  </lg-flex-row>
 
                   <small class="text-muted text-cursive"
                          [attr.data-u2e]="'products.list.item.' + index + '.edited-at'">

@@ -17,6 +17,7 @@ export class Ingredient {
       product_id?: string | ProductDTO
       recipe_id?: string | RecipeDTO
       unit: Unit | string
+      new_product_name?: string
     }
   ) {
     this.amount = parseFloatingNumber(props.amount)
@@ -27,12 +28,14 @@ export class Ingredient {
       uuid: props.recipe_id,
     } : props.recipe_id) : undefined;
     this.unit = props.unit as Unit;
+    this.new_product_name = props.new_product_name;
   }
 
   product_id?: Product;
   recipe_id?: Recipe;
   amount: number;
   unit: Unit;
+  new_product_name?: string;
 
   get uuid() {
     return this.product_id?.uuid || this.recipe_id?.uuid;
@@ -133,6 +136,7 @@ export class Ingredient {
       product_id: dto?.product_id,
       recipe_id: dto?.recipe_id,
       unit: dto?.unit,
+      new_product_name: dto?.new_product_name,
     });
   }
 
@@ -141,6 +145,7 @@ export class Ingredient {
       amount: 0,
       product_id: undefined,
       recipe_id: undefined,
+      new_product_name: undefined,
       unit: UnitValue.GRAM,
     });
   }
@@ -151,6 +156,7 @@ export class Ingredient {
       product_id: this.product_id?.uuid,
       recipe_id: this.recipe_id?.uuid,
       unit: this.unit || UnitValue.GRAM,
+      new_product_name: this.new_product_name || '',
     };
   }
 
@@ -161,6 +167,7 @@ export class Ingredient {
     this.product_id = dto?.product_id || this.product_id;
     this.recipe_id = dto?.recipe_id || this.recipe_id;
     this.unit = dto?.unit || this.unit;
+    this.new_product_name = dto?.new_product_name || this.new_product_name;
     return this;
   }
 
