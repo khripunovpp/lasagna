@@ -36,6 +36,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -107,6 +108,7 @@ export class AddRecipeComponent
   protected readonly RecipeScheme = RecipeScheme;
   protected readonly Stores = Stores;
   private readonly _recipeShareService = inject(RecipeShareService);
+  private readonly _transferDataService = inject(TransferDataService);
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -302,6 +304,15 @@ export class AddRecipeComponent
       .catch((e) => this._notificationsService.error(errorHandler(e)));
   }
 
+  onExportRecipe() {
+    const uuid = this.recipe()?.uuid;
+    if (!uuid) return;
+    this._transferDataService.exportTable(Stores.RECIPES, 'json', {selected: [uuid]})
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
+  }
+
   onCloneRecipe() {
     if (!this.recipe()) {
       return;
@@ -366,7 +377,7 @@ export class AddRecipeComponent
     recipesString: string,
   ) {
     this._recipeShareService.decodeRecipe(recipesString)
-      .then(({recipe,message}) => {
+      .then(({recipe, message}) => {
         if (recipe) {
           this.recipe.set(recipe);
           this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-loaded'));

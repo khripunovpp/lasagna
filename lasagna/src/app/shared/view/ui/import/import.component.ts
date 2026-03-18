@@ -17,6 +17,7 @@ import {PortalComponent} from '../portal.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../service/services';
 import {errorHandler, parseZodError} from '../../../helpers';
+import {RadioComponent} from '../../../../features/controls/form/radio.component';
 
 @Component({
   selector: 'lg-import',
@@ -32,7 +33,8 @@ import {errorHandler, parseZodError} from '../../../helpers';
     NgClass,
     NgTemplateOutlet,
     PortalComponent,
-    TranslatePipe
+    TranslatePipe,
+    RadioComponent
   ],
   template: `
     <lg-upload (filesSelected)="onFileSelected($event)" [accept]="'.json'">
@@ -61,18 +63,23 @@ import {errorHandler, parseZodError} from '../../../helpers';
                          [class.disabled]="rowsToSkip[row.name]">
 
                       @if ((duplicates[row.uuid] || duplicates[row.name])) {
-                        <input [(ngModel)]="rowsToUpdate[row.name]"
-                               [disabled]="rowsToSkip[row.name]"
-                               type="checkbox">
-                        {{ 'update-label'|translate }}
+                        <lg-radio [markOnHover]="true"
+                                  [size]="'small'"
+                                  [name]="'update-' + row.name"
+                                  [(ngModel)]="rowsToUpdate[row.name]"
+                                  [disabled]="rowsToSkip[row.name]">
+                          {{ 'update-label'|translate }}
+                        </lg-radio>
                       } @else {
-                        <input [(ngModel)]="rowsToAdd[row.name]"
-                               [disabled]="rowsToSkip[row.name]"
-                               checked
-                               type="checkbox">
-                        {{ 'add-label'|translate }}
+                        <lg-radio [markOnHover]="true"
+                                  [size]="'small'"
+                                  [name]="'add-' + row.name"
+                                  [(ngModel)]="rowsToAdd[row.name]"
+                                  [disabled]="rowsToSkip[row.name]">
+                          {{ 'add-label'|translate }}
+                        </lg-radio>
                       }
-
+                      -
                       @if (rowTemplate()) {
                         <ng-container
                           *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: row, flow: 'new'}"></ng-container>
@@ -86,10 +93,18 @@ import {errorHandler, parseZodError} from '../../../helpers';
                            [class.disabled]="rowsToUpdate[row.name]"
                            [class.skip]="rowsToUpdate[row.name]"
                            style="margin-left: 16px">
-                        <input [(ngModel)]="rowsToSkip[row.name]"
-                               [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
-                               type="checkbox">
-                        <span>{{ (rowsToSkip[row.name] ? 'skip-label' : 'duplicates-label') | translate }}</span>
+                        <lg-radio [markOnHover]="true"
+                                  [size]="'small'"
+                                  [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
+                                  [name]="row.name"
+                                  [(ngModel)]="rowsToSkip[row.name]">
+                          @if (rowsToSkip[row.name]) {
+                            {{ 'skip-label'|translate }}
+                          } @else {
+                            {{ 'duplicates-label'|translate }}
+                          }
+                        </lg-radio>
+                        -
                         @if (rowTemplate()) {
                           <ng-container
                             *ngTemplateOutlet="rowTemplate()!.templateRef; context: {$implicit: (duplicates[row.uuid] || duplicates[row.name]), flow: 'old'}"></ng-container>
@@ -102,22 +117,25 @@ import {errorHandler, parseZodError} from '../../../helpers';
             }
           }
 
-          <lg-flex-row [center]="true" [hidden]="replaceAll()" [size]="'small'">
-            <input (change)="onSkipAllDuplicates()"
-                   [(ngModel)]="skipAllDuplicates"
-                   type="checkbox">
-            <label>
+          <lg-flex-column [size]="'small'">
+            <lg-radio [markOnHover]="true"
+                      [hidden]="replaceAll()"
+                      [size]="'small'"
+                      name="skipAll"
+                      (change)="onSkipAllDuplicates()"
+                      [(ngModel)]="skipAllDuplicates">
               {{ 'skip-duplicates-label'|translate }}
-            </label>
-          </lg-flex-row>
+            </lg-radio>
 
-          <lg-flex-row [center]="true" [hidden]="skipAllDuplicates()" [size]="'small'">
-            <input (change)="onReplaceAll()" [(ngModel)]="replaceAll"
-                   type="checkbox">
-            <label>
+            <lg-radio [markOnHover]="true"
+                      [size]="'small'"
+                      name="replaceAll"
+                      [hidden]="skipAllDuplicates()"
+                      (change)="onReplaceAll()"
+                      [(ngModel)]="replaceAll">
               {{ 'replace-duplicates-label'|translate }}
-            </label>
-          </lg-flex-row>
+            </lg-radio>
+          </lg-flex-column>
         </lg-flex-column>
       </lg-dialog>
     </div>

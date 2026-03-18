@@ -1,4 +1,4 @@
-import {Component, forwardRef, HostListener, input, output, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, HostListener, input, output, signal, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NgClass} from '@angular/common';
 
@@ -8,6 +8,7 @@ import {NgClass} from '@angular/common';
   template: `
     <label [attr.for]="name()+'-'+value()"
            [ngClass]="size()"
+           [class.lg-radio--disabled]="disabled()"
            [attr.data-u2e]="'radio.' + name() + '.label.' + value()"
            class="lg-radio"
            tabindex="0">
@@ -15,6 +16,7 @@ import {NgClass} from '@angular/common';
              [attr.data-u2e]="'radio.' + name() + '.input.' + value()"
              [attr.id]="name()+'-'+value()"
              [attr.name]="name()"
+             [disabled]="disabled()"
              [attr.value]="radio() ? value() : modelValue"
              [checked]="modelValue"
              [type]="radio() ? 'radio' : 'checkbox'"
@@ -110,6 +112,29 @@ import {NgClass} from '@angular/common';
         width: 16px;
         height: 16px;
         border-radius: 6px;
+        line-height: 16px;
+
+        .lg-radio__mark-inner {
+          width: 16px;
+          height: 16px;
+        }
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .lg-radio--disabled {
+        cursor: not-allowed;
+
+        .lg-radio__mark {
+          cursor: not-allowed;
+        }
+
+        .lg-radio__mark-inner {
+          opacity: 0 !important;
+        }
       }
     `
   ],
@@ -124,7 +149,7 @@ import {NgClass} from '@angular/common';
   imports: [
     FormsModule,
     NgClass
-]
+  ]
 })
 export class RadioComponent
   implements ControlValueAccessor {
@@ -135,6 +160,7 @@ export class RadioComponent
   customMark = input<string>('');
   name = input<string>('');
   value = input<string>('');
+  disabled = signal<boolean>(false);
   // value = input<string>('');
   size = input<
     'small' | 'default' | 'large'
@@ -161,6 +187,12 @@ export class RadioComponent
     this._change(value);
   }
 
+  setDisabledState(
+    isDisabled: boolean,
+  ) {
+    this.disabled.set(isDisabled);
+  }
+
   registerOnChange(fn: any) {
     this.onChange = fn;
   }
@@ -175,8 +207,10 @@ export class RadioComponent
     this._change(value);
   }
 
-
   private _change(value: boolean | string) {
+    if (this.disabled()) {
+      return;
+    }
     if (typeof value === 'boolean') {
       this.modelValue = value;
     } else {

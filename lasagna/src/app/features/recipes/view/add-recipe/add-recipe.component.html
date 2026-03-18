@@ -72,6 +72,16 @@
                 {{ 'recipe.form.share-btn'|translate }}
               </lg-button>
             </ng-template>
+
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button lgShrink
+                         [style]="'default'"
+                         data-u2e="recipe.form.export-btn"
+                         [flat]="true"
+                         (click)="onExportRecipe()">
+                {{ 'export-label'|translate }}
+              </lg-button>
+            </ng-template>
           }
 
           @if (isDraftRoute()) {
