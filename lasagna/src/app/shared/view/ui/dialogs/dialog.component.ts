@@ -16,7 +16,7 @@ import {TranslatePipe} from '@ngx-translate/core';
           <div class="dialog__box" lgFocusTrap>
             @if (closeButton()) {
               <button class="dialog__close-button"
-                      data-u2e="dialog.close-button"
+                      [attr.data-u2e]="'dialog-'+name()+'.close-button'"
                       aria-label="Close dialog">
                 {{ 'close-label' | translate }}
               </button>
@@ -33,17 +33,18 @@ import {TranslatePipe} from '@ngx-translate/core';
                        [class.column]="columnButtons()"
                        [class.centered]="centerButtons()">
                     @if (showCancelButton()) {
-                    <lg-button (click)="onCancelClick()"
-                               data-u2e="dialog.cancel-button"
-                               [style]="cancelButtonStyle()"
-                               class="dialog__cancel-button">
-                      {{ cancelButtonText() }}
-                    </lg-button>
+                      <lg-button (click)="onCancelClick()"
+                                 [attr.data-u2e]="'dialog-'+name()+'.cancel-button'"
+                                 [style]="cancelButtonStyle()"
+                                 class="dialog__cancel-button">
+                        {{ cancelButtonText() }}
+                      </lg-button>
                     }
 
                     @if (showConfirmButton()) {
                       <lg-button (click)="onConfirmClick()"
                                  data-u2e="dialog.confirm-button"
+                                 [attr.data-u2e]="'dialog-'+name()+'.confirm-button'"
                                  [style]="confirmButtonStyle()"
                                  class="dialog__confirm-button">
                         {{ confirmButtonText() }}
@@ -164,6 +165,7 @@ export class DialogComponent {
   columnButtons = input(true);
   showConfirmButton = input(true);
   showCancelButton = input(true);
+  name = input('dialog');
   onCancel = output<void>();
   onConfirm = output<void>();
   readonly #_bodyLocker = inject(BODY_LOCKER);

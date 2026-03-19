@@ -39,6 +39,14 @@ export class RecipePage
     return this.htmlEditor('html-editor.description');
   }
 
+  get cloneRecipeButton() {
+    return this.page.locator('[data-u2e="recipe.form.clone-btn"]');
+  }
+
+  get exportButton() {
+    return this.page.locator('[data-u2e="recipe.form.export-btn"]');
+  }
+
   getIngredientItemByIndex(index: number) {
     return this.page.locator('[data-u2e="ingredient-row.' + index + '"]');
   }
@@ -103,9 +111,5 @@ export class RecipePage
       default:
         throw new Error(`Unknown unit type: ${unit}`);
     }
-  }
-
-  get cloneRecipeButton() {
-    return this.page.locator('[data-u2e="recipe.form.clone-btn"]');
   }
 }

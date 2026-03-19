@@ -4,14 +4,14 @@ const path = require("path");
 
 (async () => {
   const routes = [
-    // '/',
+    '/',
     // '/products',
     // '/products/add',
     // '/products/edit/:id',
     '/recipes',
     '/recipes/add',
     '/recipes/edit/:id',
-    '/recipes/calculate/:id',
+    // '/recipes/calculate/:id',
     // '/settings',
     // '/settings?tab=categoires',
     // '/settings?tab=invoice',

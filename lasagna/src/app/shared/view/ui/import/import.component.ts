@@ -48,6 +48,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
     <div #dialog>
       <lg-dialog (onCancel)="onClose()"
                  [cancelButtonText]="'close-label'|translate"
+                 name="import-dialog"
                  [confirmButtonText]="'confirm-label'|translate"
                  (onConfirm)="onConfirm()">
         <lg-flex-column>
@@ -65,6 +66,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
                       @if ((duplicates[row.uuid] || duplicates[row.name])) {
                         <lg-radio [markOnHover]="true"
                                   [size]="'small'"
+                                  [attr.data-u2e]="'import-dialog.update-radio.'+i"
                                   [name]="'update-' + row.name"
                                   [(ngModel)]="rowsToUpdate[row.name]"
                                   [disabled]="rowsToSkip[row.name]">
@@ -73,6 +75,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
                       } @else {
                         <lg-radio [markOnHover]="true"
                                   [size]="'small'"
+                                  [attr.data-u2e]="'import-dialog.add-radio.'+i"
                                   [name]="'add-' + row.name"
                                   [(ngModel)]="rowsToAdd[row.name]"
                                   [disabled]="rowsToSkip[row.name]">
@@ -97,6 +100,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
                                   [size]="'small'"
                                   [disabled]="rowsToAdd[row.name] || rowsToUpdate[row.name]"
                                   [name]="row.name"
+                                  [attr.data-u2e]="'import-dialog.skip-radio.'+i"
                                   [(ngModel)]="rowsToSkip[row.name]">
                           @if (rowsToSkip[row.name]) {
                             {{ 'skip-label'|translate }}
@@ -121,6 +125,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
             <lg-radio [markOnHover]="true"
                       [hidden]="replaceAll()"
                       [size]="'small'"
+                      data-u2e="import-dialog.skip-all"
                       name="skipAll"
                       (change)="onSkipAllDuplicates()"
                       [(ngModel)]="skipAllDuplicates">
@@ -129,6 +134,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
 
             <lg-radio [markOnHover]="true"
                       [size]="'small'"
+                      data-u2e="import-dialog.replace-all"
                       name="replaceAll"
                       [hidden]="skipAllDuplicates()"
                       (change)="onReplaceAll()"
@@ -140,10 +146,7 @@ import {RadioComponent} from '../../../../features/controls/form/radio.component
       </lg-dialog>
     </div>
 
-
-    <lg-portal [appendTarget]="'body'" [targetElement]="dialog">
-
-    </lg-portal>
+    <lg-portal [appendTarget]="'body'" [targetElement]="dialog"></lg-portal>
   `,
   styles: [`
     .import-row {

@@ -36,7 +36,8 @@ export interface PriceChange {
   },
   template: `
     <lg-dialog [showCancelButton]="false"
-               [showConfirmButton]="false">
+               [showConfirmButton]="false"
+               name="price-changes">
       <lg-flex-column>
         <lg-flex-column [size]="'small'">
           <lg-title [level]="2">

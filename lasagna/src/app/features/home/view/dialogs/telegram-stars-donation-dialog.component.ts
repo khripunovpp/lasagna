@@ -36,7 +36,8 @@ import {ControlExtraTemplateDirective} from '../../../controls/form/control-extr
                [cancelButtonText]="'tg-stars-donation.cancel-button' | translate"
                [closeButton]="!isSubmitting()"
                [closeOnConfirm]="false"
-               [confirmButtonText]="getConfirmButtonText()">
+               [confirmButtonText]="getConfirmButtonText()"
+               name="tg-stars">
       <lg-flex-column position="center"
                       [formGroup]="form"
                       size="medium">
@@ -57,6 +58,7 @@ import {ControlExtraTemplateDirective} from '../../../controls/form/control-extr
                      lgExpand>
           @for (stars of predefinedPacks; track stars) {
             <button (click)="onStarsClick(stars)"
+                    [attr.data-u2e]="'tg-stars-donation.stars.'+stars"
                     class="tg-stars-donation__stars-btn"
                     type="button">
               {{ stars }}
@@ -71,6 +73,7 @@ import {ControlExtraTemplateDirective} from '../../../controls/form/control-extr
         <lg-number-input #nameField
                          lgWidth="200"
                          [centred]="true"
+                         name="tg-stars-donation"
                          [placeholder]="''"
                          formControlName="stars">
           <ng-template lgExtraTpl place="before">

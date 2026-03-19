@@ -25,7 +25,8 @@ import {errorHandler} from '../../../../shared/helpers';
                [closeButton]="!showThankYou()"
                [closeOnConfirm]="false"
                [confirmButtonText]="isSubmitting() ? ('satisfaction.submitting' | translate) : ('satisfaction.submit-button' | translate)"
-               [displayFooter]="showFeedbackForm()">
+               [displayFooter]="showFeedbackForm()"
+               name="satisfaction">
       <lg-flex-column position="center"
                       size="medium">
         @if (showThankYou()) {

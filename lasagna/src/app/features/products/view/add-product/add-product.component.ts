@@ -29,11 +29,11 @@ import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/cont
 import {MatIcon} from '@angular/material/icon';
 import {errorHandler} from '../../../../shared/helpers';
 import {
-  DeleteConfirmationService
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+  ConfirmationService
+} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {
-  DeleteConfirmationPopoverComponent
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+  ConfirmationPopoverComponent
+} from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -57,7 +57,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     SelfStartDirective,
     ControlsBarComponent,
     MatIcon,
-    DeleteConfirmationPopoverComponent,
+    ConfirmationPopoverComponent,
   ],
   templateUrl: './add-product.component.html',
   styles: [
@@ -66,7 +66,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   ],
   providers: [
     CurrencyPipe,
-    DeleteConfirmationService
+    ConfirmationService
   ],
 })
 export class AddProductComponent
@@ -81,7 +81,7 @@ export class AddProductComponent
   ) {
   }
 
-  readonly deleteConfirmationService = inject(DeleteConfirmationService);
+  readonly deleteConfirmationService = inject(ConfirmationService);
   draftOrProductUUID = signal<string | undefined>(undefined);
   product = signal<Product | null>(null);
   formComponent = viewChild<AddProductFormComponent | null>(AddProductFormComponent);

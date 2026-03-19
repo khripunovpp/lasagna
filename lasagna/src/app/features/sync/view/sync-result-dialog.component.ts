@@ -36,7 +36,8 @@ export interface SyncView<T> {
     class: 'lg-sync-result-dialog'
   },
   template: `
-    <lg-dialog (onConfirm)="confirm()">
+    <lg-dialog (onConfirm)="confirm()"
+               name="sync-result">
       <lg-flex-column [formGroup]="formGroup" [size]="'medium'">
 
         <lg-tabs [flat]="true">

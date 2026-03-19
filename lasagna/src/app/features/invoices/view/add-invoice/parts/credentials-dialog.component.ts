@@ -14,7 +14,8 @@ import {TranslatePipe} from '@ngx-translate/core';
   selector: 'lg-credentials-dialog',
   standalone: true,
   template: `
-    <lg-dialog [displayFooter]="false">
+    <lg-dialog [displayFooter]="false"
+               name="credentials">
       <lg-flex-row size="small"
                    cols="2"
                    [wrap]="true">
@@ -25,7 +26,7 @@ import {TranslatePipe} from '@ngx-translate/core';
             <div class="text-wrap credential-item__inner">{{ credential.toFormattedString() }}</div>
           </button>
         } @empty {
-           <lg-flex-column position="center"
+          <lg-flex-column position="center"
                           size="medium">
             {{ 'settings.credentials.empty-state.text'|translate }}
           </lg-flex-column>

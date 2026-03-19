@@ -12,11 +12,11 @@ import {NotificationsService, TransferDataService} from '../../../../shared/serv
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {
-  DeleteConfirmationService
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+  ConfirmationService
+} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {
-  DeleteConfirmationPopoverComponent
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+  ConfirmationPopoverComponent
+} from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 @Component({
@@ -85,7 +85,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
       </lg-card>
     </lg-flex-column>
 
-    <lg-delete-confirmation-popover></lg-delete-confirmation-popover>
+    <lg-confirmation-popover></lg-confirmation-popover>
   `,
   styles: [``],
   imports: [
@@ -98,10 +98,10 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     UploadComponent,
     TranslatePipe,
     SelfStartDirective,
-    DeleteConfirmationPopoverComponent
+    ConfirmationPopoverComponent
   ],
   providers: [
-    DeleteConfirmationService,
+    ConfirmationService,
   ],
 })
 export class BackupSettingsComponent
@@ -109,7 +109,7 @@ export class BackupSettingsComponent
   constructor() {
   }
 
-  readonly deleteConfirmationService = inject(DeleteConfirmationService);
+  readonly confirmationService = inject(ConfirmationService);
   readonly downloadBackupParam = injectQueryParams('download_backup');
   readonly transferDataService = inject(TransferDataService);
   readonly notificationsService = inject(NotificationsService);
@@ -138,7 +138,7 @@ export class BackupSettingsComponent
   }
 
   async onRestore(event: File[]) {
-    this.deleteConfirmationService.configure({
+    this.confirmationService.configure({
       message: this.translate.instant('backup.restore-confirmation'),
       confirmText: this.translate.instant('backup.restore-confirmation-confirm'),
       onSuccess: async () => {
@@ -159,7 +159,7 @@ export class BackupSettingsComponent
   }
 
   async onFlush() {
-    this.deleteConfirmationService.configure({
+    this.confirmationService.configure({
       message: this.translate.instant('backup.flush-confirmation'),
       confirmText: this.translate.instant('backup.flush-confirmation-confirm'),
       onSuccess: async () => {
@@ -177,7 +177,7 @@ export class BackupSettingsComponent
   }
 
   async onDeleteAll() {
-    this.deleteConfirmationService.configure({
+    this.confirmationService.configure({
       message: this.translate.instant('backup.delete-all.confirmation'),
       confirmText: this.translate.instant('backup.delete-all.confirmation-confirm'),
       onSuccess: async () => {

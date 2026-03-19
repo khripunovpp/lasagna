@@ -68,12 +68,13 @@ export class BasePage {
   }
 
   confirmDialogButton(
+    dialogName: string,
     type: 'confirm' | 'cancel',
   ) {
     if (type === 'cancel') {
-      return this._page.locator(`[data-u2e="dialog.cancel-button"]`);
+      return this._page.locator(`[data-u2e="dialog-${dialogName}.cancel-button"]`);
     }
-    return this._page.locator(`[data-u2e="dialog.confirm-button"]`);
+    return this._page.locator(`[data-u2e="dialog-${dialogName}.confirm-button"]`);
   }
 
   async clickOutside(

@@ -3,6 +3,8 @@ import { Page } from '@playwright/test';
 export class Recipes_add_Page {
     constructor(private page: Page) {}
 
+  get dialogSatisfactionCloseButton() { return this.page.locator('[data-u2e="dialog-satisfaction.close-button"]'); }
+
   get titleLevel2() { return this.page.locator('[data-u2e="title.level.2"]'); }
 
   get titleLevel1() { return this.page.locator('[data-u2e="title.level.1"]'); }
@@ -19,6 +21,8 @@ export class Recipes_add_Page {
 
   get entityItemSelectorTabProduct() { return this.page.locator('[data-u2e="entity-item-selector.tab.product"]'); }
 
+  get entityItemSelectorTabCustom() { return this.page.locator('[data-u2e="entity-item-selector.tab.custom"]'); }
+
   get entityItemSelectorPartRecipe() { return this.page.locator('[data-u2e="entity-item-selector.part.recipe"]'); }
 
   get multiselectRecipeId() { return this.page.locator('[data-u2e="multiselect.recipe_id"]'); }
@@ -26,6 +30,10 @@ export class Recipes_add_Page {
   get entityItemSelectorPartProduct() { return this.page.locator('[data-u2e="entity-item-selector.part.product"]'); }
 
   get multiselectProductId() { return this.page.locator('[data-u2e="multiselect.product_id"]'); }
+
+  get entityItemSelectorPartCustom() { return this.page.locator('[data-u2e="entity-item-selector.part.custom"]'); }
+
+  get input() { return this.page.locator('[data-u2e="input."]'); }
 
   get numberInputAmount() { return this.page.locator('[data-u2e="number-input.amount"]'); }
 
@@ -49,5 +57,31 @@ export class Recipes_add_Page {
 
   get recipeFormSaveBtnAdd() { return this.page.locator('[data-u2e="recipe.form.save-btn.add"]'); }
 
-  get input() { return this.page.locator('[data-u2e="input."]'); }
+  get dialogConfirmationPopoverCloseButton() { return this.page.locator('[data-u2e="dialog-confirmation-popover.close-button"]'); }
+
+  get dialogConfirmationPopoverCancelButton() { return this.page.locator('[data-u2e="dialog-confirmation-popover.cancel-button"]'); }
+
+  get dialogConfirmationPopoverConfirmButton() { return this.page.locator('[data-u2e="dialog-confirmation-popover.confirm-button"]'); }
+
+  get dialogSupportCloseButton() { return this.page.locator('[data-u2e="dialog-support.close-button"]'); }
+
+  get dialogSupportCancelButton() { return this.page.locator('[data-u2e="dialog-support.cancel-button"]'); }
+
+  get dialogSupportConfirmButton() { return this.page.locator('[data-u2e="dialog-support.confirm-button"]'); }
+
+  get dialogTgStarsCloseButton() { return this.page.locator('[data-u2e="dialog-tg-stars.close-button"]'); }
+
+  get tgStarsDonationStars2() { return this.page.locator('[data-u2e="tg-stars-donation.stars.2"]'); }
+
+  get tgStarsDonationStars10() { return this.page.locator('[data-u2e="tg-stars-donation.stars.10"]'); }
+
+  get tgStarsDonationStars50() { return this.page.locator('[data-u2e="tg-stars-donation.stars.50"]'); }
+
+  get tgStarsDonationStars100() { return this.page.locator('[data-u2e="tg-stars-donation.stars.100"]'); }
+
+  get numberInputTgStarsDonation() { return this.page.locator('[data-u2e="number-input.tg-stars-donation"]'); }
+
+  get dialogTgStarsCancelButton() { return this.page.locator('[data-u2e="dialog-tg-stars.cancel-button"]'); }
+
+  get dialogTgStarsConfirmButton() { return this.page.locator('[data-u2e="dialog-tg-stars.confirm-button"]'); }
 }

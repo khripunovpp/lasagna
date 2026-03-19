@@ -35,7 +35,8 @@ import {errorHandler} from '../../../../shared/helpers';
                [closeButton]="!showThankYou() && !isSubmitting()"
                [closeOnConfirm]="false"
                [confirmButtonText]="getConfirmButtonText()"
-               [displayFooter]="showForm()">
+               [displayFooter]="showForm()"
+               name="support">
 
       <lg-flex-column position="center"
                       size="medium">

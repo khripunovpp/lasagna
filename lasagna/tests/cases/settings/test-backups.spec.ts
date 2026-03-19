@@ -145,8 +145,8 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
       mimeType: 'application/json',
       buffer: fileBuffer,
     });
-    await expect(settingsPage.confirmDialogButton('confirm').first()).toBeVisible();
-    await settingsPage.confirmDialogButton('confirm').first().click();
+    await expect(settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first()).toBeVisible();
+    await settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first().click();
   }
 
   async function searchProductByName(

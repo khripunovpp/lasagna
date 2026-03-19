@@ -1,5 +1,5 @@
 import {Component, effect, inject, viewChild} from '@angular/core';
-import {DeleteConfirmationService} from './delete-confirmation.service';
+import {ConfirmationService} from './confirmation.service';
 import {DialogComponent} from '../dialogs/dialog.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
@@ -9,27 +9,19 @@ import {FlexColumnComponent} from '../../layout/flex-column.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'lg-delete-confirmation-popover',
+  selector: 'lg-confirmation-popover',
   template: `
     <lg-dialog (onCancel)="onCancel()"
                (onConfirm)="onConfirm()"
                [cancelButtonStyle]="'primary'"
-               [cancelButtonText]="settings()?.cancelText ?? ('delete-close-label'|translate)"
+               [cancelButtonText]="settings()?.cancelText ?? ('confirm-close-label'|translate)"
                [centerButtons]="true"
-               data-u2e="delete.confirmation.popover"
                [columnButtons]="false"
                [confirmButtonStyle]="'secondary'"
-               [confirmButtonText]="settings()?.confirmText ?? ('delete-confirm-label'|translate)">
+               [confirmButtonText]="settings()?.confirmText ?? ('confirm-confirm-label'|translate)"
+               name="confirmation-popover">
       <lg-flex-column [position]="'center'" [size]="'small'">
         <div>{{ settings()?.message }}</div>
-
-        @if (settings()?.withLock) {
-          <lg-checkbox [formControl]="locked"
-                       [size]="'medium'"
-                       name="disable-deletion">
-            {{ 'delete-lock-label' | translate }}
-          </lg-checkbox>
-        }
       </lg-flex-column>
     </lg-dialog>
   `,
@@ -41,8 +33,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     FlexColumnComponent
   ]
 })
-export class DeleteConfirmationPopoverComponent {
-  readonly _service = inject(DeleteConfirmationService);
+export class ConfirmationPopoverComponent {
+  readonly _service = inject(ConfirmationService);
   readonly settings = this._service.settings;
   readonly dialogRef = viewChild(DialogComponent);
   readonly locked = new FormControl(false);

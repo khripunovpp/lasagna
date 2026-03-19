@@ -27,11 +27,11 @@ import {RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {MatIcon} from '@angular/material/icon';
 import {
-  DeleteConfirmationPopoverComponent
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation-popover.component';
+  ConfirmationPopoverComponent
+} from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 import {
-  DeleteConfirmationService
-} from '../../../../shared/view/ui/delete-confirmation-popover/delete-confirmation.service';
+  ConfirmationService
+} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -41,7 +41,7 @@ import {TransferDataService} from '../../../../shared/service/services/transfer-
 @Component({
   selector: 'lg-add-recipe',
   providers: [
-    DeleteConfirmationService
+    ConfirmationService
   ],
   imports: [
     ContainerComponent,
@@ -60,7 +60,7 @@ import {TransferDataService} from '../../../../shared/service/services/transfer-
     SelfStartDirective,
     ControlsBarComponent,
     MatIcon,
-    DeleteConfirmationPopoverComponent,
+    ConfirmationPopoverComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './add-recipe.component.html',
@@ -81,7 +81,7 @@ export class AddRecipeComponent
   }
 
   uuid = injectParams<string>('uuid');
-  readonly deleteConfirmationService = inject(DeleteConfirmationService);
+  readonly deleteConfirmationService = inject(ConfirmationService);
   readonly draftOrRecipeUUID = signal<string | undefined>(undefined);
   readonly recipe = signal<Recipe | undefined>(undefined);
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);

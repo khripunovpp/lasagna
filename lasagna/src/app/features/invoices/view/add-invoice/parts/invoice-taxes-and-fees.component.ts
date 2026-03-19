@@ -149,7 +149,8 @@ import {SelfStartDirective} from '../../../../../shared/view/directives/self-sta
       }
     </lg-flex-column>
 
-    <lg-dialog [displayFooter]="false">
+    <lg-dialog [displayFooter]="false"
+               name="invoices-taxes">
       <lg-flex-column>
         @if (taxes().length) {
           <lg-flex-column size="small">

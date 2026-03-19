@@ -22,7 +22,8 @@ import {MatIcon} from '@angular/material/icon';
                [centerButtons]="true"
                [showConfirmButton]="false"
                [displayFooter]="false"
-               [columnButtons]="false">
+               [columnButtons]="false"
+               name="amount-widget">
       <div [class.selected]="selectedWidget() != null"
            class="amount-widgets">
         <div class="amount-widgets__buttons">
