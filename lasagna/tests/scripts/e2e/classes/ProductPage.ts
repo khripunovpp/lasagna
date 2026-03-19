@@ -15,6 +15,18 @@ export class ProductPage
     return this.page.locator('[data-u2e="product.form.saved-draft-label"]');
   }
 
+  get priceChangesButton() {
+    return this.page.locator('[data-u2e="product.form.price-changes-btn"]');
+  }
+
+  get priceChangesDialog() {
+    return this.page.locator('[data-u2e="dialog-price-changes.close-button"]');
+  }
+
+  get priceChangesTableRows() {
+    return this.page.locator('.lg-price-changes__table tbody tr');
+  }
+
   get addNewProductButton() {
     return this.page.locator('[data-u2e="product.form.add-new-btn"] a');
   }
