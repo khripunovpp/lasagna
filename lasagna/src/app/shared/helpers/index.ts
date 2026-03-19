@@ -1,4 +1,5 @@
 export * from "./attribute.helper";
+export * from "./clipboard.helper";
 export * from "./color.helper";
 export * from "./error.helper";
 export * from "./grouping.helper";

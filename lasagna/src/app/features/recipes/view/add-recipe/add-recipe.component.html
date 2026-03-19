@@ -64,13 +64,23 @@
             </ng-template>
 
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink
-                         [style]="'default'"
-                         data-u2e="recipe.form.share-btn"
-                         [flat]="true"
-                         (click)="onShareRecipe()">
-                {{ 'recipe.form.share-btn'|translate }}
-              </lg-button>
+              @if (shareUrl()) {
+                <lg-button lgShrink
+                           [style]="'success'"
+                           data-u2e="recipe.form.copy-share-url-btn"
+                           [flat]="true"
+                           (click)="onCopyShareUrl()">
+                  {{ 'recipe.form.copy-shared-link-btn'|translate }}
+                </lg-button>
+              } @else {
+                <lg-button lgShrink
+                           [style]="'default'"
+                           data-u2e="recipe.form.share-btn"
+                           [flat]="true"
+                           (click)="onShareRecipe()">
+                  {{ 'recipe.form.share-btn'|translate }}
+                </lg-button>
+              }
             </ng-template>
 
             <ng-template lgInlineSeparatedGroup>

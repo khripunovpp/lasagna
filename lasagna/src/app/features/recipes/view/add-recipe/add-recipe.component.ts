@@ -14,7 +14,7 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {Recipe} from '../../service/models/Recipe';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {checkCycleRecipe, errorHandler, injectParams} from '../../../../shared/helpers';
+import {checkCycleRecipe, copyToClipboard, errorHandler, injectParams} from '../../../../shared/helpers';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -87,6 +87,7 @@ export class AddRecipeComponent
   formComponent = viewChild<AddRecipeFormComponent | null>(AddRecipeFormComponent);
   readonly draftRef = signal<DraftForm<Recipe> | undefined>(undefined);
   readonly sharedRecipe = signal<string | undefined>(undefined);
+  readonly shareUrl = signal<string | undefined>(undefined);
   draftByExistingRecipe = computed(() => {
     return this.draftRef()?.meta?.['uuid'];
   });
@@ -296,11 +297,18 @@ export class AddRecipeComponent
     const recipe = this.recipe();
     if (!recipe) return;
     this._recipeShareService.encode(recipe)
-      .then(encoded => {
-        const url = this._recipeShareService.generateUrl(encoded);
-        return navigator.clipboard.writeText(url);
+      .then(encoded => this.shareUrl.set(this._recipeShareService.generateUrl(encoded)))
+      .catch((e) => this._notificationsService.error(errorHandler(e)));
+  }
+
+  onCopyShareUrl() {
+    const url = this.shareUrl();
+    if (!url) return;
+    copyToClipboard(url)
+      .then(() => {
+        this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-copied'));
+        this.shareUrl.set(undefined);
       })
-      .then(() => this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-copied')))
       .catch((e) => this._notificationsService.error(errorHandler(e)));
   }
 
