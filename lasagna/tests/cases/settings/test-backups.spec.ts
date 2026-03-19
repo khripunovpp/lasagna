@@ -154,8 +154,10 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
     name: string,
   ) {
     await page.goto(URLS.product.list);
+    await page.waitForLoadState('networkidle');
     const appRefs = new AppRefs(page);
     await appRefs.ref.navGlobalSearchButton.click();
+    await page.waitForLoadState('networkidle');
     await appRefs.searchInput.fill(name);
     await page.waitForLoadState('networkidle');
     await expect(appRefs.findLinkInSearchResults(name)).toBeVisible();

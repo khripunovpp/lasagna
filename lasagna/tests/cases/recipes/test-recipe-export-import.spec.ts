@@ -84,6 +84,8 @@ test.describe.serial('Экспорт и импорт рецептов', () => {
     const confirmButton = recipesListPage.confirmDialogButton('import-dialog', 'confirm').first();
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();
+    // Ждём закрытия диалога — сигнал что onConfirm() завершил запись в IndexedDB
+    await expect(confirmButton).not.toBeVisible();
 
     await page.goto(URLS.recipes.edit('import-single-test-uuid'));
     await page.waitForLoadState('networkidle');
@@ -118,6 +120,7 @@ test.describe.serial('Экспорт и импорт рецептов', () => {
     const confirmButton = recipesListPage.confirmDialogButton('import-dialog', 'confirm').first();
     await expect(confirmButton).toBeVisible();
     await confirmButton.click();
+    await expect(confirmButton).not.toBeVisible();
 
     for (const recipe of recipesToImport) {
       await page.goto(URLS.recipes.edit(recipe.uuid));
