@@ -47,6 +47,10 @@ export class RecipePage
     return this.page.locator('[data-u2e="recipe.form.export-btn"]');
   }
 
+  get shareButton() {
+    return this.page.locator('[data-u2e="recipe.form.share-btn"]');
+  }
+
   getIngredientItemByIndex(index: number) {
     return this.page.locator('[data-u2e="ingredient-row.' + index + '"]');
   }
