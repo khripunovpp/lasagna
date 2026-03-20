@@ -48,17 +48,17 @@ import {
           </button>
 
           <!--          @if (isTG) {-->
-<!--          <button (click)="openDonation()"-->
-<!--                  class="lg-footer__support-link"-->
-<!--                  data-u2e="nav.footer.donation-link"-->
-<!--                  type="button">-->
-<!--            {{ 'footer.donation' | translate }}-->
-<!--          </button>-->
+          <!--          <button (click)="openDonation()"-->
+          <!--                  class="lg-footer__support-link"-->
+          <!--                  data-u2e="nav.footer.donation-link"-->
+          <!--                  type="button">-->
+          <!--            {{ 'footer.donation' | translate }}-->
+          <!--          </button>-->
           <!--          }-->
 
           <div class="lg-footer__version">
-            v{{ appVersion() }}
-
+            <a routerLink="./release-notes">v{{ appVersion() }}</a>
+            &nbsp;
             <a data-u2e="nav.footer.documents-link"
                routerLink="./documents"
                target="_blank">beta</a>.

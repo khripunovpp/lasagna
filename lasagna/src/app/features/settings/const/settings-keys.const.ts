@@ -5,4 +5,5 @@ export enum SettingsKeysConst {
   currency = 'currency',
   lang = 'lang',
   promoWidgets = 'promoWidgets',
+  seenReleaseNotes = 'seenReleaseNotes',
 }

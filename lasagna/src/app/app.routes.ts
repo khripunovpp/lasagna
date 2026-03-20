@@ -236,6 +236,13 @@ export const routes: Routes = [{
     },
 
     {
+      path: 'release-notes',
+      loadComponent: () => import('./features/release-notes/view/release-notes-page.component')
+        .then(m => m.ReleaseNotesPageComponent),
+      title: defTitleResolver,
+    },
+
+    {
       path: 'dev',
       loadComponent: () => import('./shared/view/dev/color-palette.component')
         .then(m => m.ColorPaletteComponent),

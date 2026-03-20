@@ -8,7 +8,6 @@ import {MatIcon} from '@angular/material/icon';
 import {DemoInformerComponent} from '../../../features/home/view/informers/demo-informer.component';
 import {PromoWidgetsService} from '../../../features/home/service/promo-widgets.service';
 import {NgOptimizedImage} from '@angular/common';
-import {FadeInComponent} from '../ui/fade-in.component';
 import {GlobalSearchService} from '../../../features/global-search/global-search.service';
 
 @Component({
@@ -275,7 +274,6 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
     MatIcon,
     TranslatePipe,
     DemoInformerComponent,
-    FadeInComponent,
     NgOptimizedImage,
     TranslatePipe
   ]

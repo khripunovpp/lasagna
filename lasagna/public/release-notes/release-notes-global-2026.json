@@ -1,0 +1,13 @@
+{
+  "notes": [
+    {
+      "date": "2026-03-20",
+      "features": [
+        "Price changes can be tracked in products. If a product has a price set, a price chart button will be available in the unit cost field.",
+        "When creating a recipe, you can now create products on the fly. Click +, enter the name of a product you don't yet have in stock, and select a unit of measurement. After saving the recipe, the product will be created automatically; you just need to enter the correct price for further calculations.",
+        "The ability to share a recipe link has been added. Currently, there are limitations—recipes with nested recipes cannot be shared. When clicking the generated link, the user will be able to save the recipe in their app.",
+        "Additionally, you can export a specific recipe directly from the recipe page and share it as a file."
+      ]
+    }
+  ]
+}
