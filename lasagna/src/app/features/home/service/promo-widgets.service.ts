@@ -1,6 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {SettingsService} from '../../settings/service/services/settings.service';
 import {SettingsKeysConst} from '../../settings/const/settings-keys.const';
+import {IS_TELEGRAM} from '../../../shared/service/providers/is-telegram-env.token';
 
 export enum PromoWidget {
   tgBot = 'tgBot'
@@ -10,17 +11,17 @@ export enum PromoWidget {
   providedIn: 'root'
 })
 export class PromoWidgetsService {
+  readonly isTg = inject(IS_TELEGRAM);
   readonly widgets = signal<Record<PromoWidget, { visible: boolean; disabled: boolean }>>({
     [PromoWidget.tgBot]: {
       visible: false,
-      disabled: false
+      disabled: this.isTg,
     },
   });
-  private readonly _settingsService = inject(SettingsService);
-
   readonly hasUnread = computed(() =>
     Object.values(this.widgets()).some(w => w.visible && !w.disabled)
   );
+  private readonly _settingsService = inject(SettingsService);
 
   init() {
     const saved = this._settingsService.settingsSignal()

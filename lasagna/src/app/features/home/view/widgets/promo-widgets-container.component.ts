@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, HostBinding, inject} from '@angular/core';
 import {TelegramBotAnnouncementWidgetComponent} from './telegram-bot-announcement-widget.component';
-import {IS_TELEGRAM} from '../../../../shared/service/providers/is-telegram-env.token';
 import {PromoWidgetsService} from '../../service/promo-widgets.service';
 
 @Component({
@@ -20,10 +19,9 @@ export class PromoWidgetsContainerComponent {
   constructor() {
   }
 
-  readonly isTg = inject(IS_TELEGRAM);
   private readonly _widgetsService = inject(PromoWidgetsService);
   readonly shouldShowTgPromo = computed(() => {
-    return this._widgetsService.widgets().tgBot.visible && !this.isTg;
+    return this._widgetsService.widgets().tgBot.visible;
   });
 
   @HostBinding('attr.hidden') get hidden() {
