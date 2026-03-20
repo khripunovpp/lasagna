@@ -292,5 +292,41 @@
       "title": "⚠️ Предупреждение о мошенничестве"
     },
     "html": "<details class=\"lg-accordion\"><summary>Может ли кто-то от имени Lasagna просить мои данные?</summary><div><p>Нет, никогда. У нас нет ни одной платной функции, и мы не собираем личные данные для верификации. Мы никогда не будем писать вам на почту самостоятельно и не будем запрашивать никакие личные данные.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что делать, если получил подозрительное письмо?</summary><div><p>Если вы получили письмо якобы от Lasagna с просьбой предоставить данные, пароли или оплатить что-либо — это мошенничество. Не переходите по ссылкам и не предоставляйте никакую информацию.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Как проверить подлинность сообщения?</summary><div><p>Все официальные уведомления приходят только через само приложение. Мы не отправляем письма на электронную почту, даже если вы её указывали в настройках приложения.</p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Куда сообщить о мошенничестве?</summary><div><p>Если вы столкнулись с попытками мошенничества от имени Lasagna, сообщите нам через форму поддержки в приложении или напишите на официальную почту поддержки.</p>\n</div></details>\n\n\n"
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[en].md",
+    "language": "en",
+    "path": "07-telegram-bot[en].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Is there a Telegram version of the app?</summary><div><p>Yes! Lasagna is available as a Telegram Mini App. You can use it directly inside Telegram without installing anything extra.</p>\n<p>👉 <a href=\"https://t.me/lasagnacost_bot\">Open in Telegram</a></p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>What can I do in the Telegram Mini App?</summary><div><p>Everything you can do in the web app — manage recipes, calculate costs, track ingredients — all without leaving Telegram.</p>\n</div></details>"
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[pt].md",
+    "language": "pt",
+    "path": "07-telegram-bot[pt].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Existe uma versão do app no Telegram?</summary><div><p>Sim! O Lasagna está disponível como Telegram Mini App. Use diretamente dentro do Telegram, sem instalar nada extra.</p>\n<p>👉 <a href=\"https://t.me/lasagnacost_bot\">Abrir no Telegram</a></p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>O que posso fazer no Telegram Mini App?</summary><div><p>Tudo o que você faz no app web — gerenciar receitas, calcular custos, controlar ingredientes — sem sair do Telegram.</p>\n</div></details>"
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[ru].md",
+    "language": "ru",
+    "path": "07-telegram-bot[ru].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    },
+    "html": "<details class=\"lg-accordion\"><summary>Есть ли приложение в Telegram?</summary><div><p>Да! Lasagna доступна как Telegram Mini App — пользуйтесь прямо внутри Telegram, без установки.</p>\n<p>👉 <a href=\"https://t.me/lasagna_ru_bot\">Открыть в Telegram</a></p>\n</div></details>\n\n<details class=\"lg-accordion\"><summary>Что можно делать в Telegram Mini App?</summary><div><p>Всё то же, что и в веб-приложении — управлять рецептами, считать себестоимость, вести ингредиенты — не выходя из Telegram.</p>\n</div></details>"
   }
 ]

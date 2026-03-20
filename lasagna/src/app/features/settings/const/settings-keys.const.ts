@@ -4,4 +4,5 @@ export enum SettingsKeysConst {
   pricePrecision = 'pricePrecision',
   currency = 'currency',
   lang = 'lang',
+  promoWidgets = 'promoWidgets',
 }

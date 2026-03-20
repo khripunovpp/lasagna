@@ -17,6 +17,12 @@ import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.
       <lg-container>
         <lg-title>{{ 'main.title' | translate }}</lg-title>
 
+        @defer {
+          <ls-promo-widgets-container></ls-promo-widgets-container>
+        } @error {
+          {{ 'main.defer-load-error' | translate }}
+        }
+
         @if (!isOnboardingComplete()) {
           <lg-card [hidden]="!isClient">
             <lg-onboarding></lg-onboarding>
@@ -24,7 +30,6 @@ import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.
         }
 
         @defer {
-          <ls-promo-widgets-container></ls-promo-widgets-container>
           <lg-latest-widget></lg-latest-widget>
         } @error {
           {{ 'main.defer-load-error' | translate }}

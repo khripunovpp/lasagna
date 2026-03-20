@@ -6,6 +6,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {DemoInformerComponent} from '../../../features/home/view/informers/demo-informer.component';
+import {PromoWidgetsService} from '../../../features/home/service/promo-widgets.service';
 import {NgOptimizedImage} from '@angular/common';
 import {FadeInComponent} from '../ui/fade-in.component';
 import {GlobalSearchService} from '../../../features/global-search/global-search.service';
@@ -35,6 +36,10 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
                ngSrc="./logomark.svg"
                priority
                width="50"/>
+
+          @if (promoWidgetsService.hasUnread()) {
+            <span class="lg-header__promo-dot"></span>
+          }
         </a>
       </div>
 
@@ -230,6 +235,33 @@ import {GlobalSearchService} from '../../../features/global-search/global-search
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+    }
+
+    .lg-header__promo-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      animation: promo-pulse 2s ease-in-out infinite forwards;
+    }
+
+    @keyframes promo-pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
     }
 
     .lg-header__icon.route-active {
@@ -272,6 +304,7 @@ export class HeaderComponent {
   activeIndex = signal(0);
   links = viewChildren(ButtonComponent);
   readonly window = inject(WINDOW);
+  readonly promoWidgetsService = inject(PromoWidgetsService);
 
   setActive(index: number) {
     this.activeIndex.set(index);

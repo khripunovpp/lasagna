@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, HostBinding, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, HostBinding, inject} from '@angular/core';
 import {TelegramBotAnnouncementWidgetComponent} from './telegram-bot-announcement-widget.component';
 import {IS_TELEGRAM} from '../../../../shared/service/providers/is-telegram-env.token';
 import {PromoWidgetsService} from '../../service/promo-widgets.service';
@@ -16,19 +16,12 @@ import {PromoWidgetsService} from '../../service/promo-widgets.service';
     TelegramBotAnnouncementWidgetComponent
   ]
 })
-export class PromoWidgetsContainerComponent
-  implements OnInit {
+export class PromoWidgetsContainerComponent {
   constructor() {
   }
 
-  ngOnInit() {
-    this._widgetsService.init();
-    console.log(this._widgetsService.widgets())
-  }
-
-  private readonly _widgetsService = inject(PromoWidgetsService);
   readonly isTg = inject(IS_TELEGRAM);
-
+  private readonly _widgetsService = inject(PromoWidgetsService);
   readonly shouldShowTgPromo = computed(() => {
     return this._widgetsService.widgets().tgBot.visible && !this.isTg;
   });

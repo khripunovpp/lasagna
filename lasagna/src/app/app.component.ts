@@ -16,6 +16,7 @@ import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {getURLWithoutParams} from './shared/helpers';
 import {IS_CLIENT} from './shared/service/tokens/isClient.token';
+import {PromoWidgetsService} from './features/home/service/promo-widgets.service';
 
 @Component({
   selector: 'app-root',
@@ -67,6 +68,7 @@ export class AppComponent
   });
   readonly isPwa = inject(IS_PWA);
   readonly isBrowser = inject(IS_CLIENT);
+  private readonly _widgetsService = inject(PromoWidgetsService);
   private readonly demoService = inject(DemoService);
 
   async ngOnInit() {
@@ -74,5 +76,6 @@ export class AppComponent
       return;
     }
     await this.demoService.loadDemoData();
+    this._widgetsService.init();
   }
 }

@@ -268,5 +268,38 @@
     "data": {
       "title": "⚠️ Предупреждение о мошенничестве"
     }
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[en].md",
+    "language": "en",
+    "path": "07-telegram-bot[en].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    }
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[pt].md",
+    "language": "pt",
+    "path": "07-telegram-bot[pt].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    }
+  },
+  {
+    "type": "file",
+    "name": "07-telegram-bot[ru].md",
+    "language": "ru",
+    "path": "07-telegram-bot[ru].md",
+    "title": "💬 Telegram Mini App",
+    "order": 0,
+    "data": {
+      "title": "💬 Telegram Mini App"
+    }
   }
 ]
