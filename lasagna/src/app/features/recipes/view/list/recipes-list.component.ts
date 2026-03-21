@@ -199,10 +199,16 @@ export class RecipesListComponent {
     private _transferDataService: TransferDataService,
     public selectionZoneService: SelectionZoneService,
   ) {
-    this.selectionZoneService.onDelete.pipe(
+    this.selectionZoneService.onDelete$.pipe(
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(([key]) => {
       this.deleteRecipe(key);
+    });
+
+    this.selectionZoneService.onDeleteSelected$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe((keys) => {
+      this.deleteMany(keys);
     });
   }
 
@@ -234,6 +240,21 @@ export class RecipesListComponent {
       })
   }
 
+  deleteMany(uuids: string[]) {
+    if (!uuids.length) {
+      return;
+    }
+    this._recipesRepository.deleteMany(uuids)
+      .then(() => {
+        this._notificationsService.success('recipe.deleted');
+        this.loadRecipes();
+        this.selectionZoneService.onDeselectAll();
+      })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
+  }
+
   loadRecipes() {
     return this._recipesRepository.loadRecipes()
       .catch((e) => {
@@ -246,8 +267,9 @@ export class RecipesListComponent {
   ) {
     return this._transferDataService.exportTable(Stores.RECIPES, 'json', {
       selected: Array.from(selected || []),
-    }).catch((e) => {
-      this._notificationsService.error(errorHandler(e));
-    });
+    })
+      .catch((e) => {
+        this._notificationsService.error(errorHandler(e));
+      });
   }
 }

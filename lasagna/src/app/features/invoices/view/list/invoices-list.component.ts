@@ -1,4 +1,4 @@
-import {Component, computed, inject, isDevMode, OnInit, Signal} from '@angular/core';
+import {Component, computed, DestroyRef, inject, isDevMode, OnInit, Signal} from '@angular/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {MatIcon} from '@angular/material/icon';
@@ -9,7 +9,7 @@ import {CardListComponent} from '../../../../shared/view/ui/card/card-list.compo
 import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {Router, RouterLink} from '@angular/router';
-import {toSignal} from '@angular/core/rxjs-interop';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {NotificationsService} from '../../../../shared/service/services/notifications.service';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
@@ -27,6 +27,7 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
 
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {errorHandler} from '../../../../shared/helpers';
 
 @Component({
   selector: 'lg-invoices-list',
@@ -178,6 +179,11 @@ export class InvoicesListComponent
     private _router: Router,
     private _translateService: TranslateService,
   ) {
+    this.selectionZoneService.onDeleteSelected$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe((keys) => {
+      this.deleteMany(keys);
+    });
   }
 
   readonly isDevMode = isDevMode;
@@ -194,6 +200,7 @@ export class InvoicesListComponent
       })
     });
   });
+  readonly destroyRef = inject(DestroyRef);
   isClient = inject(IS_CLIENT);
   protected readonly Stores = Stores;
   private _userLang = inject(USER_LANGUAGE);
@@ -219,10 +226,29 @@ export class InvoicesListComponent
     if (!event?.uuid) {
       return;
     }
-    this._invoicesRepository.deleteOne(event!.uuid).then(() => {
-      this._notificationsService.success('invoices.deleted');
-      this.loadItems();
-    });
+    this._invoicesRepository.deleteOne(event!.uuid)
+      .then(() => {
+        this._notificationsService.success('invoices.deleted');
+        this.loadItems();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
+  }
+
+  deleteMany(uuids: string[]) {
+    if (!uuids.length) {
+      return;
+    }
+    this._invoicesRepository.deleteMany(uuids)
+      .then(() => {
+        this._notificationsService.success('invoices.deleted');
+        this.loadItems();
+        this.selectionZoneService.onDeselectAll();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 
   ngOnInit() {
@@ -233,12 +259,19 @@ export class InvoicesListComponent
   }
 
   loadItems() {
-    this._invoicesRepository.loadToObservable();
+    this._invoicesRepository.loadToObservable()
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 
   onAddInvoice() {
-    this._invoicesRepository.createEmpty().then((resp) => {
-      this._router.navigate(['/invoices/edit', resp]);
-    });
+    this._invoicesRepository.createEmpty()
+      .then((resp) => {
+        this._router.navigate(['/invoices/edit', resp]);
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 }

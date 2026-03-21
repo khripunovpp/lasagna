@@ -141,6 +141,12 @@ export class ProductsRepository {
     return this._indexDbService.remove(Stores.PRODUCTS, uuid);
   }
 
+  deleteMany(
+    uuids: string[],
+  ) {
+    return this._indexDbService.removeMany(Stores.PRODUCTS, uuids);
+  }
+
   getTopCategories() {
     const {top} = this._usingHistoryService.read('products_categories');
     const keys = Object.keys(top);

@@ -201,10 +201,16 @@ export class ProductListComponent
     public selectionZoneService: SelectionZoneService,
     private _settingsService: SettingsService,
   ) {
-    this.selectionZoneService.onDelete.pipe(
+    this.selectionZoneService.onDelete$.pipe(
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(([key]) => {
       this.deleteProduct(key);
+    });
+
+    this.selectionZoneService.onDeleteSelected$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe((keys) => {
+      this.deleteMeny(keys);
     });
   }
 
@@ -214,7 +220,6 @@ export class ProductListComponent
   readonly destroyRef = inject(DestroyRef);
   readonly products = toSignal(inject(CATEGORIZED_PRODUCTS_LIST));
   isClient = inject(IS_CLIENT);
-  protected readonly ProductDbInputScheme = ProductScheme;
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
@@ -225,21 +230,41 @@ export class ProductListComponent
   ) {
     this._transferDataService.exportTable(Stores.PRODUCTS, 'json', {
       selected: Array.from(selected ?? []),
-    }).catch(error => {
-      this._notificationsService.error(errorHandler(error));
-    });
+    })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 
   deleteProduct(uuid: string | undefined) {
     if (!uuid) {
       return;
     }
-    this._productsRepository.deleteProduct(uuid).then(() => {
-      this._notificationsService.success('notifications.product.deleted');
-      this.loadProducts();
-    }).catch(error => {
-      this._notificationsService.error(errorHandler(error));
-    });
+    this._productsRepository.deleteProduct(uuid)
+      .then(() => {
+        this._notificationsService.success('notifications.product.deleted');
+        this.loadProducts();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
+  }
+
+  deleteMeny(
+    uuids: string[],
+  ) {
+    if (!uuids.length) {
+      return;
+    }
+    this._productsRepository.deleteMany(uuids)
+      .then(() => {
+        this._notificationsService.success('notifications.product.deleted-many');
+        this.loadProducts();
+        this.selectionZoneService.onDeselectAll();
+      })
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 
   ngOnInit() {
@@ -250,8 +275,9 @@ export class ProductListComponent
   }
 
   loadProducts() {
-    this._productsRepository.loadAll().catch(error => {
-      this._notificationsService.error(errorHandler(error));
-    });
+    this._productsRepository.loadAll()
+      .catch(error => {
+        this._notificationsService.error(errorHandler(error));
+      });
   }
 }

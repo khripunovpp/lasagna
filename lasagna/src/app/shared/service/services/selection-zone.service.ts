@@ -12,12 +12,17 @@ export class SelectionZoneService {
   deselectAll = signal<boolean>(false);
   selected = signal<Set<string>>(new Set());
   selectedData = signal<Map<string, any>>(new Map());
-  deleteAll = signal<boolean>(false);
-  deleteSelected = signal<boolean>(false);
   private _deleteSubject = new ReplaySubject<[string, any]>();
+  private _deleteManySubject = new ReplaySubject<string[]>();
 
-  get onDelete() {
+  get onDelete$() {
     return this._deleteSubject.asObservable().pipe(
+      shareReplay(1),
+    );
+  }
+
+  get onDeleteSelected$() {
+    return this._deleteManySubject.asObservable().pipe(
       shareReplay(1),
     );
   }
@@ -38,14 +43,8 @@ export class SelectionZoneService {
     this.deselectAll.set(true);
   }
 
-  onDeleteAll() {
-    this.deleteAll.set(true);
-    this.deleteSelected.set(false);
-  }
-
   onDeleteSelected() {
-    this.deleteAll.set(false);
-    this.deleteSelected.set(true);
+    this._deleteManySubject.next(Array.from(this.selected()));
   }
 
   putSelected(selected: [boolean, string, any]) {
