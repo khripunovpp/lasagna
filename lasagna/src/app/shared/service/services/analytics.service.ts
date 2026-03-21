@@ -80,7 +80,7 @@ export class AnalyticsService {
       if (consent === 'all' || consent === 'analytics') {
         (this._window['gtag'] as any)?.('event', eventName, {
           ...parameters,
-          user_weak_uuid: this._getUserUUID(),
+          user_id: this._getUserUUID(),
         });
         console.log('Analytics event tracked:', eventName, parameters);
       } else {

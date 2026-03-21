@@ -26,7 +26,7 @@ if (window) {
         const buildVersion = document.querySelector('[data-build-version]')?.getAttribute('data-build-version');
         if (userUUID) {
           event.user = {
-            user_weak_uuid: userUUID,
+            id: userUUID,
             build_version: buildVersion || 'Unknown',
           };
         }

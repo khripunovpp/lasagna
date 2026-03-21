@@ -304,7 +304,7 @@
         // Устанавливаем email для контекста пользователя
         window.Sentry.setUser({
           email,
-          user_weak_uuid: userUUID,
+          id: userUUID,
           build_version: buildVersion
         });
 
