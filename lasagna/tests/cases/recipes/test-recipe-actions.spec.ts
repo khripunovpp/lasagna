@@ -114,6 +114,9 @@ test.describe.serial('Поделиться рецептом', () => {
     await expect(recipePage.shareButton).toBeVisible();
     await recipePage.shareButton.click();
 
+    await expect(recipePage.copySharedLinkButton).toBeVisible();
+    await recipePage.copySharedLinkButton.click();
+
     await expect(recipePage.getToast('success')).toBeVisible();
 
     const sharedUrl = await page.evaluate(() => navigator.clipboard.readText());
