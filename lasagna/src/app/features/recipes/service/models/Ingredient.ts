@@ -185,7 +185,7 @@ export class Ingredient {
     this.update({
       product_id: product,
       recipe_id: undefined,
-      name: undefined,
+      new_product_name: undefined,
     });
   }
 
@@ -193,7 +193,7 @@ export class Ingredient {
     this.update({
       recipe_id: recipe,
       product_id: undefined,
-      name: undefined,
+      new_product_name: undefined,
     });
   }
 }
