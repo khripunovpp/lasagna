@@ -143,6 +143,7 @@ export class DraftRecipesListComponent
       .then(() => {
         this.drafts.set([]);
         this._notificationsService.success('notifications.drafts.deleted');
+        this.selectionZoneService.onDeselectAll();
       })
       .catch(e => {
         this._notificationsService.error(errorHandler(e));
@@ -158,6 +159,7 @@ export class DraftRecipesListComponent
           return drafts.filter((item) => !selected.has(item.uuid));
         });
         this._notificationsService.success('notifications.drafts.deleted');
+        this.selectionZoneService.onDeselectAll();
       })
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));
