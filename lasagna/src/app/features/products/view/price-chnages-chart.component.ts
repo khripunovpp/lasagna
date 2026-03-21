@@ -40,7 +40,7 @@ export class ProductChangesChartComponent
 
   @Input() changes: ChangeLogDTO[] = [];
   @ViewChild('chartCanvas') chartCanvas: any;
-  chart: Chart | null = null;
+  chart: Chart<'line'> | null = null;
   readonly pipesDigits = '1.0-4';
   private _productFactory = inject(ProductFactory);
   private _decimalPipe = inject(DecimalPipe);

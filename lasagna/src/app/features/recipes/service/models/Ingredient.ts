@@ -182,18 +182,14 @@ export class Ingredient {
   }
 
   replaceProduct(product: Product) {
-    this.update({
-      product_id: product,
-      recipe_id: undefined,
-      new_product_name: undefined,
-    });
+    this.product_id = product;
+    this.recipe_id = undefined;
+    this.new_product_name = '';
   }
 
   replaceRecipe(recipe: Recipe) {
-    this.update({
-      recipe_id: recipe,
-      product_id: undefined,
-      new_product_name: undefined,
-    });
+    this.product_id = undefined;
+    this.recipe_id = recipe;
+    this.new_product_name = '';
   }
 }
