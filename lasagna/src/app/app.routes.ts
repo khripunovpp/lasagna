@@ -17,6 +17,7 @@ import {
   recipeCalculationTitleResolver,
   recipeTitleResolver
 } from './shared/service/providers/title.resolver';
+import {blogPostResolver} from './features/blog/blog-post/blog-post.resolver';
 
 export const routes: Routes = [{
   path: '',
@@ -233,6 +234,26 @@ export const routes: Routes = [{
       data: {
         canSeeAuthors: true,
       }
+    },
+
+    {
+      path: 'blog',
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./features/blog/blog-list/blog-list.component')
+            .then(m => m.BlogListComponent),
+          title: defTitleResolver,
+        },
+        {
+          path: ':slug',
+          loadComponent: () => import('./features/blog/blog-post/blog-post.component')
+            .then(m => m.BlogPostComponent),
+          resolve: {
+            post: blogPostResolver,
+          },
+        },
+      ],
     },
 
     {

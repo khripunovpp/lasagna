@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {join} from 'path';
 import * as fs from 'fs';
 import {appConfigFactory} from './app-bootstrap.helpers';
+import {BLOG_FS_READER} from './features/blog/blog-fs-reader.token';
 
 const serverAppProviders = [
   importProvidersFrom([TranslateModule.forRoot({
@@ -39,7 +40,32 @@ const serverAppProviders = [
 ];
 
 const serverConfig: ApplicationConfig = {
-  providers: [provideServerRendering(withRoutes(serverRoutes))]
+  providers: [
+    provideServerRendering(withRoutes(serverRoutes)),
+    {
+      provide: BLOG_FS_READER,
+      useFactory: () => {
+        const postsDir = join(process.cwd(), 'public', 'blog', 'posts');
+        const indexPath = join(process.cwd(), 'public', 'blog', 'index.json');
+        return {
+          getPost(slug: string) {
+            try {
+              return JSON.parse(fs.readFileSync(join(postsDir, `${slug}.json`), 'utf-8'));
+            } catch {
+              return null;
+            }
+          },
+          getIndex() {
+            try {
+              return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
+            } catch {
+              return [];
+            }
+          },
+        };
+      },
+    },
+  ]
 };
 
 export const config = mergeApplicationConfig(

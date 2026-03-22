@@ -1,4 +1,6 @@
-import {RenderMode, ServerRoute} from '@angular/ssr';
+import { RenderMode, ServerRoute } from '@angular/ssr';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export const serverRoutes: ServerRoute[] = [
   {
@@ -60,6 +62,19 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: 'widgets',
     renderMode: RenderMode.Prerender
+  },
+  {
+    path: 'blog',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'blog/:slug',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      const indexPath = join(process.cwd(), 'public', 'blog', 'index.json');
+      const posts: { slug: string }[] = JSON.parse(readFileSync(indexPath, 'utf-8'));
+      return posts.map(p => ({ slug: p.slug }));
+    },
   },
   {
     path: 'documents',
