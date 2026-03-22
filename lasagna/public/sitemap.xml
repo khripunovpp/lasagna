@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/0.9">
+
+  <url>
+    <loc>https://lasagna.app/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/recipes</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/products</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/invoices</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/blog</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://lasagna.app/blog/kak-pravilno-formirovat-cenu-na-vypechku</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/blog/how-to-calculate-food-cost</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://lasagna.app/blog/kak-rasschitat-sebestoimost-blyuda</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>

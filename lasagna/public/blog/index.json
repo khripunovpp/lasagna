@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "kak-pravilno-formirovat-cenu-na-vypechku",
+    "title": "Как правильно формировать цену на выпечку и торты",
+    "description": "Разбираем ошибки в ценообразовании домашних кондитеров и пекарей. Как не работать себе в убыток и при этом оставаться конкурентоспособным.",
+    "keywords": "ценообразование, торты, выпечка, кондитер, прибыль, бизнес, цена",
+    "date": "2026-03-10",
+    "lang": "ru",
+    "image": "/assets/blog/pricing.jpg"
+  },
+  {
+    "slug": "how-to-calculate-food-cost",
+    "title": "How to Calculate Food Cost for Your Recipe Business",
+    "description": "A step-by-step guide to calculating food cost percentage for home bakers, pastry chefs, and small food businesses. Formulas, examples, and tools.",
+    "keywords": "food cost, recipe costing, bakery, pricing, small business, profit margin",
+    "date": "2026-03-01",
+    "lang": "en",
+    "image": "/assets/blog/food-cost.jpg"
+  },
+  {
+    "slug": "kak-rasschitat-sebestoimost-blyuda",
+    "title": "Как рассчитать себестоимость блюда — пошаговый гид",
+    "description": "Пошаговый гид по расчёту себестоимости для домашних кондитеров, пекарей и малого бизнеса. Формулы, примеры и инструменты.",
+    "keywords": "себестоимость, расчёт, рецепты, кондитер, пекарь, цена, бизнес",
+    "date": "2026-03-01",
+    "lang": "ru",
+    "image": "/assets/blog/food-cost.jpg"
+  }
+]
