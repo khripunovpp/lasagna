@@ -12,7 +12,6 @@
     "prebuild": "node scripts/build-blog.js && node scripts/generate-ver.js && node scripts/inject-translations.js && node scripts/set-env.js && node scripts/set-right-region-settings.js",
     "build": "npm run build-ssr",
     "build-github-pages": "sh build-github-dev.sh",
-    "build-vercel": "sh build-vercel-ssr.sh",
     "build-ssr": "npm run prebuild && ng run lasagna:build-ssr:production",
     "cleanup": "ng generate @angular/core:cleanup-unused-imports",
     "watch": "ng build --watch --configuration local",

@@ -42,5 +42,5 @@ docker-compose up strapi-dev     # Strapi dev server
 
 ## Deployment
 
-- Frontend: Vercel SSR (`npm run build-vercel` in `lasagna/`)
+- Frontend: Vercel SSR (`npm run build-ssr` in `lasagna/`)
 - Backend: Timeweb (autodeploy via git push to master)

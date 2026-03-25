@@ -36,7 +36,7 @@ services:
       context: ./lasagna
       dockerfile: Dockerfile.build
     container_name: angular-build
-    command: sh -c "npm run build-vercel"
+    command: sh -c "npm run build-ssr"
     volumes:
       - ./lasagna:/app
       - /app/node_modules

@@ -20,7 +20,7 @@ The main product: offline-first PWA for recipe costing and invoicing. Angular 21
 npm start              # Dev server at http://localhost:4200 (local config)
 npm run start-ssr      # Dev server with SSR
 npm run build          # Production SSR build (runs prebuild scripts first)
-npm run build-vercel   # Build for Vercel deployment
+npm run build-ssr   # Build for Vercel deployment
 npm test               # Unit tests (Karma/Jasmine)
 npx playwright test    # E2e tests
 ```
@@ -69,6 +69,6 @@ Translation files: `public/i18n/en.json`, `ru.json`, `pt.json`
 
 ## Deployment
 
-- Vercel SSR: `sh build-vercel-ssr.sh`
+- Vercel SSR: `sh build-ssr-ssr.sh`
 - GitHub Pages (demo): `sh build-github-dev.sh`
 - Timeweb: `npm run build-timeweb` from repo root
