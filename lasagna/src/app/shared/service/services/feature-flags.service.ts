@@ -5,6 +5,7 @@ export const featureFlagsList = [
   'invoices',
   'registration',
   'synchronization',
+  'synchronizationUrlStr',
 ] as const;
 
 export type FeatureFlag = typeof featureFlagsList[number];
@@ -16,13 +17,16 @@ const allowedFlags = Object.fromEntries(featureFlagsList.map(f => [f, true])) as
   providedIn: 'root'
 })
 export class FeatureFlagsService {
-  readonly flags = signal<[FeatureFlag, boolean][]>([]);
+  readonly flags = signal<[FeatureFlag, boolean | string][]>([]);
   private readonly _window = inject(WINDOW);
 
-  setFlag(flag: FeatureFlag, value: boolean): void {
+  setFlag(flag: FeatureFlag, value: boolean | string): void {
     if (!allowedFlags[flag]) {
       return;
     }
+
+    debugger
+
     try {
       const currentFlags = new Map(this.flags());
       currentFlags.set(flag, value);
@@ -36,11 +40,13 @@ export class FeatureFlagsService {
   async fillState() {
     try {
       const stored = this._window?.localStorage.getItem(STORAGE_KEY);
-      const parsed: Partial<Record<FeatureFlag, boolean>> = JSON.parse(stored ?? '{}');
+      const parsed: Partial<Record<FeatureFlag, boolean | string>> = JSON.parse(stored ?? '{}');
+      console.log({parsed})
       this.flags.set(featureFlagsList.map(key => ([
         key as FeatureFlag,
-        parsed[key as FeatureFlag] as boolean
+        parsed[key as FeatureFlag] as boolean | string
       ])));
+      console.log({flags: this.flags()})
       return this.flags();
     } catch (error) {
       console.error('Error filling feature flags state:', error);
@@ -50,6 +56,6 @@ export class FeatureFlagsService {
 
   getFlagValue(flag: FeatureFlag): boolean {
     const currentFlags = new Map(this.flags());
-    return currentFlags.get(flag) ?? false;
+    return currentFlags.get(flag) as boolean ?? false;
   }
 }
