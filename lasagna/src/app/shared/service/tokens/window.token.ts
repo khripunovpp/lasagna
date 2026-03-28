@@ -8,8 +8,6 @@ export const WINDOW = new InjectionToken<(Window & Record<string, unknown>) | un
     if (!isBrowser) {
       return undefined
     }
-    return typeof window !== 'undefined'
-      ? window as any
-      : undefined
+    return window as any;
   }
 });

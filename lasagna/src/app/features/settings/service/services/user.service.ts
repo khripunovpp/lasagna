@@ -10,7 +10,6 @@ export class UserService {
   constructor() {
   }
 
-  isUserFirstTime = !this.isUserFirstTimeValue;
   private readonly _window = inject(WINDOW);
   private readonly _notificationsService = inject(NotificationsService);
 

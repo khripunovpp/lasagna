@@ -26,7 +26,7 @@ export const appInitializer = () => {
   const window = inject(WINDOW);
   pwaBackgroundUpdateService.observe();
 
-  if (userService.isUserFirstTime) {
+  if (!userService.isUserFirstTimeValue) {
     userService.setUserFirstTime(false);
   }
 
