@@ -1,6 +1,14 @@
 export const environment = {
   production: false,
   region: '',
+  policy: {
+    privacy: '',
+    termsOfService: '',
+    cookie: '',
+  },
+  googleSheets: {
+    appsScriptUrl: ''
+  },
   smtp: {
     apiKey: '',
     apiSecret: '',

@@ -1,83 +1,123 @@
-const setEnv = () => {
-  const fs = require('fs');
-  const writeFile = fs.writeFile;
-  const prefix = process.argv
-    .find(arg => arg.startsWith('--prefix='))?.split('=')[1];
+const fs = require('fs');
+const path = require('path');
 
-  // Configure Angular `environment.ts` file path
-  const targetPath = `./src/environments/environment.${prefix ? prefix + '.' : ''}ts`;
+const templatePath = path.join(__dirname, '../src/environments/environment.tpl.ts');
+const outputPath = path.join(__dirname, '../src/environments/environment.ts');
 
-  // Load node modules
-  const colors = require('colors');
-  const appVersion = require('../package.json').version;
+// Load .env file (try several paths)
+const envPaths = [
+  'src/environments/.env',
+  '../.env',
+  '.env',
+];
 
-  // Load .env file if exists (for local development)
-  // Try multiple paths for .env file
-  const envPaths = [
-    'src/environments/.env',  // локальная разработка в папке lasagna/
-    '../.env',                // если .env в корне проекта lasagna/
-    '.env'                    // fallback для других случаев
-  ];
-
-  let envLoaded = false;
-  for (const envPath of envPaths) {
-    try {
-      const result = require('dotenv').config({path: envPath});
-      if (!result.error) {
-        console.log(colors.green(`Loaded .env from: ${envPath}`));
-        envLoaded = true;
-        break;
-      }
-    } catch (e) {
-      // Игнорируем ошибки, пробуем следующий путь
+for (const envPath of envPaths) {
+  try {
+    const result = require('dotenv').config({ path: envPath });
+    if (!result.error) {
+      console.log(`Loaded .env from: ${envPath}`);
+      break;
     }
-  }
+  } catch (_) {}
+}
 
-  if (!envLoaded) {
-    console.log(colors.yellow('No .env file found, using system environment variables only'));
-  }
+// Parse the TS file by stripping the export wrapper and eval-ing the object literal
+const source = fs.readFileSync(templatePath, 'utf8');
+const objectSource = source
+  .replace(/^export const environment\s*=\s*/, '')
+  .replace(/;\s*$/, '')
+  .trim();
 
-  // `environment.ts` file structure
-  const envConfigFile = `export const environment = {
-    production: true,
-    region: '${process.env['LG_APP_REGION'] || 'global'}',
-    googleSheets: {
-      appsScriptUrl: '${process.env['NG_APP_APPS_SCRIPT_URL'] || ''}'
-    },
-    policies: {
-      privacyPolicyUrl: '${process.env['PRIVACY_POLICY_URL'] || ''}',
-      termsOfServiceUrl: '${process.env['TERMS_OF_SERVICE_URL'] || ''}',
-      cookiePolicyUrl: '${process.env['COOKIE_POLICY_URL'] || ''}'
-    },
-    smtp: {
-      apiKey: '${process.env['SEND_PULSE_API_KEY'] || ''}',
-      apiSecret: '${process.env['SEND_PULSE_API_SECRET'] || ''}',
-      domain: '${process.env['SEND_PULSE_DOMAIN'] || ''}',
-      supportEmail: '${process.env['SUPPORT_EMAIL']}',
-      senderEmail: '${process.env['SENDER_EMAIL']}',
-      senderName: '${process.env['SENDER_NAME']}'
-    },
-    bot: {
-      apiUrl: '${process.env['BOT_API_URL']}'
-    },
-    api: {
-      baseUrl: '${process.env['API_BASE_URL'] || ''}'
-    },
-    version: '${appVersion}'
-  };
-  `;
+let template;
+try {
+  template = eval(`(${objectSource})`);
+} catch (e) {
+  console.error('Failed to parse environment.development.ts:', e.message);
+  process.exit(1);
+}
 
-  console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
-  console.log(colors.cyan(envConfigFile));
+// ['api', 'baseUrl'] → 'API_BASE_URL'
+function pathToEnvVar(pathArr) {
+  return pathArr
+    .map(seg => seg.replace(/([A-Z])/g, '_$1').toUpperCase())
+    .join('_')
+    .replace(/__+/g, '_');
+}
 
-  writeFile(targetPath, envConfigFile, (err) => {
-    if (err) {
-      console.error(err);
-      throw err;
+// Recursively collect all leaf key paths, skipping 'production' and 'version'
+// (version comes from package.json, production is always true in the output)
+function collectLeafPaths(obj, prefix = []) {
+  const paths = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === 'production' || key === 'version') continue;
+    const current = [...prefix, key];
+    if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+      paths.push(...collectLeafPaths(value, current));
     } else {
-      console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
+      paths.push(current);
     }
-  });
-};
+  }
+  return paths;
+}
 
-setEnv();
+function getNestedValue(obj, pathArr) {
+  return pathArr.reduce((cur, key) => cur?.[key], obj);
+}
+
+function setNestedValue(obj, pathArr, value) {
+  let cur = obj;
+  for (let i = 0; i < pathArr.length - 1; i++) {
+    if (!(pathArr[i] in cur)) cur[pathArr[i]] = {};
+    cur = cur[pathArr[i]];
+  }
+  cur[pathArr[pathArr.length - 1]] = value;
+}
+
+// Build result: env var → template default → ''
+const result = { production: true };
+const leafPaths = collectLeafPaths(template);
+
+for (const pathArr of leafPaths) {
+  const envVar = pathToEnvVar(pathArr);
+  const raw = process.env[envVar];
+  const envValue = (raw !== undefined && raw !== 'undefined' && raw !== 'null') ? raw : undefined;
+  const defaultValue = getNestedValue(template, pathArr);
+  const resolvedValue = envValue ?? defaultValue ?? '';
+
+  setNestedValue(result, pathArr, resolvedValue);
+
+  if (envValue !== undefined) {
+    console.log(`  ${envVar} = ${envValue}`);
+  }
+}
+
+// version always from package.json
+result.version = require('../package.json').version;
+
+// Serialize result to TypeScript
+function serializeValue(value, indent) {
+  if (typeof value === 'string') {
+    return `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+  }
+  if (typeof value === 'boolean' || typeof value === 'number') {
+    return String(value);
+  }
+  if (typeof value === 'object' && value !== null) {
+    const pad = ' '.repeat(indent);
+    const closePad = ' '.repeat(indent - 2);
+    const entries = Object.entries(value)
+      .map(([k, v]) => `${pad}${k}: ${serializeValue(v, indent + 2)}`)
+      .join(',\n');
+    return `{\n${entries},\n${closePad}}`;
+  }
+  return String(value);
+}
+
+const topLevel = Object.entries(result)
+  .map(([k, v]) => `  ${k}: ${serializeValue(v, 4)}`)
+  .join(',\n');
+
+const content = `export const environment = {\n${topLevel},\n};\n`;
+
+fs.writeFileSync(outputPath, content);
+console.log(`\nGenerated ${path.relative(process.cwd(), outputPath)}`);

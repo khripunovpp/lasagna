@@ -28,14 +28,14 @@ import {
         }
         @if (canSeePolicies()) {
           {{ 'footer.agree' | translate }}
-          <a [attr.href]="environment.policies.privacyPolicyUrl"
+          <a [attr.href]="environment.policy.privacy"
              data-u2e="nav.footer.privacy-link"
              target="_blank">{{ 'footer.privacy' | translate }}</a>,
-          <a [attr.href]="environment.policies.termsOfServiceUrl"
+          <a [attr.href]="environment.policy.termsOfService"
              data-u2e="nav.footer.terms-link"
              target="_blank">{{ 'footer.terms' | translate }}</a>,
           {{ 'footer.and' | translate }}
-          <a [attr.href]="environment.policies.cookiePolicyUrl"
+          <a [attr.href]="environment.policy.cookie"
              data-u2e="nav.footer.cookie-policy-link"
              target="_blank">{{ 'footer.cookie' | translate }}</a>.
         }

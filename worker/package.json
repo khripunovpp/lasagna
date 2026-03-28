@@ -1,0 +1,19 @@
+{
+  "name": "lasagna-worker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "hono": "^4.7.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250326.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^4.5.0"
+  }
+}
