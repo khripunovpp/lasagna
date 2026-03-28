@@ -58,4 +58,10 @@ export class FeatureFlagsService {
     const currentFlags = new Map(this.flags());
     return currentFlags.get(flag) as boolean ?? false;
   }
+
+  getFlagString(flag: FeatureFlag): string | undefined {
+    const currentFlags = new Map(this.flags());
+    const value = currentFlags.get(flag);
+    return typeof value === 'string' && value ? value : undefined;
+  }
 }

@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {ApiAgentInterface} from '../../api/api-agent.interface';
 import {Product} from './Product';
-import {StrapiBatchResponse, StrapiResponse, StrapiService} from '../../api/strapi.service';
+import {SupabaseBatchResponse, SupabaseResponse, SupabaseService} from '../../api/supabase.service';
 import {ProductCloudDTO} from './Product.scheme';
 import qs from 'qs';
 
@@ -10,10 +10,10 @@ import qs from 'qs';
 })
 export class ProductsApiService
   implements ApiAgentInterface<Product> {
-  strapiService = inject(StrapiService);
+  supabaseService = inject(SupabaseService);
 
   get(id: string) {
-    return this.strapiService.get<StrapiResponse<unknown>>(`/products/${id}`)
+    return this.supabaseService.get<SupabaseResponse<unknown>>(`/products/${id}`)
       .then((response) => {
         return Product.fromCloud(response.data);
       });
@@ -30,7 +30,7 @@ export class ProductsApiService
       encodeValuesOnly: true,
     });
 
-    return this.strapiService.get<StrapiResponse<ProductCloudDTO[]>>(`/products?${query}`)
+    return this.supabaseService.get<SupabaseResponse<ProductCloudDTO[]>>(`/products?${query}`)
       .then((response) => {
         return response.data?.length > 0
           ? response.data.map(item => Product.fromCloud(item))
@@ -39,28 +39,28 @@ export class ProductsApiService
   }
 
   post(data?: Record<string, any>) {
-    return this.strapiService.post<StrapiResponse<unknown>>('/products', data)
+    return this.supabaseService.post<SupabaseResponse<unknown>>('/products', data)
       .then((response) => {
         return Product.fromCloud(response);
       });
   }
 
   postMany(data: ProductCloudDTO[]) {
-    return this.strapiService.post<StrapiBatchResponse>('/products/batch', data);
+    return this.supabaseService.post<SupabaseBatchResponse>('/products/batch', data);
   }
 
   put(id: string, data?: Record<string, any>) {
-    return this.strapiService.put<StrapiResponse<unknown>>(`/products/${id}`, data)
+    return this.supabaseService.put<SupabaseResponse<unknown>>(`/products/${id}`, data)
       .then((response) => {
         return Product.fromCloud(response);
       });
   }
 
   putMany(data: Array<{ id: string, data: Record<string, any> }>) {
-    return this.strapiService.put<StrapiBatchResponse>('/products/batch', data);
+    return this.supabaseService.put<SupabaseBatchResponse>('/products/batch', data);
   }
 
   delete(id: string) {
-    return this.strapiService.delete(`/products/${id}`);
+    return this.supabaseService.delete(`/products/${id}`);
   }
 }

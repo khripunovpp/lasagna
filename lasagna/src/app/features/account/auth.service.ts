@@ -1,27 +1,26 @@
-import { Injectable, signal } from '@angular/core';
-import { RestService } from '../api/rest.service';
-import { HttpHeaders } from '@angular/common/http';
-import { LoggerService } from '../logger/logger.service';
-import { TokenService } from '../../shared/service/services/token.service';
+import {Injectable, signal} from '@angular/core';
+import {RestService} from '../api/rest.service';
+import {HttpHeaders} from '@angular/common/http';
+import {LoggerService} from '../logger/logger.service';
+import {TokenService} from '../../shared/service/services/token.service';
 import {environment} from '../../../environments/environment';
 
 export interface AuthUser {
-  id: string;
-  username: string;
-  email: string;
+  id: string
+  username: string
+  email: string
 }
 
 export interface Profile {
   canBuy: boolean
-  user: AuthUser
+  id: string
+  username: string
+  email: string
+  role: string
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
-  private readonly API_BASE = environment.api.baseUrl;
-
-  currentUser = signal<Profile | null>(null);
-
   constructor(
     private _restService: RestService,
     private _tokenService: TokenService,
@@ -30,26 +29,18 @@ export class AuthService {
     this.restoreUser();
   }
 
-  private async restoreUser() {
-    if (this.isAuthenticated()) {
-      try {
-        const user = await this.getCurrentUser();
-        this.currentUser.set(user);
-      } catch {
-        this.logout();
-      }
-    }
-  }
+  currentUser = signal<Profile | null>(null);
+  private readonly API_BASE = environment.api.baseUrl;
 
   async login(identifier: string, password: string): Promise<void> {
-    const response: any = await this._restService.post(`${this.API_BASE}/auth/local`, {
-      identifier,
+    const response: any = await this._restService.post(`${this.API_BASE}/auth/login`, {
+      email: identifier,
       password
     });
-    if (response.jwt && response.user) {
-      this._tokenService.setToken(response.jwt);
-      if (response.refreshToken) {
-        this._tokenService.setRefreshToken(response.refreshToken);
+    if (response.session && response.user) {
+      this._tokenService.setToken(response.session.access_token);
+      if (response.session.refresh_token) {
+        this._tokenService.setRefreshToken(response.refresh_token);
       }
       this._tokenService.setUserId(response.user.id.toString());
       this.logger.log('Login successful for user:', response.user.username);
@@ -62,22 +53,12 @@ export class AuthService {
   }
 
   async register(username: string, email: string, password: string): Promise<void> {
-    const response: any = await this._restService.post(`${this.API_BASE}/auth/local/register`, {
+    const response: any = await this._restService.post(`${this.API_BASE}/auth/register`, {
       username,
       email,
       password
     });
-    if (response.jwt && response.user) {
-      this._tokenService.setToken(response.jwt);
-      if (response.refreshToken) {
-        this._tokenService.setRefreshToken(response.refreshToken);
-      }
-      this._tokenService.setUserId(response.user.id.toString());
-      this.logger.log('Registration successful for user:', response.user.username);
-      // Получить и сохранить пользователя
-      const user = await this.getCurrentUser();
-      this.currentUser.set(user);
-    } else {
+    if (!response.message) {
       throw new Error('Invalid registration response');
     }
   }
@@ -94,38 +75,34 @@ export class AuthService {
   }
 
   async changePassword(
-    code: string,
+    accessToken: string,
+    refreshToken: string | null,
     newPassword: string,
     confirmPassword: string
   ): Promise<void> {
     const response: any = await this._restService.post(`${this.API_BASE}/auth/reset-password`, {
-      code,
+      accessToken,
+      refreshToken,
       password: newPassword,
       passwordConfirmation: confirmPassword
     });
-    if (response.jwt && response.user) {
-      this._tokenService.setToken(response.jwt);
-      if (response.refreshToken) {
-        this._tokenService.setRefreshToken(response.refreshToken);
-      }
-      this._tokenService.setUserId(response.user.id.toString());
-      this.logger.log('Password changed successfully for user:', response.user.username);
-      // Получить и сохранить пользователя
-      const user = await this.getCurrentUser();
-      this.currentUser.set(user);
-    } else {
+    if (!response.ok) {
       throw new Error('Invalid password change response');
     }
+    this.logger.log('Password changed successfully');
   }
 
   async refreshToken(): Promise<void> {
     const refreshToken = this._tokenService.getRefreshToken();
     if (!refreshToken) throw new Error('No refresh token');
     const response: any = await this._restService.post(`${this.API_BASE}/auth/refresh`, {
-      refreshToken
+      refresh_token: refreshToken
     });
-    if (response.jwt) {
-      this._tokenService.setToken(response.jwt);
+    if (response.session) {
+      this._tokenService.setToken(response.session.access_token);
+      if (response.session.refresh_token) {
+        this._tokenService.setRefreshToken(response.refresh_token);
+      }
       this.logger.log('Token refreshed successfully');
       // Обновить пользователя
       const user = await this.getCurrentUser();
@@ -145,7 +122,13 @@ export class AuthService {
     throw new Error('Failed to get current user');
   }
 
-  logout(): void {
+  async logout() {
+    const token = this._tokenService.getToken();
+    if (token) {
+      await this._restService.post(`${this.API_BASE}/auth/logout`, {
+        token: token
+      });
+    }
     this._tokenService.clearAll();
     this.currentUser.set(null);
     this.logger.log('User logged out');
@@ -165,6 +148,17 @@ export class AuthService {
 
   getAuthHeaders(): Record<string, string> {
     const token = this._tokenService.getToken();
-    return token ? { 'Authorization': `Bearer ${token}` } : {};
+    return token ? {'Authorization': `Bearer ${token}`} : {};
+  }
+
+  private async restoreUser() {
+    if (this.isAuthenticated()) {
+      try {
+        const user = await this.getCurrentUser();
+        this.currentUser.set(user);
+      } catch {
+        this.logout();
+      }
+    }
   }
 }

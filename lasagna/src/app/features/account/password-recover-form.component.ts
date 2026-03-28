@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, effect, inject, input, output, signal} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from './auth.service';
 import {NotificationsService} from '../../shared/service/services';
@@ -52,7 +52,7 @@ import {AsyncPipe} from '@angular/common';
         <lg-flex-column [position]="'center'" [size]="'small'">
           @let valid = validControls$ | async;
           @let validRules = rules.valid$ | async;
-          @let disabled = isLoading() || !valid || (mode() === 'reset' && !validRules);
+          @let disabled = isLoading() || (mode() === 'reset' && (!validRules || !valid)) || (mode() === 'request' && recoverEmail.invalid);
 
           <lg-button [disabled]="disabled"
                      [style]="'success'"
@@ -94,14 +94,14 @@ export class PasswordRecoverFormComponent {
   constructor() {
   }
 
-  recoverEmail = new FormControl('');
+  recoverEmail = new FormControl('', [Validators.required, Validators.email]);
   recoverPassword = new FormControl('');
   recoverPasswordConfirm = new FormControl('');
   authService = inject(AuthService);
   notificationsService = inject(NotificationsService);
   isLoading = signal(false);
   mode = signal<'request' | 'reset'>('request');
-  code = input<string | null>(null);
+  code = input<{accessToken: string; refreshToken: string | null} | null>(null);
   onDone = output<void>();
   codeEffect = effect(() => {
     if (this.code() != null) {
@@ -133,6 +133,7 @@ export class PasswordRecoverFormComponent {
     try {
       await this.authService.sendRecoverLink(this.recoverEmail.value!);
       this.notificationsService.success('Password recovery email sent');
+      this.recoverEmail.reset();
     } catch (e: any) {
       this.notificationsService.error(e?.message || 'An error occurred during password recovery');
     } finally {
@@ -141,6 +142,24 @@ export class PasswordRecoverFormComponent {
   }
 
   async onReset() {
-    this.notificationsService.error('Password reset functionality is not implemented yet');
+    if (!this.code()) {
+      this.notificationsService.error('Invalid reset link');
+      return;
+    }
+    this.isLoading.set(true);
+    try {
+      await this.authService.changePassword(
+        this.code()!.accessToken,
+        this.code()!.refreshToken,
+        this.recoverPassword.value!,
+        this.recoverPasswordConfirm.value!
+      );
+      this.notificationsService.success('Password changed successfully');
+      this.onDone.emit();
+    } catch (e: any) {
+      this.notificationsService.error(e?.message || 'An error occurred during password reset');
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 }

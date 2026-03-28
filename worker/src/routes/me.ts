@@ -27,7 +27,7 @@ me.get('/', async (c) => {
     username: (user.user_metadata as Record<string, unknown> | undefined)?.username
       ?? user.email?.split('@')[0],
     role: meta?.role ?? 'user',
-    can_buy: profile?.can_buy ?? false,
+    canBuy: profile?.can_buy ?? false,
   })
 })
 

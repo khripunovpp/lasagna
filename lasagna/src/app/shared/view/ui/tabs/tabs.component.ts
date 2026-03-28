@@ -194,6 +194,7 @@ export class TabsComponent {
     this.router.navigate([], {
       queryParams: {tab: this.tabs()[index].alias},
       queryParamsHandling: 'merge',
+      preserveFragment: true,
     });
   }
 }

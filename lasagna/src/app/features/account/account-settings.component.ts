@@ -62,16 +62,21 @@ import {map} from 'rxjs';
 })
 export class AccountSettingsComponent {
   constructor() {
-    console.log({
-      snapshot: this.activatedRoute.snapshot.queryParams,
-    })
   }
 
   authService = inject(AuthService);
   notificationsService = inject(NotificationsService);
   activatedRoute = inject(ActivatedRoute);
-  code = toSignal(this.activatedRoute.queryParams.pipe(
-    map(params => params['code'] || null)
+  // Supabase передаёт токены в hash фрагменте: #access_token=xxx&refresh_token=yyy&type=recovery
+  code = toSignal(this.activatedRoute.fragment.pipe(
+    map(fragment => {
+      if (!fragment) return null;
+      const params = new URLSearchParams(fragment);
+      if (params.get('type') !== 'recovery') return null;
+      const accessToken = params.get('access_token');
+      const refreshToken = params.get('refresh_token');
+      return accessToken ? {accessToken, refreshToken} : null;
+    })
   ), {initialValue: null});
   showRegister = signal(false);
   state = signal<'login' | 'register' | 'recover-request' | 'reset-password'>('login');

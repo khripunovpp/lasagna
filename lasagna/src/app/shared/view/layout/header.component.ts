@@ -329,7 +329,7 @@ export class HeaderComponent {
   readonly window = inject(WINDOW);
   readonly promoWidgetsService = inject(PromoWidgetsService);
   readonly shortName = computed(() => {
-    const name = this.account()?.user?.username || '';
+    const name = this.account()?.username || '';
     const parts = name.split(' ');
     if (parts.length === 1) {
       return (name.charAt(0) + name.charAt(1)).toUpperCase();

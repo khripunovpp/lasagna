@@ -4,7 +4,7 @@ import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.ser
 import {errorHandler} from '../../../shared/helpers';
 import {RepositoryAbstract} from '../../../shared/service/services/repository/repository.abstract';
 import {CanSync} from './CanSync.abstract';
-import {StrapiBatchResponse} from '../../api/strapi.service';
+import {SupabaseBatchResponse} from '../../api/supabase.service';
 
 export interface SyncStrategyNotSyncedResult {
   cloud: {
@@ -209,7 +209,7 @@ export class BaseSyncStrategy
     };
 
     const itemsToCloud = items.map(item => item.toCloudDTO());
-    const resp = await this._repo.batchCreateToCloud<StrapiBatchResponse>(this.table, itemsToCloud);
+    const resp = await this._repo.batchCreateToCloud<SupabaseBatchResponse>(this.table, itemsToCloud);
     if (!resp) return {
       cloud: {
         message: 'No new items added to cloud',
