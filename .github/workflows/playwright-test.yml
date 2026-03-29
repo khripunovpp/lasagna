@@ -17,7 +17,7 @@ jobs:
       run: npm ci --force
       working-directory: ./lasagna
     - name: Prebuild Lasagna
-      run: node scripts/set-env.js --prefix=local
+      run: node scripts/set-env.js && node scripts/set-env.js --prefix=local
       working-directory: ./lasagna
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps

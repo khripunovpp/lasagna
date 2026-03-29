@@ -16,7 +16,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
       top: 50%;
       left: 0;
       transform: translateY(-50%);
-      z-index: 20;
+      z-index: 9;
       display: flex;
       gap: 8px;
       flex-direction: column;

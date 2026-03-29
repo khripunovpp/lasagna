@@ -69,7 +69,7 @@ import {TranslatePipe} from '@ngx-translate/core';
     .dialog {
       display: flex;
       position: fixed;
-      z-index: 9;
+      z-index: 100;
       top: 0;
       left: 0;
       width: 100%;

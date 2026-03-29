@@ -211,7 +211,7 @@ import {WINDOW} from '../../shared/service/tokens/window.token';
       bottom: 0;
       background-color: rgba(31, 31, 31, 0.7);
       backdrop-filter: blur(10px);
-      z-index: 10000;
+      z-index: 1000;
       padding: 1rem;
       display: flex;
       align-items: center;
