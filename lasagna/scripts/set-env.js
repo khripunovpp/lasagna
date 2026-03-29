@@ -1,8 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const args = process.argv.slice(2);
+const prefixArg = args.find(a => a.startsWith('--prefix='));
+const prefix = prefixArg ? prefixArg.split('=')[1] : null;
+
 const templatePath = path.join(__dirname, '../src/environments/environment.tpl.ts');
-const outputPath = path.join(__dirname, '../src/environments/environment.ts');
+const outputPath = path.join(__dirname, `../src/environments/environment${prefix ? '.' + prefix : ''}.ts`);
 
 // Load .env file (try several paths)
 const envPaths = [
