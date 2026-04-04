@@ -146,7 +146,7 @@ const appProviders = [
   {
     provide: DISABLE_LOGGER,
     useFactory: () => {
-      return  true;
+      return true;
       const _window = inject(WINDOW);
       return _window?.location.search.includes('dl') ?? false;
     },

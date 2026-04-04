@@ -137,6 +137,7 @@ export abstract class RepositoryAbstract<
     uuid: string,
     item: T
   ) {
+    debugger
     const dto = await this.withUpdateTransaction(
       (tx) => updateProductTransaction(tx, uuid, this.table, item, this.changeLogCondition)
     );

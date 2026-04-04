@@ -1,15 +1,15 @@
 import {computed, inject, InjectionToken} from '@angular/core';
-import {ACCOUNT, AUTHENTICATED} from '../../account/account.token';
 import {HAS_FEATURE} from '../../settings/service/providers/has-feature.token';
+import {AuthService} from '../../account/auth.service';
 
 export const CAN_SYNC = new InjectionToken('canSync', {
   factory: () => {
-    const hasFeatureSync = inject(HAS_FEATURE)('synchronization');
-    const auth = inject(AUTHENTICATED);
-    const acc = inject(ACCOUNT);
+    const hasFeature = inject(HAS_FEATURE);
+    const authService = inject(AuthService);
+
     return computed(() => {
-      return hasFeatureSync
-        && !!(acc()?.canBuy && auth());
+      return authService.canSync()
+        && hasFeature('synchronization');
     });
   }
 });

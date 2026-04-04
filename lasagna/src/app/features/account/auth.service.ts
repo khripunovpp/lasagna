@@ -1,4 +1,4 @@
-import {Injectable, signal} from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import {RestService} from '../api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../logger/logger.service';
@@ -30,6 +30,7 @@ export class AuthService {
   }
 
   currentUser = signal<Profile | null>(null);
+  canSync = computed(() => !!this.currentUser()?.canBuy);
   private readonly API_BASE = environment.api.baseUrl;
 
   async login(identifier: string, password: string): Promise<void> {
@@ -155,6 +156,7 @@ export class AuthService {
     if (this.isAuthenticated()) {
       try {
         const user = await this.getCurrentUser();
+        console.log('Restored user:', user);
         this.currentUser.set(user);
       } catch {
         this.logout();
