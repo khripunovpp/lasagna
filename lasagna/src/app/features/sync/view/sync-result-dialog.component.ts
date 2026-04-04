@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, computed, inject, input, output, viewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, output, signal, viewChild} from '@angular/core';
 import {DialogComponent} from '../../../shared/view/ui/dialogs/dialog.component';
 import {NotificationsService, SyncEstimation, SyncService} from '../../../shared/service/services';
 import {Product} from '../../products/service/Product';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {productLabelFactoryProvider} from '../../../shared/factories/entity-labels/product.label.factory';
 import {SyncTransactionItem} from '../service/estimate-sync-changes-transaction';
 import {ProductFactory} from '../../products/service/product.factory';
@@ -40,27 +40,59 @@ export interface SyncView<T> {
   },
   template: `
     <lg-dialog (onConfirm)="confirm()"
+               [closeOnConfirm]="false"
                name="sync-result">
       <lg-flex-column [formGroup]="formGroup" [size]="'medium'">
         <lg-tabs [flat]="true"
+                 [lazy]="false"
                  [silent]="true">
           @for (entity of entities(); track entity) {
             <ng-template [alias]="entity" [label]="entity" lgTab>
-              <lg-sync-result-group [dualFactory]="entityToDualFactoryMap[entity]"
-                                    [factory]="entityToFactoryMap[entity]"
-                                    [labelFactory]="entityToLabelMap[entity]"
-                                    [selectionForm]="$any(formGroup.get(entity))"
-                                    [syncEstimation]="syncEstimation()[entity]"></lg-sync-result-group>
+
+              @if (syncResult()?.result; as result) {
+                <lg-flex-column [size]="'small'">
+                  <div>{{ 'sync.status.title' | translate }}</div>
+
+                  @if (result) {
+                    @if (result?.[entity]?.notSynced?.cloud?.message) {
+                      <div>
+                        ⚠️ {{ result?.[entity]?.notSynced?.cloud?.message }}
+                      </div>
+
+                      @if (result?.[entity]?.notSynced?.cloud?.hasErrors) {
+                        @for (item of syncResult()?.request?.[entity]?.notSynced || []; track $index) {
+                          @let error = item.uuid ? result?.[entity]?.notSynced?.cloud?.errors?.[item.uuid] : undefined;
+
+                          @if (error) {
+                            <div style="margin-left: 1rem; color: red">
+                              - {{ item.name }}: {{ error }}
+                            </div>
+                          }
+                        }
+                      }
+                    }
+                    @if (result?.[entity]?.toAdd?.message) {
+                      <div>
+                        ⚠️ {{ result?.[entity]?.toAdd?.message }}
+                      </div>
+                    }
+                    @if (result?.[entity]?.toUpdate?.message) {
+                      <div>
+                        ⚠️ {{ result?.[entity]?.toUpdate?.message }}
+                      </div>
+                    }
+                  }
+                </lg-flex-column>
+              } @else {
+                <lg-sync-result-group [dualFactory]="entityToDualFactoryMap[entity]"
+                                      [factory]="entityToFactoryMap[entity]"
+                                      [labelFactory]="entityToLabelMap[entity]"
+                                      [selectionForm]="$any(formGroup.get(entity))"
+                                      [syncEstimation]="syncEstimation()[entity]"></lg-sync-result-group>
+              }
             </ng-template>
           }
         </lg-tabs>
-
-        <!--        <lg-flex-column [size]="'small'">-->
-        <!--          <span>By completing the sync, you are going to:</span>-->
-        <!--          <span>- add {{ res.sizes().toAdd }} products</span>-->
-        <!--          <span>- update {{ res.sizes().toUpdate }} products</span>-->
-        <!--          <span>- put {{ res.sizes().notSynced }} products to the cloud</span>-->
-        <!--        </lg-flex-column>-->
       </lg-flex-column>
     </lg-dialog>
   `,
@@ -72,6 +104,8 @@ export interface SyncView<T> {
     TabDirective,
     TabsComponent,
     ReactiveFormsModule,
+    TranslatePipe,
+
   ]
 })
 export class SyncResultDialogComponent {
@@ -87,7 +121,8 @@ export class SyncResultDialogComponent {
   readonly productFactory = inject(ProductFactory);
   readonly dialogRef = viewChild(DialogComponent);
   syncEstimation = input.required<SyncEstimation>();
-  syncResult = output<PerformSyncResult>();
+  onSyncResult = output<{ request: PerformSyncMap<CanSync>, result: PerformSyncResult }>();
+  syncResult = signal<{ request: PerformSyncMap<CanSync>, result: PerformSyncResult } | undefined>(undefined);
   productFactoryFn = this.productFactory.fromRaw.bind(this.productFactory);
   recipeFactoryFn = Recipe.fromRaw;
   entities = computed<SyncKey[]>(() => this._syncService.syncSettings().entities);
@@ -107,6 +142,7 @@ export class SyncResultDialogComponent {
   });
 
   open() {
+    this.syncResult.set(undefined);
     this.dialogRef()?.open();
   }
 
@@ -138,9 +174,10 @@ export class SyncResultDialogComponent {
       }, {} as PerformSyncMap);
 
       const result = await this._syncService.performSync(params);
-      this.syncResult.emit(result);
+      this.syncResult.set({request: params, result});
+      this.onSyncResult.emit({result, request: params});
       this._notificationsService.success(this._translateService.instant('sync.sync_completed_successfully'));
-      this.close();
+      // this.close();
     } catch (e) {
       this._notificationsService.error(errorHandler(e));
     }

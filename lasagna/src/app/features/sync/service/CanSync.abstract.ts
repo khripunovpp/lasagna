@@ -3,6 +3,7 @@ export abstract class CanSync {
   updatedAt?: number | undefined;
   cloud_uuid?: string | undefined;
   uuid?: string | undefined;
+  name = '';
   dirtyToSync?: boolean;
   deleted?: boolean | undefined;
   deletedAt?: number | undefined;
@@ -29,10 +30,10 @@ export abstract class CanSync {
     this.markAsNeedSync();
   }
 
-  toCloudDTO():any{
+  toCloudDTO(): any {
   }
 
-  toDTO():any{
+  toDTO(): any {
   }
 
   update(

@@ -8,6 +8,7 @@ export abstract class BaseModel
   createdAt?: number | undefined;
   cloud_uuid?: string | undefined;
   uuid?: string | undefined;
+  name = '';
   dirtyToSync?: boolean;
   deleted?: boolean | undefined;
   deletedAt?: number | undefined;
@@ -59,6 +60,7 @@ export abstract class BaseModel
       : this.syncedAt;
     this.cloud_uuid = dto?.cloud_uuid || this.cloud_uuid;
     this.uuid = dto?.uuid || this.uuid;
+    this.name = dto?.name || this.name;
     this.deleted = !!(dto?.deleted == null ? this.deleted : dto.deleted);
     this.deletedAt = this.deleted
       ? dto?.deletedAt
@@ -72,6 +74,7 @@ export abstract class BaseModel
 
   toCloudDTO() {
     return {
+      name: this.name,
       uuid: this.uuid,
       deleted: this.deleted ?? false,
       deleted_at: this.deletedAt ? new Date(this.deletedAt).toISOString() : null,
@@ -86,6 +89,7 @@ export abstract class BaseModel
       createdAt: this.createdAt,
       cloud_uuid: this.cloud_uuid,
       uuid: this.uuid,
+      name: this.name,
       dirtyToSync: this.dirtyToSync,
       deleted: this.deleted ? 1 : 0,
       deletedAt: this.deletedAt,

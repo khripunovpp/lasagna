@@ -96,6 +96,11 @@ export interface SyncStrategy {
    * @param syncMap
    */
   performSync(syncMap: PerformSyncMap[string]): Promise<PerformSyncResult[string]>;
+
+  /**
+   * Сбрасывает состояние синхронизации для всех элементов, например, при выходе пользователя или при возникновении критической ошибки синхронизации.
+   */
+  resetSyncState(): Promise<{message: string, hasErrors?: boolean}>;
 }
 
 export class BaseSyncStrategy
@@ -202,6 +207,8 @@ export class BaseSyncStrategy
       }
     };
 
+    debugger
+
     const result: SyncStrategyNotSyncedResult = {
       cloud: {
         message: 'All good',
@@ -219,6 +226,7 @@ export class BaseSyncStrategy
     if (resp.hasErrors) {
       result.cloud.message = 'Some items failed to sync';
       result.cloud.errors = resp.errors;
+      result.cloud.hasErrors = true
     }
 
     const syncDate = Date.now();
@@ -232,7 +240,7 @@ export class BaseSyncStrategy
     });
     if (!itemsToUpdate.length) {
       result.local = {
-        message: 'Items were not updated locally, but successfully added to cloud',
+        message: 'Items were not updated locally',
       };
       return result;
     }
@@ -275,5 +283,34 @@ export class BaseSyncStrategy
     }
 
     return result;
+  }
+
+  async resetSyncState() {
+    try {
+      const result = {
+          message: '',
+      };
+      const allItems = await this._indexedDB.getAll(this.table) as CanSync[];
+      const itemsToReset = allItems
+        .filter(item => item.cloud_uuid || item.syncedAt)
+        .map(item => ({
+          uuid: item.uuid,
+          cloud_uuid: null,
+          syncedAt: null,
+        }));
+      if (itemsToReset.length) {
+        await this._indexedDB.bulkPatch(this.table, itemsToReset);
+        console.log(`Sync state reset for ${itemsToReset.length} items in ${this.table}`);
+      } else {
+        console.log(`No items to reset sync state for in ${this.table}`);
+      }
+      return result;
+    } catch (error) {
+      console.error(`Failed to reset sync state for ${this.table}:`, error);
+      return {
+        message: errorHandler(error),
+        hasErrors: true,
+      };
+    }
   }
 }

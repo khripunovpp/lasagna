@@ -80,13 +80,22 @@ export interface SyncViewGroup {
     FlexRowComponent,
     UnitStringPipe,
     UserCurrencyPipe,
-    FormsModule
+    FormsModule,
   ],
   template: `
     @if (selectionForm && sizes) {
       <lg-flex-column [formGroup]="selectionForm">
         @let view = syncView();
         @let sz = sizes();
+        @let nothingChanged = view.rows.toAdd.length === 0
+          && view.rows.toUpdate.length === 0
+          && view.rows.notSynced.length === 0
+          && view.rows.toDelete.length === 0
+          && view.rows.toSkip.length === 0;
+
+        @if (nothingChanged) {
+          <div>{{ 'sync.result.nothing-to-sync' | translate }}</div>
+        }
 
         @if (view.rows.toDelete.length > 0) {
           <lg-flex-column [size]="'small'" formGroupName="toDelete">
@@ -248,6 +257,16 @@ export interface SyncViewGroup {
           </lg-flex-column>
         }
 
+        @if (!nothingChanged) {
+          <lg-flex-column [size]="'small'">
+            <span>By completing the sync, you are going to:</span>
+            <span>- add {{ sz?.toAdd }} items</span>
+            <span>- update {{ sz?.toUpdate }} items</span>
+            <span>- put {{ sz?.notSynced }} items to the cloud</span>
+            <span>- with skip {{ view.rows.toSkip.length }} items</span>
+          </lg-flex-column>
+        }
+
         <ng-template #itemTpl let-caption="caption" let-label="label" let-item>
           <div class="lg-sync-result-group__item">
             <lg-expander [flat]="true"
@@ -287,8 +306,10 @@ export interface SyncViewGroup {
               : {{ product.price ? (product.price | userCurrency: pipesDigits()) : '---' }}</span>
             <span>{{ 'sync.result.products.view.amount'|translate }}
               : {{ product.amount }} {{ product.unit | unitString | translate }}</span>
-            <span>{{ 'sync.result.products.view.createdAt'|translate }}: {{ product.createdAt ? (product.createdAt | date:'medium') : '---' }}</span>
-            <span>{{ 'sync.result.products.view.updatedAt'|translate }}: {{ product.updatedAt ? (product.updatedAt | date:'medium') : '---' }}</span>
+            <span>{{ 'sync.result.products.view.createdAt'|translate }}
+              : {{ product.createdAt ? (product.createdAt | date:'medium') : '---' }}</span>
+            <span>{{ 'sync.result.products.view.updatedAt'|translate }}
+              : {{ product.updatedAt ? (product.updatedAt | date:'medium') : '---' }}</span>
           </lg-flex-column>
         </ng-template>
       </lg-flex-column>

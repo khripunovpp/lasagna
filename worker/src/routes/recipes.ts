@@ -41,17 +41,17 @@ recipes.get('/', async (c) => {
 recipes.post('/batch', async (c) => {
   const user = c.get('user')
   const token = c.get('token')
-  const body = await c.req.json<{ items: Record<string, unknown>[] }>()
+  const body =await c.req.json<Record<string, unknown>[]>()
   const supabase = createUserClient(c.env.SUPABASE_URL, c.env.SUPABASE_PUBLISHABLE_KEY, token)
 
-  if (!Array.isArray(body.items) || body.items.length === 0) {
+  if (!Array.isArray(body) || body.length === 0) {
     return c.json({ error: 'items array is required' }, 400)
   }
 
   const added: Record<string, unknown> = {}
   const errors: Record<string, string> = {}
 
-  for (const item of body.items) {
+  for (const item of body) {
     const uuid = item['uuid'] as string | undefined
     if (!uuid) { errors['_'] = 'Item missing uuid'; continue }
 

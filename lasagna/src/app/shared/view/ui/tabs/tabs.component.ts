@@ -42,11 +42,21 @@ import {Router} from '@angular/router';
            class="tabs__body"
            role="tabpanel">
         @if (tabs().length > 0) {
-          @if (activated()[selectedIndex()]) {
-            <lg-flex-column [size]="'small'">
-              <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
-              </ng-container>
-            </lg-flex-column>
+          @if (lazy()) {
+            @if (activated()[selectedIndex()]) {
+              <lg-flex-column [size]="'small'">
+                <ng-container *ngTemplateOutlet="tabs()[selectedIndex()].templateRef">
+                </ng-container>
+              </lg-flex-column>
+            }
+          } @else {
+            @for (tab of tabs(); track tab.label; let i = $index) {
+              <lg-flex-column [size]="'small'"
+                              [hidden]="!activated()[i]">
+                <ng-container *ngTemplateOutlet="tab.templateRef">
+                </ng-container>
+              </lg-flex-column>
+            }
           }
         }
       </div>
@@ -164,6 +174,7 @@ export class TabsComponent {
   readonly name = input('')
   readonly silent = input(false)
   readonly scrollable = input(true)
+  readonly lazy = input(true)
   readonly activated = signal<boolean[]>([]);
   readonly selectedIndex = signal(0);
   readonly tabQuery = injectQueryParams('tab');

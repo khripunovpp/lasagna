@@ -9,9 +9,7 @@ import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 import {SyncResultDialogComponent} from "./sync-result-dialog.component";
 import {CAN_SYNC} from '../service/can-sync.token';
 import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
-import {PerformSyncResult} from '../service/sync-strategy';
 import {SwitchComponent} from '../../controls/form/switch.component';
-import {Stores} from '../../../shared/service/db/const/stores';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {SyncKey} from '../service/sync-key.enum';
 
@@ -38,30 +36,12 @@ import {SyncKey} from '../service/sync-key.enum';
               </div>
             }
           </lg-flex-row>
-        </lg-flex-column>
-      }
 
-      @if (syncResult(); as result) {
-        <lg-flex-column [size]="'small'">
-          <div>{{ 'sync.status.title' | translate }}</div>
-
-          @if (result) {
-            @if (result?.['product']?.notSynced?.cloud?.message) {
-              <div>
-                ⚠️ {{ result?.['product']?.notSynced?.cloud?.message }}
-              </div>
-            }
-            @if (result?.['product']?.toAdd?.message) {
-              <div>
-                ⚠️ {{ result?.['product']?.toAdd?.message }}
-              </div>
-            }
-            @if (result?.['product']?.toUpdate?.message) {
-              <div>
-                ⚠️ {{ result?.['product']?.toUpdate?.message }}
-              </div>
-            }
-          }
+          <lg-button [attr.data-u2e]="'sync.reset-sync-state-btn'"
+                     (click)="onResetSyncState()"
+                     [style]="'danger'">
+            {{ 'sync.reset-sync-state' | translate }}
+          </lg-button>
         </lg-flex-column>
       }
 
@@ -77,8 +57,7 @@ import {SyncKey} from '../service/sync-key.enum';
       </lg-flex-column>
     </lg-flex-column>
 
-    <lg-sync-result-dialog (syncResult)="syncResult.set($event)"
-                           [syncEstimation]="syncEstimation()"></lg-sync-result-dialog>
+    <lg-sync-result-dialog [syncEstimation]="syncEstimation()"></lg-sync-result-dialog>
   `,
   styles: [
     `.sync-status-grid {
@@ -124,7 +103,6 @@ export class SyncSettingsComponent implements OnInit {
   syncEstimation = signal<SyncEstimation>({});
   syncDialog = viewChild(SyncResultDialogComponent);
   canSync = inject(CAN_SYNC);
-  syncResult = signal<PerformSyncResult | undefined>(undefined);
   private readonly _syncEntitiesToLabelMap: Record<string, string> = {
     [SyncKey.products]: _('sync.entity.products'),
     [SyncKey.recipes]: _('sync.entity.recipes'),
@@ -175,6 +153,18 @@ export class SyncSettingsComponent implements OnInit {
       this.notificationsService.success('Sync preview loaded');
     } catch (error) {
       this.notificationsService.error(`Sync failed: ${(error as Error).message}`);
+    } finally {
+      loader.close();
+    }
+  }
+
+  async onResetSyncState() {
+    const loader = this.notificationsService.loading('Resetting sync state...');
+    try {
+      await this.syncService.resetSync();
+      this.notificationsService.success('Sync state reset successfully');
+    } catch (error) {
+      this.notificationsService.error(`Failed to reset sync state: ${(error as Error).message}`);
     } finally {
       loader.close();
     }

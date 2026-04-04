@@ -17,7 +17,6 @@ export class Recipe
     this.dirtyToSync = props.dirtyToSync ?? false;
   }
 
-  name: string = '';
   description: string = '';
   ingredients: Ingredient[] = [];
   portions: number = 0;
@@ -249,14 +248,12 @@ export class Recipe
     dto: any,
     doNotMarkDirty: boolean = false,
   ) {
-    this.name = dto?.name || this.name;
     this.description = dto?.description || this.description;
     this.ingredients = Array.isArray(dto?.ingredients)
       ? dto.ingredients.map((ingredient: any) => {
         return Ingredient.fromRaw(ingredient);
       }) : this.ingredients;
     this.portions = dto?.portions ?? this.portions;
-    this.uuid = dto?.uuid || this.uuid;
     this.category_id = dto?.category_id ? CategoryRecipe.fromRaw(
       typeof dto.category_id === 'string' ? {
         uuid: dto.category_id,

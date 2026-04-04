@@ -152,6 +152,15 @@ export class SyncService {
     return result;
   }
 
+  async resetSync() {
+    for (const strategy of Object.values(this.strategies)) {
+      if (strategy) {
+        await strategy.resetSyncState();
+      }
+    }
+    this._updateLastSyncTime();
+  }
+
   private _parseErrorsToLog(errors: any[]): SyncLog[] {
     return errors.map(error => ({
       entityIdentifier: error.uuid || 'unknown',

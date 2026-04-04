@@ -36,7 +36,6 @@ export class Product
     this.dirtyToSync = props.dirtyToSync ?? false;
   }
 
-  name: string = '';
   amount: number = 0;
   price: number = 0;
   unit: Unit = 'gram';
@@ -153,7 +152,6 @@ export class Product
     dto: any,
     doNotMarkDirty: boolean = false,
   ) {
-    this.name = dto.name || this.name;
     this.amount = dto.amount ? Number(dto.amount) : this.amount;
     this.price = dto.price ? Number(dto.price) : this.price;
     this.unit = dto.unit || this.unit;
@@ -163,7 +161,6 @@ export class Product
     this.category_id = dto.category_id
       ? CategoryProduct.fromRaw(dto.category_id || '')
       : this.category_id;
-    this.uuid = dto.uuid || this.uuid;
     this.cloud_uuid = dto.cloud_uuid || this.cloud_uuid;
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
     this.system = dto.system !== undefined ? dto.system : this.system;
