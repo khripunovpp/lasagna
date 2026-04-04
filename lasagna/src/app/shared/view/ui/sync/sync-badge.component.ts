@@ -33,28 +33,26 @@ export type SyncBadgeState = typeof STATES[SyncBadgeStates];
   },
   template: `
     <span [attr.title]="STATES[state()].label | translate"
-          [style.background-color]="STATES[state()].color"
+          [style.--sync-badge-size]="size()+'px'"
           class="lg-sync-badge">
-     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-       <g [attr.fill]="STATES[state()].stroke" data-name="7.Upload">
+     <svg viewBox="0 0 24 24"
+          fill="none"
+          [attr.width]="size()"
+          [attr.heigth]="size()"
+          xmlns="http://www.w3.org/2000/svg">
+       <g data-name="7.Upload">
          @if (state() === 'not-synced') {
            <path
-             d="M17.5 21H7a7.084 7.084 0 0 1-1.166-.1l.332-1.972A5.029 5.029 0 0 0 7 19h10.5a4.5 4.5 0 0 0 0-9V8a6.5 6.5 0 0 1 0 13zM.4 16.334a7 7 0 0 1 4.875-9.111A6 6 0 0 1 13.4 3.5l-.8 1.833A4 4 0 0 0 7.075 8.26l-.13.7-.7.106a5 5 0 0 0-3.959 6.6zM2.294 18.293l14-14 1.414 1.414-14 14z"/>
-
+             d="M10 11L14 15M14 11L10 15M8.4 19C5.41766 19 3 16.6044 3 13.6493C3 11.2001 4.8 8.9375 7.5 8.5C8.34694 6.48637 10.3514 5 12.6893 5C15.684 5 18.1317 7.32251 18.3 10.25C19.8893 10.9449 21 12.6503 21 14.4969C21 16.9839 18.9853 19 16.5 19L8.4 19Z"
+             [attr.stroke]="STATES[state()].color" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
          } @else if (state() === 'synced') {
            <path
-             d="M17.5 20H14v-2h3.5a4.5 4.5 0 1 0-1.245-8.821l-1.33.383.054-1.383a1.881 1.881 0 0 1 .02-.2 4 4 0 0 0-7.924-.719l-.13.7-.7.106A5 5 0 0 0 7 18h1v2H7A7 7 0 0 1 5.275 6.223a6 6 0 0 1 11.646.8A6.5 6.5 0 1 1 17.5 20z"/>
-           <path
-             d="M13.293 15.707 11 13.414l-2.293 2.293-1.414-1.414L11 10.586l3.707 3.707-1.414 1.414z"/>
-           <path
-             d="M10 12h2v10h-2z"/>
+             d="M9 13.2222L10.8462 15L15 11M8.4 19C5.41766 19 3 16.6044 3 13.6493C3 11.2001 4.8 8.9375 7.5 8.5C8.34694 6.48637 10.3514 5 12.6893 5C15.684 5 18.1317 7.32251 18.3 10.25C19.8893 10.9449 21 12.6503 21 14.4969C21 16.9839 18.9853 19 16.5 19L8.4 19Z"
+             [attr.stroke]="STATES[state()].color" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
          } @else if (state() === 'warning') {
            <path
-             d="M17.5 21H7a7.084 7.084 0 0 1-1.166-.1l.332-1.972A5.029 5.029 0 0 0 7 19h10.5a4.5 4.5 0 0 0 0-9V8a6.5 6.5 0 0 1 0 13zM.4 16.334a7 7 0 0 1 4.875-9.111A6 6 0 0 1 13.4 3.5l-.8 1.833A4 4 0 0 0 7.075 8.26l-.13.7-.7.106a5 5 0 0 0-3.959 6.6zM12.002 10.002h2v7h-2zM12 19h2v2h-2z"/>
-           <path
-             d="M12.002 10.002h2v7h-2zM12 19h2v2h-2z"/>
-           <path
-             d="M12 19h2v2h-2z"/>
+             d="M12 9.5V12.5M12 15.5H12.01M8.4 19C5.41766 19 3 16.6044 3 13.6493C3 11.2001 4.8 8.9375 7.5 8.5C8.34694 6.48637 10.3514 5 12.6893 5C15.684 5 18.1317 7.32251 18.3 10.25C19.8893 10.9449 21 12.6503 21 14.4969C21 16.9839 18.9853 19 16.5 19L8.4 19Z"
+             [attr.stroke]="STATES[state()].color" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
          }
        </g>
      </svg>
@@ -65,16 +63,18 @@ export type SyncBadgeState = typeof STATES[SyncBadgeStates];
     TranslatePipe,
   ],
   styles: [`
+    :host {
+      display: flex;
+    }
+
     .lg-sync-badge {
       display: inline-flex;
       gap: 6px;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
-      padding: 4px;
+      width: var(--sync-badge-size);
+      height: var(--sync-badge-size);
       color: #fff;
-      background-color: white;
       border-radius: 50%;
       line-height: 1;
     }
@@ -85,6 +85,7 @@ export class SyncBadgeComponent {
   }
 
   readonly hasSyncFeature = inject(HAS_SYNC_FEATURE);
+  size = input('28');
   entity = input.required<CanSync>();
   state = computed<SyncBadgeStates>(() => {
     if (!this.entity()?.cloud_uuid) {
@@ -96,5 +97,6 @@ export class SyncBadgeComponent {
     return 'synced';
   });
   protected STATES = STATES;
+  protected viewBox = computed(()=>`0 0 ${this.size()} ${this.size()}`)
 }
 

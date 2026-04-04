@@ -25,7 +25,7 @@ export const errorHandler = (error: unknown): string => {
         })
         .join('; ');
     }
-    return err?.error?.message || error.message;
+    return err?.error || err?.error?.message || error.message;
   }
 
   // если объект

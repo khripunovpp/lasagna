@@ -41,7 +41,7 @@ export class RecipesApiService
   post(data?: Record<string, any>) {
     return this.supabaseService.post<SupabaseResponse<unknown>>('/recipes', data)
       .then((response) => {
-        return Recipe.fromCloud(response);
+        return Recipe.fromCloud(response.data);
       });
   }
 

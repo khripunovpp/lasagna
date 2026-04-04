@@ -248,6 +248,10 @@ export class AddProductComponent
       let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
       const resp = await this._productsRepository.updateOne(productUUID as string, product);
 
+      if (resp.message) {
+        this._notificationsService.warning(resp.message);
+      }
+
       if (resp.data) {
         this.formComponent()?.resetForm(product);
         this._notificationsService.success('notifications.product.edited');
@@ -257,10 +261,6 @@ export class AddProductComponent
         }
 
         this._routerManager.replace(['products', 'edit', productUUID]);
-      }
-
-      if (resp.message) {
-        this._notificationsService.warning(resp.message);
       }
     } catch (error) {
       this._notificationsService.error(errorHandler(error));

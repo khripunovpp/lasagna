@@ -29,9 +29,7 @@ import {MatIcon} from '@angular/material/icon';
 import {
   ConfirmationPopoverComponent
 } from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
-import {
-  ConfirmationService
-} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
+import {ConfirmationService} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -247,7 +245,11 @@ export class AddRecipeComponent
         this.recipe()!,
         this.form.value.ingredients ?? []
       );
-      await this._recipesRepository.updateOne(recipeUUID as string, newRecipe);
+      const {message} = await this._recipesRepository.updateOne(recipeUUID as string, newRecipe);
+
+      if (message) {
+        this._notificationsService.warning(message);
+      }
 
       this.formComponent()?.resetForm(newRecipe);
 

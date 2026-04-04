@@ -144,18 +144,21 @@ export class Recipe
 
 
   static fromCloud(dto: any) {
-    const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
-    const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
-    const syncedAt = dto?.syncedAt ? new Date(dto?.syncedAt) : undefined;
+    const createdAt = dto?.created_at ? new Date(dto.created_at) : undefined;
+    const updatedAt = dto?.updated_at ? new Date(dto.updated_at) : undefined;
+    const deletedAt = dto?.deleted_at ? new Date(dto.deleted_at) : undefined;
+    const syncedAt = dto?.synced_at ? new Date(dto?.synced_at) : undefined;
+    debugger
 
     return Recipe.fromRaw({
       ...dto,
       createdAt: createdAt?.getTime(),
       updatedAt: updatedAt?.getTime(),
       syncedAt: syncedAt?.getTime(),
-      cloud_uuid: dto?.documentId,
+      cloud_uuid: dto?.id,
       deleted: dto?.deleted,
-      deletedAt: dto?.deletedAt,
+      deletedAt: deletedAt?.getTime(),
+      priceModifiers: dto?.price_modifiers,
     });
   }
 
@@ -227,18 +230,18 @@ export class Recipe
     return {
       name: this.name,
       uuid: this.uuid,
+      created_at: this.createdAt ? new Date(this.createdAt).toISOString() : new Date().toISOString(),
       description: this.description,
-      ingredients: this.ingredients.map((ingredient) => ingredient.toDTO()),
       portions: this.portions,
       category_id: this.category_id?.toUUID(),
       tags: this.tags?.map((tag) => {
         return tag.toString();
       }),
       color: this.color || estimateColor(this.name),
-      priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
+      price_modifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
       master: this.master || false,
       deleted: this.deleted ?? false,
-      deletedAt: this.deletedAt ?? null,
+      deleted_at: this.deletedAt ? new Date(this.deletedAt).toISOString() : null,
     };
   }
 

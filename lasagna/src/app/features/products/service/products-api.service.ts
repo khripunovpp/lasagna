@@ -41,7 +41,7 @@ export class ProductsApiService
   post(data?: Record<string, any>) {
     return this.supabaseService.post<SupabaseResponse<unknown>>('/products', data)
       .then((response) => {
-        return Product.fromCloud(response);
+        return Product.fromCloud(response.data);
       });
   }
 

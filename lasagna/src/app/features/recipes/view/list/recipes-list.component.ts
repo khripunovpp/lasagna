@@ -36,6 +36,7 @@ import {matchMediaSignal} from '../../../../shared/view/signals/match-media.sign
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {errorHandler} from '../../../../shared/helpers';
+import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 
 
 @Component({
@@ -118,7 +119,7 @@ import {errorHandler} from '../../../../shared/helpers';
                     {{ recipe.name }}
                   </a>
 
-                  <lg-flex-row>
+                  <lg-flex-row [mobileMode]="true" [size]="'medium'">
                     <lg-button [flat]="true"
                                [link]="'/recipes/calculate/' + recipe.uuid"
                                [size]="'small'"
@@ -127,11 +128,17 @@ import {errorHandler} from '../../../../shared/helpers';
                       {{ 'recipes.calculate-btn'|translate }}
                     </lg-button>
 
-                    <small class="text-muted text-cursive"
-                           lgPull
-                           [attr.data-u2e]="'recipes.list.item.' + index + '.edited-at'">
-                      {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                    </small>
+                    <lg-flex-row [size]="'small'"
+                                 lgPull
+                                 [center]="true">
+                      <small class="text-muted text-cursive"
+                             [attr.data-u2e]="'recipes.list.item.' + index + '.edited-at'">
+                        {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                      </small>
+
+                      <lg-sync-badge size="16"
+                                     [entity]="recipe"></lg-sync-badge>
+                    </lg-flex-row>
                   </lg-flex-row>
                 </lg-flex-column>
               </lg-card>
@@ -184,6 +191,7 @@ import {errorHandler} from '../../../../shared/helpers';
     CardComponent,
     RecipesFiltersComponent,
     TranslateDirective,
+    SyncBadgeComponent,
   ],
   styles: [
     `:host {

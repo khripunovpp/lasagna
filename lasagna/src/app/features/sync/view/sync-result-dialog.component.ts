@@ -42,7 +42,8 @@ export interface SyncView<T> {
     <lg-dialog (onConfirm)="confirm()"
                name="sync-result">
       <lg-flex-column [formGroup]="formGroup" [size]="'medium'">
-        <lg-tabs [flat]="true">
+        <lg-tabs [flat]="true"
+                 [silent]="true">
           @for (entity of entities(); track entity) {
             <ng-template [alias]="entity" [label]="entity" lgTab>
               <lg-sync-result-group [dualFactory]="entityToDualFactoryMap[entity]"

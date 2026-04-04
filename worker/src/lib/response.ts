@@ -17,7 +17,7 @@ export function paginated<T>(
 
 /** Strip protected fields before an update/insert. */
 export function omitProtected(body: Record<string, unknown>): Record<string, unknown> {
-  const { id: _id, user_id: _uid, created_at: _ca, ...rest } = body
-  void _id; void _uid; void _ca
+  const { id: _id, user_id: _uid, ...rest } = body
+  void _id; void _uid;
   return rest
 }

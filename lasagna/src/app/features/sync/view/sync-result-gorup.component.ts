@@ -284,10 +284,11 @@ export interface SyncViewGroup {
             <span>{{ 'sync.result.products.view.brand'|translate }}: {{ product.brand }}</span>
             <span>{{ 'sync.result.products.view.source'|translate }}: {{ product.source }}</span>
             <span>{{ 'sync.result.products.view.price'|translate }}
-              : {{ product.price | userCurrency: pipesDigits() }}</span>
+              : {{ product.price ? (product.price | userCurrency: pipesDigits()) : '---' }}</span>
             <span>{{ 'sync.result.products.view.amount'|translate }}
               : {{ product.amount }} {{ product.unit | unitString | translate }}</span>
-            <span>{{ 'sync.result.products.view.updatedAt'|translate }}: {{ product.updatedAt | date:'medium' }}</span>
+            <span>{{ 'sync.result.products.view.createdAt'|translate }}: {{ product.createdAt ? (product.createdAt | date:'medium') : '---' }}</span>
+            <span>{{ 'sync.result.products.view.updatedAt'|translate }}: {{ product.updatedAt ? (product.updatedAt | date:'medium') : '---' }}</span>
           </lg-flex-column>
         </ng-template>
       </lg-flex-column>

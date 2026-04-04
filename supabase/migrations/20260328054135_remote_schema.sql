@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS "public"."products" (
     "deleted" boolean DEFAULT false NOT NULL,
     "deleted_at" timestamp with time zone,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "inserted_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
 );
 
@@ -195,6 +196,7 @@ CREATE TABLE IF NOT EXISTS "public"."recipes" (
     "deleted" boolean DEFAULT false NOT NULL,
     "deleted_at" timestamp with time zone,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "inserted_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone DEFAULT "now"() NOT NULL
 );
 

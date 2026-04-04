@@ -39,6 +39,8 @@ import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.
 import {SETTINGS} from '../../../settings/service/providers/settings.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {ProductFactory} from '../../service/product.factory';
+import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 
 @Component({
   selector: 'lg-product-list',
@@ -126,10 +128,17 @@ import {ProductFactory} from '../../service/product.factory';
                     </div>
                   </lg-flex-row>
 
-                  <small class="text-muted text-cursive"
-                         [attr.data-u2e]="'products.list.item.' + index + '.edited-at'">
-                    {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
-                  </small>
+                  <lg-flex-row [size]="'small'"
+                               [center]="true">
+                    <small class="text-muted text-cursive"
+                           lgPull
+                           [attr.data-u2e]="'products.list.item.' + index + '.edited-at'">
+                      {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
+                    </small>
+
+                    <lg-sync-badge size="16"
+                                   [entity]="product"></lg-sync-badge>
+                  </lg-flex-row>
                 </lg-flex-column>
               </lg-card>
             </ng-template>
@@ -179,6 +188,8 @@ import {ProductFactory} from '../../service/product.factory';
     GroupingTileDirective,
     GroupingTilesComponent,
     CurrencySymbolPipe,
+    SyncBadgeComponent,
+    PullDirective,
   ],
   providers: [
     SelectionZoneService,

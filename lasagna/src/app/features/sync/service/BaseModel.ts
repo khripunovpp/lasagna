@@ -74,7 +74,8 @@ export abstract class BaseModel
     return {
       uuid: this.uuid,
       deleted: this.deleted ?? false,
-      deletedAt: this.deletedAt ?? null,
+      deleted_at: this.deletedAt ? new Date(this.deletedAt).toISOString() : null,
+      created_at: this.createdAt ? new Date(this.createdAt).toISOString() : null,
     };
   }
 

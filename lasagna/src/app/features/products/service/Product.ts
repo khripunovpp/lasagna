@@ -106,10 +106,10 @@ export class Product
   }
 
   static fromCloud(dto: any) {
-    const createdAt = dto?.createdAt ? new Date(dto?.createdAt) : undefined;
-    const updatedAt = dto?.updatedAt ? new Date(dto?.updatedAt) : undefined;
-    const syncedAt = dto?.syncedAt ? new Date(dto?.syncedAt) : undefined;
-    const deleteAt = dto?.deletedAt ? new Date(dto?.deletedAt) : undefined;
+    const createdAt = dto?.created_at ? new Date(dto.created_at) : undefined;
+    const updatedAt = dto?.updated_at ? new Date(dto.updated_at) : undefined;
+    const deletedAt = dto?.deleted_at ? new Date(dto.deleted_at) : undefined;
+    const syncedAt = dto?.synced_at ? new Date(dto?.synced_at) : undefined;
 
     return new Product({
       name: dto?.name || '',
@@ -119,14 +119,14 @@ export class Product
       source: dto?.source || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
-      cloud_uuid: dto?.documentId,
+      cloud_uuid: dto?.id,
+      syncedAt: syncedAt?.getTime(),
       createdAt: createdAt?.getTime(),
       updatedAt: updatedAt?.getTime(),
-      syncedAt: syncedAt?.getTime(),
       color: dto?.color,
       system: dto?.system || false,
       deleted: !!dto?.deleted,
-      deletedAt: deleteAt?.getTime(),
+      deletedAt: deletedAt?.getTime(),
       notes: dto?.notes || '',
       brand: dto?.brand || '',
     });
@@ -210,12 +210,11 @@ export class Product
       notes: this.notes ?? '',
       category_id: this.category_id?.toUUID() ?? '',
       uuid: this.uuid ?? '',
-      createdAt: this.createdAt ?? 0,
-      updatedAt: this.updatedAt ?? 0,
+      created_at: this.createdAt ? new Date(this.createdAt).toISOString() : new Date().toISOString(),
       color: this.color || estimateColor(this.name),
       system: this.system || false,
       deleted: this.deleted ?? false,
-      deletedAt: this.deletedAt ?? null,
+      deleted_at: this.deletedAt ? new Date(this.deletedAt).toISOString() : null,
     };
   }
 }
