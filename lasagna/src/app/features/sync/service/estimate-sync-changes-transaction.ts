@@ -47,9 +47,9 @@ export const estimateSyncChangesTransaction = async (
       for (let i = 0; i < uuids.length; i++) {
         const existingDto = existingDtos[i];
         const incomingCloudResponse = withItems[i];
-        const incomingDto_updatedAt = new Date(incomingCloudResponse['updatedAt']).getTime();
-        const incomingDto_deletedAt = incomingCloudResponse['deletedAt']
-          ? new Date(incomingCloudResponse['deletedAt']).getTime()
+        const incomingDto_updatedAt = new Date(incomingCloudResponse['updated_at']).getTime();
+        const incomingDto_deletedAt = incomingCloudResponse['deleted_at']
+          ? new Date(incomingCloudResponse['deleted_at']).getTime()
           : null;
         // если есть локальный элемент с таким uuid
         if (existingDto) {
@@ -68,7 +68,7 @@ export const estimateSyncChangesTransaction = async (
 
           // если облачный элемент новее, планируем обновление локального элемента
           // или удаление, если в облаке стоит флаг deleted
-          if (incomingCloudResponse.deleted && incomingCloudResponse['deletedAt']) {
+          if (incomingCloudResponse.deleted && incomingCloudResponse['deleted_at']) {
             if (existingDto['updatedAt'] <= incomingDto_deletedAt!) {
               result.toDelete.push([incomingCloudResponse, existingDto]);
             }
