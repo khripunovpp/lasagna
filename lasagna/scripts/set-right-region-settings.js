@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const region = process.env['LG_APP_REGION'] || 'global';
+const region = process.env['REGION'] || 'global';
 // replace content of index.html with index-ru.html
 function replaceIndexHtml() {
   const indexPath = path.join(__dirname, '../src/index.html');
