@@ -12,6 +12,8 @@ import {IS_TELEGRAM} from '../../service/providers/is-telegram-env.token';
 import {
   TelegramStarsDonationDialogComponent
 } from '../../../features/home/view/dialogs/telegram-stars-donation-dialog.component';
+import {AnalyticsService} from '../../service/services/analytics.service';
+import {getSymbolValueByName} from '../../helpers/symbol.helper';
 
 
 @Component({
@@ -156,20 +158,35 @@ export class FooterComponent {
   readonly isTG = inject(IS_TELEGRAM);
   readonly supportPopup = viewChild(SupportPopupComponent);
   readonly tgDonationPopup = viewChild(TelegramStarsDonationDialogComponent);
-  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
-  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
   private readonly versionService = inject(VersionService);
   readonly appVersion = this.versionService.version;
   private readonly router = inject(Router);
+  private readonly analyticsService = inject(AnalyticsService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private _timeoutId: any;
   readonly routeData = toSignal(this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null), // Для первоначальной загрузки
-    switchMap(() => {
+    switchMap((event) => {
       const routeData = findRouteData(this.activatedRoute);
+
+      clearTimeout(this._timeoutId);
+      this._timeoutId = setTimeout(() => {
+        try {
+          const routeTitle = getSymbolValueByName(routeData, 'RouteTitle')
+            ?? routeData?.['title']
+            ?? window.document.title;
+          this.analyticsService.trackPageView(routeTitle);
+        } catch {
+
+        }
+      }, 1000);
+
       return [routeData];
     })
   ));
+  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
+  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
 
   /**
    * Open support popup

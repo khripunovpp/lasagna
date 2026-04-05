@@ -1,9 +1,10 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {RestService} from '../api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../logger/logger.service';
 import {TokenService} from '../../shared/service/services/token.service';
 import {environment} from '../../../environments/environment';
+import {HAS_FEATURE} from '../settings/service/providers/has-feature.token';
 
 export interface AuthUser {
   id: string
@@ -26,11 +27,14 @@ export class AuthService {
     private _tokenService: TokenService,
     private logger: LoggerService
   ) {
-    this.restoreUser();
+    if (this.hasAuthFeature) {
+      this.restoreUser();
+    }
   }
 
   currentUser = signal<Profile | null>(null);
   canSync = computed(() => !!this.currentUser()?.canBuy);
+  hasAuthFeature = inject(HAS_FEATURE)('registration');
   private readonly API_BASE = environment.api.baseUrl;
 
   async login(identifier: string, password: string): Promise<void> {

@@ -11,11 +11,12 @@ import {inject} from '@angular/core';
 import {BrowserTabTrackingService} from './shared/service/services/browser-tab-tracking.service';
 import {NotificationsService} from './shared/service/services';
 import {TranslateService} from '@ngx-translate/core';
+import {marker} from '@colsen1991/ngx-translate-extract-marker';
 import {
-  defTitleResolver,
   productTitleResolver,
   recipeCalculationTitleResolver,
-  recipeTitleResolver
+  recipeTitleResolver,
+  translationTitleResolver
 } from './shared/service/providers/title.resolver';
 import {blogPostResolver} from './features/blog/blog-post/blog-post.resolver';
 
@@ -30,7 +31,7 @@ export const routes: Routes = [{
       data: {
         canSeePolicies: true,
       },
-      title: defTitleResolver,
+      title: translationTitleResolver(marker('app.title')),
     },
     {
       path: 'home',
@@ -42,7 +43,7 @@ export const routes: Routes = [{
           data: {
             canSeePolicies: true,
           },
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title')),
         }
       ]
     },
@@ -53,13 +54,13 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/recipes/view/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.recipes')),
         },
         {
           path: 'add',
           loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
             .then(m => m.AddRecipeComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.add-recipe')),
         },
         {
           path: 'edit/:uuid',
@@ -80,7 +81,7 @@ export const routes: Routes = [{
           resolve: {
             draft: recipeDraftResolver,
           },
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.recipe-draft')),
           data: {
             draftRoute: true,
           }
@@ -105,13 +106,13 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/products/view/list/product-list.component')
             .then(m => m.ProductListComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.products')),
         },
         {
           path: 'add',
           loadComponent: () => import('./features/products/view/add-product/add-product.component')
             .then(m => m.AddProductComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.add-product')),
         },
         {
           path: 'edit/:uuid',
@@ -129,7 +130,7 @@ export const routes: Routes = [{
           resolve: {
             draft: productDraftResolver,
           },
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.product-draft')),
           data: {
             draftRoute: true,
           }
@@ -154,7 +155,7 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/invoices/view/list/invoices-list.component')
             .then(m => m.InvoicesListComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.invoices')),
         },
         {
           path: 'edit/:uuid',
@@ -166,7 +167,7 @@ export const routes: Routes = [{
           resolve: {
             invoice: invoiceEditResolver,
           },
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.edit-invoice')),
           data: {
             editRoute: true,
           },
@@ -194,7 +195,7 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/settings/view/settings.component')
             .then(m => m.SettingsComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.settings')),
         },
         // {
         //   path: 'taxes',
@@ -214,7 +215,7 @@ export const routes: Routes = [{
       path: 'widgets',
       loadComponent: () => import('./features/widgets/widgets-page/widgets-page.component')
         .then(m => m.WidgetsPageComponent),
-      title: defTitleResolver,
+      title: translationTitleResolver(marker('app.title.widgets')),
     },
 
     {
@@ -222,13 +223,13 @@ export const routes: Routes = [{
       loadComponent: () => import('./features/documentation/view/documentation-container.component')
         .then(m => m.DocumentationContainerComponent),
 
-      title: defTitleResolver,
+      title: translationTitleResolver(marker('app.title.documentation')),
       children: [
         {
           path: '**',
           loadComponent: () => import('./features/documentation/view/article.component')
             .then(m => m.ArticleComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.documentation')),
         }
       ],
       data: {
@@ -243,7 +244,7 @@ export const routes: Routes = [{
           path: '',
           loadComponent: () => import('./features/blog/blog-list/blog-list.component')
             .then(m => m.BlogListComponent),
-          title: defTitleResolver,
+          title: translationTitleResolver(marker('app.title.blog')),
         },
         {
           path: ':slug',
@@ -260,7 +261,7 @@ export const routes: Routes = [{
       path: 'release-notes',
       loadComponent: () => import('./features/release-notes/view/release-notes-page.component')
         .then(m => m.ReleaseNotesPageComponent),
-      title: defTitleResolver,
+      title: translationTitleResolver(marker('app.title.release-notes')),
     },
 
     {
@@ -279,7 +280,7 @@ export const routes: Routes = [{
       path: '**',
       loadComponent: () => import('./shared/view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),
-      title: defTitleResolver,
+      title: translationTitleResolver(marker('app.title.not-found')),
     }
   ]
 }];

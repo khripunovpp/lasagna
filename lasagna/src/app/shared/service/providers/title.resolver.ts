@@ -11,6 +11,12 @@ export const defTitleResolver = () => {
   return translateService.instant('app.title');
 }
 
+export const translationTitleResolver = (translationKey: string) => {
+  return () => {
+    return inject(TranslateService).instant(translationKey)
+  };
+}
+
 export const recipeTitleResolver = async (route: ActivatedRouteSnapshot) => {
   const translateService = inject(TranslateService);
   const data = await dataResolver(route, 'recipe');

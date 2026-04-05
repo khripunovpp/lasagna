@@ -301,6 +301,19 @@ export class AnalyticsService {
     };
   }
 
+  trackPageView(pageTitle: string): void {
+    console.log('Tracking page view:', pageTitle);
+    if (this.isAnalyticsAvailable()) {
+      (this._window?.['gtag'] as any)?.('event', 'page_view', {
+        page_title: pageTitle,
+        page_location: this._window?.location.href,
+        user_id: this._getUserUUID(),
+      });
+    } else {
+      console.warn('Google Analytics not available for page view:', pageTitle);
+    }
+  }
+
   private _getCookieConsent(): string {
     try {
       return String(this._window?.localStorage.getItem('cookie-consent')).trim() || 'unknown';
