@@ -55,7 +55,14 @@ function loadGoogleAnalytics(
   callback = () => {
   }
 ) {
-  // if (window.location.hostname === 'localhost') return;
+  let skipGa = false;
+  try {
+    skipGa = localStorage.getItem('dev-mode') === 'true'
+    || window.location.hostname === 'localhost';
+  } catch (e) {
+
+  }
+  if (skipGa) return;
   if (window.gtagLoaded) return;
   // Create and load gtag script
   const script = document.createElement('script');
