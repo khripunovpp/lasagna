@@ -3,8 +3,8 @@ import {RestService} from '../api/rest.service';
 import {HttpHeaders} from '@angular/common/http';
 import {LoggerService} from '../logger/logger.service';
 import {TokenService} from '../../shared/service/services/token.service';
-import {environment} from '../../../environments/environment';
 import {HAS_FEATURE} from '../settings/service/providers/has-feature.token';
+import {API_BASE_URL} from '../api/api-base-url.token';
 
 export interface AuthUser {
   id: string
@@ -35,7 +35,7 @@ export class AuthService {
   currentUser = signal<Profile | null>(null);
   canSync = computed(() => !!this.currentUser()?.canBuy);
   hasAuthFeature = inject(HAS_FEATURE)('registration');
-  private readonly API_BASE = environment.api.baseUrl;
+  readonly API_BASE = inject(API_BASE_URL);
 
   async login(identifier: string, password: string): Promise<void> {
     const response: any = await this._restService.post(`${this.API_BASE}/auth/login`, {

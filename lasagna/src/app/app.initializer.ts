@@ -40,18 +40,15 @@ export const appInitializer = () => {
     docsService.init(),
   ];
 
-  const setFlagsParam = new URLSearchParams(window?.location.search).get('set-feature-flags');
-  const removeFlagsParam = new URLSearchParams(window?.location.search).get('remove-feature-flags');
+  const setFlagsParam = new URLSearchParams(window?.location.search).getAll('set-feature-flags');
 
   return Promise.all([
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
     featureFlagsService.fillState().then(() => {
-      setFlagsParam?.split(',').forEach(flag => {
-        featureFlagsService.setFlag(flag.trim() as FeatureFlag, true)
-      });
-      removeFlagsParam?.split(',').forEach(flag => {
-        featureFlagsService.setFlag(flag.trim() as FeatureFlag, false)
+      setFlagsParam.forEach(flag => {
+        const [flagName, flagValue] = flag.split('::');
+        featureFlagsService.setFlag(flagName as FeatureFlag, flagValue);
       });
     }),
   ])

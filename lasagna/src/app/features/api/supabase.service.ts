@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {ApiInterface} from './api.interface';
 import {RestService} from './rest.service';
-import {environment} from '../../../environments/environment';
 import {FeatureFlagsService} from '../../shared/service/services/feature-flags.service';
+import {API_BASE_URL} from './api-base-url.token';
 
 export interface SupabaseResponse<T = any> {
   data: T;
@@ -26,14 +26,9 @@ export interface SupabaseBatchResponse {
   providedIn: 'root'
 })
 export class SupabaseService implements ApiInterface {
+  readonly endpoint = inject(API_BASE_URL);
   private readonly _restService = inject(RestService);
   private readonly _featureFlagsService = inject(FeatureFlagsService);
-
-  get endpoint(): string {
-    return this._featureFlagsService.getFlagString('synchronizationUrlStr')
-      ?? (environment.api.baseUrl || undefined)
-      ?? '';
-  }
 
   get isConfigured(): boolean {
     return !!this.endpoint;

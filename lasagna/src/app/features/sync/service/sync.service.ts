@@ -12,7 +12,7 @@ import {SyncTransactionResult} from "./estimate-sync-changes-transaction";
 import {RecipeSyncStrategy} from '../../recipes/service/providers/recipe-sync-strategy';
 import {WINDOW} from '../../../shared/service/tokens/window.token';
 import {SyncKey} from './sync-key.enum';
-import {environment} from '../../../../environments/environment';
+import {API_BASE_URL} from '../../api/api-base-url.token';
 
 export interface SyncLog {
   entityIdentifier: string
@@ -32,7 +32,6 @@ export interface SyncSettings {
 })
 export class SyncService {
   constructor() {
-
     this._loadLastSyncTime();
   }
 
@@ -51,6 +50,7 @@ export class SyncService {
   });
   isSyncing = signal<boolean>(false);
   lastSyncTime = signal<number | null>(null);
+  readonly API_BASE = inject(API_BASE_URL);
   private _restService = inject(RestService);
   private _logger = inject(LoggerService);
   private _authService = inject(AuthService);
@@ -72,8 +72,7 @@ export class SyncService {
         return acc;
       }, {} as Partial<Record<SyncKey, SyncStrategy>>);
   })
-
-  private readonly _syncRoute = `${environment.api.baseUrl}/sync`;
+  private readonly _syncRoute = `${this.API_BASE}/sync`;
 
   /**
    * Получает предварительную оценку синхронизации между локальными и облачными данными.
