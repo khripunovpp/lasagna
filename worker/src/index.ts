@@ -14,7 +14,7 @@ app.use('*', logger())
 app.use(
   '*',
   cors({
-    origin: ['http://localhost:4200', 'https://lasagna.vercel.app'],
+    origin: ['http://localhost:4200', 'https://www.lasagnacost.com/'],
     allowMethods: ['GET', 'POST', 'PUT', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     maxAge: 600,
