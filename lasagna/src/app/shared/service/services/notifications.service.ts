@@ -113,7 +113,6 @@ export class NotificationsService {
     if (control.errors) {
       errors.push(...Object.entries(control.errors)
         .map(([key, value]) => {
-          debugger
           return this._translate.instant('form.error', {key: options?.keysMap?.[key] ?? key});
         }));
     }

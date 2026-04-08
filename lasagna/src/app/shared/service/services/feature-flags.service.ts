@@ -25,8 +25,6 @@ export class FeatureFlagsService {
       return;
     }
 
-    debugger
-
     try {
       const currentFlags = new Map(this.flags());
       currentFlags.set(flag, value);

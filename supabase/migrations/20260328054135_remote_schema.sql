@@ -114,6 +114,7 @@ ALTER FUNCTION "public"."set_user_role"("target_user_id" "uuid", "role" "text") 
 
 CREATE OR REPLACE FUNCTION "public"."update_updated_at"() RETURNS "trigger"
     LANGUAGE "plpgsql"
+    SET search_path = ''
     AS $$
 BEGIN
   NEW.updated_at = NOW();
@@ -325,53 +326,53 @@ ALTER TABLE "public"."recipes" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "user_delete_ingredients" ON "public"."recipe_ingredients" FOR DELETE TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM "public"."recipes"
-  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = "auth"."uid"())))));
+  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = (SELECT "auth"."uid"()))))));
 
 
 
 CREATE POLICY "user_insert_ingredients" ON "public"."recipe_ingredients" FOR INSERT TO "authenticated" WITH CHECK (((NOT "public"."is_admin"()) AND (EXISTS ( SELECT 1
    FROM "public"."recipes"
-  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = "auth"."uid"()))))));
+  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = (SELECT "auth"."uid"())))))));
 
 
 
-CREATE POLICY "user_insert_products" ON "public"."products" FOR INSERT TO "authenticated" WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_insert_products" ON "public"."products" FOR INSERT TO "authenticated" WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
-CREATE POLICY "user_insert_recipes" ON "public"."recipes" FOR INSERT TO "authenticated" WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_insert_recipes" ON "public"."recipes" FOR INSERT TO "authenticated" WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
-CREATE POLICY "user_read_own_profile" ON "public"."profiles" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_read_own_profile" ON "public"."profiles" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
 CREATE POLICY "user_select_ingredients" ON "public"."recipe_ingredients" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND (EXISTS ( SELECT 1
    FROM "public"."recipes"
-  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = "auth"."uid"()))))));
+  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = (SELECT "auth"."uid"())))))));
 
 
 
-CREATE POLICY "user_select_products" ON "public"."products" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_select_products" ON "public"."products" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
-CREATE POLICY "user_select_recipes" ON "public"."recipes" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_select_recipes" ON "public"."recipes" FOR SELECT TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
 CREATE POLICY "user_update_ingredients" ON "public"."recipe_ingredients" FOR UPDATE TO "authenticated" USING (((NOT "public"."is_admin"()) AND (EXISTS ( SELECT 1
    FROM "public"."recipes"
-  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = "auth"."uid"()))))));
+  WHERE (("recipes"."id" = "recipe_ingredients"."recipe_id") AND ("recipes"."user_id" = (SELECT "auth"."uid"())))))));
 
 
 
-CREATE POLICY "user_update_products" ON "public"."products" FOR UPDATE TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"()))) WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_update_products" ON "public"."products" FOR UPDATE TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"())))) WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
-CREATE POLICY "user_update_recipes" ON "public"."recipes" FOR UPDATE TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"()))) WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = "auth"."uid"())));
+CREATE POLICY "user_update_recipes" ON "public"."recipes" FOR UPDATE TO "authenticated" USING (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"())))) WITH CHECK (((NOT "public"."is_admin"()) AND ("user_id" = (SELECT "auth"."uid"()))));
 
 
 
