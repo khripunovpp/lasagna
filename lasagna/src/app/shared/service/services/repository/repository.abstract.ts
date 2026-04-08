@@ -2,7 +2,7 @@ import {Stores} from '../../db/const/stores';
 import {CanSync} from '../../../../features/sync/service/CanSync.abstract';
 import {CanBeStoredIndexDbAbstract} from '../../../../features/sync/service/CanBeStoredIndexDb.abstract';
 import {DexieIndexDbService} from '../../db/dexie-index-db.service';
-import {CloudSyncService} from '../../../../features/api/cloud-sync.service';
+import {CloudSyncService} from '../../../../features/sync/service/cloud-sync.service';
 import {BehaviorSubject} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {CAN_SYNC} from '../../../../features/sync/service/can-sync.token';

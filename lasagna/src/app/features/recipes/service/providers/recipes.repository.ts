@@ -13,7 +13,7 @@ import {ProductFactory} from '../../../products/service/product.factory';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {RepositoryAbstract} from '../../../../shared/service/services/repository/repository.abstract';
-import {CloudSyncService} from '../../../api/cloud-sync.service';
+import {CloudSyncService} from '../../../sync/service/cloud-sync.service';
 import {ProductsRepository} from '../../../products/service/products.repository';
 
 @Injectable({

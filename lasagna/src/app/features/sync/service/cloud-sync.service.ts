@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {ProductsApiService} from '../products/service/products-api.service';
-import {Stores} from '../../shared/service/db/const/stores';
-import {ApiAgentInterface} from './api-agent.interface';
-import {RecipesApiService} from '../recipes/service/providers/recipes-api.service';
+import {ProductsApiService} from '../../products/service/products-api.service';
+import {Stores} from '../../../shared/service/db/const/stores';
+import {ApiAgentInterface} from '../../api/api-agent.interface';
+import {RecipesApiService} from '../../recipes/service/providers/recipes-api.service';
 
 @Injectable({
   providedIn: 'root'

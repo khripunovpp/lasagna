@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {Stores} from '../../../shared/service/db/const/stores';
 import {DexieIndexDbService} from '../../../shared/service/db/dexie-index-db.service';
-import {CloudSyncService} from '../../api/cloud-sync.service';
+import {CloudSyncService} from './cloud-sync.service';
 import {CanSync} from './CanSync.abstract';
 import {errorHandler, errorIs404, messageIsAlreadyExists} from '../../../shared/helpers';
 

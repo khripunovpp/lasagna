@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../db/dexie-index-db.service';
 import {Stores} from '../db/const/stores';
-import {CloudSyncService} from '../../../features/api/cloud-sync.service';
+import {CloudSyncService} from '../../../features/sync/service/cloud-sync.service';
 import {CAN_SYNC} from '../../../features/sync/service/can-sync.token';
 import {CanSync} from '../../../features/sync/service/CanSync.abstract';
 import {z} from 'zod';

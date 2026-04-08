@@ -8,7 +8,7 @@ import {ProductFactory} from "./product.factory";
 import {Stores} from '../../../shared/service/db/const/stores';
 import {ProductDTO} from './Product.scheme';
 import {ChangesLogService} from '../../history/changes-log.service';
-import {CloudSyncService} from '../../api/cloud-sync.service';
+import {CloudSyncService} from '../../sync/service/cloud-sync.service';
 
 @Injectable({
   providedIn: 'root'
