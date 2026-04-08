@@ -159,7 +159,7 @@ export class SyncService {
         await strategy.resetSyncState();
       }
     }
-    this._updateLastSyncTime();
+    this._removeLastSyncTime();
   }
 
   private _parseErrorsToLog(errors: any[]): SyncLog[] {
@@ -187,6 +187,15 @@ export class SyncService {
       this.lastSyncTime.set(now);
     } catch (error) {
       this._logger.error('Failed to update last sync time:', error);
+    }
+  }
+
+  private _removeLastSyncTime(): void {
+    try {
+      this._window?.localStorage.removeItem('last_sync_time');
+      this.lastSyncTime.set(null);
+    } catch (error) {
+      this._logger.error('Failed to remove last sync time:', error);
     }
   }
 
