@@ -233,7 +233,7 @@ export class BaseSyncStrategy
     const itemsToUpdate = Object.entries(resp.added).map(([uuid, res]) => {
       return {
         uuid,
-        cloud_uuid: res.documentId,
+        cloud_uuid: res.id,
         syncedAt: syncDate,
         updatedAt: syncDate,
       }
