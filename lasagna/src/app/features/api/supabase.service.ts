@@ -17,7 +17,12 @@ export interface SupabaseResponse<T = any> {
 }
 
 export interface SupabaseBatchResponse {
-  added: { [key: string]: { id: string } }
+  added: {
+    [key: string]: {
+      id: string
+      updated_at: string
+    }
+  }
   errors: { [key: string]: string }
   hasErrors: boolean
 }

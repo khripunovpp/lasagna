@@ -64,7 +64,7 @@ export interface SyncStrategy {
    * Оценка изменений между локальными и серверными данными.
    * @param serverData
    */
-  estimateChanges(serverData: any[]): Promise<SyncTransactionResult>;
+  estimateChanges(serverData: any[], isFullSync?: boolean): Promise<SyncTransactionResult>;
 
   /**
    * Добавляет локальные элементы, полученные из облака.
@@ -100,7 +100,7 @@ export interface SyncStrategy {
   /**
    * Сбрасывает состояние синхронизации для всех элементов, например, при выходе пользователя или при возникновении критической ошибки синхронизации.
    */
-  resetSyncState(): Promise<{message: string, hasErrors?: boolean}>;
+  resetSyncState(): Promise<{ message: string, hasErrors?: boolean }>;
 }
 
 export class BaseSyncStrategy
@@ -113,18 +113,18 @@ export class BaseSyncStrategy
   }
 
   estimateChanges(
-    cloudData: unknown[]
+    cloudData: unknown[],
+    isFullSync: boolean = false,
   ) {
     return this._indexedDB.withTransaction(
       [this.table],
-      (tx) => estimateSyncChangesTransaction(tx, this.table, cloudData)
+      (tx) => estimateSyncChangesTransaction(tx, this.table, cloudData, isFullSync)
     );
   }
 
   async performSync(
     syncMap: PerformSyncMap[string],
   ) {
-    debugger
     const result: PerformSyncResult[string] = {
       notSynced: undefined,
       toAdd: undefined,
@@ -154,7 +154,6 @@ export class BaseSyncStrategy
       const itemsToAdd = items.map(([cloud, local]) => ({
         ...cloud.toDTO(),
         syncedAt: syncDate,
-        updatedAt: syncDate,
       }));
       if (!itemsToAdd.length) {
         result.message = 'No items to add locally';
@@ -184,7 +183,6 @@ export class BaseSyncStrategy
         uuid: local.uuid,
         ...cloud.toDTO(),
         syncedAt: syncDate,
-        updatedAt: syncDate,
       }));
       if (!itemsToUpdate.length) {
         result.message = 'No items to update locally';
@@ -207,11 +205,9 @@ export class BaseSyncStrategy
       }
     };
 
-    debugger
-
     const result: SyncStrategyNotSyncedResult = {
       cloud: {
-        message: 'All good',
+        message: 'All items are synced with cloud',
       }
     };
 
@@ -229,13 +225,13 @@ export class BaseSyncStrategy
       result.cloud.hasErrors = true
     }
 
-    const syncDate = Date.now();
     const itemsToUpdate = Object.entries(resp.added).map(([uuid, res]) => {
+      const updatedAt = new Date(res.updated_at).getTime();
       return {
         uuid,
         cloud_uuid: res.id,
-        syncedAt: syncDate,
-        updatedAt: syncDate,
+        syncedAt: updatedAt,
+        updatedAt: updatedAt,
       }
     });
     if (!itemsToUpdate.length) {
@@ -288,7 +284,7 @@ export class BaseSyncStrategy
   async resetSyncState() {
     try {
       const result = {
-          message: '',
+        message: '',
       };
       const allItems = await this._indexedDB.getAll(this.table) as CanSync[];
       const itemsToReset = allItems

@@ -49,7 +49,7 @@ products.post('/batch', async (c) => {
 
     const { data, error } = await supabase
       .from('products')
-      .insert({ ...omitProtected(item), user_id: user.id })
+      .upsert({ ...omitProtected(item), user_id: user.id }, { onConflict: 'uuid,user_id' })
       .select()
       .single()
 
@@ -116,7 +116,7 @@ products.post('/', async (c) => {
 
   const { data, error } = await supabase
     .from('products')
-    .insert({ ...omitProtected(body), user_id: user.id })
+    .upsert({ ...omitProtected(body), user_id: user.id }, { onConflict: 'uuid,user_id' })
     .select()
     .single()
 

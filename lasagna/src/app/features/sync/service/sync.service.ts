@@ -87,12 +87,18 @@ export class SyncService {
       if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync');
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
 
-      // Запрос данных из облака, изменённых после lastSyncTime
+      // Запрос данных из облака, изменённых после lastSyncTime.
+      // При первом синке после логина делаем полный запрос (без afterDate) для обнаружения потери данных в облаке.
+      const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+      const isFullSync = !this.lastSyncTime() || (Date.now() - this.lastSyncTime()!) > ONE_WEEK;
+      const afterDate = isFullSync
+        ? undefined
+        : new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1);
+
       const cloudResponse = await this._restService.post<{
-        afterDate: number
+        afterDate?: number
       }, SyncCloudResponse>(`${this._syncRoute}/data`, {
-        // afterDate: this.lastSyncTime() ?? new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
-        afterDate: new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1),
+        afterDate,
       }, headers);
 
       const syncResponse: SyncEstimation = {};
@@ -100,7 +106,7 @@ export class SyncService {
       if (cloudResponse) {
         // Оценка изменений для каждой стратегии синхронизации
         for (const [strategyKey, strategy] of Object.entries(this.strategies)) {
-          syncResponse[strategyKey as SyncKey] = await strategy.estimateChanges(cloudResponse[strategyKey as SyncKey] || []);
+          syncResponse[strategyKey as SyncKey] = await strategy.estimateChanges(cloudResponse[strategyKey as SyncKey] || [], isFullSync);
         }
         this.logger.log('Sync completed successfully:', {cloudResponse, syncResponse});
         this._updateLastSyncTime();
@@ -187,4 +193,5 @@ export class SyncService {
       this._logger.error('Failed to update last sync time:', error);
     }
   }
+
 }

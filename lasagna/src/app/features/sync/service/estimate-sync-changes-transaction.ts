@@ -19,7 +19,8 @@ export interface SyncTransactionResult {
 export const estimateSyncChangesTransaction = async (
   tx: Transaction,
   store: Stores,
-  withItems: any[]
+  withItems: any[],
+  isFullSync: boolean = false,
 ) => {
   return new Promise<SyncTransactionResult>(async (resolve, reject) => {
     try {
@@ -38,9 +39,11 @@ export const estimateSyncChangesTransaction = async (
       };
 
       // находим все не синхронизированные элементы, те у которых нет cloud_uuid,
-      // чтобы потом не предлагать на добавление в облако
+      // чтобы потом не предлагать на добавление в облако.
+      // При полном синке также включаем элементы у которых есть cloud_uuid но их нет в облаке — данные могли пропасть.
+      const cloudUuids = isFullSync ? new Set(withItems.map(i => i.uuid)) : null;
       result.notSynced = (await table
-        .filter(p => !p.cloud_uuid)
+        .filter(p => !p.cloud_uuid || (isFullSync && !cloudUuids!.has(p.uuid)))
         .toArray()).map(i => [null, i]);
 
       // теперь пробегаемся по входящим элементам и сравниваем с локальными
