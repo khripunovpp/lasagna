@@ -804,6 +804,8 @@
   "sync.status.title": "Status da Sincronização",
   "sync.status.total": "total",
   "sync.sync-btn": "Sincronizar Agora",
+  "sync.sync-from": "Sincronizar desde",
+  "sync.full-sync": "Sincronização completa necessária",
   "sync.sync_completed_successfully": "Sincronização concluída com sucesso",
   "sync.title": "Nuvem",
   "tags.add-tag-text": "Adicionar nova tag",

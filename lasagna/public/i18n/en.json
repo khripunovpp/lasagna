@@ -804,6 +804,8 @@
   "sync.status.title": "Sync Status",
   "sync.status.total": "total",
   "sync.sync-btn": "Sync Now",
+  "sync.sync-from": "Sync from",
+  "sync.full-sync": "Full sync required",
   "sync.sync_completed_successfully": "Sync completed successfully",
   "sync.title": "Cloud",
   "tags.add-tag-text": "Add tag",

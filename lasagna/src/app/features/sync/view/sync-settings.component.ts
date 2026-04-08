@@ -2,6 +2,7 @@ import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/c
 import {TranslatePipe} from '@ngx-translate/core';
 import {NotificationsService} from '../../../shared/service/services/notifications.service';
 import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
+import {DatePipe} from '@angular/common';
 import {SyncEstimation, SyncLog, SyncService} from '../service/sync.service';
 import {FormsModule} from '@angular/forms';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
@@ -27,21 +28,21 @@ import {SyncKey} from '../service/sync-key.enum';
               (click)="onSync()"
               [style]="'success'"
               [disabled]="syncService.isSyncing()">
-              {{ 'sync.sync-btn' | translate }}
+              @if (syncAfterDate(); as afterDate) {
+                {{ 'sync.sync-from' | translate }} {{ afterDate | date:'dd.MM.yyyy HH:mm' }}
+              } @else {
+                {{ 'sync.full-sync' | translate }}
+              }
             </lg-button>
 
-            @if (syncService.lastSyncTime(); as lastSync) {
-              <div class="text-center">
-                {{ 'sync.last-sync' | translate }} {{ lastSync | timeAgo }}
-              </div>
-            }
+            <lg-button [attr.data-u2e]="'sync.reset-sync-state-btn'"
+                       (click)="onResetSyncState()"
+                       [outlined]="true"
+                       [style]="'danger'">
+              {{ 'sync.reset-sync-state' | translate }}
+            </lg-button>
           </lg-flex-row>
 
-          <lg-button [attr.data-u2e]="'sync.reset-sync-state-btn'"
-                     (click)="onResetSyncState()"
-                     [style]="'danger'">
-            {{ 'sync.reset-sync-state' | translate }}
-          </lg-button>
         </lg-flex-column>
       }
 
@@ -90,6 +91,7 @@ import {SyncKey} from '../service/sync-key.enum';
     ButtonComponent,
     TranslatePipe,
     TimeAgoPipe,
+    DatePipe,
     FormsModule,
     SyncResultDialogComponent,
     FlexRowComponent,
@@ -140,13 +142,21 @@ export class SyncSettingsComponent implements OnInit {
     label: this._syncEntitiesToLabelMap[e],
   })).concat(this._futureSyncEntities));
 
+  private readonly _ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+
+  syncAfterDate = computed<number | undefined>(() => {
+    const lastSync = this.syncService.lastSyncTime();
+    if (!lastSync || (Date.now() - lastSync) > this._ONE_WEEK) return undefined;
+    return new Date().setMonth(new Date(lastSync).getMonth() - 1);
+  });
+
   ngOnInit() {
   }
 
   async onSync() {
     const loader = this.notificationsService.loading('Syncing data...');
     try {
-      const result = await this.syncService.getSyncPreview();
+      const result = await this.syncService.getSyncPreview(this.syncAfterDate());
 
       this.syncEstimation.set(result);
       this.syncDialog()?.open();

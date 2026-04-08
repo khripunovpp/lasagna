@@ -77,8 +77,9 @@ export class SyncService {
   /**
    * Получает предварительную оценку синхронизации между локальными и облачными данными.
    */
-  async getSyncPreview(): Promise<SyncEstimation> {
+  async getSyncPreview(afterDate?: number): Promise<SyncEstimation> {
     this.isSyncing.set(true);
+    this._loadLastSyncTime();
     const currentUserId = this._authService.getUserId();
     if (!currentUserId) throw new Error('User ID is required for sync');
 
@@ -87,13 +88,7 @@ export class SyncService {
       if (!this._authService.isAuthenticated()) throw new Error('Authentication required for sync');
       const headers = new HttpHeaders(this._authService.getAuthHeaders());
 
-      // Запрос данных из облака, изменённых после lastSyncTime.
-      // При первом синке после логина делаем полный запрос (без afterDate) для обнаружения потери данных в облаке.
-      const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-      const isFullSync = !this.lastSyncTime() || (Date.now() - this.lastSyncTime()!) > ONE_WEEK;
-      const afterDate = isFullSync
-        ? undefined
-        : new Date().setMonth(new Date(this.lastSyncTime()!).getMonth() - 1);
+      const isFullSync = afterDate === undefined;
 
       const cloudResponse = await this._restService.post<{
         afterDate?: number
@@ -109,7 +104,6 @@ export class SyncService {
           syncResponse[strategyKey as SyncKey] = await strategy.estimateChanges(cloudResponse[strategyKey as SyncKey] || [], isFullSync);
         }
         this.logger.log('Sync completed successfully:', {cloudResponse, syncResponse});
-        this._updateLastSyncTime();
       }
       return syncResponse;
     } catch (error) {
@@ -153,6 +147,8 @@ export class SyncService {
         };
       }
     }
+
+    this._updateLastSyncTime();
 
     return result;
   }

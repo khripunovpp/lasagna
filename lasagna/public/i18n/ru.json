@@ -804,6 +804,8 @@
   "sync.status.title": "Статус синхронизации",
   "sync.status.total": "всего",
   "sync.sync-btn": "Синхронизировать",
+  "sync.sync-from": "Синхронизировать с",
+  "sync.full-sync": "Требуется полная синхронизация",
   "sync.sync_completed_successfully": "Синхронизация успешно завершена",
   "sync.title": "Облако",
   "tags.add-tag-text": "Добавить тег",
