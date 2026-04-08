@@ -803,6 +803,8 @@
   "sync.status.synced": "синхронизировано",
   "sync.status.title": "Статус синхронизации",
   "sync.status.total": "всего",
+  "sync.reset-sync-state-confirmation": "Вы уверены, что хотите сбросить состояние синхронизации? Все элементы будут помечены как несинхронизированные и потребуется полная синхронизация.",
+  "sync.reset-sync-state-confirmation-confirm": "Да, сбросить",
   "sync.sync-btn": "Синхронизировать",
   "sync.sync-from": "Синхронизировать с",
   "sync.full-sync": "Требуется полная синхронизация",

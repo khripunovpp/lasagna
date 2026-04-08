@@ -1,4 +1,4 @@
-import {Component, effect, inject, viewChild} from '@angular/core';
+import {Component, effect, inject, input, viewChild} from '@angular/core';
 import {ConfirmationService} from './confirmation.service';
 import {DialogComponent} from '../dialogs/dialog.component';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                [columnButtons]="false"
                [confirmButtonStyle]="'secondary'"
                [confirmButtonText]="settings()?.confirmText ?? ('confirm-confirm-label'|translate)"
-               name="confirmation-popover">
+               [name]="name()">
       <lg-flex-column [position]="'center'" [size]="'small'">
         <div class="text-wrap">{{ settings()?.message }}</div>
       </lg-flex-column>
@@ -44,6 +44,7 @@ export class ConfirmationPopoverComponent {
       this.dialogRef()?.close();
     }
   });
+  name = input('confirmation-popover');
 
   onConfirm() {
     this._emit(true);

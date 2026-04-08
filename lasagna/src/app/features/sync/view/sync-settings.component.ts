@@ -1,7 +1,6 @@
 import {Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {NotificationsService} from '../../../shared/service/services/notifications.service';
-import {TimeAgoPipe} from '../../../shared/view/pipes/time-ago.pipe';
 import {DatePipe} from '@angular/common';
 import {SyncEstimation, SyncLog, SyncService} from '../service/sync.service';
 import {FormsModule} from '@angular/forms';
@@ -13,6 +12,10 @@ import {FlexRowComponent} from '../../../shared/view/layout/flex-row.component';
 import {SwitchComponent} from '../../controls/form/switch.component';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {SyncKey} from '../service/sync-key.enum';
+import {ConfirmationService} from '../../../shared/view/ui/confirmation-popover/confirmation.service';
+import {
+  ConfirmationPopoverComponent
+} from '../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 
 @Component({
   selector: 'lg-sync-settings',
@@ -59,6 +62,7 @@ import {SyncKey} from '../service/sync-key.enum';
     </lg-flex-column>
 
     <lg-sync-result-dialog [syncEstimation]="syncEstimation()"></lg-sync-result-dialog>
+    <lg-confirmation-popover name="sync-reset-confirmation"></lg-confirmation-popover>
   `,
   styles: [
     `.sync-status-grid {
@@ -90,17 +94,22 @@ import {SyncKey} from '../service/sync-key.enum';
     FlexColumnComponent,
     ButtonComponent,
     TranslatePipe,
-    TimeAgoPipe,
     DatePipe,
     FormsModule,
     SyncResultDialogComponent,
     FlexRowComponent,
-    SwitchComponent
-  ]
+    SwitchComponent,
+    ConfirmationPopoverComponent
+  ],
+  providers: [
+    ConfirmationService,
+  ],
 })
 export class SyncSettingsComponent implements OnInit {
   syncService = inject(SyncService);
   notificationsService = inject(NotificationsService);
+  confirmationService = inject(ConfirmationService);
+  translate = inject(TranslateService);
   logs = signal<SyncLog[]>([]);
   syncEstimation = signal<SyncEstimation>({});
   syncDialog = viewChild(SyncResultDialogComponent);
@@ -168,15 +177,21 @@ export class SyncSettingsComponent implements OnInit {
     }
   }
 
-  async onResetSyncState() {
-    const loader = this.notificationsService.loading('Resetting sync state...');
-    try {
-      await this.syncService.resetSync();
-      this.notificationsService.success('Sync state reset successfully');
-    } catch (error) {
-      this.notificationsService.error(`Failed to reset sync state: ${(error as Error).message}`);
-    } finally {
-      loader.close();
-    }
+  onResetSyncState() {
+    this.confirmationService.configure({
+      message: this.translate.instant('sync.reset-sync-state-confirmation'),
+      confirmText: this.translate.instant('sync.reset-sync-state-confirmation-confirm'),
+      onSuccess: async () => {
+        const loader = this.notificationsService.loading('Resetting sync state...');
+        try {
+          await this.syncService.resetSync();
+          this.notificationsService.success('Sync state reset successfully');
+        } catch (error) {
+          this.notificationsService.error(`Failed to reset sync state: ${(error as Error).message}`);
+        } finally {
+          loader.close();
+        }
+      },
+    });
   }
 }

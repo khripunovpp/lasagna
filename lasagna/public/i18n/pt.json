@@ -803,6 +803,8 @@
   "sync.status.synced": "sincronizado",
   "sync.status.title": "Status da Sincronização",
   "sync.status.total": "total",
+  "sync.reset-sync-state-confirmation": "Tem certeza de que deseja redefinir o estado de sincronização? Todos os itens serão marcados como não sincronizados e será necessária uma sincronização completa.",
+  "sync.reset-sync-state-confirmation-confirm": "Sim, redefinir",
   "sync.sync-btn": "Sincronizar Agora",
   "sync.sync-from": "Sincronizar desde",
   "sync.full-sync": "Sincronização completa necessária",

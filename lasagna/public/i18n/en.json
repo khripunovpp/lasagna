@@ -803,6 +803,8 @@
   "sync.status.synced": "synced",
   "sync.status.title": "Sync Status",
   "sync.status.total": "total",
+  "sync.reset-sync-state-confirmation": "Are you sure you want to reset the sync state? All items will be marked as not synced and a full sync will be required.",
+  "sync.reset-sync-state-confirmation-confirm": "Yes, reset sync state",
   "sync.sync-btn": "Sync Now",
   "sync.sync-from": "Sync from",
   "sync.full-sync": "Full sync required",
