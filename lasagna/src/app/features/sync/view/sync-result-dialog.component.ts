@@ -9,7 +9,7 @@ import {SyncTransactionItem} from '../service/estimate-sync-changes-transaction'
 import {ProductFactory} from '../../products/service/product.factory';
 import {errorHandler} from '../../../shared/helpers';
 import {PerformSyncMap, PerformSyncResult} from '../service/sync-strategy';
-import {SyncResultGroupComponent} from './sync-result-gorup.component';
+import {SyncResultGroupComponent} from './sync-result-group.component';
 import {Recipe} from "../../recipes/service/models/Recipe";
 import {TabDirective} from "../../../shared/view/ui/tabs/tab.directive";
 import {TabsComponent} from "../../../shared/view/ui/tabs/tabs.component";

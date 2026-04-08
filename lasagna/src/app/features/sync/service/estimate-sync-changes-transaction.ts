@@ -38,12 +38,17 @@ export const estimateSyncChangesTransaction = async (
         toDelete: [],
       };
 
-      // находим все не синхронизированные элементы, те у которых нет cloud_uuid,
-      // чтобы потом не предлагать на добавление в облако.
-      // При полном синке также включаем элементы у которых есть cloud_uuid но их нет в облаке — данные могли пропасть.
-      const cloudUuids = isFullSync ? new Set(withItems.map(i => i.uuid)) : null;
+      // Строим множество uuid из облачного ответа для быстрой проверки.
+      // Элементы без cloud_uuid, но присутствующие в облаке, обработает цикл ниже (toUpdate) — они подхватят cloud_uuid.
+      // Элементы без cloud_uuid, отсутствующие в облаке — идут в notSynced (нужно залить в облако).
+      // При полном синке: элементы с cloud_uuid, которых нет в облаке — данные пропали, нужно перезалить.
+      const cloudUuids = new Set(withItems.map(i => i.uuid));
       result.notSynced = (await table
-        .filter(p => !p.cloud_uuid || (isFullSync && !cloudUuids!.has(p.uuid)))
+        .filter(p => {
+          if (!p.cloud_uuid && !cloudUuids.has(p.uuid)) return true;
+          if (isFullSync && p.cloud_uuid && !cloudUuids.has(p.uuid)) return true;
+          return false;
+        })
         .toArray()).map(i => [null, i]);
 
       // теперь пробегаемся по входящим элементам и сравниваем с локальными

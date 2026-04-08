@@ -296,16 +296,20 @@ export interface SyncViewGroup {
         <ng-template #viewTpl let-product>
           <lg-flex-column [size]="'tiny'">
             @if (product.system) {
-              <span>{{ 'sync.result.products.view.name'|translate }}: {{ 'product.' + product.uuid | translate }}</span>
+              <u>{{ 'sync.result.products.view.name'|translate }}: {{ 'product.' + product.uuid | translate }}</u>
             } @else {
-              <span>{{ 'sync.result.products.view.name'|translate }}: {{ product.name }}</span>
+              <u>{{ 'sync.result.products.view.name'|translate }}: {{ product.name }}</u>
             }
+            <span>ID: {{ product.uuid || '-' }}</span>
+            <span>CloudID: {{ product.cloud_uuid || '-' }}</span>
+            <br>
             <span>{{ 'sync.result.products.view.brand'|translate }}: {{ product.brand }}</span>
             <span>{{ 'sync.result.products.view.source'|translate }}: {{ product.source }}</span>
             <span>{{ 'sync.result.products.view.price'|translate }}
               : {{ product.price ? (product.price | userCurrency: pipesDigits()) : '---' }}</span>
             <span>{{ 'sync.result.products.view.amount'|translate }}
               : {{ product.amount }} {{ product.unit | unitString | translate }}</span>
+            <hr>
             <span>{{ 'sync.result.products.view.createdAt'|translate }}
               : {{ product.createdAt ? (product.createdAt | date:'medium') : '---' }}</span>
             <span>{{ 'sync.result.products.view.updatedAt'|translate }}
