@@ -13,9 +13,11 @@ import {SyncResultGroupComponent} from './sync-result-group.component';
 import {Recipe} from "../../recipes/service/models/Recipe";
 import {TabDirective} from "../../../shared/view/ui/tabs/tab.directive";
 import {TabsComponent} from "../../../shared/view/ui/tabs/tabs.component";
-import {FormBuilder, FormControl, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SyncKey} from '../service/sync-key.enum';
 import {CanSync} from '../service/CanSync.abstract';
+import {TransferDataService} from '../../../shared/service/services/transfer-data.service';
+import {CheckboxComponent} from '../../controls/form/chckbox.component';
 
 export type SyncEntity = 'products'
   | 'recipes';
@@ -41,6 +43,7 @@ export interface SyncView<T> {
   template: `
     <lg-dialog (onConfirm)="confirm()"
                [closeOnConfirm]="false"
+               [confirmButtonText]="'sync.confirm-btn' | translate"
                [showConfirmButton]="!syncResult()?.result"
                name="sync-result">
       <lg-flex-column [formGroup]="formGroup" [size]="'medium'">
@@ -94,6 +97,14 @@ export interface SyncView<T> {
             </ng-template>
           }
         </lg-tabs>
+
+        @if (!syncResult()?.result) {
+          <lg-checkbox formControlName="backupBeforeSync"
+                       name="backup-before-sync"
+                       size="medium">
+            {{ 'sync.backup-before-sync' | translate }}
+          </lg-checkbox>
+        }
       </lg-flex-column>
     </lg-dialog>
   `,
@@ -106,7 +117,8 @@ export interface SyncView<T> {
     TabsComponent,
     ReactiveFormsModule,
     TranslatePipe,
-
+    CheckboxComponent,
+    FormsModule,
   ]
 })
 export class SyncResultDialogComponent {
@@ -120,6 +132,7 @@ export class SyncResultDialogComponent {
 
   readonly productLabelFactory = inject(productLabelFactoryProvider);
   readonly productFactory = inject(ProductFactory);
+  readonly transferDataService = inject(TransferDataService);
   readonly dialogRef = viewChild(DialogComponent);
   syncEstimation = input.required<SyncEstimation>();
   onSyncResult = output<{ request: PerformSyncMap<CanSync>, result: PerformSyncResult }>();
@@ -140,6 +153,7 @@ export class SyncResultDialogComponent {
   formGroup = this._formBuilder.group({
     [SyncKey.products]: this._createGroup(),
     [SyncKey.recipes]: this._createGroup(),
+    backupBeforeSync: this._formBuilder.control(false),
   });
 
   open() {
@@ -153,7 +167,9 @@ export class SyncResultDialogComponent {
 
   async confirm() {
     try {
-      debugger
+      if (this.formGroup.value.backupBeforeSync) {
+        await this.transferDataService.exportAll('json');
+      }
       const resp = this.syncEstimation();
       const formValue = this.formGroup.value;
       const params: PerformSyncMap<CanSync> = this.entities().reduce((acc, e) => {

@@ -805,6 +805,8 @@
   "sync.status.total": "всего",
   "sync.reset-sync-state-confirmation": "Вы уверены, что хотите сбросить состояние синхронизации? Все элементы будут помечены как несинхронизированные и потребуется полная синхронизация.",
   "sync.reset-sync-state-confirmation-confirm": "Да, сбросить",
+  "sync.backup-before-sync": "Сделать бекап перед синком",
+  "sync.confirm-btn": "Подтвердить синк",
   "sync.sync-btn": "Синхронизировать",
   "sync.sync-from": "Синхронизировать с",
   "sync.full-sync": "Требуется полная синхронизация",
