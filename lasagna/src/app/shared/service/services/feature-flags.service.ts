@@ -6,6 +6,7 @@ export const featureFlagsList = [
   'registration',
   'synchronization',
   'synchronizationUrlStr',
+  'folders',
 ] as const;
 
 export type FeatureFlag = typeof featureFlagsList[number];
@@ -39,12 +40,10 @@ export class FeatureFlagsService {
     try {
       const stored = this._window?.localStorage.getItem(STORAGE_KEY);
       const parsed: Partial<Record<FeatureFlag, boolean | string>> = JSON.parse(stored ?? '{}');
-      console.log({parsed})
       this.flags.set(featureFlagsList.map(key => ([
         key as FeatureFlag,
         parsed[key as FeatureFlag] as boolean | string
       ])));
-      console.log({flags: this.flags()})
       return this.flags();
     } catch (error) {
       console.error('Error filling feature flags state:', error);

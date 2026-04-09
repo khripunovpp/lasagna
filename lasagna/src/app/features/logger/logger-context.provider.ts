@@ -13,5 +13,5 @@ export const LOGGER_CONTEXT = new InjectionToken<LoggerContext>('LOGGER_CONTEXT'
   }),
 });
 export const DISABLE_LOGGER = new InjectionToken<boolean>('DISABLE_LOGGER', {
-  factory: () => true
+  factory: () => false
 });

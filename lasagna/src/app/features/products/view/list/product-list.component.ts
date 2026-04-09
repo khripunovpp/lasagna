@@ -52,7 +52,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
           <lg-button [icon]="true"
                      [link]="'/products/add'"
                      data-u2e="products.list.add-button"
-                     [size]="'medium'"
+                     [size]="'small'"
                      [style]="'primary'">
             <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
           </lg-button>

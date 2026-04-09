@@ -32,6 +32,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'recipes/folder/:folderUuid',
+    renderMode: RenderMode.Client
+  },
+  {
     path: 'products',
     renderMode: RenderMode.Prerender
   },

@@ -79,6 +79,7 @@ export class FeatureFlagsComponent {
     'registration': 'Registration',
     'synchronization': 'Synchronization',
     'synchronizationUrlStr': 'Synchronization URL',
+    'folders': 'Folders',
   };
 
   isString(flagKey: string) {

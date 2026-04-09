@@ -2,6 +2,7 @@ import {
   Directive,
   effect,
   ElementRef,
+  HostBinding,
   inject,
   input,
   OnDestroy,
@@ -43,7 +44,10 @@ const POSITIONS: Record<PopoverPosition, ConnectedPosition[]> = {
 
 @Directive({
   selector: '[lgPopover]',
-  host: {'(click)': 'toggle($event)'},
+  exportAs: 'lgPopover',
+  host: {
+    '(click)': 'toggle($event)',
+  },
 })
 export class PopoverDirective implements PopoverRef, OnDestroy {
   constructor() {
@@ -53,6 +57,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
   lgPopover = input.required<TemplateRef<any>>();
   lgPopoverPosition = input<PopoverPosition>('bottom');
   lgPopoverCloseOnOther = input<boolean>(true);
+  lgPopoverCloseOnInnerClick = input<boolean>(false);
   lgPopoverOpen = output<void>();
   lgPopoverClose = output<void>();
   private _overlay = inject(Overlay);
@@ -102,25 +107,34 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
 
     this._overlayRef.attach(new TemplatePortal(this.lgPopover(), this._vcr));
 
-    strategy.positionChanges.subscribe(({ connectionPair: p }) => {
-      const panel = this._overlayRef?.overlayElement;
-      if (!panel) return;
-      panel.classList.remove(
-        'lg-popover-panel--from-top',
-        'lg-popover-panel--from-bottom',
-        'lg-popover-panel--from-left',
-        'lg-popover-panel--from-right',
-      );
-      if (p.overlayY === 'top')    panel.classList.add('lg-popover-panel--from-top');
-      else if (p.overlayY === 'bottom') panel.classList.add('lg-popover-panel--from-bottom');
-      else if (p.overlayX === 'start')  panel.classList.add('lg-popover-panel--from-left');
-      else                              panel.classList.add('lg-popover-panel--from-right');
-    });
+    strategy.positionChanges
+      .subscribe(({connectionPair: p}) => {
+        const panel = this._overlayRef?.overlayElement;
+        if (!panel) return;
+        panel.classList.remove(
+          'lg-popover-panel--from-top',
+          'lg-popover-panel--from-bottom',
+          'lg-popover-panel--from-left',
+          'lg-popover-panel--from-right',
+        );
+        if (p.overlayY === 'top') panel.classList.add('lg-popover-panel--from-top');
+        else if (p.overlayY === 'bottom') panel.classList.add('lg-popover-panel--from-bottom');
+        else if (p.overlayX === 'start') panel.classList.add('lg-popover-panel--from-left');
+        else panel.classList.add('lg-popover-panel--from-right');
+      });
 
-    this._overlayRef.backdropClick().subscribe(() => this.close());
-    this._overlayRef.keydownEvents().subscribe(e => {
-      if (e.key === 'Escape') this.close();
-    });
+    this._overlayRef.backdropClick()
+      .subscribe(() => this.close());
+
+    this._overlayRef.keydownEvents()
+      .subscribe(e => {
+        if (e.key === 'Escape') this.close();
+      });
+
+    if (this.lgPopoverCloseOnInnerClick()) {
+      this._overlayRef.overlayElement
+        .addEventListener('click', () => this.close());
+    }
 
     this.lgPopoverOpen.emit();
   }
@@ -141,7 +155,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
       this.lgPopoverClose.emit();
     };
 
-    panel.addEventListener('animationend', dispose, { once: true });
+    panel.addEventListener('animationend', dispose, {once: true});
     setTimeout(dispose, 200); // fallback если анимация не сработала
   }
 

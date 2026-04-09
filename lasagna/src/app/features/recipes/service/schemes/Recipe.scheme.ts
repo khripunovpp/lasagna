@@ -19,6 +19,7 @@ export const RecipeScheme = z.object({
     unit: z.enum(['currency', 'percent']),
   })).optional(),
   master: z.boolean().optional(),
+  folder_uuid: z.string().nullable().optional(),
   dirtyToSync: z.boolean().optional(),
   cloud_uuid: z.string().optional(),
   syncedAt: z.union([z.string(), z.number()]).optional(),

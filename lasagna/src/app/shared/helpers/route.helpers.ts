@@ -17,7 +17,9 @@ export function injectParams<T = Params | string | null>(
   const getParam = (params: Params) =>
     keyOrTransform ? params?.[keyOrTransform] ?? null : params;
 
-  return toSignal(route.params.pipe(map(getParam)), {requireSync: true});
+  return toSignal(route.params.pipe(
+    map(getParam),
+  ), {requireSync: true});
 }
 
 export function injectQueryParams<T = Params | string | null>(

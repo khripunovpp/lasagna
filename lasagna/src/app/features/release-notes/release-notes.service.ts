@@ -43,7 +43,6 @@ export class ReleaseNotesService {
       const data = await firstValueFrom(
         this._http.get<{ notes: ReleaseNote[] }>(`./release-notes/release-notes-${region}-${year}.json`)
       );
-      console.log({data})
       this.allNotes.set(data.notes ?? []);
     } catch(e) {
       console.error(e)

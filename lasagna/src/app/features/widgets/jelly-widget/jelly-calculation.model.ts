@@ -63,7 +63,7 @@ export class JellyCalculationModel {
     ) {
       return 0
     }
-    debugger
+
     if (this.type === 'mass') {
       return waterCalculationFromMass(jellyAmount, this.ratio);
     } else if (type === 'mass') {

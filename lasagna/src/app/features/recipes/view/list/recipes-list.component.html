@@ -1,0 +1,184 @@
+@defer {
+  @if (recipes | async; as recipesList) {
+    @if (recipesList.groups?.length) {
+      <lg-controls-bar>
+        <lg-button [icon]="true"
+                   (click)="addRecipe()"
+                   data-u2e="recipes.list.add-button"
+                   [size]="'small'"
+                   [style]="'primary'">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+        </lg-button>
+
+        @if (foldersEnabled() && foldersAllowed()) {
+          <lg-button [icon]="true"
+                     (onClick)="createFolder()"
+                     data-u2e="recipes.list.folder-add-button"
+                     [size]="'small'">
+            <mat-icon aria-hidden="false" fontIcon="create_new_folder"></mat-icon>
+          </lg-button>
+        }
+
+        <lg-inline-separated-group>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-button (click)="exportRecipes(selectionZoneService.selected())"
+                       [flat]="true"
+                       [size]="'small'"
+                       [style]="'solid'">
+              {{ 'export-label'|translate }}
+            </lg-button>
+          </ng-template>
+          <ng-template lgInlineSeparatedGroup>
+            <lg-import (onDone)="loadRecipes()"
+                       [label]="('import-label'|translate)"
+                       [schema]="RecipeScheme"
+                       [storeName]="Stores.RECIPES">
+              <ng-template let-flow="flow" let-row lgImportRowTpl>
+                <span>{{ row?.name }}</span>
+              </ng-template>
+            </lg-import>
+          </ng-template>
+        </lg-inline-separated-group>
+      </lg-controls-bar>
+    }
+
+    <lg-fade-in>
+      <lg-container>
+        <lg-flex-row [center]="true">
+          <lg-title>
+            {{ 'recipes.list-title'|translate }}
+
+            <span [translateParams]="{length:recipesList.length}"
+                  [translate]="'filters.results.length'"
+                  class="text-muted text-small"></span>
+          </lg-title>
+        </lg-flex-row>
+
+        <lg-draft-recipes-list></lg-draft-recipes-list>
+
+        <lg-flex-column [size]="'medium'">
+          <lg-flex-row [center]="!isMobile()"
+                       [mobileMode]="true"
+                       [size]="'medium'">
+
+            @if (foldersAllowed() && !isInFolderRoute()) {
+              <div class="view-mode-switcher">
+                <lg-button [icon]="true"
+                           [flat]="true"
+                           [style]="isFolderView() ? 'primary' : 'default'"
+                           [size]="'small'"
+                           (click)="switchViewMode('folders')">
+                  <mat-icon>folder</mat-icon>
+                </lg-button>
+                <lg-button [icon]="true"
+                           [flat]="true"
+                           [style]="!isFolderView() ? 'primary' : 'default'"
+                           [size]="'small'"
+                           (click)="switchViewMode('groupings')">
+                  <mat-icon>view_module</mat-icon>
+                </lg-button>
+              </div>
+            }
+
+            <lg-recipes-filters></lg-recipes-filters>
+
+            <lg-grouping-sorting></lg-grouping-sorting>
+          </lg-flex-row>
+        </lg-flex-column>
+
+        @if (isInFolderRoute() && foldersEnabled()) {
+          <lg-folder-breadcrumb></lg-folder-breadcrumb>
+        }
+
+        @if (isFolderView()) {
+          <lg-folder-tiles
+            [folders]="childFolders()"
+            (edit)="onEditFolder($event)"
+            (delete)="onDeleteFolder($event)">
+          </lg-folder-tiles>
+        }
+
+        <lg-flex-column [size]="'medium'">
+          <lg-selection-tools [active]="!!recipesList.length"
+                              [selectionTypes]="['recipe']">
+          </lg-selection-tools>
+
+
+          @if (selectionZoneService.selectionMode() === 'selection' && selectionZoneService.selected().size) {
+            <lg-button [flat]="true"
+                       [size]="'small'"
+                       [style]="'solid'"
+                       (click)="openMoveDialog()">
+              {{ 'folders.move-btn' | translate }}
+            </lg-button>
+          }
+
+          <lg-grouping-tiles [selectable]="true"
+                             data-u2e="recipes.list.grouping-tiles"
+                             [collapsable]="foldersAllowed() ? !foldersEnabled() : true"
+                             [sortResult]="recipesList">
+            <ng-template let-recipe let-index="index" lgGroupingTile>
+              <lg-card>
+                <lg-flex-column size="medium">
+                  <a [routerLink]="'/recipes/edit/' + recipe.uuid"
+                     [attr.data-u2e]="'recipes.list.item.' + index + '.link'">
+                    {{ recipe.name }}
+                  </a>
+
+                  <lg-flex-row [mobileMode]="true" [size]="'medium'">
+                    <lg-button [flat]="true"
+                               [link]="'/recipes/calculate/' + recipe.uuid"
+                               [size]="'small'"
+                               [attr.data-u2e]="'recipes.list.item.' + index + '.calculate-btn'"
+                               [style]="'success'">
+                      {{ 'recipes.calculate-btn'|translate }}
+                    </lg-button>
+
+                    <lg-flex-row [size]="'small'"
+                                 lgPull
+                                 [center]="true">
+                      <small class="text-muted text-cursive"
+                             [attr.data-u2e]="'recipes.list.item.' + index + '.edited-at'">
+                        {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
+                      </small>
+
+                      <lg-sync-badge size="16"
+                                     [entity]="recipe"></lg-sync-badge>
+                    </lg-flex-row>
+                  </lg-flex-row>
+                </lg-flex-column>
+              </lg-card>
+            </ng-template>
+
+            <lg-flex-column empty-state
+                            position="center"
+                            size="medium">
+              {{ 'recipes.empty-state.text'|translate }}
+
+              <lg-button (click)="addRecipe()"
+                         [size]="'medium'"
+                         data-u2e="recipes.list.empty-state.add-button"
+                         [style]="'primary'">
+                {{ 'recipes.empty-state.btn'|translate }}
+              </lg-button>
+            </lg-flex-column>
+          </lg-grouping-tiles>
+        </lg-flex-column>
+      </lg-container>
+    </lg-fade-in>
+  }
+
+  <lg-folder-edit-dialog #folderDialog
+                         (onSaved)="onFolderSaved()">
+  </lg-folder-edit-dialog>
+
+  <lg-folder-delete-dialog #folderDeleteDialog
+                           (onDeleted)="onFolderDeleted()">
+  </lg-folder-delete-dialog>
+
+  <lg-folder-move-dialog #folderMoveDialog
+                         (onMoved)="onRecipesMoved()">
+  </lg-folder-move-dialog>
+} @error {
+  {{ 'recipes-list.defer-load-error' | translate }}
+}

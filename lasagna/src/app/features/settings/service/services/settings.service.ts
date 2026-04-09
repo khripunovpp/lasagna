@@ -133,4 +133,13 @@ export class SettingsService {
 
     return [precision ?? 2, precision ?? 2];
   }
+
+  getRecipesViewMode(): 'folders' | 'groupings' {
+    return (this.settingsModel?.getSetting<string>(SettingsKeysConst.recipesViewMode)?.data as any) ?? 'folders';
+  }
+
+  setRecipesViewMode(mode: 'folders' | 'groupings') {
+    this.settingsModel?.addSetting(SettingsKeysConst.recipesViewMode, mode);
+    return this.saveSettings();
+  }
 }

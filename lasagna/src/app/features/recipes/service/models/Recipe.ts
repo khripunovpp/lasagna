@@ -25,6 +25,7 @@ export class Recipe
   color?: string | undefined;
   priceModifiers: RecipePriceModifier[] = [];
   master?: boolean = false;
+  folder_uuid: string | null = null;
 
   get perUnitPriceModified() {
     let value = this.pricePerUnit;
@@ -138,6 +139,7 @@ export class Recipe
       dirtyToSync: dto?.dirtyToSync ?? false,
       deleted: dto?.deleted,
       deletedAt: dto?.deletedAt,
+      folder_uuid: dto?.folder_uuid ?? null,
     });
   }
 
@@ -147,7 +149,6 @@ export class Recipe
     const updatedAt = dto?.updated_at ? new Date(dto.updated_at) : undefined;
     const deletedAt = dto?.deleted_at ? new Date(dto.deleted_at) : undefined;
     const syncedAt = dto?.synced_at ? new Date(dto?.synced_at) : undefined;
-    debugger
 
     return Recipe.fromRaw({
       ...dto,
@@ -222,6 +223,7 @@ export class Recipe
       syncedAt: this.syncedAt,
       deleted: this.deleted ? 1 : 0,
       deletedAt: this.deletedAt,
+      folder_uuid: this.folder_uuid,
     };
   }
 
@@ -274,6 +276,7 @@ export class Recipe
         );
       }) : this.priceModifiers;
     this.master = dto?.master ?? this.master;
+    this.folder_uuid = dto?.folder_uuid !== undefined ? dto.folder_uuid : this.folder_uuid;
     super.update(dto, doNotMarkDirty);
     return this;
   }

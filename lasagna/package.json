@@ -9,7 +9,7 @@
     "start-prod": "ng serve --no-hmr --configuration production",
     "start-host": "ng serve --no-hmr --host 192.168.1.186 --port 4200 --disable-host-check",
     "build-blog": "node scripts/build-blog.js",
-    "prebuild": "node scripts/build-blog.js && node scripts/generate-ver.js && node scripts/inject-translations.js && node scripts/set-env.js && node scripts/set-right-region-settings.js",
+    "prebuild": "node scripts/generate-brand-palette.js && node scripts/build-blog.js && node scripts/generate-ver.js && node scripts/inject-translations.js && node scripts/set-env.js && node scripts/set-right-region-settings.js",
     "build": "npm run build-ssr",
     "build-github-pages": "sh build-github-dev.sh",
     "build-ssr": "npm run prebuild && ng run lasagna:build-ssr:production",
