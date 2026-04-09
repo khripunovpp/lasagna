@@ -1,4 +1,4 @@
-import {Component, input, output, viewChild, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, input, output, viewChild, ViewEncapsulation} from '@angular/core';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
@@ -55,6 +55,13 @@ export class ButtonComponent {
   routerLinkActive = viewChild(RouterLinkActive);
   noScale = input<boolean>(false);
   label = input<string>('');
+  silent = input<boolean>(false);
+
+  @HostListener('click', ['$event']) silentHandler(event: MouseEvent) {
+    if (this.silent() || this.disabled()) {
+      event.preventDefault();
+    }
+  }
 
   onClickHandler(event: MouseEvent) {
     if (this.disabled()) {

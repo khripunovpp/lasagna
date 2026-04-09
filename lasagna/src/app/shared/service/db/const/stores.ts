@@ -13,4 +13,5 @@ export enum Stores {
   CREDENTIALS = 'credentials',
   CHANGES_LOG = 'changes_log',
   DELETES_STORE = 'deletes_store',
+  FOLDERS = 'foldersStore',
 }

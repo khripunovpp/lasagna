@@ -3,7 +3,7 @@ import {CanSync} from '../../../../features/sync/service/CanSync.abstract';
 import {CanBeStoredIndexDbAbstract} from '../../../../features/sync/service/CanBeStoredIndexDb.abstract';
 import {DexieIndexDbService} from '../../db/dexie-index-db.service';
 import {CloudSyncService} from '../../../../features/sync/service/cloud-sync.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, switchMap, tap, withLatestFrom} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {CAN_SYNC} from '../../../../features/sync/service/can-sync.token';
 import {errorHandler} from '../../../helpers';
@@ -55,7 +55,7 @@ export abstract class RepositoryAbstract<
     uuid: T | string | undefined,
     verbose: boolean = false,
   ): Promise<T | undefined> {
-    uuid = typeof uuid === 'string' ? uuid : (uuid as T).uuid;
+    uuid = typeof uuid === 'string' ? uuid : (uuid as T)?.uuid;
     if (!uuid) {
       throw new Error('UUID is undefined.');
     }
@@ -137,7 +137,6 @@ export abstract class RepositoryAbstract<
     uuid: string,
     item: T
   ) {
-    debugger
     const dto = await this.withUpdateTransaction(
       (tx) => updateProductTransaction(tx, uuid, this.table, item, this.changeLogCondition)
     );

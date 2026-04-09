@@ -1,21 +1,19 @@
-import {Component, DestroyRef, inject} from '@angular/core';
+import {Component, computed, DestroyRef, effect, inject, OnInit, signal, viewChild} from '@angular/core';
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
-import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {NotificationsService} from '../../../../shared/service/services/notifications.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NotificationsService, SelectionZoneService, TransferDataService} from '../../../../shared/service/services';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {ImportComponent} from '../../../../shared/view/ui/import/import.component';
-import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
 import {ImportRowTplDirective} from '../../../../shared/view/ui/import/import-row-tpl.directive';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
-import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {RecipeDTO, RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
@@ -27,7 +25,7 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {GroupingSortingComponent} from '../../../../shared/view/ui/grouping-sorting/grouping-sorting.component';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {CATEGORIZED_RECIPES_LIST} from '../../service/providers/categorized-recipes-list.token';
+import {CATEGORIZED_RECIPES_LIST, provideRecipes} from '../../service/providers/categorized-recipes-list.token';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
@@ -35,136 +33,27 @@ import {RecipesFiltersComponent} from './recipes-filters.component';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
-import {errorHandler} from '../../../../shared/helpers';
+import {errorHandler, injectParams} from '../../../../shared/helpers';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
+import {FeatureFlagsService} from '../../../../shared/service/services/feature-flags.service';
+import {SettingsService} from '../../../settings/service/services/settings.service';
+import {FoldersRepository} from '../../service/providers/folders.repository';
+import {Folder} from '../../service/models/Folder';
+import {FolderTilesComponent} from '../folders/folder-tiles.component';
+import {FolderBreadcrumbComponent} from '../folders/folder-breadcrumb.component';
+import {FolderEditDialogComponent} from '../folders/folder-edit-dialog.component';
+import {FolderDeleteDialogComponent} from '../folders/folder-delete-dialog.component';
+import {FolderMoveDialogComponent} from '../folders/folder-move-dialog.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
 
 
 @Component({
   selector: 'lg-recipes-list',
-  standalone: true,
-  template: `
-    @defer {
-      @if (!groupingTiles.empty()) {
-        <lg-controls-bar>
-          <lg-button [icon]="true"
-                     [link]="'/recipes/add'"
-                     data-u2e="recipes.list.add-button"
-                     [size]="'medium'"
-                     [style]="'primary'">
-            <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-          </lg-button>
-
-          <lg-inline-separated-group>
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button (click)="exportRecipes(selectionZoneService.selected())"
-                         [flat]="true"
-                         [size]="'small'"
-                         [style]="'solid'">
-                {{ 'export-label'|translate }}
-              </lg-button>
-            </ng-template>
-            <ng-template lgInlineSeparatedGroup>
-              <lg-import (onDone)="loadRecipes()"
-                         [label]="('import-label'|translate)"
-                         [schema]="RecipeScheme"
-                         [storeName]="Stores.RECIPES">
-                <ng-template let-flow="flow" let-row lgImportRowTpl>
-                  <span>{{ row?.name }}</span>
-                </ng-template>
-              </lg-import>
-            </ng-template>
-          </lg-inline-separated-group>
-        </lg-controls-bar>
-      }
-
-      <lg-fade-in>
-        <lg-container>
-          <lg-flex-row [center]="true">
-            <lg-title>
-              {{ 'recipes.list-title'|translate }}
-
-              @if (!groupingTiles.empty()) {
-                <span [translateParams]="{length:recipes()?.length}"
-                      [translate]="'filters.results.length'"
-                      class="text-muted text-small"></span>
-              }
-            </lg-title>
-          </lg-flex-row>
-
-          <lg-draft-recipes-list></lg-draft-recipes-list>
-
-          <lg-flex-column [size]="'medium'">
-            <lg-flex-row [center]="!isMobile()"
-                         [mobileMode]="true"
-                         [size]="'medium'">
-              <lg-recipes-filters></lg-recipes-filters>
-
-              <lg-grouping-sorting></lg-grouping-sorting>
-            </lg-flex-row>
-
-            @if (!groupingTiles.empty()) {
-              <lg-selection-tools [selectionTypes]="['recipe']"></lg-selection-tools>
-            }
-          </lg-flex-column>
-
-          <lg-grouping-tiles #groupingTiles
-                             [selectable]="true"
-                             data-u2e="recipes.list.grouping-tiles"
-                             [sortResult]="recipes()">
-            <ng-template let-recipe let-index="index" lgGroupingTile>
-              <lg-card>
-                <lg-flex-column size="medium">
-                  <a [routerLink]="'/recipes/edit/' + recipe.uuid"
-                     [attr.data-u2e]="'recipes.list.item.' + index + '.link'">
-                    {{ recipe.name }}
-                  </a>
-
-                  <lg-flex-row [mobileMode]="true" [size]="'medium'">
-                    <lg-button [flat]="true"
-                               [link]="'/recipes/calculate/' + recipe.uuid"
-                               [size]="'small'"
-                               [attr.data-u2e]="'recipes.list.item.' + index + '.calculate-btn'"
-                               [style]="'success'">
-                      {{ 'recipes.calculate-btn'|translate }}
-                    </lg-button>
-
-                    <lg-flex-row [size]="'small'"
-                                 lgPull
-                                 [center]="true">
-                      <small class="text-muted text-cursive"
-                             [attr.data-u2e]="'recipes.list.item.' + index + '.edited-at'">
-                        {{ 'edited-at-label'|translate }} {{ (recipe?.updatedAt || recipe?.createdAt) | timeAgo }}
-                      </small>
-
-                      <lg-sync-badge size="16"
-                                     [entity]="recipe"></lg-sync-badge>
-                    </lg-flex-row>
-                  </lg-flex-row>
-                </lg-flex-column>
-              </lg-card>
-            </ng-template>
-
-            <lg-flex-column empty-state
-                            position="center"
-                            size="medium">
-              {{ 'recipes.empty-state.text'|translate }}
-
-              <lg-button [link]="'/recipes/add'"
-                         [size]="'medium'"
-                         data-u2e="recipes.list.empty-state.add-button"
-                         [style]="'primary'">
-                {{ 'recipes.empty-state.btn'|translate }}
-              </lg-button>
-            </lg-flex-column>
-          </lg-grouping-tiles>
-        </lg-container>
-      </lg-fade-in>
-    } @error {
-      {{ 'recipes-list.defer-load-error' | translate }}
-    }
-  `,
+  templateUrl: './recipes-list.component.html',
   providers: [
     SelectionZoneService,
+    provideRecipes,
   ],
   imports: [
     FlexRowComponent,
@@ -192,15 +81,27 @@ import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.com
     RecipesFiltersComponent,
     TranslateDirective,
     SyncBadgeComponent,
+    FolderTilesComponent,
+    FolderBreadcrumbComponent,
+    FolderEditDialogComponent,
+    FolderDeleteDialogComponent,
+    FolderMoveDialogComponent,
+    ReactiveFormsModule,
+    AsyncPipe,
   ],
   styles: [
     `:host {
       display: block;
     }
+
+    .view-mode-switcher {
+      display: flex;
+      gap: 4px;
+    }
     `
   ]
 })
-export class RecipesListComponent {
+export class RecipesListComponent implements OnInit {
   constructor(
     private _recipesRepository: RecipesRepository,
     private _notificationsService: NotificationsService,
@@ -218,19 +119,97 @@ export class RecipesListComponent {
     ).subscribe((items) => {
       this.deleteMany(items);
     });
+
+    effect(() => {
+      const uuid = this.folderUuid();
+      const folderView = this.isFolderView();
+      if (!this.isClient || !folderView) return;
+      this.loadFolderContent();
+    });
   }
 
-  destroyRef = inject(DestroyRef);
-  isClient = inject(IS_CLIENT);
-  recipes = toSignal(inject(CATEGORIZED_RECIPES_LIST));
+  readonly destroyRef = inject(DestroyRef);
+  readonly isClient = inject(IS_CLIENT);
+  readonly recipes = inject(CATEGORIZED_RECIPES_LIST);
   readonly isMobile = matchMediaSignal(mobileBreakpoint);
+  readonly folderUuid = injectParams<string | null>('folderUuid');
+  readonly isInFolderRoute = computed(() => !!this.folderUuid());
+  readonly viewMode = signal<'folders' | 'groupings'>('folders');
+  readonly childFolders = signal<Folder[]>([]);
+  readonly folderDialog = viewChild(FolderEditDialogComponent);
+  readonly folderDeleteDialog = viewChild(FolderDeleteDialogComponent);
+  readonly folderMoveDialog = viewChild(FolderMoveDialogComponent);
+  readonly isFolderView = computed(() =>
+    this.foldersAllowed() && (this.isInFolderRoute() || this.viewMode() === 'folders')
+  );
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
+  private readonly _featureFlags = inject(FeatureFlagsService);
+  readonly foldersAllowed = computed(() => this._featureFlags.getFlagValue('folders'));
+  readonly foldersEnabled = computed(() => this._settingsService.getRecipesViewMode() === 'folders' && this.viewMode() === 'folders');
+  private readonly _settingsService = inject(SettingsService);
+  private readonly _foldersRepository = inject(FoldersRepository);
+  private readonly _router = inject(Router);
 
   ngOnInit() {
     if (!this.isClient) {
       return;
     }
+
+    this.viewMode.set(this._settingsService.getRecipesViewMode());
+  }
+
+  async loadFolderContent() {
+    const uuid = this.folderUuid();
+    const allFolders = await this._foldersRepository.getAll(true);
+    this.childFolders.set(this._foldersRepository.getChildren(uuid, allFolders));
+  }
+
+  switchViewMode(mode: 'folders' | 'groupings') {
+    this.viewMode.set(mode);
+    this._settingsService.setRecipesViewMode(mode);
+    if (mode === 'folders') {
+      this.loadFolderContent();
+    }
+    this.loadRecipes();
+  }
+
+  addRecipe() {
+    const folderUuid = this.folderUuid();
+    this._router.navigate(['/recipes/add'], {
+      queryParams: folderUuid ? {folder_uuid: folderUuid} : {},
+    });
+  }
+
+  createFolder() {
+    this.folderDialog()?.openCreate(this.folderUuid());
+  }
+
+  onEditFolder(folder: Folder) {
+    this.folderDialog()?.openEdit(folder);
+  }
+
+  onFolderSaved() {
+    this.loadFolderContent();
+  }
+
+  onDeleteFolder(folder: Folder) {
+    this.folderDeleteDialog()?.open(folder);
+  }
+
+  onFolderDeleted() {
+    this.loadRecipes();
+    this.loadFolderContent();
+  }
+
+  openMoveDialog() {
+    const uuids = Array.from(this.selectionZoneService.selected());
+    this.folderMoveDialog()?.open(uuids, this.folderUuid());
+  }
+
+  onRecipesMoved() {
+    this.selectionZoneService.onDeselectAll();
+    this.selectionZoneService.onSelection(); // exit selection mode
     this.loadRecipes();
   }
 

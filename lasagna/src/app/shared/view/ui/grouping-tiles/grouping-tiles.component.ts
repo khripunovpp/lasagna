@@ -13,13 +13,14 @@ import {injectFragment} from '../../../helpers';
 
 @Component({
   selector: 'lg-grouping-tiles',
-  standalone: true,
   template: `
-    <section class="grouping-tiles" >
+    <section class="grouping-tiles"
+             [class.grouping-tiles--selectable]="selectable()"
+             [class.grouping-tiles--collapsable]="collapsable()">
       @for (group of sortResult()?.groups; track group?.field; let i = $index) {
         <section class="grouping-tiles__section"
                  [attr.data-u2e]="'grouping-tiles.section.' + i"
-                 [class.grouping-tiles__section--collapsed]="!collapsedStates()[i]">
+                 [class.grouping-tiles__section--collapsed]="collapsable() ? !collapsedStates()[i] : false">
           @let items = group.items;
           <header class="grouping-tiles__header"
                   [attr.id]="'group-' + i"
@@ -36,9 +37,12 @@ import {injectFragment} from '../../../helpers';
               <span class="grouping-tiles__header-count text-muted">{{ items.length }}</span>
             }
 
-            <mat-icon [fontIcon]="collapsedStates()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
+            @if (collapsable()) {
+              <mat-icon [fontIcon]="collapsedStates()[i] ? 'expand_more' : 'chevron_right'"></mat-icon>
+            }
           </header>
-          @if (groupingTileDirective() && collapsedStates()[i]) {
+
+          @if (groupingTileDirective() && (collapsable() ? collapsedStates()[i] : true)) {
             <div class="grouping-tiles__content">
               @for (tile of items; track tile.uuid; let j = $index) {
                 <div class="grouping-tiles__item">
@@ -97,10 +101,25 @@ import {injectFragment} from '../../../helpers';
       align-items: flex-end;
       justify-content: flex-start;
       gap: 4px;
+      position: relative;
+
+      &::before {
+        content: '#';
+        position: absolute;
+        left: -16px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.15s ease;
+      }
     }
 
     .grouping-tiles__header:hover {
       text-decoration: underline;
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     .grouping-tiles__header-count {
@@ -163,6 +182,7 @@ export class GroupingTilesComponent {
   readonly storedGroup = injectFragment();
   sortResult = input<SortResult<any>>();
   selectable = input<boolean>(false);
+  collapsable = input<boolean>(true);
   readonly empty = computed(() => {
     return !this.sortResult()?.groups.length;
   });

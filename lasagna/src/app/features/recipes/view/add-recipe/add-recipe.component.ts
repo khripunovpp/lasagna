@@ -147,7 +147,11 @@ export class AddRecipeComponent
       } else if (this.sharedRecipe()) {
         this._decodeRecipe(this.sharedRecipe()!);
       } else {
-        this.recipe.set(Recipe.empty());
+        const newRecipe = Recipe.empty();
+        if (query['folder_uuid']) {
+          newRecipe.folder_uuid = query['folder_uuid'];
+        }
+        this.recipe.set(newRecipe);
         console.log('Creating new recipe', this.recipe());
       }
 

@@ -82,6 +82,21 @@ export class RecipesRepository
     return recipes;
   }
 
+  async loadByFolder(folder_uuid: string | null, filter?: Filters): Promise<Recipe[]> {
+    let resp = await this._indexDbService.getAll<RecipeDTO>(Stores.RECIPES, true);
+    resp = resp.filter(r => (r.folder_uuid ?? null) === folder_uuid);
+
+    if (filter?.key && filter.value) {
+      const isExact = filter.operator === 'equals';
+      resp = resp.filter(r => {
+        const val = (r as any)[filter.key!];
+        return isExact ? String(val) === filter.value : String(val ?? '').toLowerCase().includes(filter.value!.toLowerCase());
+      });
+    }
+
+    return resp.map(r => Recipe.fromRaw(r));
+  }
+
   override getAll() {
     return super.getAll(true)
       .then(res => res.toSorted((a: Recipe, b: Recipe) => a?.name?.localeCompare(b?.name)));

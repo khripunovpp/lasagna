@@ -6,4 +6,5 @@ export enum SettingsKeysConst {
   lang = 'lang',
   promoWidgets = 'promoWidgets',
   seenReleaseNotes = 'seenReleaseNotes',
+  recipesViewMode = 'recipesViewMode',
 }

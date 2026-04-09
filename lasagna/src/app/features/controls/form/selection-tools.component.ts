@@ -1,4 +1,4 @@
-import {Component, Input, Optional} from '@angular/core';
+import {Component, input, Input, Optional} from '@angular/core';
 import {ButtonComponent} from '../../../shared/view/ui/button/button.component';
 
 
@@ -59,8 +59,9 @@ import {InlineSeparatedGroupComponent, InlineSeparatedGroupDirective} from '../.
         }
       } @else {
         <ng-template lgInlineSeparatedGroup>
-          <lg-button (click)="selectionZoneService.onSelection()"
+          <lg-button (onClick)="selectionZoneService.onSelection()"
                      [flat]="true"
+                     [disabled]="!active()"
                      data-u2e="selection-tools.select-many-button"
                      [size]="'small'"
                      [style]="'success'">
@@ -85,5 +86,6 @@ export class SelectionToolsComponent {
   }
 
   @Input() selectionTypes: string[] = [];
+  active = input(true);
 }
 

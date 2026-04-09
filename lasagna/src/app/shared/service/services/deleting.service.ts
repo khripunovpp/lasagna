@@ -46,7 +46,6 @@ export class DeletingService {
     itemsToDeleteInCloud: Record<string, CanSync[]>
     count: number
   }> {
-    debugger
     let count = 0;
     const items = await this.getAllItems();
     const itemsToDelete = items
@@ -86,7 +85,6 @@ export class DeletingService {
     itemsToDelete: Record<string, DeleteRecord[]>,
     productsHaveCloudData: Record<string, CanSync[]>
   ) {
-    debugger
     const result = this._entitiesMapFactory<string>()
 
     for (const key in result) {

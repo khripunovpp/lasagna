@@ -21,6 +21,7 @@ import {ProductPage} from '../../scripts/e2e/classes/ProductPage';
 import {AppRefs} from '../../scripts/e2e/classes/AppRefs';
 import {ChangeLogScheme} from '../../../src/app/features/history/ChangeLogEntry.scheme';
 import {DeleteRecordScheme} from '../../../src/app/shared/service/db/shemes/DeleteRecord.scheme';
+import {FolderScheme} from '../../../src/app/features/recipes/service/schemes/Folder.scheme';
 
 /**
  * Тест настроек
@@ -87,6 +88,7 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
       [Stores.TAXES]: [],
       [Stores.INVOICES]: [],
       [Stores.CREDENTIALS]: [],
+      [Stores.FOLDERS]: [],
     };
     // загружаем файл с текущей версией
     await uploadBackupFile(newBackupDataMap, startVersion);
@@ -199,6 +201,7 @@ async function validateBackupContentAndCount(
     [Stores.CREDENTIALS]: CredentialScheme,
     [Stores.CHANGES_LOG]: ChangeLogScheme,
     [Stores.DELETES_STORE]: DeleteRecordScheme,
+    [Stores.FOLDERS]: FolderScheme,
   };
   const countKeys = Object.keys(schemaMap) as Stores[];
   const parsedInfo = await validateDownloadedBackup(contentStringJSON, schemaMap);
@@ -238,5 +241,6 @@ function getDataInitialCounts(
     [Stores.CREDENTIALS]: 0,
     [Stores.CHANGES_LOG]: 0,
     [Stores.DELETES_STORE]: 0,
+    [Stores.FOLDERS]: 0,
   };
 }
