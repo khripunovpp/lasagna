@@ -4,7 +4,10 @@ WORKDIR /app
 
 # Устанавливаем зависимости (с кэшем)
 COPY package*.json ./
-RUN npm install
+
+#устнавливем Angular CLI глобально
+RUN npm install -g @angular/cli
+RUN npm ci --legacy-peer-deps
 
 # Копируем проект (исключая node_modules)
 COPY . .
