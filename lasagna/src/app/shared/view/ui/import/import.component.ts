@@ -303,10 +303,10 @@ export class ImportComponent {
       if (!result?.data) {
         throw new Error('Invalid file content: data property is missing');
       }
-      if (!result?.version || result.version > currentDbVersion) {
-        throw new Error('The database version is lower than the data version. Please update the application to the latest version.' +
-          ' Current version: ' + currentDbVersion + ', data version: ' + result.version);
-      }
+      // if (!result?.version || result.version > currentDbVersion) {
+      //   throw new Error('The database version is lower than the data version. Please update the application to the latest version.' +
+      //     ' Current version: ' + currentDbVersion + ', data version: ' + result.version);
+      // }
       for (const record of result.data) {
         await this._validateData(record);
 
