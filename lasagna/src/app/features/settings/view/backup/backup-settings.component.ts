@@ -11,13 +11,12 @@ import {injectQueryParams} from '../../../../shared/helpers';
 import {NotificationsService, TransferDataService} from '../../../../shared/service/services';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
-import {
-  ConfirmationService
-} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
+import {ConfirmationService} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {
   ConfirmationPopoverComponent
 } from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -115,6 +114,7 @@ export class BackupSettingsComponent
   readonly notificationsService = inject(NotificationsService);
   readonly dexieIndexDbService = inject(DexieIndexDbService);
   readonly translate = inject(TranslateService);
+  private readonly _analyticsService = inject(AnalyticsService);
   private readonly _window = inject(WINDOW);
 
   ngAfterViewInit() {
@@ -126,9 +126,15 @@ export class BackupSettingsComponent
   async onBackup() {
     const loader = this.notificationsService.loading(this.translate.instant('backup.creating'));
     try {
-      await this.transferDataService.exportAll('json');
-      this.notificationsService.success(this.translate.instant('backup.created'));
-      this._window?.localStorage.setItem('lastBackupDate', Date.now().toString());
+      await this.transferDataService.exportAll('json', () => {
+        this.notificationsService.success(this.translate.instant('backup.created'));
+        this._analyticsService.trackEvent('backup_created', {
+          event_category: 'settings',
+          event_label: 'backup',
+          value: 1,
+        });
+        this._window?.localStorage.setItem('lastBackupDate', Date.now().toString());
+      });
     } catch (e) {
       this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.failed'));
       console.error(e);
@@ -146,6 +152,11 @@ export class BackupSettingsComponent
 
         try {
           await this.transferDataService.restoreAllData(event);
+          this._analyticsService.trackEvent('backup_restored', {
+            event_category: 'settings',
+            event_label: 'backup',
+            value: 1,
+          });
           this.notificationsService.success(this.translate.instant('backup.restored'));
         } catch (e) {
           this.notificationsService.showJsonErrors([JSON.stringify(e?.toString()).trim()], this.translate.instant('backup.restore-failed'));
@@ -165,6 +176,11 @@ export class BackupSettingsComponent
       onSuccess: async () => {
         try {
           await this.dexieIndexDbService.flushCache();
+          this._analyticsService.trackEvent('cache_flushed', {
+            event_category: 'settings',
+            event_label: 'cache',
+            value: 1,
+          });
           this.notificationsService.success(this.translate.instant('backup.flushed'));
           this._window?.location.reload();
         } catch (e) {
@@ -185,6 +201,11 @@ export class BackupSettingsComponent
           await this.dexieIndexDbService.deleteAllData();
           this._window?.localStorage.clear();
           this.notificationsService.success(this.translate.instant('all-data.deleted'));
+          this._analyticsService.trackEvent('data_deleted_all', {
+            event_category: 'settings',
+            event_label: 'data',
+            value: 1,
+          });
           setTimeout(() => {
             this._window?.location.reload();
           }, 1000);

@@ -63,6 +63,7 @@ export class TransferDataService {
 
   async exportAll(
     fileType: 'csv' | 'json' = 'csv',
+    beforeSavedCb?: () => void
   ) {
     const data: BuckupData[] = [];
     const source = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
@@ -76,6 +77,9 @@ export class TransferDataService {
         version,
         createdAt,
       });
+    }
+    if (beforeSavedCb) {
+      beforeSavedCb();
     }
     if (fileType === 'json') {
       this._csvReaderService.saveToJSONFile(data, this._getFileName('buckup' as any, fileType));

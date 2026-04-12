@@ -20,6 +20,7 @@ import {FadeInComponent} from '../../../../../../shared/view/ui/fade-in.componen
 import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-column.component';
 import {matchMediaSignal} from '../../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints';
+import {AnalyticsService} from '../../../../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-add-category-form',
@@ -117,6 +118,7 @@ export class AddCategoryFormComponent
       });
   });
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _analyticsService = inject(AnalyticsService);
 
   reset(
     category: CategoryProduct,
@@ -146,6 +148,11 @@ export class AddCategoryFormComponent
           name: '',
         });
         this._notificationsService.success('settings.category.added');
+        this._analyticsService.trackEvent('product_category_created', {
+          event_category: 'categories',
+          event_label: 'products',
+          category_name: this.category()?.name,
+        });
         this.form.markAsPristine();
         this._categoryRepository.loadAll();
       })
@@ -166,6 +173,13 @@ export class AddCategoryFormComponent
           name: '',
         });
         this._notificationsService.success('settings.category.edited');
+        if (this.category()?.system) {
+          this._analyticsService.trackEvent('product_system_category_updated', {
+            event_category: 'categories',
+            event_label: 'products',
+            category_name: this.category()?.name,
+          })
+        }
         this.form.markAsPristine();
         this._categoryRepository.loadAll();
       })

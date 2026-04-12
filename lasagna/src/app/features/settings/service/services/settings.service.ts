@@ -7,6 +7,7 @@ import {LoggerService} from '../../../logger/logger.service';
 import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
 import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,14 @@ export class SettingsService {
   })
   private readonly _isRuRegion = inject(APP_SERVER_IS_RU);
   private readonly _window = inject(WINDOW);
+  private readonly _analyticsService = inject(AnalyticsService);
 
   get lang() {
     return this._localisationService.lang;
+  }
+
+  get currency() {
+    return this.settingsSignal()?.getSetting<string>(SettingsKeysConst.currency)?.data;
   }
 
   get languages(): string[] {
@@ -96,17 +102,30 @@ export class SettingsService {
     this._localisationService.changeLang(lang);
     // Store language in localStorage for JavaScript files
     this._window?.localStorage.setItem('lang', lang);
-    if (silent){
+
+    this._analyticsService.trackEvent('language_change', {
+      saved_language: lang,
+      current_language: this.lang(),
+      event_category: 'settings',
+      event_label: 'language',
+    });
+
+    if (silent) {
       return Promise.resolve();
     }
 
-    console.log({lang})
     this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
     return this.saveSettings();
   }
 
   changeCurrency(currency: string) {
     this.settingsModel?.addSetting(SettingsKeysConst.currency, currency);
+    this._analyticsService.trackEvent('currency_change', {
+      saved_currency: currency,
+      current_currency: this.currency,
+      event_category: 'settings',
+      event_label: 'currency',
+    });
     return this.saveSettings();
   }
 
@@ -148,6 +167,12 @@ export class SettingsService {
 
   setRecipesViewMode(mode: 'folders' | 'groupings') {
     this.settingsModel?.addSetting(SettingsKeysConst.recipesViewMode, mode);
+    this._analyticsService.trackEvent('recipes_mode_change', {
+      saved_mode: mode,
+      current_mode: this.getRecipesViewMode(),
+      event_category: 'settings',
+      event_label: 'recipes-mode',
+    });
     return this.saveSettings();
   }
 }

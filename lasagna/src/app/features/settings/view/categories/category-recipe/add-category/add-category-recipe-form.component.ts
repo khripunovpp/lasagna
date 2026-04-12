@@ -1,4 +1,4 @@
-import {Component, effect, EventEmitter, Inject, input, OnInit, Output, signal} from '@angular/core';
+import {Component, effect, EventEmitter, inject, Inject, input, OnInit, Output, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../../../controls/form/input.component';
 import {ControlComponent} from '../../../../../controls/form/control-item/control.component';
@@ -21,6 +21,7 @@ import {FlexColumnComponent} from '../../../../../../shared/view/layout/flex-col
 
 import {matchMediaSignal} from '../../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints';
+import {AnalyticsService} from '../../../../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-add-category-recipe-form',
@@ -84,7 +85,7 @@ import {mobileBreakpoint} from '../../../../../../shared/view/const/breakpoints'
     TranslatePipe,
     FadeInComponent,
     FlexColumnComponent,
-    ],
+  ],
   styles: [
     `
     `
@@ -122,6 +123,8 @@ export class AddCategoryRecipeFormComponent
         this._notificationsService.error(errorHandler(error));
       });
   });
+  private readonly _analyticsService = inject(AnalyticsService);
+
 
   ngOnInit() {
     this.form.valueChanges.subscribe(values => {
@@ -141,6 +144,11 @@ export class AddCategoryRecipeFormComponent
           name: '',
         });
         this._notificationsService.success('settings.category.added');
+        this._analyticsService.trackEvent('recipe_category_created', {
+          event_category: 'categories',
+          event_label: 'recipes',
+          category_name: this.category()?.name,
+        });
         this.form.markAsPristine();
         this._categoryRepository.loadAll();
       })
@@ -161,6 +169,13 @@ export class AddCategoryRecipeFormComponent
           name: '',
         });
         this._notificationsService.success('settings.category.edited');
+        if (this.category()?.system) {
+          this._analyticsService.trackEvent('recipe_system_category_updated', {
+            event_category: 'categories',
+            event_label: 'recipes',
+            category_name: this.category()?.name,
+          })
+        }
         this.form.markAsPristine();
         this._categoryRepository.loadAll();
       })
