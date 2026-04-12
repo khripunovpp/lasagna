@@ -3,9 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
-const { marked } = require('marked');
+const {marked} = require('marked');
 
-const BASE_URL = process.env.BLOG_BASE_URL || 'https://lasagna.app';
+const BASE_URL = process.env.HOST;
 
 const BLOG_SRC = path.join(__dirname, '..', 'documentation', 'blog');
 const BLOG_OUT = path.join(__dirname, '..', 'public', 'blog');
@@ -13,11 +13,24 @@ const POSTS_OUT = path.join(BLOG_OUT, 'posts');
 const SITEMAP_OUT = path.join(__dirname, '..', 'public', 'sitemap.xml');
 const ROBOTS_OUT = path.join(__dirname, '..', 'public', 'robots.txt');
 
-const STATIC_ROUTES = ['', 'recipes', 'products', 'invoices', 'blog'];
+const STATIC_ROUTES = [
+  '',
+  'home',
+  'recipes',
+  'products',
+  'settings',
+  'widgets',
+  'documents',
+  'release-notes',
+];
+
+const disallowedRoutes = [
+  'dev-settings'
+]
 
 function buildBlog() {
-  fs.mkdirSync(BLOG_OUT, { recursive: true });
-  fs.mkdirSync(POSTS_OUT, { recursive: true });
+  fs.mkdirSync(BLOG_OUT, {recursive: true});
+  fs.mkdirSync(POSTS_OUT, {recursive: true});
 
   const index = [];
 
@@ -31,7 +44,7 @@ function buildBlog() {
 
     for (const file of files) {
       const raw = fs.readFileSync(path.join(langDir, file), 'utf-8');
-      const { data, content } = matter(raw);
+      const {data, content} = matter(raw);
 
       if (!data.slug || !data.title || !data.description || !data.date) {
         console.warn(`⚠️  Пропущен ${file}: отсутствуют обязательные поля (slug, title, description, date)`);
@@ -54,7 +67,7 @@ function buildBlog() {
         image: data.image || null,
       };
 
-      const postFull = { ...postMeta, html };
+      const postFull = {...postMeta, html};
 
       fs.writeFileSync(
         path.join(POSTS_OUT, `${data.slug}.json`),
@@ -106,7 +119,13 @@ ${postUrls}
 }
 
 function generateRobots() {
-  const robots = `User-agent: *\nAllow: /\n\nSitemap: ${BASE_URL}/sitemap.xml\n`;
+  const disallowedRoutes = [
+    '/dev',
+    '/dev-settings',
+    '/feature-flags',
+  ];
+  const disallowLines = disallowedRoutes.map(r => `Disallow: ${r}`).join('\n');
+  const robots = `User-agent: *\nAllow: /\n${disallowLines}\n\nSitemap: ${BASE_URL}/sitemap.xml\n`;
   fs.writeFileSync(ROBOTS_OUT, robots, 'utf-8');
   console.log(`🤖 Robots → ${ROBOTS_OUT}`);
 }
