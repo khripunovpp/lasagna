@@ -5,6 +5,7 @@ import {errorHandler} from '../../shared/helpers';
 import {SettingsService} from '../settings/service/services/settings.service';
 import {WINDOW} from '../../shared/service/tokens/window.token';
 import {isPlatformBrowser} from '@angular/common';
+import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.token';
 
 export const setupDefaultsInitializer = async () => {
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -15,6 +16,8 @@ export const setupDefaultsInitializer = async () => {
   const notificationsService = inject(NotificationsService);
   const settingsService = inject(SettingsService);
   const window = inject(WINDOW);
+  const isRuRegion = inject(APP_SERVER_IS_RU);
+
   const disableSetupProducts = new URLSearchParams(window?.location.search ?? '').get('dsp') === '';
 
   if (disableSetupProducts) {
@@ -34,8 +37,9 @@ export const setupDefaultsInitializer = async () => {
       settingsService.loadSettings()
         .then((settings) => settingsService.setDefaultSettings())
         .then(async (settings) => {
-          const lang = settings?.getSetting<string>('lang')?.data || 'en';
-          await settingsService.changeLang(lang);
+          const lang = settings?.getSetting<string>('lang')?.data;
+          const defLang = isRuRegion ? 'ru' : 'en';
+          await settingsService.changeLang(lang || defLang, !!lang);
         }),
     ]);
   } catch (error) {

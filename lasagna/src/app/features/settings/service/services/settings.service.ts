@@ -89,11 +89,19 @@ export class SettingsService {
     return this.saveSettings();
   }
 
-  changeLang(lang: string) {
+  changeLang(
+    lang: string,
+    silent = false,
+  ) {
     this._localisationService.changeLang(lang);
-    this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
     // Store language in localStorage for JavaScript files
     this._window?.localStorage.setItem('lang', lang);
+    if (silent){
+      return Promise.resolve();
+    }
+
+    console.log({lang})
+    this.settingsModel?.addSetting(SettingsKeysConst.lang, lang);
     return this.saveSettings();
   }
 
