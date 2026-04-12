@@ -59,7 +59,9 @@ function loadGoogleAnalytics(
     const devEnv = localStorage.getItem('dev-mode') === 'true'
       || window.location.hostname === 'localhost';
     const devSettings = JSON.parse(localStorage.getItem('dev_settings') || '{}');
-    skipGa = devSettings['ga_analytics'] ? false : devEnv;
+    skipGa = devSettings['ga_analytics_disabled']
+      ? true
+      : devEnv;
   } catch (e) {
 
   }

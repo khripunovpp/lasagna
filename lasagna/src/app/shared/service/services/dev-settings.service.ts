@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {WINDOW} from '../tokens/window.token';
 
 export const devSettingsList = [
-  'ga_analytics'
+  'ga_analytics_disabled'
 ] as const;
 
 export type DevSetting = typeof devSettingsList[number];
