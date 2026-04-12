@@ -75,7 +75,7 @@ export class SettingsComponent implements OnInit {
     if (this._titleTapTimer) {
       clearTimeout(this._titleTapTimer);
     }
-    if (this._titleTapCount >= 5) {
+    if (this._titleTapCount >= 8) {
       this._titleTapCount = 0;
       this._router.navigate(['/dev-settings']);
       return;

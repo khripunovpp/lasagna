@@ -89,7 +89,7 @@ export class DevSettingsComponent {
   readonly settings = this.devSettingsService.settings;
   readonly form = new FormGroup({});
   readonly labelsMap: Record<string, string> = {
-    ga_analytics_disabled: 'Disable GA analytics'
+    ga_analytics_disabled: 'Disable GA analytics (on localhost it\'s disabled permanently)',
   };
 
   isString(settingKey: string) {
