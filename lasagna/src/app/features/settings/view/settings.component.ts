@@ -1,4 +1,5 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
+import {Router} from '@angular/router';
 import {ContainerComponent} from '../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
 import {FadeInComponent} from '../../../shared/view/ui/fade-in.component';
@@ -65,6 +66,24 @@ export class SettingsComponent implements OnInit {
   editedCategoryProduct = signal('')
   editedCategoryRecipe = signal('')
   private _onboardingService = inject(OnboardingService);
+  private _router = inject(Router);
+  private _titleTapCount = 0;
+  private _titleTapTimer: ReturnType<typeof setTimeout> | null = null;
+
+  onTitleTap() {
+    this._titleTapCount++;
+    if (this._titleTapTimer) {
+      clearTimeout(this._titleTapTimer);
+    }
+    if (this._titleTapCount >= 5) {
+      this._titleTapCount = 0;
+      this._router.navigate(['/dev-settings']);
+      return;
+    }
+    this._titleTapTimer = setTimeout(() => {
+      this._titleTapCount = 0;
+    }, 1500);
+  }
 
   canSync = inject(CAN_SYNC);
   hasSyncFeature = inject(HAS_SYNC_FEATURE);

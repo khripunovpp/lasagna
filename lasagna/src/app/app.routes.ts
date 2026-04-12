@@ -285,6 +285,12 @@ export const routes: Routes = [{
     },
 
     {
+      path: 'dev-settings',
+      loadComponent: () => import('./features/settings/view/dev-settings/dev-settings.component')
+        .then(m => m.DevSettingsComponent),
+    },
+
+    {
       path: '**',
       loadComponent: () => import('./shared/view/ui/error-page-404.component')
         .then(m => m.ErrorPage404Component),

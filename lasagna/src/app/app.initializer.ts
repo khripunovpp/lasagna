@@ -9,6 +9,7 @@ import {PwaBackgroundUpdateService} from './shared/service/services/pwa-backgrou
 import {WINDOW} from './shared/service/tokens/window.token';
 import {isPlatformBrowser} from '@angular/common';
 import {FeatureFlag, FeatureFlagsService} from './shared/service/services/feature-flags.service';
+import {DevSettingsService} from './shared/service/services/dev-settings.service';
 
 export const appInitializer = () => {
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -23,6 +24,7 @@ export const appInitializer = () => {
   const versionService = inject(VersionService);
   const pwaBackgroundUpdateService = inject(PwaBackgroundUpdateService);
   const featureFlagsService = inject(FeatureFlagsService);
+  const devSettingsService = inject(DevSettingsService);
   const window = inject(WINDOW);
   pwaBackgroundUpdateService.observe();
 
@@ -45,6 +47,7 @@ export const appInitializer = () => {
   return Promise.all([
     Promise.all(docsResources).finally(() => indexDbService.initIndexes()),
     versionService.load(),
+    devSettingsService.fillState(),
     featureFlagsService.fillState().then(() => {
       setFlagsParam.forEach(flag => {
         const [flagName, flagValue] = flag.split('::');

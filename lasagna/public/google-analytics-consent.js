@@ -3,25 +3,25 @@
 // Auto-generated translations - DO NOT EDIT MANUALLY
 function getTranslation(key, params = {}) {
   const TRANSLATIONS = {
-    "en": {
-      "cookies.banner.text": "We use cookies to enhance your experience. Please choose your preferences:",
-      "cookies.banner.accept-all": "Accept All",
-      "cookies.banner.analytics-only": "Analytics Only",
-      "cookies.banner.reject-all": "Reject All"
-    },
-    "ru": {
-      "cookies.banner.text": "Мы используем файлы cookie для улучшения вашего опыта. Пожалуйста, выберите ваши предпочтения:",
-      "cookies.banner.accept-all": "Принять все",
-      "cookies.banner.analytics-only": "Только аналитика",
-      "cookies.banner.reject-all": "Отклонить все"
-    },
-    "pt": {
-      "cookies.banner.text": "Usamos cookies para melhorar sua experiência. Por favor, escolha suas preferências:",
-      "cookies.banner.accept-all": "Aceitar Todos",
-      "cookies.banner.analytics-only": "Apenas Análises",
-      "cookies.banner.reject-all": "Rejeitar Todos"
-    }
-  };
+  "en": {
+    "cookies.banner.text": "We use cookies to enhance your experience. Please choose your preferences:",
+    "cookies.banner.accept-all": "Accept All",
+    "cookies.banner.analytics-only": "Analytics Only",
+    "cookies.banner.reject-all": "Reject All"
+  },
+  "ru": {
+    "cookies.banner.text": "Мы используем файлы cookie для улучшения вашего опыта. Пожалуйста, выберите ваши предпочтения:",
+    "cookies.banner.accept-all": "Принять все",
+    "cookies.banner.analytics-only": "Только аналитика",
+    "cookies.banner.reject-all": "Отклонить все"
+  },
+  "pt": {
+    "cookies.banner.text": "Usamos cookies para melhorar sua experiência. Por favor, escolha suas preferências:",
+    "cookies.banner.accept-all": "Aceitar Todos",
+    "cookies.banner.analytics-only": "Apenas Análises",
+    "cookies.banner.reject-all": "Rejeitar Todos"
+  }
+};
   let lang = 'en';
 
   try {
@@ -43,7 +43,6 @@ function getTranslation(key, params = {}) {
 
   return result;
 }
-
 // END TRANSLATIONS
 
 // Google Analytics Configuration
@@ -57,12 +56,17 @@ function loadGoogleAnalytics(
 ) {
   let skipGa = false;
   try {
-    skipGa = localStorage.getItem('dev-mode') === 'true'
-    || window.location.hostname === 'localhost';
+    const devEnv = localStorage.getItem('dev-mode') === 'true'
+      || window.location.hostname === 'localhost';
+    const devSettings = JSON.parse(localStorage.getItem('dev_settings') || '{}');
+    skipGa = devSettings['ga_analytics'] ? false : devEnv;
   } catch (e) {
 
   }
-  if (skipGa) return;
+  if (skipGa) {
+    console.warn('!!!___GA skip___!!!')
+    return;
+  }
   if (window.gtagLoaded) return;
   // Create and load gtag script
   const script = document.createElement('script');

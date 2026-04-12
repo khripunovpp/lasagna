@@ -1,7 +1,7 @@
 @defer {
   <lg-fade-in>
     <lg-container>
-      <lg-title>{{ 'settings.title'|translate }}</lg-title>
+      <lg-title (click)="onTitleTap()">{{ 'settings.title'|translate }}</lg-title>
 
       <lg-tabs name="settings">
         <ng-template alias="language" label="{{ 'language.settings-title'|translate }}" lgTab>
