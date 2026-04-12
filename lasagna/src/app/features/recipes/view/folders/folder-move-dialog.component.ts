@@ -7,8 +7,7 @@ import {NotificationsService} from '../../../../shared/service/services/notifica
 import {FoldersRepository} from '../../service/providers/folders.repository';
 import {Folder} from '../../service/models/Folder';
 import {errorHandler} from '../../../../shared/helpers';
-import {folderColorVar, FolderColorKey} from '../../service/const/folder-colors.const';
-import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
+import {FolderColorKey, folderColorVar} from '../../service/const/folder-colors.const';
 
 @Component({
   selector: 'lg-folder-move-dialog',
@@ -19,7 +18,6 @@ import {ButtonComponent} from '../../../../shared/view/ui/button/button.componen
     FlexColumnComponent,
     MatIcon,
     TranslatePipe,
-    ButtonComponent,
   ],
   template: `
     <lg-dialog
@@ -94,16 +92,13 @@ import {ButtonComponent} from '../../../../shared/view/ui/button/button.componen
   `],
 })
 export class FolderMoveDialogComponent {
-  private readonly _foldersRepository = inject(FoldersRepository);
-  private readonly _notificationsService = inject(NotificationsService);
-  private readonly _dialogRef = viewChild(DialogComponent);
-
   readonly onMoved = output<void>();
-
   readonly folders = signal<Folder[]>([]);
   readonly targetUuid = signal<string | null>(null);
   readonly excludeUuid = signal<string | null>(null);
-
+  private readonly _foldersRepository = inject(FoldersRepository);
+  private readonly _notificationsService = inject(NotificationsService);
+  private readonly _dialogRef = viewChild(DialogComponent);
   private _recipeUuids: string[] = [];
 
   readonly colorVar = (color: string) => folderColorVar(color as FolderColorKey);

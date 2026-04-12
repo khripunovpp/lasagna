@@ -23,10 +23,9 @@ import {TranslatePipe} from '@ngx-translate/core';
         }
       </div>
       <div class="entity-item-selector__body">
-        @for (item of items(); track item.slug; let last = $last, first = $first, index = $index) {
+        @for (item of items(); track item.slug; let index = $index) {
           <div class="entity-item-selector__part"
                [attr.data-u2e]="'entity-item-selector.part.' + item.slug"
-               (click)="onClickItem(item, index)"
                [class.active]="activeIndex() === index">
             <div class="entity-item-selector__control">
               @if (item.slug === 'custom') {

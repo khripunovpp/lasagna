@@ -47,7 +47,6 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     InlineSeparatedGroupDirective,
     NgClass,
     PullDirective,
-    SelfStartDirective,
   ],
   template: `
     @defer {
@@ -57,20 +56,23 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
             <lg-flex-row [center]="true"
                          [mobileMode]="true"
                          [mobileReverse]="true">
-              @if (currentInvoice()?.uuid) {
-                <lg-title lgSelfStart>
-                  {{ currentInvoice()?.name }}
-                </lg-title>
-              } @else {
-                <lg-title lgSelfStart>
-                  {{ 'invoices.new-invoice' | translate }}
-                </lg-title>
-              }
+              <lg-flex-row [center]="true"
+                           size="medium"
+                           [mobileMode]="true">
+                @if (currentInvoice()?.uuid) {
+                  <lg-title>
+                    {{ currentInvoice()?.name }}
+                  </lg-title>
+                } @else {
+                  <lg-title>
+                    {{ 'invoices.new-invoice' | translate }}
+                  </lg-title>
+                }
 
-              <span [ngClass]="stateBadgeClass()" lgSelfStart>
+                <span [ngClass]="stateBadgeClass()">
                 {{ stateLabel() }}
               </span>
-
+              </lg-flex-row>
 
               <lg-inline-separated-group lgPull lgShrink>
                 @if (currentInvoice()?.canMarkPaid) {
@@ -273,7 +275,6 @@ export class AddInvoiceComponent {
       this.currentInvoice()?.uuid!,
       this.currentInvoice()!
     ).then(() => {
-      // Track invoice edit analytics
       this._analyticsService.trackUserEngagement(
         'edit_invoice',
         'invoice',

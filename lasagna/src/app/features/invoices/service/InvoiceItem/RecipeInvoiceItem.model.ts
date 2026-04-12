@@ -12,7 +12,7 @@ export class RecipeInvoiceItem
   constructor(
     public recipe: Recipe,
     public amount: number = 0,
-    public unit: string = 'gram',
+    public unit: string = UnitValue.GRAM,
     public pinnedDto: InvoiceItemDTO["pinnedDto"],
   ) {
     super();
@@ -37,7 +37,7 @@ export class RecipeInvoiceItem
 
   get weightGram(): number {
     // TODO
-    if (this.unit === 'gram' && !this.recipe.portions) {
+    if (this.unit === UnitValue.GRAM && !this.recipe.portions) {
       return this.amount;
     }
     return 0
@@ -48,14 +48,14 @@ export class RecipeInvoiceItem
       return this.pinnedDto.pricePerUnit;
     }
     // TODO
-    if (this.unit === 'gram' && this.recipe?.portions) {
+    if (this.unit === UnitValue.GRAM && this.recipe?.portions) {
       return this.recipe.totalPrice / this.recipe.totalIngredientsWeight
     }
     return this.recipe.pricePerUnit;
   }
 
   get compareKey(): string {
-    return makeCompareKey.forRecipeModel(this);
+    return makeCompareKey.forModel(this);
   }
 
   get itemEmpty(): boolean {
@@ -84,9 +84,10 @@ export class RecipeInvoiceItem
     return {
       type: this.type,
       amount: parseFloatingNumber(this.amount),
-      unit: this.unit || 'gram',
+      unit: this.unit || UnitValue.GRAM,
       recipe_id: this.recipe.uuid || null,
       product_id: null,
+      custom_name: null,
       pinnedDto: this.pinnedDto,
     };
   }
@@ -96,7 +97,7 @@ export class RecipeInvoiceItem
   }
 
   setUnit(unit: string): void {
-    this.unit = unit || 'gram';
+    this.unit = unit || UnitValue.GRAM;
   }
 
   setPayload(payload: unknown): void {

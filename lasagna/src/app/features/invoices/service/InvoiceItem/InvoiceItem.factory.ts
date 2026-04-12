@@ -6,12 +6,14 @@ import {InvoiceItemType} from './InvoiceItem.types';
 import {ProductInvoiceItem} from './ProductInvoiceItem.model';
 import {RecipeInvoiceItem} from '@invoices/service/InvoiceItem/RecipeInvoiceItem.model';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {CustomInvoiceItem} from '@invoices/service/InvoiceItem/CustomInvoiceItem.model';
 
 export class InvoiceItemFactory {
   constructor() {
   }
 
   fromDTO(dto: Partial<InvoiceItemDTO>): InvoiceItemBase | undefined {
+    debugger
     switch (dto.type) {
       case InvoiceItemType.Product:
         const product = typeof dto.product_id === 'string'
@@ -24,6 +26,13 @@ export class InvoiceItemFactory {
           ? Recipe.fromRaw({uuid: dto.recipe_id})
           : Recipe.fromRaw(dto.recipe_id);
         return new RecipeInvoiceItem(recipe, dto?.amount, dto?.unit || UnitValue.GRAM, dto?.pinnedDto || null);
+
+      case InvoiceItemType.Custom:
+        return new CustomInvoiceItem(
+          dto.custom_name || '',
+          dto?.amount,
+          dto?.unit || UnitValue.GRAM,
+          dto?.pinnedDto || null);
 
       default:
         return undefined

@@ -30,7 +30,6 @@ import {TranslatePipe} from '@ngx-translate/core';
       <ng-container [formGroup]="form">
         <ng-container formArrayName="rows">
           @for (row of credentials(); track (row.name + row.uuid); let i = $index, odd = $odd, last = $last) {
-            @let tacControl = form.controls.rows.controls[i];
             <section class="credentials" [formGroupName]="i">
               @if (isMobile()) {
                 <lg-control-box>

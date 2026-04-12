@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
+@use "brand-palette";
 @import "@ng-select/ng-select/themes/default.theme.css";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import 'brand-palette';
 
 :root {
   // MAIN PALETTE

@@ -19,6 +19,7 @@ export class Invoice {
     if (dto) {
       this.patch(dto);
       if (dto.rows && factory) {
+        debugger
         this.rows = dto.rows.map(item => factory.fromDTO(item))
           .filter(Boolean) as InvoiceItemBase[];
       }
@@ -217,6 +218,7 @@ export class Invoice {
     rows: Partial<InvoiceDTO>['rows'],
     factory: InvoiceItemFactory
   ) {
+    debugger
     if (!this.canBeUpdated
       || !rows) return;
     const existingItemsMap = this._getItemsMap();
@@ -233,7 +235,7 @@ export class Invoice {
 
         targetItem.setAmount((currentRow.amount ?? targetItem.amount) ?? 0);
         targetItem.setUnit(currentRow.unit || targetItem.unit || UnitValue.GRAM);
-      } else if (currentRow.product_id || currentRow.recipe_id) {
+      } else if (currentRow.product_id || currentRow.recipe_id || currentRow.custom_name) {
         const newItem = factory.fromDTO(currentRow);
 
         if (newItem) {
@@ -263,6 +265,7 @@ export class Invoice {
   addItem(
     item: InvoiceItemBase,
   ) {
+    debugger
     if (!this.canBeUpdated) return;
     this.rows.push(item);
     this.markUpdated();
@@ -398,6 +401,7 @@ export class Invoice {
     index: number,
     pricePerUnit: number
   ) {
+    debugger
     if (index < 0 || index >= this.rows.length) {
       throw new Error('Index out of bounds');
     }
@@ -497,12 +501,7 @@ export class Invoice {
   private _getRowKey(
     item: InvoiceItemDTO
   ): string {
-    if (item.type === 'product') {
-      return makeCompareKey.forProductDTO(item);
-    } else if (item.type === 'recipe') {
-      return makeCompareKey.forRecipeDTO(item);
-    }
-    return 'unknown-' + item.type;
+    return makeCompareKey.forDTO(item);
   }
 
   private _getItemsMap() {

@@ -8,6 +8,7 @@ import {ProductInvoiceItem} from '../service/InvoiceItem/ProductInvoiceItem.mode
 import {RecipeInvoiceItem} from '@invoices/service/InvoiceItem/RecipeInvoiceItem.model';
 import {Credential} from '../../settings/service/models/Credential';
 import {UnitValue} from '../../../shared/view/const/units.const';
+import {CustomInvoiceItem} from '@invoices/service/InvoiceItem/CustomInvoiceItem.model';
 
 export const invoiceItemFormShape = {
   amount: new FormControl<string | null>(null, Validators.required),
@@ -19,6 +20,7 @@ export const invoiceItemFormShape = {
   product_id: new FormControl<{
     uuid: string
   } | null>(null),
+  custom_name: new FormControl<string | null>(null),
   pricePerUnit: new FormControl<string | null>(null),
   totalPrice: new FormControl<string | null>(null),
   totalPriceWithTaxesAndFees: new FormControl<string | null>(null),
@@ -62,11 +64,15 @@ export const makeInvoiceItemFormGroup = (
 ): FormGroup => {
   let productId = null;
   let recipeId = null;
+  let customName = null;
   if (item && item instanceof ProductInvoiceItem && item.product?.uuid) {
     productId = {uuid: item.product.uuid};
   }
   if (item && item instanceof RecipeInvoiceItem && item.recipe?.uuid) {
     recipeId = {uuid: item.recipe.uuid};
+  }
+  if (item && item instanceof CustomInvoiceItem && item.name) {
+    customName = item.name;
   }
 
   const totalPriceWithTaxesAndFees = (((item?.totalPrice || 0) + (item?.calculateTaxesAndFeesAmount(invoice?.taxesAndFees || []) || 0)) || 0) || null;
@@ -77,6 +83,7 @@ export const makeInvoiceItemFormGroup = (
     activeTab: new FormControl(item?.type || 'recipe'),
     recipe_id: new FormControl(recipeId),
     product_id: new FormControl(productId),
+    custom_name: new FormControl(customName),
     totalPrice: new FormControl(item?.totalPrice),
     pricePerUnit: new FormControl(item?.pricePerUnitModified),
     totalPriceWithTaxesAndFees: new FormControl(totalPriceWithTaxesAndFees),
@@ -86,6 +93,7 @@ export const makeInvoiceItemFormGroup = (
 export const fromFormToDTO = (
   formValue: InferFormShape<typeof invoiceFormShape>
 ): Partial<InvoiceDTO> => {
+  debugger
   return {
     name: formValue.name || '',
     rows: formValue.rows?.map((item) => {
@@ -95,6 +103,7 @@ export const fromFormToDTO = (
         type: (item.activeTab || 'recipe') as InvoiceItemDTO['type'],
         recipe_id: item.recipe_id?.uuid || null,
         product_id: item.product_id?.uuid || null,
+        custom_name: item.custom_name || '',
       }
     }),
     credential_from_string: formValue.credential_from?.free_style || '',
@@ -115,6 +124,7 @@ export const fromFormToDTO = (
 export const fromInvoiceToFormValue = (
   invoice: Invoice
 ): InferFormShape<typeof invoiceFormShape> => {
+  debugger
   return {
     name: invoice.name,
     rows: invoice.rows.map(item => {
@@ -133,6 +143,7 @@ export const fromInvoiceToFormValue = (
         activeTab: item.type as 'recipe' | 'product' | 'custom',
         product_id: productId,
         recipe_id: recipeId,
+        custom_name: '',
         totalPrice: item.totalPrice.toString(),
         pricePerUnit: item.pricePerUnitModified.toString(),
         totalPriceWithTaxesAndFees: (
@@ -175,6 +186,9 @@ export const invoiceItemIsProduct = (item: InvoiceItemBase): item is ProductInvo
 export const invoiceItemIsRecipe = (item: InvoiceItemBase): item is RecipeInvoiceItem => {
   return item.type === 'recipe';
 }
+export const invoiceItemIsCustom = (item: InvoiceItemBase): item is RecipeInvoiceItem => {
+  return item.type === 'custom';
+}
 
 export const makeCompareKey = {
   forProductModel: (item: ProductInvoiceItem): string => {
@@ -188,5 +202,30 @@ export const makeCompareKey = {
   },
   forRecipeDTO: (item: InvoiceItemDTO): string => {
     return `recipe-${item.recipe_id}`;
+  },
+  forCustomModel: (item: CustomInvoiceItem): string => {
+    return `recipe-${item.name}`;
+  },
+  forCustomDTO: (item: InvoiceItemDTO): string => {
+    return `recipe-${item.custom_name}`;
+  },
+
+  forModel: (item: InvoiceItemBase) => {
+    if ((item as RecipeInvoiceItem)['recipe']?.uuid) {
+      return `recipe-${item.payloadUUID}`
+    } else if ((item as ProductInvoiceItem)['product']?.uuid) {
+      return `product-${item.payloadUUID}`;
+    } else {
+      return `custom-${item.payloadUUID}`;
+    }
+  },
+  forDTO: (item: InvoiceItemDTO) => {
+    if (item.recipe_id) {
+      return `recipe-${item.recipe_id}`
+    } else if (item.product_id) {
+      return `product-${item.product_id}`;
+    } else {
+      return `custom-${item.custom_name}`;
+    }
   },
 }

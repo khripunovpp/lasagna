@@ -50,6 +50,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {CurrencySymbolPipe} from '../../../../shared/view/pipes/currency-symbol.pipe';
+import {errorHandler} from '../../../../shared/helpers';
 
 
 @Component({
@@ -131,7 +132,7 @@ export class AddInvoiceFormComponent
     }
 
     this.form.valueChanges.pipe(
-      debounceTime(100),
+      debounceTime(500),
     ).subscribe(values => {
       if (!this.form.dirty) {
         return
@@ -220,17 +221,27 @@ export class AddInvoiceFormComponent
       return
     }
 
-    this.invoiceBuilderService.setRecipePayload(index, Recipe.fromRaw(recipe)).then((row) => {
-      this.amountField()?.at(index)?.focus();
-      this.rows.at(index).patchValue({
-        unit: row?.unit || 'gram',
-        amount: row?.defaultOutcome,
-      });
+    this.invoiceBuilderService.changeRowType(index, InvoiceItemType.Recipe);
+    this.invoiceBuilderService.setRecipePayload(index, Recipe.fromRaw(recipe))
+      .then((row) => {
+        this.amountField()?.at(index)?.focus();
+        this.rows.at(index).patchValue({
+          unit: row?.unit || 'gram',
+          amount: row?.defaultOutcome,
+          product_id: null,
+          custom_name: null,
+          totalPrice: 0,
+          pricePerUnit: 0,
+          totalPriceWithTaxesAndFees: 0,
+        });
 
-      setTimeout(() => {
-        this.recalculateRows();
-      }, 200);
-    });
+        setTimeout(() => {
+          this.recalculateRows();
+        }, 200);
+      })
+      .catch(err => {
+        this._notificationsService.error(errorHandler(err));
+      });
   }
 
   onProductSelected(
@@ -241,32 +252,46 @@ export class AddInvoiceFormComponent
       return
     }
 
+    this.invoiceBuilderService.changeRowType(index, InvoiceItemType.Product);
     const row = this.invoiceBuilderService.setProductPayload(index, Product.fromRaw(product));
     this.amountField()?.at(index)?.focus();
     this.rows.at(index).patchValue({
       unit: row?.unit || 'gram',
+      recipe_id: null,
+      custom_name: null,
+      totalPrice: 0,
+      pricePerUnit: 0,
+      totalPriceWithTaxesAndFees: 0,
     });
   }
 
-  onItemChanged(
-    type: string,
+  onCustomSelected(
+    custom_name: string,
     index: number
   ) {
     if (!this.invoiceBuilderService.invoice()?.canBeUpdated) {
       return
     }
 
-    this.invoiceBuilderService.changeRowType(index, type as InvoiceItemType);
+    this.invoiceBuilderService.changeRowType(index, InvoiceItemType.Custom);
+    const row = this.invoiceBuilderService.setCustomPayload(index, {
+      name: custom_name,
+      unit: this.rows.at(index).value['unit'],
+    });
+    this.amountField()?.at(index)?.focus();
     this.rows.at(index).patchValue({
+      unit: row?.unit || 'gram',
       recipe_id: null,
       product_id: null,
-      pricePerUnit: null,
-      totalPrice: null,
-    })
+      totalPrice: 0,
+      pricePerUnit: 0,
+      totalPriceWithTaxesAndFees: 0,
+    });
   }
 
   recalculateRows() {
     const invoiceRows = this.invoiceBuilderService.invoice()?.rows || [];
+        debugger
     this.rows.controls.forEach((row, index) => {
       const item = invoiceRows[index];
       if (item) {
@@ -316,6 +341,7 @@ export class AddInvoiceFormComponent
     event: any,
     index: number
   ) {
+    debugger
     this.invoiceBuilderService.invoice()?.pinPricePerUnit(index, event);
     this.recalculateRows();
   }
@@ -324,7 +350,6 @@ export class AddInvoiceFormComponent
     event: any,
     index: number
   ) {
-
     this.recalculateRows();
   }
 

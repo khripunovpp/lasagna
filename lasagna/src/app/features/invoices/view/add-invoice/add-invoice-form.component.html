@@ -102,10 +102,14 @@
                      lgExpand>
           <div lgWidth="40%">{{ 'invoices.item' | translate }}</div>
           <div [lgWidth]="canBeUpdated ? '20%' : '12.5%'">{{ 'invoices.amount' | translate }}</div>
-          <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.price' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
-          <div lgWidth="12.5%">{{ 'invoices.total' | translate }}, <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.price-per-unit' | translate }},
+            <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.price' | translate }},
+            <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.taxes-and-fees' | translate }},
+            <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
+          <div lgWidth="12.5%">{{ 'invoices.total' | translate }},
+            <span>{{ userSettings()?.['currency']|currencySymbol }}</span></div>
         </lg-flex-row>
       }
 
@@ -114,14 +118,15 @@
           <ng-container [formGroupName]="i">
             @let item = invoiceBuilderService.invoice()?.rows?.[i];
             @let isRecipe = item?.type === 'recipe';
+            @let isCustom = item?.type === 'custom';
 
             <lg-controls-row [mobileMode]="true" [equal]="true">
 
               @if (canBeUpdated) {
                 <lg-entity-item-selector lgWidth="40%"
-                                         (onChanged)="onItemChanged($event, i)"
                                          formControlName="activeTab">
                   <lg-multiselect [resource]="'recipes'"
+                                  name="recipe_id"
                                   appendTo="body"
                                   [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
                                   formControlName="recipe_id"
@@ -130,13 +135,25 @@
                                   [autoLoad]="true"></lg-multiselect>
 
                   <lg-multiselect [resource]="'products'"
-                                  (onSelected)="onProductSelected($event, i)"
                                   appendTo="body"
+                                  name="product_id"
+                                  (onSelected)="onProductSelected($event, i)"
                                   formControlName="product_id"
                                   [placeholder]="'recipe.form.ingredients.product_id.label' | translate"
                                   ngProjectAs="products"
                                   [autoLoad]="true">
                   </lg-multiselect>
+
+                  <lg-input ngProjectAs="custom"
+                            (onInputChanged)="onCustomSelected($event, i)"
+                            formControlName="custom_name"
+                            [placeholder]="'recipe.form.ingredients.new_product_name.label' | translate"></lg-input>
+
+                  <div ngProjectAs="custom-title">
+                    <mat-icon [inline]="true"
+                              aria-hidden="false"
+                              fontIcon="add"></mat-icon>
+                  </div>
                 </lg-entity-item-selector>
               } @else {
                 <lg-readonly-control [placeholder]="'invoices.unknown-item' | translate"
@@ -150,11 +167,11 @@
                 @if (canBeUpdated) {
                   <lg-number-input #amount
                                    lgParseMath
-                                   (onInputChange)="onAmountChange($event, i)"
+                                   (change)="onAmountChange($event, i)"
                                    [placeholder]="'0'"
                                    formControlName="amount">
                     <ng-template lgExtraTpl place="after">
-                      <lg-unit-switcher [disable]="true"
+                      <lg-unit-switcher [disable]="!isCustom"
                                         formControlName="unit">
                       </lg-unit-switcher>
                     </ng-template>
@@ -201,13 +218,9 @@
 
               <lg-control lgWidth="12.5%"
                           [label]="isMobile() ? ('invoices.taxes-and-fees' | translate) : ''">
-                @if (isRecipe) {
-                  <lg-readonly-control [placeholder]="'0'"
-                                       [value]="taxAmount | number: '1.2-4'">
-                  </lg-readonly-control>
-                } @else {
-                  <div></div>
-                }
+                <lg-readonly-control [placeholder]="'0'"
+                                     [value]="isRecipe ? taxAmount : 0 | number: '1.2-4'">
+                </lg-readonly-control>
               </lg-control>
 
               <lg-control lgWidth="12.5%"

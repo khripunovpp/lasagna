@@ -26,7 +26,8 @@ import {CAN_SYNC, HAS_SYNC_FEATURE} from '../../sync/service/can-sync.token';
 import {HAS_FEATURE} from '../service/providers/has-feature.token';
 import {DeletedDataStorageViewComponent} from '../../../shared/view/deleting/deleted-data-storage-view.component';
 import {AccountSettingsComponent} from '../../account/account-settings.component';
-
+import {CredentialSettingsComponent} from './finance-settings/credentials/credential-settings.component';
+import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.component';
 
 
 @Component({
@@ -54,6 +55,8 @@ import {AccountSettingsComponent} from '../../account/account-settings.component
     SyncSettingsComponent,
     DeletedDataStorageViewComponent,
     AccountSettingsComponent,
+    CredentialSettingsComponent,
+    TaxesSettingsComponent,
   ]
 })
 export class SettingsComponent implements OnInit {
@@ -65,6 +68,10 @@ export class SettingsComponent implements OnInit {
   isClient = inject(IS_CLIENT);
   editedCategoryProduct = signal('')
   editedCategoryRecipe = signal('')
+  canSync = inject(CAN_SYNC);
+  hasSyncFeature = inject(HAS_SYNC_FEATURE);
+  hasAuthFeature = inject(HAS_FEATURE)('registration');
+  hasInvoicesFeature = inject(HAS_FEATURE)('invoices');
   private _onboardingService = inject(OnboardingService);
   private _router = inject(Router);
   private _titleTapCount = 0;
@@ -84,10 +91,6 @@ export class SettingsComponent implements OnInit {
       this._titleTapCount = 0;
     }, 1500);
   }
-
-  canSync = inject(CAN_SYNC);
-  hasSyncFeature = inject(HAS_SYNC_FEATURE);
-  hasAuthFeature = inject(HAS_FEATURE)('registration');
 
   ngOnInit() {
     if (!this.isClient) {

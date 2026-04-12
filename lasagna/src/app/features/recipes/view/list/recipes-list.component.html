@@ -1,6 +1,6 @@
 @defer {
   @if (recipes | async; as recipesList) {
-    @if (recipesList.groups?.length) {
+    @if (recipesList.groups.length) {
       <lg-controls-bar>
         <lg-button [icon]="true"
                    (click)="addRecipe()"

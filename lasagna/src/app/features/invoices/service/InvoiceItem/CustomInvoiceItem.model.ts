@@ -1,17 +1,15 @@
 import {InvoiceItemBase} from './InvoiceItemBase.abstract';
 import {InvoiceItemType} from './InvoiceItem.types';
-import {Product} from '../../../products/service/Product';
 import {InvoiceItemDTO} from './InvoiceItem.scheme';
-import {parseFloatingNumber} from '../../../../shared/helpers/number.helper';
+import {parseFloatingNumber} from '../../../../shared/helpers';
 import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Tax} from '../../../settings/service/models/Tax';
-import {undefined} from 'zod';
 import {UnitValue} from '../../../../shared/view/const/units.const';
 
-export class ProductInvoiceItem
+export class CustomInvoiceItem
   extends InvoiceItemBase {
   constructor(
-    public product: Product,
+    public name: string,
     public amount: number = 0,
     public unit: string = UnitValue.GRAM,
     public pinnedDto: InvoiceItemDTO['pinnedDto'],
@@ -19,36 +17,29 @@ export class ProductInvoiceItem
     super();
   }
 
-  readonly type = InvoiceItemType.Product;
+  readonly type = InvoiceItemType.Custom;
 
   get totalPrice(): number {
-    return this.pricePerUnit * this.amount;
+    console.log({
+      pricePerUnitModified: this.pricePerUnitModified,
+      amount: this.amount,
+    })
+    return this.pricePerUnitModified * this.amount;
   }
 
   get weightGram(): number {
-    // TODO
-    if (this.unit === UnitValue.GRAM && this.product.unit === UnitValue.GRAM) {
-      return this.amount;
-    }
     return 0
   }
 
   get pricePerUnit(): number {
-    // TODO
-    if (this.unit === UnitValue.PIECE && this.product.unit !== UnitValue.PIECE) {
-      return 0;
-    }
-
-    // TODO
-    if (this.unit === UnitValue.GRAM && this.product.unit === UnitValue.PIECE) {
-      return 0;
-    }
-
-    return this.product.pricePerUnit;
+    return 0;
   }
 
   get pricePerUnitModified() {
-    return this.pricePerUnit
+    if (this.pinnedDto?.pricePerUnit) {
+      return this.pinnedDto.pricePerUnit;
+    }
+    return 0;
   }
 
   get compareKey(): string {
@@ -56,29 +47,29 @@ export class ProductInvoiceItem
   }
 
   get itemEmpty(): boolean {
-    return this.amount <= 0 || !this.product.uuid;
+    return this.amount <= 0 || !this.name;
   }
 
   get payloadUUID(): string | undefined {
-    return this.product.uuid;
+    return this.name;
   }
 
   get rowName(): string {
-    return this.product.name || 'Unnamed Product';
+    return this.name || 'Unnamed';
   }
 
   get defaultOutcome() {
-    return this.product.amount;
+    return this.amount;
   }
 
   toDTO(): InvoiceItemDTO {
     return {
       type: this.type,
-      product_id: this.product.uuid || null,
       amount: parseFloatingNumber(this.amount),
       unit: this.unit || UnitValue.GRAM,
+      custom_name: this.name,
       recipe_id: null,
-      custom_name: null,
+      product_id: null,
       pinnedDto: this.pinnedDto,
     };
   }
@@ -91,18 +82,20 @@ export class ProductInvoiceItem
     this.unit = unit || UnitValue.GRAM;
   }
 
-  setPayload(payload: unknown): void {
-    if (payload instanceof Product) {
-      this.product = payload;
+  setPayload(payload: any): void {
+    if ('name' in payload
+      && typeof payload.name === 'string'
+      && 'unit' in payload) {
+      this.name = payload.name;
       this.setUnit(payload.unit || UnitValue.GRAM);
     } else {
       throw new Error('Invalid payload type for ProductInvoiceItem');
     }
   }
 
-  clone(): ProductInvoiceItem {
-    return new ProductInvoiceItem(
-      this.product,
+  clone(): CustomInvoiceItem {
+    return new CustomInvoiceItem(
+      this.name,
       this.amount,
       this.unit,
       this.pinnedDto,
@@ -115,8 +108,8 @@ export class ProductInvoiceItem
       amount: dto.amount,
       unit: dto.unit,
       type: dto.type,
-      entity_id: this.product.uuid || null,
-      entity_name: this.product.name,
+      entity_id: null,
+      entity_name: this.name,
       pricePerUnit: this.pricePerUnitModified,
     }
   }
@@ -126,7 +119,7 @@ export class ProductInvoiceItem
   }
 
   calculateTaxesAndFeesAmount(taxesAndFees: Tax[]): number {
-    return 0;
+    return this.totalPrice;
   }
 
   calculateTaxesAndFeesMap(taxesAndFees: Tax[]): Map<Tax["uuid"], number> {

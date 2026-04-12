@@ -42,8 +42,6 @@ import {SelfEndDirective} from '../../../../../shared/view/directives/self-end.d
           }
 
           @for (taxRow of taxesAndFees(); track (taxRow.name + taxRow.uuid + i); let i = $index, odd = $odd) {
-            @let tacControl = taxesForm.controls.rows.controls[i];
-
             @if (feesIndex() === i) {
               {{ 'settings.taxes.fees' | translate }}
             }

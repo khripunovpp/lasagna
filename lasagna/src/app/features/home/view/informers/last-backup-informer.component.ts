@@ -1,6 +1,4 @@
 import {Component, computed, HostListener, inject, signal} from '@angular/core';
-import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
-import {TitleCasePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {UserService} from '../../../settings/service/services/user.service';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -44,8 +42,6 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     }
   `],
   imports: [
-    TimeAgoPipe,
-    TitleCasePipe,
     RouterLink,
     TranslatePipe
   ]
@@ -54,9 +50,9 @@ export class LastBackupInformerComponent {
   constructor() {
   }
 
+  private readonly _window = inject(WINDOW);
   oneDayInMilliseconds = 24 * 60 * 60 * 1000;
   twoWeeksInMilliseconds = 14 * this.oneDayInMilliseconds;
-  private readonly _window = inject(WINDOW);
   userService = inject(UserService);
   storedBackupDate = signal<string | null>(this._getStoredDate());
   today: Date = new Date();

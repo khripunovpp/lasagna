@@ -28,6 +28,7 @@ import {USER_LANGUAGE} from '../../../../features/settings/service/providers/use
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {errorHandler} from '../../../../shared/helpers';
+import {HAS_FEATURE} from '../../../settings/service/providers/has-feature.token';
 
 @Component({
   selector: 'lg-invoices-list',
@@ -51,8 +52,7 @@ import {errorHandler} from '../../../../shared/helpers';
             {{ 'invoices.list-title' | translate }}
           </lg-title>
 
-          @if (isDevMode()) {
-
+          @if (isDevMode) {
             @if (invoices().length) {
               <lg-selection-tools [selectionTypes]="['invoice']"></lg-selection-tools>
             }
@@ -186,7 +186,7 @@ export class InvoicesListComponent
     });
   }
 
-  readonly isDevMode = isDevMode;
+  readonly isDevMode = inject(HAS_FEATURE)('invoices');
   nowDate = Date.now();
   invoices: Signal<{
     group_key: string

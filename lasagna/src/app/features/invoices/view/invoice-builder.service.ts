@@ -12,6 +12,8 @@ import {LoggerService} from '../../logger/logger.service';
 import {Credential} from '../../settings/service/models/Credential';
 import {CredentialsRepository} from '../../settings/service/repositories/credentials.repository';
 import {Tax} from '../../settings/service/models/Tax';
+import {Unit} from '../../../shared/service/types/Unit.types';
+import {InvoiceItemDTO} from '@invoices/service/InvoiceItem/InvoiceItem.scheme';
 
 
 type PayloadMap = Partial<Record<InvoiceItemType, Map<string, number>>>;
@@ -34,6 +36,10 @@ export class InvoiceBuilderService {
   ) {
   }
 
+  /**
+   * Фабрика для создания позиций счета-фактуры.
+   */
+  factory = new InvoiceItemFactory();
   private _builderLogger = inject(LoggerService).withContext({
     label: 'InvoiceBuilderService',
     color: '#8e44ad',
@@ -47,10 +53,6 @@ export class InvoiceBuilderService {
     [InvoiceItemType.Product]: new Map(),
     [InvoiceItemType.Recipe]: new Map(),
   };
-  /**
-   * Фабрика для создания позиций счета-фактуры.
-   */
-  factory = new InvoiceItemFactory();
 
   /**
    * Сигнал для хранения текущего счета-фактуры.
@@ -102,6 +104,7 @@ export class InvoiceBuilderService {
   patchInvoice(
     formValue: unknown,
   ): Invoice | undefined {
+    debugger
     const values = formValue as any;
     const newInvoice = this._invoice()!.clone();
     const commonInvoiceDTO: Partial<InvoiceDTO> = {
@@ -118,20 +121,25 @@ export class InvoiceBuilderService {
       customer_credential_id: values.customer_credential_id?.id || null,
       taxesIncluded: values.taxesIncluded || false,
     };
-    const rowsDTO = values.rows.map((row: any) => {
+    const rowsDTO: InvoiceItemDTO[] = values.rows.map((row: any) => {
       return {
         amount: row.amount ? parseFloat(row.amount) : 0,
         unit: row.unit || 'gram',
         type: (row.type || InvoiceItemType.Product) as InvoiceItemType,
         product_id: row.product_id,
         recipe_id: row.recipe_id,
+        custom_name: row.custom_name,
       };
     });
     const taxesDTO = values.taxes_and_fees?.map((tax: any) => tax.toDTO()) || [];
     newInvoice.patch(commonInvoiceDTO);
     newInvoice.patchRows(rowsDTO, this.factory);
     newInvoice.replaceTaxes(taxesDTO)
-    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {values, newInvoice,oldInvoice: this._invoice()});
+    this._builderLogger.log(`Patched invoice with UUID: ${newInvoice.uuid}`, {
+      values,
+      newInvoice,
+      oldInvoice: this._invoice()
+    });
     this._invoice.set(newInvoice);
     return this._invoice();
   }
@@ -187,6 +195,17 @@ export class InvoiceBuilderService {
     }
 
     this._setPayload(index, dbRecipe);
+    return this._invoice()?.getRow(index);
+  }
+
+  setCustomPayload(
+    index: number,
+    payload: {
+      name: string
+      unit: Unit
+    }
+  ): InvoiceItemBase | undefined {
+    this._setPayload(index, payload);
     return this._invoice()?.getRow(index);
   }
 
@@ -291,7 +310,10 @@ export class InvoiceBuilderService {
    */
   private _setPayload(
     index: number,
-    payload: Product | Recipe
+    payload: Product | Recipe | {
+      name: string
+      unit: Unit
+    }
   ): Invoice | undefined {
     if (!this._invoice()) return undefined;
     const newInvoice = this._invoice()!.clone();

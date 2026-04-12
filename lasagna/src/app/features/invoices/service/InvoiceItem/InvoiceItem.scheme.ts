@@ -6,6 +6,7 @@ export const InvoiceItemScheme = z.object({
   type: z.enum(['product', 'recipe', 'custom']),
   product_id: z.string().nullable(),
   recipe_id: z.string().nullable(),
+  custom_name: z.string().nullable(),
   pinnedDto: z.object({
     amount: z.number(),
     unit: z.string().nullable(),
