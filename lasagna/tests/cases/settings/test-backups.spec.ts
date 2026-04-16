@@ -22,6 +22,7 @@ import {AppRefs} from '../../scripts/e2e/classes/AppRefs';
 import {ChangeLogScheme} from '../../../src/app/features/history/ChangeLogEntry.scheme';
 import {DeleteRecordScheme} from '../../../src/app/shared/service/db/shemes/DeleteRecord.scheme';
 import {FolderScheme} from '../../../src/app/features/recipes/service/schemes/Folder.scheme';
+import {schemaMap} from '../../../src/app/shared/service/const/schema-map';
 
 /**
  * Тест настроек
@@ -187,22 +188,6 @@ async function validateBackupContentAndCount(
   contentStringJSON: string,
   countMap: Partial<Record<Stores, number>>,
 ) {
-  const schemaMap: Partial<Record<Stores, ZodTypeAny>> = {
-    [Stores.PRODUCTS]: ProductScheme,
-    [Stores.RECIPES]: RecipeScheme,
-    [Stores.PRODUCTS_CATEGORIES]: CategoryProductScheme,
-    [Stores.RECIPES_CATEGORIES]: CategoryRecipeScheme,
-    [Stores.DOCUMENTATION]: DocumentsScheme,
-    [Stores.FAQ]: DocumentsScheme,
-    [Stores.TAGS]: TagScheme,
-    [Stores.SETTINGS]: SettingsScheme,
-    [Stores.TAXES]: TaxScheme,
-    [Stores.INVOICES]: InvoiceScheme,
-    [Stores.CREDENTIALS]: CredentialScheme,
-    [Stores.CHANGES_LOG]: ChangeLogScheme,
-    [Stores.DELETES_STORE]: DeleteRecordScheme,
-    [Stores.FOLDERS]: FolderScheme,
-  };
   const countKeys = Object.keys(schemaMap) as Stores[];
   const parsedInfo = await validateDownloadedBackup(contentStringJSON, schemaMap);
 

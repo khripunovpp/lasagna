@@ -51,7 +51,7 @@ export class InsertHandlersManager {
 
     this.logger.log(`Transformed data for table: ${table}`, {
       handler: handler.getName(),
-      originalCount: data.length,
+      originalCount: Array.isArray(data) ? data.length : 1,
       transformedCount: transformedData.length,
       timeMs: (endTime - startTime).toFixed(2)
     });

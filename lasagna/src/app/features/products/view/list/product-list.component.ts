@@ -71,9 +71,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
             <ng-template lgInlineSeparatedGroup>
               <lg-import (onDone)="loadProducts()"
                          [label]="('import-label'|translate)"
-                         data-u2e="products.list.import-button"
-                         [schema]="ProductScheme"
-                         [storeName]="Stores.PRODUCTS">
+                         data-u2e="products.list.import-button">
                 <ng-template let-flow="flow" let-row lgImportRowTpl>
                   <span>{{ row?.name }}</span>
                 </ng-template>

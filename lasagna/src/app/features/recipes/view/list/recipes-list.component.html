@@ -30,9 +30,7 @@
           </ng-template>
           <ng-template lgInlineSeparatedGroup>
             <lg-import (onDone)="loadRecipes()"
-                       [label]="('import-label'|translate)"
-                       [schema]="RecipeScheme"
-                       [storeName]="Stores.RECIPES">
+                       [label]="('import-label'|translate)">
               <ng-template let-flow="flow" let-row lgImportRowTpl>
                 <span>{{ row?.name }}</span>
               </ng-template>

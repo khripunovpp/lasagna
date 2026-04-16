@@ -4,7 +4,7 @@ import {Stores} from './const/stores';
 import {migrations} from './migrations';
 import {generateUuid} from '../../helpers/attribute.helper';
 import {FlexsearchIndexService} from './flexsearch-index.service';
-import {BuckupData} from '../services/transfer-data.service';
+import {TransferDataStructure} from '../services/transfer-data.service';
 import {relationsMap} from './const/relations-maps';
 import {DB_NAME} from '../tokens/db-name.token';
 import {LoggerService} from '../../../features/logger/logger.service';
@@ -515,7 +515,7 @@ export class DexieIndexDbService extends Dexie {
   }
 
   async restoreAllData(
-    data: BuckupData[],
+    data: TransferDataStructure[],
   ): Promise<void> {
     const currentVersion = await this.getVersion();
     const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
@@ -556,6 +556,10 @@ export class DexieIndexDbService extends Dexie {
 
   async withTransaction<T = any>(storeKeys: Stores[], fn: (tx: Transaction) => Promise<T>): Promise<T> {
     return this.transaction<T>('rw', storeKeys, fn);
+  }
+
+  getTransformed(storeKey: Stores, data: any[]) {
+    return this.indexHandlersManager.transformData(storeKey, data).data;
   }
 
   private async _addBalkIndexWithTransform(storeKey: Stores, data: any[]) {

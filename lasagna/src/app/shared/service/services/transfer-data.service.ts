@@ -6,8 +6,8 @@ import {WINDOW} from '../tokens/window.token';
 import {NotificationsService} from './notifications.service';
 import {errorHandler} from '../../helpers';
 
-export interface BuckupData {
-  store: string
+export interface TransferDataStructure {
+  store: Stores
   data: any[]
   version: number
   createdAt: number
@@ -48,7 +48,7 @@ export class TransferDataService {
     } else {
       data = await this._indexDbService.getAll(source);
     }
-    const writeObjects: BuckupData = {
+    const writeObjects: TransferDataStructure = {
       store: source,
       data,
       version: await this._indexDbService.getVersion(),
@@ -65,7 +65,7 @@ export class TransferDataService {
     fileType: 'csv' | 'json' = 'csv',
     beforeSavedCb?: () => void
   ) {
-    const data: BuckupData[] = [];
+    const data: TransferDataStructure[] = [];
     const source = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
     for (const store of source) {
       const items = await this._indexDbService.getAll(store);
@@ -96,7 +96,7 @@ export class TransferDataService {
       return;
     }
     debugger
-    const data = await this._csvReaderService.readFromJSONFile<BuckupData[]>(files![0]);
+    const data = await this._csvReaderService.readFromJSONFile<TransferDataStructure[]>(files![0]);
     await this._indexDbService.restoreAllData(data);
     await this._indexDbService.flushCache();
   }
