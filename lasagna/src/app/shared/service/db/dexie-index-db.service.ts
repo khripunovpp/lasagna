@@ -8,8 +8,9 @@ import {BuckupData} from '../services/transfer-data.service';
 import {relationsMap} from './const/relations-maps';
 import {DB_NAME} from '../tokens/db-name.token';
 import {LoggerService} from '../../../features/logger/logger.service';
-import {IndexHandlersManager} from './handlers/index-handlers.manager';
+import {IndexHandlersManager} from './index-transform-manager/index-handlers.manager';
 import {isPlatformBrowser} from '@angular/common';
+import {InsertHandlersManager} from './insert-transform-manager/insert-handlers.manager';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class DexieIndexDbService extends Dexie {
   constructor(
     private flexsearchIndexService: FlexsearchIndexService,
     private indexHandlersManager: IndexHandlersManager,
+    private insertHandlersManager: InsertHandlersManager,
     @Inject(DB_NAME) dbName: string,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
@@ -434,13 +436,28 @@ export class DexieIndexDbService extends Dexie {
     }
   }
 
-  async balkAdd(storeKey: Stores, values: any[], autoUUID = true): Promise<string[]> {
+  async balkAdd(
+    storeKey: Stores,
+    values: any[],
+    autoUUID = true,
+    options?: {
+      withInsertTransform: boolean
+    }
+  ): Promise<string[]> {
     this.logger.log(`Bulk adding ${values.length} items to ${storeKey}`, {autoUUID});
 
-    const valuesWithUuid = values.map(value => ({
-      ...value,
-      uuid: autoUUID ? this._generateUuid() : (value.uuid || this._generateUuid()),
-    }));
+    const valuesWithUuid = values.map(value => {
+      const obj = {
+        ...value,
+        uuid: autoUUID
+          ? this._generateUuid()
+          : (value.uuid || this._generateUuid()),
+      };
+
+      return options?.withInsertTransform
+        ? this._applyInsertTransformation(storeKey, obj).data[0]
+        : obj;
+    });
 
     // @ts-ignore
     const resp = await (this[storeKey] as Table<any>).bulkPut(valuesWithUuid, {allKeys: true});
@@ -497,18 +514,26 @@ export class DexieIndexDbService extends Dexie {
     return (this as any).idbdb?.version ?? 0;
   }
 
-  async restoreAllData(data: BuckupData[]): Promise<void> {
+  async restoreAllData(
+    data: BuckupData[],
+  ): Promise<void> {
     const currentVersion = await this.getVersion();
     const stores = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
     for (const store of stores) {
       const items = data.find(item => item.store === store);
       if (items) {
-        if (items.version > currentVersion) {
-          throw new Error(`Backup version ${items.version} is newer than current DB version ${currentVersion}. Please update the application.`);
-        }
+        // if (items.version > currentVersion) {
+        //   throw new Error(`Backup version ${items.version} is newer than current DB version ${currentVersion}. Please update the application.`);
+        // }
         // TODO validate schema
         await this.clear(store);
-        await this.balkAdd(store, items.data, false);
+        await this.balkAdd(
+          store,
+          items.data,
+          false,
+          {
+            withInsertTransform: true,
+          });
       } else {
         // throw new Error(`Store ${store} not found in backup data`);
       }
@@ -539,6 +564,13 @@ export class DexieIndexDbService extends Dexie {
     for (const item of transformedItem.data) {
       await this.flexsearchIndexService.addToIndex(storeKey, item);
     }
+  }
+
+  private _applyInsertTransformation(
+    storeKey: Stores,
+    data: unknown,
+  ) {
+    return this.insertHandlersManager.transformData(storeKey, data);
   }
 
   private async _collectRelations(obj: Record<any, any>, relations: Record<string, Record<string, any>> = {}) {

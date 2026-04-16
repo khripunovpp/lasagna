@@ -95,6 +95,7 @@ export class TransferDataService {
       throw new Error('Only one file is allowed');
       return;
     }
+    debugger
     const data = await this._csvReaderService.readFromJSONFile<BuckupData[]>(files![0]);
     await this._indexDbService.restoreAllData(data);
     await this._indexDbService.flushCache();

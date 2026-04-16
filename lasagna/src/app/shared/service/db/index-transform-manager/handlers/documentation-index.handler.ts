@@ -1,5 +1,5 @@
-import {IndexDataHandler} from '../types/index-handlers.types';
-import {Stores} from '../const/stores';
+import {IndexDataHandler} from '../index-handlers.types';
+import {Stores} from '../../const/stores';
 
 /**
  * Documentation data structure from database

@@ -1,6 +1,6 @@
-import {IndexDataHandler} from '../types/index-handlers.types';
-import {Stores} from '../const/stores';
-import {ProductDTO} from '../../../../features/products/service/Product.scheme';
+import {IndexDataHandler} from '../index-handlers.types';
+import {Stores} from '../../const/stores';
+import {ProductDTO} from '../../../../../features/products/service/Product.scheme';
 import {TranslateService} from '@ngx-translate/core';
 import {inject} from '@angular/core';
 

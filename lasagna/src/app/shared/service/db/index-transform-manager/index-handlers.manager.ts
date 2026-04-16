@@ -1,12 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import {LoggerService} from '../../../../features/logger/logger.service';
-import {IndexDataHandler, IndexHandlerRegistry, TransformedData} from '../types/index-handlers.types';
-import {DocumentationIndexHandler} from './documentation-index.handler';
-import {DefaultIndexHandler} from './default-index.handler';
+import {IndexDataHandler, IndexHandlerRegistry, TransformedData} from './index-handlers.types';
+import {DocumentationIndexHandler} from './handlers/documentation-index.handler';
+import {DefaultIndexHandler} from './handlers/default-index.handler';
 import {Stores} from '../const/stores';
-import {ProductsIndexHandler} from './products-index.handler';
-import {ProductsCategoriesIndexHandler} from './products-categories-index.handler';
-import {RecipesCategoriesIndexHandler} from './recipes-categories-index.handler';
+import {ProductsIndexHandler} from './handlers/products-index.handler';
+import {ProductsCategoriesIndexHandler} from './handlers/products-categories-index.handler';
+import {RecipesCategoriesIndexHandler} from './handlers/recipes-categories-index.handler';
 import {IS_CLIENT} from '../../tokens/isClient.token';
 
 /**

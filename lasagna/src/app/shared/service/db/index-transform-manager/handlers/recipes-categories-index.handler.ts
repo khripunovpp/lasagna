@@ -1,8 +1,8 @@
-import {IndexDataHandler} from '../types/index-handlers.types';
-import {Stores} from '../const/stores';
+import {IndexDataHandler} from '../index-handlers.types';
+import {Stores} from '../../const/stores';
 import {TranslateService} from '@ngx-translate/core';
 import {inject} from '@angular/core';
-import {CategoryRecipeDTO} from '../shemes/CategoryRecipe.scheme';
+import {CategoryRecipeDTO} from '../../shemes/CategoryRecipe.scheme';
 
 export class RecipesCategoriesIndexHandler
   implements IndexDataHandler<CategoryRecipeDTO, CategoryRecipeDTO> {
