@@ -325,7 +325,7 @@ export class AddRecipeComponent
   onExportRecipe() {
     const uuid = this.recipe()?.uuid;
     if (!uuid) return;
-    this._transferDataService.exportTable(Stores.RECIPES, 'json', {selected: [uuid]})
+    this._transferDataService.exportDataFor(Stores.RECIPES,  {selected: [uuid]})
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));
       });

@@ -31,9 +31,9 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
           {{ 'backup.make-btn'|translate }}
         </lg-button>
 
-        @if (transferDataService.currenBackupDate) {
+        @if (transferDataService.currentBackupDate) {
           <span data-u2e="backup.last-backup-label">
-            {{ 'backup.last-label'|translate }} {{ transferDataService.currenBackupDate | timeAgo }}
+            {{ 'backup.last-label'|translate }} {{ transferDataService.currentBackupDate | timeAgo }}
           </span>
         }
       </lg-flex-row>
@@ -126,7 +126,7 @@ export class BackupSettingsComponent
   async onBackup() {
     const loader = this.notificationsService.loading(this.translate.instant('backup.creating'));
     try {
-      await this.transferDataService.exportAll('json', () => {
+      await this.transferDataService.exportAll(() => {
         this.notificationsService.success(this.translate.instant('backup.created'));
         this._analyticsService.trackEvent('backup_created', {
           event_category: 'settings',

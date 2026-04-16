@@ -168,7 +168,7 @@ export class SyncResultDialogComponent {
   async confirm() {
     try {
       if (this.formGroup.value.backupBeforeSync) {
-        await this.transferDataService.exportAll('json');
+        await this.transferDataService.exportAll();
       }
       const resp = this.syncEstimation();
       const formValue = this.formGroup.value;

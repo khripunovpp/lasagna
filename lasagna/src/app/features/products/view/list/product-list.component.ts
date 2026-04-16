@@ -237,7 +237,7 @@ export class ProductListComponent
   exportProducts(
     selected: Set<string>,
   ) {
-    this._transferDataService.exportTable(Stores.PRODUCTS, 'json', {
+    this._transferDataService.exportDataFor(Stores.PRODUCTS, {
       selected: Array.from(selected ?? []),
     })
       .catch(error => {

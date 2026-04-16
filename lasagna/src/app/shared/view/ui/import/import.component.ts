@@ -202,7 +202,7 @@ const storeToLabelMap: Partial<Record<string, string>> = {
 })
 export class ImportComponent {
   constructor(
-    private _csvReaderService: CsvReaderService,
+    private _csvReaderService: ReadWriteFileService,
     private _indexDbService: DexieIndexDbService,
     private _analyticsService: AnalyticsService,
   ) {

@@ -238,7 +238,7 @@ export class RecipesListComponent implements OnInit {
   exportRecipes(
     selected: Set<string>,
   ) {
-    return this._transferDataService.exportTable(Stores.RECIPES, 'json', {
+    return this._transferDataService.exportDataFor(Stores.RECIPES, {
       selected: Array.from(selected || []),
     })
       .catch((e) => {

@@ -4,7 +4,7 @@ import {WINDOW} from '../tokens/window.token';
 @Injectable({
   providedIn: 'root'
 })
-export class CsvReaderService {
+export class ReadWriteFileService {
   constructor() {
   }
 
