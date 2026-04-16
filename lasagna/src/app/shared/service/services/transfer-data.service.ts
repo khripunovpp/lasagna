@@ -5,6 +5,7 @@ import {Stores} from '../db/const/stores';
 import {WINDOW} from '../tokens/window.token';
 import {NotificationsService} from './notifications.service';
 import {errorHandler} from '../../helpers';
+import {AnalyticsService} from './analytics.service';
 
 export interface TransferDataStructure {
   store: Stores
@@ -25,6 +26,7 @@ export class TransferDataService {
 
   private readonly _window = inject(WINDOW);
   private readonly _notificationsService = inject(NotificationsService);
+  private readonly _analyticsService = inject(AnalyticsService);
   private readonly _exportDTODependenciesMap: Partial<Record<Stores, Record<string, Stores>>> = {
     [Stores.RECIPES]: {
       tags: Stores.TAGS,
@@ -158,6 +160,14 @@ export class TransferDataService {
       writeObjects,
       this._getFileName(targetStore, 'json')
     );
+
+    this._analyticsService.trackEvent('transfer_data', {
+      event_category: 'transfer',
+      event_label: 'export',
+      target_store: targetStore,
+      target_store_items: writeObjects.find(obj => obj.store === targetStore)?.data?.length || 0,
+      version,
+    });
   }
 
   async exportAll(
@@ -167,8 +177,10 @@ export class TransferDataService {
     const createdAt = Date.now();
     const data: TransferDataStructure[] = [];
     const source = (Object.values(Stores) as Stores[]).filter((store) => store !== Stores.INDICES);
+    let itemsCount = 0;
     for (const store of source) {
       const items = await this._indexDbService.getAll(store);
+      itemsCount += items.length;
       data.push({
         store,
         data: items,
@@ -181,6 +193,13 @@ export class TransferDataService {
     }
 
     this._csvReaderService.saveToJSONFile(data, this._getFileName('backup' as any, 'json'));
+
+    this._analyticsService.trackEvent('export_all', {
+      event_category: 'transfer',
+      event_label: 'export_all',
+      items_count: itemsCount,
+      version,
+    });
   }
 
   async restoreAllData(
@@ -193,6 +212,12 @@ export class TransferDataService {
     const data = await this._csvReaderService.readFromJSONFile<TransferDataStructure[]>(files![0]);
     await this._indexDbService.restoreAllData(data);
     await this._indexDbService.flushCache();
+
+    this._analyticsService.trackEvent('restore', {
+      event_category: 'transfer',
+      event_label: 'restore',
+      items_count: data.reduce((acc, part) => acc + part.data.length, 0),
+    });
   }
 
   makeCsv(

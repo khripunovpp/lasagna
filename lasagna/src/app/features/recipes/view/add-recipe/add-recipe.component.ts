@@ -140,12 +140,20 @@ export class AddRecipeComponent
       if (draft) {
         this.draftRef.set(draft);
         this.recipe.set(draft.data);
+        this._analyticsService.trackEvent('recipe_draft_opened', {
+          event_category: 'recipes',
+          event_label: 'draft',
+        });
       } else if (data['recipe']) {
         this.recipe.set(data['recipe']);
       } else if (this.draftOrRecipeUUID()) {
         this._loadRecipe(this.draftOrRecipeUUID());
       } else if (this.sharedRecipe()) {
         this._decodeRecipe(this.sharedRecipe()!);
+        this._analyticsService.trackEvent('recipe_shared_opened', {
+          event_category: 'recipes',
+          event_label: 'shared',
+        });
       } else {
         const newRecipe = Recipe.empty();
         if (query['folder_uuid']) {
@@ -205,6 +213,7 @@ export class AddRecipeComponent
       this._analyticsService.trackRecipeCreated(newRecipe.name, {
         recipe_uuid: newUUID,
         ingredients_count: newRecipe.ingredients?.length || 0,
+        ingredients_uuids: newRecipe.ingredients?.map(ing => ing.uuid) || [],
         portions: newRecipe.portions,
         category: newRecipe.category_id?.name,
         asDraft: !!this.draftRef(),
@@ -258,6 +267,14 @@ export class AddRecipeComponent
       this.formComponent()?.resetForm(newRecipe);
 
       this._notificationsService.success('notifications.recipe.edited');
+
+      this._analyticsService.trackEvent('recipe_updated', {
+        event_category: 'recipes',
+        event_label: 'update',
+        recipe_uuid: newRecipe.uuid,
+        ingredients_uuids: newRecipe.ingredients?.map(ing => ing.uuid) || [],
+      });
+
       if (addedCount > 0) {
         this._notificationsService.success(
           this._translateService.instant('notifications.recipe.related-products-created', {
@@ -307,7 +324,13 @@ export class AddRecipeComponent
     const recipe = this.recipe();
     if (!recipe) return;
     this._recipeShareService.encode(recipe)
-      .then(encoded => this.shareUrl.set(this._recipeShareService.generateUrl(encoded)))
+      .then(encoded => {
+        this.shareUrl.set(this._recipeShareService.generateUrl(encoded));
+        this._analyticsService.trackEvent('recipe_link_generated', {
+          event_category: 'recipes',
+          event_label: 'shared',
+        });
+      })
       .catch((e) => this._notificationsService.error(errorHandler(e)));
   }
 
@@ -318,6 +341,10 @@ export class AddRecipeComponent
       .then(() => {
         this._notificationsService.success(this._translateService.instant('notifications.recipe.share-link-copied'));
         this.shareUrl.set(undefined);
+        this._analyticsService.trackEvent('recipe_link_copied', {
+          event_category: 'recipes',
+          event_label: 'shared',
+        });
       })
       .catch((e) => this._notificationsService.error(errorHandler(e)));
   }
@@ -325,7 +352,7 @@ export class AddRecipeComponent
   onExportRecipe() {
     const uuid = this.recipe()?.uuid;
     if (!uuid) return;
-    this._transferDataService.exportDataFor(Stores.RECIPES,  {selected: [uuid]})
+    this._transferDataService.exportDataFor(Stores.RECIPES, {selected: [uuid]})
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));
       });
@@ -340,6 +367,10 @@ export class AddRecipeComponent
         this._notificationsService.success('notifications.recipe.cloned');
         await this._routerManager.replace(['recipes', 'edit', newRecipe.data?.uuid]);
         await this._loadRecipe(newRecipe.data?.uuid);
+        this._analyticsService.trackEvent('recipe_cloned', {
+          event_category: 'recipes',
+          event_label: 'clone',
+        });
         return newRecipe.data?.uuid;
       })
       .catch((e) => {

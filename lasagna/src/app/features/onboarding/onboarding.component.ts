@@ -7,6 +7,7 @@ import {OnboardingService} from '../onboarding/onboarding.service';
 import {FlexColumnComponent} from '../../shared/view/layout/flex-column.component';
 import {TranslatePipe} from '@ngx-translate/core';
 import {APP_SERVER_IS_RU} from '../../shared/service/tokens/app-server-region.token';
+import {AnalyticsService} from '../../shared/service/services/analytics.service';
 
 interface OnboardingStep {
   key: string;
@@ -24,7 +25,7 @@ interface OnboardingStep {
     TitleComponent,
     FlexColumnComponent,
     TranslatePipe
-],
+  ],
   template: `
     @if (!allDone()) {
       <section class="onboarding">
@@ -116,10 +117,6 @@ interface OnboardingStep {
   ]
 })
 export class OnboardingComponent {
-  // Текущий активный шаг (первый незавершённый)
-  currentStep = computed(() => {
-    return this.steps().find(step => !step.done);
-  });
   private _router = inject(Router);
   private _onboarding = inject(OnboardingService);
   // Используем сигнал из сервиса напрямую
@@ -160,6 +157,11 @@ export class OnboardingComponent {
 
     return this._isRuRegion ? steps : [settingsItems].concat(steps);
   });
+  // Текущий активный шаг (первый незавершённый)
+  currentStep = computed(() => {
+    return this.steps().find(step => !step.done);
+  });
+  private readonly _analyticsService = inject(AnalyticsService);
 
   // Проверка, является ли шаг текущим активным
   isCurrentStep(step: OnboardingStep): boolean {
@@ -168,17 +170,33 @@ export class OnboardingComponent {
 
   goToSettings() {
     this._router.navigate(['/settings']);
+    this._analyticsService.trackEvent('onboarding_start_action', {
+      event_category: 'onboarding',
+      event_label: 'settings',
+    });
   }
 
   goToFaq() {
     this._router.navigate(['/documents']);
+    this._analyticsService.trackEvent('onboarding_start_action', {
+      event_category: 'onboarding',
+      event_label: 'documents',
+    });
   }
 
   goToAddProduct() {
     this._router.navigate(['/products/add']);
+    this._analyticsService.trackEvent('onboarding_start_action', {
+      event_category: 'onboarding',
+      event_label: 'products',
+    });
   }
 
   goToAddRecipe() {
     this._router.navigate(['/recipes/add']);
+    this._analyticsService.trackEvent('onboarding_start_action', {
+      event_category: 'onboarding',
+      event_label: 'recipes',
+    });
   }
 }

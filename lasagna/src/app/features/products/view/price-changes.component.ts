@@ -21,6 +21,7 @@ import {WidthDirective} from "../../../shared/view/directives/width.directive";
 import {ExpandDirective} from "../../../shared/view/directives/expand.directive";
 import {ShrinkDirective} from "../../../shared/view/directives/shrink.directive";
 import {ChangeLogDTO} from '../../history/ChangeLogEntry.scheme';
+import {AnalyticsService} from '../../../shared/service/services/analytics.service';
 
 export interface PriceChange {
   timestamp: number
@@ -209,6 +210,7 @@ export class PriceChangesComponent {
   private readonly _productsRepository = inject(ProductsRepository);
   private readonly _productFactory = inject(ProductFactory);
   private readonly _notificationsService = inject(NotificationsService);
+  private readonly _analyticsService = inject(AnalyticsService);
 
   open() {
     if (!this.uuid()) {
@@ -249,6 +251,13 @@ export class PriceChangesComponent {
           isAmountChange: isAmountChange,
         };
       }));
+
+    this._analyticsService.trackEvent('loaded_price_changes', {
+      event_category: 'products',
+      event_label: 'price_changes',
+      items_count: changes.length,
+      uuid,
+    });
     } catch (err) {
       this._notificationsService.error(errorHandler(err));
     }

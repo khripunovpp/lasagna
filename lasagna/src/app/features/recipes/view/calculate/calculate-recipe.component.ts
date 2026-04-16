@@ -158,7 +158,7 @@ export class CalculateRecipeComponent
 
         // Track recipe calculation analytics
         if (data['result']) {
-          const calculation = data['result'];
+          const calculation: Calculation = data['result'];
           this._analyticsService.trackRecipeCalculated(
             calculation.calculation?.recipe?.name,
             calculation.calculation?.outcomeAmount,
@@ -166,6 +166,7 @@ export class CalculateRecipeComponent
               recipe_uuid: this.uuid(),
               total_price: calculation.calculation?.totalPrice,
               ingredients_count: calculation.calculation?.ingredients?.length || 0,
+              ingredients_uuids: calculation.calculation?.ingredients?.map(ing => ing.uuid) || [],
               outcome_unit: calculation.calculation?.outcomeUnit
             }
           );
@@ -322,19 +323,27 @@ export class CalculateRecipeComponent
     formValue: any,
   ) {
     try {
+      const newModifier = new RecipePriceModifier(
+        formValue.action,
+        formValue.unit,
+        parseFloat(formValue.value) || 0,
+        formValue.type || 'per_unit',
+      );
       await this._calculateRecipeService.updateRecipe({
         priceModifiers: [
-          new RecipePriceModifier(
-            formValue.action,
-            formValue.unit,
-            parseFloat(formValue.value) || 0,
-            formValue.type || 'per_unit',
-          ),
+          newModifier,
         ]
       } as any);
 
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
       this.result.set(result);
+      this._analyticsService.trackEvent('recipe_price_modifiers_update', {
+        event_category: 'recipes',
+        event_label: 'price_modifiers',
+        action: newModifier.action,
+        unit: newModifier.unit,
+        type: newModifier.type,
+      });
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }
@@ -344,6 +353,10 @@ export class CalculateRecipeComponent
     if (!this.result()) return;
     try {
       this._calculateRecipeService.generatePdf(this.result()!);
+      this._analyticsService.trackEvent('recipe_calculation_pdf_created', {
+        event_category: 'recipes',
+        event_label: 'pdf',
+      });
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }

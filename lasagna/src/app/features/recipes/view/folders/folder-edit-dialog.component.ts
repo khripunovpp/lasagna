@@ -16,6 +16,7 @@ import {
 } from '../../service/const/folder-colors.const';
 import {DEFAULT_FOLDER_ICON, FOLDER_ICONS, FolderIconKey} from '../../service/const/folder-icons.const';
 import {InputComponent} from '../../../controls/form/input.component';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-folder-edit-dialog',
@@ -153,24 +154,21 @@ import {InputComponent} from '../../../controls/form/input.component';
   `],
 })
 export class FolderEditDialogComponent {
-  private readonly _foldersRepository = inject(FoldersRepository);
-  private readonly _notificationsService = inject(NotificationsService);
-  private readonly _dialogRef = viewChild(DialogComponent);
-
   readonly onSaved = output<Folder>();
-
   readonly name = signal('');
   readonly color = signal<FolderColorKey>(DEFAULT_FOLDER_COLOR);
   readonly icon = signal<FolderIconKey>(DEFAULT_FOLDER_ICON);
-
-  private _folder: Folder | null = null;
-  private _parentUuid: string | null = null;
-
-  readonly isEditMode = computed(() => !!this._folder);
-
   readonly colorGroups = FOLDER_COLOR_GROUPS;
   readonly icons = FOLDER_ICONS;
   readonly colorVar = folderColorVar;
+  protected readonly folderColorVar = folderColorVar;
+  private readonly _foldersRepository = inject(FoldersRepository);
+  private readonly _notificationsService = inject(NotificationsService);
+  private readonly _analyticsService = inject(AnalyticsService);
+  private readonly _dialogRef = viewChild(DialogComponent);
+  private _folder: Folder | null = null;
+  readonly isEditMode = computed(() => !!this._folder);
+  private _parentUuid: string | null = null;
 
   openCreate(parentUuid: string | null = null) {
     this._folder = null;
@@ -200,6 +198,15 @@ export class FolderEditDialogComponent {
         const resp = await this._foldersRepository.updateOne(this._folder.uuid!, this._folder);
         this._dialogRef()?.close();
         this.onSaved.emit(resp.data);
+        this._analyticsService.trackEvent('folder_created', {
+          with_parent: !!this._folder.parent_uuid,
+          color: this._folder.color,
+          icon: this._folder.icon,
+          name: this._folder.name,
+          uuid: resp.data.uuid,
+          event_category: 'folders',
+          event_label: 'create',
+        });
       } else {
         const folder = Folder.empty(this._parentUuid);
         folder.update({name, color: this.color(), icon: this.icon()});
@@ -207,6 +214,11 @@ export class FolderEditDialogComponent {
         if (resp.data) {
           this._dialogRef()?.close();
           this.onSaved.emit(resp.data);
+          this._analyticsService.trackEvent('folder_updated', {
+            uuid: resp.data.uuid,
+            event_category: 'folders',
+            event_label: 'update',
+          });
         }
       }
     } catch (e) {
@@ -218,6 +230,4 @@ export class FolderEditDialogComponent {
     this._folder = null;
     this._parentUuid = null;
   }
-
-  protected readonly folderColorVar = folderColorVar;
 }

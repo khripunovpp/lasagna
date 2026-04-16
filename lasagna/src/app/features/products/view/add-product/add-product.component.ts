@@ -25,9 +25,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
 import {SelfStartDirective} from '../../../../shared/view/directives/self-start.directive';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
 import {MatIcon} from '@angular/material/icon';
-import {
-  ConfirmationService
-} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
+import {ConfirmationService} from '../../../../shared/view/ui/confirmation-popover/confirmation.service';
 import {
   ConfirmationPopoverComponent
 } from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
@@ -86,7 +84,6 @@ export class AddProductComponent
   }
 
   readonly deleteConfirmationService = inject(ConfirmationService);
-  private readonly _onboardingService = inject(OnboardingService);
   draftOrProductUUID = signal<string | undefined>(undefined);
   product = signal<Product | null>(null);
   formComponent = viewChild<AddProductFormComponent | null>(AddProductFormComponent);
@@ -101,6 +98,7 @@ export class AddProductComponent
   })
   firstState?: any;
   isClient = inject(IS_CLIENT);
+  private readonly _onboardingService = inject(OnboardingService);
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _window = inject(WINDOW);
   private readonly _destroyRef = inject(DestroyRef);
@@ -143,6 +141,10 @@ export class AddProductComponent
       if (data['draft']) {
         this.draftRef.set(data['draft']);
         this.product.set(Product.fromRaw(data['draft'].data));
+        this._analyticsService.trackEvent('product_draft_opened', {
+          event_category: 'products',
+          event_label: 'draft',
+        });
       } else if (this.draftOrProductUUID()) {
         this._loadProduct(this.draftOrProductUUID());
       } else {

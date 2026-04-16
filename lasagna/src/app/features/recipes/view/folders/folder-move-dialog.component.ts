@@ -8,6 +8,7 @@ import {FoldersRepository} from '../../service/providers/folders.repository';
 import {Folder} from '../../service/models/Folder';
 import {errorHandler} from '../../../../shared/helpers';
 import {FolderColorKey, folderColorVar} from '../../service/const/folder-colors.const';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 @Component({
   selector: 'lg-folder-move-dialog',
@@ -99,6 +100,7 @@ export class FolderMoveDialogComponent {
   private readonly _foldersRepository = inject(FoldersRepository);
   private readonly _notificationsService = inject(NotificationsService);
   private readonly _dialogRef = viewChild(DialogComponent);
+  private readonly _analyticsService = inject(AnalyticsService);
   private _recipeUuids: string[] = [];
 
   readonly colorVar = (color: string) => folderColorVar(color as FolderColorKey);
@@ -125,6 +127,12 @@ export class FolderMoveDialogComponent {
       await this._foldersRepository.bulkMoveRecipes(this._recipeUuids, this.targetUuid());
       this._dialogRef()?.close();
       this.onMoved.emit();
+      this._analyticsService.trackEvent('folder_moved', {
+        recipes_count: this._recipeUuids.length,
+        uuid: this.targetUuid(),
+        event_category: 'folders',
+        event_label: 'move',
+      });
     } catch (e) {
       this._notificationsService.error(errorHandler(e));
     }
