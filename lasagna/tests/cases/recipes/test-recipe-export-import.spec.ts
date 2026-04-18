@@ -45,14 +45,16 @@ test.describe.serial('Экспорт и импорт рецептов', () => {
     }
     const content = JSON.parse(Buffer.concat(chunks).toString());
 
-    expect(content.store).toBe(Stores.RECIPES);
-    expect(Array.isArray(content.data)).toBe(true);
-    expect(content.data).toHaveLength(1);
-    expect(content.data[0].uuid).toBe(recipeToExport.uuid);
-    expect(content.data[0].name).toBe(recipeToExport.name);
-    expect(typeof content.version).toBe('number');
+    expect(Array.isArray(content)).toBe(true);
+    const recipesSection = content.find((section: any) => section.store === Stores.RECIPES);
+    expect(recipesSection).toBeDefined();
+    expect(Array.isArray(recipesSection.data)).toBe(true);
+    expect(recipesSection.data).toHaveLength(1);
+    expect(recipesSection.data[0].uuid).toBe(recipeToExport.uuid);
+    expect(recipesSection.data[0].name).toBe(recipeToExport.name);
+    expect(typeof recipesSection.version).toBe('number');
 
-    const parsed = RecipeScheme.safeParse(content.data[0]);
+    const parsed = RecipeScheme.safeParse(recipesSection.data[0]);
     expect(parsed.success).toBe(true);
   });
 
@@ -68,12 +70,12 @@ test.describe.serial('Экспорт и импорт рецептов', () => {
       ingredients: [],
     };
 
-    const importData = {
+    const importData = [{
       store: Stores.RECIPES,
       data: [recipeToImport],
       version,
       createdAt: Date.now(),
-    };
+    }];
 
     await page.locator('[data-u2e="upload."]').setInputFiles({
       name: 'import-single.json',
@@ -104,12 +106,12 @@ test.describe.serial('Экспорт и импорт рецептов', () => {
       {...recipesInput[2], uuid: 'import-multi-uuid-3', name: 'Import Multi Recipe 3', ingredients: []},
     ];
 
-    const importData = {
+    const importData = [{
       store: Stores.RECIPES,
       data: recipesToImport,
       version,
       createdAt: Date.now(),
-    };
+    }];
 
     await page.locator('[data-u2e="upload."]').setInputFiles({
       name: 'import-multi.json',

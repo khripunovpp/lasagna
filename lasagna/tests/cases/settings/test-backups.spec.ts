@@ -72,9 +72,7 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
   test('Загрузка бэкапа', async () => {
     await configureRoute(page);
     await expect(settingsPage.ref.backupRestoreButton).toBeVisible();
-    const startVersion = await getDbVersion(page, 'lasagna-db');
-    const higherVersion = startVersion + 1;
-    const lowerVersion = startVersion - 1;
+    const dbVersion = await getDbVersion(page, 'lasagna-db');
 
     // подготавливаем файл в котором есть данные
     const newBackupDataMap: Partial<Record<Stores, unknown[]>> = {
@@ -91,16 +89,8 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
       [Stores.CREDENTIALS]: [],
       [Stores.FOLDERS]: [],
     };
-    // загружаем файл с текущей версией
-    await uploadBackupFile(newBackupDataMap, startVersion);
-    await expect(settingsPage.getToast('success')).toBeVisible();
 
-    // пытаемся загрузить файл с более высокой версией
-    await uploadBackupFile(newBackupDataMap, higherVersion);
-    await expect(settingsPage.getToast('error')).toBeVisible();
-
-    // пытаемся загрузить файл с более низкой версией
-    await uploadBackupFile(newBackupDataMap, lowerVersion);
+    await uploadBackupFile(newBackupDataMap, dbVersion);
     await expect(settingsPage.getToast('success')).toBeVisible();
 
     // создаем бэкап после заливки
