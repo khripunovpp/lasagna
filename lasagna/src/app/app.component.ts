@@ -1,5 +1,5 @@
 import {Component, effect, inject, OnInit, Signal} from '@angular/core';
-import {Router, RouterOutlet, Scroll} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router, RouterOutlet, Scroll} from '@angular/router';
 import {PwaInstallComponent} from './features/home/view/informers/pwa-install.component';
 import {GlobalSearchComponent} from './features/global-search/global-search.component';
 import {LastBackupInformerComponent} from './features/home/view/informers/last-backup-informer.component';
@@ -14,11 +14,12 @@ import {DecimalPipe, ViewportScroller} from '@angular/common';
 import {IS_PWA} from './shared/helpers/match-media.helper';
 import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {getURLWithoutParams} from './shared/helpers';
+import {getURLWithoutParams, routeChangeSignal} from './shared/helpers';
 import {IS_CLIENT} from './shared/service/tokens/isClient.token';
 import {PromoWidgetsService} from './features/home/service/promo-widgets.service';
 import {ReleaseNotesService} from './features/release-notes/release-notes.service';
 import {LoaderDirective} from './shared/view/directives/loader.directive';
+import {LoadersManagerService} from './shared/service/services/loaders-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +63,6 @@ export class AppComponent
       ),
     );
   }
-
   readonly scrollingPosition: Signal<[number, number] | undefined | null>;
   readonly scrollToPositionEffect = effect(() => {
     if (this.scrollingPosition()) {
@@ -74,6 +74,8 @@ export class AppComponent
   private readonly _widgetsService = inject(PromoWidgetsService);
   private readonly _releaseNotesService = inject(ReleaseNotesService);
   private readonly demoService = inject(DemoService);
+  private readonly router = inject(Router);
+  private readonly loadersManagerService = inject(LoadersManagerService);
 
   async ngOnInit() {
     if (!this.isBrowser) {
@@ -82,5 +84,17 @@ export class AppComponent
     await this.demoService.loadDemoData();
     this._widgetsService.init();
     await this._releaseNotesService.init();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart),
+    ).subscribe(()=>{
+      this.loadersManagerService.showLoader('app')
+    });
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+    ).subscribe(()=>{
+      this.loadersManagerService.hideLoader('app')
+    });
   }
 }
