@@ -1,5 +1,5 @@
 import {inject, InjectionToken} from '@angular/core';
-import {from, map, mergeMap, Observable, shareReplay, switchMap} from 'rxjs';
+import {from, map, Observable, shareReplay, switchMap, tap} from 'rxjs';
 import {groupBy} from '../../../shared/helpers/grouping.helper';
 import {ProductsRepository} from './products.repository';
 import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
@@ -8,16 +8,20 @@ import {catchError} from 'rxjs/operators';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
 import {SortResult} from '../../../shared/service/types/sorting.types';
+import {LoadersManagerService} from '../../../shared/service/services/loaders-manager.service';
 
 export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResult<Product>>>('CategorizedProductsList', {
   factory: () => {
     const productsRepository = inject(ProductsRepository);
     const categoryRepository = inject(CategoryProductsRepository);
     const notificationsService = inject(NotificationsService);
+    const loadersManagerService = inject(LoadersManagerService);
+
     const products = from(productsRepository.loadAll()).pipe(
       switchMap(() => productsRepository.getStream$),
     );
 
+    loadersManagerService.showLoader('app');
     return products.pipe(
       map((products: Product[]) => products.toSorted((a: Product, b: Product) => a?.name?.localeCompare(b?.name))),
       map((products: Product[]) => groupBy(products, 'category_id')),
@@ -66,6 +70,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResul
         notificationsService.error(errorHandler(error));
         return caught;
       }),
+      tap(() => loadersManagerService.hideLoader('app')),
       shareReplay(1),
     );
   }

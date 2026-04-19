@@ -19,6 +19,7 @@ import {FeatureFlagsService} from '../../../../shared/service/services/feature-f
 import {FoldersRepository} from './folders.repository';
 import {Router} from '@angular/router';
 import {SettingsService} from '../../../settings/service/services/settings.service';
+import {LoadersManagerService} from '../../../../shared/service/services/loaders-manager.service';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult<RecipeDTO>>>('CategorizedRecipesList');
 
@@ -33,6 +34,7 @@ export const provideRecipes = {
     const categoryRepository = inject(CategoryRecipesRepository);
     const foldersRepository = inject(FoldersRepository);
     const settingsService = inject(SettingsService);
+    const loadersManagerService = inject(LoadersManagerService);
 
     const folderUuid = injectParams<string | null>('folderUuid');
     const groupingParam = injectQueryParams('groupBy');
@@ -93,6 +95,7 @@ export const provideRecipes = {
       }),
     );
 
+    loadersManagerService.showLoader('app');
     return recipes.pipe(
       switchMap((recipes: RecipeDTO[]) => {
         const grouping = groupingParam() as string;
@@ -109,6 +112,7 @@ export const provideRecipes = {
         notificationsService.error(errorHandler(error));
         return caught;
       }),
+      tap(() => loadersManagerService.hideLoader('app')),
       shareReplay(1),
     );
   },
