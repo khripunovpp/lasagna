@@ -11,6 +11,7 @@ import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
 import {ControlComponent} from '../../../controls/form/control-item/control.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 
 @Component({
@@ -82,7 +83,6 @@ export class LocalisationSettingsComponent {
     'ru': 'settings.language.russian',
   };
   readonly selectedLangModel = model<boolean[]>([]);
-  readonly onlyOneLanguage = computed(() => this.languages().length <= 1);
   private readonly _notificationsService = inject(NotificationsService);
   private readonly _settingsService = inject(SettingsService);
   readonly selectedLang: Signal<string> = this._settingsService.lang;
@@ -93,11 +93,21 @@ export class LocalisationSettingsComponent {
         name: this.langsMap[lang] ? this.langsMap[lang] : lang,
       }));
   });
+  readonly onlyOneLanguage = computed(() => this.languages().length <= 1);
   private readonly _window = inject(WINDOW);
+  private readonly _analyticsService = inject(AnalyticsService);
+
 
   async changeLang(lang: string) {
     try {
       await this._settingsService.changeLang(lang);
+
+      this._analyticsService.trackEvent('language_change', {
+        saved_language: lang,
+        current_language: this.selectedLang(),
+        event_category: 'settings',
+        event_label: 'language',
+      });
       this._notificationsService.success('settings.language.changed');
       this._window?.location.reload();
     } catch (error) {
@@ -108,6 +118,13 @@ export class LocalisationSettingsComponent {
   async changeCurrency(currency: string) {
     try {
       await this._settingsService.changeCurrency(String(currency).toUpperCase());
+
+      this._analyticsService.trackEvent('currency_change', {
+        saved_currency: currency,
+        current_currency: this.currency(),
+        event_category: 'settings',
+        event_label: 'currency',
+      });
       this._notificationsService.success('settings.currency.changed');
       this._window?.location.reload();
     } catch (error) {

@@ -38,6 +38,13 @@ export class LanguageService {
   }
 
   private get _defaultLang(): string {
+    try {
+      const storedLang = this._window?.localStorage.getItem('lang');
+      if (storedLang && allowedLanguages.includes(storedLang)) {
+        return storedLang;
+      }
+    } catch (e) {
+    }
     if (this._isRuRegion) {
       return 'ru';
     }

@@ -46,6 +46,7 @@ import {FolderDeleteDialogComponent} from '../folders/folder-delete-dialog.compo
 import {FolderMoveDialogComponent} from '../folders/folder-move-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 
 @Component({
@@ -139,17 +140,18 @@ export class RecipesListComponent implements OnInit {
   readonly folderDialog = viewChild(FolderEditDialogComponent);
   readonly folderDeleteDialog = viewChild(FolderDeleteDialogComponent);
   readonly folderMoveDialog = viewChild(FolderMoveDialogComponent);
-  readonly isFolderView = computed(() =>
-    this.foldersAllowed() && (this.isInFolderRoute() || this.viewMode() === 'folders')
-  );
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
   private readonly _featureFlags = inject(FeatureFlagsService);
   readonly foldersAllowed = computed(() => this._featureFlags.getFlagValue('folders'));
+  readonly isFolderView = computed(() =>
+    this.foldersAllowed() && (this.isInFolderRoute() || this.viewMode() === 'folders')
+  );
   private readonly _settingsService = inject(SettingsService);
   readonly foldersEnabled = computed(() => this._settingsService.getRecipesViewMode() === 'folders' && this.viewMode() === 'folders');
   private readonly _foldersRepository = inject(FoldersRepository);
   private readonly _router = inject(Router);
+  private readonly _analyticsService = inject(AnalyticsService);
 
   ngOnInit() {
     if (!this.isClient) {
@@ -160,18 +162,32 @@ export class RecipesListComponent implements OnInit {
   }
 
   async loadFolderContent() {
-    const uuid = this.folderUuid();
-    const allFolders = await this._foldersRepository.getAll(true);
-    this.childFolders.set(this._foldersRepository.getChildren(uuid, allFolders));
+    try {
+      const uuid = this.folderUuid();
+      const allFolders = await this._foldersRepository.getAll(true);
+      this.childFolders.set(this._foldersRepository.getChildren(uuid, allFolders));
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
-  switchViewMode(mode: 'folders' | 'groupings') {
-    this.viewMode.set(mode);
-    this._settingsService.setRecipesViewMode(mode);
-    if (mode === 'folders') {
-      this.loadFolderContent();
+  async switchViewMode(mode: 'folders' | 'groupings') {
+    try {
+      this.viewMode.set(mode);
+      await this._settingsService.setRecipesViewMode(mode);
+      this._analyticsService.trackEvent('recipes_mode_change', {
+        saved_mode: mode,
+        current_mode: this.viewMode(),
+        event_category: 'settings',
+        event_label: 'recipes-mode',
+      });
+      if (mode === 'folders') {
+        await this.loadFolderContent();
+      }
+      await this.loadRecipes();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
     }
-    this.loadRecipes();
   }
 
   addRecipe() {
@@ -189,17 +205,25 @@ export class RecipesListComponent implements OnInit {
     this.folderDialog()?.openEdit(folder);
   }
 
-  onFolderSaved() {
-    this.loadFolderContent();
+  async onFolderSaved() {
+    try {
+      await this.loadFolderContent();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   onDeleteFolder(folder: Folder) {
     this.folderDeleteDialog()?.open(folder);
   }
 
-  onFolderDeleted() {
-    this.loadRecipes();
-    this.loadFolderContent();
+  async onFolderDeleted() {
+    try {
+      await this.loadRecipes();
+      await this.loadFolderContent();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   openMoveDialog() {
@@ -207,10 +231,14 @@ export class RecipesListComponent implements OnInit {
     this.folderMoveDialog()?.open(uuids, this.folderUuid());
   }
 
-  onRecipesMoved() {
-    this.selectionZoneService.onDeselectAll();
-    this.selectionZoneService.onSelection(); // exit selection mode
-    this.loadRecipes();
+  async onRecipesMoved() {
+    try {
+      this.selectionZoneService.onDeselectAll();
+      this.selectionZoneService.onSelection(); // exit selection mode
+      await this.loadRecipes();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   deleteMany(recipes: RecipeDTO[]) {
@@ -220,29 +248,31 @@ export class RecipesListComponent implements OnInit {
     this._recipesRepository.deleteMany(recipes.map(recipe => this._recipesRepository.factory(recipe)))
       .then(() => {
         this._notificationsService.success('recipe.deleted');
-        this.loadRecipes();
         this.selectionZoneService.onDeselectAll();
+        return this.loadRecipes();
       })
       .catch((e) => {
         this._notificationsService.error(errorHandler(e));
       });
   }
 
-  loadRecipes() {
-    return this._recipesRepository.loadAll()
-      .catch((e) => {
-        this._notificationsService.error(errorHandler(e));
-      });
+  async loadRecipes() {
+    try {
+      await this._recipesRepository.loadAll();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
-  exportRecipes(
+  async exportRecipes(
     selected: Set<string>,
   ) {
-    return this._transferDataService.exportDataFor(Stores.RECIPES, {
-      selected: Array.from(selected || []),
-    })
-      .catch((e) => {
-        this._notificationsService.error(errorHandler(e));
+    try {
+      return await this._transferDataService.exportDataFor(Stores.RECIPES, {
+        selected: Array.from(selected || []),
       });
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 }
