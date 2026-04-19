@@ -11,7 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {DexieIndexDbService} from '../../../service/db/dexie-index-db.service';
 import {ImportRowTplDirective} from './import-row-tpl.directive';
 import {PortalComponent} from '../portal.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {errorHandler, parseZodError} from '../../../helpers';
 import {RadioComponent} from '../../../../features/controls/form/radio.component';
 import {InsertHandlersManager} from '../../../service/db/insert-transform-manager/insert-handlers.manager';
@@ -19,6 +19,7 @@ import {schemaMap} from '../../../service/const/schema-map';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {TitleComponent} from '../../layout/title.component';
 import {AnalyticsService} from '../../../service/services/analytics.service';
+import {LoadersManagerService} from '../../../service/services/loaders-manager.service';
 
 const storeToLabelMap: Partial<Record<string, string>> = {
   [Stores.PRODUCTS]: _('import.labels.products'),
@@ -257,9 +258,15 @@ export class ImportComponent {
   protected storeToLabelMap = storeToLabelMap;
   private readonly _notificationsService = inject(NotificationsService);
   private readonly _insertHandlersManager = inject(InsertHandlersManager);
+  private readonly _loadersManagerService = inject(LoadersManagerService);
+  private readonly _translateService = inject(TranslateService);
 
   async onConfirm() {
     try {
+      this._loadersManagerService.showLoader('app', {
+        title: this._translateService.instant('import.applying_changes'),
+      });
+
       for (const [store, entity] of this.parsedData) {
         if (this.rowsToAdd[entity['uuid']]) {
           await this._indexDbService.addData(
@@ -290,6 +297,8 @@ export class ImportComponent {
     } catch (e) {
       console.error(e);
       this._notificationsService.error(errorHandler(e));
+    } finally {
+      this._loadersManagerService.hideLoader('app');
     }
   }
 
@@ -355,6 +364,13 @@ export class ImportComponent {
 
   async onFileSelected(file: File[]) {
     try {
+      this._loadersManagerService.showLoader('app', {
+        title: this._translateService.instant('import.reading_file'),
+      });
+      this._analyticsService.trackEvent('import_started', {
+        event_category: 'import',
+        event_label: 'flow',
+      });
       const result = await this._csvReaderService.readFromJSONFile<TransferDataStructure[]>(file[0]);
       if (!Array.isArray(result) || !result[0]?.data) {
         throw new Error('Invalid file content');
@@ -365,10 +381,6 @@ export class ImportComponent {
       }
 
       this.dialog.open();
-      this._analyticsService.trackEvent('import_started', {
-        event_category: 'import',
-        event_label: 'flow',
-      });
     } catch (e) {
       console.error(e);
       this._analyticsService.trackEvent('import_failed', {
@@ -377,6 +389,8 @@ export class ImportComponent {
         message: errorHandler(e),
       });
       this._notificationsService.error(errorHandler(e));
+    } finally {
+      this._loadersManagerService.hideLoader('app');
     }
   }
 

@@ -17,6 +17,7 @@ import {
 } from '../../../../shared/view/ui/confirmation-popover/confirmation-popover.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
+import {LoadersManagerService} from '../../../../shared/service/services/loaders-manager.service';
 
 @Component({
   selector: 'lg-backup-settings',
@@ -114,6 +115,7 @@ export class BackupSettingsComponent
   readonly notificationsService = inject(NotificationsService);
   readonly dexieIndexDbService = inject(DexieIndexDbService);
   readonly translate = inject(TranslateService);
+  private readonly _loadersManagerService = inject(LoadersManagerService);
   private readonly _analyticsService = inject(AnalyticsService);
   private readonly _window = inject(WINDOW);
 
@@ -124,7 +126,9 @@ export class BackupSettingsComponent
   }
 
   async onBackup() {
-    const loader = this.notificationsService.loading(this.translate.instant('backup.creating'));
+    this._loadersManagerService.showLoader('app', {
+      title: this.translate.instant('backup.creating'),
+    });
     try {
       await this.transferDataService.exportAll(() => {
         this.notificationsService.success(this.translate.instant('backup.created'));
@@ -139,7 +143,7 @@ export class BackupSettingsComponent
       this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('backup.failed'));
       console.error(e);
     } finally {
-      loader.close();
+      this._loadersManagerService.hideLoader('app')
     }
   }
 
@@ -148,7 +152,9 @@ export class BackupSettingsComponent
       message: this.translate.instant('backup.restore-confirmation'),
       confirmText: this.translate.instant('backup.restore-confirmation-confirm'),
       onSuccess: async () => {
-        const loader = this.notificationsService.loading(this.translate.instant('backup.restoring'));
+        this._loadersManagerService.showLoader('app', {
+          title: this.translate.instant('backup.restoring'),
+        });
 
         try {
           await this.transferDataService.restoreAllData(event);
@@ -162,8 +168,7 @@ export class BackupSettingsComponent
           this.notificationsService.showJsonErrors([JSON.stringify(e?.toString()).trim()], this.translate.instant('backup.restore-failed'));
           console.error(e);
         } finally {
-          loader.close();
-          loader.close();
+          this._loadersManagerService.hideLoader('app');
         }
       },
     });
@@ -198,6 +203,9 @@ export class BackupSettingsComponent
       confirmText: this.translate.instant('backup.delete-all.confirmation-confirm'),
       onSuccess: async () => {
         try {
+          this._loadersManagerService.showLoader('app', {
+            title: this.translate.instant('backup.deleting-all'),
+          });
           await this.dexieIndexDbService.deleteAllData();
           this._window?.localStorage.clear();
           this.notificationsService.success(this.translate.instant('all-data.deleted'));
@@ -213,6 +221,7 @@ export class BackupSettingsComponent
           this.notificationsService.showJsonErrors([JSON.stringify(e)], this.translate.instant('all-data.delete-failed'));
           console.error(e);
         } finally {
+          this._loadersManagerService.hideLoader('app');
         }
       }
     });
