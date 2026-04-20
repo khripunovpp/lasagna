@@ -8,9 +8,9 @@ import {HAS_FEATURE} from '../../../settings/service/providers/has-feature.token
 export const CATEGORIZED_INVOICES_LIST = new InjectionToken<Observable<any>>('CategorizedInvoicesList', {
   factory: () => {
     const invoicesRepository = inject(InvoicesRepository);
-    const isDevMode = inject(HAS_FEATURE)('invoices');
+    const accessGranted = inject(HAS_FEATURE)('invoices');
 
-    if (isDevMode) {
+    if (!accessGranted) {
       return of([]);
     }
 
