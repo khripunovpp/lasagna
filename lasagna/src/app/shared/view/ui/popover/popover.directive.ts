@@ -14,6 +14,7 @@ import {ConnectedPosition, FlexibleConnectedPositionStrategy, Overlay, OverlayRe
 import {TemplatePortal} from '@angular/cdk/portal';
 import {PopoverPosition, PopoverRef} from './popover.types';
 import {PopoverService} from './popover.service';
+import {IS_MOBILE_MEDIA_MATCHED} from '../../../helpers/match-media.helper';
 
 const POSITIONS: Record<PopoverPosition, ConnectedPosition[]> = {
   bottom: [
@@ -58,17 +59,20 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
   lgPopoverPosition = input<PopoverPosition>('bottom');
   lgPopoverCloseOnOther = input<boolean>(true);
   lgPopoverCloseOnInnerClick = input<boolean>(false);
+  lgPopoverMobileModal = input<boolean>(false);
   lgPopoverOpen = output<void>();
   lgPopoverClose = output<void>();
   private _overlay = inject(Overlay);
   private _host = inject(ElementRef<HTMLElement>);
   private _vcr = inject(ViewContainerRef);
   private _service = inject(PopoverService);
+  private _isMobileMatched = inject(IS_MOBILE_MEDIA_MATCHED);
   private _overlayRef: OverlayRef | null = null;
+  private _isMobileModal = false;
   // Reposition when position input changes while popover is open
   private _positionEffect = effect(() => {
     const pos = this.lgPopoverPosition();
-    if (!this._overlayRef) return;
+    if (!this._overlayRef || this._isMobileModal) return;
     const strategy = this._overlayRef.getConfig()
       .positionStrategy as FlexibleConnectedPositionStrategy;
     strategy.withPositions(POSITIONS[pos]);
@@ -89,40 +93,60 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
 
     this._service.closeOthers(this);
 
-    const strategy = this._overlay
-      .position()
-      .flexibleConnectedTo(this._host)
-      .withPositions(POSITIONS[this.lgPopoverPosition()])
-      .withFlexibleDimensions(false)
-      .withPush(true)
-      .withViewportMargin(8);
+    this._isMobileModal = this.lgPopoverMobileModal() && this._isMobileMatched();
 
-    this._overlayRef = this._overlay.create({
-      positionStrategy: strategy,
-      scrollStrategy: this._overlay.scrollStrategies.close(),
-      hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: 'lg-popover-panel',
-      maxWidth: 415
-    });
+    if (this._isMobileModal) {
+      const strategy = this._overlay
+        .position()
+        .global()
+        .centerHorizontally()
+        .centerVertically();
 
-    this._overlayRef.attach(new TemplatePortal(this.lgPopover(), this._vcr));
-
-    strategy.positionChanges
-      .subscribe(({connectionPair: p}) => {
-        const panel = this._overlayRef?.overlayElement;
-        if (!panel) return;
-        panel.classList.remove(
-          'lg-popover-panel--from-top',
-          'lg-popover-panel--from-bottom',
-          'lg-popover-panel--from-left',
-          'lg-popover-panel--from-right',
-        );
-        if (p.overlayY === 'top') panel.classList.add('lg-popover-panel--from-top');
-        else if (p.overlayY === 'bottom') panel.classList.add('lg-popover-panel--from-bottom');
-        else if (p.overlayX === 'start') panel.classList.add('lg-popover-panel--from-left');
-        else panel.classList.add('lg-popover-panel--from-right');
+      this._overlayRef = this._overlay.create({
+        positionStrategy: strategy,
+        scrollStrategy: this._overlay.scrollStrategies.block(),
+        hasBackdrop: true,
+        backdropClass: 'lg-popover-backdrop',
+        panelClass: ['lg-popover-panel', 'lg-popover-panel--mobile-modal'],
       });
+
+      this._overlayRef.attach(new TemplatePortal(this.lgPopover(), this._vcr));
+    } else {
+      const strategy = this._overlay
+        .position()
+        .flexibleConnectedTo(this._host)
+        .withPositions(POSITIONS[this.lgPopoverPosition()])
+        .withFlexibleDimensions(false)
+        .withPush(true)
+        .withViewportMargin(8);
+
+      this._overlayRef = this._overlay.create({
+        positionStrategy: strategy,
+        scrollStrategy: this._overlay.scrollStrategies.close(),
+        hasBackdrop: true,
+        backdropClass: 'cdk-overlay-transparent-backdrop',
+        panelClass: 'lg-popover-panel',
+        maxWidth: 415
+      });
+
+      this._overlayRef.attach(new TemplatePortal(this.lgPopover(), this._vcr));
+
+      strategy.positionChanges
+        .subscribe(({connectionPair: p}) => {
+          const panel = this._overlayRef?.overlayElement;
+          if (!panel) return;
+          panel.classList.remove(
+            'lg-popover-panel--from-top',
+            'lg-popover-panel--from-bottom',
+            'lg-popover-panel--from-left',
+            'lg-popover-panel--from-right',
+          );
+          if (p.overlayY === 'top') panel.classList.add('lg-popover-panel--from-top');
+          else if (p.overlayY === 'bottom') panel.classList.add('lg-popover-panel--from-bottom');
+          else if (p.overlayX === 'start') panel.classList.add('lg-popover-panel--from-left');
+          else panel.classList.add('lg-popover-panel--from-right');
+        });
+    }
 
     this._overlayRef.backdropClick()
       .subscribe(() => this.close());
@@ -132,7 +156,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
         if (e.key === 'Escape') this.close();
       });
 
-    if (this.lgPopoverCloseOnInnerClick()) {
+    if (this.lgPopoverCloseOnInnerClick() || this._isMobileModal) {
       this._overlayRef.overlayElement
         .addEventListener('click', () => this.close());
     }
@@ -144,6 +168,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
     if (!this._overlayRef) return;
     const overlayRef = this._overlayRef;
     this._overlayRef = null;
+    this._isMobileModal = false;
 
     const panel = overlayRef.overlayElement;
     panel.classList.add('lg-popover-panel--closing');
