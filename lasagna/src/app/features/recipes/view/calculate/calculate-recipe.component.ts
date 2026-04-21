@@ -30,7 +30,7 @@ import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {randomRGB} from '../../../../shared/helpers/color.helper';
 import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
-import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
+import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
 import {errorHandler} from '../../../../shared/helpers';
@@ -56,6 +56,9 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {PopoverDirective} from '../../../../shared/view/ui/popover/popover.directive';
+import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
+import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -86,6 +89,9 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     ControlExtraTemplateDirective,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
+    PopoverDirective,
+    QuestionMarkComponent,
+    PullDirective,
 
 
   ],
@@ -148,6 +154,7 @@ export class CalculateRecipeComponent
     private _notificationService: NotificationsService,
     private _analyticsService: AnalyticsService,
     private _settingsService: SettingsService,
+    private _translateService: TranslateService,
   ) {
     if (this.isClient) {
 
@@ -228,7 +235,7 @@ export class CalculateRecipeComponent
         labels: labels,
         datasets: [
           {
-            label: 'Cost',
+            label: this._translateService.instant('recipe.calculation.price_by_ingredient'),
             data: prices,
             backgroundColor: colors,
             // hoverBackgroundColor: colors,
@@ -240,7 +247,7 @@ export class CalculateRecipeComponent
         labels: labels,
         datasets: [
           {
-            label: 'Amount',
+            label: this._translateService.instant('recipe.calculation.weight_by_ingredient'),
             data: weight,
             backgroundColor: colors,
             // hoverBackgroundColor: colors,

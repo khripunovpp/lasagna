@@ -103,6 +103,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
       hasBackdrop: true,
       backdropClass: 'cdk-overlay-transparent-backdrop',
       panelClass: 'lg-popover-panel',
+      maxWidth: 415
     });
 
     this._overlayRef.attach(new TemplatePortal(this.lgPopover(), this._vcr));

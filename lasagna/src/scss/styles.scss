@@ -369,13 +369,25 @@ video {
 
 // Popover panel (CDK Overlay)
 @keyframes popover-in {
-  from { opacity: 0; transform: scale(0.94); }
-  to   { opacity: 1; transform: scale(1);    }
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes popover-out {
-  from { opacity: 1; transform: scale(1);    }
-  to   { opacity: 0; transform: scale(0.94); }
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.94);
+  }
 }
 
 .lg-popover-panel {
@@ -387,14 +399,28 @@ video {
   box-sizing: border-box;
   transform-origin: top center;
   animation: popover-in 160ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  font-size: 14px;
 
   &--closing {
     animation: popover-out 130ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
 
   // transform-origin по реальной позиции — popup "вырастает" от триггера
-  &--from-top    { transform-origin: bottom center; }
-  &--from-bottom { transform-origin: top center;    }
-  &--from-left   { transform-origin: right center;  }
-  &--from-right  { transform-origin: left center;   }
+  &--from-top {
+    transform-origin: bottom center;
+  }
+
+  &--from-bottom {
+    transform-origin: top center;
+  }
+
+  &--from-left {
+    transform-origin: right center;
+  }
+
+  &--from-right {
+    transform-origin: left center;
+  }
 }
+
+

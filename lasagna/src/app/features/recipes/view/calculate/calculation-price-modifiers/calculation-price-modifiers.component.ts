@@ -15,6 +15,7 @@ import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
 import {currencyStringToSymbol} from '../../../../../shared/helpers/assets/currency.helper';
 import {marker} from '@colsen1991/ngx-translate-extract-marker';
 import {TranslatePipe} from '@ngx-translate/core';
+import {QuestionMarkComponent} from '../../../../../shared/view/ui/question-mark.component';
 
 @Component({
   selector: 'lg-calculation-price-modifiers',
@@ -26,7 +27,8 @@ import {TranslatePipe} from '@ngx-translate/core';
     ControlExtraTemplateDirective,
     CurrencySymbolPipe,
     FlexRowComponent,
-    TranslatePipe
+    TranslatePipe,
+    QuestionMarkComponent
   ],
   template: `
     <lg-flex-row [formGroup]="recipePriceAdditionsForm">
@@ -54,12 +56,15 @@ import {TranslatePipe} from '@ngx-translate/core';
         @if (roundActionSelected()) {
           <ng-template lgExtraTpl place="after">
             {{ userSettings()?.['currency']|currencySymbol }}
+            <lg-question [text]="'recipe.calculation.price-modifiers.info' | translate"></lg-question>
+
           </ng-template>
         } @else {
           <ng-template lgExtraTpl place="after">
             <lg-unit-switcher formControlName="unit"
                               [items]="additionalPriceUnit">
             </lg-unit-switcher>
+            <lg-question [text]="'recipe.calculation.price-modifiers.info' | translate"></lg-question>
           </ng-template>
         }
       </lg-number-input>

@@ -42,20 +42,24 @@
                              [relaxed]="true">
                   <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
 
-                  <lg-flex-row size="tiny" data-u2e="calculate-recipe.outcome-amount">
+                  <lg-flex-row size="tiny"
+                               lgPull
+                               data-u2e="calculate-recipe.outcome-amount">
                     <div class="text-bold">
                       {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
                       {{ result()?.calculation?.outcomeUnit | unitString | translate }}
                     </div>
 
-<!--                    @if (hasPortions()) {-->
-<!--                      <span>/</span>-->
+                    <!--                    @if (hasPortions()) {-->
+                    <!--                      <span>/</span>-->
 
-<!--                      <div>-->
-<!--                        {{ result()?.calculation?.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}-->
-<!--                      </div>-->
-<!--                    }-->
+                    <!--                      <div>-->
+                    <!--                        {{ result()?.calculation?.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}-->
+                    <!--                      </div>-->
+                    <!--                    }-->
                   </lg-flex-row>
+
+                  <lg-question [text]="'recipe.calculation.outcome.info' | translate"></lg-question>
                 </lg-flex-row>
               </lg-card>
 
@@ -69,6 +73,7 @@
                   </div>
 
                   <lg-flex-row size="tiny"
+                               lgPull
                                data-u2e="calculate-recipe.one-unit-price">
                     @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
                     <lg-flex-row [size]="'tiny'">
@@ -100,6 +105,8 @@
                       </lg-flex-row>
                     }
                   </lg-flex-row>
+
+                  <lg-question [text]="'recipe.calculation.one-unit.info' | translate"></lg-question>
                 </lg-flex-row>
               </lg-card>
             }
@@ -112,6 +119,7 @@
                   <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
                   <lg-flex-row [size]="'tiny'"
+                               lgPull
                                data-u2e="calculate-recipe.total-price-amount">
                     @let diff = totalPriceDifference();
                     <lg-flex-row [class.text-bold]="!totalPriceDifference()"
@@ -140,6 +148,8 @@
                       </lg-flex-row>
                     }
                   </lg-flex-row>
+
+                  <lg-question [text]="'recipe.calculation.total-price.info' | translate"></lg-question>
                 </lg-flex-row>
               </lg-card>
 
@@ -159,6 +169,8 @@
                     <b>
                       {{ result()?.calculation?.outcomeUnit | unitString | translate }}
                     </b>
+                    <lg-question [text]="'recipe.calculation.recalculate.info' | translate"></lg-question>
+
                   </ng-template>
                 </lg-number-input>
 
@@ -184,6 +196,8 @@
                         #priceChart
                         baseChart>
                 </canvas>
+
+                <lg-question lgPull [text]="'recipe.calculation.price-chart.info' | translate"></lg-question>
               </lg-flex-column>
             </lg-card>
 
@@ -202,6 +216,8 @@
                           #weightChart
                           baseChart>
                   </canvas>
+
+                  <lg-question lgPull [text]="'recipe.calculation.weight-chart.info' | translate"></lg-question>
                 </lg-flex-column>
               </lg-card>
             }
@@ -212,6 +228,8 @@
 
       <lg-title [level]="3">
         {{ 'recipe.calculation.table.title'  | translate }}
+
+        <lg-question lgPull [text]="'recipe.calculation.table.info' | translate"></lg-question>
       </lg-title>
 
       @if (hasIngredients) {
