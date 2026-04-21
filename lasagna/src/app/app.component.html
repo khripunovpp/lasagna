@@ -12,9 +12,7 @@
 
 <main [class.app--pwa]="isPwa()"
       [hidden]="!isBrowser"
-      lgLoader
-      loaderScope="app"
-      loaderSize="zero"
+      [class.app--isLoading]="loadersManagerService.observeScope('app') | async"
       class="app">
   <lg-header></lg-header>
 

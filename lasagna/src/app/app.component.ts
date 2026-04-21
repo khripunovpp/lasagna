@@ -10,15 +10,14 @@ import {HeaderComponent} from './shared/view/layout/header.component';
 import {OverlayActionsComponent} from './shared/view/ui/overlay-actions/overlay-actions.component';
 import {StorageQuotaWarningComponent} from './features/home/view/informers/storage-quota-warning.component';
 import {SatisfactionPopupComponent} from './features/home/view/dialogs/satisfaction-popup.component';
-import {DecimalPipe, ViewportScroller} from '@angular/common';
+import {AsyncPipe, DecimalPipe, ViewportScroller} from '@angular/common';
 import {IS_PWA} from './shared/helpers/match-media.helper';
 import {filter, map, pairwise} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {getURLWithoutParams, routeChangeSignal} from './shared/helpers';
+import {getURLWithoutParams} from './shared/helpers';
 import {IS_CLIENT} from './shared/service/tokens/isClient.token';
 import {PromoWidgetsService} from './features/home/service/promo-widgets.service';
 import {ReleaseNotesService} from './features/release-notes/release-notes.service';
-import {LoaderDirective} from './shared/view/directives/loader.directive';
 import {LoadersManagerService} from './shared/service/services/loaders-manager.service';
 
 @Component({
@@ -34,7 +33,7 @@ import {LoadersManagerService} from './shared/service/services/loaders-manager.s
     OverlayActionsComponent,
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent,
-    LoaderDirective,
+    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   standalone: true,
@@ -63,6 +62,7 @@ export class AppComponent
       ),
     );
   }
+
   readonly scrollingPosition: Signal<[number, number] | undefined | null>;
   readonly scrollToPositionEffect = effect(() => {
     if (this.scrollingPosition()) {
@@ -75,7 +75,7 @@ export class AppComponent
   private readonly _releaseNotesService = inject(ReleaseNotesService);
   private readonly demoService = inject(DemoService);
   private readonly router = inject(Router);
-  private readonly loadersManagerService = inject(LoadersManagerService);
+  readonly loadersManagerService = inject(LoadersManagerService);
 
   async ngOnInit() {
     if (!this.isBrowser) {
@@ -87,13 +87,13 @@ export class AppComponent
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),
-    ).subscribe(()=>{
+    ).subscribe(() => {
       this.loadersManagerService.showLoader('app')
     });
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-    ).subscribe(()=>{
+    ).subscribe(() => {
       this.loadersManagerService.hideLoader('app')
     });
   }
