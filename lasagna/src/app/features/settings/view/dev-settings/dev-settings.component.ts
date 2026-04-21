@@ -90,6 +90,7 @@ export class DevSettingsComponent {
   readonly form = new FormGroup({});
   readonly labelsMap: Record<string, string> = {
     ga_analytics_disabled: 'Disable GA analytics (on localhost it\'s disabled permanently)',
+    userUUIDStr: 'Replace user UUID (stored in local storage) with this value',
   };
 
   isString(settingKey: string) {
