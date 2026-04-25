@@ -14,6 +14,7 @@ import {
 } from '../../../features/home/view/dialogs/telegram-stars-donation-dialog.component';
 import {AnalyticsService} from '../../service/services/analytics.service';
 import {getSymbolValueByName} from '../../helpers/symbol.helper';
+import {ReleaseNotesService} from '../../../features/release-notes/release-notes.service';
 
 
 @Component({
@@ -59,7 +60,12 @@ import {getSymbolValueByName} from '../../helpers/symbol.helper';
           <!--          }-->
 
           <div class="lg-footer__version">
-            <a routerLink="./release-notes">v{{ appVersion() }}</a>
+            <a routerLink="./release-notes">
+              v{{ appVersion() }}
+              @if (hasUnreadNotes()) {
+                ({{ 'footer.new' | translate }})
+              }
+            </a>
             &nbsp;
             <a data-u2e="nav.footer.documents-link"
                routerLink="./documents"
@@ -157,7 +163,10 @@ export class FooterComponent {
   readonly environment = environment;
   readonly isTG = inject(IS_TELEGRAM);
   readonly supportPopup = viewChild(SupportPopupComponent);
+  readonly hasUnreadNotes = inject(ReleaseNotesService).hasUnread;
   readonly tgDonationPopup = viewChild(TelegramStarsDonationDialogComponent);
+  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
+  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
   private readonly versionService = inject(VersionService);
   readonly appVersion = this.versionService.version;
   private readonly router = inject(Router);
@@ -185,8 +194,6 @@ export class FooterComponent {
       return [routeData];
     })
   ));
-  readonly canSeePolicies = computed(() => this.routeData()?.['canSeePolicies'] ?? false);
-  readonly canSeeAuthors = computed(() => this.routeData()?.['canSeeAuthors'] ?? false);
 
   /**
    * Open support popup
