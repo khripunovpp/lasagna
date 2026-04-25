@@ -1,5 +1,6 @@
-import {Component, input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {PopoverDirective} from './popover/popover.directive';
+import {AnalyticsService} from '../../service/services/analytics.service';
 
 @Component({
   selector: 'lg-question',
@@ -13,6 +14,7 @@ import {PopoverDirective} from './popover/popover.directive';
          fill="none"
          [lgPopoverPosition]="'auto'"
          [lgPopover]="lgPopover"
+         (lgPopoverOpen)="track()"
          [lgPopoverMobileModal]="true"
          xmlns="http://www.w3.org/2000/svg">
       <path
@@ -41,5 +43,14 @@ import {PopoverDirective} from './popover/popover.directive';
   `,
 })
 export class QuestionMarkComponent {
-  text = input.required<string>()
+  text = input.required<string>();
+  readonly analyticsService = inject(AnalyticsService);
+
+  track() {
+    this.analyticsService.trackEvent('question_mark_popover_opened', {
+      event_category: 'question_mark',
+      event_label: 'popover_opened',
+      text: this.text(),
+    });
+  }
 }
