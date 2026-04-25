@@ -27,32 +27,59 @@ export class CalculateRecipePage
     return this.page.locator('[data-u2e="number-input.recalculateTotals"]');
   }
 
+  // Shrinkage control — scoped в lg-shrinkage-control,
+  // т.к. unit-switcher.item.percent есть и у модификаторов цены.
+  get shrinkageControl(): Locator {
+    return this.page.locator('lg-shrinkage-control');
+  }
+
+  get shrinkageValueInput(): Locator {
+    return this.shrinkageControl.locator('[data-u2e="number-input.shrinkage-value"]');
+  }
+
+  get shrinkageModePercent(): Locator {
+    return this.shrinkageControl.locator('[data-u2e="unit-switcher.item.percent"]');
+  }
+
+  get shrinkageModeWeight(): Locator {
+    return this.shrinkageControl.locator('[data-u2e="unit-switcher.item.weight"]');
+  }
+
+  // Price modifiers — scoped в lg-calculation-price-modifiers по тем же причинам.
+  get priceModifiersControl(): Locator {
+    return this.page.locator('lg-calculation-price-modifiers');
+  }
+
   get priceModifierInput(): Locator {
-    return this.page.locator('[data-u2e="number-input.price-modifier"]');
+    return this.priceModifiersControl.locator('[data-u2e="number-input.price-modifier"]');
   }
 
-  get unitSwitcherItemPerUnit(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.per_unit"]');
+  get modifierActionAdd(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.add"]');
   }
 
-  get unitSwitcherTotal(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.total"]');
+  get modifierActionRound(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.round"]');
   }
 
-  get unitSwitcherItemAdd(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.add"]');
+  get modifierTypePerUnit(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.per_unit"]');
   }
 
-  get unitSwitcherItemRound(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.round"]');
+  get modifierTypeTotal(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.total"]');
   }
 
-  get unitSwitcherItemPercent(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.percent"]');
+  get modifierUnitCurrency(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.currency"]');
   }
 
-  get unitSwitcherItemCurrency(): Locator {
-    return this.page.locator('[data-u2e="unit-switcher.item.currency"]');
+  get modifierUnitPercent(): Locator {
+    return this.priceModifiersControl.locator('[data-u2e="unit-switcher.item.percent"]');
+  }
+
+  get pdfGenerateBtn(): Locator {
+    return this.page.locator('[data-u2e="calculate-recipe.pdf-generate-btn"]');
   }
 
   get table(): Locator {

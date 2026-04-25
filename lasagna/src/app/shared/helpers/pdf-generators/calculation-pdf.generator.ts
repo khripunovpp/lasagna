@@ -6,7 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {getUnitMarker} from '../unit.helper';
 import {productLabelFactory} from '../../factories/entity-labels/product.label.factory';
 
-const fixed  = (num?: number, precision?: number) => {
+const fixed = (num?: number, precision?: number) => {
   return Number.parseFloat(num?.toString() || '0').toFixed(precision ?? 2);
 }
 
@@ -41,7 +41,7 @@ export function calculationPdfGenerator(
   currentY += lineSpacing * 2;
 
   doc.setFontSize(10);
-  doc.text(`${t('recipe.calculation.outcome.label')}: ${fixed(recipeCost.outcomeAmount)} ${t(getUnitMarker(recipeCost.outcomeUnit))}`, leftX, currentY);
+  doc.text(`${t(recipeCost.hasShrinkage ? 'recipe.calculation.outcome.label.with-shrinkage' : 'recipe.calculation.outcome.label')}: ${fixed(recipeCost.outcomeAmount)} ${t(getUnitMarker(recipeCost.outcomeUnit))}`, leftX, currentY);
   currentY += lineSpacing;
 
   doc.setFontSize(10);
@@ -50,7 +50,7 @@ export function calculationPdfGenerator(
 
   const nameFactory = (row: CalculationTableParams) => {
     let name = '';
-    if (row.type === 'recipe-row'){
+    if (row.type === 'recipe-row') {
       name = row.name;
     } else if (row.type === 'total') {
       name = t(row.name);
@@ -60,13 +60,15 @@ export function calculationPdfGenerator(
     return name;
   }
 
+  console.log({settings})
+
   // Таблица ингредиентов внизу
   const tableBody = calculation.table.map((row: CalculationTableParams, idx) => [
     idx + 1,
     nameFactory(row),
-    fixed(row.amount,settings.rowsPrecision) + ' ' + t(getUnitMarker(row.unit)),
-    (row.price_per_unit?.toFixed(settings.rowsPrecision ?? 2) || '-') + ' ' + t(getUnitMarker(row.unit)) +  ` / ${t(getUnitMarker(settings.currency || 'USD'))}`,
-    (row.total?.toFixed(settings.rowsPrecision ?? 2) || '-' ) + ' ' + settings.currency,
+    fixed(row.amount, settings.rowsPrecision) + ' ' + t(getUnitMarker(row.unit)),
+    (row.price_per_unit?.toFixed(settings.rowsPrecision ?? 2) || '-') + ' ' + t(getUnitMarker(row.unit)) + ` / ${t(getUnitMarker(settings.currency || 'USD'))}`,
+    (row.total?.toFixed(settings.rowsPrecision ?? 2) || '-') + ' ' + settings.currency,
   ]);
 
 

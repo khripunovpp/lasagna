@@ -16,84 +16,71 @@ import {productsDTOs} from '../products/products-test.helpers';
 import {RecipeDTO} from '../../../src/app/features/recipes/service/schemes/Recipe.scheme';
 import {Stores} from '../../../src/app/shared/service/db/const/stores';
 import {CalculateRecipePage} from '../../scripts/e2e/classes/CalculateRecipePage';
+import {
+  nestedRecipeForCalc,
+  richRecipeNoPortions,
+  richRecipeWithPortions,
+  RICH_RECIPE_NO_PORTIONS_UUID,
+  RICH_RECIPE_WITH_PORTIONS_UUID,
+} from './calc-test.helpers';
 
 /**
  * Тест создания рецепта + расчет стоимости
  */
 test.describe.serial('Групповой тест создания и калькуляции рецептов', () => {
   let page: Page;
+
   test.beforeAll(async ({browser}) => {
     const context = await browser.newContext();
     page = await context.newPage();
+    await page.goto(URLS.recipes.list);
+    await page.waitForLoadState('networkidle');
+    await seedCategories(page);
+    await seedProducts(page, productsDTOs);
   });
 
   test.afterAll(async () => {
     await page.close();
   });
 
-  let createdRecipesIds = {
-    withPortions: [] as string[],
-    withoutPortions: [] as string[],
-  };
-
-  // ignore fails in this suite
-  test.describe.serial('C порциям', () => {
-    createRecipeBatchFixture(createdRecipesIds.withPortions, {withPortions: true});
+  // Драфт-флоу проверяем один раз на любом рецепте — он не зависит от юнит-матрицы.
+  // Попутно используем recipesInput[0] как «первый рецепт» — чтобы не плодить
+  // дубликаты с одинаковым именем (recipesInput[6], [7] ссылаются на него по имени).
+  test.describe.serial('Драфт + первый рецепт', () => {
+    test('Драфт сохраняется, появляется в списке, открывается; рецепт корректно считается', async () => {
+      const dto = recipesInput[0];
+      const recipeId = await createRecipeFixture(page, dto, {
+        withDraft: true,
+        withPortions: true,
+      });
+      await checkRecipePage(recipeId, dto, {withPortions: true});
+      await calculateRecipeCostFixture(page, recipeId, calculationOutputWithPortions[0]);
+    });
   });
 
-  // test.describe.serial('Без порций', () => {
-  //   createRecipeBatchFixture(createdRecipesIds.withoutPortions, {withPortions: false});
-  // });
-  //
-  // test('Проверка доступности на странице продуктов', async () => {
-  //   await page.goto(URLS.recipes.list);
-  //
-  //   const recipesListPage = new RecipesListPage(page);
-  //
-  //   await expect(recipesListPage.ref.recipesListGroupingTiles).toBeVisible();
-  //
-  //   await page.waitForLoadState('networkidle')
-  //
-  //   const count = await recipesListPage.groupsCount;
-  //   expect(count).toBeGreaterThanOrEqual(1);
-  //
-  //
-  //   await recipesListPage.clickOutside({timeout: 1000});
-  //
-  //   await recipesListPage.getGroupByIndex(0).click();
-  //   await expect(recipesListPage.getItemLinkInGroupByIndex(0, 0).first()).toBeVisible();
-  //
-  //   const itemsCount = await recipesListPage.getGroupItemsCountByIndex(0);
-  //   const expectedItemsCount = 16;
-  //   expect(itemsCount).toEqual(expectedItemsCount);
-  //
-  //   for (let i = 0; i < expectedItemsCount; i++) {
-  //     const info = await recipesListPage.getRecipeCardInfoByIndex(0, i);
-  //     expect(info.name).toEqual(recipesCardsOutput[i].name);
-  //     expect(info.editedAt).toEqual(recipesCardsOutput[i].editedAt);
-  //
-  //     await expect(recipesListPage.getCalculateButton(0, i)).toBeVisible();
-  //   }
-  // });
-  //
-  // test('Проверка доступности созданных продуктов по прямым ссылкам и корректность данных', async () => {
-  //   for (let i = 0; i < createdRecipesIds.withPortions.length; i++) {
-  //     await checkRecipePage(createdRecipesIds.withPortions[i], recipesInput[i], {withPortions: true});
-  //   }
-  //
-  //   for (let i = 0; i < createdRecipesIds.withoutPortions.length; i++) {
-  //     await checkRecipePage(createdRecipesIds.withoutPortions[i], recipesInput[i], {withPortions: false});
-  //   }
-  //
-  // });
+  // Основной прогон: create + round-trip + calc в одном тесте на каждый рецепт.
+  // Один упавший кейс больше не валит остальные.
+  test.describe.serial('Создание и калькуляция (с порциями)', () => {
+    for (let idx = 1; idx < recipesInput.length; idx++) {
+      const dto = recipesInput[idx];
+      test(`[${idx}] ${dto.name}`, async () => {
+        const recipeId = await createRecipeFixture(page, dto, {withPortions: true});
+        await checkRecipePage(recipeId, dto, {withPortions: true});
+        await calculateRecipeCostFixture(page, recipeId, calculationOutputWithPortions[idx]);
+      });
+    }
+  });
 
-  test('Калькуляция созданных рецептов', async () => {
-    for (let i = 0; i < createdRecipesIds.withPortions.length; i++) {
-      await calculateRecipeCostFixture(page, createdRecipesIds.withPortions[i], calculationOutputWithPortions[i]);
-    }
-    for (let i = 0; i < createdRecipesIds.withoutPortions.length; i++) {
-      await calculateRecipeCostFixture(page, createdRecipesIds.withoutPortions[i], calculationOutputWithoutPortions[i]);
-    }
+  // «Без порций» раньше дублировал всю матрицу (8 тестов). Для покрытия
+  // достаточно одного кейса — берём самый богатый (смешанные юниты, idx=3).
+  test.describe.serial('Без порций', () => {
+    test('Смешанные юниты корректно считаются без порций', async () => {
+      const idx = 3;
+      const dto = recipesInput[idx];
+      const recipeId = await createRecipeFixture(page, dto, {withPortions: false});
+      await checkRecipePage(recipeId, dto, {withPortions: false});
+      await calculateRecipeCostFixture(page, recipeId, calculationOutputWithoutPortions[idx]);
+    });
   });
 
   async function checkRecipePage(
@@ -164,83 +151,6 @@ test.describe.serial('Групповой тест создания и кальк
         break;
     }
   }
-
-  function createRecipeBatchFixture(
-    createdRecipesIds: string[],
-    options?: {
-      withPortions?: boolean
-    }
-  ) {
-    test('С драфтом, все ингредиенты в граммах, всех юнитов, мастер', async () => {
-      await page.goto(URLS.recipes.list);
-      await page.waitForLoadState('networkidle');
-      await seedCategories(page);
-      await seedProducts(page, productsDTOs);
-
-      const uuid = await createRecipeFixture(page, recipesInput[0], {
-        withDraft: true,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, все ингредиенты в килограммах, всех юнитов', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[1], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, все ингредиенты в штуках, всех юнитов', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[2], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, все ингредиенты в своих юнитах', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[3], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, все ингредиенты в разных не своих юнитах', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[4], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, без ингредиентов', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[5], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, с рецептами в ингредиентах, разные юниты', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[6], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-
-    test('Без драфта, с миксом продуктов и рецептов в ингредиентах, разные юниты', async () => {
-      const uuid = await createRecipeFixture(page, recipesInput[7], {
-        withDraft: false,
-        withPortions: options?.withPortions
-      });
-      createdRecipesIds.push(uuid);
-    });
-  }
-
 
   async function createRecipeFixture(
     page: Page,
@@ -464,3 +374,162 @@ test.describe.serial('Групповой тест создания и кальк
     await expect(calculationPage.getIngredientTotalPriceCell(rowsCount - 1)).toHaveText(recipeOutput.total.totalPrice);
   }
 })
+
+/**
+ * Калькуляция: шринкейдж и модификаторы цены.
+ *
+ * См. calc-test.helpers.ts — там описан рецепт и базовые итоги.
+ * Здесь покрыты шринкейдж в обоих режимах (% и weight) и 4 типа модификатора
+ * (add+percent+per_unit, add+currency+total, add+percent+total, round per_unit)
+ * на обеих версиях рецепта (с порциями и без).
+ */
+test.describe.serial('Калькуляция: рецепт с порциями (шринкейдж и модификаторы)', () => {
+  let page: Page;
+  let calculationPage: CalculateRecipePage;
+
+  test.beforeAll(async ({browser}) => {
+    const context = await browser.newContext();
+    page = await context.newPage();
+    calculationPage = new CalculateRecipePage(page);
+    await page.goto(URLS.recipes.list);
+    await page.waitForLoadState('networkidle');
+    await seedCategories(page);
+    await seedProducts(page, productsDTOs);
+  });
+
+  test.afterAll(async () => {
+    await page.close();
+  });
+
+  test.beforeEach(async () => {
+    // вложенный рецепт нужен для четвертого ингредиента; перезаливаем оба, чтобы сбросить shrinkage/modifiers
+    await putDbItems(page, 'lasagna-db', Stores.RECIPES, [
+      nestedRecipeForCalc,
+      richRecipeWithPortions,
+    ]);
+    await page.goto(URLS.recipes.calculate(RICH_RECIPE_WITH_PORTIONS_UUID));
+    await page.waitForLoadState('networkidle');
+
+    // baseline: 2 порции, общий вес 400 → 200г на порцию; цена 105$, 52.5$ за порцию
+    await expect(calculationPage.outcomeAmountResult).toContainText('200');
+    await expect(calculationPage.oneUnitPriceResult).toContainText('52.5');
+    await expect(calculationPage.totalPriceAmountResult).toContainText('105');
+  });
+
+  test('Шринкейдж 50%: вес на порцию падает 200 → 100гр (цена не меняется)', async () => {
+    await calculationPage.fillAndCheck(calculationPage.shrinkageValueInput, '50');
+
+    // weightForUnit = (400×0.5) / 2 = 100
+    await expect(calculationPage.outcomeAmountResult).toContainText('100');
+    // с порциями шринкейдж не меняет цену
+    await expect(calculationPage.oneUnitPriceResult).toContainText('52.5');
+    await expect(calculationPage.totalPriceAmountResult).toContainText('105');
+  });
+
+  test('Шринкейдж до 100гр (weight): вес на порцию падает до 50гр', async () => {
+    await calculationPage.shrinkageModeWeight.click();
+    await calculationPage.fillAndCheck(calculationPage.shrinkageValueInput, '100');
+
+    // totalWeight=100, weightForUnit=100/2=50
+    await expect(calculationPage.outcomeAmountResult).toContainText('50');
+    await expect(calculationPage.oneUnitPriceResult).toContainText('52.5');
+  });
+
+  test('Модификатор +50% per-unit: цена за порцию 52.5 → 78.75', async () => {
+    await calculationPage.modifierUnitPercent.click();
+    await calculationPage.fillAndCheck(calculationPage.priceModifierInput, '50');
+
+    // 52.5 × 1.5 = 78.75; total = 78.75 × 2 = 157.5
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/52\.5.*?78\.75/);
+    await expect(calculationPage.totalPriceAmountResult).toContainText('157.5');
+  });
+
+  test('Модификатор +50$ к total: итог 105 → 155', async () => {
+    await calculationPage.modifierTypeTotal.click();
+    // unit currency — это дефолт
+    await calculationPage.fillAndCheck(calculationPage.priceModifierInput, '50');
+
+    // total = 105 + 50 = 155; за порцию = 155/2 = 77.5
+    await expect(calculationPage.totalPriceAmountResult).toContainText(/105.*?155/);
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/52\.5.*?77\.5/);
+  });
+});
+
+test.describe.serial('Калькуляция: рецепт без порций (шринкейдж и модификаторы)', () => {
+  let page: Page;
+  let calculationPage: CalculateRecipePage;
+
+  test.beforeAll(async ({browser}) => {
+    const context = await browser.newContext();
+    page = await context.newPage();
+    calculationPage = new CalculateRecipePage(page);
+    await page.goto(URLS.recipes.list);
+    await page.waitForLoadState('networkidle');
+    await seedCategories(page);
+    await seedProducts(page, productsDTOs);
+  });
+
+  test.afterAll(async () => {
+    await page.close();
+  });
+
+  test.beforeEach(async () => {
+    await putDbItems(page, 'lasagna-db', Stores.RECIPES, [
+      nestedRecipeForCalc,
+      richRecipeNoPortions,
+    ]);
+    await page.goto(URLS.recipes.calculate(RICH_RECIPE_NO_PORTIONS_UUID));
+    await page.waitForLoadState('networkidle');
+
+    // baseline: 400гр / 105$ / 0.2625 $/гр (округляется до "0.26")
+    await expect(calculationPage.outcomeAmountResult).toContainText('400');
+    await expect(calculationPage.oneUnitPriceResult).toContainText('0.26');
+    await expect(calculationPage.totalPriceAmountResult).toContainText('105');
+  });
+
+  test('Шринкейдж 25%: вес 400 → 300гр, цена за грамм 0.26 → 0.35', async () => {
+    await calculationPage.fillAndCheck(calculationPage.shrinkageValueInput, '25');
+
+    // ячейка показывает "before > after" — проверяем оба значения одним regex
+    await expect(calculationPage.outcomeAmountResult).toContainText(/400.*?300/);
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/0\.26.*?0\.35/);
+    // итог не меняется без модификаторов
+    await expect(calculationPage.totalPriceAmountResult).toContainText('105');
+  });
+
+  test('Шринкейдж до 200гр (weight): вес 400 → 200, цена 0.26 → 0.53', async () => {
+    await calculationPage.shrinkageModeWeight.click();
+    await calculationPage.fillAndCheck(calculationPage.shrinkageValueInput, '200');
+
+    await expect(calculationPage.outcomeAmountResult).toContainText(/400.*?200/);
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/0\.26.*?0\.53/);
+  });
+
+  test('Модификатор +100% per-unit: цена 0.26 → 0.53, итог 105 → 210', async () => {
+    await calculationPage.modifierUnitPercent.click();
+    await calculationPage.fillAndCheck(calculationPage.priceModifierInput, '100');
+
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/0\.26.*?0\.53/);
+    await expect(calculationPage.totalPriceAmountResult).toContainText('210');
+  });
+
+  test('Модификатор +20% к total: итог 105 → 126', async () => {
+    await calculationPage.modifierTypeTotal.click();
+    await calculationPage.modifierUnitPercent.click();
+    await calculationPage.fillAndCheck(calculationPage.priceModifierInput, '20');
+
+    // 105 × 1.2 = 126; за грамм = 126/400 = 0.315 → "0.32"
+    await expect(calculationPage.totalPriceAmountResult).toContainText(/105.*?126/);
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/0\.26.*?0\.32/);
+  });
+
+  test('Модификатор round per-unit=1: цена за грамм фиксируется как 1', async () => {
+    await calculationPage.modifierActionRound.click();
+    // у round нет unit-switcher (в шаблоне он скрыт), просто заполняем значение
+    await calculationPage.fillAndCheck(calculationPage.priceModifierInput, '1');
+
+    // цена за грамм 0.26 → 1; итог = 1 × 400 = 400
+    await expect(calculationPage.oneUnitPriceResult).toContainText(/0\.26.*?1/);
+    await expect(calculationPage.totalPriceAmountResult).toContainText(/105.*?400/);
+  });
+});

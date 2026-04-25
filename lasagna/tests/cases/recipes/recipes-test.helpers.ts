@@ -436,29 +436,34 @@ export const calculationOutputWithoutPortions = [
   },
   {
     name: 'Fourth Test Recipe - mixed ingredient unit types in their own units Cost Analytics',
-    outcomeAmount: '1.25 kg.',
-    oneUnitPrice: '2.40 $',
-    totalPrice: '3.00 $',
+    outcomeAmount: '3,750 gr.',
+    oneUnitPrice: '0.18 $',
+    totalPrice: '678.75 $',
     ingredientsRows: [
       {
         name: 'Test Product - Test Brand (Test Source)',
-        amount: '750.00 gr.',
-        pricePerUnit: '0.30 $ /gr.',
-        totalPrice: '0.23 $',
+        amount: '750 gr.',
+        pricePerUnit: '0.3 $ /gr.',
+        totalPrice: '225 $',
       },
       {
         name: 'Test Product KG - Test Brand (Test Source)',
-        amount: '3.00 pcs.',
-        pricePerUnit: '150.00 $ /kg.',
-        totalPrice: '450.00 $',
+        amount: '3 kg. (3,000 gr.)',
+        pricePerUnit: '150 $ /kg.',
+        totalPrice: '450 $',
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '0.50 kg.',
-        pricePerUnit: '7.50 $ /pcs.',
+        amount: '0.5 pcs. (0 gr.)',
+        pricePerUnit: '7.5 $ /pcs.',
         totalPrice: '3.75 $',
       },
     ],
+    total: {
+      amount: '3,750 gr.',
+      pricePerUnit: '0.18 $ /gr.',
+      totalPrice: '678.75 $',
+    }
   },
   {
     name: 'Fifth Test Recipe - mix unit types with no their own units Cost Analytics',
@@ -549,7 +554,7 @@ export const calculationOutputWithoutPortions = [
 export const calculationOutputWithPortions = [
   {
     name: 'Test Recipe - all ingredients unit types setup as gram Cost Analytics',
-    outcomeAmount: '4 pcs.',
+    outcomeAmount: '4 pcs. / 131 gram',
     oneUnitPrice: '38.4 $',
     totalPrice: '153.6 $',
     ingredientsRows: [
@@ -580,25 +585,25 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Third Test Recipe - all ingredients unit types setup as kilogram Cost Analytics',
-    outcomeAmount: '2 pcs.',
+    outcomeAmount: '2 pcs. / 1,000 gram',
     oneUnitPrice: '262.5 $',
     totalPrice: '525 $',
     ingredientsRows: [
       {
         name: 'Test Product - Test Brand (Test Source)',
-        amount: '1.5 kg.',
+        amount: '1.5 kg. (1,500 gr.)',
         pricePerUnit: '300 $ /kg.',
         totalPrice: '450 $',
       },
       {
         name: 'Test Product KG - Test Brand (Test Source)',
-        amount: '0.5 kg.',
+        amount: '0.5 kg. (500 gr.)',
         pricePerUnit: '150 $ /kg.',
         totalPrice: '75 $',
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '0.2 kg.',
+        amount: '0.2 kg. (0 gr.)',
         pricePerUnit: '0 $ /kg.',
         totalPrice: '0 $',
       },
@@ -611,25 +616,25 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Another Test Recipe - all ingredients unit types setup as piece Cost Analytics',
-    outcomeAmount: '4 pcs.',
+    outcomeAmount: '4 pcs. / 750 gram',
     oneUnitPrice: '159.38 $',
     totalPrice: '637.5 $',
     ingredientsRows: [
       {
         name: 'Test Product - Test Brand (Test Source)',
-        amount: '2 pcs.',
+        amount: '2 pcs. (1,000 gr.)',
         pricePerUnit: '150 $ /pcs.',
         totalPrice: '300 $',
       },
       {
         name: 'Test Product KG - Test Brand (Test Source)',
-        amount: '1 pcs.',
+        amount: '1 pcs. (2,000 gr.)',
         pricePerUnit: '300 $ /pcs.',
         totalPrice: '300 $',
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '5 pcs.',
+        amount: '5 pcs. (0 gr.)',
         pricePerUnit: '7.5 $ /pcs.',
         totalPrice: '37.5 $',
       },
@@ -642,7 +647,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Fourth Test Recipe - mixed ingredient unit types in their own units Cost Analytics',
-    outcomeAmount: '4 pcs.',
+    outcomeAmount: '4 pcs. / 937.5 gram',
     oneUnitPrice: '169.69 $',
     totalPrice: '678.75 $',
     ingredientsRows: [
@@ -654,13 +659,13 @@ export const calculationOutputWithPortions = [
       },
       {
         name: 'Test Product KG - Test Brand (Test Source)',
-        amount: '3 kg.',
+        amount: '3 kg. (3,000 gr.)',
         pricePerUnit: '150 $ /kg.',
         totalPrice: '450 $',
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '0.5 pcs.',
+        amount: '0.5 pcs. (0 gr.)',
         pricePerUnit: '7.5 $ /pcs.',
         totalPrice: '3.75 $',
       },
@@ -673,13 +678,13 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Fifth Test Recipe - mix unit types with no their own units Cost Analytics',
-    outcomeAmount: '2 pcs.',
+    outcomeAmount: '2 pcs. / 500 gram',
     oneUnitPrice: '112.5 $',
     totalPrice: '225 $',
     ingredientsRows: [
       {
         name: 'Test Product - Test Brand (Test Source)',
-        amount: '1 pcs.',
+        amount: '1 pcs. (500 gr.)',
         pricePerUnit: '150 $ /pcs.',
         totalPrice: '150 $',
       },
@@ -691,7 +696,7 @@ export const calculationOutputWithPortions = [
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '0.75 kg.',
+        amount: '0.75 kg. (0 gr.)',
         pricePerUnit: '0 $ /kg.',
         totalPrice: '0 $',
       },
@@ -709,13 +714,13 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Seventh Test Recipe - ingredients with recipes as ingredients, all unit types Cost Analytics',
-    outcomeAmount: '3 pcs.',
+    outcomeAmount: '3 pcs. / 277 gram',
     oneUnitPrice: '65.72 $',
     totalPrice: '197.15 $',
     ingredientsRows: [
       {
         name: 'Test Recipe - all ingredients unit types setup as gram',
-        amount: '1 pcs.',
+        amount: '1 pcs. (131 gr.)',
         pricePerUnit: '38.4 $ /pcs.',
         totalPrice: '38.4 $',
       },
@@ -740,7 +745,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Eighth Test Recipe - mixed ingredients with products and recipes Cost Analytics',
-    outcomeAmount: '5 pcs.',
+    outcomeAmount: '5 pcs. / 360 gram',
     oneUnitPrice: '81.75 $',
     totalPrice: '408.75 $',
     ingredientsRows: [
@@ -752,13 +757,13 @@ export const calculationOutputWithPortions = [
       },
       {
         name: 'Another Test Recipe - all ingredients unit types setup as piece',
-        amount: '2 pcs.',
+        amount: '2 pcs. (1,500 gr.)',
         pricePerUnit: '159.38 $ /pcs.',
         totalPrice: '318.75 $',
       },
       {
         name: 'Test Product Piece - Test Brand (Test Source)',
-        amount: '1 kg.',
+        amount: '1 kg. (0 gr.)',
         pricePerUnit: '0 $ /kg.',
         totalPrice: '0 $',
       },

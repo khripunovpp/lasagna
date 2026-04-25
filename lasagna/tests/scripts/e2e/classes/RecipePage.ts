@@ -43,6 +43,18 @@ export class RecipePage
     return this.page.locator('[data-u2e="recipe.form.clone-btn"]');
   }
 
+  get recipeFormSaveBtnEdit() {
+    return this.page.locator('[data-u2e="recipe.form.save-btn.edit"]');
+  }
+
+  getDeleteIngredientButton(index: number) {
+    return this.getIngredientItemByIndex(index).locator('[data-u2e="delete-ingredient-btn"]');
+  }
+
+  getTagRemoveIcon(index: number) {
+    return this.page.locator('[data-u2e="tags.tags"] .ng-value').nth(index).locator('.ng-value-icon');
+  }
+
   get exportButton() {
     return this.page.locator('[data-u2e="recipe.form.export-btn"]');
   }

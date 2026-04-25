@@ -27,7 +27,7 @@ export class PdfGeneratorService {
       logo: settings?.[SettingsKeysConst.invoiceLogo] || null,
       rowsPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
       totalPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
-      currency: currencyStringToSymbol(settings?.[SettingsKeysConst.currency] || 'USD'),
+      currency: settings?.[SettingsKeysConst.currency] || 'USD',
     };
   }
 
@@ -36,7 +36,7 @@ export class PdfGeneratorService {
     return {
       rowsPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
       totalPrecision: +settings?.[SettingsKeysConst.pricePrecision] || 2,
-      currency: currencyStringToSymbol(settings?.[SettingsKeysConst.currency] || 'USD'),
+      currency: settings?.[SettingsKeysConst.currency] || 'USD',
     };
   }
 
