@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-04-25",
+      "features": [
+        "Added shrinkage tracking (mass loss during cooking). On the recipe page, you can specify a percentage or final weight — the cost will be recalculated taking the loss into account.",
+        "Informational blocks with explanations of the calculations have been added to the calculation page.",
+        "Minor fixes and improvements."
+      ]
+    },
+    {
       "date": "2026-03-20",
       "features": [
         "Price changes can be tracked in products. If a product has a price set, a price chart button will be available in the unit cost field.",

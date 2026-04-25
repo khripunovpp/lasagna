@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject} from '@angular/core';
 import {ReleaseNotesService} from '../release-notes.service';
 import {ContainerComponent} from '../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
@@ -53,4 +53,11 @@ export class ReleaseNotesPageComponent {
   readonly sortedNotes = computed(() =>
     [...this._releaseNotesService.allNotes()].sort((a, b) => b.date.localeCompare(a.date))
   );
+
+  constructor() {
+    effect(() => {
+      const latest = this.sortedNotes()[0];
+      if (latest) this._releaseNotesService.markRead(latest.date);
+    });
+  }
 }
