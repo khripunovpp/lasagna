@@ -2,7 +2,6 @@ import {Routes} from '@angular/router';
 import {recipeEditResolver} from './features/recipes/service/resolvers/recipe-edit.resolver';
 import {recipeCalculationResolver,} from './features/recipes/service/resolvers/recipe-calculation.resolver';
 import {recipeDraftResolver} from './features/recipes/service/resolvers/recipe-draft.resolver';
-import {folderGuard} from './features/recipes/service/guards/folder.guard';
 import {productDraftResolver} from './features/products/service/product-draft.resolver';
 import {invoiceEditResolver} from '@invoices/service/invoice-route.resolver';
 import {InvoiceBuilderService} from '@invoices/view/invoice-builder.service';
@@ -61,7 +60,6 @@ export const routes: Routes = [{
           path: 'folder/:folderUuid',
           loadComponent: () => import('./features/recipes/view/list/recipes-list.component')
             .then(m => m.RecipesListComponent),
-          canActivate: [folderGuard],
           title: translationTitleResolver(marker('app.title.recipes')),
         },
         {

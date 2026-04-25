@@ -148,7 +148,7 @@ export class RecipesListComponent implements OnInit {
     this.foldersAllowed() && (this.isInFolderRoute() || this.viewMode() === 'folders')
   );
   private readonly _settingsService = inject(SettingsService);
-  readonly foldersEnabled = computed(() => this._settingsService.getRecipesViewMode() === 'folders' && this.viewMode() === 'folders');
+  readonly foldersEnabled = computed(() => this.viewMode() === 'folders' && this._settingsService.getRecipesViewMode() === 'folders');
   private readonly _foldersRepository = inject(FoldersRepository);
   private readonly _router = inject(Router);
   private readonly _analyticsService = inject(AnalyticsService);

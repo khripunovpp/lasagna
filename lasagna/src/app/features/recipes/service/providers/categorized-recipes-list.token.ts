@@ -1,10 +1,10 @@
 import {inject, InjectionToken} from '@angular/core';
-import {from, map, Observable, of, shareReplay, switchMap, tap, withLatestFrom} from 'rxjs';
+import {distinctUntilChanged, from, map, Observable, of, shareReplay, switchMap, tap} from 'rxjs';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
 import {SortResult, SortStrategy} from '../../../../shared/service/types/sorting.types';
 import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {RecipesRepository} from './recipes.repository';
-import {errorHandler, injectParams, injectQueryParams} from '../../../../shared/helpers';
+import {errorHandler, injectQueryParams} from '../../../../shared/helpers';
 import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
 import {Recipe} from '../models/Recipe';
 import {
@@ -17,7 +17,7 @@ import {NotificationsService} from '../../../../shared/service/services';
 import {catchError} from 'rxjs/operators';
 import {FeatureFlagsService} from '../../../../shared/service/services/feature-flags.service';
 import {FoldersRepository} from './folders.repository';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {LoadersManagerService} from '../../../../shared/service/services/loaders-manager.service';
 
@@ -27,6 +27,7 @@ export const provideRecipes = {
   provide: CATEGORIZED_RECIPES_LIST,
   useFactory: () => {
     const router = inject(Router);
+    const route = inject(ActivatedRoute);
     const notificationsService = inject(NotificationsService);
     const featureFlagsService = inject(FeatureFlagsService);
     const groupSortService = inject(GroupSortService);
@@ -35,8 +36,6 @@ export const provideRecipes = {
     const foldersRepository = inject(FoldersRepository);
     const settingsService = inject(SettingsService);
     const loadersManagerService = inject(LoadersManagerService);
-
-    const folderUuid = injectParams<string | null>('folderUuid');
     const groupingParam = injectQueryParams('groupBy');
     const sortDirection = injectQueryParams<string | null>('sortDirection');
     const sortField = injectQueryParams('sortField');
@@ -50,22 +49,30 @@ export const provideRecipes = {
       'alphabetical': () => new RecipeAlphabeticalSortStrategy(),
       'tag': () => new TagsRecipeSortStrategy(),
     };
-    const existFolder = folderUuid()
-      ? from(foldersRepository.getOne(folderUuid()!)).pipe(
-        map((folder) => !folder?.deleted),
-        catchError(() => {
-          return of(false)
-        }),
-        tap(exists => {
-          if (!exists) {
-            notificationsService.error('recipes.folder.not-found');
-            router.navigate(['/recipes'], {
-              skipLocationChange: true,
-            });
-          }
-        }),
-      )
-      : of(false);
+
+    const folderState$ = route.params.pipe(
+      map((params) => (params?.['folderUuid'] as string | null) ?? null),
+      distinctUntilChanged(),
+      switchMap((uuid) => {
+        if (!uuid) {
+          return of({uuid: null as string | null, exists: false});
+        }
+
+        return from(foldersRepository.getOne(uuid)).pipe(
+          map((folder) => !folder?.deleted),
+          catchError(() => of(false)),
+          tap((exists) => {
+            if (!exists) {
+              notificationsService.error('recipes.folder.not-found');
+              router.navigate(['/recipes'], {
+                skipLocationChange: true,
+              });
+            }
+          }),
+          map((exists) => ({uuid, exists})),
+        );
+      }),
+    );
 
     const recipes = from(recipesRepository.loadAll({
       key: filterField() as keyof Recipe,
@@ -74,26 +81,28 @@ export const provideRecipes = {
     })).pipe(
       switchMap(() => recipesRepository.getStream$),
       map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
-      withLatestFrom(existFolder),
-      switchMap(([recipes, folderExists]) => {
-        const foldersAllowed = featureFlagsService.getFlagValue('folders');
-        const foldersEnabled = settingsService.getRecipesViewMode() === 'folders';
+      switchMap((recipes) => folderState$.pipe(
+        map(({uuid, exists}) => {
+          const foldersAllowed = featureFlagsService.getFlagValue('folders');
+          const foldersEnabled = settingsService.getRecipesViewMode() === 'folders';
 
-        return of(recipes.filter(r => {
-          if (!foldersEnabled || !foldersAllowed) {
-            return true;
-          }
+          return recipes.filter(r => {
+            if (!foldersEnabled || !foldersAllowed) {
+              return true;
+            }
 
-          if (folderUuid() && folderExists) {
-            return r.folder_uuid === folderUuid();
-          }
+            if (uuid && exists) {
+              return r.folder_uuid === uuid;
+            }
 
-          return foldersAllowed
-            ? r.folder_uuid == null
-            : true;
-        }));
-      }),
+            return foldersAllowed
+              ? r.folder_uuid == null
+              : true;
+          });
+        }),
+      )),
     );
+
 
     loadersManagerService.showLoader('app');
     return recipes.pipe(
