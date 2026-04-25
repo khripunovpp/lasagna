@@ -33,7 +33,7 @@ import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe'
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs';
 import {NotificationsService} from '../../../../shared/service/services';
-import {errorHandler} from '../../../../shared/helpers';
+import {errorHandler, isMicroAmount} from '../../../../shared/helpers';
 import {difference} from 'lodash';
 import {RecipePriceModifier} from '../../service/models/PriceModifier';
 import {CalculationPriceModifiersComponent} from './calculation-price-modifiers/calculation-price-modifiers.component';
@@ -56,9 +56,10 @@ import {
 } from '../../../../shared/view/ui/inline-separated-group.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
-import {PopoverDirective} from '../../../../shared/view/ui/popover/popover.directive';
 import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {ShrinkageValue} from '../../service/models/Recipe';
+import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.component';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -89,11 +90,9 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
     ControlExtraTemplateDirective,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
-    PopoverDirective,
     QuestionMarkComponent,
     PullDirective,
-
-
+    ShrinkageControlComponent,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -171,7 +170,7 @@ export class CalculateRecipeComponent
             calculation.calculation?.outcomeAmount,
             {
               recipe_uuid: this.uuid(),
-              total_price: calculation.calculation?.totalPrice,
+              total_price: calculation.calculation?.tableIngredientsTotalPrice,
               ingredients_count: calculation.calculation?.ingredients?.length || 0,
               ingredients_uuids: calculation.calculation?.ingredients?.map(ing => ing.uuid) || [],
               outcome_unit: calculation.calculation?.outcomeUnit
@@ -187,6 +186,12 @@ export class CalculateRecipeComponent
           value: recipePriceModifiers?.value,
           type: recipePriceModifiers?.type,
         });
+
+        const shrinkage = data['result']?.calculation?.recipe?.shrinkage;
+        this.shrinkageForm.patchValue(
+          shrinkage || {value: 0, mode: 'percent'},
+          {emitEvent: false},
+        );
       });
     }
   }
@@ -207,11 +212,11 @@ export class CalculateRecipeComponent
       weight,
       labels,
       colors,
-    } = result?.calculation?.ingredients?.reduce((acc, item: Ingredient) => {
-      acc.prices.push(item.totalPrice);
-      acc.weight.push(item.totalWeightGram);
-      acc.labels.push(item.generalName);
-      acc.colors.push(item.product_id?.ownColor ?? item.recipe_id?.ownColor ?? randomRGB());
+    } = result?.calculation?.ingredients?.reduce((acc, item) => {
+      acc.prices.push(item.total);
+      acc.weight.push(item.total_weight_gram);
+      acc.labels.push(item.name);
+      acc.colors.push(item.color);
       return acc;
     }, {
       prices: [],
@@ -275,14 +280,15 @@ export class CalculateRecipeComponent
     return !!this.result()?.calculation?.recipe?.portions;
   });
   recipePriceAdditionsForm = new FormControl();
+  shrinkageForm = new FormControl<ShrinkageValue>({value: 0, mode: 'percent'});
   readonly values = toSignal(this.recipePriceAdditionsForm.valueChanges);
   readonly isMobile = matchMediaSignal(mobileBreakpoint);
   readonly totalScaleFactor = computed(() => {
     if (!this.recalculateTotalsModel()) return 1;
     return this.recalculateTotalsModel() / (this.result()?.calculation?.outcomeAmount || 1);
   })
-  readonly totalPrice = computed(() => {
-    return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
+  readonly initialTotalPrice = computed(() => {
+    return (this.result()?.calculation?.initialTotalPrice || 0) * this.totalScaleFactor();
   });
   readonly totalPriceDifference = computed(() => {
     const diff = (this.result()?.calculation?.totalPriceDifference || 0) * this.totalScaleFactor();
@@ -294,11 +300,12 @@ export class CalculateRecipeComponent
     return this.result()?.calculation?.totalPriceProfit || 0;
   });
 
-  readonly totalPriceWithAdditions = computed(() => {
-    return (this.result()?.calculation?.totalPriceWithAdditions || 0) * this.totalScaleFactor();
+  readonly totalPrice = computed(() => {
+    return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
   });
   protected readonly difference = difference;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
+  protected readonly hasMicroPrice = isMicroAmount;
   private readonly _window = inject(WINDOW);
 
   ngOnInit() {
@@ -315,6 +322,14 @@ export class CalculateRecipeComponent
       )
       .subscribe((value) => {
         this.updatePriceAdditions(value);
+      });
+
+    this.shrinkageForm.valueChanges
+      .pipe(
+        debounceTime(300),
+      )
+      .subscribe((value) => {
+        if (value) this.updateShrinkage(value);
       });
   }
 
@@ -337,19 +352,35 @@ export class CalculateRecipeComponent
         formValue.type || 'per_unit',
       );
       await this._calculateRecipeService.updateRecipe({
-        priceModifiers: [
+        priceModifiers: newModifier.value ? [
           newModifier,
-        ]
+        ] : [],
       } as any);
 
       const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
       this.result.set(result);
+
       this._analyticsService.trackEvent('recipe_price_modifiers_update', {
         event_category: 'recipes',
         event_label: 'price_modifiers',
         action: newModifier.action,
         unit: newModifier.unit,
         type: newModifier.type,
+      });
+    } catch (error) {
+      this._notificationService.error(errorHandler(error));
+    }
+  }
+
+  async updateShrinkage(value: ShrinkageValue) {
+    try {
+      await this._calculateRecipeService.updateRecipe({shrinkage: value} as any);
+      const result = await this._calculateRecipeService.calculateRecipe(this.uuid());
+      this.result.set(result);
+      this._analyticsService.trackEvent('recipe_shrinkage_update', {
+        event_category: 'recipes',
+        event_label: 'shrinkage',
+        mode: value.mode,
       });
     } catch (error) {
       this._notificationService.error(errorHandler(error));

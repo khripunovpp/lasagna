@@ -70,15 +70,20 @@ export const routes: Routes = [{
         },
         {
           path: 'edit/:uuid',
-          loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
-            .then(m => m.AddRecipeComponent),
           resolve: {
             recipe: recipeEditResolver,
           },
-          title: recipeTitleResolver,
-          data: {
-            editRoute: true,
-          }
+          children: [
+            {
+              path: '',
+              loadComponent: () => import('./features/recipes/view/add-recipe/add-recipe.component')
+                .then(m => m.AddRecipeComponent),
+              title: recipeTitleResolver,
+              data: {
+                editRoute: true,
+              },
+            }
+          ]
         },
         {
           path: 'draft/:uuid',
@@ -94,13 +99,17 @@ export const routes: Routes = [{
         },
         {
           path: 'calculate/:uuid',
-          loadComponent: () => import('./features/recipes/view/calculate/calculate-recipe.component')
-            .then(m => m.CalculateRecipeComponent),
           resolve: {
             result: recipeCalculationResolver,
           },
-          title: recipeCalculationTitleResolver,
-          data: {}
+          children: [
+            {
+              path: '',
+              title: recipeCalculationTitleResolver,
+              loadComponent: () => import('./features/recipes/view/calculate/calculate-recipe.component')
+                .then(m => m.CalculateRecipeComponent),
+            }
+          ]
         },
       ]
     },

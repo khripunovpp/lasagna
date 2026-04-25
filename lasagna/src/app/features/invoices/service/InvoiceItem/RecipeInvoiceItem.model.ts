@@ -6,6 +6,7 @@ import {makeCompareKey} from '../../helpers/invoices-forms.helper';
 import {Recipe} from '../../../recipes/service/models/Recipe';
 import {Tax} from '../../../settings/service/models/Tax';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {RecipeCostCalculator} from '../../../recipes/service/models/RecipeCostCalculator';
 
 export class RecipeInvoiceItem
   extends InvoiceItemBase {
@@ -16,9 +17,11 @@ export class RecipeInvoiceItem
     public pinnedDto: InvoiceItemDTO["pinnedDto"],
   ) {
     super();
+    this.recipeCost = RecipeCostCalculator.fromRecipe(recipe);
   }
 
   readonly type = InvoiceItemType.Recipe;
+  readonly recipeCost: RecipeCostCalculator;
 
   get totalPrice(): number {
     return this.pricePerUnitModified * this.amount;
@@ -28,11 +31,11 @@ export class RecipeInvoiceItem
     if (this.pinnedDto?.pricePerUnit) {
       return this.pinnedDto.pricePerUnit;
     }
-    if (!this.recipe.totalPriceModified) {
+    if (!this.recipeCost.totalPrice) {
       return 0;
     }
     // для иновйса подгоняем цену юнит исходя из тотала
-    return this.recipe.totalPriceModified / this.recipe.outcomeAmount
+    return this.recipeCost.totalPrice / this.recipeCost.outcomeAmount
   }
 
   get weightGram(): number {
@@ -49,9 +52,9 @@ export class RecipeInvoiceItem
     }
     // TODO
     if (this.unit === UnitValue.GRAM && this.recipe?.portions) {
-      return this.recipe.totalPrice / this.recipe.totalIngredientsWeight
+      return this.recipeCost.tableIngredientsTotalPrice / this.recipeCost.totalIngredientsWeight
     }
-    return this.recipe.pricePerUnit;
+    return this.recipeCost.actualPricePerUnit;
   }
 
   get compareKey(): string {
@@ -74,7 +77,7 @@ export class RecipeInvoiceItem
     // TODO
     if (this.recipe.portions) {
       return this.recipe.portions;
-    } else  {
+    } else {
       // TODO
       return this.recipe.portions || this.weightGram;
     }

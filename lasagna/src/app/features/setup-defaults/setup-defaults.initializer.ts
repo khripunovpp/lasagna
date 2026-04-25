@@ -38,7 +38,7 @@ export const setupDefaultsInitializer = async () => {
         .then((settings) => settingsService.setDefaultSettings())
         .then(async (settings) => {
           const lang = settings?.getSetting<string>('lang')?.data;
-          debugger
+
           if (!lang) {
             const defLang = isRuRegion ? 'ru' : 'en';
             await settingsService.changeLang(lang || defLang);

@@ -25,6 +25,10 @@ export const RecipeScheme = z.object({
   syncedAt: z.union([z.string(), z.number()]).optional(),
   deleted: z.number().optional(),
   deletedAt: z.union([z.string(), z.number()]).optional(),
+  shrinkage: z.object({
+    value: z.number().or(z.string()),
+    mode: z.enum(['percent', 'weight']),
+  }).optional(),
 });
 
 export type RecipeDTO = z.infer<typeof RecipeScheme>;

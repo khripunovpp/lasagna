@@ -22,4 +22,8 @@ export const currencyMapToHumanReadable: Record<string, string> = {
   KRW: '₩',
   AUD: 'A$',
   CAD: 'C$',
+  UAH: '₴',
+  PLN: 'zł',
+  KZT: '₸',
+  TRY: '₺',
 };

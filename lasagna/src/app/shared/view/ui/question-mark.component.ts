@@ -1,6 +1,5 @@
 import {Component, input} from '@angular/core';
 import {PopoverDirective} from './popover/popover.directive';
-import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-question',
@@ -12,6 +11,7 @@ import {TranslatePipe} from '@ngx-translate/core';
          height="16px"
          viewBox="0 0 24 24"
          fill="none"
+         [lgPopoverPosition]="'auto'"
          [lgPopover]="lgPopover"
          [lgPopoverMobileModal]="true"
          xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     </ng-template>
   `,
   imports: [
-    TranslatePipe,
     PopoverDirective
   ],
   styles: `

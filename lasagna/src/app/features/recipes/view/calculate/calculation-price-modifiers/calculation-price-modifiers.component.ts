@@ -1,4 +1,4 @@
-import {Component, computed, effect, forwardRef, inject, input, output} from '@angular/core';
+import {Component, computed, effect, forwardRef, inject, output} from '@angular/core';
 import {RecipePriceModifier} from '../../../service/models/PriceModifier';
 import {NumberInputComponent} from '../../../../controls/form/number-input.component';
 import {ParseMathDirective} from '../../../../../shared/view/directives/parse-math.directive';
@@ -8,7 +8,6 @@ import {ControlExtraTemplateDirective} from '../../../../controls/form/control-e
 import {SETTINGS} from '../../../../settings/service/providers/settings.token';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {CurrencySymbolPipe} from '../../../../../shared/view/pipes/currency-symbol.pipe';
-import {RecipeCost} from '../../../service/models/RecipeCost';
 import {FlexRowComponent} from '../../../../../shared/view/layout/flex-row.component';
 import {matchMediaSignal} from '../../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../../shared/view/const/breakpoints';
@@ -87,13 +86,13 @@ export class CalculationPriceModifiersComponent
   implements ControlValueAccessor {
   constructor() {
   }
+
   recipePriceAdditionsForm = new FormGroup({
     action: new FormControl<'add' | 'round'>('add'),
     value: new FormControl<number | string>(0),
     unit: new FormControl<'currency' | 'percent'>('currency'),
     type: new FormControl<'per_unit' | 'total'>('per_unit'),
   });
-  recipeCost = input<RecipeCost | null>();
   values = toSignal(this.recipePriceAdditionsForm.valueChanges);
   userSettings = inject(SETTINGS);
   additionalPriceUnit: UnitGroupItem[] = [

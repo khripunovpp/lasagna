@@ -7,6 +7,11 @@ import {Tag} from '../../../settings/service/models/Tag';
 import {RecipePriceModifier} from './PriceModifier';
 import {BaseModel} from '../../../sync/service/BaseModel';
 
+export interface ShrinkageValue {
+  value: number;
+  mode: 'percent' | 'weight';
+}
+
 export class Recipe
   extends BaseModel {
   constructor(
@@ -26,28 +31,7 @@ export class Recipe
   priceModifiers: RecipePriceModifier[] = [];
   master?: boolean = false;
   folder_uuid: string | null = null;
-
-  get perUnitPriceModified() {
-    let value = this.pricePerUnit;
-    for (const modifier of this.priceModifiers) {
-      if (modifier.type !== 'per_unit') {
-        continue;
-      }
-      value = modifier.apply(value);
-    }
-    return value
-  }
-
-  get totalPriceModified() {
-    let value = this.perUnitPriceModified * this.outcomeAmount;
-    for (const modifier of this.priceModifiers) {
-      if (modifier.type !== 'total') {
-        continue;
-      }
-      value = modifier.apply(value);
-    }
-    return value
-  }
+  shrinkage?: ShrinkageValue;
 
   get valid() {
     return this.name
@@ -61,46 +45,6 @@ export class Recipe
       return this.color;
     }
     return estimateColor(this.name);
-  }
-
-  get totalPrice() {
-    return this.ingredients.reduce((acc, ingredient) => {
-      return acc + ingredient.totalPrice;
-    }, 0);
-  }
-
-  get outcomeAmount(): number {
-    if (this.portions) {
-      return parseFloatingNumber(this.portions);
-    }
-    return this.totalIngredientsWeight;
-  }
-
-  get pricePerUnit() {
-    if (this.ingredients.length === 0) return 0;
-    if (this.portions) {
-      return this.totalPrice / this.portions;
-    }
-    return this.pricePerGram;
-  }
-
-  get pricePerGram() {
-    if (this.ingredients.length === 0) {
-      return 0;
-    }
-    return this.totalPrice / this.totalIngredientsWeight;
-  }
-
-  get totalIngredientsWeight(): number {
-    return this.ingredients.reduce((acc, ingredient) => {
-      // Итоговый вес ингредиенты может быть не вывеен, например, для штучных продуктов
-      return acc + (ingredient.totalWeightGram ?? 0);
-    }, 0);
-  }
-
-  get weightForUnit(): number {
-    if (!this.portions) return 0;
-    return this.totalIngredientsWeight / this.portions;
   }
 
   static fromRaw(dto: any) {
@@ -140,6 +84,10 @@ export class Recipe
       deleted: dto?.deleted,
       deletedAt: dto?.deletedAt,
       folder_uuid: dto?.folder_uuid ?? null,
+      shrinkage: dto?.shrinkage ? {
+        value: parseFloatingNumber(dto.shrinkage.value) || 0,
+        mode: dto.shrinkage.mode || 'percent',
+      } : undefined,
     });
   }
 
@@ -217,6 +165,7 @@ export class Recipe
       color: this.color || estimateColor(this.name),
       priceModifiers: this.priceModifiers.map((modifier) => modifier.toDto()),
       master: this.master || false,
+      shrinkage: this.shrinkage,
       ingredientsUUIDs: this._ingredientsUUIDs(),
       dirtyToSync: this.dirtyToSync,
       cloud_uuid: this.cloud_uuid || '',
@@ -277,6 +226,10 @@ export class Recipe
       }) : this.priceModifiers;
     this.master = dto?.master ?? this.master;
     this.folder_uuid = dto?.folder_uuid !== undefined ? dto.folder_uuid : this.folder_uuid;
+    this.shrinkage = dto?.shrinkage ? {
+      value: parseFloatingNumber(dto.shrinkage.value) || 0,
+      mode: dto.shrinkage.mode || 'percent',
+    } : this.shrinkage;
     super.update(dto, doNotMarkDirty);
     return this;
   }

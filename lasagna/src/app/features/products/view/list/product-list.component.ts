@@ -31,7 +31,7 @@ import {UnitStringPipe} from '../../../../shared/view/pipes/unitString.pipe';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {GroupingTileDirective} from '../../../../shared/view/ui/grouping-tiles/grouping-tile.directive';
 import {GroupingTilesComponent} from '../../../../shared/view/ui/grouping-tiles/grouping-tiles.component';
-import {errorHandler, hasMicroPrice} from '../../../../shared/helpers';
+import {errorHandler, isMicroAmount} from '../../../../shared/helpers';
 import {SettingsKeysConst} from '../../../settings/const/settings-keys.const';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {productLabelFactoryProvider} from '../../../../shared/factories/entity-labels/product.label.factory';
@@ -232,7 +232,7 @@ export class ProductListComponent
   protected readonly Stores = Stores;
   protected readonly ProductScheme = ProductScheme;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
-  protected readonly hasMicroPrice = hasMicroPrice;
+  protected readonly hasMicroPrice = isMicroAmount;
 
   exportProducts(
     selected: Set<string>,

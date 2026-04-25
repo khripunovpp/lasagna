@@ -2,332 +2,371 @@
   <lg-container class="calculation-page">
     <lg-flex-column>
       @let calculation = result()?.calculation;
-      @let hasIngredients = (result()?.calculation?.ingredients?.length || 0) > 0;
+      @let hasIngredients = (calculation?.ingredients?.length || 0) > 0;
 
-      <lg-flex-column [size]="'medium'">
-        <lg-title>
-          {{ result()?.calculation?.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
-        </lg-title>
+      @if (calculation) {
+        <lg-flex-column [size]="'medium'">
+          <lg-title>
+            {{ calculation.recipeName }} {{ 'recipe.calculation.title.after-text'  | translate }}
+          </lg-title>
 
-        @if (hasIngredients) {
-          <lg-inline-separated-group>
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button [flat]="true"
-                         data-u2e="calculate-recipe.edit-recipe-btn"
-                         [link]="'/recipes/edit/' + result()?.calculation?.recipeUuid"
-                         [style]="'default'">
-                {{ 'edit-label' | translate }}
-              </lg-button>
-            </ng-template>
+          @if (hasIngredients) {
+            <lg-inline-separated-group>
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button [flat]="true"
+                           [link]="'/recipes/edit/' + calculation.recipeUuid"
+                           [style]="'default'"
+                           data-u2e="calculate-recipe.edit-recipe-btn">
+                  {{ 'edit-label' | translate }}
+                </lg-button>
+              </ng-template>
 
-            <ng-template lgInlineSeparatedGroup>
-              <lg-button [flat]="true"
-                         data-u2e="calculate-recipe.pdf-generate-btn"
-                         (onClick)="onPdfGenerate()"
-                         [style]="'default'">
-                {{ 'pdf-generate-label' | translate }}
-              </lg-button>
-            </ng-template>
-          </lg-inline-separated-group>
-        }
-      </lg-flex-column>
+              <ng-template lgInlineSeparatedGroup>
+                <lg-button (onClick)="onPdfGenerate()"
+                           [flat]="true"
+                           [style]="'default'"
+                           data-u2e="calculate-recipe.pdf-generate-btn">
+                  {{ 'pdf-generate-label' | translate }}
+                </lg-button>
+              </ng-template>
+            </lg-inline-separated-group>
+          }
+        </lg-flex-column>
 
-      @if (result()?.calculation?.totalPrice) {
-        <div class="calculation-page__topStat">
-          <lg-flex-column [position]="'stretch'">
-            @if (calculation?.hasWeight) {
-              <lg-card size="small">
-                <lg-flex-row [size]="'small'"
-                             [mobileMode]="true"
-                             [relaxed]="true">
-                  <div>{{ 'recipe.calculation.outcome.label' | translate }}</div>
+        @if (calculation.tableIngredientsTotalPrice) {
+          <div class="calculation-page__topStat">
+            <lg-flex-column [position]="'stretch'">
+              @if (calculation.hasWeight) {
+                <!-- Outcome amount -->
+                <lg-flex-column [position]="'stretch'" size="small">
+                  <lg-card size="small">
+                    <lg-flex-row [mobileMode]="true"
+                                 [relaxed]="true"
+                                 [size]="'small'">
+                      <div>{{ calculation.hasShrinkage ? ('recipe.calculation.outcome.label.with-shrinkage' | translate) : ('recipe.calculation.outcome.label') | translate }}</div>
 
-                  <lg-flex-row size="tiny"
-                               lgPull
-                               data-u2e="calculate-recipe.outcome-amount">
-                    <div class="text-bold">
-                      {{ result()?.calculation?.outcomeAmount | number: pipesDigits() }}
-                      {{ result()?.calculation?.outcomeUnit | unitString | translate }}
+                      <lg-flex-row data-u2e="calculate-recipe.outcome-amount"
+                                   lgPull
+                                   size="tiny">
+                        <lg-flex-row size="tiny">
+                          @if (hasPortions()) {
+                            <div class="text-bold">
+                              {{ calculation.recipe.portions }}
+                              {{ 'piece' | unitString | translate }}
+                            </div>
+                            <span>/</span>
+                            <div>
+                              {{ calculation.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}
+                            </div>
+                          } @else {
+                            <div [class.text-bold]="!calculation.hasShrinkage">
+                              {{ calculation.tableIngredientsWeight | number: pipesDigits() }}
+                              {{ 'gram' | unitString | translate }}
+                            </div>
+                            @if (calculation.hasShrinkage) {
+                              <span>></span>
+                              <div class="text-bold text-underlined">
+                                {{ calculation.totalWeight | number: pipesDigits() }}
+                                {{ 'gram' | unitString | translate }}
+                              </div>
+                            }
+                          }
+                        </lg-flex-row>
+                      </lg-flex-row>
+
+                      <lg-question [text]="'recipe.calculation.outcome.info' | translate"></lg-question>
+                    </lg-flex-row>
+                  </lg-card>
+
+                  <lg-flex-column [position]="'stretch'"
+                                  [style.padding]="isMobile() ? '0' : '0 16px'"
+                                  size="small"
+                                  style="--control-bg: var(--hr-bg-strong);">
+                    <lg-shrinkage-control
+                      [formControl]="shrinkageForm"
+                      [totalWeight]="calculation.tableIngredientsWeight">
+                    </lg-shrinkage-control>
+                  </lg-flex-column>
+                </lg-flex-column>
+
+                <!-- Per unit price -->
+                <lg-card size="small">
+                  <lg-flex-row [mobileMode]="true"
+                               [relaxed]="true"
+                               [size]="'small'">
+                    <div>
+                      {{ 'recipe.calculation.one-unit.label' | translate }}
+                      <b>{{ calculation.outcomeUnit | unitString | translate }}</b>
                     </div>
 
-                    <!--                    @if (hasPortions()) {-->
-                    <!--                      <span>/</span>-->
-
-                    <!--                      <div>-->
-                    <!--                        {{ result()?.calculation?.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}-->
-                    <!--                      </div>-->
-                    <!--                    }-->
-                  </lg-flex-row>
-
-                  <lg-question [text]="'recipe.calculation.outcome.info' | translate"></lg-question>
-                </lg-flex-row>
-              </lg-card>
-
-              <lg-card size="small">
-                <lg-flex-row [size]="'small'"
-                             [mobileMode]="true"
-                             [relaxed]="true">
-                  <div>
-                    {{ 'recipe.calculation.one-unit.label' | translate }}
-                    <b>{{ result()?.calculation?.outcomeUnit | unitString | translate }}</b>
-                  </div>
-
-                  <lg-flex-row size="tiny"
-                               lgPull
-                               data-u2e="calculate-recipe.one-unit-price">
-                    @let diff = result()?.calculation?.pricePerUnitFromTotalDifference ?? 0;
-                    <lg-flex-row [size]="'tiny'">
-                      <div [class.text-bold]="!result()?.calculation?.hasPriceDifference">
-                        @if (hasPortions()) {
-                          {{ result()?.calculation?.pricePerOutcomeUnit | userCurrency: pipesDigits() }}
-                        } @else {
-                          {{ result()?.calculation?.pricePerUnit | userCurrency:pipesDigits() }}
-                        }
-                      </div>
-
-                      @if (result()?.calculation?.hasPriceDifference) {
-                        <span>></span>
-                        <div
-                          class="text-underlined text-bold">{{ result()?.calculation?.pricePerUnitFromTotal |  userCurrency : pipesDigits() }}
-                        </div>
-                      }
-                    </lg-flex-row>
-
-                    @if (result()?.calculation?.hasPriceDifference) {
-                      <lg-flex-row [size]="'tiny'"
-                                   class="text-bold"
-                                   [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                        <span>(</span>
-                        <div>
-                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
-                        </div>
-                        <span>)</span>
-                      </lg-flex-row>
-                    }
-                  </lg-flex-row>
-
-                  <lg-question [text]="'recipe.calculation.one-unit.info' | translate"></lg-question>
-                </lg-flex-row>
-              </lg-card>
-            }
-
-            <lg-flex-column [position]="'stretch'" size="small">
-              <lg-card size="small">
-                <lg-flex-row [size]="'small'"
-                             [mobileMode]="true"
-                             [relaxed]="true">
-                  <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
-
-                  <lg-flex-row [size]="'tiny'"
-                               lgPull
-                               data-u2e="calculate-recipe.total-price-amount">
-                    @let diff = totalPriceDifference();
-                    <lg-flex-row [class.text-bold]="!totalPriceDifference()"
+                    <lg-flex-row data-u2e="calculate-recipe.one-unit-price"
+                                 lgPull
                                  size="tiny">
-                      <div> {{ totalPrice() | userCurrency: totalPipesDigits }}</div>
+                      @let diff = calculation.pricePerUnitSimplifiedDifference;
 
-                      @if (totalPriceDifference()) {
-                        <span>></span>
-                        <div class="text-bold text-underlined">
-                          {{ totalPriceWithAdditions() |  userCurrency: pipesDigits() }}
+                      <lg-flex-row [size]="'tiny'">
+                        <div [class.text-bold]="!diff">
+                          {{ calculation.initialPricePerUnit | userCurrency : pipesDigits() }}
                         </div>
+
+                        @if (diff) {
+                          <span>></span>
+                          <div class="text-underlined text-bold">
+                            {{ calculation.newPricePerUnit | userCurrency: pipesDigits() }}
+                          </div>
+                        }
+                      </lg-flex-row>
+
+                      @if (diff && calculation.hasModifiers) {
+                        <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
+                                     [size]="'tiny'"
+                                     class="text-bold">
+                          <span>(</span>
+                          <div>
+                            {{ diff > 0 ? '+' : '' }}{{ diff | number: pipesDigits() }}
+                          </div>
+                          <span>)</span>
+                        </lg-flex-row>
                       }
                     </lg-flex-row>
 
-                    @if (totalPriceDifference()) {
-                      <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
-                                   class="text-bold"
-                                   size="tiny">
-                        <span>(</span>
-                        <div [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                          {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
-                        </div>
-                        <span>/</span>
-                        <div class="text-no-wrap">{{ totalPriceProfit() |number:totalPipesDigits }}%</div>
-                        <span>)</span>
-                      </lg-flex-row>
-                    }
+                    <lg-question [text]="'recipe.calculation.one-unit.info' | translate"></lg-question>
                   </lg-flex-row>
+                </lg-card>
+              }
 
-                  <lg-question [text]="'recipe.calculation.total-price.info' | translate"></lg-question>
-                </lg-flex-row>
-              </lg-card>
+              <!-- Total price -->
+              <lg-flex-column [position]="'stretch'" size="small">
+                <lg-card size="small">
+                  <lg-flex-row [mobileMode]="true"
+                               [relaxed]="true"
+                               [size]="'small'">
+                    <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
 
-              <lg-flex-column [position]="'stretch'"
-                              size="small"
-                              [style.padding]="isMobile() ? '0' : '0 16px'"
-                              style="--control-bg: var(--hr-bg-strong);">
-                <lg-number-input lgParseMath
-                                 name="recalculateTotals"
-                                 [placeholder]="'recipe.calculation.recalculate.placeholder' | translate"
-                                 [(ngModel)]="recalculateTotalsModel">
-                  <ng-template lgExtraTpl place="before">
-                    {{ 'recipe.calculation.recalculate.label'  | translate }}
-                  </ng-template>
+                    <lg-flex-row [size]="'tiny'"
+                                 data-u2e="calculate-recipe.total-price-amount"
+                                 lgPull>
+                      @let diff = totalPriceDifference();
+                      <lg-flex-row [class.text-bold]="!diff"
+                                   size="tiny">
+                        <div> {{ initialTotalPrice() | userCurrency: totalPipesDigits }}</div>
 
-                  <ng-template lgExtraTpl place="after">
-                    <b>
-                      {{ result()?.calculation?.outcomeUnit | unitString | translate }}
-                    </b>
-                    <lg-question [text]="'recipe.calculation.recalculate.info' | translate"></lg-question>
+                        @if (diff) {
+                          <span>></span>
+                          <div class="text-bold text-underlined">
+                            {{ totalPrice() |  userCurrency: pipesDigits() }}
+                          </div>
+                        }
+                      </lg-flex-row>
 
-                  </ng-template>
-                </lg-number-input>
+                      @if (diff) {
+                        <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
+                                     class="text-bold"
+                                     size="tiny">
+                          <span>(</span>
+                          <div [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
+                            {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
+                          </div>
+                          <span>/</span>
+                          <div class="text-no-wrap">{{ totalPriceProfit() |number:totalPipesDigits }}%</div>
+                          <span>)</span>
+                        </lg-flex-row>
+                      }
+                    </lg-flex-row>
 
-                <lg-calculation-price-modifiers
-                  [formControl]="recipePriceAdditionsForm"
-                  [recipeCost]="result()?.calculation"></lg-calculation-price-modifiers>
+                    <lg-question [text]="'recipe.calculation.total-price.info' | translate"></lg-question>
+                  </lg-flex-row>
+                </lg-card>
+
+                <lg-flex-column [position]="'stretch'"
+                                [style.padding]="isMobile() ? '0' : '0 16px'"
+                                size="small"
+                                style="--control-bg: var(--hr-bg-strong);">
+                  <lg-number-input [(ngModel)]="recalculateTotalsModel"
+                                   [placeholder]="'recipe.calculation.recalculate.placeholder' | translate"
+                                   lgParseMath
+                                   name="recalculateTotals">
+                    <ng-template lgExtraTpl place="before">
+                      {{ 'recipe.calculation.recalculate.label'  | translate }}
+                    </ng-template>
+
+                    <ng-template lgExtraTpl place="after">
+                      <b>
+                        {{ calculation.outcomeUnit | unitString | translate }}
+                      </b>
+                      <lg-question [text]="'recipe.calculation.recalculate.info' | translate"></lg-question>
+
+                    </ng-template>
+                  </lg-number-input>
+
+                  <lg-calculation-price-modifiers
+                    [formControl]="recipePriceAdditionsForm"></lg-calculation-price-modifiers>
+                </lg-flex-column>
               </lg-flex-column>
             </lg-flex-column>
-          </lg-flex-column>
 
-          <div class="calculation-page__charts">
-            <lg-card size="small">
-              <lg-flex-column [fill]="true"
-                              [size]="'small'">
-                <lg-title [level]="5">
-                  <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
-                </lg-title>
-
-                <canvas [data]="doughnutChartData().prices"
-                        [options]="doughnutChartOptions"
-                        [type]="doughnutChartType"
-                        (chartHover)="onChartHover('price', $event.event, $event.active)"
-                        #priceChart
-                        baseChart>
-                </canvas>
-
-                <lg-question lgPull [text]="'recipe.calculation.price-chart.info' | translate"></lg-question>
-              </lg-flex-column>
-            </lg-card>
-
-            @if (calculation?.hasWeight) {
+            <div class="calculation-page__charts">
               <lg-card size="small">
                 <lg-flex-column [fill]="true"
                                 [size]="'small'">
                   <lg-title [level]="5">
-                    <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
+                    <div>{{ 'recipe.calculation.price-chart' | translate }}</div>
                   </lg-title>
 
-                  <canvas [data]="doughnutChartData().weight"
+                  <canvas #priceChart
+                          (chartHover)="onChartHover('price', $event.event, $event.active)"
+                          [data]="doughnutChartData().prices"
                           [options]="doughnutChartOptions"
-                          (chartHover)="onChartHover('weight', $event.event, $event.active)"
                           [type]="doughnutChartType"
-                          #weightChart
                           baseChart>
                   </canvas>
 
-                  <lg-question lgPull [text]="'recipe.calculation.weight-chart.info' | translate"></lg-question>
+                  <lg-question [text]="'recipe.calculation.price-chart.info' | translate" lgPull></lg-question>
                 </lg-flex-column>
               </lg-card>
-            }
+
+              @if (calculation.hasWeight) {
+                <lg-card size="small">
+                  <lg-flex-column [fill]="true"
+                                  [size]="'small'">
+                    <lg-title [level]="5">
+                      <div>{{ 'recipe.calculation.weight-chart' | translate }}</div>
+                    </lg-title>
+
+                    <canvas #weightChart
+                            (chartHover)="onChartHover('weight', $event.event, $event.active)"
+                            [data]="doughnutChartData().weight"
+                            [options]="doughnutChartOptions"
+                            [type]="doughnutChartType"
+                            baseChart>
+                    </canvas>
+
+                    <lg-question [text]="'recipe.calculation.weight-chart.info' | translate" lgPull></lg-question>
+                  </lg-flex-column>
+                </lg-card>
+              }
+            </div>
           </div>
-        </div>
-      }
+        }
 
+        <lg-title [level]="3">
+          {{ 'recipe.calculation.table.title'  | translate }}
 
-      <lg-title [level]="3">
-        {{ 'recipe.calculation.table.title'  | translate }}
+          <lg-question [text]="'recipe.calculation.table.info' | translate" lgPull></lg-question>
+        </lg-title>
 
-        <lg-question lgPull [text]="'recipe.calculation.table.info' | translate"></lg-question>
-      </lg-title>
+        @if (hasIngredients) {
+          <lg-table-card>
+            <table data-u2e="calculate-recipe.ingredients-table">
+              <colgroup>
+                <col span="1" style="width: 1%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 7%;">
+                <col span="1" style="width: 10%;">
+              </colgroup>
+              <thead>
 
-      @if (hasIngredients) {
-        <lg-table-card>
-          <table data-u2e="calculate-recipe.ingredients-table">
-            <colgroup>
-              <col span="1" style="width: 1%;">
-              <col span="1" style="width: 20%;">
-              <col span="1" style="width: 10%;">
-              <col span="1" style="width: 7%;">
-              <col span="1" style="width: 10%;">
-            </colgroup>
-            <thead>
+              <tr>
+                <th>#</th>
+                <th>{{ 'recipe.calculation.table.name.title' | translate }}</th>
+                <th>{{ 'recipe.calculation.table.amount.title' | translate }}</th>
+                <th>{{ 'recipe.calculation.table.price.title' | translate }}</th>
+                <th>{{ 'recipe.calculation.table.total.title' | translate }}</th>
+              </tr>
+              </thead>
 
-            <tr>
-              <th>#</th>
-              <th>{{ 'recipe.calculation.table.name.title' | translate }}</th>
-              <th>{{ 'recipe.calculation.table.amount.title' | translate }}</th>
-              <th>{{ 'recipe.calculation.table.price.title' | translate }}</th>
-              <th>{{ 'recipe.calculation.table.total.title' | translate }}</th>
-            </tr>
-            </thead>
+              <tbody>
+                @for (row of result()?.table; track row.name; let i = $index) {
+                  <tr [ngClass]="row.type">
+                    <td>{{ i + 1 }}</td>
 
-            <tbody>
-              @for (row of result()?.table; track row.name; let i = $index) {
-                <tr [ngClass]="row.type">
-                  <td>{{ i + 1 }}</td>
+                    <td width="200">
+                      <div [attr.data-u2e]="'calculate-recipe.ingredient-name-' + i" class="text-no-wrap">
+                        @if (row.type === 'recipe-row') {
+                          <a [routerLink]="['/recipes/edit/' ,row.uuid]">
+                            {{ row.name }}
+                          </a>
+                        } @else if (row.type == 'total') {
+                          {{ row.name | translate }}
+                        } @else {
+                          <a [routerLink]="['/products/edit/', row.uuid]">
+                            {{ productLabelFactory(row.product_id) }}
+                          </a>
+                        }
+                      </div>
+                    </td>
 
-                  <td width="200">
-                    <div class="text-no-wrap"
-                         [attr.data-u2e]="'calculate-recipe.ingredient-name-' + i"
-                         [ngClass]="'indent-' + row.indent">
-                      <!--                      <pre>{{row.ingredient|json}}</pre>-->
-                      @if (row.type === 'recipe-row') {
-                        <a [routerLink]="['/recipes/edit/' ,row.uuid]">
-                          {{ row.name }}
-                        </a>
-                      } @else if (row.type == 'total') {
-                        {{ row.name | translate }}
+                    @let microAmount = hasMicroPrice(row.amount || 0);
+
+                    <td [attr.data-u2e]="'calculate-recipe.ingredient-amount-' + i">
+                      @if (microAmount) {
+                        {{ 'micro-amount'|translate }}
                       } @else {
-                        <a [routerLink]="['/products/edit/', row.uuid]">
-                          {{ productLabelFactory(row.ingredient?.product_id) }}
-                        </a>
-
+                        @if (row.type === 'total') {
+                          {{ row.amount | number: totalPipesDigits }}
+                        } @else {
+                          {{ row.amount | number: pipesDigits() }}
+                        }
                       }
-                    </div>
-                  </td>
 
-                  <td [attr.data-u2e]="'calculate-recipe.ingredient-amount-' + i">
-                    @if (row.type !== 'total') {
-                      {{ row.amount | number: pipesDigits() }}
-                    } @else {
-                      {{ row.amount | number: totalPipesDigits }}
-                    }
-                    {{ row.unit | unitString | translate }}
-                  </td>
+                      {{ row.unit | unitString | translate }}
 
-                  <td class="text-no-wrap"
-                      [attr.data-u2e]="'calculate-recipe.ingredient-price-per-unit-' + i"
-                      [class.text-muted]="row.ingredient?.hasMicroPerUnitPrice">
-                    @if (row.ingredient?.hasMicroPerUnitPrice) {
-                      {{ 'micro-amount'|translate }}
-                      {{ userSettings()?.['currency']|currencySymbol }}
-                    } @else {
-                      {{ row.price_per_unit | userCurrency: pipesDigits() }}
-                    }
-                    <span [translateParams]="{unit:row.unit | unitString | translate}"
-                          [translate]="'per-unit.label'"></span>
-                  </td>
+                      @if (row.type !== 'total' && row.need_gram_equivalent) {
+                        <span class="text-muted">({{ row.weight | number: pipesDigits() }}&nbsp;{{ 'gram' | unitString | translate }})</span>
+                      }
+                    </td>
 
-                  <td class="text-bold text-no-wrap"
-                      [attr.data-u2e]="'calculate-recipe.ingredient-total-price-' + i">
-                    @if (row.type !== 'total') {
-                      @if (row.ingredient?.hasMicroTotalPrice) {
+                    @let microPricePerUnit = hasMicroPrice(row.price_per_unit || 0);
+
+                    <td [attr.data-u2e]="'calculate-recipe.ingredient-price-per-unit-' + i"
+                        [class.text-muted]="microPricePerUnit"
+                        class="text-no-wrap">
+                      @if (microPricePerUnit) {
                         {{ 'micro-amount'|translate }}
                         {{ userSettings()?.['currency']|currencySymbol }}
                       } @else {
-                        {{ row.total | userCurrency: pipesDigits() }}
+                        {{ row.price_per_unit | userCurrency: pipesDigits() }}
                       }
-                    } @else {
-                      {{ row.total | userCurrency: totalPipesDigits }}
-                    }
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </lg-table-card>
+                      <span [translateParams]="{unit:row.unit | unitString | translate}"
+                            [translate]="'per-unit.label'"></span>
+                    </td>
+
+                    <td [attr.data-u2e]="'calculate-recipe.ingredient-total-price-' + i"
+                        class="text-bold text-no-wrap">
+                      @if (hasMicroPrice(row.total || 0)) {
+                        {{ 'micro-amount'|translate }}
+                        {{ userSettings()?.['currency']|currencySymbol }}
+                      } @else {
+
+                        @if (row.type === 'total') {
+                          {{ row.total | userCurrency: totalPipesDigits }}
+                        } @else {
+                          {{ row.total | userCurrency: pipesDigits() }}
+                        }
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </lg-table-card>
+        } @else {
+          <lg-flex-column position="start"
+                          size="medium">
+            {{ 'recipe.calculation.empty-state.text' | translate }}
+
+            <lg-button [routerLink]="'/recipes/edit/' + calculation.recipeUuid"
+                       [size]="'medium'"
+                       data-u2e="calculate-recipe.empty-state-edit-recipe-btn">
+              {{ 'recipe.calculation.empty-state.btn' | translate }}
+            </lg-button>
+          </lg-flex-column>
+        }
       } @else {
         <lg-flex-column position="start"
                         size="medium">
-          {{ 'recipe.calculation.empty-state.text' | translate }}
-
-          <lg-button [size]="'medium'"
-                     data-u2e="calculate-recipe.empty-state-edit-recipe-btn"
-                     [routerLink]="'/recipes/edit/' + result()?.calculation?.recipeUuid">
-            {{ 'recipe.calculation.empty-state.btn' | translate }}
-          </lg-button>
+          {{ 'recipe.calculation.error-state.text' | translate }}
         </lg-flex-column>
       }
     </lg-flex-column>

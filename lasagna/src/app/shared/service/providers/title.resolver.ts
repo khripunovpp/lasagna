@@ -17,27 +17,19 @@ export const translationTitleResolver = (translationKey: string) => {
   };
 }
 
-export const recipeTitleResolver = async (route: ActivatedRouteSnapshot) => {
+export const recipeTitleResolver = (route: ActivatedRouteSnapshot) => {
   const translateService = inject(TranslateService);
-  const data = await dataResolver(route, 'recipe');
+  const recipeName = route.data?.['recipe']?.name;
 
-  return translateService.instant('recipe.title', {name: data?.name})
+  return translateService.instant('recipe.title', {name: recipeName})
 };
 
-export const recipeCalculationTitleResolver = async (route: ActivatedRouteSnapshot) => {
+export const recipeCalculationTitleResolver = (route: ActivatedRouteSnapshot) => {
   const translateService = inject(TranslateService);
-  const data = await dataResolver<Calculation>(route, 'result');
+  const recipeName = (route.data?.['result'] as Calculation)?.calculation?.recipeName;
 
-  return translateService.instant('recipe.title', {name: data?.calculation?.recipeName})
+  return translateService.instant('recipe.title', {name: recipeName})
 };
-
-const dataResolver = <T = any>(route: ActivatedRouteSnapshot, dataKey: string) => {
-  const recipeResolver = route.routeConfig?.resolve?.[dataKey] as (r: ActivatedRouteSnapshot) => T;
-  if (recipeResolver) {
-    return Promise.resolve(recipeResolver(route));
-  }
-  return null;
-}
 
 export const productTitleResolver = async (route: ActivatedRouteSnapshot) => {
   const isBrowser = inject(IS_CLIENT);

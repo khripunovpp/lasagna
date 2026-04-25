@@ -45,7 +45,7 @@ export function calculationPdfGenerator(
   currentY += lineSpacing;
 
   doc.setFontSize(10);
-  doc.text(`${t('recipe.calculation.one-unit.label')} ${t(getUnitMarker(recipeCost.outcomeUnit))}: ${fixed(recipeCost.pricePerOutcomeUnit)} ${settings.currency}`, leftX, currentY);
+  doc.text(`${t('recipe.calculation.one-unit.label')} ${t(getUnitMarker(recipeCost.outcomeUnit))}: ${fixed(recipeCost.initialPricePerUnit)} ${settings.currency}`, leftX, currentY);
   currentY += lineSpacing;
 
   const nameFactory = (row: CalculationTableParams) => {
@@ -55,7 +55,7 @@ export function calculationPdfGenerator(
     } else if (row.type === 'total') {
       name = t(row.name);
     } else {
-      name = productLabelFactory(row.ingredient?.product_id!, t);
+      name = productLabelFactory(row?.product_id!, t);
     }
     return name;
   }

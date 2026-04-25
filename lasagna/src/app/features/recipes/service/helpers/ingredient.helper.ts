@@ -9,6 +9,10 @@ import {
 } from '../../../../shared/helpers/unit.helper';
 import {Recipe} from '../models/Recipe';
 import {UnitValue} from '../../../../shared/view/const/units.const';
+import {Ingredient} from '../models/Ingredient';
+import {IngredientCostInterface} from '../models/IngredientCost.interface';
+import {ingredientProductCostFactory, ingredientRecipeCostFactory} from '../factories/ingredinet-cost-entity.factory';
+import {RecipeCostCalculator} from '../models/RecipeCostCalculator';
 
 // Расчет итогового веса ингредиента в граммах
 export const productIngredientWeight = (
@@ -58,18 +62,38 @@ export const recipeIngredientWeight = (
   ingredientUnit: Unit,
 ) => {
   if (isCountUnit(ingredientUnit)) {
-    if (recipe.portions) {
-      const weightPerUnit = recipe.totalIngredientsWeight / recipe.portions;
-      return weightPerUnit * ingredientAmount;
-    } else {
-      return recipe.totalIngredientsWeight * ingredientAmount;
-    }
-  } else if (isWeightUnit(ingredientUnit)) {
-    if (ingredientUnit === UnitValue.KILOGRAM) {
-      return convertKilogramToGram(ingredientAmount)
-    } else if (ingredientUnit === UnitValue.GRAM) {
-      return ingredientAmount;
-    }
+    const cost = RecipeCostCalculator.fromRecipe(recipe);
+    const weightPerUnit = recipe.portions ? cost.weightForUnit : cost.totalWeight;
+    return weightPerUnit * ingredientAmount;
+  }
+  if (isWeightUnit(ingredientUnit)) {
+    return ingredientUnit === UnitValue.KILOGRAM
+      ? convertKilogramToGram(ingredientAmount)
+      : ingredientAmount;
+  }
+  return 0;
+}
+
+export const ingredientCost = (
+  ingredient: Ingredient,
+): IngredientCostInterface<Product | Recipe> | undefined => {
+  if (ingredient.recipe_id) {
+    return ingredientRecipeCostFactory(ingredient.recipe_id, ingredient.unit, ingredient.amount);
+  }
+  if (ingredient.product_id) {
+    return ingredientProductCostFactory(ingredient.product_id, ingredient.unit, ingredient.amount);
+  }
+  return undefined;
+}
+
+export const ingredientTotalWeightGram = (
+  ingredient: Ingredient,
+): number => {
+  if (ingredient.product_id) {
+    return productIngredientWeight(ingredient.product_id, ingredient.amount, ingredient.unit);
+  }
+  if (ingredient.recipe_id) {
+    return recipeIngredientWeight(ingredient.recipe_id, ingredient.amount, ingredient.unit);
   }
   return 0;
 }
