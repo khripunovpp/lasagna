@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, contentChild, effect, input, Optional, signal} from '@angular/core';
+import {Component, computed, contentChild, effect, inject, input, Optional, signal, untracked} from '@angular/core';
 import {SortResult} from '../../../service/types/sorting.types';
 import {TitleComponent} from '../../layout/title.component';
 import {GroupingTileDirective} from './grouping-tile.directive';
@@ -10,6 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {MatIcon} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {injectFragment} from '../../../helpers';
+import {IS_CLIENT} from '../../../service/tokens/isClient.token';
 
 @Component({
   selector: 'lg-grouping-tiles',
@@ -102,6 +103,7 @@ import {injectFragment} from '../../../helpers';
       justify-content: flex-start;
       gap: 4px;
       position: relative;
+      scroll-margin-top: calc(var(--header-height) + 44px);
 
       &::before {
         content: '#';
@@ -163,20 +165,34 @@ export class GroupingTilesComponent {
     public router: Router,
     public viewportScroller: ViewportScroller,
   ) {
-    afterNextRender(() => {
-      const group = this.storedGroup()?.split('-')?.[1];
-      if (group == null) return;
-      this.collapsedStates.set({
-        [group]: true
-      });
-      this.viewportScroller.setOffset([0, 100]);
+    const isClient = inject(IS_CLIENT);
+    let scrolled = false;
+    effect(() => {
+      if (scrolled || !isClient) return;
+      const fragment = this.storedGroup();
+      const groups = this.sortResult()?.groups;
+      if (!fragment || !groups?.length) return;
 
-      setTimeout(() => {
-        this.viewportScroller.scrollToAnchor(this.storedGroup()!, {
-          behavior: 'smooth'
-        });
-      }, 200);
-    })
+      const group = fragment.split('-')?.[1];
+      if (group == null) return;
+
+      scrolled = true;
+      untracked(() => {
+        this.collapsedStates.set({[group]: true});
+      });
+
+      const tryScroll = (attempts: number) => {
+        const el = document.getElementById(fragment);
+        if (el) {
+          el.scrollIntoView({block: 'start', behavior: 'smooth'});
+          return;
+        }
+        if (attempts > 0) {
+          requestAnimationFrame(() => tryScroll(attempts - 1));
+        }
+      };
+      requestAnimationFrame(() => tryScroll(20));
+    });
   }
 
   readonly storedGroup = injectFragment();
