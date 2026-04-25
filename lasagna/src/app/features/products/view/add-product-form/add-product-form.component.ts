@@ -25,7 +25,7 @@ import {ExpandDirective} from '../../../../shared/view/directives/expand.directi
 import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
-import {errorHandler, fromValuesToProductDTO, hasMicroPrice, productToFormValue} from '../../../../shared/helpers';
+import {errorHandler, fromValuesToProductDTO, isMicroAmount, productToFormValue} from '../../../../shared/helpers';
 import {debounceTime} from 'rxjs';
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
@@ -126,7 +126,7 @@ export class AddProductFormComponent
   userSettings = inject(SETTINGS)
   product = input<Product | null>(null);
   readonly hasMicroPrice = computed(() => {
-    return hasMicroPrice(this.product()?.pricePerUnit ?? 0)
+    return isMicroAmount(this.product()?.pricePerUnit ?? 0)
   });
   editMode = input(false);
   topCategories = signal<{

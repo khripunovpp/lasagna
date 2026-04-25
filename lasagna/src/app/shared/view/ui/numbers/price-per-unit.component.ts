@@ -3,7 +3,7 @@ import {CurrencySymbolPipe} from '../../pipes/currency-symbol.pipe';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
 import {UnitStringPipe} from '../../pipes/unitString.pipe';
 import {UserCurrencyPipe} from '../../pipes/userCurrency.pipe';
-import {hasMicroPrice} from '../../../helpers';
+import {isMicroAmount} from '../../../helpers';
 import {SETTINGS} from '../../../../features/settings/service/providers/settings.token';
 import {SettingsKeysConst} from '../../../../features/settings/const/settings-keys.const';
 
@@ -41,5 +41,5 @@ export class PricePerUnitComponent {
   readonly userSettings = inject(SETTINGS);
   readonly precisions = computed(() => this.userSettings()?.[SettingsKeysConst.pricePrecision] ?? 2);
   readonly pipesDigits = computed(() => `1.0-${this.precisions()}`);
-  protected readonly hasMicroPrice = hasMicroPrice;
+  protected readonly hasMicroPrice = isMicroAmount;
 }

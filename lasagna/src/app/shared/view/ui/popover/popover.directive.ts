@@ -16,7 +16,9 @@ import {PopoverPosition, PopoverRef} from './popover.types';
 import {PopoverService} from './popover.service';
 import {IS_MOBILE_MEDIA_MATCHED} from '../../../helpers/match-media.helper';
 
-const POSITIONS: Record<PopoverPosition, ConnectedPosition[]> = {
+type PopoverDirection = Exclude<PopoverPosition, 'auto'>;
+
+const POSITIONS: Record<PopoverDirection, ConnectedPosition[]> = {
   bottom: [
     {originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: 8},
     {originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -8},
@@ -42,6 +44,16 @@ const POSITIONS: Record<PopoverPosition, ConnectedPosition[]> = {
     {originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -8},
   ],
 };
+
+const AUTO_POSITIONS: ConnectedPosition[] = [
+  POSITIONS.bottom[0],
+  POSITIONS.top[0],
+  POSITIONS.right[0],
+  POSITIONS.left[0],
+];
+
+const resolvePositions = (pos: PopoverPosition): ConnectedPosition[] =>
+  pos === 'auto' ? AUTO_POSITIONS : POSITIONS[pos];
 
 @Directive({
   selector: '[lgPopover]',
@@ -75,7 +87,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
     if (!this._overlayRef || this._isMobileModal) return;
     const strategy = this._overlayRef.getConfig()
       .positionStrategy as FlexibleConnectedPositionStrategy;
-    strategy.withPositions(POSITIONS[pos]);
+    strategy.withPositions(resolvePositions(pos));
     this._overlayRef.updatePosition();
   });
 
@@ -115,7 +127,7 @@ export class PopoverDirective implements PopoverRef, OnDestroy {
       const strategy = this._overlay
         .position()
         .flexibleConnectedTo(this._host)
-        .withPositions(POSITIONS[this.lgPopoverPosition()])
+        .withPositions(resolvePositions(this.lgPopoverPosition()))
         .withFlexibleDimensions(false)
         .withPush(true)
         .withViewportMargin(8);

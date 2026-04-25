@@ -3,12 +3,12 @@ import {Unit} from '../../../../shared/service/types/Unit.types';
 import {
   convertPriceOfGramToKilogram,
   isCountUnit,
-  isGramUnit,
   isKilogramUnit,
   isWeightUnit
 } from '../../../../shared/helpers/unit.helper';
 import {parseFloatingNumber} from '../../../../shared/helpers';
 import {Recipe} from './Recipe';
+import {RecipeCostCalculator} from './RecipeCostCalculator';
 
 export class IngredientRecipeCost
   implements IngredientCostInterface<Recipe> {
@@ -24,28 +24,25 @@ export class IngredientRecipeCost
   }
 
   get pricePerUnit() {
-    if (this.entity.portions
-      && isCountUnit(this.ingredientUnit)) {
-      // Если единицы равны, то можно использовать расчет из самого рецепта
-      return this.entity.pricePerUnit;
-    } else {
-      // Если единицы не равны, тогда нужно делать расчет в зависимости от типа единицы ингредиента
-      if (isCountUnit(this.ingredientUnit)) {
-        if (this.entity.portions) {
-          return this.entity.totalPrice / this.entity.portions;
-        } else {
-          return this.entity.totalPrice;
-        }
-      } else if (isWeightUnit(this.ingredientUnit)) {
-        const perGramPrice = this.entity.totalPrice / this.entity.totalIngredientsWeight;
-        if (isGramUnit(this.ingredientUnit) || !this.entity.portions) {
-          return perGramPrice;
-        } else if (isKilogramUnit(this.ingredientUnit)) {
-          return convertPriceOfGramToKilogram(perGramPrice);
-        }
-      }
+    const recipe = this.entity;
+    const cost = RecipeCostCalculator.fromRecipe(recipe);
+
+    // Если ингредиент в штуках, тогда он может иметь цену за юнит только если рецепт имеет порции
+    // Если же рецепт не имеет порций, тогда цена за юнит эквивалента цене самого рецепта, так как в таком случае рецепт рассматривается как единый ингредиент
+    if (isCountUnit(this.ingredientUnit)) {
+      return recipe.portions
+        ? cost.actualPricePerUnit
+        : cost.tableIngredientsTotalPrice;
     }
-    // Для всех остальных вывести цену невозможно, возвращаем undefined
+
+    // Если ингредиент в единицах веса, тогда он может иметь цену за юнит только если рецепт имеет вес ингредиентов
+    if (isWeightUnit(this.ingredientUnit)) {
+      const perGram = cost.pricePerGramActual;
+      return isKilogramUnit(this.ingredientUnit)
+        ? convertPriceOfGramToKilogram(perGram)
+        : perGram;
+    }
+
     return undefined;
   }
 

@@ -233,7 +233,7 @@ function CalculateRecipeComponent_Defer_0_Conditional_10_Conditional_2_Condition
   if (rf & 2) {
     let tmp_9_0;
     const ctx_r0 = \u0275\u0275nextContext(4);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(1, 1, (tmp_9_0 = ctx_r0.result()) == null ? null : tmp_9_0.calculation == null ? null : tmp_9_0.calculation.pricePerUnit, ctx_r0.pipesDigits()), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(1, 1, (tmp_9_0 = ctx_r0.result()) == null ? null : tmp_9_0.calculation == null ? null : tmp_9_0.calculation.initialPricePerUnit, ctx_r0.pipesDigits()), " ");
   }
 }
 function CalculateRecipeComponent_Defer_0_Conditional_10_Conditional_2_Conditional_27_Template(rf, ctx) {
@@ -807,7 +807,7 @@ function CalculateRecipeComponent_Defer_0_Template(rf, ctx) {
     \u0275\u0275advance(2);
     \u0275\u0275conditional(hasIngredients_r10 ? 9 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(((tmp_8_0 = ctx_r0.result()) == null ? null : tmp_8_0.calculation == null ? null : tmp_8_0.calculation.totalPrice) ? 10 : -1);
+    \u0275\u0275conditional(((tmp_8_0 = ctx_r0.result()) == null ? null : tmp_8_0.calculation == null ? null : tmp_8_0.calculation.tableIngredientsTotalPrice) ? 10 : -1);
     \u0275\u0275advance();
     \u0275\u0275property("level", 3);
     \u0275\u0275advance();

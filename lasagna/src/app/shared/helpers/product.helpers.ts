@@ -44,8 +44,3 @@ export const categoryProductDTOFromFormValue = (categoryFormValue: any): Categor
     name: categoryFormValue.name || '',
   }
 }
-
-export const hasMicroPrice = (price: number) => {
-  if (!price) return false;
-  return price < 0.01;
-}
