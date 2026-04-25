@@ -49,163 +49,154 @@ function getTranslation(key, params = {}) {
 const GA_TRACKING_ID = 'G-GWN769JKRP';
 window.gtagLoaded = false;
 
-// Dynamic Google Analytics loader
-function loadGoogleAnalytics(
-  callback = () => {
-  }
-) {
-  let skipGa = false;
+function shouldSkipGa() {
   try {
     const devEnv = localStorage.getItem('dev-mode') === 'true'
       || window.location.hostname === 'localhost';
     const devSettings = JSON.parse(localStorage.getItem('dev_settings') || '{}');
-    skipGa = devSettings['ga_analytics_disabled']
-      ? true
-      : devEnv;
+    if (devSettings['ga_analytics_disabled']) return true;
+    if (devEnv) return true;
+    // Explicit rejection — respect it on subsequent visits (no cookieless pings either)
+    if (localStorage.getItem('cookie-consent') === 'none') return true;
+    return false;
   } catch (e) {
-
+    return false;
   }
-  if (skipGa) {
-    console.warn('!!!___GA skip___!!!')
-    return;
-  }
-  if (window.gtagLoaded) return;
-  // Create and load gtag script
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-  script.onload = function () {
-    // Initialize gtag after script loads
-    window.dataLayer = window.dataLayer || [];
+}
 
-    function gtag() {
-      dataLayer.push(arguments);
+// Capture UTM / gclid / Telegram start_param into sessionStorage BEFORE Angular
+// hydration can rewrite the URL. Used to enrich manual page_view events later.
+function captureCampaignParams() {
+  try {
+    const url = new URL(window.location.href);
+    const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','gclid','gbraid','wbraid'];
+    const stored = JSON.parse(sessionStorage.getItem('ga_campaign') || '{}');
+    let updated = false;
+    keys.forEach(k => {
+      const v = url.searchParams.get(k);
+      if (v && !stored[k]) { stored[k] = v; updated = true; }
+    });
+    const tgParam = window.Telegram && window.Telegram.WebApp
+      && window.Telegram.WebApp.initDataUnsafe
+      && window.Telegram.WebApp.initDataUnsafe.start_param;
+    if (tgParam && !stored.utm_source) {
+      stored.utm_source = 'telegram';
+      stored.utm_medium = 'miniapp';
+      stored.utm_campaign = tgParam;
+      updated = true;
     }
-
-    window.gtag = gtag;
-    // Set default consent to 'denied'
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied'
-    });
-    gtag('js', new Date());
-    gtag('config', GA_TRACKING_ID, {
-      send_page_view: false
-    });
-    window.gtagLoaded = true;
-    console.log('Google Analytics loaded dynamically');
-    // Execute callback after GA is fully initialized
-    if (typeof callback === 'function') {
-      callback();
-    }
-  };
-  document.head.appendChild(script);
+    if (updated) sessionStorage.setItem('ga_campaign', JSON.stringify(stored));
+  } catch (e) {}
 }
 
-// Google Analytics Consent Management Functions
-function consentGrantedAdStorage() {
-  if (!window.gtagLoaded) {
-    loadGoogleAnalytics(() => {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted'
-      });
-    });
-  } else {
-    gtag('consent', 'update', {
-      'ad_storage': 'granted'
-    });
-  }
-}
+window.getCampaignParams = function () {
+  try { return JSON.parse(sessionStorage.getItem('ga_campaign') || '{}'); }
+  catch (e) { return {}; }
+};
 
-function consentGrantedAdUserData() {
-  if (!window.gtagLoaded) {
-    loadGoogleAnalytics(() => {
-      gtag('consent', 'update', {
-        'ad_user_data': 'granted'
-      });
-    });
-  } else {
-    gtag('consent', 'update', {
-      'ad_user_data': 'granted'
-    });
-  }
-}
+// Set up dataLayer + consent default BEFORE gtag.js arrives, so the very first
+// session_start (which fires when gtag.js loads) sees the right consent state.
+function bootstrapGtag() {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
 
-function consentGrantedAdPersonalization() {
-  if (!window.gtagLoaded) {
-    loadGoogleAnalytics(() => {
-      gtag('consent', 'update', {
-        'ad_personalization': 'granted'
-      });
-    });
-  } else {
-    gtag('consent', 'update', {
-      'ad_personalization': 'granted'
-    });
-  }
-}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'wait_for_update': 500
+  });
 
-function consentGrantedAnalyticsStorage() {
-  if (!window.gtagLoaded) {
-    loadGoogleAnalytics(() => {
-      gtag('consent', 'update', {
-        'analytics_storage': 'granted'
-      });
-    });
-  } else {
-    gtag('consent', 'update', {
-      'analytics_storage': 'granted'
-    });
-  }
-}
-
-function consentGrantedAll() {
-  if (!window.gtagLoaded) {
-    loadGoogleAnalytics(() => {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'analytics_storage': 'granted'
-      });
-    });
-  } else {
+  // Promote saved consent BEFORE config so the first session_start has it
+  const saved = getUserConsent();
+  if (saved === 'all') {
     gtag('consent', 'update', {
       'ad_storage': 'granted',
       'ad_user_data': 'granted',
       'ad_personalization': 'granted',
       'analytics_storage': 'granted'
     });
+  } else if (saved === 'analytics') {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
   }
+
+  // Keep gclid/UTM across SPA navigations; redact ads data while denied.
+  gtag('set', 'url_passthrough', true);
+  gtag('set', 'ads_data_redaction', true);
+
+  gtag('js', new Date());
+  gtag('config', GA_TRACKING_ID, {
+    send_page_view: false
+  });
+}
+
+// Dynamic Google Analytics loader
+function loadGoogleAnalytics(callback = () => {}) {
+  if (window.gtagLoaded) {
+    if (typeof callback === 'function') callback();
+    return;
+  }
+  if (shouldSkipGa()) {
+    console.warn('!!!___GA skip___!!!');
+    return;
+  }
+
+  bootstrapGtag();
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+  script.onload = function () {
+    window.gtagLoaded = true;
+    console.log('Google Analytics loaded dynamically');
+    if (typeof callback === 'function') callback();
+  };
+  document.head.appendChild(script);
+}
+
+// Consent updates. gtag is already loaded with default=denied (or skipped on
+// localhost / explicit rejection). These just push the update.
+function consentGrantedAdStorage() {
+  if (!window.gtag) return;
+  gtag('consent', 'update', { 'ad_storage': 'granted' });
+}
+
+function consentGrantedAdUserData() {
+  if (!window.gtag) return;
+  gtag('consent', 'update', { 'ad_user_data': 'granted' });
+}
+
+function consentGrantedAdPersonalization() {
+  if (!window.gtag) return;
+  gtag('consent', 'update', { 'ad_personalization': 'granted' });
+}
+
+function consentGrantedAnalyticsStorage() {
+  if (!window.gtag) return;
+  gtag('consent', 'update', { 'analytics_storage': 'granted' });
+}
+
+function consentGrantedAll() {
+  if (!window.gtag) return;
+  gtag('consent', 'update', {
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted',
+    'analytics_storage': 'granted'
+  });
 }
 
 function consentDeniedAll() {
-}
-
-// Restore consent state on page load
-function restoreConsentState() {
-  const consent = getUserConsent();
-  if (consent && consent !== 'none') {
-    // Load Google Analytics if user has consented (not rejected)
-    if (consent === 'all' || consent === 'analytics') {
-      loadGoogleAnalytics(() => {
-        if (consent === 'all') {
-          gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-          });
-        } else if (consent === 'analytics') {
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted'
-          });
-        }
-      });
-    }
-  }
+  // Downgrade if user previously granted on this same page load.
+  if (!window.gtag) return;
+  gtag('consent', 'update', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
 }
 
 // Make functions globally available
@@ -327,14 +318,16 @@ function hideConsentBanner() {
   }
 }
 
-// Initialize consent banner
+// 1. Capture UTM/Telegram start_param BEFORE Angular hydration touches the URL
+captureCampaignParams();
+// 2. Load gtag immediately with consent default = denied (Google Consent Mode v2).
+//    No cookies are set while denied; gtag sends cookieless pings so session_start
+//    is captured with correct source/medium even if user clicks Accept later.
+loadGoogleAnalytics();
+// 3. Banner UI
 const consentBanner = createConsentBanner();
 document.body.appendChild(consentBanner);
-// Restore consent state if user has already consented
-restoreConsentState();
-// Show banner if user hasn't consented yet
 if (!hasUserConsented()) {
-  // Show banner after a short delay to ensure page is loaded
   setTimeout(() => {
     showConsentBanner();
   }, 1000);

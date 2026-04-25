@@ -303,15 +303,26 @@ export class AnalyticsService {
 
   trackPageView(pageTitle: string): void {
     console.log('Tracking page view:', pageTitle);
-    if (this.isAnalyticsAvailable()) {
-      (this._window?.['gtag'] as any)?.('event', 'page_view', {
-        page_title: pageTitle,
-        page_location: this._window?.location.href,
-        user_id: this._getUserUUID(),
-      });
-    } else {
+    const gtag = this._window?.['gtag'] as any;
+    if (typeof gtag !== 'function') {
       console.warn('Google Analytics not available for page view:', pageTitle);
+      return;
     }
+    // With Consent Mode v2, gtag itself gates cookies based on consent state.
+    // We always fire the event — gtag sends a cookieless ping if denied.
+    const campaign = (this._window?.['getCampaignParams'] as any)?.() || {};
+    gtag('event', 'page_view', {
+      page_title: pageTitle,
+      page_location: this._window?.location.href,
+      user_id: this._getUserUUID(),
+      ...(campaign.utm_source && { campaign_source: campaign.utm_source }),
+      ...(campaign.utm_medium && { campaign_medium: campaign.utm_medium }),
+      ...(campaign.utm_campaign && { campaign_name: campaign.utm_campaign }),
+      ...(campaign.utm_term && { campaign_term: campaign.utm_term }),
+      ...(campaign.utm_content && { campaign_content: campaign.utm_content }),
+      ...(campaign.utm_id && { campaign_id: campaign.utm_id }),
+      ...(campaign.gclid && { gclid: campaign.gclid }),
+    });
   }
 
   private _getCookieConsent(): string {
