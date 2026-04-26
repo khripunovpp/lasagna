@@ -27,6 +27,10 @@ const REFERENCED_RECIPE_NAME = 'Referenced Recipe Alpha';
 const BETA_CATEGORY_ID = 'beta-recipe-category-id';
 const BETA_CATEGORY_NAME = 'Beta Recipe Category';
 
+// IndexDbSelectLoaderService.load зовёт getAll(store, skipDeleted=true), что
+// делает .where('deleted').equals(0) — записи без поля deleted в индекс
+// не попадают, и ng-select получает пустой список. Поэтому в seed обязательно
+// явно указываем deleted: 0.
 const baseRecipe: RecipeDTO = {
   uuid: BASE_RECIPE_UUID,
   name: 'Base Recipe For Edit',
@@ -35,6 +39,7 @@ const baseRecipe: RecipeDTO = {
   master: true,
   tags: ['edit-tag-a', 'edit-tag-b'],
   category_id: categoryRecipeAlphaId,
+  deleted: 0,
   ingredients: [
     {product_id: 'test-product-uuid-1', amount: '100', unit: 'gram'},
     {product_id: 'test-product-uuid-2', amount: '0.5', unit: 'kilogram'},
@@ -50,6 +55,7 @@ const referencedRecipe: RecipeDTO = {
   master: false,
   tags: [],
   category_id: categoryRecipeAlphaId,
+  deleted: 0,
   ingredients: [
     {product_id: 'test-product-uuid-1', amount: '50', unit: 'gram'},
   ],
@@ -213,7 +219,9 @@ test.describe.serial('Редактирование рецепта', () => {
   });
 
   async function saveEditAndReload() {
-    await recipePage.clickOutside({timeout: 300});
+    // form.valueChanges → recipe.update() debounced на 500мс в add-recipe.component.ts;
+    // ждём с запасом, иначе repository кинет 'Ingredients count mismatch'
+    await recipePage.clickOutside({timeout: 700});
     await expect(recipePage.recipeFormSaveBtnEdit).toBeEnabled();
     await recipePage.recipeFormSaveBtnEdit.click();
     await expect(recipePage.getToast('success')).toBeVisible();

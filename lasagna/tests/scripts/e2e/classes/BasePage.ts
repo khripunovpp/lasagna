@@ -117,6 +117,9 @@ export class BasePage {
     await ngSelectInputLocator.click();
     const selectWindowDropdown = this.ngSelectWindowDropdown();
     await expect(selectWindowDropdown).toBeVisible();
+    // дожидаемся, пока ресурс ng-select подгрузит items (loadedList async),
+    // иначе getByRole('option') не находит ничего и textContent висит до таймаута
+    await expect(selectWindowDropdown.getByRole('option').first()).toBeVisible();
     const option = selectWindowDropdown.getByRole('option').nth(optionIndex);
     const selectedValue = await option.textContent();
     await option.click();
@@ -134,6 +137,9 @@ export class BasePage {
     const selectWindowDropdown = this.ngSelectWindowDropdown();
     await expect(selectWindowDropdown).toBeVisible();
     const option = selectWindowDropdown.getByRole('option').nth(optionIndex);
+    // явно ждём появления отфильтрованной опции с понятным сообщением,
+    // вместо неявного ожидания внутри textContent() до общего timeout теста
+    await expect(option).toBeVisible();
     const selectedValue = await option.textContent();
     await option.click();
     await this.clickOutside({timeout: 500});
