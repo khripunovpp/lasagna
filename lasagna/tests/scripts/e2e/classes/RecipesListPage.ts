@@ -1,12 +1,14 @@
 import {BasePage} from './BasePage';
 import {Page} from '@playwright/test';
 import {Recipes_Page} from '../pages/Recipes_Page';
+import {DraftListSection} from './DraftListSection';
 
 export class RecipesListPage
   extends BasePage {
   constructor(
     page: Page,
     readonly ref = new Recipes_Page(page),
+    readonly drafts = new DraftListSection(page, 'draft-recipes-list'),
   ) {
     super(page);
   }
@@ -24,11 +26,11 @@ export class RecipesListPage
   }
 
   get draftOpenButton() {
-    return this._page.locator('[data-u2e="draft-recipes-list.expander"] .expander__header');
+    return this.drafts.expander;
   }
 
   get draftCardList() {
-    return this._page.locator('[data-u2e="draft-recipes-list.card-list"]');
+    return this.drafts.cardList;
   }
 
   getGroupByIndex(index: number) {
@@ -77,6 +79,6 @@ export class RecipesListPage
   }
 
   getDraftItemByIndex(index: number) {
-    return this.draftCardList.locator('.lg-card-list__item').nth(index);
+    return this.drafts.itemByIndex(index);
   }
 }

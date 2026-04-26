@@ -1,12 +1,14 @@
 import {BasePage} from './BasePage';
 import {Page} from '@playwright/test';
 import {Products_Page} from '../pages/Products_Page';
+import {DraftListSection} from './DraftListSection';
 
 export class ProductsListPage
   extends BasePage {
   constructor(
     page: Page,
     readonly ref = new Products_Page(page),
+    readonly drafts = new DraftListSection(page, 'draft-products-list'),
   ) {
     super(page);
   }

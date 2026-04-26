@@ -33,14 +33,19 @@ test.describe.serial('Список рецептов', () => {
     const recipesListPage = new RecipesListPage(page);
     const recipePage = new RecipePage(page);
 
+    // First goto initializes the IndexedDB schema (Dexie opens the DB and
+    // creates object stores). Seeding before the schema exists would fail.
+    // After seeding we reload so the list re-renders with data — otherwise
+    // the test races on clicking a not-yet-existing group.
     await page.goto(URLS.recipes.list);
     await seedRecipes(page);
+    await page.goto(URLS.recipes.list);
 
     await logDb(page, 'lasagna-db', [Stores.RECIPES]);
 
-    await expect(recipesListPage.ref.recipesListGroupingTiles).toBeVisible();
-    const getFirstGroup = recipesListPage.getGroupByIndex(0)
-    await getFirstGroup.click();
+    const firstGroup = recipesListPage.getGroupByIndex(0);
+    await expect(firstGroup).toBeVisible();
+    await firstGroup.click();
 
     const firstLink = recipesListPage.getItemLinkInGroupByIndex(0, 0).first();
     await expect(firstLink).toBeVisible();

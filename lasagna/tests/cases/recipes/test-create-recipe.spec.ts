@@ -1,6 +1,5 @@
 import {expect, Page, test} from '@playwright/test';
 import {URLS} from '../../helpers/urls.const';
-import {RecipesListPage} from '../../scripts/e2e/classes/RecipesListPage';
 import {
   calculationOutputWithoutPortions,
   calculationOutputWithPortions,
@@ -43,25 +42,10 @@ test.describe.serial('Групповой тест создания и кальк
     await page.close();
   });
 
-  // Драфт-флоу проверяем один раз на любом рецепте — он не зависит от юнит-матрицы.
-  // Попутно используем recipesInput[0] как «первый рецепт» — чтобы не плодить
-  // дубликаты с одинаковым именем (recipesInput[6], [7] ссылаются на него по имени).
-  test.describe.serial('Драфт + первый рецепт', () => {
-    test('Драфт сохраняется, появляется в списке, открывается; рецепт корректно считается', async () => {
-      const dto = recipesInput[0];
-      const recipeId = await createRecipeFixture(page, dto, {
-        withDraft: true,
-        withPortions: true,
-      });
-      await checkRecipePage(recipeId, dto, {withPortions: true});
-      await calculateRecipeCostFixture(page, recipeId, calculationOutputWithPortions[0]);
-    });
-  });
-
   // Основной прогон: create + round-trip + calc в одном тесте на каждый рецепт.
-  // Один упавший кейс больше не валит остальные.
+  // Драфт-флоу вынесен в tests/cases/drafts/test-draft-recipe.spec.ts.
   test.describe.serial('Создание и калькуляция (с порциями)', () => {
-    for (let idx = 1; idx < recipesInput.length; idx++) {
+    for (let idx = 0; idx < recipesInput.length; idx++) {
       const dto = recipesInput[idx];
       test(`[${idx}] ${dto.name}`, async () => {
         const recipeId = await createRecipeFixture(page, dto, {withPortions: true});
@@ -156,7 +140,6 @@ test.describe.serial('Групповой тест создания и кальк
     page: Page,
     dto: RecipeDTO,
     options?: {
-      withDraft?: boolean
       withPortions?: boolean
       withDefaultProducts?: boolean
       withDefaultRecipes?: boolean
@@ -202,31 +185,6 @@ test.describe.serial('Групповой тест создания и кальк
     await recipePage.ref.inputName.fill(dto.name);
     // проверяем что название установлено
     await expect(recipePage.ref.inputName).toHaveValue(dto.name);
-
-    if (options?.withDraft) {
-      // и проверяем что сохранился драфт
-      await expect(recipePage.savedDraftNotification).toBeVisible();
-
-      // переходим на страницу рецептов и проверяем что есть драфт
-      await page.goto(URLS.recipes.list);
-      const recipesListPage = new RecipesListPage(page);
-      // открываем список драфтов
-      await expect(recipesListPage.draftOpenButton).toBeVisible();
-      await recipesListPage.draftOpenButton.click();
-      // проверяем что в списке драфтов есть наш драфт
-      await expect(recipesListPage.draftCardList).toBeVisible();
-      const item = recipesListPage.getDraftItemByIndex(0);
-      await expect(item).toBeVisible();
-      // проверяем что название драфта корректное
-      const linkTag = item.locator('a');
-      const linkText = await linkTag.textContent().then(text => text?.trim());
-      expect(linkText).toEqual('Draft ' + dto.name);
-
-      // переходим обратно на страницу редактирования драфта
-      await linkTag.click();
-      await expect(page).toHaveURL(/\/recipes\/draft\/[a-z0-9]+/);
-      recipePage = new RecipePage(page);
-    }
 
     // теперь заполняем остальные поля
     if (options?.withPortions && dto.portions) {
