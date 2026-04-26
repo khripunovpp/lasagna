@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ContainerComponent} from '../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../shared/view/layout/title.component';
@@ -60,8 +60,6 @@ export class SettingsComponent implements OnInit {
   }
 
   isClient = inject(IS_CLIENT);
-  editedCategoryProduct = signal('')
-  editedCategoryRecipe = signal('')
   canSync = inject(CAN_SYNC);
   hasSyncFeature = inject(HAS_SYNC_FEATURE);
   hasAuthFeature = inject(HAS_FEATURE)('registration');

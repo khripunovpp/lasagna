@@ -6,6 +6,7 @@ import {CheckboxComponent} from '../../../../features/controls/form/chckbox.comp
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonComponent} from '../button/button.component';
 import {MatIcon} from '@angular/material/icon';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'lg-card-list',
@@ -17,6 +18,7 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     ButtonComponent,
     MatIcon,
+    TranslatePipe,
   ],
   template: `
     <section [formGroup]="selected" class="lg-card-list">
@@ -45,7 +47,7 @@ import {MatIcon} from '@angular/material/icon';
             }
           </div>
         } @empty {
-          <div style="padding:16px 24px;">No items found</div>
+          <div style="padding:16px 24px;">{{ 'card-list.empty' | translate }}</div>
         }
       </section>
     </section>

@@ -16,24 +16,18 @@
             <ng-template [label]="'categories.products.link-label' | translate" alias="system" lgTab>
               <lg-flex-column>
                 <lg-category-add-form type="product"
-                                      titleKey="categories.add-product"
-                                      (onSaved)="editedCategoryProduct.set('')"
-                                      [uuid]="editedCategoryProduct()"></lg-category-add-form>
+                                      titleKey="categories.add-product"></lg-category-add-form>
                 <lg-category-list type="product"
-                                  titleKey="categories.products.title"
-                                  (onEdit)="editedCategoryProduct.set($event)"></lg-category-list>
+                                  titleKey="categories.products.title"></lg-category-list>
               </lg-flex-column>
             </ng-template>
 
             <ng-template [label]="'categories.recipes.link-label' | translate" alias="system" lgTab>
               <lg-flex-column>
                 <lg-category-add-form type="recipe"
-                                      titleKey="categories.add-recipe"
-                                      (onSaved)="editedCategoryRecipe.set('')"
-                                      [uuid]="editedCategoryRecipe()"></lg-category-add-form>
+                                      titleKey="categories.add-recipe"></lg-category-add-form>
                 <lg-category-list type="recipe"
-                                  titleKey="categories.recipes.title"
-                                  (onEdit)="editedCategoryRecipe.set($event)"></lg-category-list>
+                                  titleKey="categories.recipes.title"></lg-category-list>
               </lg-flex-column>
             </ng-template>
           </lg-tabs>

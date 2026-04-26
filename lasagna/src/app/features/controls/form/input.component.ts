@@ -77,9 +77,8 @@ import {NgTemplateOutlet} from '@angular/common';
       }
 
       .lg-input--small .input {
-        padding: 12px;
+        padding: 11px 12px;
         border-radius: 8px;
-        font-size: 14px;
       }
 
       .lg-input__after {
