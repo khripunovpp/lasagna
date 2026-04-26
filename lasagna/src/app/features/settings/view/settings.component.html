@@ -10,24 +10,24 @@
 
         <ng-template alias="categoires" label="{{ 'categories.settings-title'|translate }}" lgTab>
           <lg-tabs [flat]="true"
-                   name="categories-settings"
                    [scrollable]="false"
-                   [silent]="true">
+                   [silent]="true"
+                   name="categories-settings">
             <ng-template [label]="'categories.products.link-label' | translate" alias="system" lgTab>
               <lg-flex-column>
-                <lg-category-add-form type="product"
-                                      titleKey="categories.add-product"></lg-category-add-form>
-                <lg-category-list type="product"
-                                  titleKey="categories.products.title"></lg-category-list>
+                <lg-category-add-form titleKey="categories.add-product"
+                                      type="product"></lg-category-add-form>
+                <lg-category-list titleKey="categories.products.title"
+                                  type="product"></lg-category-list>
               </lg-flex-column>
             </ng-template>
 
             <ng-template [label]="'categories.recipes.link-label' | translate" alias="system" lgTab>
               <lg-flex-column>
-                <lg-category-add-form type="recipe"
-                                      titleKey="categories.add-recipe"></lg-category-add-form>
-                <lg-category-list type="recipe"
-                                  titleKey="categories.recipes.title"></lg-category-list>
+                <lg-category-add-form titleKey="categories.add-recipe"
+                                      type="recipe"></lg-category-add-form>
+                <lg-category-list titleKey="categories.recipes.title"
+                                  type="recipe"></lg-category-list>
               </lg-flex-column>
             </ng-template>
           </lg-tabs>
@@ -48,27 +48,29 @@
         }
 
         <ng-template alias="data" label="{{ 'data.settings-title'|translate }}" lgTab>
-          @if (hasSyncFeature) {
-            <lg-tabs [flat]="true"
-                     [scrollable]="false"
-                     [silent]="true">
-              @if (canSync()) {
-                <ng-template alias="sync" label="{{ 'sync.title'|translate }}" lgTab>
-                  <lg-sync-settings></lg-sync-settings>
-                </ng-template>
-              }
+          <lg-tabs [flat]="true"
+                   [scrollable]="false"
+                   [silent]="true">
+            <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
+              <lg-backup-settings></lg-backup-settings>
+            </ng-template>
 
+            <ng-template [label]="'settings.drafts.title' | translate" alias="drafts" lgTab>
+              <lg-drafts-settings></lg-drafts-settings>
+            </ng-template>
+
+            @if (canSync()) {
+              <ng-template alias="sync" label="{{ 'sync.title'|translate }}" lgTab>
+                <lg-sync-settings></lg-sync-settings>
+              </ng-template>
+            }
+
+            @if (hasSyncFeature) {
               <ng-template alias="deleted" label="{{ 'deleted-data.settings-title'|translate }}" lgTab>
                 <lg-deleted-data-storage-view></lg-deleted-data-storage-view>
               </ng-template>
-
-              <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
-                <lg-backup-settings></lg-backup-settings>
-              </ng-template>
-            </lg-tabs>
-          } @else {
-            <lg-backup-settings></lg-backup-settings>
-          }
+            }
+          </lg-tabs>
         </ng-template>
 
         <ng-template alias="logs" label="{{ 'log-center.title'|translate }}" lgTab>

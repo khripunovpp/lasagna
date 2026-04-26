@@ -105,8 +105,9 @@
   --card-list-bg: #ffffff;
   --text-success: #4caf50;
   --text-danger: #f44336;
+  --text-warning: #ff9800;
   --text-info: #2196f3;
-  --card-bg-draft: #bee5ff;
+  --card-bg-draft: #f3f3f3;
   --category-orange: #e67e22;
   --category-purple: #8e44ad;
   --category-blue: #3498db;
@@ -293,6 +294,10 @@ html, body {
 
 .text-danger {
   color: var(--text-danger);
+}
+
+.text-warning {
+  color: var(--text-warning);
 }
 
 .text-info {

@@ -36,6 +36,7 @@ import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.co
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
+import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
 
 @Component({
   selector: 'lg-add-product',
@@ -60,6 +61,7 @@ import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.com
     FlexColumnComponent,
     FlexRowComponent,
     SyncBadgeComponent,
+    DraftFormBannerComponent,
   ],
   templateUrl: './add-product.component.html',
   styles: [
@@ -120,7 +122,7 @@ export class AddProductComponent
       } else if (this.product()) {
         this.draftRef.set(this._productsRepository.saveDraftProduct(
           this.product()!,
-          this.draftOrProductUUID() ?? ''));
+          this.draftOrProductUUID() ?? '') ?? null);
 
         // if (!this.isDraftRoute()) {
         //   this._routerManager.replace(['products/draft/' + this.draftRef()!.uuid]);

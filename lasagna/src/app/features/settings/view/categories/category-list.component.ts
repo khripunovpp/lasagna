@@ -42,7 +42,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               @if (editingUuid() === category.uuid) {
                 <lg-category-add-form (onSaved)="stopEdit()"
                                       [type]="type()"
-                                      [uuid]="category.uuid ?? ''"
+                                      [uuid]="category.uuid"
                                       style="--control-bg: white;"
                                       titleKey="categories.edit-hint"></lg-category-add-form>
               } @else {

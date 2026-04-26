@@ -18,7 +18,7 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {RecipeDTO, RecipeScheme} from '../../service/schemes/Recipe.scheme';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
-import {DraftRecipesListComponent} from './draft-recipes-list.component';
+import {DraftsListComponent} from '../../../drafts/drafts-list/drafts-list.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -71,7 +71,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
     TimeAgoPipe,
     PullDirective,
     TranslatePipe,
-    DraftRecipesListComponent,
+    DraftsListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     GroupingSortingComponent,

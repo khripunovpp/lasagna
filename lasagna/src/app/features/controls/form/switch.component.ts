@@ -31,6 +31,10 @@ import {NgClass} from '@angular/common';
     </label>
   `,
   styles: [`
+    lg-switch {
+      display: inline-flex;
+    }
+
     .lg-switch {
       display: inline-flex;
       align-items: center;

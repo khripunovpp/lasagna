@@ -15,6 +15,12 @@
   <lg-fade-in>
     <lg-container [formGroup]="form">
       <lg-flex-column size="medium">
+        @if (draftRef(); as draft) {
+          <lg-draft-form-banner type="recipe"
+                                [draft]="draft"
+                                (deleteNow)="onRemoveDraft()"></lg-draft-form-banner>
+        }
+
         @if (addedRecipeInformerUUID(); as uuid) {
           <p>
             {{ 'recipe.added-informer' | translate }} <a

@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {ProductsRepository} from '../../service/products.repository';
+import {DraftsListComponent} from '../../../drafts/drafts-list/drafts-list.component';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
@@ -20,7 +21,6 @@ import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ProductDTO, ProductScheme} from '../../service/Product.scheme';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
 import {TranslateDirective, TranslatePipe} from '@ngx-translate/core';
-import {DraftProductsListComponent} from './draft-products-list.component';
 import {
   InlineSeparatedGroupComponent,
   InlineSeparatedGroupDirective
@@ -93,7 +93,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
             }
           </lg-title>
 
-          <lg-draft-products-list></lg-draft-products-list>
+          <lg-drafts-list type="product"></lg-drafts-list>
 
           @if (!groupingTiles.empty()) {
             <lg-flex-column [size]="'medium'">
@@ -175,7 +175,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
     TimeAgoPipe,
     ExpandDirective,
     TranslatePipe,
-    DraftProductsListComponent,
+    DraftsListComponent,
     InlineSeparatedGroupComponent,
     InlineSeparatedGroupDirective,
     UserCurrencyPipe,

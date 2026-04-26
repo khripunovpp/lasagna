@@ -2,11 +2,11 @@
   @if (editMode()) {
     <lg-controls-bar size="small">
       <lg-button [icon]="true"
-                 data-u2e="product.form.add-new-btn"
+                 [label]=" 'product.form.add-new-btn'|translate"
                  [link]="'/products/add'"
                  [size]="'small'"
-                 [label]=" 'product.form.add-new-btn'|translate"
-                 [style]="'primary'">
+                 [style]="'primary'"
+                 data-u2e="product.form.add-new-btn">
         <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
       </lg-button>
     </lg-controls-bar>
@@ -15,6 +15,12 @@
   <lg-fade-in>
     <lg-container>
       <lg-flex-column size="medium">
+        @if (draftRef(); as draft) {
+          <lg-draft-form-banner (deleteNow)="onRemoveDraft()"
+                                [draft]="draft"
+                                type="product"></lg-draft-form-banner>
+        }
+
         <lg-flex-row [center]="true">
           @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
             <lg-title lgSelfStart>
@@ -43,19 +49,19 @@
 
           @if (isDraftRoute()) {
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink [style]="'danger'"
-                         [flat]="true"
+              <lg-button (click)="onRemoveDraft()" [flat]="true"
+                         [style]="'danger'"
                          data-u2e="product.form.delete-draft-btn"
-                         (click)="onRemoveDraft()">
+                         lgShrink>
                 {{ 'product.form.delete-draft-btn'|translate }}
               </lg-button>
             </ng-template>
           } @else if (product()?.uuid && !product()?.deleted) {
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink [style]="'danger'"
-                         [flat]="true"
+              <lg-button (click)="onDeleteProduct()" [flat]="true"
+                         [style]="'danger'"
                          data-u2e="product.form.delete-btn"
-                         (click)="onDeleteProduct()">
+                         lgShrink>
                 {{ 'product.form.delete-btn'|translate }}
               </lg-button>
             </ng-template>
@@ -67,7 +73,6 @@
             {{ 'edited-at-label'|translate }} {{ product()?.updatedAt | timeAgo }}
           </small>
         }
-
       </lg-flex-column>
 
       <lg-add-product-form [editMode]="editMode()"
@@ -75,11 +80,11 @@
 
       <lg-flex-row [mobileMode]="true" [relaxed]="true">
         @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-          <lg-button [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                     lgShrink
-                     data-u2e="product.form.save-btn"
+          <lg-button (click)="onEditProduct()"
+                     [disabled]="!formComponent()?.form?.dirty && !draftRef()"
                      [style]="'primary'"
-                     (click)="onEditProduct()">
+                     data-u2e="product.form.save-btn"
+                     lgShrink>
             @if (formComponent()?.form?.dirty || draftRef()) {
               {{ 'product.form.save-btn.edit.active'|translate }}
             } @else {
@@ -87,11 +92,11 @@
             }
           </lg-button>
         } @else {
-          <lg-button lgShrink
-                     data-u2e="product.form.save-btn"
-                     [style]="'primary'"
+          <lg-button (click)="onAddProduct()"
                      [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                     (click)="onAddProduct()">
+                     [style]="'primary'"
+                     data-u2e="product.form.save-btn"
+                     lgShrink>
             @if (formComponent()?.form?.dirty || draftRef()) {
               {{ 'product.form.save-btn.add.active'|translate }}
             } @else {

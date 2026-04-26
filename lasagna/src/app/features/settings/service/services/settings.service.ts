@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {SettingsRepository} from '../repositories/settings.repository';
 import {LanguageService} from './language.service';
 import {Settings} from '../models/Settings';
-import {SettingsKeysConst} from '../../const/settings-keys.const';
+import {DRAFTS_DEFAULTS, DRAFTS_TTL_MAX, DRAFTS_TTL_MIN, DraftsSettings, SettingsKeysConst} from '../../const/settings-keys.const';
 import {LoggerService} from '../../../logger/logger.service';
 import {generateRandomInvoicePrefix} from '../../../../shared/helpers/pdf-generators/prefix-generator';
 import {APP_SERVER_IS_RU} from '../../../../shared/service/tokens/app-server-region.token';
@@ -145,6 +145,23 @@ export class SettingsService {
 
   setRecipesViewMode(mode: 'folders' | 'groupings') {
     this.settingsModel?.addSetting(SettingsKeysConst.recipesViewMode, mode);
+    return this.saveSettings();
+  }
+
+  getDraftsSettings(): DraftsSettings {
+    const stored = this.settingsModel?.getSetting<Partial<DraftsSettings>>(SettingsKeysConst.drafts)?.data;
+    const enabled = stored?.enabled ?? DRAFTS_DEFAULTS.enabled;
+    const rawTtl = stored?.ttlDays ?? DRAFTS_DEFAULTS.ttlDays;
+    const ttlDays = Math.min(DRAFTS_TTL_MAX, Math.max(DRAFTS_TTL_MIN, Math.floor(rawTtl)));
+    return {enabled, ttlDays};
+  }
+
+  setDraftsSettings(value: DraftsSettings) {
+    const ttlDays = Math.min(DRAFTS_TTL_MAX, Math.max(DRAFTS_TTL_MIN, Math.floor(value.ttlDays)));
+    this.settingsModel?.addSetting(SettingsKeysConst.drafts, {
+      enabled: !!value.enabled,
+      ttlDays,
+    });
     return this.saveSettings();
   }
 }

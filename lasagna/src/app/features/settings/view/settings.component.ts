@@ -24,6 +24,7 @@ import {DeletedDataStorageViewComponent} from '../../../shared/view/deleting/del
 import {AccountSettingsComponent} from '../../account/account-settings.component';
 import {CredentialSettingsComponent} from './finance-settings/credentials/credential-settings.component';
 import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.component';
+import {DraftsSettingsComponent} from '../../drafts/drafts-settings.component';
 
 
 @Component({
@@ -51,6 +52,7 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
     AccountSettingsComponent,
     CredentialSettingsComponent,
     TaxesSettingsComponent,
+    DraftsSettingsComponent,
   ]
 })
 export class SettingsComponent implements OnInit {

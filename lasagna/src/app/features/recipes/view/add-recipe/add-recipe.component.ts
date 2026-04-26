@@ -36,6 +36,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
+import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -62,6 +63,7 @@ import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.com
     ConfirmationPopoverComponent,
     ReactiveFormsModule,
     SyncBadgeComponent,
+    DraftFormBannerComponent,
   ],
   templateUrl: './add-recipe.component.html',
   styles: [
