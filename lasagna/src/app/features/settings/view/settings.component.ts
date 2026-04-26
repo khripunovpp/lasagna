@@ -12,13 +12,9 @@ import {SettingsService} from '../service/services/settings.service';
 import {InvoicesSettingsComponent} from "./finance-settings/invoices-settings/invoices-settings.component";
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {LogCenterPageComponent} from './log-center/log-center-page.component';
-import {CategoryListComponent} from './categories/category-product/list/category-list.component';
-import {CategoryRecipeListComponent} from './categories/category-recipe/list/category-recipe-list.component';
+import {CategoryListComponent} from './categories/category-list.component';
+import {CategoryAddFormComponent} from './categories/category-add-form.component';
 import {FlexColumnComponent} from '../../../shared/view/layout/flex-column.component';
-import {AddCategoryFormComponent} from './categories/category-product/add-category/add-category-form.component';
-import {
-  AddCategoryRecipeFormComponent
-} from './categories/category-recipe/add-category/add-category-recipe-form.component';
 import {IS_CLIENT} from '../../../shared/service/tokens/isClient.token';
 
 import {SyncSettingsComponent} from '../../sync/view/sync-settings.component';
@@ -47,10 +43,8 @@ import {TaxesSettingsComponent} from './finance-settings/taxes/taxes-settings.co
     InvoicesSettingsComponent,
     LogCenterPageComponent,
     CategoryListComponent,
-    CategoryRecipeListComponent,
+    CategoryAddFormComponent,
     FlexColumnComponent,
-    AddCategoryFormComponent,
-    AddCategoryRecipeFormComponent,
     LogCenterPageComponent,
     SyncSettingsComponent,
     DeletedDataStorageViewComponent,

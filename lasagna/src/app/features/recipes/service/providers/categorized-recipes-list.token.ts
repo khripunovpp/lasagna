@@ -5,7 +5,7 @@ import {SortResult, SortStrategy} from '../../../../shared/service/types/sorting
 import {GroupSortService} from '../../../../shared/service/services/grouping-sorting.service';
 import {RecipesRepository} from './recipes.repository';
 import {errorHandler, injectQueryParams} from '../../../../shared/helpers';
-import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
+import {CategoryRepository} from '../../../settings/service/repositories/category.repository';
 import {Recipe} from '../models/Recipe';
 import {
   CategoryRecipeSortStrategy,
@@ -32,7 +32,7 @@ export const provideRecipes = {
     const featureFlagsService = inject(FeatureFlagsService);
     const groupSortService = inject(GroupSortService);
     const recipesRepository = inject(RecipesRepository);
-    const categoryRepository = inject(CategoryRecipesRepository);
+    const categoryRepository = inject(CategoryRepository);
     const foldersRepository = inject(FoldersRepository);
     const settingsService = inject(SettingsService);
     const loadersManagerService = inject(LoadersManagerService);

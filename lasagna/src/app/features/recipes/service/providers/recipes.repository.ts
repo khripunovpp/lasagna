@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
-import {CategoryRecipesRepository} from '../../../settings/service/repositories/category-recipes.repository';
+import {CategoryRepository} from '../../../settings/service/repositories/category.repository';
 import {DraftForm, DraftFormsService, UsingHistoryService} from '../../../../shared/service/services';
 import {TagsRepository} from '../../../settings/service/repositories/tags.repository';
 import {Recipe} from '../models/Recipe';
@@ -24,7 +24,7 @@ export class RecipesRepository
   constructor(
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
-    private _categoryRepository: CategoryRecipesRepository,
+    private _categoryRepository: CategoryRepository,
     private _draftFormsService: DraftFormsService,
     private _tagsRepository: TagsRepository,
     private _productsRepository: ProductsRepository,
@@ -183,7 +183,7 @@ export class RecipesRepository
       return Promise.resolve([]);
     }
 
-    return this._categoryRepository.getManyCategories(keys).then(categories => {
+    return this._categoryRepository.getMany(keys, 'recipe').then(categories => {
       return categories.toSorted((a, b) => {
         if (!a.uuid || !b.uuid) {
           return 0;

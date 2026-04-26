@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {RepositoryAbstract} from "../../../shared/service/services/repository/repository.abstract";
 import {Product} from "./Product";
 import {DexieIndexDbService} from "../../../shared/service/db/dexie-index-db.service";
-import {CategoryProductsRepository} from "../../../shared/service/repositories";
+import {CategoryRepository} from "../../settings/service/repositories/category.repository";
 import {DraftFormsService, UsingHistoryService} from "../../../shared/service/services";
 import {ProductFactory} from "./product.factory";
 import {Stores} from '../../../shared/service/db/const/stores';
@@ -18,7 +18,7 @@ export class ProductsRepository
   extends RepositoryAbstract<ProductDTO, Product> {
   constructor(
     public _indexDbService: DexieIndexDbService,
-    private _categoryRepository: CategoryProductsRepository,
+    private _categoryRepository: CategoryRepository,
     private _usingHistoryService: UsingHistoryService,
     private _draftFormsService: DraftFormsService,
     private _productFactory: ProductFactory,
@@ -88,7 +88,7 @@ export class ProductsRepository
     const {top} = this._usingHistoryService.read('products_categories');
     const keys = Object.keys(top);
 
-    const categories = await this._categoryRepository.getMany(keys);
+    const categories = await this._categoryRepository.getMany(keys, 'product');
     return categories.toSorted((a, b) => {
       if (!a.uuid || !b.uuid) {
         return 0;

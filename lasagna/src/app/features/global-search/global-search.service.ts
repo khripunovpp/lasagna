@@ -3,8 +3,7 @@ import {FlexsearchIndexService} from '../../shared/service/db/flexsearch-index.s
 import {Stores} from '../../shared/service/db/const/stores';
 import {ProductsRepository} from '../products/service/products.repository';
 import {RecipesRepository} from '../recipes/service/providers/recipes.repository';
-import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
-import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
+import {CategoryRepository} from '../settings/service/repositories/category.repository';
 import {InvoicesRepository} from '@invoices/service/Invoices.repository';
 import {DocsService} from '../documentation/service/docs.service';
 import {DocFile} from '../documentation/service/docs-loader.service';
@@ -50,8 +49,7 @@ export class GlobalSearchService {
     private _indexDbService: DexieIndexDbService,
     private _productsRepository: ProductsRepository,
     private _recipesRepository: RecipesRepository,
-    private _categoryProductsRepository: CategoryProductsRepository,
-    private _categoryRecipesRepository: CategoryRecipesRepository,
+    private _categoryRepository: CategoryRepository,
     private _invoicesRepository: InvoicesRepository,
     private _docsService: DocsService,
   ) {
@@ -174,12 +172,12 @@ export class GlobalSearchService {
           break;
         }
         case SearchResultContext.CATEGORY_PRODUCT: {
-          const categoryProduct = await this._categoryProductsRepository.getOne(item);
+          const categoryProduct = await this._categoryRepository.getOne(item, 'product');
           results.push(categoryProduct);
           break;
         }
         case SearchResultContext.CATEGORY_RECIPE: {
-          const categoryRecipe = await this._categoryRecipesRepository.getOne(item);
+          const categoryRecipe = await this._categoryRepository.getOne(item, 'recipe');
           results.push(categoryRecipe);
           break;
         }

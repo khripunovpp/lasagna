@@ -2,7 +2,7 @@ import {inject, InjectionToken} from '@angular/core';
 import {from, map, Observable, shareReplay, switchMap, tap} from 'rxjs';
 import {groupBy} from '../../../shared/helpers/grouping.helper';
 import {ProductsRepository} from './products.repository';
-import {CategoryProductsRepository} from '../../settings/service/repositories/category-products.repository';
+import {CategoryRepository} from '../../settings/service/repositories/category.repository';
 import {Product} from './Product';
 import {catchError} from 'rxjs/operators';
 import {NotificationsService} from '../../../shared/service/services';
@@ -13,7 +13,7 @@ import {LoadersManagerService} from '../../../shared/service/services/loaders-ma
 export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResult<Product>>>('CategorizedProductsList', {
   factory: () => {
     const productsRepository = inject(ProductsRepository);
-    const categoryRepository = inject(CategoryProductsRepository);
+    const categoryRepository = inject(CategoryRepository);
     const notificationsService = inject(NotificationsService);
     const loadersManagerService = inject(LoadersManagerService);
 
@@ -32,7 +32,7 @@ export const CATEGORIZED_PRODUCTS_LIST = new InjectionToken<Observable<SortResul
         }[] = [];
         const withoutGroup: Product[] = [];
         const uuids = Object.keys(grouped).filter(uuid => uuid !== ''); // исключаем пустые категории
-        const categories = await categoryRepository.getMany(uuids);
+        const categories = await categoryRepository.getMany(uuids, 'product');
 
         for (const groupKey in grouped) {
           const products = grouped[groupKey];

@@ -1,8 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {CategoryRecipe} from '../settings/service/models/CategoryRecipe';
 import {Stores} from '../../shared/service/db/const/stores';
-import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
-import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
+import {CategoryRepository} from '../settings/service/repositories/category.repository';
 import {DexieIndexDbService} from '../../shared/service/db/dexie-index-db.service';
 import {CategoryProduct} from '../settings/service/models/CategoryProduct';
 import {Product} from '../products/service/Product';
@@ -13,8 +12,7 @@ import {WINDOW} from '../../shared/service/tokens/window.token';
   providedIn: 'root'
 })
 export class SetupDefaultsService {
-  private readonly _categoryRecipesRepository = inject(CategoryRecipesRepository);
-  private readonly _categoryProductsRepository = inject(CategoryProductsRepository);
+  private readonly _categoryRepository = inject(CategoryRepository);
   private readonly _indexDbService = inject(DexieIndexDbService);
   private readonly _window = inject(WINDOW);
 
@@ -23,7 +21,7 @@ export class SetupDefaultsService {
     if (categoriesInstalled) {
       return;
     }
-    const categories = await this._categoryRecipesRepository.getLength();
+    const categories = await this._categoryRepository.getLength('recipe');
     if (categories) return;
 
     const defaultCategories = [
@@ -73,7 +71,7 @@ export class SetupDefaultsService {
     if (categoriesInstalled) {
       return;
     }
-    const categories = await this._categoryProductsRepository.getLength();
+    const categories = await this._categoryRepository.getLength('product');
     if (categories) return;
 
     const defaultCategories = [

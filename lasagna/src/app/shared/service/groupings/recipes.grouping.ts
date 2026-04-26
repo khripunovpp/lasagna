@@ -1,12 +1,12 @@
 import {SortStrategy} from '../types/sorting.types';
 import {RecipeDTO} from '../../../features/recipes/service/schemes/Recipe.scheme';
 import {BaseGrouping} from './base-grouping';
-import {CategoryRecipesRepository} from '../../../features/settings/service/repositories/category-recipes.repository';
+import {CategoryRepository} from '../../../features/settings/service/repositories/category.repository';
 
 export class CategoryRecipeSortStrategy
   extends BaseGrouping<RecipeDTO> {
   constructor(
-    public categoryRecipesRepository: CategoryRecipesRepository,
+    public categoryRepository: CategoryRepository,
   ) {
     super();
   }
@@ -37,7 +37,7 @@ export class CategoryRecipeSortStrategy
   }
 
   override async fieldTransform(field: string) {
-    const category = await this.categoryRecipesRepository.getOne(field);
+    const category = await this.categoryRepository.getOne(field, 'recipe');
     return category?.name || field;
   }
 }

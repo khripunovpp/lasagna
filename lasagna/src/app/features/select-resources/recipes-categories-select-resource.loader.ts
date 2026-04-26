@@ -1,8 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {of} from 'rxjs';
 import {SelectResourceLoader} from '../../shared/service/services';
-import {CategoryProductsRepository} from '../settings/service/repositories/category-products.repository';
-import {CategoryRecipesRepository} from '../settings/service/repositories/category-recipes.repository';
+import {CategoryRepository} from '../settings/service/repositories/category.repository';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,10 @@ export class RecipesCategoriesSelectResourceLoader
   constructor() {
   }
 
-  private readonly _categoryRecipesRepository = inject(CategoryRecipesRepository);
+  private readonly _categoryRepository = inject(CategoryRepository);
 
   async load() {
-    return this._categoryRecipesRepository.getCategories();
+    return this._categoryRepository.getAll('recipe');
   }
 
   search(token: string): Promise<unknown[]> {
