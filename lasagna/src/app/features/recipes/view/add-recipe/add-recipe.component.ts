@@ -143,6 +143,7 @@ export class AddRecipeComponent
         this._analyticsService.trackEvent('recipe_draft_opened', {
           event_category: 'recipes',
           event_label: 'draft',
+          uuid: this.recipe()?.uuid,
         });
       } else if (data['recipe']) {
         this.recipe.set(data['recipe']);
@@ -150,10 +151,6 @@ export class AddRecipeComponent
         this._loadRecipe(this.draftOrRecipeUUID());
       } else if (this.sharedRecipe()) {
         this._decodeRecipe(this.sharedRecipe()!);
-        this._analyticsService.trackEvent('recipe_shared_opened', {
-          event_category: 'recipes',
-          event_label: 'shared',
-        });
       } else {
         const newRecipe = Recipe.empty();
         if (query['folder_uuid']) {
@@ -271,7 +268,7 @@ export class AddRecipeComponent
       this._analyticsService.trackEvent('recipe_updated', {
         event_category: 'recipes',
         event_label: 'update',
-        recipe_uuid: newRecipe.uuid,
+        uuid: newRecipe.uuid,
         ingredients_uuids: newRecipe.ingredients?.map(ing => ing.uuid) || [],
       });
 
@@ -329,6 +326,7 @@ export class AddRecipeComponent
         this._analyticsService.trackEvent('recipe_link_generated', {
           event_category: 'recipes',
           event_label: 'shared',
+          uuid: this.recipe()?.uuid,
         });
       })
       .catch((e) => this._notificationsService.error(errorHandler(e)));
@@ -344,6 +342,7 @@ export class AddRecipeComponent
         this._analyticsService.trackEvent('recipe_link_copied', {
           event_category: 'recipes',
           event_label: 'shared',
+          uuid: this.recipe()?.uuid,
         });
       })
       .catch((e) => this._notificationsService.error(errorHandler(e)));
@@ -370,6 +369,7 @@ export class AddRecipeComponent
         this._analyticsService.trackEvent('recipe_cloned', {
           event_category: 'recipes',
           event_label: 'clone',
+          uuid: newRecipe.data?.uuid,
         });
         return newRecipe.data?.uuid;
       })
@@ -434,6 +434,12 @@ export class AddRecipeComponent
           this.recipe.set(Recipe.empty());
           this._notificationsService.error(this._translateService.instant('notifications.recipe.share-link-invalid'));
         }
+
+        this._analyticsService.trackEvent('recipe_shared_opened', {
+          event_category: 'recipes',
+          event_label: 'shared',
+          uuid: this.recipe()?.uuid,
+        });
         if (message) {
           this._notificationsService.warning(message);
         }

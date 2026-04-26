@@ -162,6 +162,7 @@ export class CategoryAddFormComponent implements OnInit {
           event_category: 'categories',
           event_label: analytics.label,
           category_name: category.name,
+          uuid: this.uuid(),
         });
         this.form.markAsPristine();
         this._categoryRepository.loadAll(type);
@@ -189,6 +190,7 @@ export class CategoryAddFormComponent implements OnInit {
             event_category: 'categories',
             event_label: analytics.label,
             category_name: category.name,
+            uuid: this.uuid(),
           });
         }
         this.form.markAsPristine();

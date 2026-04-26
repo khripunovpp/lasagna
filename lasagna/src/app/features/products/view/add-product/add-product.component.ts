@@ -144,6 +144,7 @@ export class AddProductComponent
         this._analyticsService.trackEvent('product_draft_opened', {
           event_category: 'products',
           event_label: 'draft',
+          uuid: this.product()?.uuid,
         });
       } else if (this.draftOrProductUUID()) {
         this._loadProduct(this.draftOrProductUUID());

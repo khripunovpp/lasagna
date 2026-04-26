@@ -27,8 +27,6 @@ import {SelectResourcesService} from '../../../../shared/service/services/select
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {BaseChartDirective} from 'ng2-charts';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
-import {randomRGB} from '../../../../shared/helpers/color.helper';
-import {Ingredient} from '../../service/models/Ingredient';
 import {UserCurrencyPipe} from '../../../../shared/view/pipes/userCurrency.pipe';
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs';
@@ -366,6 +364,8 @@ export class CalculateRecipeComponent
         action: newModifier.action,
         unit: newModifier.unit,
         type: newModifier.type,
+        uuid: this.result()?.calculation?.recipeUuid,
+        value: newModifier.value,
       });
     } catch (error) {
       this._notificationService.error(errorHandler(error));
@@ -381,6 +381,8 @@ export class CalculateRecipeComponent
         event_category: 'recipes',
         event_label: 'shrinkage',
         mode: value.mode,
+        uuid: this.result()?.calculation?.recipeUuid,
+        value: value.value,
       });
     } catch (error) {
       this._notificationService.error(errorHandler(error));
@@ -394,6 +396,7 @@ export class CalculateRecipeComponent
       this._analyticsService.trackEvent('recipe_calculation_pdf_created', {
         event_category: 'recipes',
         event_label: 'pdf',
+        uuid: this.result()?.calculation?.recipeUuid,
       });
     } catch (error) {
       this._notificationService.error(errorHandler(error));
