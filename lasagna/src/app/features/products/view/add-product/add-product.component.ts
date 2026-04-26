@@ -203,7 +203,7 @@ export class AddProductComponent
   }
 
   private _addProduct(product: Product) {
-    this._productsRepository.addOne(product)
+    this._productsRepository.addProduct(product)
       .then(({data, message}) => {
         if (data) {
           // Track product creation analytics
@@ -213,11 +213,6 @@ export class AddProductComponent
             unit: product.unit,
             category: product.category_id?.name
           });
-
-          // Онбординг: если это первый продукт, отмечаем шаг завершённым
-          if (!this._onboardingService.isProductDone()) {
-            this._onboardingService.markProductDone();
-          }
 
           this.formComponent()?.resetForm();
           this._notificationsService.success('notifications.product.added');
@@ -248,7 +243,7 @@ export class AddProductComponent
         return;
       }
       let productUUID = this.draftRef()?.meta?.['uuid'] ?? this.draftOrProductUUID();
-      const resp = await this._productsRepository.updateOne(productUUID as string, product);
+      const resp = await this._productsRepository.updateProduct(productUUID as string, product);
 
       if (resp.message) {
         this._notificationsService.warning(resp.message);

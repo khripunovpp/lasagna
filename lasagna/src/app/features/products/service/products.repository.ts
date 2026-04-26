@@ -9,6 +9,7 @@ import {Stores} from '../../../shared/service/db/const/stores';
 import {ProductDTO} from './Product.scheme';
 import {ChangesLogService} from '../../history/changes-log.service';
 import {CloudSyncService} from '../../sync/service/cloud-sync.service';
+import {OnboardingService} from '../../onboarding/onboarding.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,46 @@ export class ProductsRepository
     private _productFactory: ProductFactory,
     private _changesLogService: ChangesLogService,
     private _cloudSyncService: CloudSyncService,
+    private _onboardingService: OnboardingService,
   ) {
     super(
       Stores.PRODUCTS,
       _indexDbService,
       _cloudSyncService
     );
+  }
+
+  async addProduct(
+    product: Product
+  ) {
+    const resp = await super.addOne(product);
+
+    if (resp.data) {
+      this._saveSomeHistoryData(resp.data.toDTO());
+
+      if (!this._onboardingService.isProductDone()) {
+        this._onboardingService.markProductDone();
+      }
+    }
+
+    return resp;
+  }
+
+
+  async updateProduct(
+    uuid: string,
+    product: Product
+  ): Promise<{
+    data: Product
+    message: string
+  }> {
+    const resp = await super.updateOne(uuid, product);
+
+    await this.saveIndex();
+
+    this._saveSomeHistoryData(resp.data.toDTO());
+
+    return resp;
   }
 
   async getLastProducts() {
