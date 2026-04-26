@@ -1,4 +1,4 @@
-import {Download, Page} from '@playwright/test';
+import {Download} from '@playwright/test';
 import {Buffer} from 'node:buffer';
 import {ZodSchema} from 'zod';
 import {Stores} from '../../../src/app/shared/service/db/const/stores';
@@ -60,42 +60,14 @@ export function isStoreBackupShape(object: unknown): object is {
     || 'createdAt' in (object as any);
 }
 
-export const handleBackupDownload = (page: Page) => {
-  return new Promise<string>((resolve, reject) => {
-    let chunks: Buffer[] = [];
-    page.on('pageerror', (err) => {
-      reject(err)
-    });
-
-    page.on('crash', (err) => {
-      reject(err)
-    });
-
-    page.on('download', async (download: Download) => {
-      const stream = await download.createReadStream();
-      stream.on('readable', () => {
-        let chunk;
-        while (null !== (chunk = stream.read())) {
-          chunks.push(Buffer.from(chunk))
-        }
-      });
-
-      stream.on('error', (err) => {
-        console.error(err);
-        reject(err)
-      });
-
-      stream.on('end', async () => {
-        try {
-          const content = chunks.map(buf => buf.toString()).join('');
-          await download.saveAs('./downloads/' + download.suggestedFilename());
-          resolve(content);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
-  })
+export const readBackupDownload = async (download: Download): Promise<string> => {
+  const stream = await download.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.from(chunk));
+  }
+  await download.saveAs('./downloads/' + download.suggestedFilename());
+  return chunks.map(buf => buf.toString()).join('');
 }
 
 export const expectStoreCount = (

@@ -1,7 +1,7 @@
 import {expect, Page, test} from '@playwright/test';
 import {URLS} from '../../helpers/urls.const';
 import {BackupSettingsPage} from '../../scripts/e2e/classes/BackupSettingsPage';
-import {handleBackupDownload, makeBackupStructure, validateDownloadedBackup} from './backups.helpers';
+import {makeBackupStructure, readBackupDownload, validateDownloadedBackup} from './backups.helpers';
 import {Stores} from '../../../src/app/shared/service/db/const/stores';
 import {DocumentsScheme} from '../../../src/app/features/documentation/service/documents.scheme';
 import {ProductScheme} from '../../../src/app/features/products/service/Product.scheme';
@@ -47,9 +47,11 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
     await configureRoute(page);
 
     await expect(settingsPage.ref.backupCreateButton).toBeVisible();
+    const downloadPromise = page.waitForEvent('download');
     await settingsPage.ref.backupCreateButton.click();
+    const download = await downloadPromise;
 
-    const contentStringJSON = await handleBackupDownload(page);
+    const contentStringJSON = await readBackupDownload(download);
     await validateBackupContentAndCount(contentStringJSON, getDataInitialCounts());
   });
 
@@ -60,9 +62,11 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
     });
 
     await expect(settingsPage.ref.backupCreateButton).toBeVisible();
+    const downloadPromise = page.waitForEvent('download');
     await settingsPage.ref.backupCreateButton.click();
+    const download = await downloadPromise;
 
-    const contentStringJSON = await handleBackupDownload(page);
+    const contentStringJSON = await readBackupDownload(download);
     const counts = getDataInitialCounts();
     counts[Stores.PRODUCTS]! += defaultProductsForRecipes.length;
     await validateBackupContentAndCount(contentStringJSON, counts);
@@ -92,10 +96,16 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
 
     await uploadBackupFile(newBackupDataMap, dbVersion);
     await expect(settingsPage.getToast('success')).toBeVisible();
+    // ждём, пока попап подтверждения восстановления полностью закроется,
+    // иначе оверлей диалога перехватывает клик по backupCreateButton
+    await expect(settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first()).toBeHidden();
 
     // создаем бэкап после заливки
+    await expect(settingsPage.ref.backupCreateButton).toBeVisible();
+    const downloadPromise = page.waitForEvent('download');
     await settingsPage.ref.backupCreateButton.click();
-    const downloadedContentStringJSON = await handleBackupDownload(page);
+    const download = await downloadPromise;
+    const downloadedContentStringJSON = await readBackupDownload(download);
 
     // валидируем что в бэкапе есть наши данные
     const counts = getDataInitialCounts({empty: true});
