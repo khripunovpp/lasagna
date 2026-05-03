@@ -25,7 +25,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     <lg-fade-in>
       <lg-flex-column [size]="'small'">
         <div class="text-small">{{ titleKey() | translate }}</div>
-        @let cats = (categories() | async) ?? [];
+        @let cats = (categories() | async) || [];
 
         @if (cats.length) {
           <lg-selection-tools></lg-selection-tools>
