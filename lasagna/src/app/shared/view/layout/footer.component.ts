@@ -4,9 +4,10 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {VersionService} from '../../service/services/version.service';
 import {environment} from '../../../../environments/environment';
 import {ActivatedRoute, NavigationEnd, Router, RouterLink} from '@angular/router';
-import {toSignal} from '@angular/core/rxjs-interop';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {filter, startWith, switchMap} from 'rxjs';
 import {SupportPopupComponent} from '../../../features/home/view/dialogs/support-popup.component';
+import {SupportService} from '../../../features/home/service/support.service';
 import {findRouteData} from '../../helpers';
 import {IS_TELEGRAM} from '../../service/providers/is-telegram-env.token';
 import {
@@ -172,7 +173,16 @@ export class FooterComponent {
   private readonly router = inject(Router);
   private readonly analyticsService = inject(AnalyticsService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly supportService = inject(SupportService);
   private _timeoutId: any;
+
+  constructor() {
+    this.supportService.onOpenRequested
+      .pipe(takeUntilDestroyed())
+      .subscribe((prefill) => {
+        this.supportPopup()?.open(prefill);
+      });
+  }
   readonly routeData = toSignal(this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null), // Для первоначальной загрузки

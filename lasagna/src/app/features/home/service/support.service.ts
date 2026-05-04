@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {SendPulseEmailData, SendPulseService} from '../../../shared/service/services/sendpulse.service';
 import {LoggerService} from '../../logger/logger.service';
@@ -17,6 +17,11 @@ export interface SupportSendResult {
   success: boolean;
   message: string;
   rateLimited?: boolean;
+}
+
+export interface SupportOpenRequest {
+  subject?: string;
+  message?: string;
 }
 
 interface RateLimitEntry {
@@ -47,6 +52,16 @@ export class SupportService {
   private readonly isInitialized = signal(false);
   private readonly supportEmail = signal('');
   private readonly supportFromEmail = signal('');
+
+  private readonly openRequests$ = new Subject<SupportOpenRequest>();
+  readonly onOpenRequested = this.openRequests$.asObservable();
+
+  /**
+   * Request the global support popup to open, optionally prefilled.
+   */
+  requestOpen(prefill?: SupportOpenRequest): void {
+    this.openRequests$.next(prefill ?? {});
+  }
 
   /**
    * Initialize support service with SendPulse configuration
@@ -197,7 +212,9 @@ export class SupportService {
       console.error('Error clearing rate limit data', error);
     }
   }
+
   private readonly _window = inject(WINDOW);
+
   /**
    * Send analytics event for support message
    * @param additionalData Дополнительные данные для события

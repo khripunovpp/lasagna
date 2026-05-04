@@ -351,6 +351,13 @@
               </tbody>
             </table>
           </lg-table-card>
+
+          <button (click)="openCalculationErrorSupport()"
+                  class="calculation-page__report-error-link"
+                  data-u2e="calculate-recipe.report-error-btn"
+                  type="button">
+            {{ 'recipe.calculation.report-error.link' | translate }}
+          </button>
         } @else {
           <lg-flex-column position="start"
                           size="medium">

@@ -615,6 +615,8 @@
   "recipe.calculation.recalculate.info": "<b>Rendimento da receita</b> <br><br>Campo auxiliar para recalcular rapidamente o custo total da receita para outro número de porções ou peso. <br>Por exemplo, se você quer saber o custo de 5 porções em vez de 10, basta informar 5. Isso não altera as quantidades dos ingredientes — apenas recalcula o custo total para o novo número de porções ou peso. Útil para estimar custos ao alterar o número de porções ou o peso do prato",
   "recipe.calculation.recalculate.label": "Recalcular para",
   "recipe.calculation.recalculate.placeholder": "quantidade",
+  "recipe.calculation.report-error.link": "Encontrou um erro nos cálculos? Escreva para nós",
+  "recipe.calculation.report-error.subject": "Erro de cálculo na receita: {{recipe}}",
   "recipe.calculation.table.amount.title": "Quantidade",
   "recipe.calculation.table.info": "<b>Tabela de resumo de custos dos ingredientes</b> <br><br>Exibe informações detalhadas de cada ingrediente: quantidade, preço unitário e custo total. Isso facilita identificar quais ingredientes contribuem mais para o custo total e onde otimizar os gastos. <br><br>Por exemplo, se um ingrediente custa significativamente mais do que os outros, você pode considerar substituí-lo por uma alternativa mais barata ou reduzir sua quantidade. <br><br>Esta tabela não inclui acréscimos, portanto o custo total do ingrediente aqui pode diferir do custo com acréscimos mostrado no gráfico de distribuição de custos",
   "recipe.calculation.table.name.title": "Nome",

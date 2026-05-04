@@ -58,6 +58,7 @@ import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.co
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {ShrinkageValue} from '../../service/models/Recipe';
 import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.component';
+import {SupportService} from '../../../home/service/support.service';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -134,6 +135,25 @@ import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.c
       .calculation-page__charts > * {
         max-width: 100%;
       }
+    }
+
+    .calculation-page__report-error-link {
+      align-self: flex-start;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: -8px;
+      font: inherit;
+      font-size: 12px;
+      color: var(--text-secondary-color, #888);
+      opacity: 0.7;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+    }
+
+    .calculation-page__report-error-link:hover {
+      opacity: 1;
     }
   `],
   encapsulation: ViewEncapsulation.None,
@@ -305,6 +325,7 @@ export class CalculateRecipeComponent
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   protected readonly hasMicroPrice = isMicroAmount;
   private readonly _window = inject(WINDOW);
+  private readonly _supportService = inject(SupportService);
 
   ngOnInit() {
   }
@@ -387,6 +408,17 @@ export class CalculateRecipeComponent
     } catch (error) {
       this._notificationService.error(errorHandler(error));
     }
+  }
+
+  openCalculationErrorSupport() {
+    const recipeName = this.result()?.calculation?.recipeName ?? '';
+    const subject = this._translateService.instant('recipe.calculation.report-error.subject', {recipe: recipeName});
+    this._supportService.requestOpen({subject});
+    this._analyticsService.trackEvent('recipe_calculation_report_error_click', {
+      event_category: 'recipes',
+      event_label: 'support',
+      uuid: this.result()?.calculation?.recipeUuid,
+    });
   }
 
   async onPdfGenerate() {

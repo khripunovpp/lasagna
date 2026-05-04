@@ -615,6 +615,8 @@
   "recipe.calculation.recalculate.info": "<b>Recipe yield</b> <br><br>Auxiliary field for quickly recalculating the total recipe cost for a different number of portions or weight. <br>For example, if you want to know the cost of 5 portions instead of 10, just enter 5. This does not change the ingredient amounts in the recipe — it only recalculates the total cost for the new number of portions or weight. Handy for estimating cost when the portion count or dish weight changes",
   "recipe.calculation.recalculate.label": "Recalculate for",
   "recipe.calculation.recalculate.placeholder": "amount",
+  "recipe.calculation.report-error.link": "Found an error in the calculations? Let us know",
+  "recipe.calculation.report-error.subject": "Calculation error in recipe: {{recipe}}",
   "recipe.calculation.table.amount.title": "Amount",
   "recipe.calculation.table.info": "<b>Ingredient cost summary table</b> <br><br>Shows detailed information for each ingredient: amount, unit price, and total cost. This makes it easy to see which ingredients contribute most to the total cost and where you can optimize spending. <br><br>For example, if one ingredient costs significantly more than the others, you can consider replacing it with a cheaper alternative or reducing its quantity. <br><br>This table does not include markups, so the total ingredient cost here may differ from the cost with markups shown on the cost distribution chart",
   "recipe.calculation.table.name.title": "Name",

@@ -227,7 +227,7 @@ export class SupportPopupComponent {
     name: [''],
     email: ['', [Validators.required, Validators.email]],
     subject: [''],
-    message: ['', [Validators.required, Validators.minLength(10)]]
+    message: ['', [Validators.required]]
   });
   readonly formValueChanges = toSignal(this.supportForm.valueChanges, {initialValue: this.supportForm.value});
   readonly hasFormErrors = computed(() => {
@@ -242,9 +242,15 @@ export class SupportPopupComponent {
   /**
    * Open support popup
    */
-  open(): void {
+  open(prefill?: { subject?: string; message?: string }): void {
     try {
       this.resetForm();
+      if (prefill?.subject) {
+        this.supportForm.patchValue({subject: prefill.subject});
+      }
+      if (prefill?.message) {
+        this.supportForm.patchValue({message: prefill.message});
+      }
       this.updateRemainingMessages();
       this.dialog()?.open();
     } catch (error) {
@@ -269,9 +275,18 @@ export class SupportPopupComponent {
     this.supportForm.markAllAsTouched();
 
     if (this.supportForm.invalid) {
-      this.notificationsService.error(
-        this.translateService.instant('support.notifications.validation-error')
+      const errors = this.notificationsService.parseFormErrors(
+        this.supportForm, {
+          keysMap: {
+            required: this.translateService.instant('form.error.required'),
+          },
+          controlsMap: {
+            email: this.translateService.instant('support.form.email'),
+            message: this.translateService.instant('support.form.message'),
+          },
+        }
       );
+      this.notificationsService.error(errors.join('\n'));
       return;
     }
 
