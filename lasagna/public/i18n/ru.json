@@ -483,6 +483,7 @@
   "product.form.delete-btn": "Удалить этот продукт",
   "product.form.delete-confirm-message": "Вы уверены, что хотите удалить этот продукт? Это действие нельзя будет отменить",
   "product.form.delete-draft-btn": "Удалить этот черновик",
+  "product.form.gramsPerPiece.placeholder": "Вес одной штуки",
   "product.form.name.label": "Название",
   "product.form.name.placeholder": "Название",
   "product.form.notes.placeholder": "Примечания, например, особенности хранения и т.п.",

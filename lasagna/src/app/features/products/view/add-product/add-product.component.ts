@@ -211,10 +211,11 @@ export class AddProductComponent
         if (data) {
           // Track product creation analytics
           this._analyticsService.trackProductCreated(product.name, {
-            product_uuid: data,
+            uuid: data,
             price_per_unit: product.pricePerUnit,
+            grams_per_piece: product.gramsPerPiece,
             unit: product.unit,
-            category: product.category_id?.name
+            category: product.category_id?.name,
           });
 
           this.formComponent()?.resetForm();

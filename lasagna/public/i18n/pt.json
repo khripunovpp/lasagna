@@ -483,6 +483,7 @@
   "product.form.delete-btn": "Excluir este produto",
   "product.form.delete-confirm-message": "Tem certeza de que deseja excluir este produto? Esta ação não pode ser desfeita",
   "product.form.delete-draft-btn": "Excluir este rascunho",
+  "product.form.gramsPerPiece.placeholder": "Peso por unidade",
   "product.form.name.label": "Nome",
   "product.form.name.placeholder": "Nome",
   "product.form.notes.placeholder": "Notas adicionais",

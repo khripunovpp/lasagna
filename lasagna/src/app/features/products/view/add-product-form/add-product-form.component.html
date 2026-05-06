@@ -9,29 +9,53 @@
                     placeholder=""></lg-input>
         </lg-control>
 
-        <lg-flex-row [center]="true" [mobileMode]="true">
-          <lg-control
-            [label]="'product.form.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.unit || UnitValue.GRAM)|translate)}"
-            lgExpand>
-            <lg-number-input #amountField
-                             (onInputChange)="priceField.focus()"
-                             formControlName="amount"
-                             lgParseMath
-                             name="amount"
-                             placeholder="">
-              <ng-template lgExtraTpl place="after">
-                <lg-flex-row [center]="true" [size]="'small'">
-                  <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
+        <lg-flex-row [bottom]="true"
+                     [center]="true"
+                     [mobileMode]="true"
+                     [wrap]="true">
+          <lg-flex-row [bottom]="true"
+                       [center]="true"
+                       [mobileMode]="true"
+                       [size]="'small'"
+                       lgExpand>
+            <lg-control
+              [label]="'product.form.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.unit || UnitValue.GRAM)|translate)}"
+              lgExpand>
+              <lg-number-input #amountField
+                               (onInputChange)="priceField.focus()"
+                               formControlName="amount"
+                               lgParseMath
+                               name="amount"
+                               placeholder="">
+                <ng-template lgExtraTpl place="after">
+                  <lg-flex-row [center]="true" [size]="'small'">
+                    <lg-amount-widgets (eggsChanged)="eggsChanged($event)"></lg-amount-widgets>
 
-                  <lg-unit-switcher formControlName="unit">
-                  </lg-unit-switcher>
-                </lg-flex-row>
-              </ng-template>
-            </lg-number-input>
-          </lg-control>
+                    <lg-unit-switcher formControlName="unit">
+                    </lg-unit-switcher>
+                  </lg-flex-row>
+                </ng-template>
+              </lg-number-input>
+            </lg-control>
+
+
+            @if (form.value.unit === UnitValue.PIECE) {
+              <lg-control [label]="'product.form.gramsPerPiece.placeholder'|translate"
+                          lgWidth="30%">
+                <lg-number-input formControlName="gramsPerPiece"
+                                 lgParseMath
+                                 name="gramsPerPiece"
+                                 placeholder="">
+                  <ng-template lgExtraTpl place="after">
+                    <span [translate]="'unit.gram'"></span>
+                  </ng-template>
+                </lg-number-input>
+              </lg-control>
+            }
+          </lg-flex-row>
 
           <lg-control [label]="'product.form.price.placeholder'|translate:{currency:'EUR'}"
-                      lgWidth="40%">
+                      lgWidth="20%">
             <lg-number-input #priceField
                              formControlName="price"
                              lgParseMath
@@ -44,7 +68,7 @@
             </lg-number-input>
           </lg-control>
 
-          <lg-control lgWidth="40%">
+          <lg-control lgWidth="20%">
             <ng-template lgControlLabelTemplate>
               <span>{{ userSettings()?.['currency']|currencySymbol }}</span>
               <span [translateParams]="{unit:product()?.unit | unitString | translate}"
@@ -56,16 +80,17 @@
                                  name="pricePerUnit">
               <lg-button (click)="priceChangesComponent.open()"
                          [flat]="true"
-                         [icon]="true"
                          [hidden]="!product()?.uuid"
-                         data-u2e="product.form.price-changes-btn"
+                         [icon]="true"
                          [style]="'success'"
+                         data-u2e="product.form.price-changes-btn"
                          ngProjectAs="after">
                 <mat-icon aria-hidden="false" fontIcon="bar_chart"></mat-icon>
               </lg-button>
             </lg-readonly-control>
           </lg-control>
         </lg-flex-row>
+
       </lg-flex-column>
     </lg-card>
 

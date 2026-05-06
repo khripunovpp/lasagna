@@ -21,7 +21,7 @@ import {ReleaseNotesService} from './features/release-notes/release-notes.servic
 import {LoadersManagerService} from './shared/service/services/loaders-manager.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'lg-root',
   imports: [
     RouterOutlet,
     HeaderComponent,

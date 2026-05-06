@@ -118,6 +118,7 @@ export class AddProductFormComponent
     amount: new FormControl<number | null>(null, Validators.required),
     price: new FormControl<number | null>(null, Validators.required),
     unit: new FormControl('gram'),
+    gramsPerPiece: new FormControl<number | null>(null),
     source: new FormControl<string | null>(null),
     brand: new FormControl<string | null>(null),
     notes: new FormControl<string | null>(null),
@@ -161,6 +162,7 @@ export class AddProductFormComponent
       notes: null,
       category_id: null,
       unit: 'gram',
+      gramsPerPiece: null,
     };
   }
 

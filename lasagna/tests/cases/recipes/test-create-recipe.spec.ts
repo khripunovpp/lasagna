@@ -21,6 +21,9 @@ import {
   richRecipeWithPortions,
   RICH_RECIPE_NO_PORTIONS_UUID,
   RICH_RECIPE_WITH_PORTIONS_UUID,
+  gppProducts,
+  gppMixedRecipe,
+  GPP_RECIPE_UUID, gppMixedRecipeOutput,
 } from './calc-test.helpers';
 
 /**
@@ -64,6 +67,18 @@ test.describe.serial('Групповой тест создания и кальк
       const recipeId = await createRecipeFixture(page, dto, {withPortions: false});
       await checkRecipePage(recipeId, dto, {withPortions: false});
       await calculateRecipeCostFixture(page, recipeId, calculationOutputWithoutPortions[idx]);
+    });
+  });
+
+  // Подкейс для фичи gramsPerPiece. Шесть ингредиентов, все продукты в штуках,
+  // у трёх из них задан вес одной штуки — у трёх нет. Данные и ожидания
+  // живут в calc-test.helpers.ts (gppProducts / gppMixedRecipe / gppMixedRecipeOutput).
+  test.describe.serial('gramsPerPiece у продуктов в штуках', () => {
+    test('С весом штуки — учитывается вес и цена; без него — нули, как раньше', async () => {
+      await seedProducts(page, gppProducts);
+      await putDbItems(page, 'lasagna-db', Stores.RECIPES, [gppMixedRecipe]);
+
+      await calculateRecipeCostFixture(page, GPP_RECIPE_UUID, gppMixedRecipeOutput);
     });
   });
 

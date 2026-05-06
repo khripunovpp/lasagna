@@ -483,6 +483,7 @@
   "product.form.delete-btn": "Remove this product",
   "product.form.delete-confirm-message": "Are you sure you want to delete this product? This action cannot be undone",
   "product.form.delete-draft-btn": "Remove this draft",
+  "product.form.gramsPerPiece.placeholder": "Weight per piece",
   "product.form.name.label": "Name",
   "product.form.name.placeholder": "Name",
   "product.form.notes.placeholder": "Additional notes",

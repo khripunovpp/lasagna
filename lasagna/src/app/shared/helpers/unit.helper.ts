@@ -36,6 +36,11 @@ export const convertPriceOfKilogramToGram = (price: number): number => {
   return price / 1000;
 }
 
+export const pricePerGramFromPiece = (pricePerPiece: number, gramsPerPiece: number): number => {
+  if (!gramsPerPiece || gramsPerPiece <= 0) return 0;
+  return pricePerPiece / gramsPerPiece;
+}
+
 export const unitMarkersMap: Record<string, string> = {
   [UnitValue.GRAM]: marker('unit.gram'),
   [UnitValue.KILOGRAM]: marker('unit.kilogram'),

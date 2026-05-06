@@ -7,7 +7,8 @@ import {
   isCountUnit,
   isGramUnit,
   isKilogramUnit,
-  isWeightUnit
+  isWeightUnit,
+  pricePerGramFromPiece
 } from '../../../../shared/helpers/unit.helper';
 import {parseFloatingNumber} from '../../../../shared/helpers';
 
@@ -37,8 +38,15 @@ export class IngredientProductCost
       }
     } else if (isWeightUnit(this.ingredientUnit)) {
       if (isCountUnit(this.entity.unit)) {
-        // Если ингдеридент в единицах массы, то продукты указаные в штуках всегда буду возвращать 0
-        return 0;
+        // Если у продукта в штуках задан вес одной штуки — переводим цену штуки в цену за грамм,
+        // и далее в нужную единицу ингредиента. Иначе сохраняем старое поведение (0).
+        const pricePerGram = pricePerGramFromPiece(this.entity.pricePerUnit, this.entity.gramsPerPiece);
+        if (pricePerGram === 0) {
+          return 0;
+        }
+        return isKilogramUnit(this.ingredientUnit)
+          ? convertPriceOfGramToKilogram(pricePerGram)
+          : pricePerGram;
       } else if (this.ingredientUnit === this.entity.unit) {
         // Если ингредиент имеют такую же еденицу что и продукт,
         // тогда можно использовать цену за юнит самого продукта

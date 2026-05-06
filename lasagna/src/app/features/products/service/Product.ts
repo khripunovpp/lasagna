@@ -15,6 +15,7 @@ export class Product
       amount: number | string
       price: number
       unit?: string
+      gramsPerPiece?: number | string
       source?: string | undefined
       brand?: string | undefined
       notes?: string | undefined
@@ -39,6 +40,7 @@ export class Product
   amount: number = 0;
   price: number = 0;
   unit: Unit = 'gram';
+  gramsPerPiece: number = 0;
   category_id?: CategoryProduct;
   source?: string;
   brand?: string;
@@ -87,6 +89,7 @@ export class Product
       amount: Number(dto?.amount) || 0,
       price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
+      gramsPerPiece: Number(dto?.gramsPerPiece) || 0,
       source: dto?.source || '',
       brand: dto?.brand || '',
       notes: dto?.notes || '',
@@ -115,6 +118,7 @@ export class Product
       amount: Number(dto?.amount) || 0,
       price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
+      gramsPerPiece: Number(dto?.grams_per_piece ?? dto?.gramsPerPiece) || 0,
       source: dto?.source || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
@@ -137,6 +141,7 @@ export class Product
       amount: 0,
       price: 0,
       unit: 'gram',
+      gramsPerPiece: 0,
       source: undefined,
       brand: undefined,
       notes: undefined,
@@ -155,6 +160,9 @@ export class Product
     this.amount = dto.amount ? Number(dto.amount) : this.amount;
     this.price = dto.price ? Number(dto.price) : this.price;
     this.unit = dto.unit || this.unit;
+    this.gramsPerPiece = dto.gramsPerPiece != null
+      ? Number(dto.gramsPerPiece) || 0
+      : this.gramsPerPiece;
     this.source = dto.source || this.source;
     this.brand = dto.brand || this.brand;
     this.notes = dto.notes || this.notes;
@@ -180,6 +188,7 @@ export class Product
       amount: this.amount || 0,
       price: this.price || 0,
       unit: this.unit || '',
+      gramsPerPiece: this.gramsPerPiece || 0,
       source: this.source || '',
       brand: this.brand || '',
       notes: this.notes || '',
@@ -202,6 +211,7 @@ export class Product
       amount: this.amount ?? 0,
       price: this.price ?? 0,
       unit: this.unit ?? 'gram',
+      grams_per_piece: this.gramsPerPiece ?? 0,
       source: this.source ?? '',
       brand: this.brand ?? '',
       notes: this.notes ?? '',

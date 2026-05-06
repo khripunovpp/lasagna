@@ -11,7 +11,7 @@ import {LatestWidgetComponent} from './widgets/latest-widget.component';
 import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.component';
 
 @Component({
-  selector: 'app-application',
+  selector: 'lg-app',
   template: `
     <lg-fade-in>
       <lg-container>

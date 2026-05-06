@@ -8,6 +8,7 @@ export const productToFormValue = (product?: Product) => {
     name: product?.name || null,
     amount: product?.amount || null,
     unit: product?.unit || 'gram',
+    gramsPerPiece: product?.gramsPerPiece || null,
     price: product?.price || null,
     source: product?.source || null,
     brand: product?.brand || null,
@@ -23,6 +24,9 @@ export const fromValuesToProductDTO = (productFormValue: any): Partial<ProductDT
       ? Number(productFormValue.amount)
       : 0,
     unit: productFormValue.unit || 'gram',
+    gramsPerPiece: productFormValue.gramsPerPiece !== null && productFormValue.gramsPerPiece !== undefined
+      ? Number(productFormValue.gramsPerPiece)
+      : 0,
     price: productFormValue.price !== null && productFormValue.price !== undefined
       ? Number(productFormValue.price)
       : 0,

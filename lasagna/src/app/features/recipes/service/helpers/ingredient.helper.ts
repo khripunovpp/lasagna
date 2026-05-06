@@ -21,7 +21,21 @@ export const productIngredientWeight = (
   ingredientUnit: Unit,
 ) => {
   if (isCountUnit(product.unit)) {
-    // Если продукт в штуках, то вычислить вес невозможно
+    // Вес продукта в штуках можно посчитать только если задан gramsPerPiece.
+    // Без него поведение прежнее — вес неизвестен, возвращаем 0.
+    const gramsPerPiece = product.gramsPerPiece || 0;
+    if (gramsPerPiece <= 0) {
+      return 0;
+    }
+    if (isCountUnit(ingredientUnit)) {
+      return gramsPerPiece * ingredientAmount;
+    }
+    if (isGramUnit(ingredientUnit)) {
+      return ingredientAmount;
+    }
+    if (isKilogramUnit(ingredientUnit)) {
+      return convertKilogramToGram(ingredientAmount);
+    }
     return 0;
   } else if (isWeightUnit(product.unit)) {
     if (product.unit === ingredientUnit) {

@@ -1,35 +1,28 @@
-import {Component, Input, input, ViewEncapsulation} from '@angular/core';
-import {NgClass, NgStyle} from '@angular/common';
+import {Component, HostBinding, Input, input, ViewEncapsulation} from '@angular/core';
+import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'lg-flex-row',
-  standalone: true,
+  host: {
+    '[class.gap-row__bottom]': "bottom()",
+    '[class.gap-row__center]': "center()",
+    '[class.gap-row__right]': "right()",
+    '[class.gap-row__left]': "left()",
+    '[class.gap-row__strict-center]': "strictCenter()",
+    '[class.gap-row__fit]': "fit()",
+    '[class.gap-row__mobile]': "mobileMode()",
+    '[class.gap-row__responsive]': "!noResponsive()",
+    '[class.gap-row__relaxed]': "relaxed()",
+    '[class.gap-row__top]': "top()",
+    '[class.gap-row__equal]': "equal",
+    '[class.gap-row__inline]': "inline()",
+    '[class.gap-row__wrap]': "wrap()",
+    '[class.gap-row__mobileReverse]': "mobileReverse()",
+    '[style]': "'--cols: ' + cols()",
+  },
   template: `
-    <div [class.gap-row__bottom]="bottom()"
-         [class.gap-row__center]="center()"
-         [class.gap-row__right]="right()"
-         [class.gap-row__left]="left()"
-         [class.gap-row__strict-center]="strictCenter()"
-         [class.gap-row__fit]="fit()"
-         [class.gap-row__mobile]="mobileMode()"
-         [class.gap-row__responsive]="!noResponsive()"
-         [class.gap-row__relaxed]="relaxed()"
-         [class.gap-row__top]="top()"
-         [class.gap-row__equal]="equal"
-         [class.gap-row__inline]="inline()"
-         [class.gap-row__wrap]="wrap()"
-         [class.gap-row__mobileReverse]="mobileReverse()"
-         [ngClass]="size()"
-         [style]="'--cols: ' + cols()"
-         [ngStyle]="styles()"
-         class="gap-row">
-      <ng-content></ng-content>
-    </div>
+    <ng-content></ng-content>
   `,
-  imports: [
-    NgClass,
-    NgStyle
-  ],
   styles: [
     `:host {
       flex: 1;
@@ -161,7 +154,7 @@ export class FlexRowComponent {
   relaxed = input<boolean>(false);
   wrap = input<boolean>(false);
   inline = input<boolean>(false);
-  cols = input<string|number>(1);
+  cols = input<string | number>(1);
   size = input<
     'default' |
     'small' |
@@ -169,4 +162,11 @@ export class FlexRowComponent {
     'tiny'
   >('default');
   styles = input<NgStyle['ngStyle']>({});
+
+  @HostBinding('class') get hostClasses() {
+    return [
+      'gap-row',
+      this.size(),
+    ].filter(Boolean).join(' ');
+  }
 }
