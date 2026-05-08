@@ -194,10 +194,10 @@
         "name": "buckups[en].md",
         "language": "en",
         "path": "settings/buckups[en].md",
-        "title": "Backups",
+        "title": "Backup",
         "order": 5,
         "data": {
-          "title": "Backups",
+          "title": "Backup",
           "order": 5
         }
       },
@@ -206,10 +206,10 @@
         "name": "buckups[ru].md",
         "language": "ru",
         "path": "settings/buckups[ru].md",
-        "title": "Резервные копии",
+        "title": "Резервная копия",
         "order": 5,
         "data": {
-          "title": "Резервные копии",
+          "title": "Резервная копия",
           "order": 5
         }
       },
@@ -218,10 +218,10 @@
         "name": "categories[en].md",
         "language": "en",
         "path": "settings/categories[en].md",
-        "title": "Category Management",
+        "title": "Categories",
         "order": 1,
         "data": {
-          "title": "Category Management",
+          "title": "Categories",
           "order": 1
         }
       },
@@ -230,10 +230,10 @@
         "name": "categories[ru].md",
         "language": "ru",
         "path": "settings/categories[ru].md",
-        "title": "Управление категориями",
+        "title": "Категории",
         "order": 1,
         "data": {
-          "title": "Управление категориями",
+          "title": "Категории",
           "order": 1
         }
       },
@@ -263,13 +263,37 @@
       },
       {
         "type": "file",
+        "name": "drafts[en].md",
+        "language": "en",
+        "path": "settings/drafts[en].md",
+        "title": "Drafts",
+        "order": 6,
+        "data": {
+          "title": "Drafts",
+          "order": 6
+        }
+      },
+      {
+        "type": "file",
+        "name": "drafts[ru].md",
+        "language": "ru",
+        "path": "settings/drafts[ru].md",
+        "title": "Черновики",
+        "order": 6,
+        "data": {
+          "title": "Черновики",
+          "order": 6
+        }
+      },
+      {
+        "type": "file",
         "name": "invoice-settings[en].md",
         "language": "en",
         "path": "settings/invoice-settings[en].md",
-        "title": "Invoice Settings",
+        "title": "Finance",
         "order": 2,
         "data": {
-          "title": "Invoice Settings",
+          "title": "Finance",
           "order": 2
         }
       },
@@ -278,10 +302,10 @@
         "name": "invoice-settings[ru].md",
         "language": "ru",
         "path": "settings/invoice-settings[ru].md",
-        "title": "Настройки инвойсов",
+        "title": "Финансы",
         "order": 2,
         "data": {
-          "title": "Настройки инвойсов",
+          "title": "Финансы",
           "order": 2
         }
       },
@@ -290,10 +314,10 @@
         "name": "language[en].md",
         "language": "en",
         "path": "settings/language[en].md",
-        "title": "Language Settings",
+        "title": "Language & Currency",
         "order": 0,
         "data": {
-          "title": "Language Settings",
+          "title": "Language & Currency",
           "order": 0
         }
       },
@@ -368,10 +392,10 @@
         "name": "storage-overview[en].md",
         "language": "en",
         "path": "storage/storage-overview[en].md",
-        "title": "Stock (Products Page)",
+        "title": "Storage (Products Page)",
         "order": 0,
         "data": {
-          "title": "Stock (Products Page)",
+          "title": "Storage (Products Page)",
           "order": 0
         }
       },

@@ -1,39 +1,28 @@
 ---
-title: "Language Settings"
+title: "Language & Currency"
 order: 0
 ---
 
+# 🌐 Language & Currency
 
-## 🌐 Language Settings
+The **Language & Currency** tab lets you set the interface language and the default currency.
 
-The **Localization** section in the Settings page allows you to configure the interface language and default currency for the application.
+## 🗣️ Language
 
-### 🗣️ Interface Language
+The **Language** group lists the available interface languages as a single-choice list:
 
-You can choose one of the available interface languages:
+- 🇬🇧 **English**
+- 🇷🇺 **Russian**
+- 🇵🇹 **Portuguese**
 
-- 🇵🇹 **Português** — Portuguese  
-- 🇷🇺 **Русский** — Russian  
-- 🇬🇧 **English** — English
+Pick one — the page reloads and the interface switches to your chosen language.
 
-The selected language is stored locally and applied across the entire application.  
-Once selected, the interface updates automatically — no page reload is required.
+## 💱 Currency
 
-> ❗ Only **one language** can be active at a time.
+The **Currency** picker is a searchable dropdown with common world currencies (e.g., `EUR`, `USD`, `GBP`, `RUB`). The selected currency is used throughout the app:
 
-### 💱 Currency
+- recipe cost calculations
+- product prices
+- any other place that shows a money amount
 
-The `Currency` field accepts codes in the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format.  
-Examples include:
-- `EUR` — Euro  
-- `USD` — US Dollar  
-- `RUB` — Russian Ruble  
-
-The selected currency is used throughout the app:
-- in recipe cost calculations
-- on generated invoices
-- in all displayed financial values
-
----
-
-This section is essential for tailoring the app experience to your region and preferences.
+> ⚠️ Heads up: changing the currency does **not** automatically convert prices of products you've already added. After switching, you'll want to update product prices manually.

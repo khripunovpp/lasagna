@@ -3,33 +3,38 @@ title: "Top Bar (Header)"
 order: 1
 ---
 
-## 🔝 Top Bar (Header)
+## 🔝 Top Bar
 
-The **top bar** provides quick access to navigation and utilities, and is always visible at the top of the screen.
+The **top bar** stays fixed at the top of the screen and gives you quick access to navigation and utilities.
 
-### 🧭 Elements:
+### 🧭 Elements (left to right):
 
-- ⬅️ **Back Button**  
-  Navigate to the previous screen. Useful when returning from nested views or edit pages.
+- ⬅️ **Back Button**
+  Appears only when you have a previous screen to return to. Useful in nested views or edit pages.
 
-- 🏠 **Home Button**  
-  Instantly go back to the main dashboard (Home Page) from anywhere in the app.
+- 🥬 **Logo**
+  Returns to the Home Page from anywhere in the app. A small **promo dot** appears on it when there are unread promo announcements (e.g., a new feature or invitation).
 
-- 🔎 **Full-text Search**  
-  Search across recipes, products, and invoices using flexible input:  
-  - Supports partial text, exact phrases, and multiple keywords.  
+- 🔎 **Global Search**
+  Full-text search across recipes, products, and invoices.
+  - Supports partial text, exact phrases, and multiple keywords.
   - Results are ranked by relevance and context.
 
-- ⚙️ **Settings Button**  
-  Opens the app settings panel where you can:  
-  - Change language and preferences  
-  - Manage privacy options  
-  - View legal policies
+- **Main navigation** (the centered pill):
+  - **Recipes** → your recipe list
+  - **Storage** → all saved products
+  - **Invoices** → invoice list
 
-- 🧩 **Widgets Button**  
-  Opens the utilities menu. Available widgets include:  
-  - 🧬 **Gelatin Converter** – helps convert between sheet and powdered gelatin  
-  - ⏳ (More tools coming soon)
+- ⚙️ **Settings**
+  Opens the settings panel: language, currency, categories, taxes, invoice formatting, credentials, and backups.
+
+- 🧩 **Widgets**
+  Opens the utilities menu. Available widgets include:
+  - 🧬 **Gelatin Converter** — converts between sheet and powdered gelatin
+  - ⏳ More tools planned
+
+- ❓ **Documentation**
+  Opens this in-app documentation.
 
 ---
 

@@ -1,35 +1,36 @@
 ---
-title: "Category Management"
+title: "Categories"
 order: 1
 ---
 
-## 🗂️ Category Management
+# 🗂️ Categories
 
-The **Categories** tab in the Settings section allows you to manage product and recipe categories. Categorization helps you organize items, filter data, and group similar content for better clarity and reporting.
+The **Categories** tab lets you manage product and recipe categories. Categories help group similar items, improve filtering, and structure the lists of products and recipes.
 
-### 📦 Product Categories
+The tab has two sub-sections — **Product categories** and **Recipe categories**. Both work the same way.
 
-Navigate to **Product Categories** to view and manage the list of all available product groups.
+## ➕ Adding a category
 
-Each category is displayed in a list and includes:
-- The category name (e.g., "Glazes and coatings", "Oils and fats", "Gluten-free ingredients")
-- Actions:
-  - ✏️ **Edit** — rename the category
-  - ❌ **Delete** — permanently remove the category
+At the top of the list there's a small *"Here you can add new category"* hint with an input field.
 
-To **add a new category**:
-1. Click on **Add** next to the section title.
-2. Enter a name in the input field.
-3. Click **Save category** to confirm.
+1. Type the category name in the input.
+2. The button on the right is initially labeled with a placeholder — once you start typing, it becomes **Add**.
+3. Click **Add** to save it.
 
-> ⚠️ Deleting a category will not delete associated products, but those products will become uncategorized.
+If the category already exists, you'll get a notification.
 
-### 🧾 Recipe Categories
+## ✏️ Editing & deleting
 
-Similarly, click on **Recipe Categories** to manage how your recipes are grouped:
-- Create categories such as "Cakes", "Ganache", "Bases", "Decorations", etc.
-- This improves sorting and structuring in large recipe collections.
+Below the input you'll see *"and here is your list of your existing categories"*.
 
----
+Each row in the list shows:
+- The category name.
+- An **edit** action — switches the row into edit mode (*"Enter new name"*) so you can rename it. The save button changes to **No changes** when there's nothing new to save.
+- A **delete** action — removes the category. Products or recipes that used it become uncategorised (they aren't deleted).
 
-Categorization is optional but strongly recommended for keeping your data structured and easy to search or export.
+## 🍰 Product vs Recipe categories
+
+- **Product categories** group items on the *Storage* page (Dairy, Spices, Glazes, etc.).
+- **Recipe categories** group entries on the *Recipes* page (Cakes, Bases, Decorations, etc.).
+
+Categorisation is optional but recommended once your storage or recipe collection grows.

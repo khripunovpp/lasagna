@@ -1,51 +1,44 @@
 ---
-title: "Stock (Products Page)"
+title: "Storage (Products Page)"
 order: 0
 ---
 
-# 🧺 Stock (Products Page)
+# 🧺 Storage (Products Page)
 
-The **Stock** section is where you manage all ingredients and materials used in your recipes.  
-Each item on this page is called a **product**, and it has a price, unit, category, and edit history.
+The **Storage** section (titled *"Storage"* in the app) is where you manage all ingredients and materials used in your recipes.
+Each item on this page is a **product**: it has a price, unit, category, brand, source, and edit history.
 
 ## 🗃️ Page Structure
 
-- Products are automatically **grouped by categories**.
-- Items **without a category** appear at the top.
-- Each product displays the **last edited** timestamp in the top-right corner.
+- The page title shows *"Storage"* and the total count next to it (e.g. *"found: 42"*).
+- Products are grouped on the page (by default — by category), and you can change the grouping and the sort direction.
+- Each product card shows:
+  - The product name (click to open it for editing).
+  - The **price per unit** on the right (e.g. `0.018 €/g`). For very small values you'll see *"less <0.01"* instead of a number.
+  - The label *"edited <time ago>"* at the bottom.
 
 ## 📝 Drafts
 
-If you made changes to a product but didn’t save them, a message will appear at the top indicating **unsaved changes**.  
-Click the message to view or review your draft edits.
+If you started editing a product but didn't save it, a **drafts banner** appears at the top of the page indicating unsaved changes. Click it to review or finish those drafts.
 
 ## ✅ Selection Mode & Bulk Actions
 
-Clicking on a product activates **selection mode**:
-
+Clicking on a product card activates **selection mode**:
 - You can select multiple products at once.
-- After selection, bulk actions become available:
-  - **Delete** selected products
-  - **Export** selected products to a file
-
-Available selection tools:
-- `Select all`
-- `Hide selection`
-- `Clear selection from all`
+- A toolbar appears with quick actions: select all, hide the selection, or clear it.
+- After selecting, you can **delete** the selected products. The **Export** button at the top will export only the selected items if any are selected.
 
 ## 🔁 Import & Export
 
-At the bottom right of the screen, you'll find two key options:
+The controls bar at the top of the page contains:
 
-- **Export products** — saves your product list to a file (for backup or transfer)
-- **Import products** — uploads a file with product data (in a compatible format)
+- ➕ **Add product** — opens the new-product form.
+- **Export** — downloads your products as a file (only the selected ones if you're in selection mode, otherwise all).
+- **Import** — uploads a previously-exported file. Existing products are updated when their IDs match; new ones are added.
 
-> Importing will add new products and update existing ones if their IDs match.
+## 📭 Empty State
 
-## 📌 Sorting and Display
-
-- Products are **always sorted by category**, and within each category by **last edited date**.
-- The interface is optimized for speed and clarity, helping you quickly locate ingredients and keep data up to date.
+If you have no products yet, the page shows *"Products not found"* and an **Add first product** button.
 
 ---
 
