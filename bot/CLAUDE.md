@@ -1,42 +1,57 @@
-# bot — Telegram Bot + Mini App API
+# bot — Telegram Bot Worker
 
-Telegram bot that opens the Lasagna PWA as a Telegram Mini App. Also serves an Express API for Telegram Stars payment integration.
+Cloudflare Worker that handles the Telegram bot webhook for the Lasagna Mini App. The bot opens the PWA inside Telegram; Stars payments integration is planned (currently not implemented in this worker).
 
 ## Tech Stack
 
-- Node.js (ESM modules, `"type": "module"`)
-- `node-telegram-bot-api` — bot in polling mode
-- `express` 5.x — HTTP API
-- `cors` — for cross-origin requests from the Mini App
+- Cloudflare Workers runtime (`wrangler`)
+- TypeScript, ESM
+- Plain `fetch` handler (Hono is a dependency but the current `src/index.ts` uses the bare Workers handler)
+- `nodejs_compat` flag enabled
 
 ## Running
 
 ```bash
-# Requires .env file with BOT_TOKEN and WEB_APP_URL
-npm start
-# Runs on port 3000 (or PORT env var)
+# Local dev (port 8787)
+npm run dev
+
+# Deploy to Cloudflare
+npm run deploy
 ```
+
+Secrets are not stored in `wrangler.toml`; set them via:
+
+```bash
+wrangler secret put BOT_TOKEN
+wrangler secret put WEB_APP_URL    # if needed
+```
+
+For local dev, copy `.dev.vars.example` → `.dev.vars`.
 
 ## Environment Variables
 
-| Variable      | Description                          |
-|---------------|--------------------------------------|
-| `BOT_TOKEN`   | Telegram bot token                   |
-| `WEB_APP_URL` | URL of the Lasagna PWA               |
-| `PORT`        | HTTP server port (default: 3000)     |
+| Variable      | Description                                  |
+|---------------|----------------------------------------------|
+| `BOT_TOKEN`   | Telegram bot token (set as Wrangler secret)  |
+| `WEB_APP_URL` | URL of the Lasagna PWA                       |
 
-## Bot Commands
+## Endpoints
 
-- `/start` — sends inline keyboard button to open the Mini App
+| Method | Path        | Description                                                           |
+|--------|-------------|-----------------------------------------------------------------------|
+| POST   | `/webhook`  | Telegram webhook. Replies to `/start` with a message pointing at the Mini App. |
 
-## API Endpoints
+All other paths return 404.
 
-| Method | Path                       | Description                             |
-|--------|----------------------------|-----------------------------------------|
-| POST   | `/api/create-invoice-link` | Creates a Telegram Stars payment link   |
+## Telegram Setup
+
+The bot runs in **webhook mode** (not polling). Point Telegram at the deployed Worker URL:
+
+```
+https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.workers.dev/webhook
+```
 
 ## Notes
 
-- Stars payment (`createInvoiceLink`) is currently commented out and returns `'link-test'` — WIP
-- `invoiceStore` (in-memory Map) holds pending invoices for 1 hour; no persistence
-- Polling mode only — no webhook setup
+- Stars payments (`createInvoiceLink`) are not implemented in the current worker — the previous Express-based prototype is gone.
+- No persistence; the worker is stateless.

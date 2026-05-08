@@ -32,8 +32,12 @@ DEMO https://khripunovpp.github.io/lasagna?demo=true
   - Works completely offline
 
 - ☁️ **Cloud Sync** *(WIP / Premium)*
-  - Planned Strapi backend sync
-  - Optional user accounts for syncing
+  - Supabase (Postgres + Auth) backend, accessed via a Cloudflare Worker REST API
+  - Optional user accounts for cross-device syncing
+
+- 🤖 **Telegram Mini App** *(WIP)*
+  - Bot opens Lasagna as a Telegram Mini App
+  - Stars payments integration in progress
 
 - 📊 **Visual Analytics**
   - Weight and cost pie charts
@@ -56,10 +60,12 @@ Open in browser: `http://localhost:4200`
 
 ## 🧠 Tech Stack
 
-- [Angular](https://angular.io/) + [Angular Material](https://material.angular.io/)
+- [Angular 21](https://angular.io/) + [Angular Material](https://material.angular.io/) (PWA, SSR via Vercel)
 - [Dexie.js](https://dexie.org/) for IndexedDB
 - [jsPDF](https://github.com/parallax/jsPDF) for future PDF exports
 - [FlexSearch](https://github.com/nextapps-de/flexsearch) for local search
+- [Supabase](https://supabase.com/) (Postgres + Auth) — cloud sync backend
+- [Cloudflare Workers](https://workers.cloudflare.com/) + [Hono](https://hono.dev/) — REST API and Telegram bot
 - [Sentry](https://sentry.io/) for error tracking
 - [Google Analytics](https://analytics.google.com/) (optional, with consent)
 
