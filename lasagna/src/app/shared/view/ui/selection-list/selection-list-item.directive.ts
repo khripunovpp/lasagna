@@ -1,10 +1,10 @@
 import {Directive, Input, TemplateRef} from '@angular/core';
 
 @Directive({
-  selector: '[lgCardListItem]',
+  selector: '[lgSelectionListItem]',
   standalone: true,
 })
-export class CardListItemDirective {
+export class SelectionListItemDirective {
   constructor(
     public template: TemplateRef<any>
   ) {

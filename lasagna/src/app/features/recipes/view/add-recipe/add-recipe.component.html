@@ -15,11 +15,9 @@
   <lg-fade-in>
     <lg-container [formGroup]="form">
       <lg-flex-column size="medium">
-        @if (draftRef(); as draft) {
-          <lg-draft-form-banner (deleteNow)="onRemoveDraft()"
-                                [draft]="draft"
-                                type="recipe"></lg-draft-form-banner>
-        }
+        <lg-draft-status type="recipe"
+                         [draft]="draftRef() ?? null"
+                         [originalUuid]="recipe()?.uuid"></lg-draft-status>
 
         @if (addedRecipeInformerUUID(); as uuid) {
           <p>
@@ -47,6 +45,10 @@
 
             @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
               <lg-title lgSelfStart>
+                @if (isDraftRoute()) {
+                  <span class="text-muted"
+                        data-u2e="recipe.form.title.draft-prefix">{{ 'draft.title-prefix' | translate }}</span>
+                }
                 {{ recipe()?.name }}
               </lg-title>
             } @else {

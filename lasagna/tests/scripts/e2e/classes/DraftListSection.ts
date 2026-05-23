@@ -15,12 +15,22 @@ export class DraftListSection {
     return this._page.locator(`[data-u2e="${this._prefix}.expander"] .expander__header`);
   }
 
+  /**
+   * Items are split into per-date-group `<lg-selection-list>` instances
+   * (data-u2e="${prefix}.card-list-today" / -yesterday / -last-7-days / ...).
+   * For visibility assertions we return the first card-list; for indexing we
+   * query items across every card-list in document order.
+   */
   get cardList(): Locator {
-    return this._page.locator(`[data-u2e="${this._prefix}.card-list"]`);
+    return this._page.locator(`[data-u2e^="${this._prefix}.card-list"]`).first();
+  }
+
+  private get allItems(): Locator {
+    return this._page.locator(`[data-u2e^="${this._prefix}.card-list"] .lg-card-list__item`);
   }
 
   itemByIndex(index: number): Locator {
-    return this.cardList.locator('.lg-card-list__item').nth(index);
+    return this.allItems.nth(index);
   }
 
   itemLink(index: number): Locator {
@@ -37,22 +47,22 @@ export class DraftListSection {
   }
 
   expiringMessage(index: number): Locator {
-    return this._page.locator(`[data-u2e="${this._prefix}.item-expiring-${index}"]`);
+    return this._page.locator(`[data-u2e^="${this._prefix}.item-expiring-"]`).nth(index);
   }
 
   graceMessage(index: number): Locator {
-    return this._page.locator(`[data-u2e="${this._prefix}.item-grace-${index}"]`);
+    return this._page.locator(`[data-u2e^="${this._prefix}.item-grace-"]`).nth(index);
   }
 
   deleteNowButton(index: number): Locator {
-    return this._page.locator(`[data-u2e="${this._prefix}.item-delete-now-${index}"] button`);
+    return this._page.locator(`[data-u2e^="${this._prefix}.item-delete-now-"]`).nth(index).locator('button');
   }
 
   staleMessage(index: number): Locator {
-    return this._page.locator(`[data-u2e="${this._prefix}.item-stale-${index}"]`);
+    return this._page.locator(`[data-u2e^="${this._prefix}.item-stale-"]`).nth(index);
   }
 
   async itemsCount(): Promise<number> {
-    return this.cardList.locator('.lg-card-list__item').count();
+    return this.allItems.count();
   }
 }

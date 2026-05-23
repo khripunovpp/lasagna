@@ -3,7 +3,7 @@ import {CanSync} from '../../../../features/sync/service/CanSync.abstract';
 import {CanBeStoredIndexDbAbstract} from '../../../../features/sync/service/CanBeStoredIndexDb.abstract';
 import {DexieIndexDbService} from '../../db/dexie-index-db.service';
 import {CloudSyncService} from '../../../../features/sync/service/cloud-sync.service';
-import {BehaviorSubject, switchMap, tap, withLatestFrom} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {CAN_SYNC} from '../../../../features/sync/service/can-sync.token';
 import {errorHandler} from '../../../helpers';
@@ -12,6 +12,23 @@ import {CloudWriteService} from '../../../../features/sync/service/cloud-write.s
 import {Transaction} from 'dexie';
 import {DeleteRecord, tablToDeletingKeyMap} from '../deleting.service';
 import {updateProductTransaction} from '../../../../features/products/service/update-product.transaction';
+import {DraftForm, DraftFormsService, DraftLifecycle} from '../draft-forms.service';
+import {SettingsService} from '../../../../features/settings/service/services/settings.service';
+
+export type RepositoryDraftType = 'product' | 'recipe';
+
+export interface ClosestDraftInfo<T> {
+  draft: DraftForm<T>;
+  lifecycle: DraftLifecycle;
+  isStale: boolean;
+  total: number;
+}
+
+export interface CategorizedDrafts<T> {
+  drafts: DraftForm<T>[];
+  lifecycleByUuid: Map<string, DraftLifecycle>;
+  staleUuids: Set<string>;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +48,16 @@ export abstract class RepositoryAbstract<
   canSync = inject(CAN_SYNC);
   cloudWriteService = inject(CloudWriteService);
   abstract factory: ((dto: D, ...args: any[]) => T)
+  /** Used by the draft-status banner to pick the right translation keys/route. */
+  draftType: RepositoryDraftType | undefined = undefined;
   protected stream$ = new BehaviorSubject<T[]>([]);
+  /**
+   * Override in subclasses that support form drafts. When unset, all draft-*
+   * methods are no-ops or return empty results.
+   */
+  protected draftStore: string | undefined = undefined;
+  private readonly _draftFormsService = inject(DraftFormsService);
+  private readonly _settingsService = inject(SettingsService);
 
   get getStream$() {
     return this.stream$.asObservable();
@@ -221,5 +247,114 @@ export abstract class RepositoryAbstract<
 
   saveIndex() {
     return this.indexDbService.saveIndex(this.table);
+  }
+
+  // -------- Drafts --------
+
+  saveDraft(item: T, originalUuid?: string): DraftForm<T> | undefined {
+    if (!this.draftStore) return undefined;
+    const dto = (item as any).toDTO() as D;
+    const draft = this._draftFormsService.setDraftForm<D & Record<string, any>>(
+      this.draftStore,
+      dto as D & Record<string, any>,
+      originalUuid?.length ? 'edit' : 'add',
+      originalUuid ? {uuid: originalUuid} : {},
+    );
+    if (!draft) return undefined;
+    return {...draft, data: item} as unknown as DraftForm<T>;
+  }
+
+  updateDraft(key: string, item: T, originalUuid?: string): void {
+    if (!this.draftStore) return;
+    const dto = (item as any).toDTO() as D;
+    this._draftFormsService.updateDraftForm<D & Record<string, any>>(
+      this.draftStore,
+      dto as D & Record<string, any>,
+      key,
+      originalUuid?.length ? 'edit' : 'add',
+      originalUuid ? {uuid: originalUuid} : {},
+    );
+  }
+
+  async removeDraft(key: string | string[]): Promise<void> {
+    if (!this.draftStore) return;
+    await this._draftFormsService.removeDraftForm(this.draftStore, key);
+  }
+
+  /**
+   * Removes every draft whose `meta.uuid` points at `originalUuid`. Returns
+   * the number removed. Useful for the stale-cleanup path where the latest
+   * draft is older than the original — by transitivity all sibling drafts
+   * are stale too, so deleting them one-by-one would force N clicks.
+   */
+  async removeDraftsByOriginal(originalUuid: string): Promise<number> {
+    if (!this.draftStore) return 0;
+    const all = this._draftFormsService.getDraftForms<any>(this.draftStore);
+    if (!all) return 0;
+    const keys = Object.values(all)
+      .filter(d => d.meta?.['uuid'] === originalUuid)
+      .map(d => d.uuid);
+    if (keys.length) {
+      await this._draftFormsService.removeDraftForm(this.draftStore, keys);
+    }
+    return keys.length;
+  }
+
+  getDraft(draftUuid: string): DraftForm<T> | null {
+    if (!this.draftStore) return null;
+    const all = this._draftFormsService.getDraftForms<D & Record<string, any>>(this.draftStore);
+    const raw = all?.[draftUuid];
+    if (!raw) return null;
+    return {...raw, data: this.factory(raw.data as unknown as D)} as unknown as DraftForm<T>;
+  }
+
+  async getClosestDraft(originalUuid: string): Promise<ClosestDraftInfo<T> | null> {
+    if (!this.draftStore) return null;
+    const {enabled, ttlDays} = this._settingsService.getDraftsSettings();
+    if (!enabled) return null;
+    const result = await this._draftFormsService.getClosestDraft<D & Record<string, any>>(
+      this.draftStore,
+      originalUuid,
+      ttlDays,
+      (u) => this._draftOriginalUpdatedAt(u),
+    );
+    if (!result) return null;
+    return {
+      draft: {...result.draft, data: this.factory(result.draft.data as unknown as D)} as unknown as DraftForm<T>,
+      lifecycle: result.lifecycle,
+      isStale: result.isStale,
+      total: result.total,
+    };
+  }
+
+  async loadAndCategorizeDrafts(now: number = Date.now()): Promise<CategorizedDrafts<T>> {
+    if (!this.draftStore) {
+      return {drafts: [], lifecycleByUuid: new Map(), staleUuids: new Set()};
+    }
+    const {enabled, ttlDays} = this._settingsService.getDraftsSettings();
+    if (!enabled) {
+      return {drafts: [], lifecycleByUuid: new Map(), staleUuids: new Set()};
+    }
+    const result = await this._draftFormsService.loadAndCategorize<D & Record<string, any>>(
+      this.draftStore,
+      ttlDays,
+      (u) => this._draftOriginalUpdatedAt(u),
+      now,
+    );
+    return {
+      drafts: result.drafts.map(d => ({...d, data: this.factory(d.data as unknown as D)} as unknown as DraftForm<T>)),
+      lifecycleByUuid: result.lifecycleByUuid,
+      staleUuids: result.staleUuids,
+    };
+  }
+
+  /** Used by draft-status banner to detect stale drafts. */
+  async getOriginalUpdatedAt(uuid: string): Promise<number | undefined> {
+    return this._draftOriginalUpdatedAt(uuid);
+  }
+
+  private async _draftOriginalUpdatedAt(uuid: string): Promise<number | undefined> {
+    const original = await this.getOne(uuid).catch(() => undefined);
+    return (original as any)?.updatedAt;
   }
 }

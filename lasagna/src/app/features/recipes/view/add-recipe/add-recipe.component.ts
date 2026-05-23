@@ -7,7 +7,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/button/button.componen
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {RecipesRepository} from '../../../../shared/service/repositories';
-import {DraftForm, NotificationsService} from '../../../../shared/service/services';
+import {DraftForm, NotificationsService, TransferDataService} from '../../../../shared/service/services';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
@@ -34,13 +34,12 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {RecipeShareService, SHARE_RECIPE_PARAM} from '../../service/recipe-share.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
-import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
 import {FoldersRepository} from '../../service/providers/folders.repository';
 import {Folder} from '../../service/models/Folder';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
+import {DraftStatusComponent} from '../../../drafts/draft-status.component';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -67,7 +66,7 @@ import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
     ConfirmationPopoverComponent,
     ReactiveFormsModule,
     SyncBadgeComponent,
-    DraftFormBannerComponent,
+    DraftStatusComponent,
   ],
   templateUrl: './add-recipe.component.html',
   styles: [
@@ -205,13 +204,13 @@ export class AddRecipeComponent
       }
 
       if (this.draftRef()?.uuid) {
-        this._recipesRepository.updateDraftRecipe(
+        this._recipesRepository.updateDraft(
           this.draftRef()!.uuid,
           this.recipe()!,
           this.draftRef()!.meta?.['uuid']
         );
       } else if (this.recipe()) {
-        this.draftRef.set(this._recipesRepository.saveDraftRecipe(
+        this.draftRef.set(this._recipesRepository.saveDraft(
           this.recipe()!,
           this.draftOrRecipeUUID() ?? ''));
       }
@@ -430,7 +429,7 @@ export class AddRecipeComponent
     if (!this.draftRef()) {
       return;
     }
-    this._recipesRepository.removeDraftRecipe(this.draftRef()!.uuid)
+    this._recipesRepository.removeDraft(this.draftRef()!.uuid);
     this.draftRef.set(undefined);
   }
 

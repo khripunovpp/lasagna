@@ -5,15 +5,15 @@ import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {CurrencyPipe, DatePipe, NgClass} from '@angular/common';
-import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
-import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
+import {SelectionListComponent} from '../../../../shared/view/ui/selection-list/selection-list.component';
+import {SelectionListItemDirective} from '../../../../shared/view/ui/selection-list/selection-list-item.directive';
 import {Stores} from '../../../../shared/service/db/const/stores';
 import {Router, RouterLink} from '@angular/router';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {NotificationsService} from '../../../../shared/service/services/notifications.service';
+import {NotificationsService} from '../../../../shared/service/services';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {ControlsBarComponent} from '../../../../shared/view/ui/controls-bar/controls-bar.component';
-import {SelectionZoneService} from '../../../../shared/service/services/selection-zone.service';
+import {SelectionZoneService} from '../../../../shared/service/services';
 import {SelectionToolsComponent} from '../../../controls/form/selection-tools.component';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {ExpandDirective} from '../../../../shared/view/directives/expand.directive';
@@ -23,8 +23,7 @@ import {InvoicesRepository} from '../../service/Invoices.repository';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {Invoice} from '../../service/Inovice/Invoice';
 import {stateToBadgeClassMap, stateToLabelMap} from '../../../../shared/service/const/badges.const';
-import {USER_LANGUAGE} from '../../../../features/settings/service/providers/user-language.token';
-
+import {USER_LANGUAGE} from '../../../settings/service/providers/user-language.token';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {errorHandler} from '../../../../shared/helpers';
@@ -62,13 +61,13 @@ import {HAS_FEATURE} from '../../../settings/service/providers/has-feature.token
                 {{ category?.group_key || ('without-category-label'|translate) }}
               </lg-title>
 
-              <lg-card-list [mode]="selectionZoneService.selectionMode()"
+              <lg-selection-list [mode]="selectionZoneService.selectionMode()"
                             (onSelected)="selectionZoneService.putSelected($event)"
                             (onDeleteOne)="deleteMany([$event.uuid])"
                             [selectAll]="selectionZoneService.selectAll()"
                             [deselectAll]="selectionZoneService.deselectAll()">
                 @for (invoice of category.items; track (invoice.uuid ?? '') + i; let i = $index) {
-                  <ng-template lgCardListItem
+                  <ng-template lgSelectionListItem
                                [uuid]="invoice.uuid"
                                [bgColor]="invoice.overdue ? '#ffcfcb' : ''"
                                type="invoice">
@@ -117,7 +116,7 @@ import {HAS_FEATURE} from '../../../settings/service/providers/has-feature.token
                     </lg-flex-column>
                   </ng-template>
                 }
-              </lg-card-list>
+              </lg-selection-list>
             } @empty {
               <lg-flex-column position="center"
                               size="medium">
@@ -145,8 +144,8 @@ import {HAS_FEATURE} from '../../../settings/service/providers/has-feature.token
     MatIcon,
     ContainerComponent,
     TitleComponent,
-    CardListComponent,
-    CardListItemDirective,
+    SelectionListComponent,
+    SelectionListItemDirective,
     RouterLink,
     FadeInComponent,
     ControlsBarComponent,

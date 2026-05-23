@@ -1,5 +1,5 @@
 import {Component, ContentChildren, effect, input, Optional, QueryList, SkipSelf} from '@angular/core';
-import {CardListItemDirective} from './card/card-list-item.directive';
+import {SelectionListItemDirective} from './selection-list/selection-list-item.directive';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {CheckboxComponent} from '../../../features/controls/form/chckbox.component';
 import {SelectionZoneService} from '../../service/services';
@@ -66,7 +66,7 @@ export class SelectableSectionComponent {
 
   key = input<string>(generateUuid());
   data = input<any>(null);
-  @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
+  @ContentChildren(SelectionListItemDirective) items!: QueryList<SelectionListItemDirective>;
   selected = new FormControl()
 
   effectMode = effect(() => {
