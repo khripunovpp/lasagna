@@ -7,11 +7,13 @@ export const URLS = {
     list: `${HOST}/products`,
     add: `${HOST}/products/add`,
     edit: (id: string) => `${HOST}/products/edit/${id}`,
+    draft: (id: string) => `${HOST}/products/draft/${id}`,
   },
   recipes: {
     list: `${HOST}/recipes`,
     add: `${HOST}/recipes/add`,
     edit: (id: string) => `${HOST}/recipes/edit/${id}`,
+    draft: (id: string) => `${HOST}/recipes/draft/${id}`,
     calculate: (id: string) => `${HOST}/recipes/calculate/${id}`,
   },
   settings: {

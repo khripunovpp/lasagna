@@ -15,15 +15,17 @@
   <lg-fade-in>
     <lg-container>
       <lg-flex-column size="medium">
-        @if (draftRef(); as draft) {
-          <lg-draft-form-banner (deleteNow)="onRemoveDraft()"
-                                [draft]="draft"
-                                type="product"></lg-draft-form-banner>
-        }
+        <lg-draft-status type="product"
+                         [draft]="draftRef()"
+                         [originalUuid]="product()?.uuid"></lg-draft-status>
 
         <lg-flex-row [center]="true">
           @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
             <lg-title lgSelfStart>
+              @if (isDraftRoute()) {
+                <span class="text-muted"
+                      data-u2e="product.form.title.draft-prefix">{{ 'draft.title-prefix' | translate }}</span>
+              }
               {{ product()?.name }}
             </lg-title>
           } @else {

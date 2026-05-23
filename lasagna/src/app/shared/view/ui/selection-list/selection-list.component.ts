@@ -1,6 +1,6 @@
 import {Component, ContentChildren, effect, input, output, QueryList, ViewEncapsulation} from '@angular/core';
 
-import {CardListItemDirective} from './card-list-item.directive';
+import {SelectionListItemDirective} from './selection-list-item.directive';
 import {NgTemplateOutlet} from '@angular/common';
 import {CheckboxComponent} from '../../../../features/controls/form/chckbox.component';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -9,7 +9,7 @@ import {MatIcon} from '@angular/material/icon';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'lg-card-list',
+  selector: 'lg-selection-list',
   standalone: true,
   imports: [
     NgTemplateOutlet,
@@ -21,7 +21,9 @@ import {TranslatePipe} from '@ngx-translate/core';
     TranslatePipe,
   ],
   template: `
-    <section [formGroup]="selected" class="lg-card-list">
+    <section [formGroup]="selected"
+             [class.flat]="flat()"
+             class="lg-card-list">
       <section class="lg-card-list__inner" formArrayName="items">
         @for (item of items; track (item?.uuid ?? '') + $index; let i = $index, even = $even) {
           <div class="lg-card-list__item"
@@ -98,6 +100,11 @@ import {TranslatePipe} from '@ngx-translate/core';
         }
       }
 
+      .lg-card-list.flat .lg-card-list__item__inner {
+        border-radius: 0;
+        padding: 0;
+      }
+
       .lg-card-list__item.colored {
         //background-color: #f6f6f6
       }
@@ -106,7 +113,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class CardListComponent {
+export class SelectionListComponent {
 
   constructor() {
   }
@@ -114,11 +121,12 @@ export class CardListComponent {
   mode = input<'default' | 'selection'>('default');
   selectAll = input<boolean>(false);
   deselectAll = input<boolean>(false);
+  flat = input<boolean>(false);
   onSelected = output<[boolean, string, any]>();
   onDeleteOne = output<{
     uuid: string, type: string
   }>();
-  @ContentChildren(CardListItemDirective) items!: QueryList<CardListItemDirective>;
+  @ContentChildren(SelectionListItemDirective) items!: QueryList<SelectionListItemDirective>;
   selected = new FormGroup({
     items: new FormArray([])
   });
@@ -152,7 +160,7 @@ export class CardListComponent {
 
   buildValueString(
     index: number,
-    item: CardListItemDirective,
+    item: SelectionListItemDirective,
   ) {
     return String(`${item?.type}-${index}-${item?.uuid}`);
   }

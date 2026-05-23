@@ -45,7 +45,7 @@ import {TranslatePipe} from '@ngx-translate/core';
       .expander {
         display: flex;
         flex-direction: column;
-        border-radius: 32px;
+        border-radius: 8px;
         background-color: #fff;
         overflow: hidden;
       }
@@ -60,11 +60,11 @@ import {TranslatePipe} from '@ngx-translate/core';
       }
 
       .expander__header {
-        padding: 24px;
+        padding: 8px;
       }
 
       .expander__content {
-        padding: 24px;
+        padding: 8px;
       }
 
       .expander.opened {

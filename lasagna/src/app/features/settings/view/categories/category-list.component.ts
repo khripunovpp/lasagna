@@ -2,8 +2,8 @@ import {Component, computed, DestroyRef, inject, input, OnInit, signal} from '@a
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {MatIcon} from '@angular/material/icon';
-import {CardListComponent} from '../../../../shared/view/ui/card/card-list.component';
-import {CardListItemDirective} from '../../../../shared/view/ui/card/card-list-item.directive';
+import {SelectionListComponent} from '../../../../shared/view/ui/selection-list/selection-list.component';
+import {SelectionListItemDirective} from '../../../../shared/view/ui/selection-list/selection-list-item.directive';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {NotificationsService, SelectionZoneService} from '../../../../shared/service/services';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -31,14 +31,14 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
           <lg-selection-tools></lg-selection-tools>
         }
 
-        <lg-card-list (onDeleteOne)="deleteCategoryByUuid($event.uuid)"
+        <lg-selection-list (onDeleteOne)="deleteCategoryByUuid($event.uuid)"
                       (onSelected)="selectionZoneService.putSelected($event)"
                       [deselectAll]="selectionZoneService.deselectAll()"
                       [mode]="selectionZoneService.selectionMode()"
                       [selectAll]="selectionZoneService.selectAll()"
                       style="--card-list-bg: var(--control-bg)">
           @for (category of cats; track category.uuid ?? i; let i = $index) {
-            <ng-template [type]="type()" [uuid]="category.uuid" lgCardListItem>
+            <ng-template [type]="type()" [uuid]="category.uuid" lgSelectionListItem>
               @if (editingUuid() === category.uuid) {
                 <lg-category-add-form (onSaved)="stopEdit()"
                                       [type]="type()"
@@ -62,7 +62,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
               }
             </ng-template>
           }
-        </lg-card-list>
+        </lg-selection-list>
       </lg-flex-column>
     </lg-fade-in>
   `,
@@ -70,8 +70,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     FlexRowComponent,
     ButtonComponent,
     MatIcon,
-    CardListComponent,
-    CardListItemDirective,
+    SelectionListComponent,
+    SelectionListItemDirective,
     FadeInComponent,
     TranslatePipe,
     ExpandDirective,

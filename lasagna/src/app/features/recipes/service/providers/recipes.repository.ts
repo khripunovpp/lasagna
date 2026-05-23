@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {DexieIndexDbService} from '../../../../shared/service/db/dexie-index-db.service';
 import {CategoryRepository} from '../../../settings/service/repositories/category.repository';
-import {DraftForm, DraftFormsService, UsingHistoryService} from '../../../../shared/service/services';
+import {UsingHistoryService} from '../../../../shared/service/services';
 import {TagsRepository} from '../../../settings/service/repositories/tags.repository';
 import {Recipe} from '../models/Recipe';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
@@ -25,7 +25,6 @@ export class RecipesRepository
     public _indexDbService: DexieIndexDbService,
     private _usingHistoryService: UsingHistoryService,
     private _categoryRepository: CategoryRepository,
-    private _draftFormsService: DraftFormsService,
     private _tagsRepository: TagsRepository,
     private _productsRepository: ProductsRepository,
     private _productFactory: ProductFactory,
@@ -36,8 +35,11 @@ export class RecipesRepository
     this._copyPrefix = this._translate.instant('recipes.copy.prefix');
   }
 
+  override draftType = 'recipe' as const;
+  protected override draftStore = 'draft_recipes';
   private _onboardingService = inject(OnboardingService);
   private _copyPrefix = '';
+
   override factory = (dto: RecipeDTO) => Recipe.fromRaw(dto);
 
   override changeLogCondition = (oldItem?: RecipeDTO, newItem?: RecipeDTO): boolean => {
@@ -124,50 +126,6 @@ export class RecipesRepository
     }
 
     return resp;
-  }
-
-  saveDraftRecipe(recipe: Recipe, uuid?: string) {
-    const draft = this._draftFormsService.setDraftForm<RecipeDTO>(
-      'draft_recipes',
-      recipe.toDTO(),
-      uuid?.length ? 'edit' : 'add',
-      uuid ? {
-        uuid: uuid,
-      } : {});
-
-    return draft ? {
-      ...draft,
-      data: recipe,
-    } as DraftForm<Recipe> : undefined;
-  }
-
-  updateDraftRecipe(key: string, recipe: Recipe, uuid?: string) {
-    this._draftFormsService.updateDraftForm<RecipeDTO>(
-      'draft_recipes',
-      recipe.toDTO(),
-      key,
-      uuid?.length ? 'edit' : 'add',
-      uuid ? {
-        uuid: uuid,
-      } : {});
-  }
-
-  getDraftRecipe(uuid?: string) {
-    const draft = this._draftFormsService.getDraftForms<RecipeDTO>('draft_recipes');
-    if (uuid && draft?.[uuid]) {
-      return [draft![uuid]];
-    }
-    return draft
-      ? Object.values(draft)
-      : [];
-  }
-
-  removeDraftRecipe(key: string) {
-    this._draftFormsService.removeDraftForm('draft_recipes', key);
-  }
-
-  removeDraftMany(uuids: string[]) {
-    return this._draftFormsService.removeDraftForm('draft_recipes', uuids);
   }
 
   cloneRecipe(recipe: Recipe) {

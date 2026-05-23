@@ -11,10 +11,10 @@ export const productDraftResolver: ResolveFn<any> = async (
   const router = inject(Router);
   const productsRepository = inject(ProductsRepository);
   const notificationsService = inject(NotificationsService);
-  const draft = productsRepository?.getDraftProducts(uuid);
+  const draft = productsRepository?.getDraft(uuid);
 
-  if (draft?.length) {
-    return draft[0];
+  if (draft) {
+    return draft;
   } else {
     notificationsService.error("Draft not found or doesn't exist");
     const productAdd = router.parseUrl("/products/add");

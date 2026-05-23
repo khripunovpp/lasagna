@@ -3,7 +3,7 @@ import {RepositoryAbstract} from "../../../shared/service/services/repository/re
 import {Product} from "./Product";
 import {DexieIndexDbService} from "../../../shared/service/db/dexie-index-db.service";
 import {CategoryRepository} from "../../settings/service/repositories/category.repository";
-import {DraftFormsService, UsingHistoryService} from "../../../shared/service/services";
+import {UsingHistoryService} from "../../../shared/service/services";
 import {ProductFactory} from "./product.factory";
 import {Stores} from '../../../shared/service/db/const/stores';
 import {ProductDTO} from './Product.scheme';
@@ -20,7 +20,6 @@ export class ProductsRepository
     public _indexDbService: DexieIndexDbService,
     private _categoryRepository: CategoryRepository,
     private _usingHistoryService: UsingHistoryService,
-    private _draftFormsService: DraftFormsService,
     private _productFactory: ProductFactory,
     private _changesLogService: ChangesLogService,
     private _cloudSyncService: CloudSyncService,
@@ -32,6 +31,9 @@ export class ProductsRepository
       _cloudSyncService
     );
   }
+
+  override draftType = 'product' as const;
+  protected override draftStore = 'draft_products';
 
   async addProduct(
     product: Product
@@ -48,7 +50,6 @@ export class ProductsRepository
 
     return resp;
   }
-
 
   async updateProduct(
     uuid: string,
@@ -103,45 +104,6 @@ export class ProductsRepository
 
   async getTopBrands() {
     return Object.keys(this._usingHistoryService.read('products_brands').top);
-  }
-
-  saveDraftProduct(product: Product, uuid?: string) {
-    return this._draftFormsService.setDraftForm(
-      'draft_products',
-      product.toDTO(),
-      uuid?.length ? 'edit' : 'add',
-      uuid ? {
-        uuid: uuid,
-      } : {});
-  }
-
-  updateDraftProduct(key: string, product: Product, uuid?: string) {
-    return this._draftFormsService.updateDraftForm<ProductDTO>(
-      'draft_products',
-      product.toDTO(),
-      key,
-      uuid?.length ? 'edit' : 'add',
-      uuid ? {
-        uuid: uuid,
-      } : {});
-  }
-
-  getDraftProducts(uuid?: string) {
-    const draft = this._draftFormsService.getDraftForms<ProductDTO>('draft_products');
-    if (uuid && draft?.[uuid]) {
-      return [draft![uuid]];
-    }
-    return draft
-      ? Object.values(draft)
-      : [];
-  }
-
-  removeDraftProduct(key: string) {
-    return this._draftFormsService.removeDraftForm('draft_products', key);
-  }
-
-  removeDraftMany(uuids: string[]) {
-    return this._draftFormsService.removeDraftForm('draft_products', uuids);
   }
 
   getChanges(uuid: string) {

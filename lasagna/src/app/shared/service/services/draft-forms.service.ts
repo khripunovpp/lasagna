@@ -7,7 +7,7 @@ import {SettingsService} from '../../../features/settings/service/services/setti
 
 // ключами временных форм будут timestamp
 
-export interface DraftForm<T extends Record<string, any>> {
+export interface DraftForm<T = Record<string, any>> {
   createdAt: number
   updatedAt?: number
   data: DraftFormData<T>
@@ -19,7 +19,7 @@ export interface DraftForm<T extends Record<string, any>> {
   graceStartedAt?: number
 }
 
-export type DraftFormData<T extends Record<string, any>> = T
+export type DraftFormData<T> = T
 
 export const DRAFT_GRACE_MS = 24 * 60 * 60 * 1000;
 export const DAY_MS = 24 * 60 * 60 * 1000;
@@ -190,6 +190,51 @@ export class DraftFormsService {
     }
 
     return {drafts, lifecycleByUuid, staleUuids};
+  }
+
+  /**
+   * Returns the freshest draft for the given original entity along with its
+   * status (lifecycle, stale flag) and the total count of drafts pointing
+   * at the same original. Null if no drafts.
+   *
+   * Filters by `originalUuid` BEFORE calling `getOriginalUpdatedAt`, so the
+   * caller's lookup runs at most once regardless of how many drafts the user
+   * has across other entities.
+   */
+  async getClosestDraft<T extends Record<string, any>>(
+    store: string,
+    originalUuid: string,
+    ttlDays: number,
+    getOriginalUpdatedAt: (uuid: string) => Promise<number | undefined>,
+    now: number = Date.now(),
+  ): Promise<{
+    draft: DraftForm<T>;
+    lifecycle: DraftLifecycle;
+    isStale: boolean;
+    total: number;
+  } | null> {
+    const survivors = this.pruneAndLoad<T>(store, ttlDays, now);
+    const matches = survivors
+      .filter(d => d.meta?.['uuid'] === originalUuid)
+      .toSorted((a, b) => (b.updatedAt ?? b.createdAt) - (a.updatedAt ?? a.createdAt));
+    if (!matches.length) return null;
+
+    const draft = matches[0];
+    let originalUpdatedAt: number | undefined;
+    try {
+      originalUpdatedAt = await getOriginalUpdatedAt(originalUuid);
+    } catch {
+      originalUpdatedAt = undefined;
+    }
+    const draftEditedAt = draft.updatedAt ?? draft.createdAt;
+    const isStale = !!originalUpdatedAt && originalUpdatedAt > draftEditedAt;
+
+    return {
+      draft,
+      lifecycle: getDraftLifecycle(draft, ttlDays, now),
+      isStale,
+      total: matches.length,
+    };
   }
 
   /**

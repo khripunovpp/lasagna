@@ -15,6 +15,22 @@ export class RecipePage
     return this.page.locator('[data-u2e="recipe.form.saved-draft-label"]');
   }
 
+  get titleDraftPrefix() {
+    return this.page.locator('[data-u2e="recipe.form.title.draft-prefix"]');
+  }
+
+  get existingDraftBanner() {
+    return this.page.locator('[data-u2e="draft-status.existing"]');
+  }
+
+  get existingDraftOpenLink() {
+    return this.page.locator('[data-u2e="draft-status.existing-switch"]');
+  }
+
+  get existingDraftDeleteLink() {
+    return this.page.locator('[data-u2e="draft-status.existing-delete"]');
+  }
+
   get addNewRecipeButton() {
     return this.page.locator('[data-u2e="recipe.form.add-new-btn"] a');
   }

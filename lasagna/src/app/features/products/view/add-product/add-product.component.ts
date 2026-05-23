@@ -12,7 +12,6 @@ import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directi
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
 import {CurrencyPipe} from '@angular/common';
 import {Product} from '../../service/Product';
-import {ProductDTO} from '../../service/Product.scheme';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {
@@ -36,7 +35,7 @@ import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.co
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
-import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
+import {DraftStatusComponent} from '../../../drafts/draft-status.component';
 
 @Component({
   selector: 'lg-add-product',
@@ -61,7 +60,7 @@ import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.compon
     FlexColumnComponent,
     FlexRowComponent,
     SyncBadgeComponent,
-    DraftFormBannerComponent,
+    DraftStatusComponent,
   ],
   templateUrl: './add-product.component.html',
   styles: [
@@ -89,7 +88,10 @@ export class AddProductComponent
   draftOrProductUUID = signal<string | undefined>(undefined);
   product = signal<Product | null>(null);
   formComponent = viewChild<AddProductFormComponent | null>(AddProductFormComponent);
-  draftRef = signal<DraftForm<ProductDTO> | null>(null);
+  draftRef = signal<DraftForm<Product> | null>(null);
+  /** Если есть черновик, то он может быть как для нового продукта, так и для существующего.
+   * Этот сигнал позволяет понять, что черновик относится к существующему продукту,
+   * а не является черновиком для нового продукта. */
   draftByExistingProduct = computed(() => {
     return this.draftRef()!.meta?.['uuid'];
   });
@@ -114,19 +116,15 @@ export class AddProductComponent
       }
 
       if (this.draftRef()?.uuid) {
-        this._productsRepository.updateDraftProduct(
+        this._productsRepository.updateDraft(
           this.draftRef()!.uuid,
           this.product()!,
           this.draftRef()!.meta?.['uuid']
         );
       } else if (this.product()) {
-        this.draftRef.set(this._productsRepository.saveDraftProduct(
+        this.draftRef.set(this._productsRepository.saveDraft(
           this.product()!,
           this.draftOrProductUUID() ?? '') ?? null);
-
-        // if (!this.isDraftRoute()) {
-        //   this._routerManager.replace(['products/draft/' + this.draftRef()!.uuid]);
-        // }
       }
     });
   })
@@ -142,7 +140,7 @@ export class AddProductComponent
       this.draftOrProductUUID.set(params['uuid']);
       if (data['draft']) {
         this.draftRef.set(data['draft']);
-        this.product.set(Product.fromRaw(data['draft'].data));
+        this.product.set(data['draft'].data);
         this._analyticsService.trackEvent('product_draft_opened', {
           event_category: 'products',
           event_label: 'draft',
@@ -209,7 +207,6 @@ export class AddProductComponent
     this._productsRepository.addProduct(product)
       .then(({data, message}) => {
         if (data) {
-          // Track product creation analytics
           this._analyticsService.trackProductCreated(product.name, {
             uuid: data,
             price_per_unit: product.pricePerUnit,
@@ -272,7 +269,7 @@ export class AddProductComponent
     if (!this.draftRef()) {
       return;
     }
-    this._productsRepository.removeDraftProduct(this.draftRef()!.uuid)
+    this._productsRepository.removeDraft(this.draftRef()!.uuid)
       .then(() => {
         this.draftRef.set(null);
       })
