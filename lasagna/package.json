@@ -27,7 +27,7 @@
     "i18n": "ngx-translate-extract --input ./src --output ./public/i18n/{en,pt,ru}.json --format json --sort",
     "inject-translations": "node scripts/inject-translations.js",
     "build-docs": "cd documentation && node build.js",
-    "build-policies": "marked ../privacy-policy.md -o ./public/privacy-policy.html && marked ../terms-of-service.md -o ./public/terms-of-service.html && marked ../cookie-policy.md -o ./public/cookie-policy.html"
+    "build-policies": "node scripts/build-policies.js"
   },
   "private": true,
   "dependencies": {
