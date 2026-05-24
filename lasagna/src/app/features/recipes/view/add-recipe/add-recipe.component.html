@@ -29,7 +29,8 @@
         }
 
         <lg-flex-row [center]="true">
-          <lg-flex-row [center]="true"
+          <lg-flex-row [center]="!isMobile()"
+                       [mobileMode]="true"
                        size="tiny">
             @if (folder(); as f) {
               <lg-button [flat]="true"
@@ -42,7 +43,7 @@
               </lg-button>
             }
 
-            <span>/</span>
+            <span [hidden]="isMobile()">/</span>
 
             @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
               <lg-title lgSelfStart>

@@ -39,6 +39,8 @@ import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.com
 import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
 import {FoldersRepository} from '../../service/providers/folders.repository';
 import {Folder} from '../../service/models/Folder';
+import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
+import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -70,12 +72,12 @@ import {Folder} from '../../service/models/Folder';
   templateUrl: './add-recipe.component.html',
   styles: [
     `
-    .back-to-folder__icon.mat-icon {
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
-      vertical-align: middle;
-    }
+      .back-to-folder__icon.mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+      }
     `
   ]
 })
@@ -101,6 +103,7 @@ export class AddRecipeComponent
   draftByExistingRecipe = computed(() => {
     return this.draftRef()?.meta?.['uuid'];
   });
+  isMobile = matchMediaSignal(mobileBreakpoint);
   readonly form = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     description: new FormControl(''),
@@ -116,6 +119,7 @@ export class AddRecipeComponent
     return (this.recipe()?.uuid && !this.draftRef()) || (this.draftRef() && this.draftByExistingRecipe())
   })
   isClient = inject(IS_CLIENT);
+  readonly folder = signal<Folder | undefined>(undefined);
   protected readonly RecipeScheme = RecipeScheme;
   protected readonly Stores = Stores;
   private readonly _recipeShareService = inject(RecipeShareService);
@@ -123,7 +127,6 @@ export class AddRecipeComponent
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _foldersRepository = inject(FoldersRepository);
-  readonly folder = signal<Folder | undefined>(undefined);
   private readonly _loadFolderEffect = effect(() => {
     const uuid = this.recipe()?.folder_uuid;
     if (!uuid) {
