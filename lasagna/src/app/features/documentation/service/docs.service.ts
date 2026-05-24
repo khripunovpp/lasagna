@@ -1,7 +1,7 @@
-import {DocFile, SharedDocLoaderService, TreeNode} from "./docs-loader.service";
+import {DocFile, MetaInfo, SharedDocLoaderService, TreeNode} from "./docs-loader.service";
 import {Stores} from '../../../shared/service/db/const/stores';
 import {BehaviorSubject} from 'rxjs';
-import {inject, Injectable} from "@angular/core";
+import {inject, Injectable, signal} from "@angular/core";
 import {USER_LANGUAGE} from '../../settings/service/providers/user-language.token';
 import {NotificationsService} from '../../../shared/service/services';
 import {errorHandler} from '../../../shared/helpers';
@@ -20,6 +20,7 @@ export class DocsService {
   };
   private docs$ = new BehaviorSubject<DocFile[]>([]);
   private tree$ = new BehaviorSubject<TreeNode[]>([]);
+  readonly meta = signal<MetaInfo | null>(null);
   private _userLang = inject(USER_LANGUAGE);
   private _sharedLoader = inject(SharedDocLoaderService);
   private _notificationsService = inject(NotificationsService);
@@ -30,10 +31,11 @@ export class DocsService {
 
   async init() {
     try {
-      const {docs, tree} = await this._sharedLoader.load('./docs', Stores.DOCUMENTATION);
+      const {docs, tree, meta} = await this._sharedLoader.load('./docs', Stores.DOCUMENTATION);
       const filteredTree = this._filterLanguage(tree, this._userLang());
       this.tree$.next(this._sortTree(filteredTree));
       this.docs$.next(docs);
+      this.meta.set(meta);
     } catch (e) {
       this._notificationsService.error(errorHandler(e));
     }

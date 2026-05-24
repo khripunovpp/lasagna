@@ -26,8 +26,8 @@ export interface TreeNode {
   order?: number;
 }
 
-interface MetaInfo {
-  updatedAt: string;
+export interface MetaInfo {
+  updatedAt: number;
 }
 
 @Injectable({providedIn: 'root'})
@@ -41,7 +41,7 @@ export class SharedDocLoaderService {
   async load(
     sourcePath: string,
     storeKey: Stores
-  ): Promise<{ docs: DocFile[]; tree: TreeNode[] }> {
+  ): Promise<{ docs: DocFile[]; tree: TreeNode[]; meta: MetaInfo }> {
     const remoteMeta = await firstValueFrom(
       this._http.get<MetaInfo>(`${sourcePath}/meta.json`)
     );
@@ -62,11 +62,11 @@ export class SharedDocLoaderService {
         {key: 'tree', value: tree},
       ]);
 
-      return {docs: data, tree};
+      return {docs: data, tree, meta: remoteMeta};
     } else {
       const docs = localData?.find((item: any) => item.key === 'data')?.value || [];
       const tree = localData?.find((item: any) => item.key === 'tree')?.value || [];
-      return {docs, tree};
+      return {docs, tree, meta: localMeta as MetaInfo};
     }
   }
 
