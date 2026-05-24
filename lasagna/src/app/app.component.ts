@@ -19,6 +19,7 @@ import {IS_CLIENT} from './shared/service/tokens/isClient.token';
 import {PromoWidgetsService} from './features/home/service/promo-widgets.service';
 import {ReleaseNotesService} from './features/release-notes/release-notes.service';
 import {LoadersManagerService} from './shared/service/services/loaders-manager.service';
+import {AnnouncementBannerComponent} from './features/announcements/view/announcement-banner.component';
 
 @Component({
   selector: 'lg-root',
@@ -34,6 +35,7 @@ import {LoadersManagerService} from './shared/service/services/loaders-manager.s
     StorageQuotaWarningComponent,
     SatisfactionPopupComponent,
     AsyncPipe,
+    AnnouncementBannerComponent,
   ],
   templateUrl: './app.component.html',
   standalone: true,
