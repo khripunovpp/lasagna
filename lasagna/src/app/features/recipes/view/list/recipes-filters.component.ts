@@ -82,6 +82,7 @@ export class RecipesFiltersComponent {
     }
     return this.translateService.instant('recipes.filters.all');
   });
+  readonly activeCount = computed(() => this.filterField() ? 1 : 0);
   private readonly _window = inject(WINDOW);
 
   ngOnInit() {

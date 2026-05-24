@@ -60,27 +60,40 @@
                        [size]="'medium'">
 
             @if (!isInFolderRoute()) {
-              <div class="view-mode-switcher">
-                <lg-button [icon]="true"
-                           [flat]="true"
-                           [style]="isFolderView() ? 'primary' : 'default'"
-                           [size]="'small'"
-                           (click)="switchViewMode('folders')">
-                  <mat-icon>folder</mat-icon>
-                </lg-button>
-                <lg-button [icon]="true"
-                           [flat]="true"
-                           [style]="!isFolderView() ? 'primary' : 'default'"
-                           [size]="'small'"
-                           (click)="switchViewMode('groupings')">
-                  <mat-icon>view_module</mat-icon>
-                </lg-button>
+              <div class="view-mode-group">
+                <div class="toolbox-section-label">{{ 'recipes.list.layout-label' | translate }}:</div>
+                <div class="view-mode-switcher">
+                  <lg-button [icon]="true"
+                             [flat]="true"
+                             [style]="isFolderView() ? 'primary' : 'default'"
+                             [size]="'small'"
+                             (click)="switchViewMode('folders')">
+                    <mat-icon>folder</mat-icon>
+                  </lg-button>
+                  <lg-button [icon]="true"
+                             [flat]="true"
+                             [style]="!isFolderView() ? 'primary' : 'default'"
+                             [size]="'small'"
+                             (click)="switchViewMode('groupings')">
+                    <mat-icon>view_module</mat-icon>
+                  </lg-button>
+                </div>
               </div>
             }
 
-            <lg-recipes-filters></lg-recipes-filters>
-
-            <lg-grouping-sorting storageKey="recipes"></lg-grouping-sorting>
+            <div class="view-mode-group">
+              <div class="toolbox-section-label">{{ 'recipes.toolbox.trigger-btn' | translate }}:</div>
+              <lg-button [flat]="true"
+                         [size]="'small'"
+                         [style]="recipesFilters()?.activeCount() ? 'primary' : 'default'"
+                         data-u2e="recipes.list.toolbox-trigger"
+                         (click)="openToolbox()">
+                <mat-icon class="toolbox-trigger__icon">tune</mat-icon>
+                @if (recipesFilters()?.activeCount(); as n) {
+                  <span class="toolbox-trigger__count">{{ n }}</span>
+                }
+              </lg-button>
+            </div>
           </lg-flex-row>
         </lg-flex-column>
 
@@ -177,6 +190,14 @@
   <lg-folder-move-dialog #folderMoveDialog
                          (onMoved)="onRecipesMoved()">
   </lg-folder-move-dialog>
+
+  <lg-sheet #toolbox
+            name="recipes-toolbox"
+            [title]="'recipes.toolbox.title' | translate">
+    <lg-recipes-filters></lg-recipes-filters>
+    <div class="toolbox-section-label">{{ 'recipes.toolbox.section.sorting' | translate }}:</div>
+    <lg-grouping-sorting storageKey="recipes"></lg-grouping-sorting>
+  </lg-sheet>
 } @error {
   {{ 'recipes-list.defer-load-error' | translate }}
 }

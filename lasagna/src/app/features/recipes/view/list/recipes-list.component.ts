@@ -47,6 +47,7 @@ import {FolderMoveDialogComponent} from '../folders/folder-move-dialog.component
 import {ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
+import {SheetComponent} from '../../../../shared/view/ui/dialogs/sheet.component';
 
 
 @Component({
@@ -89,6 +90,7 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
     FolderMoveDialogComponent,
     ReactiveFormsModule,
     AsyncPipe,
+    SheetComponent,
   ],
   styles: [
     `:host {
@@ -98,6 +100,29 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
     .view-mode-switcher {
       display: flex;
       gap: 4px;
+    }
+
+    .view-mode-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbox-trigger__count {
+      margin-left: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .toolbox-trigger__icon.mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .toolbox-section-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary-color);
     }
     `
   ]
@@ -140,6 +165,8 @@ export class RecipesListComponent implements OnInit {
   readonly folderDialog = viewChild(FolderEditDialogComponent);
   readonly folderDeleteDialog = viewChild(FolderDeleteDialogComponent);
   readonly folderMoveDialog = viewChild(FolderMoveDialogComponent);
+  readonly toolbox = viewChild(SheetComponent);
+  readonly recipesFilters = viewChild(RecipesFiltersComponent);
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
   readonly isFolderView = computed(() => this.isInFolderRoute() || this.viewMode() === 'folders');
@@ -195,6 +222,10 @@ export class RecipesListComponent implements OnInit {
 
   createFolder() {
     this.folderDialog()?.openCreate(this.folderUuid());
+  }
+
+  openToolbox() {
+    this.toolbox()?.open();
   }
 
   onEditFolder(folder: Folder) {
