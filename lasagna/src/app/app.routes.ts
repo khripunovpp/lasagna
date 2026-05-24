@@ -19,6 +19,7 @@ import {
   translationTitleResolver
 } from './shared/service/providers/title.resolver';
 import {blogPostResolver} from './features/blog/blog-post/blog-post.resolver';
+import {ApplicationComponent} from "./features/home/view/application.component";
 
 export const routes: Routes = [{
   path: '',
@@ -26,8 +27,7 @@ export const routes: Routes = [{
     // этот роут дублирует home для корректной работы SSG
     {
       path: '',
-      loadComponent: () => import('./features/home/view/application.component')
-        .then(m => m.ApplicationComponent),
+      component: ApplicationComponent,
       data: {
         canSeePolicies: true,
       },
@@ -38,8 +38,7 @@ export const routes: Routes = [{
       children: [
         {
           path: '',
-          loadComponent: () => import('./features/home/view/application.component')
-            .then(m => m.ApplicationComponent),
+          component: ApplicationComponent,
           data: {
             canSeePolicies: true,
           },
