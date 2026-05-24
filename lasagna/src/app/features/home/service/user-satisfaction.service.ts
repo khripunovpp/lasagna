@@ -115,11 +115,19 @@ export class UserSatisfactionService {
   }
 
   /**
-   * Проверяет, голосовал ли пользователь
+   * Проверяет, голосовал ли пользователь в последние 2 месяца.
+   * После 2 месяцев показываем попап снова, чтобы собрать свежий фидбек.
    */
   private hasUserVoted(): boolean {
     const data = this.getStorageData();
-    return data.hasVoted;
+    if (!data.hasVoted) {
+      return false;
+    }
+    const twoMonthsInMs = 60 * 24 * 60 * 60 * 1000;
+    if (!data.voteDate) {
+      return false;
+    }
+    return (Date.now() - data.voteDate) < twoMonthsInMs;
   }
 
   /**
