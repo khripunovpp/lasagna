@@ -140,7 +140,7 @@ export class SettingsService {
   }
 
   getRecipesViewMode(): 'folders' | 'groupings' {
-    return (this.settingsModel?.getSetting<string>(SettingsKeysConst.recipesViewMode)?.data as any) ?? 'folders';
+    return (this.settingsModel?.getSetting<string>(SettingsKeysConst.recipesViewMode)?.data as any) ?? 'groupings';
   }
 
   setRecipesViewMode(mode: 'folders' | 'groupings') {

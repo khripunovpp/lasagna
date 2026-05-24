@@ -135,18 +135,14 @@ export class RecipesListComponent implements OnInit {
   readonly isMobile = matchMediaSignal(mobileBreakpoint);
   readonly folderUuid = injectParams<string | null>('folderUuid');
   readonly isInFolderRoute = computed(() => !!this.folderUuid());
-  readonly viewMode = signal<'folders' | 'groupings'>('folders');
+  readonly viewMode = signal<'folders' | 'groupings'>('groupings');
   readonly childFolders = signal<Folder[]>([]);
   readonly folderDialog = viewChild(FolderEditDialogComponent);
   readonly folderDeleteDialog = viewChild(FolderDeleteDialogComponent);
   readonly folderMoveDialog = viewChild(FolderMoveDialogComponent);
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
-  private readonly _featureFlags = inject(FeatureFlagsService);
-  readonly foldersAllowed = computed(() => this._featureFlags.getFlagValue('folders'));
-  readonly isFolderView = computed(() =>
-    this.foldersAllowed() && (this.isInFolderRoute() || this.viewMode() === 'folders')
-  );
+  readonly isFolderView = computed(() => this.isInFolderRoute() || this.viewMode() === 'folders');
   private readonly _settingsService = inject(SettingsService);
   readonly foldersEnabled = computed(() => this.viewMode() === 'folders' && this._settingsService.getRecipesViewMode() === 'folders');
   private readonly _foldersRepository = inject(FoldersRepository);

@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-05-24",
+      "features": [
+        "Recipes can now be organized into folders. The recipes page has a new view-mode switch: \"Groupings\" (the previous default) and \"Folders\" — a navigable hierarchy with breadcrumbs.",
+        "Folders support a custom name, icon, and color. Use the menu on a folder tile to edit or delete it.",
+        "Selected recipes can be moved into a folder via the \"Move to...\" action."
+      ]
+    },
+    {
       "date": "2026-04-25",
       "features": [
         "Added shrinkage tracking (mass loss during cooking). On the recipe page, you can specify a percentage or final weight — the cost will be recalculated taking the loss into account.",

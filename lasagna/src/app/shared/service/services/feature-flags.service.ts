@@ -6,7 +6,6 @@ export const featureFlagsList = [
   'registration',
   'synchronization',
   'synchronizationUrlStr',
-  'folders',
 ] as const;
 
 export type FeatureFlag = typeof featureFlagsList[number];

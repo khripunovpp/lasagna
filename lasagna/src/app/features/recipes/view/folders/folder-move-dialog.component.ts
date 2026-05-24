@@ -82,12 +82,11 @@ import {AnalyticsService} from '../../../../shared/service/services/analytics.se
       transition: background 0.15s ease;
 
       &:hover {
-        background: var(--p-6);
+        background: var(--p-4);
       }
 
       &.selected {
         border-color: var(--p-3);
-        background: var(--p-6);
       }
     }
   `],

@@ -27,6 +27,21 @@ Above the list there's a row of controls:
 
 Within each group, recipes are listed alphabetically.
 
+### 📁 Folders
+
+Recipes can also be arranged into your own **folders**. Two icon buttons next to the filters switch the view:
+
+- **Groupings** — the default view described above.
+- **Folders** — a hierarchical view. The page shows folder tiles, and you navigate inside them by clicking. The path is shown as a breadcrumb starting from *"Recipes"*; click any segment to go back up.
+
+When in Folders view you can:
+
+- Create a **New folder** with a name, icon, and color.
+- Use the three-dot menu on a folder tile to **Edit** or **Delete** it (deleting a non-empty folder removes its contents).
+- Drop recipes into a folder via the **Move to...** action — select recipes first (see [Selection & Bulk Actions](#-selection--bulk-actions) below), then choose a target folder (or *"Root (no folder)"* to take them out).
+
+Your chosen view mode is remembered between sessions.
+
 ### 🃏 Recipe card
 
 Each recipe card shows:

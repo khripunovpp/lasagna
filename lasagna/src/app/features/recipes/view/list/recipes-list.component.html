@@ -10,7 +10,7 @@
           <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
         </lg-button>
 
-        @if (foldersEnabled() && foldersAllowed()) {
+        @if (foldersEnabled()) {
           <lg-button [icon]="true"
                      (onClick)="createFolder()"
                      data-u2e="recipes.list.folder-add-button"
@@ -59,7 +59,7 @@
                        [mobileMode]="true"
                        [size]="'medium'">
 
-            @if (foldersAllowed() && !isInFolderRoute()) {
+            @if (!isInFolderRoute()) {
               <div class="view-mode-switcher">
                 <lg-button [icon]="true"
                            [flat]="true"
@@ -113,7 +113,7 @@
 
           <lg-grouping-tiles [selectable]="true"
                              data-u2e="recipes.list.grouping-tiles"
-                             [collapsable]="foldersAllowed() ? !foldersEnabled() : true"
+                             [collapsable]="!foldersEnabled()"
                              [sortResult]="recipesList">
             <ng-template let-recipe let-index="index" lgGroupingTile>
               <lg-card>

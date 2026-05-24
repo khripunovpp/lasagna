@@ -83,11 +83,10 @@ export const provideRecipes = {
       map((recipes: Recipe[]) => recipes.map((recipe: Recipe) => recipe.toDTO())),
       switchMap((recipes) => folderState$.pipe(
         map(({uuid, exists}) => {
-          const foldersAllowed = featureFlagsService.getFlagValue('folders');
           const foldersEnabled = settingsService.getRecipesViewMode() === 'folders';
 
           return recipes.filter(r => {
-            if (!foldersEnabled || !foldersAllowed) {
+            if (!foldersEnabled) {
               return true;
             }
 
@@ -95,9 +94,7 @@ export const provideRecipes = {
               return r.folder_uuid === uuid;
             }
 
-            return foldersAllowed
-              ? r.folder_uuid == null
-              : true;
+            return r.folder_uuid == null
           });
         }),
       )),
