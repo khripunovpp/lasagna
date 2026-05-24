@@ -1,4 +1,4 @@
-import {Component, ContentChild, effect, EventEmitter, inject, Output, signal} from '@angular/core';
+import {Component, ContentChild, effect, EventEmitter, Input, inject, Output, signal} from '@angular/core';
 import {FlexRowComponent} from '../../layout/flex-row.component';
 import {ButtonComponent} from '../button/button.component';
 import {DropdownComponent} from '../../../../features/controls/dropdown/dropdown.component';
@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {injectQueryParams} from '../../../helpers/route.helpers';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {WINDOW} from '../../../service/tokens/window.token';
+import {GroupingSortingStorageService} from '../../../service/services/grouping-sorting-storage.service';
 
 @Component({
   selector: 'lg-grouping-sorting',
@@ -23,7 +24,7 @@ import {WINDOW} from '../../../service/tokens/window.token';
     <lg-flex-row [mobileMode]="true"
                  size="medium">
       <lg-dropdown>
-        <lg-button [outlined]="true"
+        <lg-button [flat]="true"
                    [size]="'small'"
                    [style]="'primary'"
                    data-u2e="grouping.sorting.group.button"
@@ -91,7 +92,7 @@ import {WINDOW} from '../../../service/tokens/window.token';
       <!--      </lg-dropdown>-->
 
       <lg-dropdown>
-        <lg-button [outlined]="true"
+        <lg-button [flat]="true"
                    [size]="'small'"
                    [style]="'primary'"
                    data-u2e="grouping.sorting.direction.button"
@@ -142,6 +143,7 @@ export class GroupingSortingComponent {
   aRouter = inject(ActivatedRoute);
   @ContentChild(GroupingSortingContainerComponent) context!: GroupingSortingContainerComponent;
 
+  @Input() storageKey?: string;
   @Output() sortChange = new EventEmitter<{ field: string, direction: 'asc' | 'desc' | string }>();
   @Output() groupChange = new EventEmitter<string>();
 
@@ -160,19 +162,22 @@ export class GroupingSortingComponent {
     this.sortChange.emit(sort);
   });
   private readonly _window = inject(WINDOW);
+  private readonly _storage = inject(GroupingSortingStorageService);
 
   ngOnInit() {
-    const params = this.aRouter.snapshot.queryParams;
+    const stored = this.storageKey ? this._storage.read(this.storageKey) : null;
     const groupBy = this.groupingParam();
     const sortDirection = this.sortDirection();
     const sortField = this.sortField();
 
+    const urlDirection = sortDirection
+      ? sortDirection === 'asc' ? 'asc' : 'desc'
+      : null;
+
     this.sorting.set({
-      field: sortField?.toString() || 'name',
-      direction: sortDirection
-        ? sortDirection === 'asc' ? 'asc' : 'desc'
-        : this.defaultDirection,
-      group: groupBy?.toString() || 'category'
+      field: stored?.field ?? sortField?.toString() ?? 'name',
+      direction: stored?.direction ?? urlDirection ?? this.defaultDirection,
+      group: stored?.group ?? groupBy?.toString() ?? 'category',
     });
   }
 
@@ -183,18 +188,26 @@ export class GroupingSortingComponent {
       group?: string
     }
   ) {
-    this.sorting.set({
+    const next = {
       field: props.field || this.sorting().field,
       direction: props.direction || this.sorting().direction,
-      group: props.group || this.sorting().group
-    });
-    this.sortChange.emit(this.sorting());
+      group: props.group || this.sorting().group,
+    };
+    this.sorting.set(next);
+    this.sortChange.emit(next);
+    if (this.storageKey && (next.direction === 'asc' || next.direction === 'desc')) {
+      this._storage.write(this.storageKey, {
+        field: next.field,
+        direction: next.direction,
+        group: next.group,
+      });
+    }
 
     this.router.navigate([], {
       queryParams: {
-        sortField: props.field || this.sorting().field,
-        sortDirection: props.direction || this.sorting().direction,
-        groupBy: props.group || this.sorting().group
+        sortField: next.field,
+        sortDirection: next.direction,
+        groupBy: next.group,
       },
       relativeTo: this.aRouter,
       queryParamsHandling: 'merge',

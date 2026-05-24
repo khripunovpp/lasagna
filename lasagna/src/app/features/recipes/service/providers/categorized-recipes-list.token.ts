@@ -20,6 +20,7 @@ import {FoldersRepository} from './folders.repository';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {LoadersManagerService} from '../../../../shared/service/services/loaders-manager.service';
+import {GroupingSortingStorageService} from '../../../../shared/service/services/grouping-sorting-storage.service';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult<RecipeDTO>>>('CategorizedRecipesList');
 
@@ -36,6 +37,7 @@ export const provideRecipes = {
     const foldersRepository = inject(FoldersRepository);
     const settingsService = inject(SettingsService);
     const loadersManagerService = inject(LoadersManagerService);
+    const sortingStorage = inject(GroupingSortingStorageService);
     const groupingParam = injectQueryParams('groupBy');
     const sortDirection = injectQueryParams<string | null>('sortDirection');
     const sortField = injectQueryParams('sortField');
@@ -104,14 +106,15 @@ export const provideRecipes = {
     loadersManagerService.showLoader('app');
     return recipes.pipe(
       switchMap((recipes: RecipeDTO[]) => {
-        const grouping = groupingParam() as string;
+        const stored = sortingStorage.read('recipes');
+        const grouping = (stored?.group ?? (groupingParam() as string)) as string;
         const strategy: SortStrategy<any> = groupingMap[grouping]?.() ?? groupingMap['category']();
 
         return groupSortService.groupItems<RecipeDTO>(
           recipes,
           strategy,
-          (sortDirection() as any) ?? 'asc',
-          (sortField() as any) ?? 'name',
+          stored?.direction ?? (sortDirection() as any) ?? 'asc',
+          stored?.field ?? (sortField() as any) ?? 'name',
         );
       }),
       catchError((error, caught) => {

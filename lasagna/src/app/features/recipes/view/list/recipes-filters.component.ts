@@ -22,7 +22,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     <lg-flex-row [mobileMode]="true"
                  size="medium">
       <lg-dropdown>
-        <lg-button [outlined]="true"
+        <lg-button [flat]="true"
                    [size]="'small'"
                    [attr.data-u2e]="'recipes.filters.button'"
                    [style]="'default'"
