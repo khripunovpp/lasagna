@@ -696,6 +696,7 @@
   "recipe.form.validation-name.portions": "Portions",
   "recipe.form.validation-name.tags": "Tags",
   "recipe.title": "📜 How much does {{name}} cost?",
+  "recipe.form.back-to-folder-btn": "Back to folder",
   "recipes-list.defer-load-error": "Error loading recipes. Refresh the page or try again later.",
   "recipes.list.layout-label": "Layout",
   "recipes.calculate-btn": "Calculate",

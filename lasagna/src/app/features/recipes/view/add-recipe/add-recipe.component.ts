@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, DestroyRef, inject, OnInit, signal, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, DestroyRef, effect, inject, OnInit, signal, viewChild} from '@angular/core';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
 import {AddRecipeFormComponent} from '../add-recipe-form/add-recipe-form.component';
@@ -37,6 +37,8 @@ import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from
 import {TransferDataService} from '../../../../shared/service/services/transfer-data.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.component';
+import {FoldersRepository} from '../../service/providers/folders.repository';
+import {Folder} from '../../service/models/Folder';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -68,6 +70,12 @@ import {DraftFormBannerComponent} from '../../../drafts/draft-form-banner.compon
   templateUrl: './add-recipe.component.html',
   styles: [
     `
+    .back-to-folder__icon.mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
     `
   ]
 })
@@ -114,6 +122,18 @@ export class AddRecipeComponent
   private readonly _transferDataService = inject(TransferDataService);
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _foldersRepository = inject(FoldersRepository);
+  readonly folder = signal<Folder | undefined>(undefined);
+  private readonly _loadFolderEffect = effect(() => {
+    const uuid = this.recipe()?.folder_uuid;
+    if (!uuid) {
+      this.folder.set(undefined);
+      return;
+    }
+    this._foldersRepository.getOne(uuid)
+      .then(f => this.folder.set(f?.uuid ? f : undefined))
+      .catch(() => this.folder.set(undefined));
+  });
 
   get ingredients() {
     return this.form.get('ingredients') as FormArray;

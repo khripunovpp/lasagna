@@ -2,11 +2,11 @@
   @if (editMode()) {
     <lg-controls-bar size="small">
       <lg-button [icon]="true"
+                 [label]="'recipe.form.add-new-btn'|translate"
                  [link]="'/recipes/add'"
                  [size]="'small'"
-                 data-u2e="recipe.form.add-new-btn"
-                 [label]="'recipe.form.add-new-btn'|translate"
-                 [style]="'primary'">
+                 [style]="'primary'"
+                 data-u2e="recipe.form.add-new-btn">
         <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
       </lg-button>
     </lg-controls-bar>
@@ -16,9 +16,9 @@
     <lg-container [formGroup]="form">
       <lg-flex-column size="medium">
         @if (draftRef(); as draft) {
-          <lg-draft-form-banner type="recipe"
+          <lg-draft-form-banner (deleteNow)="onRemoveDraft()"
                                 [draft]="draft"
-                                (deleteNow)="onRemoveDraft()"></lg-draft-form-banner>
+                                type="recipe"></lg-draft-form-banner>
         }
 
         @if (addedRecipeInformerUUID(); as uuid) {
@@ -29,15 +29,31 @@
         }
 
         <lg-flex-row [center]="true">
-          @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-            <lg-title lgSelfStart>
-              {{ recipe()?.name }}
-            </lg-title>
-          } @else {
-            <lg-title lgSelfStart>
-              {{ 'recipe.form.title'|translate }}
-            </lg-title>
-          }
+          <lg-flex-row [center]="true"
+                       size="tiny">
+            @if (folder(); as f) {
+              <lg-button [flat]="true"
+                         [link]="'/recipes/folder/' + f.uuid"
+                         [size]="'small'"
+                         [style]="'default'"
+                         data-u2e="recipe.form.back-to-folder-btn">
+                <mat-icon class="back-to-folder__icon">folder</mat-icon>
+                {{ f.name }}
+              </lg-button>
+            }
+
+            <span>/</span>
+
+            @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
+              <lg-title lgSelfStart>
+                {{ recipe()?.name }}
+              </lg-title>
+            } @else {
+              <lg-title lgSelfStart>
+                {{ 'recipe.form.title'|translate }}
+              </lg-title>
+            }
+          </lg-flex-row>
 
           @if (recipe()) {
             <lg-sync-badge [entity]="recipe()!"></lg-sync-badge>
@@ -56,51 +72,51 @@
 
           @if (!draftRef() && editMode()) {
             <ng-template lgInlineSeparatedGroup>
-              <lg-button [flat]="true"
-                         data-u2e="recipe.form.calculate-btn"
-                         [disabled]="!!draftRef()"
+              <lg-button [disabled]="!!draftRef()"
+                         [flat]="true"
                          [link]="'/recipes/calculate/' + recipe()?.uuid"
-                         [style]="'default'">
+                         [style]="'default'"
+                         data-u2e="recipe.form.calculate-btn">
                 {{ 'recipe.calculate-btn'|translate }}
               </lg-button>
             </ng-template>
 
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink
+              <lg-button (click)="onCloneRecipe()"
+                         [flat]="true"
                          [style]="'default'"
                          data-u2e="recipe.form.clone-btn"
-                         [flat]="true"
-                         (click)="onCloneRecipe()">
+                         lgShrink>
                 {{ 'recipe.form.clone-btn'|translate }}
               </lg-button>
             </ng-template>
 
             <ng-template lgInlineSeparatedGroup>
               @if (shareUrl()) {
-                <lg-button lgShrink
+                <lg-button (click)="onCopyShareUrl()"
+                           [flat]="true"
                            [style]="'success'"
                            data-u2e="recipe.form.copy-share-url-btn"
-                           [flat]="true"
-                           (click)="onCopyShareUrl()">
+                           lgShrink>
                   {{ 'recipe.form.copy-shared-link-btn'|translate }}
                 </lg-button>
               } @else {
-                <lg-button lgShrink
+                <lg-button (click)="onShareRecipe()"
+                           [flat]="true"
                            [style]="'default'"
                            data-u2e="recipe.form.share-btn"
-                           [flat]="true"
-                           (click)="onShareRecipe()">
+                           lgShrink>
                   {{ 'recipe.form.share-btn'|translate }}
                 </lg-button>
               }
             </ng-template>
 
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink
+              <lg-button (click)="onExportRecipe()"
+                         [flat]="true"
                          [style]="'default'"
                          data-u2e="recipe.form.export-btn"
-                         [flat]="true"
-                         (click)="onExportRecipe()">
+                         lgShrink>
                 {{ 'export-label'|translate }}
               </lg-button>
             </ng-template>
@@ -108,21 +124,21 @@
 
           @if (isDraftRoute()) {
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink
-                         [style]="'danger'"
+              <lg-button (click)="onRemoveDraft()"
                          [flat]="true"
+                         [style]="'danger'"
                          data-u2e="recipe.form.delete-draft-btn"
-                         (click)="onRemoveDraft()">
+                         lgShrink>
                 {{ 'recipe.form.delete-draft-btn'|translate }}
               </lg-button>
             </ng-template>
           } @else if (recipe()?.uuid) {
             <ng-template lgInlineSeparatedGroup>
-              <lg-button lgShrink
-                         [style]="'danger'"
+              <lg-button (click)="onDeleteRecipe()"
                          [flat]="true"
+                         [style]="'danger'"
                          data-u2e="recipe.form.delete-btn"
-                         (click)="onDeleteRecipe()">
+                         lgShrink>
                 {{ 'recipe.form.delete-btn'|translate }}
               </lg-button>
             </ng-template>
@@ -141,11 +157,11 @@
 
       <lg-flex-row [mobileMode]="true" [relaxed]="true">
         @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
-          <lg-button [disabled]="!form.dirty && !draftRef()"
-                     lgShrink
-                     data-u2e="recipe.form.save-btn.edit"
+          <lg-button (click)="onEditRecipe()"
+                     [disabled]="!form.dirty && !draftRef()"
                      [style]="'primary'"
-                     (click)="onEditRecipe()">
+                     data-u2e="recipe.form.save-btn.edit"
+                     lgShrink>
             @if (form.dirty || draftRef()) {
               {{ 'recipe.form.save-btn.edit.active'|translate }}
             } @else {
@@ -153,11 +169,11 @@
             }
           </lg-button>
         } @else {
-          <lg-button [disabled]="!form.dirty && !draftRef() && !sharedRecipe()"
-                     lgShrink
-                     data-u2e="recipe.form.save-btn.add"
+          <lg-button (click)="onAddRecipe()"
+                     [disabled]="!form.dirty && !draftRef() && !sharedRecipe()"
                      [style]="'primary'"
-                     (click)="onAddRecipe()">
+                     data-u2e="recipe.form.save-btn.add"
+                     lgShrink>
             @if (form.dirty || draftRef()) {
               {{ 'recipe.form.save-btn.add.active'|translate }}
             } @else if (sharedRecipe()) {

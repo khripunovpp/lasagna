@@ -696,6 +696,7 @@
   "recipe.form.validation-name.portions": "Количество порций",
   "recipe.form.validation-name.tags": "Теги",
   "recipe.title": "📜 Сколько стоит {{name}}?",
+  "recipe.form.back-to-folder-btn": "Назад в папку",
   "recipes-list.defer-load-error": "Ошибка загрузки списка рецептов. Пожалуйста, обновите страницу",
   "recipes.list.layout-label": "Раскладка",
   "recipes.calculate-btn": "Рассчитать",

@@ -696,6 +696,7 @@
   "recipe.form.validation-name.portions": "Porções",
   "recipe.form.validation-name.tags": "Tags",
   "recipe.title": "📜 Quanto custa {{name}}?",
+  "recipe.form.back-to-folder-btn": "Voltar à pasta",
   "recipes-list.defer-load-error": "Erro ao carregar receitas. Atualize a página ou tente novamente mais tarde.",
   "recipes.list.layout-label": "Layout",
   "recipes.calculate-btn": "Calcular",
