@@ -11,7 +11,6 @@
 }
 
 <main [class.app--pwa]="isPwa()"
-      [hidden]="!isBrowser"
       [class.app--isLoading]="loadersManagerService.observeScope('app') | async"
       class="app">
   <lg-header></lg-header>
