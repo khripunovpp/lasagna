@@ -133,6 +133,14 @@ import {ContainerComponent} from '../../../shared/view/layout/container.componen
         flex-wrap: wrap;
         gap: 8px;
       }
+
+      .banner__content {
+        flex: 1 1 100%;
+      }
+
+      .banner__details {
+        margin-left: auto;
+      }
     }
   `],
 })

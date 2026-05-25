@@ -44,6 +44,10 @@
 .app-content {
   --app-content-top-padding: calc(var(--header-height) + 44px);
   padding-top: var(--app-content-top-padding);
+
+  @media (max-width: 600px) {
+    --app-content-top-padding: calc(var(--header-height) + 24px);
+  }
 }
 
 .app-footer {
