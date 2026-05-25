@@ -91,11 +91,19 @@ test.describe.serial('Жизненный цикл драфтов (TTL / grace)',
     ]);
 
     await page.goto(URLS.product.list);
+    await page.waitForLoadState('networkidle');
     const list = new ProductsListPage(page);
 
     await expect(list.drafts.expander).toBeHidden();
 
-    const stored = await readDrafts(page, 'draft_products');
-    expect(stored?.['draft-expired-uuid']).toBeUndefined();
+    // Prune runs inside DraftsListComponent.ngOnInit → _reload, which is async.
+    // On slow CI the localStorage read can race the prune, so poll until the
+    // expired draft is gone (or the test times out).
+    await expect
+      .poll(async () => {
+        const stored = await readDrafts(page, 'draft_products');
+        return stored?.['draft-expired-uuid'];
+      })
+      .toBeUndefined();
   });
 });
