@@ -7,11 +7,14 @@ import {WINDOW} from '../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../shared/service/tokens/isClient.token';
 import {getURLWithoutParams} from '../../shared/helpers';
 import {AnalyticsService} from '../../shared/service/services/analytics.service';
+import {SupportService} from '../home/service/support.service';
+import {TranslateService} from '@ngx-translate/core';
 
 export interface AnnouncementDetailsLink {
   labelKey: string;
-  url: string;
+  url?: string;
   external?: boolean;
+  actionFn?: () => void;
 }
 
 export interface AnnouncementConfig {
@@ -40,8 +43,25 @@ export class AnnouncementsService {
   private readonly _isClient = inject(IS_CLIENT);
   private readonly _router = inject(Router);
   private readonly _analytics = inject(AnalyticsService);
+  private readonly _support = inject(SupportService);
+  private readonly _translate = inject(TranslateService);
 
   private readonly _configs: AnnouncementConfig[] = [
+    {
+      id: 'feedback-home-2026-05',
+      titleKey: _('announcements.feedback-home-2026-05.title'),
+      bodyKey: _('announcements.feedback-home-2026-05.body'),
+      startsAt: '2026-05-25',
+      expiresAt: '2026-08-01',
+      detailsLink: {
+        labelKey: _('announcements.feedback-home-2026-05.cta'),
+        actionFn: () => this._support.requestOpen({
+          subject: this._translate.instant(_('announcements.feedback-home-2026-05.support-subject')),
+          message: this._translate.instant(_('announcements.feedback-home-2026-05.support-message')),
+        }),
+      },
+      routeMatch: ['/', '/home'],
+    },
     {
       id: 'folders-mode-2026-05',
       titleKey: _('announcements.folders-mode-2026-05.title'),

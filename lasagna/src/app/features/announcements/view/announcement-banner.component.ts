@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, computed, HostBinding, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
-import {AnnouncementsService} from '../announcements.service';
+import {AnnouncementConfig, AnnouncementsService} from '../announcements.service';
 import {ContainerComponent} from '../../../shared/view/layout/container.component';
 
 @Component({
@@ -20,7 +20,13 @@ import {ContainerComponent} from '../../../shared/view/layout/container.componen
             </div>
 
             @if (a.detailsLink; as link) {
-              @if (link.external) {
+              @if (link.actionFn) {
+                <button (click)="invokeAction(a)"
+                        class="banner__details"
+                        type="button">
+                  {{ link.labelKey | translate }}
+                </button>
+              } @else if (link.external) {
                 <a (click)="trackDetailsClick(a.id)"
                    [href]="link.url"
                    class="banner__details"
@@ -92,6 +98,9 @@ import {ContainerComponent} from '../../../shared/view/layout/container.componen
       color: var(--text-color, #111);
       text-decoration: none;
       font-weight: 500;
+      border: 0;
+      font: inherit;
+      cursor: pointer;
     }
 
     .banner__details:hover {
@@ -143,5 +152,12 @@ export class AnnouncementBannerComponent {
 
   trackDetailsClick(id: string): void {
     this._service.trackDetailsClick(id);
+  }
+
+  invokeAction(a: AnnouncementConfig): void {
+    const fn = a.detailsLink?.actionFn;
+    if (!fn) return;
+    this._service.trackDetailsClick(a.id);
+    fn();
   }
 }

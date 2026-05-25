@@ -41,9 +41,9 @@
                 <mat-icon class="back-to-folder__icon">folder</mat-icon>
                 {{ f.name }}
               </lg-button>
-            }
 
-            <span [hidden]="isMobile()">/</span>
+              <span [hidden]="isMobile()">/</span>
+            }
 
             @if ((recipe()?.uuid && !draftRef()) || (draftRef() && draftByExistingRecipe())) {
               <lg-title lgSelfStart>
