@@ -13,7 +13,7 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     @if (showButton()) {
       <a [routerLink]="['/settings']"
          (click)="hide()"
-         [queryParams]="{download_backup: true,tab:'data'}">
+         [queryParams]="{download_backup: true,tab:'data','data-settings':'backup'}">
         {{ 'backup.no-backup' | translate }}
       </a>
     }

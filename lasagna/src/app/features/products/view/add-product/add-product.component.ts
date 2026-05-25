@@ -5,6 +5,7 @@ import {AddProductFormComponent} from '../add-product-form/add-product-form.comp
 import {ActivatedRoute, Router} from '@angular/router';
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {DraftForm, NotificationsService} from '../../../../shared/service/services';
+import {DeletingService} from '../../../../shared/service/services/deleting.service';
 import {ProductsRepository} from '../../service/products.repository';
 import {combineLatest, debounceTime, take} from 'rxjs';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
@@ -36,6 +37,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
 import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 import {DraftStatusComponent} from '../../../drafts/draft-status.component';
+import {DeletingKey} from '../../../../shared/service/services/deleting.types';
 
 @Component({
   selector: 'lg-add-product',
@@ -102,6 +104,7 @@ export class AddProductComponent
   })
   firstState?: any;
   isClient = inject(IS_CLIENT);
+  private readonly _deletingService = inject(DeletingService);
   private readonly _onboardingService = inject(OnboardingService);
   private _routerManager = inject(ROUTER_MANAGER);
   private readonly _window = inject(WINDOW);
@@ -111,8 +114,10 @@ export class AddProductComponent
       debounceTime(500),
       takeUntilDestroyed(this._destroyRef),
     ).subscribe((value) => {
-      if (!this.formComponent()!.form.dirty || !this.product()) {
-        return
+      if (!this.formComponent()!.form.dirty
+        || !this.product()
+        || this.product()?.deleted) {
+        return;
       }
 
       if (this.draftRef()?.uuid) {
@@ -179,6 +184,17 @@ export class AddProductComponent
   onRemoveDraft() {
     this._removeDraft();
     this._routerManager.navigate(['products']);
+  }
+
+  async onRecoverProduct() {
+    const product = this.product();
+    if (!product?.uuid) return;
+    try {
+      await this._deletingService.recoverByEntity(DeletingKey.products, product.uuid);
+      window.location.reload();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   onDeleteProduct() {

@@ -1,10 +1,10 @@
-import {Component, contentChildren, effect, inject, input, signal, ViewEncapsulation,} from '@angular/core';
+import {Component, computed, contentChildren, effect, inject, input, signal, ViewEncapsulation,} from '@angular/core';
 import {NgTemplateOutlet} from '@angular/common';
 import {TabDirective} from './tab.directive';
 import {FlexColumnComponent} from '../../layout/flex-column.component';
-
-import {injectQueryParams} from '../../../helpers/route.helpers';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
 
 @Component({
   selector: 'lg-tabs',
@@ -169,15 +169,18 @@ import {Router} from '@angular/router';
 export class TabsComponent {
   readonly tabTemplates = contentChildren(TabDirective);
   readonly router = inject(Router);
+  readonly route = inject(ActivatedRoute);
   readonly tabs = signal<readonly TabDirective[]>([]);
   readonly flat = input(false)
   readonly name = input('')
   readonly silent = input(false)
   readonly scrollable = input(true)
   readonly lazy = input(true)
+  readonly queryKey = input('tab')
   readonly activated = signal<boolean[]>([]);
   readonly selectedIndex = signal(0);
-  readonly tabQuery = injectQueryParams('tab');
+  private readonly _queryParams = toSignal(this.route.queryParams, {requireSync: true});
+  readonly tabQuery = computed(() => this._queryParams()[this.queryKey()] ?? null);
   readonly tabQueryEffect = effect(() => {
     const tab = this.tabQuery();
     if (tab) {

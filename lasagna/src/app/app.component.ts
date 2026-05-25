@@ -20,6 +20,7 @@ import {PromoWidgetsService} from './features/home/service/promo-widgets.service
 import {ReleaseNotesService} from './features/release-notes/release-notes.service';
 import {LoadersManagerService} from './shared/service/services/loaders-manager.service';
 import {AnnouncementBannerComponent} from './features/announcements/view/announcement-banner.component';
+import {CheckingDeleteDialogComponent} from './shared/view/deleting/checking-delete-dialog.component';
 
 @Component({
   selector: 'lg-root',
@@ -36,6 +37,7 @@ import {AnnouncementBannerComponent} from './features/announcements/view/announc
     SatisfactionPopupComponent,
     AsyncPipe,
     AnnouncementBannerComponent,
+    CheckingDeleteDialogComponent,
   ],
   templateUrl: './app.component.html',
   standalone: true,

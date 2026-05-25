@@ -98,7 +98,7 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
     await expect(settingsPage.getToast('success')).toBeVisible();
     // ждём, пока попап подтверждения восстановления полностью закроется,
     // иначе оверлей диалога перехватывает клик по backupCreateButton
-    await expect(settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first()).toBeHidden();
+    await expect(settingsPage.confirmDialogButton('backup-recover-confirm', 'confirm').first()).toBeHidden();
 
     // создаем бэкап после заливки
     await expect(settingsPage.ref.backupCreateButton).toBeVisible();
@@ -149,8 +149,8 @@ test.describe.serial('Скачка и заливка бэкапов', () => {
       mimeType: 'application/json',
       buffer: fileBuffer,
     });
-    await expect(settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first()).toBeVisible();
-    await settingsPage.confirmDialogButton('confirmation-popover', 'confirm').first().click();
+    await expect(settingsPage.confirmDialogButton('backup-recover-confirm', 'confirm').first()).toBeVisible();
+    await settingsPage.confirmDialogButton('backup-recover-confirm', 'confirm').first().click();
   }
 
   async function searchProductByName(

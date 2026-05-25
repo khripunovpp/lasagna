@@ -7,6 +7,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {timer} from 'rxjs';
 import {FlexColumnComponent} from '../../layout/flex-column.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ButtonComponent} from '../button/button.component';
 
 @Component({
   selector: 'lg-confirmation-popover',
@@ -22,6 +23,14 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
                [name]="name()">
       <lg-flex-column [position]="'center'" [size]="'small'">
         <div class="text-wrap">{{ settings()?.message }}</div>
+        @if (settings()?.extraAction; as extra) {
+          <lg-button [flat]="true"
+                     [style]="'info'"
+                     [attr.data-u2e]="'dialog-' + name() + '.extra-action'"
+                     (onClick)="onExtraAction(extra.handler)">
+            {{ extra.label }}
+          </lg-button>
+        }
       </lg-flex-column>
     </lg-dialog>
   `,
@@ -29,7 +38,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     DialogComponent,
     TranslatePipe,
     ReactiveFormsModule,
-    FlexColumnComponent
+    FlexColumnComponent,
+    ButtonComponent
   ]
 })
 export class ConfirmationPopoverComponent {
@@ -59,6 +69,11 @@ export class ConfirmationPopoverComponent {
   onCancel() {
     this._emit(false);
     this.locked.setValue(false);
+  }
+
+  onExtraAction(handler: () => void) {
+    handler();
+    this.settings.set(null);
   }
 
   private _emit(confirmed: boolean) {

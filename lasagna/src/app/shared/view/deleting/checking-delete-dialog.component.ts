@@ -5,11 +5,14 @@ import {errorHandler} from '../../helpers';
 import {AUTHENTICATED} from '../../../features/account/account.token';
 import {ConfirmationPopoverComponent} from '../ui/confirmation-popover/confirmation-popover.component';
 import {ConfirmationService} from '../ui/confirmation-popover/confirmation.service';
+import {HAS_SYNC_FEATURE} from '../../../features/sync/service/can-sync.token';
+import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'lg-checking-delete-dialog',
   template: `
-    <lg-confirmation-popover></lg-confirmation-popover>
+    <lg-confirmation-popover name="checking-delete-dialog"></lg-confirmation-popover>
   `,
   standalone: true,
   providers: [
@@ -25,12 +28,15 @@ export class CheckingDeleteDialogComponent
   }
 
   private readonly _deleteConfirmationService = inject(ConfirmationService);
-  private readonly _checkToDeleteService = inject(DeletingService);
+  private readonly _deletingService = inject(DeletingService);
   private readonly _notificationsService = inject(NotificationsService);
   private readonly _authenticated = inject(AUTHENTICATED);
-  private readonly _notAuthenticatedMessage = '\n\nAlso note that you are not authenticated. So any items linked to your account will not be deleted from the server. Please log in to ensure complete deletion.';
-  private readonly _timeout = 1000 * 1;
-  async ngOnInit() {
+  private readonly _hasSync = inject(HAS_SYNC_FEATURE);
+  private readonly _translate = inject(TranslateService);
+  private readonly _router = inject(Router);
+  private readonly _timeout = 1000;
+
+  ngOnInit() {
     setTimeout(() => {
       this._runEstimation();
     }, this._timeout);
@@ -38,20 +44,31 @@ export class CheckingDeleteDialogComponent
 
   private async _runEstimation() {
     try {
-      const {
-        itemsToDeleteInCloud: cloudItems, itemsToDelete: items, count
-      } = await this._checkToDeleteService.estimateItemsToDelete();
-      console.log('Items to delete:', items);
+      await this._deletingService.ensureLoaded();
+      const count = this._deletingService.expiredCount();
       if (!count) return;
 
-      this._deleteConfirmationService.configure({
+      const showAuthNote = !this._authenticated() && this._hasSync;
+      const message =
+        this._translate.instant('deleted-data.confirm.message', {count})
+        + (showAuthNote ? '\n\n' + this._translate.instant('deleted-data.confirm.not-authenticated') : '')
+        + '\n\n' + this._translate.instant('deleted-data.confirm.proceed');
 
-        message: `You have ${count} items marked for deletion because 30 days have passed since they were moved to trash.${this._authenticated() ? '' : this._notAuthenticatedMessage}\n\nDo you want to proceed?`,
+      this._deleteConfirmationService.configure({
+        message,
+        extraAction: {
+          label: this._translate.instant('deleted-data.confirm.view-list'),
+          handler: () => {
+            this._router.navigate(['/settings'], {queryParams: {'data-settings': 'deleted', tab: 'data'}});
+          },
+        },
         onCancel: () => {
-          console.log('Deletion cancelled');
         },
         onSuccess: () => {
-          this._checkToDeleteService.performCleanup(items, cloudItems)
+          this._deletingService.performExpiredCleanup()
+            .then(() => {
+              this._notificationsService.success(this._translate.instant('deleted-data.deleted-success'));
+            })
             .catch(err => {
               this._notificationsService.error(errorHandler(err));
             });

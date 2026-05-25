@@ -85,7 +85,7 @@ import {LoadersManagerService} from '../../../../shared/service/services/loaders
       </lg-card>
     </lg-flex-column>
 
-    <lg-confirmation-popover></lg-confirmation-popover>
+    <lg-confirmation-popover name="backup-recover-confirm"></lg-confirmation-popover>
   `,
   styles: [``],
   imports: [

@@ -8,6 +8,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
 import {FadeInComponent} from '../../../../shared/view/ui/fade-in.component';
 import {RecipesRepository} from '../../../../shared/service/repositories';
 import {DraftForm, NotificationsService, TransferDataService} from '../../../../shared/service/services';
+import {DeletingService} from '../../../../shared/service/services/deleting.service';
 import {combineLatest, debounceTime} from 'rxjs';
 import {ShrinkDirective} from '../../../../shared/view/directives/shrink.directive';
 import {TimeAgoPipe} from '../../../../shared/view/pipes/time-ago.pipe';
@@ -40,6 +41,7 @@ import {Folder} from '../../service/models/Folder';
 import {matchMediaSignal} from '../../../../shared/view/signals/match-media.signal';
 import {mobileBreakpoint} from '../../../../shared/view/const/breakpoints';
 import {DraftStatusComponent} from '../../../drafts/draft-status.component';
+import {DeletingKey} from '../../../../shared/service/services/deleting.types';
 
 @Component({
   selector: 'lg-add-recipe',
@@ -121,6 +123,7 @@ export class AddRecipeComponent
   readonly folder = signal<Folder | undefined>(undefined);
   protected readonly RecipeScheme = RecipeScheme;
   protected readonly Stores = Stores;
+  private readonly _deletingService = inject(DeletingService);
   private readonly _recipeShareService = inject(RecipeShareService);
   private readonly _transferDataService = inject(TransferDataService);
   private _routerManager = inject(ROUTER_MANAGER);
@@ -193,8 +196,9 @@ export class AddRecipeComponent
       debounceTime(500),
       takeUntilDestroyed(this._destroyRef),
     ).subscribe((value) => {
-      if (!this.form.dirty) {
-        return
+      if (!this.form.dirty
+        || this.recipe()?.deleted) {
+        return;
       }
 
       this.recipe()?.update(this.form?.getRawValue());
@@ -317,6 +321,17 @@ export class AddRecipeComponent
   onRemoveDraft() {
     this._removeDraft();
     this._routerManager.navigate(['recipes']);
+  }
+
+  async onRecoverRecipe() {
+    const recipe = this.recipe();
+    if (!recipe?.uuid) return;
+    try {
+      await this._deletingService.recoverByEntity(DeletingKey.recipes, recipe.uuid);
+      window.location.reload();
+    } catch (e) {
+      this._notificationsService.error(errorHandler(e));
+    }
   }
 
   onDeleteRecipe() {

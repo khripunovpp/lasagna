@@ -15,9 +15,9 @@
   <lg-fade-in>
     <lg-container>
       <lg-flex-column size="medium">
-        <lg-draft-status type="product"
-                         [draft]="draftRef()"
-                         [originalUuid]="product()?.uuid"></lg-draft-status>
+        <lg-draft-status [draft]="draftRef()"
+                         [originalUuid]="product()?.uuid"
+                         type="product"></lg-draft-status>
 
         <lg-flex-row [center]="true">
           @if ((product()?.uuid && !draftRef()) || (draftRef() && draftByExistingProduct())) {
@@ -25,6 +25,9 @@
               @if (isDraftRoute()) {
                 <span class="text-muted"
                       data-u2e="product.form.title.draft-prefix">{{ 'draft.title-prefix' | translate }}</span>
+              } @else if (product()?.deleted) {
+                <span class="text-danger"
+                      data-u2e="product.form.title.deleted-prefix">{{ 'deleted.product.title-prefix' | translate }}</span>
               }
               {{ product()?.name }}
             </lg-title>
@@ -67,6 +70,15 @@
                 {{ 'product.form.delete-btn'|translate }}
               </lg-button>
             </ng-template>
+          } @else if (product()?.uuid && product()?.deleted) {
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (click)="onRecoverProduct()" [flat]="true"
+                         [style]="'primary'"
+                         data-u2e="product.form.recover-btn"
+                         lgShrink>
+                {{ 'deleted.product.recover-btn'|translate }}
+              </lg-button>
+            </ng-template>
           }
         </lg-inline-separated-group>
 
@@ -80,43 +92,45 @@
       <lg-add-product-form [editMode]="editMode()"
                            [product]="product()"></lg-add-product-form>
 
-      <lg-flex-row [mobileMode]="true" [relaxed]="true">
-        @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
-          <lg-button (click)="onEditProduct()"
-                     [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                     [style]="'primary'"
-                     data-u2e="product.form.save-btn"
-                     lgShrink>
-            @if (formComponent()?.form?.dirty || draftRef()) {
-              {{ 'product.form.save-btn.edit.active'|translate }}
-            } @else {
-              {{ 'product.form.save-btn.edit.disabled'|translate }}
-            }
-          </lg-button>
-        } @else {
-          <lg-button (click)="onAddProduct()"
-                     [disabled]="!formComponent()?.form?.dirty && !draftRef()"
-                     [style]="'primary'"
-                     data-u2e="product.form.save-btn"
-                     lgShrink>
-            @if (formComponent()?.form?.dirty || draftRef()) {
-              {{ 'product.form.save-btn.add.active'|translate }}
-            } @else {
-              {{ 'product.form.save-btn.add.disabled'|translate }}
-            }
-          </lg-button>
-        }
+      @if (!product()?.deleted) {
+        <lg-flex-row [mobileMode]="true" [relaxed]="true">
+          @if ((product() && !draftRef()) || (draftRef() && draftByExistingProduct())) {
+            <lg-button (click)="onEditProduct()"
+                       [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       [style]="'primary'"
+                       data-u2e="product.form.save-btn"
+                       lgShrink>
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.edit.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.edit.disabled'|translate }}
+              }
+            </lg-button>
+          } @else {
+            <lg-button (click)="onAddProduct()"
+                       [disabled]="!formComponent()?.form?.dirty && !draftRef()"
+                       [style]="'primary'"
+                       data-u2e="product.form.save-btn"
+                       lgShrink>
+              @if (formComponent()?.form?.dirty || draftRef()) {
+                {{ 'product.form.save-btn.add.active'|translate }}
+              } @else {
+                {{ 'product.form.save-btn.add.disabled'|translate }}
+              }
+            </lg-button>
+          }
 
-        @if (formComponent()?.form?.dirty) {
-          <lg-button (click)="onResetForm()"
-                     [outlined]="true"
-                     [style]="'primary'"
-                     data-u2e="product.form.reset-btn"
-                     lgShrink>
-            {{ 'product.form.reset-btn.edit.active'|translate }}
-          </lg-button>
-        }
-      </lg-flex-row>
+          @if (formComponent()?.form?.dirty) {
+            <lg-button (click)="onResetForm()"
+                       [outlined]="true"
+                       [style]="'primary'"
+                       data-u2e="product.form.reset-btn"
+                       lgShrink>
+              {{ 'product.form.reset-btn.edit.active'|translate }}
+            </lg-button>
+          }
+        </lg-flex-row>
+      }
     </lg-container>
   </lg-fade-in>
 

@@ -7,11 +7,11 @@
 
   <lg-satisfaction-popup></lg-satisfaction-popup>
   <lg-global-search></lg-global-search>
-  <!--  <lg-checking-delete-dialog></lg-checking-delete-dialog>-->
+  <lg-checking-delete-dialog></lg-checking-delete-dialog>
 }
 
-<main [class.app--pwa]="isPwa()"
-      [class.app--isLoading]="loadersManagerService.observeScope('app') | async"
+<main [class.app--isLoading]="loadersManagerService.observeScope('app') | async"
+      [class.app--pwa]="isPwa()"
       class="app">
   <lg-header></lg-header>
 

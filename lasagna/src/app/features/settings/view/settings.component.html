@@ -49,6 +49,7 @@
 
         <ng-template alias="data" label="{{ 'data.settings-title'|translate }}" lgTab>
           <lg-tabs [flat]="true"
+                   queryKey="data-settings"
                    [scrollable]="false"
                    [silent]="true">
             <ng-template alias="backup" label="{{ 'backup.settings-title'|translate }}" lgTab>
@@ -65,11 +66,9 @@
               </ng-template>
             }
 
-            @if (hasSyncFeature) {
-              <ng-template alias="deleted" label="{{ 'deleted-data.settings-title'|translate }}" lgTab>
-                <lg-deleted-data-storage-view></lg-deleted-data-storage-view>
-              </ng-template>
-            }
+            <ng-template alias="deleted" label="{{ 'deleted-data.settings-title'|translate }}" lgTab>
+              <lg-deleted-data-storage-view></lg-deleted-data-storage-view>
+            </ng-template>
           </lg-tabs>
         </ng-template>
 
