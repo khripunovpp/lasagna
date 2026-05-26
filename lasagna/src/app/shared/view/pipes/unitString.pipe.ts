@@ -6,7 +6,10 @@ import {getUnitMarker} from '../../helpers/unit.helper';
   standalone: true,
 })
 export class UnitStringPipe {
-  transform(value?: string) {
-    return getUnitMarker(value);
+  transform(
+    value?: string,
+    count?: number,
+  ) {
+    return getUnitMarker(value, count);
   }
 }

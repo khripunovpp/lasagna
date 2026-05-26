@@ -171,8 +171,8 @@ export class RecipeCostCalculator {
 
   get outcomeUnit(): string {
     return this.portions
-      ? UnitValue.PIECE
-      : UnitValue.GRAM;
+      ? 'portion'
+      : 'gram';
   }
 
   get weightForUnit(): number {

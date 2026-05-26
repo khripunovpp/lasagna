@@ -45,34 +45,32 @@
                                  [size]="'small'">
                       <div>{{ calculation.hasShrinkage ? ('recipe.calculation.outcome.label.with-shrinkage' | translate) : ('recipe.calculation.outcome.label') | translate }}</div>
 
-                      <lg-flex-row data-u2e="calculate-recipe.outcome-amount"
-                                   lgPull
-                                   size="tiny">
-                        <lg-flex-row size="tiny">
-                          @if (hasPortions()) {
-                            <div class="text-bold">
-                              {{ calculation.recipe.portions }}
-                              {{ 'piece' | unitString | translate }}
-                            </div>
-                            <span>/</span>
-                            <div>
-                              {{ calculation.weightForUnit |  number: pipesDigits() }} {{ 'recipe.calculation.gram' | translate }}
-                            </div>
-                          } @else {
-                            <div [class.text-bold]="!calculation.hasShrinkage">
-                              {{ calculation.tableIngredientsWeight | number: pipesDigits() }}
+                      <div data-u2e="calculate-recipe.outcome-amount"
+                           lgPull>
+                        @if (hasPortions()) {
+                          <span class="text-bold">
+                            {{ calculation.recipe.portions }}
+                            {{ 'portion' | unitString:calculation.recipe.portions | translate }}
+                          </span>
+                          <span>~</span>
+                          <span>
+                            {{ calculation.weightForUnit |  number: pipesDigits() }} {{ 'gram' | unitString:calculation.weightForUnit | translate }}
+                            / {{ 'portion' | unitString | translate }}
+                            </span>
+                        } @else {
+                          <span [class.text-bold]="!calculation.hasShrinkage">
+                            {{ calculation.tableIngredientsWeight | number: pipesDigits() }}
+                            {{ 'gram' | unitString | translate }}
+                          </span>
+                          @if (calculation.hasShrinkage) {
+                            <span> > </span>
+                            <span class="text-bold text-underlined">
+                              {{ calculation.totalWeight | number: pipesDigits() }}
                               {{ 'gram' | unitString | translate }}
-                            </div>
-                            @if (calculation.hasShrinkage) {
-                              <span>></span>
-                              <div class="text-bold text-underlined">
-                                {{ calculation.totalWeight | number: pipesDigits() }}
-                                {{ 'gram' | unitString | translate }}
-                              </div>
-                            }
+                            </span>
                           }
-                        </lg-flex-row>
-                      </lg-flex-row>
+                        }
+                      </div>
 
                       <lg-question [text]="'recipe.calculation.outcome.info' | translate"></lg-question>
                     </lg-flex-row>
@@ -94,41 +92,30 @@
                   <lg-flex-row [mobileMode]="true"
                                [relaxed]="true"
                                [size]="'small'">
-                    <div>
-                      {{ 'recipe.calculation.one-unit.label' | translate }}
-                      <b>{{ calculation.outcomeUnit | unitString | translate }}</b>
-                    </div>
+                    <span>{{ ('unit-phrase.per-one.' + calculation.outcomeUnit) | translate }}</span>
 
-                    <lg-flex-row data-u2e="calculate-recipe.one-unit-price"
-                                 lgPull
-                                 size="tiny">
+                    <span data-u2e="calculate-recipe.one-unit-price"
+                          lgPull>
                       @let diff = calculation.pricePerUnitSimplifiedDifference;
 
-                      <lg-flex-row [size]="'tiny'">
-                        <div [class.text-bold]="!diff">
-                          {{ calculation.initialPricePerUnit | userCurrency : pipesDigits() }}
-                        </div>
+                      <span [class.text-bold]="!diff">
+                        {{ calculation.initialPricePerUnit | userCurrency : pipesDigits() }}
+                      </span>
 
-                        @if (diff) {
-                          <span>></span>
-                          <div class="text-underlined text-bold">
-                            {{ calculation.newPricePerUnit | userCurrency: pipesDigits() }}
-                          </div>
-                        }
-                      </lg-flex-row>
+                      @if (diff) {
+                        <span> > </span>
+                        <span class="text-underlined text-bold">
+                          {{ calculation.newPricePerUnit | userCurrency: pipesDigits() }}
+                        </span>
+                      }
 
                       @if (diff && calculation.hasModifiers) {
-                        <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
-                                     [size]="'tiny'"
-                                     class="text-bold">
-                          <span>(</span>
-                          <div>
-                            {{ diff > 0 ? '+' : '' }}{{ diff | number: pipesDigits() }}
-                          </div>
-                          <span>)</span>
-                        </lg-flex-row>
+                        <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
+                              class="text-bold">
+                          ({{ diff > 0 ? '+' : '' }}{{ diff | number: pipesDigits() }})
+                        </span>
                       }
-                    </lg-flex-row>
+                    </span>
 
                     <lg-question [text]="'recipe.calculation.one-unit.info' | translate"></lg-question>
                   </lg-flex-row>
@@ -141,38 +128,32 @@
                   <lg-flex-row [mobileMode]="true"
                                [relaxed]="true"
                                [size]="'small'">
-                    <div>{{ 'recipe.calculation.total-price.label' | translate }}</div>
+                    <span>{{ 'recipe.calculation.total-price.label' | translate }}</span>
 
-                    <lg-flex-row [size]="'tiny'"
-                                 data-u2e="calculate-recipe.total-price-amount"
-                                 lgPull>
+                    <span data-u2e="calculate-recipe.total-price-amount"
+                          lgPull>
                       @let diff = totalPriceDifference();
-                      <lg-flex-row [class.text-bold]="!diff"
-                                   size="tiny">
-                        <div> {{ initialTotalPrice() | userCurrency: totalPipesDigits }}</div>
+                      <span [class.text-bold]="!diff">
+                        <span> {{ initialTotalPrice() | userCurrency: totalPipesDigits }}</span>
 
                         @if (diff) {
-                          <span>></span>
-                          <div class="text-bold text-underlined">
+                          <span> > </span>
+                          <span class="text-bold text-underlined text-no-wrap">
                             {{ totalPrice() |  userCurrency: pipesDigits() }}
-                          </div>
+                          </span>
                         }
-                      </lg-flex-row>
+                      </span>
 
                       @if (diff) {
-                        <lg-flex-row [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
-                                     class="text-bold"
-                                     size="tiny">
-                          <span>(</span>
-                          <div [ngClass]="diff > 0 ? 'text-success' : 'text-danger'">
-                            {{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
-                          </div>
-                          <span>/</span>
-                          <div class="text-no-wrap">{{ totalPriceProfit() |number:totalPipesDigits }}%</div>
-                          <span>)</span>
-                        </lg-flex-row>
+                        <span [ngClass]="diff > 0 ? 'text-success' : 'text-danger'"
+                              class="text-bold">
+                          <span>
+                            ({{ diff > 0 ? '+' : '' }}{{ diff |  userCurrency: pipesDigits() }}
+                          </span>
+                          <span class="text-no-wrap"> / {{ totalPriceProfit() |number:totalPipesDigits }}%)</span>
+                        </span>
                       }
-                    </lg-flex-row>
+                    </span>
 
                     <lg-question [text]="'recipe.calculation.total-price.info' | translate"></lg-question>
                   </lg-flex-row>
@@ -313,7 +294,9 @@
                       {{ row.unit | unitString | translate }}
 
                       @if (row.type !== 'total' && row.need_gram_equivalent) {
-                        <span class="text-muted">({{ row.weight | number: pipesDigits() }}&nbsp;{{ 'gram' | unitString | translate }})</span>
+                        <span class="text-muted">
+                          ({{ row.weight | number: pipesDigits() }}&nbsp;{{ 'gram' | unitString | translate }})
+                        </span>
                       }
                     </td>
 

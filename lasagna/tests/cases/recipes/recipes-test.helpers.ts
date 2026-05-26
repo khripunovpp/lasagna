@@ -554,7 +554,7 @@ export const calculationOutputWithoutPortions = [
 export const calculationOutputWithPortions = [
   {
     name: 'Test Recipe - all ingredients unit types setup as gram Cost Analytics',
-    outcomeAmount: '4 pcs. / 131 gram',
+    outcomeAmount: '4 portions ~ 131 grams / portion',
     oneUnitPrice: '38.4 $',
     totalPrice: '153.6 $',
     ingredientsRows: [
@@ -585,7 +585,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Third Test Recipe - all ingredients unit types setup as kilogram Cost Analytics',
-    outcomeAmount: '2 pcs. / 1,000 gram',
+    outcomeAmount: '2 portions ~ 1,000 grams / portion',
     oneUnitPrice: '262.5 $',
     totalPrice: '525 $',
     ingredientsRows: [
@@ -616,7 +616,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Another Test Recipe - all ingredients unit types setup as piece Cost Analytics',
-    outcomeAmount: '4 pcs. / 750 gram',
+    outcomeAmount: '4 portions ~ 750 grams / portion',
     oneUnitPrice: '159.38 $',
     totalPrice: '637.5 $',
     ingredientsRows: [
@@ -647,7 +647,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Fourth Test Recipe - mixed ingredient unit types in their own units Cost Analytics',
-    outcomeAmount: '4 pcs. / 937.5 gram',
+    outcomeAmount: '4 portions ~ 937.5 grams / portion',
     oneUnitPrice: '169.69 $',
     totalPrice: '678.75 $',
     ingredientsRows: [
@@ -678,7 +678,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Fifth Test Recipe - mix unit types with no their own units Cost Analytics',
-    outcomeAmount: '2 pcs. / 500 gram',
+    outcomeAmount: '2 portions ~ 500 grams / portion',
     oneUnitPrice: '112.5 $',
     totalPrice: '225 $',
     ingredientsRows: [
@@ -714,7 +714,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Seventh Test Recipe - ingredients with recipes as ingredients, all unit types Cost Analytics',
-    outcomeAmount: '3 pcs. / 277 gram',
+    outcomeAmount: '3 portions ~ 277 grams / portion',
     oneUnitPrice: '65.72 $',
     totalPrice: '197.15 $',
     ingredientsRows: [
@@ -745,7 +745,7 @@ export const calculationOutputWithPortions = [
   },
   {
     name: 'Eighth Test Recipe - mixed ingredients with products and recipes Cost Analytics',
-    outcomeAmount: '5 pcs. / 360 gram',
+    outcomeAmount: '5 portions ~ 360 grams / portion',
     oneUnitPrice: '81.75 $',
     totalPrice: '408.75 $',
     ingredientsRows: [

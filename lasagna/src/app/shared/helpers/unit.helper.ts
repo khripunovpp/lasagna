@@ -45,10 +45,31 @@ export const unitMarkersMap: Record<string, string> = {
   [UnitValue.GRAM]: marker('unit.gram'),
   [UnitValue.KILOGRAM]: marker('unit.kilogram'),
   [UnitValue.PIECE]: marker('unit.piece'),
+  'portion': marker('unit.portion'),
 };
 
-export const getUnitMarker = (unit: string | undefined): string => {
-  return unit
-    ? unitMarkersMap[unit] || unit
-    : marker('unit.unknown');
+export const unitMarkersSingularMap: Record<string, string> = {
+  [UnitValue.GRAM]: marker('unit.gram.singular'),
+  [UnitValue.KILOGRAM]: marker('unit.kilogram.singular'),
+  [UnitValue.PIECE]: marker('unit.piece.singular'),
+  'portion': marker('unit.portion.singular'),
+};
+
+export const unitMarkersPluralMap: Record<string, string> = {
+  [UnitValue.GRAM]: marker('unit.gram.plural'),
+  [UnitValue.KILOGRAM]: marker('unit.kilogram.plural'),
+  [UnitValue.PIECE]: marker('unit.piece.plural'),
+  'portion': marker('unit.portion.plural'),
+};
+
+export const getUnitMarker = (
+  unit: string | undefined,
+  count?: number,
+): string => {
+  if (!unit) return marker('unit.unknown');
+  if (count === undefined) {
+    return unitMarkersMap[unit] || unit;
+  }
+  const map = count == 1 ? unitMarkersSingularMap : unitMarkersPluralMap;
+  return map[unit] || unitMarkersMap[unit] || unit;
 }
