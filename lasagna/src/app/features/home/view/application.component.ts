@@ -15,7 +15,7 @@ import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.
   template: `
     <lg-fade-in>
       <lg-container>
-        <lg-title>{{ 'main.title' | translate }}</lg-title>
+        <lg-title [hidden]="!isClient">{{ 'main.title' | translate }}</lg-title>
 
         @defer {
           <ls-promo-widgets-container></ls-promo-widgets-container>

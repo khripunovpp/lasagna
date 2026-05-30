@@ -16,7 +16,10 @@
   <lg-header></lg-header>
 
   <div class="app-content">
-    <lg-announcement-banner class="app-banner"></lg-announcement-banner>
+    @defer {
+      <lg-announcement-banner [hidden]="!isBrowser"
+                              class="app-banner"></lg-announcement-banner>
+    }
     <router-outlet/>
   </div>
 

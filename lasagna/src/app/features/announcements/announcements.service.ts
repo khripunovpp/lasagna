@@ -1,7 +1,7 @@
 import {computed, effect, inject, Injectable, signal} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {filter, map, startWith} from 'rxjs';
+import {filter, map, startWith, tap} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {WINDOW} from '../../shared/service/tokens/window.token';
 import {IS_CLIENT} from '../../shared/service/tokens/isClient.token';
@@ -120,9 +120,9 @@ export class AnnouncementsService {
     this._router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
       map(e => getURLWithoutParams(e.urlAfterRedirects)),
-      startWith(getURLWithoutParams(this._router.url)),
+      startWith(''),
     ),
-    {initialValue: getURLWithoutParams(this._router.url)},
+    {initialValue: ''},
   );
 
   readonly active = computed<AnnouncementConfig | null>(() => {
