@@ -8,6 +8,7 @@ import {OnboardingComponent} from '../../onboarding/onboarding.component';
 import {OnboardingService} from '../../onboarding/onboarding.service';
 import {IS_CLIENT} from '../../../shared/service/tokens/isClient.token';
 import {LatestWidgetComponent} from './widgets/latest-widget.component';
+import {ExpiringProductsWidgetComponent} from './widgets/expiring-products-widget.component';
 import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.component';
 
 @Component({
@@ -30,6 +31,12 @@ import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.
         }
 
         @defer {
+          <lg-expiring-products-widget></lg-expiring-products-widget>
+        } @error {
+          {{ 'main.defer-load-error' | translate }}
+        }
+
+        @defer {
           <lg-latest-widget></lg-latest-widget>
         } @error {
           {{ 'main.defer-load-error' | translate }}
@@ -48,6 +55,7 @@ import {PromoWidgetsContainerComponent} from './widgets/promo-widgets-container.
     TranslatePipe,
     OnboardingComponent,
     LatestWidgetComponent,
+    ExpiringProductsWidgetComponent,
     PromoWidgetsContainerComponent
   ],
 })

@@ -14,7 +14,8 @@ export class ProductCategoriesSelectResourceLoader
   private readonly _categoryRepository = inject(CategoryRepository);
 
   async load() {
-    return this._categoryRepository.getAll('product');
+    return this._categoryRepository.getAll('product')
+      .then(items => items.toSorted((a, b) => a.name.localeCompare(b.name)));
   }
 
   search(token: string): Promise<unknown[]> {

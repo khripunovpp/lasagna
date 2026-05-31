@@ -14,7 +14,8 @@ export class ProductsSelectResourceLoader
   private readonly _productsRepository = inject(ProductsRepository);
 
   async load() {
-    return this._productsRepository.getAll(true);
+    return this._productsRepository.getAll(true)
+      .then(items => items.toSorted((a, b) => a.name.localeCompare(b.name)));
   }
 
   search(token: string): Promise<unknown[]> {

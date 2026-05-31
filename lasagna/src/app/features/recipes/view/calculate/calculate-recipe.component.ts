@@ -59,6 +59,9 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {ShrinkageValue} from '../../service/models/Recipe';
 import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.component';
 import {SupportService} from '../../../home/service/support.service';
+import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
+import {collectExpiredIngredients} from '../../service/helpers/recipe.helpers';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'lg-calculate-recipe',
@@ -92,6 +95,8 @@ import {SupportService} from '../../../home/service/support.service';
     QuestionMarkComponent,
     PullDirective,
     ShrinkageControlComponent,
+    ExpirationBadgeComponent,
+    MatIcon,
   ],
   templateUrl: './calculate-recipe.component.html',
   styles: [`
@@ -154,6 +159,15 @@ import {SupportService} from '../../../home/service/support.service';
 
     .calculation-page__report-error-link:hover {
       opacity: 1;
+    }
+
+    .calculation-page__expired-warning {
+      --card-bg: #fff4f3;
+      color: #b03a2b;
+    }
+
+    .calculation-page__expired-warning mat-icon {
+      color: #ef4529;
     }
   `],
   encapsulation: ViewEncapsulation.None,
@@ -321,6 +335,14 @@ export class CalculateRecipeComponent
   readonly totalPrice = computed(() => {
     return (this.result()?.calculation?.totalPrice || 0) * this.totalScaleFactor();
   });
+  // Просроченные продукты на любой глубине вложенности (в т.ч. внутри под-рецептов)
+  readonly expiredIngredients = computed(() =>
+    collectExpiredIngredients(this.result()?.calculation?.recipe)
+  );
+  readonly expiredIngredientsCount = computed(() => this.expiredIngredients().length);
+  readonly expiredIngredientsNames = computed(() =>
+    this.expiredIngredients().map(i => i.name).join(', ')
+  );
   protected readonly difference = difference;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   protected readonly hasMicroPrice = isMicroAmount;

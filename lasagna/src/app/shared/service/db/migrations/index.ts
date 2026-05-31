@@ -289,4 +289,40 @@ export const migrations: {
       })
     },
   },
+  // Добавление expirationDate (срок годности) для продуктов
+  {
+    version: 10,
+    schema: {
+      [Stores.PRODUCTS]: '++uuid,name,source,brand,cloud_uuid,deleted',
+      [Stores.RECIPES]: '++uuid,name,*ingredientsUUIDs,cloud_uuid,deleted,folder_uuid',
+      [Stores.PRODUCTS_CATEGORIES]: '++uuid,name,cloud_uuid,deleted',
+      [Stores.RECIPES_CATEGORIES]: '++uuid,name,cloud_uuid,deleted',
+      [Stores.INDICES]: '++uuid,deleted',
+      [Stores.DOCUMENTATION]: '++key,deleted',
+      [Stores.FAQ]: '++key,deleted',
+      [Stores.TAGS]: '++name,cloud_uuid,deleted',
+      [Stores.TAXES]: '++uuid,cloud_uuid,deleted',
+      [Stores.SETTINGS]: '++key,cloud_uuid,deleted',
+      [Stores.INVOICES]: '++uuid,cloud_uuid,deleted',
+      [Stores.CREDENTIALS]: '++uuid,type,cloud_uuid,deleted',
+      [Stores.CHANGES_LOG]: '++uuid,entity,entityId,timestamp,cloud_uuid,deleted',
+      [Stores.DELETES_STORE]: '++uuid,entity,entityId,timestamp,deleted',
+      [Stores.FOLDERS]: '++uuid,name,parent_uuid,cloud_uuid,deleted',
+    },
+    update: tx => {
+      return new Promise(async (resolve) => {
+        const productsTable = tx.table(Stores.PRODUCTS);
+        const products = await productsTable.toArray();
+
+        await Promise.all(products.map((product: any) => {
+          if (product.expirationDate == null) {
+            return productsTable.update(product.uuid, {expirationDate: 0});
+          }
+          return Promise.resolve();
+        }));
+
+        resolve();
+      })
+    },
+  },
 ]

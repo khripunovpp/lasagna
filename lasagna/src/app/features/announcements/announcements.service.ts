@@ -21,6 +21,8 @@ export interface AnnouncementConfig {
   id: string;
   titleKey: string;
   bodyKey: string;
+  /** Эмодзи перед заголовком, под контекст анонса. Фолбэк — 🆕. */
+  emoji?: string;
   /** ISO date — banner not shown before this moment. Undefined = no lower bound. */
   startsAt?: string;
   /** ISO date — banner not shown at or after this moment. */
@@ -48,7 +50,17 @@ export class AnnouncementsService {
 
   private readonly _configs: AnnouncementConfig[] = [
     {
+      id: 'product-expiration-2026-07',
+      emoji: '⏳',
+      titleKey: _('announcements.product-expiration-2026-07.title'),
+      bodyKey: _('announcements.product-expiration-2026-07.body'),
+      startsAt: '2026-07-07',
+      expiresAt: '2026-10-01',
+      routeMatch: ['/products'],
+    },
+    {
       id: 'feedback-home-2026-05',
+      emoji: '💬',
       titleKey: _('announcements.feedback-home-2026-05.title'),
       bodyKey: _('announcements.feedback-home-2026-05.body'),
       startsAt: '2026-05-25',
@@ -64,6 +76,7 @@ export class AnnouncementsService {
     },
     {
       id: 'folders-mode-2026-05',
+      emoji: '📁',
       titleKey: _('announcements.folders-mode-2026-05.title'),
       bodyKey: _('announcements.folders-mode-2026-05.body'),
       startsAt: '2026-05-24',
@@ -76,6 +89,7 @@ export class AnnouncementsService {
     },
     {
       id: 'shrinkage-tracking-2026-04',
+      emoji: '⚖️',
       titleKey: _('announcements.shrinkage-tracking-2026-04.title'),
       bodyKey: _('announcements.shrinkage-tracking-2026-04.body'),
       startsAt: '2026-04-25',
@@ -88,6 +102,7 @@ export class AnnouncementsService {
     },
     {
       id: 'product-price-history-2026-03',
+      emoji: '📈',
       titleKey: _('announcements.product-price-history-2026-03.title'),
       bodyKey: _('announcements.product-price-history-2026-03.body'),
       startsAt: '2026-03-20',
@@ -100,6 +115,7 @@ export class AnnouncementsService {
     },
     {
       id: 'recipe-quick-product-2026-03',
+      emoji: '⚡',
       titleKey: _('announcements.recipe-quick-product-2026-03.title'),
       bodyKey: _('announcements.recipe-quick-product-2026-03.body'),
       startsAt: '2026-03-20',

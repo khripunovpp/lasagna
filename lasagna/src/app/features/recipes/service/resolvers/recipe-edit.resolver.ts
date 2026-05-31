@@ -12,5 +12,5 @@ export const recipeEditResolver: ResolveFn<any> = async (
     return Promise.resolve(null);
   }
   const uuid = route.paramMap.get('uuid')!;
-  return inject(RecipesRepository)?.getOne(uuid);
+  return inject(RecipesRepository)?.getOne(uuid, true);
 };

@@ -95,7 +95,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 
         &__body {
           background-color: var(--control-bg);
-          border-radius: 0 12px 12px 12px;
+          border-radius: 12px;
           gap: 16px;
           position: relative;
           z-index: 2;
@@ -134,6 +134,14 @@ import {TranslatePipe} from '@ngx-translate/core';
             }
           }
         }
+      }
+
+      lg-entity-item-selector.lg-product-expired .entity-item-selector__part.active {
+        --control-bg: rgba(239, 69, 41, 0.12);
+      }
+
+      lg-entity-item-selector.lg-product-expiring-soon .entity-item-selector__part.active {
+        --control-bg: rgba(254, 202, 87, 0.12);
       }
     `
   ],

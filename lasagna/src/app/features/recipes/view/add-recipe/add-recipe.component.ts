@@ -163,6 +163,7 @@ export class AddRecipeComponent
       const draft = data['draft'] as DraftForm<Recipe>;
       this.sharedRecipe.set(query[SHARE_RECIPE_PARAM] || undefined);
       this.draftOrRecipeUUID.set(params['uuid']);
+      debugger
 
       if (draft) {
         this.draftRef.set(draft);

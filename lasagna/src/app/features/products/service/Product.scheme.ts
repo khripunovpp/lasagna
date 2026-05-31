@@ -21,6 +21,7 @@ export const ProductScheme = z.object({
   syncedAt: z.union([z.string(), z.number()]).optional(),
   deleted: z.number().optional(),
   deletedAt: z.union([z.string(), z.number()]).optional(),
+  expirationDate: z.union([z.string(), z.number()]).optional(),
 });
 
 export type ProductDTO = z.infer<typeof ProductScheme>;

@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-07-07",
+      "features": [
+        "Products now have a best-before date. Set it on the product card and a status badge appears alongside — fresh, expiring soon, or past its date",
+        "The home screen has a new \"Expiring soon\" block, so you can quickly see what to use or replace (handy for items bought in bulk)",
+        "The recipe calculation page warns you if any ingredient — including those inside nested recipes — is past its best-before date; the cost stays visible"
+      ]
+    },
+    {
       "date": "2026-07-06",
       "features": [
         "The recipe page now has a \"Used in recipes\" block — it shows which recipes use this component directly as an ingredient, with quick links to open them",

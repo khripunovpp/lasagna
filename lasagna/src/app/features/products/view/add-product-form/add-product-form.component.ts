@@ -51,6 +51,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/button/button.componen
 import {MatIcon} from '@angular/material/icon';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {DatePickerComponent} from '../../../controls/form/date-picker.component';
 
 
 @Component({
@@ -85,6 +86,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     HtmlEditorComponent,
     ButtonComponent,
     MatIcon,
+    DatePickerComponent,
   ],
   styles: [
     `
@@ -123,6 +125,7 @@ export class AddProductFormComponent
     brand: new FormControl<string | null>(null),
     notes: new FormControl<string | null>(null),
     category_id: new FormControl<any>(null),
+    expirationDate: new FormControl<Date | null>(null),
   });
   userSettings = inject(SETTINGS)
   product = input<Product | null>(null);
@@ -163,6 +166,7 @@ export class AddProductFormComponent
       category_id: null,
       unit: 'gram',
       gramsPerPiece: null,
+      expirationDate: null,
     };
   }
 
@@ -216,6 +220,7 @@ export class AddProductFormComponent
           source: this._translateService.instant('product.form.validation-name.source'),
           brand: this._translateService.instant('product.form.validation-name.brand'),
           notes: this._translateService.instant('product.form.validation-name.notes'),
+          expirationDate: this._translateService.instant('product.form.validation-name.expirationDate'),
         }
       });
       this._notificationsService.error(errors.join('\n'));

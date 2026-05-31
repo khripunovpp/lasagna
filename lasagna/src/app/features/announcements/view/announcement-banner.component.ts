@@ -15,7 +15,7 @@ import {ContainerComponent} from '../../../shared/view/layout/container.componen
         <lg-container>
           <div class="banner__row">
             <div class="banner__content">
-              <div class="banner__title">🆕 {{ a.titleKey | translate }}</div>
+              <div class="banner__title">{{ a.emoji || '🆕' }} {{ a.titleKey | translate }}</div>
               <div class="banner__body">{{ a.bodyKey | translate }}</div>
             </div>
 

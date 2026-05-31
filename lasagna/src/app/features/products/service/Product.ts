@@ -30,6 +30,7 @@ export class Product
       dirtyToSync?: boolean | undefined
       deleted?: boolean | number | undefined
       deletedAt?: number | string | undefined
+      expirationDate?: number | string | undefined
     }
   ) {
     super();
@@ -47,6 +48,7 @@ export class Product
   notes?: string;
   color?: string | undefined;
   system?: boolean = false;
+  expirationDate: number | string = 0;
 
   get ownColor() {
     if (isColorString(this.color || '')) {
@@ -104,6 +106,7 @@ export class Product
       dirtyToSync: dto?.dirtyToSync ?? false,
       deleted: dto?.deleted === 1,
       deletedAt: dto?.deletedAt,
+      expirationDate: dto?.expirationDate,
     });
   }
 
@@ -112,6 +115,7 @@ export class Product
     const updatedAt = dto?.updated_at ? new Date(dto.updated_at) : undefined;
     const deletedAt = dto?.deleted_at ? new Date(dto.deleted_at) : undefined;
     const syncedAt = dto?.synced_at ? new Date(dto?.synced_at) : undefined;
+    const expirationDate = dto?.expiration_date ? new Date(dto.expiration_date) : undefined;
 
     return new Product({
       name: dto?.name || '',
@@ -132,6 +136,7 @@ export class Product
       deletedAt: deletedAt?.getTime(),
       notes: dto?.notes || '',
       brand: dto?.brand || '',
+      expirationDate:expirationDate?.getTime(),
     });
   }
 
@@ -150,6 +155,7 @@ export class Product
       createdAt: Date.now(),
       updatedAt: undefined,
       color: undefined,
+      expirationDate: 0,
     });
   }
 
@@ -172,6 +178,9 @@ export class Product
     this.cloud_uuid = dto.cloud_uuid || this.cloud_uuid;
     this.color = dto?.color ? estimateColor(dto.color) : this.color;
     this.system = dto.system !== undefined ? dto.system : this.system;
+    this.expirationDate = dto.expirationDate != null
+      ? (Number(dto.expirationDate) || 0)
+      : this.expirationDate;
     super.update(dto, doNotMarkDirty);
     return this as Product;
   }
@@ -202,6 +211,7 @@ export class Product
       syncedAt: this.syncedAt || 0,
       deleted: this.deleted ? 1 : 0,
       deletedAt: this.deletedAt || 0,
+      expirationDate: this.expirationDate || 0,
     };
   }
 
@@ -222,6 +232,7 @@ export class Product
       system: this.system || false,
       deleted: this.deleted ?? false,
       deleted_at: this.deletedAt ? new Date(this.deletedAt).toISOString() : null,
+      expiration_date: this.expirationDate ? new Date(this.expirationDate).toISOString() : null,
     };
   }
 }

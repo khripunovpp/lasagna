@@ -41,6 +41,8 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {ProductFactory} from '../../service/product.factory';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
+import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
+import {ProductExpirationDirective} from '../../../../shared/view/directives/product-expiration.directive';
 
 @Component({
   selector: 'lg-product-list',
@@ -106,7 +108,7 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                              data-u2e="products.list.grouping-tiles"
                              [sortResult]="products()">
             <ng-template let-product let-index="index" lgGroupingTile>
-              <lg-card>
+              <lg-card [lgProductExpiration]="product.expirationDate">
                 <lg-flex-column size="medium">
                   <lg-flex-row [center]="true" lgExpand>
                     <a [routerLink]="'/products/edit/' + product.uuid"
@@ -133,6 +135,11 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
                            [attr.data-u2e]="'products.list.item.' + index + '.edited-at'">
                       {{ 'edited-at-label'|translate }} {{ (product?.updatedAt || product?.createdAt) | timeAgo }}
                     </small>
+
+                    <lg-expiration-badge [expirationDate]="product.expirationDate"
+                                         [label]="true"
+                                         [attr.data-u2e]="'products.list.item.' + index + '.expiration-badge'"
+                                         size="18"></lg-expiration-badge>
 
                     <lg-sync-badge size="16"
                                    [entity]="product"></lg-sync-badge>
@@ -188,6 +195,8 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
     CurrencySymbolPipe,
     SyncBadgeComponent,
     PullDirective,
+    ExpirationBadgeComponent,
+    ProductExpirationDirective,
   ],
   providers: [
     SelectionZoneService,
@@ -196,6 +205,14 @@ import {PullDirective} from '../../../../shared/view/directives/pull.directive';
   styles: [
     `:host {
       display: block;
+    }
+
+    lg-card.lg-product-expired {
+      --card-bg: #ffe8e7;
+    }
+
+    lg-card.lg-product-expiring-soon {
+      --card-bg: #ede0b7;
     }
     `
   ]

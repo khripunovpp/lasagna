@@ -37,6 +37,7 @@ import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.componen
 import {OnboardingService} from '../../../onboarding/onboarding.service';
 import {SyncBadgeComponent} from '../../../../shared/view/ui/sync/sync-badge.component';
 import {DraftStatusComponent} from '../../../drafts/draft-status.component';
+import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
 import {DeletingKey} from '../../../../shared/service/services/deleting.types';
 
 @Component({
@@ -63,6 +64,7 @@ import {DeletingKey} from '../../../../shared/service/services/deleting.types';
     FlexRowComponent,
     SyncBadgeComponent,
     DraftStatusComponent,
+    ExpirationBadgeComponent,
   ],
   templateUrl: './add-product.component.html',
   styles: [

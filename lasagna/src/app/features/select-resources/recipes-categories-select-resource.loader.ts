@@ -14,7 +14,8 @@ export class RecipesCategoriesSelectResourceLoader
   private readonly _categoryRepository = inject(CategoryRepository);
 
   async load() {
-    return this._categoryRepository.getAll('recipe');
+    return this._categoryRepository.getAll('recipe')
+      .then(items => items.toSorted((a, b) => a.name.localeCompare(b.name)));
   }
 
   search(token: string): Promise<unknown[]> {

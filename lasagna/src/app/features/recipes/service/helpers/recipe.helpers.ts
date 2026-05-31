@@ -5,6 +5,48 @@ import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {UnitValue} from '../../../../shared/view/const/units.const';
 import {Ingredient} from '../models/Ingredient';
 import {RecipeDTO} from '../schemes/Recipe.scheme';
+import {getExpirationStatus} from '../../../../shared/helpers/expiration.helpers';
+
+export interface ExpiredIngredient {
+  name: string;
+  expirationDate: number | string;
+}
+
+/**
+ * Собирает просроченные продукты рецепта на любой глубине вложенности
+ * (продукт может лежать внутри под-рецепта). Дедуп по продукту, guard от циклов.
+ */
+export const collectExpiredIngredients = (
+  recipe?: Recipe | null,
+  now: number = Date.now(),
+): ExpiredIngredient[] => {
+  const found = new Map<string, ExpiredIngredient>();
+  const seen = new Set<string>();
+
+  const walk = (node?: Recipe | null) => {
+    if (!node) return;
+    if (node.uuid) {
+      if (seen.has(node.uuid)) return;
+      seen.add(node.uuid);
+    }
+    for (const ingredient of node.ingredients ?? []) {
+      if (ingredient.recipe_id) {
+        walk(ingredient.recipe_id);
+      } else if (ingredient.product_id) {
+        const expirationDate = ingredient.product_id.expirationDate;
+        if (getExpirationStatus(expirationDate, now) === 'expired') {
+          const key = ingredient.product_id.uuid ?? ingredient.product_id.name;
+          if (key) {
+            found.set(key, {name: ingredient.product_id.name, expirationDate});
+          }
+        }
+      }
+    }
+  };
+
+  walk(recipe);
+  return Array.from(found.values());
+};
 
 export const recipeToFormValue = (recipe: Recipe) => {
   return {

@@ -16,8 +16,8 @@
             <lg-control-box lgExpand
                             style="--control-box-bg: var(--control-bg)">
               <lg-html-editor [placeholder]="''"
-                              name="description"
-                              formControlName="description"></lg-html-editor>
+                              formControlName="description"
+                              name="description"></lg-html-editor>
 
             </lg-control-box>
           </lg-control>
@@ -30,8 +30,8 @@
                       lgExpand>
             <lg-number-input #amount
                              formControlName="portions"
-                             name="portions"
                              lgParseMath
+                             name="portions"
                              placeholder=""></lg-number-input>
           </lg-control>
 
@@ -43,32 +43,40 @@
                 @for (control of ingredients.controls; track (control.value.amount + i + 1); let i = $index,
                   last = $last) {
                   <ng-container [formGroupName]="i">
-                    <lg-flex-row [bottom]="true"
-                                 [attr.data-u2e]="'ingredient-row.' + i"
-                                 size="medium"
-                                 [mobileMode]="true">
-                      <lg-entity-item-selector lgExpand
-                                               formControlName="active_tab">
-                        <lg-multiselect [resource]="'recipes'"
-                                        name="recipe_id"
-                                        appendTo="body"
-                                        (onSelected)="onIngredientSelected(amount, i, ['product_id', 'new_product_name'])"
-                                        [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
-                                        formControlName="recipe_id"
-                                        ngProjectAs="recipes"
-                                        [autoLoad]="true"></lg-multiselect>
+                    <lg-expiration-badge [expirationDate]="form.value.ingredients?.[i]?.product_id?.expirationDate"
+                                         [label]="true"
+                                         size="14"></lg-expiration-badge>
 
-                        <lg-multiselect [resource]="'products'"
-                                        appendTo="body"
-                                        name="product_id"
-                                        [optionFactory]="productLabelFactory"
-                                        (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'new_product_name'])"
-                                        [labelFactory]="productLabelFactory"
-                                        formControlName="product_id"
-                                        [placeholder]="'recipe.form.ingredients.product_id.label' | translate"
-                                        ngProjectAs="products"
-                                        [autoLoad]="true">
-                          <ng-template lgControlTpl type="label" let-item>
+                    <lg-flex-row [attr.data-u2e]="'ingredient-row.' + i"
+                                 [bottom]="true"
+                                 [mobileMode]="true"
+                                 size="medium">
+                      <lg-entity-item-selector
+                        [lgProductExpiration]="form.value.ingredients?.[i]?.product_id?.expirationDate"
+                        formControlName="active_tab"
+                        lgExpand>
+                        <lg-multiselect
+                          (onSelected)="onIngredientSelected(amount, i, ['product_id', 'new_product_name'])"
+                          [autoLoad]="true"
+                          [placeholder]="'recipe.form.ingredients.recipe_id.label' | translate"
+                          [resource]="'recipes'"
+                          appendTo="body"
+                          formControlName="recipe_id"
+                          name="recipe_id"
+                          ngProjectAs="recipes"></lg-multiselect>
+
+                        <lg-multiselect
+                          (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'new_product_name'])"
+                          [autoLoad]="true"
+                          [labelFactory]="productLabelFactory"
+                          [optionFactory]="productLabelFactory"
+                          [placeholder]="'recipe.form.ingredients.product_id.label' | translate"
+                          [resource]="'products'"
+                          appendTo="body"
+                          formControlName="product_id"
+                          name="product_id"
+                          ngProjectAs="products">
+                          <ng-template let-item lgControlTpl type="label">
                             {{ productLabelFactory(item) }}
                             @let price = item.pricePerUnit;
                             @if (price) {
@@ -77,7 +85,7 @@
                                                  [unit]="item?.unit"></lg-price-per-unit>
                             }
                           </ng-template>
-                          <ng-template lgControlTpl type="option" let-item>
+                          <ng-template let-item lgControlTpl type="option">
                             {{ productLabelFactory(item) }}
                             @let price = item.pricePerUnit;
                             @if (price) {
@@ -88,10 +96,10 @@
                           </ng-template>
                         </lg-multiselect>
 
-                        <lg-input ngProjectAs="custom"
-                                  (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
+                        <lg-input (onInputChanged)="onIngredientSelected(amount, i, ['product_id', 'recipe_id'])"
+                                  [placeholder]="'recipe.form.ingredients.new_product_name.label' | translate"
                                   formControlName="new_product_name"
-                                  [placeholder]="'recipe.form.ingredients.new_product_name.label' | translate"></lg-input>
+                                  ngProjectAs="custom"></lg-input>
 
                         <div ngProjectAs="custom-title">
                           <mat-icon [inline]="true"
@@ -101,12 +109,12 @@
                       </lg-entity-item-selector>
 
                       <lg-number-input #amount
-                                       lgParseMath
-                                       lgWidth="40%"
-                                       name="amount"
                                        (onKeydown)="addLast()"
                                        [placeholder]="'recipe.form.ingredients.amount.placeholder'|translate:{unit:('unit.long.'+(form.value.ingredients?.[i]?.unit || UnitValue.GRAM)|translate)}"
-                                       formControlName="amount">
+                                       formControlName="amount"
+                                       lgParseMath
+                                       lgWidth="40%"
+                                       name="amount">
                         <ng-template lgExtraTpl place="after">
                           <lg-unit-switcher formControlName="unit">
                           </lg-unit-switcher>
@@ -114,18 +122,18 @@
                       </lg-number-input>
 
                       <div>
-                        <lg-button [style]="'danger'"
+                        <lg-button (click)="deleteIngredient(i)"
                                    [flat]="true"
-                                   data-u2e="delete-ingredient-btn"
                                    [icon]="true"
-                                   (click)="deleteIngredient(i)">
+                                   [style]="'danger'"
+                                   data-u2e="delete-ingredient-btn">
                           <mat-icon aria-hidden="false" fontIcon="close"></mat-icon>
                         </lg-button>
                       </div>
 
                     </lg-flex-row>
                     @if (!last) {
-                      <hr size="2" lgExpand color="#fafafa"/>
+                      <hr color="#fafafa" lgExpand size="2"/>
                     }
                   </ng-container>
                 }
@@ -133,8 +141,8 @@
 
               <lg-button (click)="addIngredient()"
                          [outlined]="true"
-                         data-u2e="add-ingredient-btn"
-                         [size]="'small'">
+                         [size]="'small'"
+                         data-u2e="add-ingredient-btn">
                 <mat-icon [inline]="true"
                           aria-hidden="false"
                           fontIcon="add"></mat-icon>
@@ -147,8 +155,8 @@
 
       <lg-flex-row [mobileMode]="true">
         <lg-control-box lgSelfStart lgWidth="50%" style="--control-box-bg: var(--hr-bg-strong)">
-          <lg-switch name="chunk-master-switch"
-                     formControlName="master">
+          <lg-switch formControlName="master"
+                     name="chunk-master-switch">
             <span class="text-center" slot="left">{{ 'recipe.form.chunk.label' | translate }}</span>
             <span class="text-center" slot="right">{{ 'recipe.form.master.label' | translate }}</span>
           </lg-switch>
@@ -163,9 +171,9 @@
       <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
         <lg-control [label]="'recipe.form.tags.placeholder'|translate">
           <lg-tags-control [multi]="true"
-                           name="tags"
                            [resource]="'tags'"
-                           formControlName="tags"></lg-tags-control>
+                           formControlName="tags"
+                           name="tags"></lg-tags-control>
         </lg-control>
 
         <lg-control [label]="'recipe.form.category.placeholder'|translate">
@@ -173,15 +181,15 @@
             <lg-multiselect #categorySelect
                             [resource]="'recipes-categories'"
                             appendTo="body"
-                            name="category_id"
                             formControlName="category_id"
-                            lgExpand>
+                            lgExpand
+                            name="category_id">
             </lg-multiselect>
 
             @if (topCategories().length) {
               <lg-chips-list [control]="categorySelect"
-                             name="topCategoriesChips"
-                             [items]="topCategories()"></lg-chips-list>
+                             [items]="topCategories()"
+                             name="topCategoriesChips"></lg-chips-list>
             }
           </lg-flex-column>
         </lg-control>

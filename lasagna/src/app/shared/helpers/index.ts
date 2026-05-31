@@ -8,4 +8,5 @@ export * from "./product.helpers";
 export * from "../../features/recipes/service/helpers/recipe.helpers";
 export * from "./route.helpers";
 export * from "./taxes.helper";
+export * from "./expiration.helpers";
 export {isMicroAmount} from "./amount.helpers";

@@ -165,6 +165,12 @@
             }
           </lg-flex-column>
         </lg-control>
+
+        <lg-control [label]="'product.form.expirationDate.label'|translate">
+          <lg-date-picker formControlName="expirationDate"
+                          data-u2e="product.add.form.expiration-date"
+                          name="expirationDate"></lg-date-picker>
+        </lg-control>
       </lg-flex-column>
     </lg-flex-row>
   </lg-flex-column>

@@ -38,6 +38,11 @@
           }
 
           @if (product()) {
+            <lg-expiration-badge [expirationDate]="product()!.expirationDate"
+                                 [label]="true"
+                                 data-u2e="product.form.title.expiration-badge"
+                                 size="20"></lg-expiration-badge>
+
             <lg-sync-badge [entity]="product()!"></lg-sync-badge>
           }
         </lg-flex-row>
