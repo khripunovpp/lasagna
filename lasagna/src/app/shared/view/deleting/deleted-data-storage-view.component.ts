@@ -74,9 +74,13 @@ import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
                      [class.deleted-data__row--expired]="item.isExpired"
                      [mobileMode]="true"
                      [size]="'medium'">
-          <a [routerLink]="['/recipes/edit/', item.model.uuid]">
-            {{ productLabelFactory(item.model) }}
-          </a>
+          @if (item.model) {
+            <a [routerLink]="['/recipes/edit/', item.model.uuid]">
+              {{ productLabelFactory(item.model) }}
+            </a>
+          } @else {
+            #
+          }
 
           @if (item.isExpired) {
             <span class="deleted-data__badge">{{ 'deleted-data.expired-badge' | translate }}</span>
@@ -89,9 +93,11 @@ import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
             {{ 'deleted-data.recover-btn' | translate }}
           </lg-button>
 
-          <small class="text-muted text-right text-cursive" lgPull>
-            {{ (item.model.deletedAt) | timeAgo }}
-          </small>
+          @if (item.model) {
+            <small class="text-muted text-right text-cursive" lgPull>
+              {{ (item.model.deletedAt) | timeAgo }}
+            </small>
+          }
         </lg-flex-row>
       </ng-template>
     }
