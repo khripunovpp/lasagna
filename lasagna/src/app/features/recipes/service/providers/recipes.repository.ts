@@ -104,6 +104,24 @@ export class RecipesRepository
       .then(res => res.toSorted((a: Recipe, b: Recipe) => a?.name?.localeCompare(b?.name)));
   }
 
+  /**
+   * Прямые родители: рецепты, в состав которых данный рецепт входит как ингредиент
+   * напрямую (без подъёма по вложенности вверх).
+   * Флаг `master` не учитываем: он проставляется не всегда.
+   * Read-only запрос по индексу `ingredientsUUIDs` (тот же, что и в global-search).
+   */
+  async getDirectParentRecipes(uuid: string): Promise<Recipe[]> {
+    const parents: RecipeDTO[] = await this._indexDbService
+      .table(Stores.RECIPES)
+      .where('ingredientsUUIDs').anyOf(uuid)
+      .and((r: RecipeDTO) => !r.deleted && r.uuid !== uuid)
+      .toArray();
+
+    return parents
+      .map(raw => this.factory(raw))
+      .toSorted((a, b) => a?.name?.localeCompare(b?.name));
+  }
+
   override async updateOne(
     uuid: string,
     recipe: Recipe

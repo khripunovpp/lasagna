@@ -7,6 +7,7 @@ import {
   input,
   OnInit,
   signal,
+  untracked,
   viewChild
 } from '@angular/core';
 import {ControlContainer, FormArray, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -49,6 +50,7 @@ import {SettingsService} from '../../../settings/service/services/settings.servi
 import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-per-unit.component';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
+import {RecipeUsedInComponent} from './recipe-used-in.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -83,7 +85,8 @@ import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.co
     HtmlEditorComponent,
     ControlTemplateDirective,
     PricePerUnitComponent,
-    QuestionMarkComponent
+    QuestionMarkComponent,
+    RecipeUsedInComponent
   ],
   providers: [
     {
@@ -109,15 +112,17 @@ export class AddRecipeFormComponent
   recipe = input<Recipe | undefined>(undefined);
   uuid = injectParams<string>('uuid');
   form?: FormGroup;
-  recipeFieldState = signal<Record<number, boolean>>({});
   nameField = viewChild<AutocompleteComponent>('nameField');
   topCategories = signal<any[]>([]);
   isClient = inject(IS_CLIENT);
   protected readonly UnitValue = UnitValue;
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   private recipeEffect = effect(() => {
-    if (this.recipe()) {
-      this.fillForm(this.recipe()!);
+    const recipe = this.recipe();
+    if (recipe) {
+      // fillForm читает другие сигналы (uuid) и мутирует форму — untracked,
+      // чтобы эффект перезапускался только при смене recipe()
+      untracked(() => this.fillForm(recipe));
     }
   });
 
@@ -159,12 +164,8 @@ export class AddRecipeFormComponent
     });
 
     if (recipe.ingredients.length) {
-      recipe.ingredients.forEach((ingredient: Ingredient, index: number) => {
+      recipe.ingredients.forEach((ingredient: Ingredient) => {
         this.ingredients.push(this._getIngredientGroup(ingredient));
-
-        if (ingredient.recipe_id) {
-          this.openRecipeField(index);
-        }
       })
     } else {
       this.ingredients.push(this._getIngredientGroup());
@@ -216,28 +217,6 @@ export class AddRecipeFormComponent
         [field]: null
       }), {}) : {[clearField]: null}),
       unit: value.product_id?.unit || value.recipe_id?.unit || UnitValue.GRAM
-    });
-  }
-
-  openRecipeField(
-    index: number
-  ) {
-    this.recipeFieldState.update((value) => {
-      return {
-        ...value,
-        [index]: true,
-      }
-    });
-  }
-
-  closeRecipeField(
-    index: number
-  ) {
-    this.recipeFieldState.update((value) => {
-      return {
-        ...value,
-        [index]: false,
-      }
     });
   }
 

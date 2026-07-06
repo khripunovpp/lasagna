@@ -1,6 +1,13 @@
 {
   "notes": [
     {
+      "date": "2026-07-06",
+      "features": [
+        "The recipe page now has a \"Used in recipes\" block — it shows which recipes use this component directly as an ingredient, with quick links to open them",
+        "Handy when you change a preparation (cream, dough, sauce) and want to see at a glance which dishes it's used in"
+      ]
+    },
+    {
       "date": "2026-05-24",
       "features": [
         "Recipes can now be organized into folders. The recipes page has a new view-mode switch: \"Groupings\" (the previous default) and \"Folders\" — a navigable hierarchy with breadcrumbs.",

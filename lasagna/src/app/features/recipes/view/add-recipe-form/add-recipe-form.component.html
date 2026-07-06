@@ -156,6 +156,10 @@
         </lg-control-box>
       </lg-flex-row>
 
+      @if (editMode() && uuid()) {
+        <lg-recipe-used-in [recipeUuid]="uuid()!"></lg-recipe-used-in>
+      }
+
       <lg-flex-row [equal]="true" [mobileMode]="true" style="--control-bg: var(--hr-bg-strong)">
         <lg-control [label]="'recipe.form.tags.placeholder'|translate">
           <lg-tags-control [multi]="true"
