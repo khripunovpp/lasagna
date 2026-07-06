@@ -48,6 +48,7 @@ import {ControlTemplateDirective} from '../../../controls/form/control-template.
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-per-unit.component';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
+import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
 
 @Component({
   selector: 'lg-add-recipe-form',
@@ -81,7 +82,8 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
     WidthDirective,
     HtmlEditorComponent,
     ControlTemplateDirective,
-    PricePerUnitComponent
+    PricePerUnitComponent,
+    QuestionMarkComponent
   ],
   providers: [
     {
