@@ -68,24 +68,29 @@ export class AppComponent
   }
 
   readonly scrollingPosition: Signal<[number, number] | undefined | null>;
+  // readonly scrollToPositionEffect = effect(() => {
+  //   const position = this.scrollingPosition();
+  //   if (!position || !this.isBrowser) {
+  //     return;
+  //   }
+  //   // Реальный скролл-контейнер — <main class="app">: у него overflow-x: hidden,
+  //   // из-за чего overflow-y вычисляется как auto (window при этом не скроллится,
+  //   // поэтому ViewportScroller здесь бесполезен). Скроллим сам контейнер, и
+  //   // откладываем до после ре-рендера (edit→edit переиспользует компонент,
+  //   // DOM перестраивается уже после навигации).
+  //   requestAnimationFrame(() => {
+  //     const scroller = this._document.querySelector('main.app');
+  //     if (scroller) {
+  //       scroller.scrollTo({left: position[0], top: position[1]});
+  //     } else {
+  //       this._viewportScroller.scrollToPosition(position);
+  //     }
+  //   });
+  // });
   readonly scrollToPositionEffect = effect(() => {
-    const position = this.scrollingPosition();
-    if (!position || !this.isBrowser) {
-      return;
+    if (this.scrollingPosition()) {
+      this._viewportScroller.scrollToPosition(this.scrollingPosition()!);
     }
-    // Реальный скролл-контейнер — <main class="app">: у него overflow-x: hidden,
-    // из-за чего overflow-y вычисляется как auto (window при этом не скроллится,
-    // поэтому ViewportScroller здесь бесполезен). Скроллим сам контейнер, и
-    // откладываем до после ре-рендера (edit→edit переиспользует компонент,
-    // DOM перестраивается уже после навигации).
-    requestAnimationFrame(() => {
-      const scroller = this._document.querySelector('main.app');
-      if (scroller) {
-        scroller.scrollTo({left: position[0], top: position[1]});
-      } else {
-        this._viewportScroller.scrollToPosition(position);
-      }
-    });
   });
   readonly isPwa = inject(IS_PWA);
   readonly isBrowser = inject(IS_CLIENT);
