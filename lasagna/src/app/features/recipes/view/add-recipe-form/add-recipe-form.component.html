@@ -63,7 +63,20 @@
                           appendTo="body"
                           formControlName="recipe_id"
                           name="recipe_id"
-                          ngProjectAs="recipes"></lg-multiselect>
+                          ngProjectAs="recipes">
+                          <ng-template let-item lgControlTpl type="link">
+                            @if (item?.uuid) {
+                              <a [attr.aria-label]="'recipe.form.ingredients.open_recipe' | translate"
+                                 [routerLink]="['/recipes/edit/', item.uuid]"
+                                 [title]="'recipe.form.ingredients.open_recipe' | translate"
+                                 class="ingredient-link"
+                                 target="_blank">
+                                <mat-icon [inline]="true"
+                                          fontIcon="open_in_new"></mat-icon>
+                              </a>
+                            }
+                          </ng-template>
+                        </lg-multiselect>
 
                         <lg-multiselect
                           (onSelected)="onIngredientSelected(amount, i, ['recipe_id', 'new_product_name'])"
@@ -92,6 +105,18 @@
                               -
                               <lg-price-per-unit [price]="price"
                                                  [unit]="item?.unit"></lg-price-per-unit>
+                            }
+                          </ng-template>
+                          <ng-template let-item lgControlTpl type="link">
+                            @if (item?.uuid) {
+                              <a [attr.aria-label]="'recipe.form.ingredients.open_product' | translate"
+                                 [routerLink]="['/products/edit/', item.uuid]"
+                                 [title]="'recipe.form.ingredients.open_product' | translate"
+                                 class="ingredient-link"
+                                 target="_blank">
+                                <mat-icon [inline]="true"
+                                          fontIcon="open_in_new"></mat-icon>
+                              </a>
                             }
                           </ng-template>
                         </lg-multiselect>

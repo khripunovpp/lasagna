@@ -728,6 +728,8 @@
   "recipe.form.ingredients.name.placeholder": "Ingredient name",
   "recipe.form.ingredients.name.switch-label": "As text",
   "recipe.form.ingredients.new_product_name.label": "Or enter a name to create a product from scratch",
+  "recipe.form.ingredients.open_product": "Open product page",
+  "recipe.form.ingredients.open_recipe": "Open recipe page",
   "recipe.form.ingredients.product_id.label": "Product from your storage",
   "recipe.form.ingredients.recipe_id.label": "Find a recipe you've created before",
   "recipe.form.master.info": "<b>Recipe component or master recipe</b> <br><br>This toggle sets the recipe's role. A <b>recipe component</b> is a preparation (such as a cream, filling, or sauce) that you use as an ingredient inside other recipes. A <b>master recipe</b> is a finished dish or product that you sell as a whole. <br><br>The role is used for filtering: it lets you separate finished dishes from helper preparations in the recipe list and find what you need faster.",

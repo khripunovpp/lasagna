@@ -728,6 +728,8 @@
   "recipe.form.ingredients.name.placeholder": "Nome do ingrediente",
   "recipe.form.ingredients.name.switch-label": "Como texto",
   "recipe.form.ingredients.new_product_name.label": "Ou digite o nome do novo produto",
+  "recipe.form.ingredients.open_product": "Abrir página do produto",
+  "recipe.form.ingredients.open_recipe": "Abrir página da receita",
   "recipe.form.ingredients.product_id.label": "Encontrar produto",
   "recipe.form.ingredients.recipe_id.label": "Encontrar receita",
   "recipe.form.master.info": "<b>Receita componente ou receita principal</b> <br><br>Este seletor define o papel da receita. Uma <b>receita componente</b> é um preparo (como um creme, recheio ou molho) que você usa como ingrediente dentro de outras receitas. Uma <b>receita principal</b> é um prato ou produto finalizado que você vende por inteiro. <br><br>O papel é usado para filtragem: assim você separa os pratos finalizados dos preparos auxiliares na lista de receitas e encontra o que precisa mais rápido.",

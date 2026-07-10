@@ -1,6 +1,6 @@
 import {Directive, inject, input, TemplateRef} from '@angular/core';
 
-export type ControlTemplateType = 'label' | 'option'
+export type ControlTemplateType = 'label' | 'option' | 'link'
 
 @Directive({
   selector: '[lgControlTpl]',

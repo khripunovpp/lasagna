@@ -105,6 +105,10 @@ import {TranslatePipe} from '@ngx-translate/core';
           display: none;
           flex: 1;
           width: 100%;
+
+          .ng-select-container {
+            border-radius: 2px 12px 12px 12px !important;
+          }
         }
 
         &__part,

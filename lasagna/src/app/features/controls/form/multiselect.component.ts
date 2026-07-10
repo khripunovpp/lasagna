@@ -30,7 +30,8 @@ export interface MultiselectItem {
   selector: 'lg-multiselect',
   standalone: true,
   template: `
-    <div class="multiselect">
+    <div class="multiselect"
+         [class.multiselect--has-link]="linkTemplate() && !!value()">
       <ng-select (change)="onChangeSelect($event)"
                  (ngModelChange)="onChangeInput($event)"
                  [appendTo]="appendTo()"
@@ -57,6 +58,13 @@ export interface MultiselectItem {
           }
         </ng-template>
       </ng-select>
+
+      @if (linkTemplate() && value(); as selected) {
+        <div class="multiselect__link">
+          <ng-container
+            *ngTemplateOutlet="linkTemplate()?.templateRef; context: { $implicit: selected }"></ng-container>
+        </div>
+      }
     </div>
   `,
   imports: [
@@ -78,6 +86,25 @@ export interface MultiselectItem {
       .multiselect {
         flex: 1;
         width: 100%;
+        position: relative;
+
+        &.multiselect--has-link {
+          .ng-select .ng-select-container .ng-value-container {
+            padding-right: 32px;
+          }
+        }
+
+        .multiselect__link {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          // sit right before the ng-clear-wrapper (×) + ng-arrow-wrapper cluster
+          right: 50px;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          pointer-events: auto;
+        }
 
         .ng-select.ng-select-focused .ng-select-container {
           outline: none;
@@ -164,6 +191,7 @@ export class MultiselectComponent
   templates = contentChildren(ControlTemplateDirective);
   labelTemplate = computed(() => this.templates().find(t => t.type() === 'label'));
   optionTemplate = computed(() => this.templates().find(t => t.type() === 'option'));
+  linkTemplate = computed(() => this.templates().find(t => t.type() === 'link'));
 
   // Эффект для обновления списка при изменении staticItems
   private updateStaticItemsEffect = effect(() => {

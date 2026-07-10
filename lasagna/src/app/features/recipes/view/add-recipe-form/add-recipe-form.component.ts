@@ -28,6 +28,7 @@ import {Recipe} from '../../service/models/Recipe';
 import {Ingredient} from '../../service/models/Ingredient';
 import {getIngredientGroup, recipeToFormValue} from '../../service/helpers/recipe.helpers';
 import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {UnitSwitcherComponent} from '../../../../shared/view/ui/unit-switcher.component';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
@@ -58,6 +59,29 @@ import {ProductExpirationDirective} from '../../../../shared/view/directives/pro
   selector: 'lg-add-recipe-form',
   standalone: true,
   templateUrl: './add-recipe-form.component.html',
+  styles: [
+    `
+      .ingredient-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        // match ng-select's clear (×) and arrow color
+        color: #999;
+        transition: color 0.15s ease;
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          line-height: 18px;
+        }
+
+        &:hover {
+          color: #333;
+        }
+      }
+    `
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
@@ -71,6 +95,7 @@ import {ProductExpirationDirective} from '../../../../shared/view/directives/pro
     ChipsListComponent,
     FormsModule,
     MatIcon,
+    RouterLink,
     TranslatePipe,
     UnitSwitcherComponent,
     CardComponent,
