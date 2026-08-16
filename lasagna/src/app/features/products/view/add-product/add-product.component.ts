@@ -199,6 +199,26 @@ export class AddProductComponent
     }
   }
 
+  onPurgeProduct() {
+    const product = this.product();
+    if (!product?.uuid) return;
+
+    this.deleteConfirmationService.configure({
+      message: this._translateService.instant('deleted-data.purge-confirm'),
+      onSuccess: async () => {
+        try {
+          await this._deletingService.purgeByEntity(DeletingKey.products, product.uuid!);
+          this._notificationsService.success(this._translateService.instant('deleted-data.purged'));
+          this._routerManager.navigate(['products']);
+        } catch (e) {
+          this._notificationsService.error(errorHandler(e));
+        }
+      },
+      onCancel: () => {
+      }
+    });
+  }
+
   onDeleteProduct() {
     this.deleteConfirmationService.configure({
       message: this._translateService.instant('product.form.delete-confirm-message'),

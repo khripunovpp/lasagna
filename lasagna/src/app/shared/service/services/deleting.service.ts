@@ -73,40 +73,66 @@ export class DeletingService {
     const byKey = this._groupExpiredByKey();
 
     for (const key of Object.keys(byKey) as DeletingKey[]) {
-      const store = deletingKeyToTableMap[key];
-      const items = byKey[key];
-      if (!store || !items || !items.length) continue;
-
-      if (this.canSync()) {
-        const cloudItems = items
-          .map(r => r.data)
-          .filter(d => d?.cloud_uuid);
-        if (cloudItems.length) {
-          await this._cloudSyncService.patchManyData(
-            store,
-            cloudItems.map(d => ({
-              id: d.cloud_uuid!,
-              data: {
-                deleted: !!d.deleted,
-                deletedAt: d.deletedAt,
-              },
-            }))
-          );
-        }
-      }
-
-      const deleteRecordUuids = items.map(r => r.record.uuid!).filter(Boolean);
-      const entityIds = items.map(r => r.record.entityId);
-
-      if (deleteRecordUuids.length) {
-        await this._dbService.removeMany(Stores.DELETES_STORE, deleteRecordUuids);
-      }
-      if (entityIds.length) {
-        await this._dbService.removeMany(store, entityIds);
-      }
+      await this._purge(key, byKey[key] ?? []);
     }
 
     await this.refresh();
+  }
+
+  /** wipes a single record for good, without waiting for the 30 days to pass */
+  async purgeItem(record: DeleteRecord): Promise<void> {
+    const records = await this.ensureLoaded();
+    const view = records.find(r => r.record.key === record.key && r.record.entityId === record.entityId)
+      ?? {record, model: null, data: null, isExpired: false};
+
+    await this._purge(record.key as DeletingKey, [view]);
+    await this.refresh();
+  }
+
+  async purgeByEntity(key: DeletingKey, entityId: string): Promise<void> {
+    const records = await this.ensureLoaded();
+    const view = records.find(r => r.record.key === key && r.record.entityId === entityId);
+
+    await this._purge(key, [view ?? {
+      record: {key, entityId} as DeleteRecord,
+      model: null,
+      data: null,
+      isExpired: false,
+    }]);
+    await this.refresh();
+  }
+
+  private async _purge(key: DeletingKey, items: DeletedRecordView[]): Promise<void> {
+    const store = deletingKeyToTableMap[key];
+    if (!store || !items.length) return;
+
+    if (this.canSync()) {
+      const cloudItems = items
+        .map(r => r.data)
+        .filter(d => d?.cloud_uuid);
+      if (cloudItems.length) {
+        await this._cloudSyncService.patchManyData(
+          store,
+          cloudItems.map(d => ({
+            id: d.cloud_uuid!,
+            data: {
+              deleted: !!d.deleted,
+              deletedAt: d.deletedAt,
+            },
+          }))
+        );
+      }
+    }
+
+    const deleteRecordUuids = items.map(r => r.record.uuid!).filter(Boolean);
+    const entityIds = items.map(r => r.record.entityId).filter(Boolean);
+
+    if (deleteRecordUuids.length) {
+      await this._dbService.removeMany(Stores.DELETES_STORE, deleteRecordUuids);
+    }
+    if (entityIds.length) {
+      await this._dbService.removeMany(store, entityIds);
+    }
   }
 
   private _groupExpiredByKey(): Partial<Record<DeletingKey, DeletedRecordView[]>> {

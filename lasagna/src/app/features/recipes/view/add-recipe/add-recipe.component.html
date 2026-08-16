@@ -158,6 +158,15 @@
                 {{ 'deleted.recipe.recover-btn'|translate }}
               </lg-button>
             </ng-template>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (click)="onPurgeRecipe()"
+                         [flat]="true"
+                         [style]="'danger'"
+                         data-u2e="recipe.form.purge-btn"
+                         lgShrink>
+                {{ 'deleted-data.purge-btn'|translate }}
+              </lg-button>
+            </ng-template>
           }
         </lg-inline-separated-group>
 

@@ -335,6 +335,26 @@ export class AddRecipeComponent
     }
   }
 
+  onPurgeRecipe() {
+    const recipe = this.recipe();
+    if (!recipe?.uuid) return;
+
+    this.deleteConfirmationService.configure({
+      message: this._translateService.instant('deleted-data.purge-confirm'),
+      onSuccess: async () => {
+        try {
+          await this._deletingService.purgeByEntity(DeletingKey.recipes, recipe.uuid!);
+          this._notificationsService.success(this._translateService.instant('deleted-data.purged'));
+          this._routerManager.navigate(['recipes']);
+        } catch (e) {
+          this._notificationsService.error(errorHandler(e));
+        }
+      },
+      onCancel: () => {
+      }
+    });
+  }
+
   onDeleteRecipe() {
     if (!this.recipe()?.uuid) {
       return;

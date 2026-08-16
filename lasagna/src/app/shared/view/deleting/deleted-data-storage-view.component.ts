@@ -13,6 +13,8 @@ import {NotificationsService} from '../../service/services';
 import {errorHandler} from '../../helpers';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
+import {ConfirmationService} from '../ui/confirmation-popover/confirmation.service';
+import {ConfirmationPopoverComponent} from '../ui/confirmation-popover/confirmation-popover.component';
 
 @Component({
   selector: 'lg-deleted-data-storage-view',
@@ -63,8 +65,16 @@ import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
             {{ 'deleted-data.recover-btn' | translate }}
           </lg-button>
 
+          <lg-button (onClick)="onPurge(item.record)"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'danger'"
+                     data-u2e="deleted-data.purge-btn">
+            {{ 'deleted-data.purge-btn' | translate }}
+          </lg-button>
+
           <small class="text-muted text-right text-cursive" lgPull>
-            {{ (item.model.deletedAt) | timeAgo }}
+            {{ (item.model.deletedAt || item.record.timestamp) | timeAgo }}
           </small>
         </lg-flex-row>
       </ng-template>
@@ -93,15 +103,24 @@ import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
             {{ 'deleted-data.recover-btn' | translate }}
           </lg-button>
 
-          @if (item.model) {
-            <small class="text-muted text-right text-cursive" lgPull>
-              {{ (item.model.deletedAt) | timeAgo }}
-            </small>
-          }
+          <lg-button (onClick)="onPurge(item.record)"
+                     [flat]="true"
+                     [size]="'small'"
+                     [style]="'danger'"
+                     data-u2e="deleted-data.purge-btn">
+            {{ 'deleted-data.purge-btn' | translate }}
+          </lg-button>
+
+          <small class="text-muted text-right text-cursive" lgPull>
+            {{ (item.model?.deletedAt || item.record.timestamp) | timeAgo }}
+          </small>
         </lg-flex-row>
       </ng-template>
     }
+
+    <lg-confirmation-popover name="deleted-data-purge-confirm"></lg-confirmation-popover>
   `,
+  providers: [ConfirmationService],
   imports: [
     NgTemplateOutlet,
     FlexColumnComponent,
@@ -111,7 +130,8 @@ import {DeleteRecord, DeletingKey} from '../../service/services/deleting.types';
     TimeAgoPipe,
     RouterLink,
     ButtonComponent,
-    TranslatePipe
+    TranslatePipe,
+    ConfirmationPopoverComponent
   ],
   styles: [`
     .deleted-data__row--expired {
@@ -137,6 +157,7 @@ export class DeletedDataStorageViewComponent implements OnInit {
   private readonly _deletingService = inject(DeletingService);
   readonly records = this._deletingService.records;
   private readonly _translate = inject(TranslateService);
+  private readonly _confirmationService = inject(ConfirmationService);
 
   ngOnInit() {
     this._deletingService.ensureLoaded()
@@ -152,5 +173,21 @@ export class DeletedDataStorageViewComponent implements OnInit {
     } catch (e) {
       this._notificationsService.error(errorHandler(e));
     }
+  }
+
+  onPurge(record: DeleteRecord) {
+    this._confirmationService.configure({
+      message: this._translate.instant('deleted-data.purge-confirm'),
+      onSuccess: async () => {
+        try {
+          await this._deletingService.purgeItem(record);
+          this._notificationsService.success(this._translate.instant('deleted-data.purged'));
+        } catch (e) {
+          this._notificationsService.error(errorHandler(e));
+        }
+      },
+      onCancel: () => {
+      }
+    });
   }
 }

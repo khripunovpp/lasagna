@@ -84,6 +84,14 @@
                 {{ 'deleted.product.recover-btn'|translate }}
               </lg-button>
             </ng-template>
+            <ng-template lgInlineSeparatedGroup>
+              <lg-button (click)="onPurgeProduct()" [flat]="true"
+                         [style]="'danger'"
+                         data-u2e="product.form.purge-btn"
+                         lgShrink>
+                {{ 'deleted-data.purge-btn'|translate }}
+              </lg-button>
+            </ng-template>
           }
         </lg-inline-separated-group>
 
