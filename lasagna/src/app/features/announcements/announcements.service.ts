@@ -58,6 +58,19 @@ export class AnnouncementsService {
 
   private readonly _configs: AnnouncementConfig[] = [
     {
+      id: 'product-cleaning-loss-2026-08',
+      emoji: '🥔',
+      titleKey: _('announcements.product-cleaning-loss-2026-08.title'),
+      bodyKey: _('announcements.product-cleaning-loss-2026-08.body'),
+      startsAt: '2026-08-16',
+      expiresAt: '2026-11-01',
+      detailsLink: {
+        labelKey: _('announcements.banner.details'),
+        url: '/documents/storage/adding-and-editing',
+      },
+      routeMatch: ['/products'],
+    },
+    {
       id: 'product-expiration-2026-07',
       emoji: '⏳',
       titleKey: _('announcements.product-expiration-2026-07.title'),
