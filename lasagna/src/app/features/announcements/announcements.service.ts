@@ -9,6 +9,7 @@ import {getURLWithoutParams} from '../../shared/helpers';
 import {AnalyticsService} from '../../shared/service/services/analytics.service';
 import {SupportService} from '../home/service/support.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UserService} from '../settings/service/services/user.service';
 
 export interface AnnouncementDetailsLink {
   labelKey: string;
@@ -47,6 +48,7 @@ export class AnnouncementsService {
   private readonly _analytics = inject(AnalyticsService);
   private readonly _support = inject(SupportService);
   private readonly _translate = inject(TranslateService);
+  private readonly _userService = inject(UserService);
 
   private readonly _configs: AnnouncementConfig[] = [
     {
@@ -149,6 +151,7 @@ export class AnnouncementsService {
     for (const cfg of this._configs) {
       if (cfg.startsAt && new Date(cfg.startsAt).getTime() > now) continue;
       if (new Date(cfg.expiresAt).getTime() <= now) continue;
+      if (this._shippedBeforeUser(cfg)) continue;
       if (this._isDismissed(cfg.id)) continue;
       if (!this._matchesRoute(cfg.routeMatch, path)) continue;
       return cfg;
@@ -167,6 +170,17 @@ export class AnnouncementsService {
       announcement_id: a.id,
     });
   });
+
+  /**
+   * A feature released before the user's first launch is not news to them — it
+   * is simply how the app has always looked.
+   */
+  private _shippedBeforeUser(cfg: AnnouncementConfig): boolean {
+    if (!cfg.startsAt) return false;
+    const firstSeen = this._userService.isUserFirstDate?.getTime();
+    if (!firstSeen) return false;
+    return new Date(cfg.startsAt).getTime() < firstSeen;
+  }
 
   private _matchesRoute(pattern: string | string[] | undefined, path: string): boolean {
     if (!pattern) return true;
