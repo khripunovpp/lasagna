@@ -1012,5 +1012,6 @@
   "widgets.page.jelly-calculator": "Calculadora de gelatina",
   "widgets.page.title": "Ferramentas",
   "widgets.scan.title": "Escanear",
-  "without-category-label": "Sem categoria"
+  "without-category-label": "Sem categoria",
+  "without-tag-label": "Sem etiqueta"
 }

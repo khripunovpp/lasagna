@@ -44,8 +44,13 @@ export class CategoryRecipeSortStrategy
 
 export class TagsRecipeSortStrategy
   extends BaseGrouping<RecipeDTO> {
+  override emptyLabel = 'without-tag-label';
+
   override groupBy(item: RecipeDTO) {
-    return item.tags?.map(tag => tag.toString()) || '';
+    const tags = item.tags?.map(tag => tag.toString()).filter(tag => !!tag) ?? [];
+    // an empty array would drop the recipe from every group, '' keeps it in the
+    // "without tag" one
+    return tags.length ? tags : '';
   }
 
   override innerSort(

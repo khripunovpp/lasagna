@@ -57,6 +57,6 @@ export class GroupSortService {
         return -1;
       }
       return a.field.localeCompare(b.field);
-    }));
+    }), strategy.emptyLabel);
   }
 }

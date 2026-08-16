@@ -32,7 +32,7 @@ import {IS_CLIENT} from '../../../service/tokens/isClient.token';
               </ng-container>
             } @else {
               <lg-title [level]="3">
-                {{ group?.field || translateService.instant('without-category-label') }}
+                {{ group?.field || translateService.instant(sortResult()?.emptyLabel || 'without-category-label') }}
               </lg-title>
 
               <span class="grouping-tiles__header-count text-muted">{{ items.length }}</span>

@@ -1012,5 +1012,6 @@
   "widgets.page.jelly-calculator": "Jelly calculator",
   "widgets.page.title": "Tools",
   "widgets.scan.title": "Scan",
-  "without-category-label": "Uncategorized"
+  "without-category-label": "Uncategorized",
+  "without-tag-label": "No tag"
 }

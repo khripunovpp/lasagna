@@ -2,6 +2,8 @@ import {SortStrategy} from '../types/sorting.types';
 
 export class BaseGrouping<T = any>
   implements SortStrategy<T> {
+  emptyLabel = 'without-category-label';
+
   innerSort(
     a: T,
     b: T,

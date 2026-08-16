@@ -1012,5 +1012,6 @@
   "widgets.page.jelly-calculator": "Калькулятор желе",
   "widgets.page.title": "Инструменты",
   "widgets.scan.title": "Сканировать",
-  "without-category-label": "Без категории"
+  "without-category-label": "Без категории",
+  "without-tag-label": "Без тега"
 }
