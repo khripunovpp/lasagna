@@ -767,6 +767,7 @@
   "recipes.list-title": "Рецепты",
   "recipes.list.layout-label": "Раскладка",
   "recipes.menu-label": "Рецепты",
+  "recipes.toolbox.clear-btn": "Очистить",
   "recipes.toolbox.section.sorting": "Сортировка",
   "recipes.toolbox.title": "Фильтры и сортировка",
   "recipes.toolbox.trigger-btn": "Фильтры",

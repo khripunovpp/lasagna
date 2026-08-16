@@ -1,4 +1,4 @@
-import {Component, ContentChild, effect, EventEmitter, Input, inject, Output, signal} from '@angular/core';
+import {Component, computed, ContentChild, effect, EventEmitter, Input, inject, Output, signal} from '@angular/core';
 import {FlexRowComponent} from '../../layout/flex-row.component';
 import {ButtonComponent} from '../button/button.component';
 import {DropdownComponent} from '../../../../features/controls/dropdown/dropdown.component';
@@ -24,9 +24,8 @@ import {GroupingSortingStorageService} from '../../../service/services/grouping-
     <lg-flex-row [mobileMode]="true"
                  size="medium">
       <lg-dropdown>
-        <lg-button [flat]="true"
-                   [size]="'small'"
-                   [style]="'primary'"
+        <lg-button [size]="'tiny'"
+                   [outlined]="sorting().group === defaultGroup"
                    data-u2e="grouping.sorting.group.button"
                    lgDropdownAnchor>
           {{ getGroupingLabel(sorting().group) }}
@@ -92,9 +91,8 @@ import {GroupingSortingStorageService} from '../../../service/services/grouping-
       <!--      </lg-dropdown>-->
 
       <lg-dropdown>
-        <lg-button [flat]="true"
-                   [size]="'small'"
-                   [style]="'primary'"
+        <lg-button [size]="'tiny'"
+                   [outlined]="sorting().direction === defaultDirection"
                    data-u2e="grouping.sorting.direction.button"
                    lgDropdownAnchor>
           {{ getGroupingDirectionLabel(sorting().direction) }}
@@ -151,12 +149,20 @@ export class GroupingSortingComponent {
   sortDirection = injectQueryParams<string | null>('sortDirection');
   sortField = injectQueryParams('sortField');
 
-  defaultDirection = 'asc';
+  defaultDirection: 'asc' | 'desc' = 'asc';
+  defaultGroup = 'category';
+  defaultField = 'name';
   sorting = signal<{
     field: string,
     direction: 'asc' | 'desc' | string,
     group: string
-  }>({field: 'name', direction: this.defaultDirection, group: 'category'});
+  }>({field: this.defaultField, direction: this.defaultDirection, group: this.defaultGroup});
+  /** how many of the sorting controls differ from their defaults */
+  readonly activeCount = computed(() => {
+    const sort = this.sorting();
+    return (sort.group !== this.defaultGroup ? 1 : 0)
+      + (sort.direction !== this.defaultDirection ? 1 : 0);
+  });
   sortingEffect = effect(() => {
     const sort = this.sorting();
     this.sortChange.emit(sort);
@@ -175,10 +181,28 @@ export class GroupingSortingComponent {
       : null;
 
     this.sorting.set({
-      field: stored?.field ?? sortField?.toString() ?? 'name',
+      field: stored?.field ?? sortField?.toString() ?? this.defaultField,
       direction: stored?.direction ?? urlDirection ?? this.defaultDirection,
-      group: stored?.group ?? groupBy?.toString() ?? 'category',
+      group: stored?.group ?? groupBy?.toString() ?? this.defaultGroup,
     });
+  }
+
+  /** back to the defaults without touching the url — the caller navigates */
+  resetSilently() {
+    const next = {
+      field: this.defaultField,
+      direction: this.defaultDirection,
+      group: this.defaultGroup,
+    };
+    this.sorting.set(next);
+    this.sortChange.emit(next);
+    if (this.storageKey) {
+      this._storage.write(this.storageKey, {
+        field: next.field,
+        direction: next.direction,
+        group: next.group,
+      });
+    }
   }
 
   onSortChange(

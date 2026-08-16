@@ -767,6 +767,7 @@
   "recipes.list-title": "Recipes",
   "recipes.list.layout-label": "Layout",
   "recipes.menu-label": "Recipes",
+  "recipes.toolbox.clear-btn": "Clear",
   "recipes.toolbox.section.sorting": "Sorting",
   "recipes.toolbox.title": "Filters & sorting",
   "recipes.toolbox.trigger-btn": "Filters",

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, input, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
@@ -7,6 +7,7 @@ import {ButtonComponent} from '../../../../shared/view/ui/button/button.componen
 import {DropdownComponent} from '../../../controls/dropdown/dropdown.component';
 import {FlexColumnComponent} from '../../../../shared/view/layout/flex-column.component';
 import {WINDOW} from '../../../../shared/service/tokens/window.token';
+import {ListFiltersStorageService} from '../../../../shared/service/services/list-filters-storage.service';
 
 @Component({
   selector: 'lg-recipes-filters',
@@ -22,10 +23,9 @@ import {WINDOW} from '../../../../shared/service/tokens/window.token';
     <lg-flex-row [mobileMode]="true"
                  size="medium">
       <lg-dropdown>
-        <lg-button [flat]="true"
-                   [size]="'small'"
+        <lg-button [size]="'tiny'"
                    [attr.data-u2e]="'recipes.filters.button'"
-                   [style]="'default'"
+                   [outlined]="!activeCount()"
                    lgDropdownAnchor>
           {{ filterLabel() }}
         </lg-button>
@@ -64,6 +64,7 @@ export class RecipesFiltersComponent {
   ) {
   }
 
+  readonly storageKey = input('recipes');
   readonly router = inject(Router);
   readonly aRouter = inject(ActivatedRoute);
   readonly filterValue = injectQueryParams('filterValue');
@@ -82,17 +83,28 @@ export class RecipesFiltersComponent {
     }
     return this.translateService.instant('recipes.filters.all');
   });
-  readonly activeCount = computed(() => this.filterField() ? 1 : 0);
+  readonly activeCount = computed(() => this.filters().field ? 1 : 0);
   private readonly _window = inject(WINDOW);
+  private readonly _storage = inject(ListFiltersStorageService);
 
   ngOnInit() {
     const value = this.filterValue();
     const field = this.filterField();
 
+    // the url wins when it carries a filter (shared links), otherwise fall back
+    // to what the user picked last time
+    const stored = field ? null : this._storage.read(this.storageKey());
+
     this.filters.set({
-      field: field?.toString() || undefined,
-      value: value?.toString() || undefined
+      field: stored ? stored.field : (field?.toString() || undefined),
+      value: stored ? stored.value : (value?.toString() || undefined)
     });
+  }
+
+  /** drops the filter without touching the url — the caller navigates */
+  resetSilently() {
+    this.filters.set({});
+    this._storage.write(this.storageKey(), {});
   }
 
   onFilterChange(
@@ -101,6 +113,9 @@ export class RecipesFiltersComponent {
       value?: string
     }
   ) {
+    this.filters.set({field: props.field, value: props.value});
+    this._storage.write(this.storageKey(), props);
+
     this.router.navigate([], {
       queryParams: {
         filterField: props.field,

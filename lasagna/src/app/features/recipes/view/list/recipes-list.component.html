@@ -85,11 +85,11 @@
               <div class="toolbox-section-label">{{ 'recipes.toolbox.trigger-btn' | translate }}:</div>
               <lg-button [flat]="true"
                          [size]="'small'"
-                         [style]="recipesFilters()?.activeCount() ? 'primary' : 'default'"
+                         [style]="toolboxActiveCount() ? 'primary' : 'default'"
                          data-u2e="recipes.list.toolbox-trigger"
                          (click)="openToolbox()">
                 <mat-icon class="toolbox-trigger__icon">tune</mat-icon>
-                @if (recipesFilters()?.activeCount(); as n) {
+                @if (toolboxActiveCount(); as n) {
                   <span class="toolbox-trigger__count">{{ n }}</span>
                 }
               </lg-button>
@@ -197,6 +197,16 @@
     <lg-recipes-filters></lg-recipes-filters>
     <div class="toolbox-section-label">{{ 'recipes.toolbox.section.sorting' | translate }}:</div>
     <lg-grouping-sorting storageKey="recipes"></lg-grouping-sorting>
+
+    <lg-button [size]="'small'"
+               [style]="'danger'"
+               [outlined]="true"
+               [disabled]="!toolboxActiveCount()"
+               class="toolbox-clear"
+               data-u2e="recipes.list.toolbox-clear"
+               (click)="clearToolbox()">
+      {{ 'recipes.toolbox.clear-btn' | translate }}
+    </lg-button>
   </lg-sheet>
 } @error {
   {{ 'recipes-list.defer-load-error' | translate }}

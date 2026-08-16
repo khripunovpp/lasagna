@@ -21,6 +21,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SettingsService} from '../../../settings/service/services/settings.service';
 import {LoadersManagerService} from '../../../../shared/service/services/loaders-manager.service';
 import {GroupingSortingStorageService} from '../../../../shared/service/services/grouping-sorting-storage.service';
+import {ListFiltersStorageService} from '../../../../shared/service/services/list-filters-storage.service';
 
 export const CATEGORIZED_RECIPES_LIST = new InjectionToken<Observable<SortResult<RecipeDTO>>>('CategorizedRecipesList');
 
@@ -38,6 +39,7 @@ export const provideRecipes = {
     const settingsService = inject(SettingsService);
     const loadersManagerService = inject(LoadersManagerService);
     const sortingStorage = inject(GroupingSortingStorageService);
+    const filtersStorage = inject(ListFiltersStorageService);
     const groupingParam = injectQueryParams('groupBy');
     const sortDirection = injectQueryParams<string | null>('sortDirection');
     const sortField = injectQueryParams('sortField');
@@ -76,9 +78,14 @@ export const provideRecipes = {
       }),
     );
 
+    // the url wins when it carries a filter, otherwise reuse the persisted one
+    const storedFilters = filterField() ? null : filtersStorage.read('recipes');
+    const activeFilterField = (storedFilters ? storedFilters.field : filterField() as string) as keyof Recipe;
+    const activeFilterValue = storedFilters ? storedFilters.value : filterValue();
+
     const recipes = from(recipesRepository.loadAll({
-      key: filterField() as keyof Recipe,
-      value: filterValue(),
+      key: activeFilterField,
+      value: activeFilterValue,
       operator: 'equals'
     })).pipe(
       switchMap(() => recipesRepository.getStream$),

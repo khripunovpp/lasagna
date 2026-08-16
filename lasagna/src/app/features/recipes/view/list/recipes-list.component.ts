@@ -2,7 +2,7 @@ import {Component, computed, DestroyRef, effect, inject, OnInit, signal, viewChi
 import {RecipesRepository} from '../../service/providers/recipes.repository';
 import {FlexRowComponent} from '../../../../shared/view/layout/flex-row.component';
 import {ButtonComponent} from '../../../../shared/view/ui/button/button.component';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {ContainerComponent} from '../../../../shared/view/layout/container.component';
 import {TitleComponent} from '../../../../shared/view/layout/title.component';
@@ -48,6 +48,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe} from '@angular/common';
 import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 import {SheetComponent} from '../../../../shared/view/ui/dialogs/sheet.component';
+import {WINDOW} from '../../../../shared/service/tokens/window.token';
 
 
 @Component({
@@ -109,8 +110,27 @@ import {SheetComponent} from '../../../../shared/view/ui/dialogs/sheet.component
     }
 
     .toolbox-trigger__count {
-      margin-left: 4px;
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 8px;
+      background-color: #fff;
+      color: var(--button-primary-bg);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
       font-variant-numeric: tabular-nums;
+      pointer-events: none;
+    }
+
+    .toolbox-clear {
+      margin-top: 16px;
     }
 
     .toolbox-trigger__icon.mat-icon {
@@ -167,6 +187,11 @@ export class RecipesListComponent implements OnInit {
   readonly folderMoveDialog = viewChild(FolderMoveDialogComponent);
   readonly toolbox = viewChild(SheetComponent);
   readonly recipesFilters = viewChild(RecipesFiltersComponent);
+  readonly groupingSorting = viewChild(GroupingSortingComponent);
+  /** filters + sorting that differ from the defaults, shown on the toolbox trigger */
+  readonly toolboxActiveCount = computed(() =>
+    (this.recipesFilters()?.activeCount() ?? 0) + (this.groupingSorting()?.activeCount() ?? 0)
+  );
   protected readonly Stores = Stores;
   protected readonly RecipeScheme = RecipeScheme;
   readonly isFolderView = computed(() => this.isInFolderRoute() || this.viewMode() === 'folders');
@@ -174,6 +199,8 @@ export class RecipesListComponent implements OnInit {
   readonly foldersEnabled = computed(() => this.viewMode() === 'folders' && this._settingsService.getRecipesViewMode() === 'folders');
   private readonly _foldersRepository = inject(FoldersRepository);
   private readonly _router = inject(Router);
+  private readonly _aRouter = inject(ActivatedRoute);
+  private readonly _window = inject(WINDOW);
   private readonly _analyticsService = inject(AnalyticsService);
 
   ngOnInit() {
@@ -226,6 +253,29 @@ export class RecipesListComponent implements OnInit {
 
   openToolbox() {
     this.toolbox()?.open();
+  }
+
+  async clearToolbox() {
+    if (!this.toolboxActiveCount()) {
+      return;
+    }
+
+    this.recipesFilters()?.resetSilently();
+    this.groupingSorting()?.resetSilently();
+
+    await this._router.navigate([], {
+      queryParams: {
+        filterField: undefined,
+        filterValue: undefined,
+        sortField: undefined,
+        sortDirection: undefined,
+        groupBy: undefined,
+      },
+      relativeTo: this._aRouter,
+      queryParamsHandling: 'merge',
+    });
+    // same as the filters/sorting controls — the list is built on load
+    this._window?.location.reload();
   }
 
   onEditFolder(folder: Folder) {
