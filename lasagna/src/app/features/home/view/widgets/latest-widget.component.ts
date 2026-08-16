@@ -96,24 +96,18 @@ export class LatestWidgetComponent {
   protected readonly productLabelFactory = inject(productLabelFactoryProvider);
   private readonly _recipesRepository = inject(RecipesRepository);
   readonly recipes$ = from(this._recipesRepository.getLastRecipes()).pipe(
-    combineLatestWith(from(this._recipesRepository.hasRecords())),
-    map(([latest, existing]) => ({
-      latest,
-      existing,
-    })),
+    map(latest => ({latest})),
   );
+  // only entries touched by the user land in the using-history, so seeded
+  // defaults never make the section appear
   readonly displayRecipes$ = this.recipes$.pipe(
-    map(recipes => recipes.latest.length || recipes.existing)
+    map(recipes => recipes.latest.length > 0)
   );
   private readonly _productsRepository = inject(ProductsRepository);
   readonly products$ = from(this._productsRepository.getLastProducts()).pipe(
-    combineLatestWith(from(this._productsRepository.hasRecords())),
-    map(([latest, existing]) => ({
-      latest,
-      existing,
-    })),
+    map(latest => ({latest})),
   );
   readonly displayProducts$ = this.products$.pipe(
-    map(products => products.latest.length || products.existing)
+    map(products => products.latest.length > 0)
   );
 }
