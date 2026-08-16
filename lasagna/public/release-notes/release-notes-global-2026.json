@@ -1,6 +1,14 @@
 {
   "notes": [
     {
+      "date": "2026-08-16",
+      "features": [
+        "Products now have a trim loss — the share that goes to waste when you clean them: peel, trim, bones. Set it as a percentage on the product card",
+        "In a recipe the amount counts as already cleaned, so the cost is taken from the raw product you actually paid for: a kilo of peeled potatoes at 20% trim loss costs as much as 1.25 kilos from the shop",
+        "The ingredient row and the calculation table show a badge with the percentage, so the higher price per unit doesn't look like a mistake"
+      ]
+    },
+    {
       "date": "2026-07-07",
       "features": [
         "Products now have a best-before date. Set it on the product card and a status badge appears alongside — fresh, expiring soon, or past its date",
