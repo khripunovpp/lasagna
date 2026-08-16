@@ -609,6 +609,8 @@
   "product.pistachios": "Фисташки",
   "product.potato-starch": "Картофельный крахмал",
   "product.powdered-sugar": "Сахарная пудра",
+  "product.price.missing": "У продукта не указана цена —",
+  "product.price.missing.set-link": "установить",
   "product.pumpkin-seeds": "Тыквенные семечки",
   "product.rice-flour": "Рисовая мука",
   "product.salt": "Соль",

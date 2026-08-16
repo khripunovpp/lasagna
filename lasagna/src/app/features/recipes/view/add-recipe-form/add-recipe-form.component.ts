@@ -53,6 +53,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
 import {RecipeUsedInComponent} from './recipe-used-in.component';
 import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
+import {MissingPriceNoticeComponent} from '../../../../shared/view/ui/price/missing-price-notice.component';
 import {ProductExpirationDirective} from '../../../../shared/view/directives/product-expiration.directive';
 
 @Component({
@@ -116,6 +117,7 @@ import {ProductExpirationDirective} from '../../../../shared/view/directives/pro
     RecipeUsedInComponent,
     PricePerUnitComponent,
     ExpirationBadgeComponent,
+    MissingPriceNoticeComponent,
     ProductExpirationDirective,
   ],
   providers: [

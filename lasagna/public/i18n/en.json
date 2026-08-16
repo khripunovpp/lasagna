@@ -609,6 +609,8 @@
   "product.pistachios": "Pistachios",
   "product.potato-starch": "Potato starch",
   "product.powdered-sugar": "Powdered sugar",
+  "product.price.missing": "No price set for this product —",
+  "product.price.missing.set-link": "set it",
   "product.pumpkin-seeds": "Pumpkin seeds",
   "product.rice-flour": "Rice flour",
   "product.salt": "Salt",

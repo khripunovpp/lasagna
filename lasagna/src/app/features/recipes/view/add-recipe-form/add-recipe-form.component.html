@@ -47,6 +47,9 @@
                                          [label]="true"
                                          size="14"></lg-expiration-badge>
 
+                    <lg-missing-price-notice
+                      [product]="form.value.ingredients?.[i]?.product_id"></lg-missing-price-notice>
+
                     <lg-flex-row [attr.data-u2e]="'ingredient-row.' + i"
                                  [bottom]="true"
                                  [mobileMode]="true"

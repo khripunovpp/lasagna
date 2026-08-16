@@ -609,6 +609,8 @@
   "product.pistachios": "Pistácios",
   "product.potato-starch": "Amido de batata",
   "product.powdered-sugar": "Açúcar em pó",
+  "product.price.missing": "Este produto não tem preço definido —",
+  "product.price.missing.set-link": "definir",
   "product.pumpkin-seeds": "Sementes de abóbora",
   "product.rice-flour": "Farinha de arroz",
   "product.salt": "Sal",
