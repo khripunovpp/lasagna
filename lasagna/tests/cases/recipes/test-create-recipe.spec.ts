@@ -24,6 +24,10 @@ import {
   gppProducts,
   gppMixedRecipe,
   GPP_RECIPE_UUID, gppMixedRecipeOutput,
+  clProducts,
+  clRecipe,
+  CL_RECIPE_UUID,
+  clRecipeOutput,
 } from './calc-test.helpers';
 
 /**
@@ -79,6 +83,18 @@ test.describe.serial('Групповой тест создания и кальк
       await putDbItems(page, 'lasagna-db', Stores.RECIPES, [gppMixedRecipe]);
 
       await calculateRecipeCostFixture(page, GPP_RECIPE_UUID, gppMixedRecipeOutput);
+    });
+  });
+
+  // Подкейс для фичи cleaningLoss. Количество в рецепте считается очищенным,
+  // поэтому цена за единицу растёт на коэффициент выхода. Данные и ожидания
+  // живут в calc-test.helpers.ts (clProducts / clRecipe / clRecipeOutput).
+  test.describe.serial('cleaningLoss (отход при очистке) у продуктов', () => {
+    test('С отходом цена за единицу выше; без него — как раньше', async () => {
+      await seedProducts(page, clProducts);
+      await putDbItems(page, 'lasagna-db', Stores.RECIPES, [clRecipe]);
+
+      await calculateRecipeCostFixture(page, CL_RECIPE_UUID, clRecipeOutput);
     });
   });
 

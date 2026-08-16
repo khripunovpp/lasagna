@@ -19,6 +19,8 @@ export class Products_edit_Paramid_Page {
 
   get numberInputPrice() { return this.page.locator('[data-u2e="number-input.price"]'); }
 
+  get numberInputCleaningLoss() { return this.page.locator('[data-u2e="number-input.cleaningLoss"]'); }
+
   get readonlyInputPricePerUnit() { return this.page.locator('[data-u2e="readonly-input.pricePerUnit"]'); }
 
   get htmlEditorNotes() { return this.page.locator('[data-u2e="html-editor.notes"]'); }

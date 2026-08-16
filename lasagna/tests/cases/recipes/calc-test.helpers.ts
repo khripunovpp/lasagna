@@ -192,3 +192,101 @@ export const gppMixedRecipeOutput = {
     totalPrice: '95 $',
   },
 };
+
+/**
+ * Отход при очистке (cleaningLoss) у продуктов.
+ *
+ * Количество в рецепте считается уже очищенным, поэтому за грамм полезного
+ * продукта платим дороже: цена за единицу делится на коэффициент выхода.
+ *
+ *   cl-potato  2кг = $100 → 50 $/кг, отход 20% → выход 0.8 → 62.5 $/кг
+ *   cl-carrot  1кг = $20  → 20 $/кг, отхода нет → 20 $/кг (контрольный)
+ *   cl-onion   1000гр = $200 → 0.2 $/гр, отход 50% → выход 0.5 → 0.4 $/гр
+ *
+ * Ингредиенты (вес не меняется — он и так указан в очищенном виде):
+ *     ing[0] cl-potato 1кг    → weight=1000, cost=62.5
+ *     ing[1] cl-carrot 0.5кг  → weight=500,  cost=10
+ *     ing[2] cl-onion  100гр  → weight=100,  cost=40
+ *
+ * Итого: weight=1600гр, cost=112.5$, pricePerGram=0.0703125 → "0.07".
+ */
+export const CL_PRODUCT_POTATO_UUID = 'cl-product-potato';
+export const CL_PRODUCT_CARROT_UUID = 'cl-product-carrot';
+export const CL_PRODUCT_ONION_UUID = 'cl-product-onion';
+export const CL_RECIPE_UUID = 'cl-cleaning-loss-recipe';
+
+export const clProducts = [
+  {
+    uuid: CL_PRODUCT_POTATO_UUID,
+    name: 'CL Potato',
+    amount: 2,
+    price: 100,
+    unit: 'kilogram',
+    cleaningLoss: 20,
+    deleted: 0,
+  },
+  {
+    uuid: CL_PRODUCT_CARROT_UUID,
+    name: 'CL Carrot',
+    amount: 1,
+    price: 20,
+    unit: 'kilogram',
+    deleted: 0,
+  },
+  {
+    uuid: CL_PRODUCT_ONION_UUID,
+    name: 'CL Onion',
+    amount: 1000,
+    price: 200,
+    unit: 'gram',
+    cleaningLoss: 50,
+    deleted: 0,
+  },
+];
+
+export const clRecipe: RecipeDTO = {
+  uuid: CL_RECIPE_UUID,
+  name: 'cleaning loss recipe',
+  description: '',
+  master: false,
+  tags: [],
+  category_id: categoryRecipeAlphaId,
+  ingredients: [
+    {product_id: CL_PRODUCT_POTATO_UUID, amount: '1', unit: 'kilogram'},
+    {product_id: CL_PRODUCT_CARROT_UUID, amount: '0.5', unit: 'kilogram'},
+    {product_id: CL_PRODUCT_ONION_UUID, amount: '100', unit: 'gram'},
+  ],
+};
+
+// В ячейке с названием рядом с продуктом рендерится бейдж отхода — он входит в текст
+export const clRecipeOutput = {
+  name: 'cleaning loss recipe Cost Analytics',
+  outcomeAmount: '1,600 gr.',
+  oneUnitPrice: '0.07 $',
+  totalPrice: '112.5 $',
+  ingredientsRows: [
+    {
+      name: 'CL Potato trim loss 20%',
+      amount: '1 kg. (1,000 gr.)',
+      pricePerUnit: '62.5 $ /kg.',
+      totalPrice: '62.5 $',
+    },
+    {
+      name: 'CL Carrot',
+      amount: '0.5 kg. (500 gr.)',
+      pricePerUnit: '20 $ /kg.',
+      totalPrice: '10 $',
+    },
+    {
+      name: 'CL Onion trim loss 50%',
+      amount: '100 gr.',
+      pricePerUnit: '0.4 $ /gr.',
+      totalPrice: '40 $',
+    },
+  ],
+  total: {
+    amount: '1,600 gr.',
+    pricePerUnit: '0.07 $ /gr.',
+    totalPrice: '112.5 $',
+  },
+};

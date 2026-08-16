@@ -104,6 +104,22 @@ test.describe.serial('Cоздание продуктов', () => {
       }
     }
   });
+
+  test('Отход при очистке сохраняется и переживает перезагрузку', async () => {
+    const productId = createdProductIds[0];
+    await page.goto(URLS.product.edit(productId));
+    const productPage = new ProductPage(page);
+
+    await expect(productPage.ref.numberInputCleaningLoss).toHaveValue('');
+
+    await productPage.fillAndCheck(productPage.ref.numberInputCleaningLoss, '20');
+    await productPage.clickOutside({timeout: 1000});
+    await productPage.ref.productFormSaveBtn.click();
+    await expect(productPage.getToast('success')).toBeVisible();
+
+    await page.reload();
+    await expect(productPage.ref.numberInputCleaningLoss).toHaveValue('20');
+  });
 })
 
 async function createProductFixture(
