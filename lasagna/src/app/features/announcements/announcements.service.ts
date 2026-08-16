@@ -28,6 +28,12 @@ export interface AnnouncementConfig {
   startsAt?: string;
   /** ISO date — banner not shown at or after this moment. */
   expiresAt: string;
+  /**
+   * Show even to users whose first launch is later than `startsAt`. For
+   * announcements that aren't "what's new" — invitations, tips, asks — which
+   * stay relevant no matter when someone joined.
+   */
+  keepForNewcomers?: boolean;
   detailsLink?: AnnouncementDetailsLink;
   /**
    * Route patterns this announcement is shown on. Undefined = every route.
@@ -67,6 +73,8 @@ export class AnnouncementsService {
       bodyKey: _('announcements.feedback-home-2026-05.body'),
       startsAt: '2026-05-25',
       expiresAt: '2026-08-01',
+      // an invitation to share ideas, not a feature — newcomers see it too
+      keepForNewcomers: true,
       detailsLink: {
         labelKey: _('announcements.feedback-home-2026-05.cta'),
         actionFn: () => this._support.requestOpen({
@@ -176,7 +184,7 @@ export class AnnouncementsService {
    * is simply how the app has always looked.
    */
   private _shippedBeforeUser(cfg: AnnouncementConfig): boolean {
-    if (!cfg.startsAt) return false;
+    if (!cfg.startsAt || cfg.keepForNewcomers) return false;
     const firstSeen = this._userService.isUserFirstDate?.getTime();
     if (!firstSeen) return false;
     return new Date(cfg.startsAt).getTime() < firstSeen;
