@@ -142,11 +142,14 @@ export class AnnouncementsService {
 
   private readonly _dismissedTick = signal(0);
 
+  // the service is created lazily, usually after the first navigation already
+  // ended — so seed from the router's current url instead of an empty string,
+  // otherwise routeMatch never matches until the user navigates somewhere
   private readonly _currentPath = toSignal(
     this._router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
       map(e => getURLWithoutParams(e.urlAfterRedirects)),
-      startWith(''),
+      startWith(getURLWithoutParams(this._router.url)),
     ),
     {initialValue: ''},
   );
