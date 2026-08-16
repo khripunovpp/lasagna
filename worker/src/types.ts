@@ -36,6 +36,7 @@ export interface Product {
   deleted: boolean
   deleted_at?: string | null
   expiration_date?: string | null
+  cleaning_loss?: number | null
   created_at: string
   updated_at: string
 }

@@ -54,6 +54,7 @@ import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.co
 import {RecipeUsedInComponent} from './recipe-used-in.component';
 import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
 import {MissingPriceNoticeComponent} from '../../../../shared/view/ui/price/missing-price-notice.component';
+import {CleaningLossBadgeComponent} from '../../../../shared/view/ui/price/cleaning-loss-badge.component';
 import {ProductExpirationDirective} from '../../../../shared/view/directives/product-expiration.directive';
 
 @Component({
@@ -118,6 +119,7 @@ import {ProductExpirationDirective} from '../../../../shared/view/directives/pro
     PricePerUnitComponent,
     ExpirationBadgeComponent,
     MissingPriceNoticeComponent,
+    CleaningLossBadgeComponent,
     ProductExpirationDirective,
   ],
   providers: [

@@ -292,6 +292,10 @@
                               [expirationDate]="$any(row.product_id)?.expirationDate"
                               [label]="true"
                               size="16"></lg-expiration-badge>
+
+                            <lg-cleaning-loss-badge
+                              [attr.data-u2e]="'calculate-recipe.ingredient-cleaning-loss-' + i"
+                              [product]="$any(row.product_id)"></lg-cleaning-loss-badge>
                           }
                         </div>
                       </td>

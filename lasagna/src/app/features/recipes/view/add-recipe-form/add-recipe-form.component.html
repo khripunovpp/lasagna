@@ -50,6 +50,9 @@
                     <lg-missing-price-notice
                       [product]="form.value.ingredients?.[i]?.product_id"></lg-missing-price-notice>
 
+                    <lg-cleaning-loss-badge
+                      [product]="form.value.ingredients?.[i]?.product_id"></lg-cleaning-loss-badge>
+
                     <lg-flex-row [attr.data-u2e]="'ingredient-row.' + i"
                                  [bottom]="true"
                                  [mobileMode]="true"

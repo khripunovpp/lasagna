@@ -52,6 +52,22 @@
                 </lg-number-input>
               </lg-control>
             }
+
+            <lg-control lgWidth="30%">
+              <ng-template lgControlLabelTemplate>
+                <span>{{ 'product.form.cleaningLoss.placeholder'|translate }}</span>
+                <lg-question [text]="'product.form.cleaningLoss.info' | translate"></lg-question>
+              </ng-template>
+
+              <lg-number-input formControlName="cleaningLoss"
+                               lgParseMath
+                               name="cleaningLoss"
+                               placeholder="">
+                <ng-template lgExtraTpl place="after">
+                  <span>%</span>
+                </ng-template>
+              </lg-number-input>
+            </lg-control>
           </lg-flex-row>
 
           <lg-control [label]="'product.form.price.placeholder'|translate:{currency:'EUR'}"

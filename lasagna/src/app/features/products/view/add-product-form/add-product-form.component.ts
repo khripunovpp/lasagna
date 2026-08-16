@@ -52,6 +52,7 @@ import {MatIcon} from '@angular/material/icon';
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {DatePickerComponent} from '../../../controls/form/date-picker.component';
+import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
 
 
 @Component({
@@ -87,6 +88,7 @@ import {DatePickerComponent} from '../../../controls/form/date-picker.component'
     ButtonComponent,
     MatIcon,
     DatePickerComponent,
+    QuestionMarkComponent,
   ],
   styles: [
     `
@@ -121,6 +123,7 @@ export class AddProductFormComponent
     price: new FormControl<number | null>(null, Validators.required),
     unit: new FormControl('gram'),
     gramsPerPiece: new FormControl<number | null>(null),
+    cleaningLoss: new FormControl<number | null>(null),
     source: new FormControl<string | null>(null),
     brand: new FormControl<string | null>(null),
     notes: new FormControl<string | null>(null),
@@ -166,6 +169,7 @@ export class AddProductFormComponent
       category_id: null,
       unit: 'gram',
       gramsPerPiece: null,
+      cleaningLoss: null,
       expirationDate: null,
     };
   }

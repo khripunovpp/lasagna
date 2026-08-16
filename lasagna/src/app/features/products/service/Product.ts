@@ -16,6 +16,7 @@ export class Product
       price: number
       unit?: string
       gramsPerPiece?: number | string
+      cleaningLoss?: number | string
       source?: string | undefined
       brand?: string | undefined
       notes?: string | undefined
@@ -42,6 +43,8 @@ export class Product
   price: number = 0;
   unit: Unit = 'gram';
   gramsPerPiece: number = 0;
+  /** доля продукта, уходящая в отход при очистке, в процентах */
+  cleaningLoss: number = 0;
   category_id?: CategoryProduct;
   source?: string;
   brand?: string;
@@ -55,6 +58,22 @@ export class Product
       return this.color;
     }
     return estimateColor(this.name);
+  }
+
+  /**
+   * Сколько продукта остаётся после очистки: 1 — очистки нет, 0.75 — уходит
+   * четверть. Мусорные значения игнорируем, иначе цена уедет в бесконечность.
+   */
+  get yieldRatio() {
+    const loss = parseFloatingNumber(this.cleaningLoss);
+    if (!loss || loss <= 0 || loss >= 100) {
+      return 1;
+    }
+    return (100 - loss) / 100;
+  }
+
+  get hasCleaningLoss() {
+    return this.yieldRatio !== 1;
   }
 
   get pricePerUnit() {
@@ -92,6 +111,7 @@ export class Product
       price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
       gramsPerPiece: Number(dto?.gramsPerPiece) || 0,
+      cleaningLoss: Number(dto?.cleaningLoss) || 0,
       source: dto?.source || '',
       brand: dto?.brand || '',
       notes: dto?.notes || '',
@@ -123,6 +143,7 @@ export class Product
       price: Number(dto?.price) || 0,
       unit: dto?.unit || 'gram',
       gramsPerPiece: Number(dto?.grams_per_piece ?? dto?.gramsPerPiece) || 0,
+      cleaningLoss: Number(dto?.cleaning_loss ?? dto?.cleaningLoss) || 0,
       source: dto?.source || '',
       category_id: dto?.category_id || '',
       uuid: dto?.uuid,
@@ -147,6 +168,7 @@ export class Product
       price: 0,
       unit: 'gram',
       gramsPerPiece: 0,
+      cleaningLoss: 0,
       source: undefined,
       brand: undefined,
       notes: undefined,
@@ -169,6 +191,9 @@ export class Product
     this.gramsPerPiece = dto.gramsPerPiece != null
       ? Number(dto.gramsPerPiece) || 0
       : this.gramsPerPiece;
+    this.cleaningLoss = dto.cleaningLoss != null
+      ? Number(dto.cleaningLoss) || 0
+      : this.cleaningLoss;
     this.source = dto.source || this.source;
     this.brand = dto.brand || this.brand;
     this.notes = dto.notes || this.notes;
@@ -198,6 +223,7 @@ export class Product
       price: this.price || 0,
       unit: this.unit || '',
       gramsPerPiece: this.gramsPerPiece || 0,
+      cleaningLoss: this.cleaningLoss || 0,
       source: this.source || '',
       brand: this.brand || '',
       notes: this.notes || '',
@@ -222,6 +248,7 @@ export class Product
       price: this.price ?? 0,
       unit: this.unit ?? 'gram',
       grams_per_piece: this.gramsPerPiece ?? 0,
+      cleaning_loss: this.cleaningLoss ?? 0,
       source: this.source ?? '',
       brand: this.brand ?? '',
       notes: this.notes ?? '',

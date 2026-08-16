@@ -12,6 +12,7 @@ export const ProductScheme = z.object({
   uuid: z.string().optional(),
   unit: UnitScheme.or(z.string()).optional(),
   gramsPerPiece: z.number().or(z.string()).optional(),
+  cleaningLoss: z.number().or(z.string()).optional(),
   createdAt: z.union([z.string(), z.number()]).optional(),
   updatedAt: z.union([z.string(), z.number()]).optional(),
   color: z.string().optional(),

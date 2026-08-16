@@ -58,6 +58,7 @@ import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.co
 import {PullDirective} from '../../../../shared/view/directives/pull.directive';
 import {ShrinkageValue} from '../../service/models/Recipe';
 import {ShrinkageControlComponent} from './shrinkage-control/shrinkage-control.component';
+import {CleaningLossBadgeComponent} from '../../../../shared/view/ui/price/cleaning-loss-badge.component';
 import {SupportService} from '../../../home/service/support.service';
 import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
 import {collectExpiredIngredients} from '../../service/helpers/recipe.helpers';
@@ -95,6 +96,7 @@ import {MatIcon} from '@angular/material/icon';
     QuestionMarkComponent,
     PullDirective,
     ShrinkageControlComponent,
+    CleaningLossBadgeComponent,
     ExpirationBadgeComponent,
     MatIcon,
   ],

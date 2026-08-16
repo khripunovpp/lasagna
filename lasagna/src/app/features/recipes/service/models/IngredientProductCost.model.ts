@@ -25,7 +25,10 @@ export class IngredientProductCost
     return parseFloatingNumber(this._ingredientAmount);
   }
 
-  get pricePerUnit() {
+  /**
+   * Цена за единицу закупленного продукта — как в чеке, без учета очистки.
+   */
+  get rawPricePerUnit() {
     // Если ингредиент в штуках, тогда он может иметь цену за юнит только если продукт в штуках
     if (isCountUnit(this.ingredientUnit)) {
       if (isCountUnit(this.entity.unit)) {
@@ -62,6 +65,19 @@ export class IngredientProductCost
     }
     // Для всех остальных вывести цену невозможно, возвращаем undefined
     return undefined;
+  }
+
+  /**
+   * В рецепте количество указывают уже очищенным, поэтому за грамм полезного
+   * продукта платим дороже: килограмм чищеной картошки при отходе 25% стоит
+   * как 1.33 килограмма закупленной.
+   */
+  get pricePerUnit() {
+    const raw = this.rawPricePerUnit;
+    if (raw == null) {
+      return raw;
+    }
+    return raw / this.entity.yieldRatio;
   }
 
   get totalPrice() {
