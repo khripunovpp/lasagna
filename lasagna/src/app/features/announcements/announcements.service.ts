@@ -72,7 +72,7 @@ export class AnnouncementsService {
       titleKey: _('announcements.feedback-home-2026-05.title'),
       bodyKey: _('announcements.feedback-home-2026-05.body'),
       startsAt: '2026-05-25',
-      expiresAt: '2026-08-01',
+      expiresAt: '2027-01-01',
       // an invitation to share ideas, not a feature — newcomers see it too
       keepForNewcomers: true,
       detailsLink: {
