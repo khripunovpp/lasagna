@@ -26,7 +26,7 @@ import {ChipsListComponent} from '../../../controls/form/chips-list.component';
 import {AutocompleteComponent} from '../../../controls/form/autocomplete.component';
 import {Product} from '../../service/Product';
 import {errorHandler, fromValuesToProductDTO, isMicroAmount, productToFormValue} from '../../../../shared/helpers';
-import {debounceTime} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {TranslateDirective, TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CardComponent} from '../../../../shared/view/ui/card/card.component';
 import {WidthDirective} from '../../../../shared/view/directives/width.directive';
@@ -53,6 +53,7 @@ import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {DatePickerComponent} from '../../../controls/form/date-picker.component';
 import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
+import {AnalyticsService} from '../../../../shared/service/services/analytics.service';
 
 
 @Component({
@@ -157,6 +158,7 @@ export class AddProductFormComponent
     this.form.markAsPristine();
   });
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _analyticsService = inject(AnalyticsService);
 
   private get _defFormValue() {
     return {
@@ -197,6 +199,24 @@ export class AddProductFormComponent
         return
       }
       this.product()?.update(fromValuesToProductDTO(values));
+    })
+
+    // отдельно от сохранения продукта: интересно, трогают ли поле вообще
+    this.form.controls.cleaningLoss.valueChanges.pipe(
+      debounceTime(700),
+      distinctUntilChanged(),
+      takeUntilDestroyed(this._destroyRef),
+    ).subscribe(value => {
+      // reset/patch формы не помечает контрол dirty — считаем только правки руками
+      if (!this.form.controls.cleaningLoss.dirty) {
+        return;
+      }
+      this._analyticsService.trackEvent('product_cleaning_loss_change', {
+        event_category: 'products',
+        event_label: 'cleaning-loss',
+        uuid: this.product()?.uuid,
+        value: Number(value) || 0,
+      });
     })
   }
 

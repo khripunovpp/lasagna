@@ -249,7 +249,6 @@ export class AddProductComponent
             uuid: data,
             price_per_unit: product.pricePerUnit,
             grams_per_piece: product.gramsPerPiece,
-            cleaning_loss: product.cleaningLoss,
             unit: product.unit,
             category: product.category_id?.name,
           });
@@ -332,4 +331,5 @@ export class AddProductComponent
         this._notificationsService.error(errorHandler(error));
       });
   }
+
 }
