@@ -667,6 +667,8 @@
   "recipe.added-informer": "Новый рецепт добавлен!",
   "recipe.added-informer.link": "Посмотреть?",
   "recipe.calculate-btn": "Рассчитать",
+  "recipe.cost-preview.details-link": "Детали расчёта",
+  "recipe.cost-preview.weight": "Вес ингредиентов",
   "recipe.calculation.empty-state.btn": "Редактировать рецепт",
   "recipe.calculation.empty-state.text": "Чтобы рассчитать рецепт, нужно сначала добавить ингредиенты.",
   "recipe.calculation.error-state.text": "",

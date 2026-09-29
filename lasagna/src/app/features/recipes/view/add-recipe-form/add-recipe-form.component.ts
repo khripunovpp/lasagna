@@ -52,6 +52,7 @@ import {PricePerUnitComponent} from '../../../../shared/view/ui/numbers/price-pe
 import {IS_CLIENT} from '../../../../shared/service/tokens/isClient.token';
 import {QuestionMarkComponent} from '../../../../shared/view/ui/question-mark.component';
 import {RecipeUsedInComponent} from './recipe-used-in.component';
+import {RecipeCostPreviewComponent} from './recipe-cost-preview.component';
 import {ExpirationBadgeComponent} from '../../../../shared/view/ui/expiration/expiration-badge.component';
 import {MissingPriceNoticeComponent} from '../../../../shared/view/ui/price/missing-price-notice.component';
 import {CleaningLossBadgeComponent} from '../../../../shared/view/ui/price/cleaning-loss-badge.component';
@@ -116,6 +117,7 @@ import {ProductExpirationDirective} from '../../../../shared/view/directives/pro
     PricePerUnitComponent,
     QuestionMarkComponent,
     RecipeUsedInComponent,
+    RecipeCostPreviewComponent,
     PricePerUnitComponent,
     ExpirationBadgeComponent,
     MissingPriceNoticeComponent,

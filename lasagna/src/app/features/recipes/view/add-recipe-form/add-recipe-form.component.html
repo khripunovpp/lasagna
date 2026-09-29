@@ -1,6 +1,8 @@
 @if (form) {
   <form [formGroup]="form">
     <lg-flex-column>
+      <lg-recipe-cost-preview [recipe]="recipe()"></lg-recipe-cost-preview>
+
       <lg-card>
         <lg-flex-column [position]="'start'">
           <lg-control [label]="'recipe.form.name.placeholder'|translate"

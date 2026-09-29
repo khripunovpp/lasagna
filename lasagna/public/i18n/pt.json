@@ -667,6 +667,8 @@
   "recipe.added-informer": "Nova receita adicionada!",
   "recipe.added-informer.link": "Ver?",
   "recipe.calculate-btn": "Calcular",
+  "recipe.cost-preview.details-link": "Detalhes do cálculo",
+  "recipe.cost-preview.weight": "Peso dos ingredientes",
   "recipe.calculation.empty-state.btn": "Editar Receita",
   "recipe.calculation.empty-state.text": "Para calcular uma receita, você precisa adicionar ingredientes primeiro.",
   "recipe.calculation.error-state.text": "",
